@@ -160,7 +160,11 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                   final SavedLocation? _savedLocation =
                       await MezRouter.toNamed<void>(
                           PickLocationRoutes.pickLocationRoute,
-                          arguments: true) as SavedLocation?;
+                          arguments: {}
+                          //change argument
+                          // true
+
+                          ) as SavedLocation?;
                   mezDbgPrint("View Got result : $_savedLocation");
                   if (_savedLocation != null) {
                     // in case it's repeated with the same name or same address
@@ -170,7 +174,6 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
                           (savedLoc.location.address ==
                               _savedLocation.location.address),
                     );
-
                     setState(() {
                       listOfSavedLoacations.add(_savedLocation);
                       dropDownListValue = listOfSavedLoacations[

@@ -137,8 +137,11 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             backgroundColor: Colors.transparent),
         child: Text("${_i18n()["sendMyLaundry"]}"),
         onPressed: () {
-          MezRouter.toNamed(LaundryRouters.laundryOrderRequest,
-              arguments: laundry.value);
+          MezRouter.toNamed(LaundryRouters.laundryOrderRequest, arguments: {}
+              //change argument
+              //laundry.value
+
+              );
         },
       ),
     );

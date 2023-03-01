@@ -59,7 +59,9 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         onClick: () async {
           // ignore: unawaited_futures
           MezRouter.toNamed<void>(PickLocationRoutes.pickLocationRoute,
-              arguments: false);
+              //change argument
+              //false
+              arguments: {});
         },
       ),
       body: Obx(() {

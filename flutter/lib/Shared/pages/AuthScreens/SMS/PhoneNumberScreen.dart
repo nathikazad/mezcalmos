@@ -26,6 +26,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
+
   // final phoneNumberFocusNode = FocusNode();
 
   RxBool canSendOtp = false.obs;
@@ -239,7 +240,10 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       if (response.success) {
                         MezSnackbar("Notice ~", "OTP Sent code to : $phone");
                         MezRouter.toNamed(SharedRoutes.kOtpConfirmRoute,
-                            arguments: phone);
+                            arguments: {}
+                            //change argument
+                            //phone
+                            );
                       } else {
                         MezSnackbar(response.errorCode.toString(),
                             response.errorMessage.toString());

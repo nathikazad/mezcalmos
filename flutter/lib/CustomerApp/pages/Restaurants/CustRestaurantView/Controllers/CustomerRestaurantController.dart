@@ -22,6 +22,7 @@ class CustomerRestaurantController {
 
   late TabController tabsController;
   late TabController specialstabsController;
+
   // keys //
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
 
@@ -35,6 +36,7 @@ class CustomerRestaurantController {
   RxBool pauseRectGetterIndex = RxBool(false);
   RxList<Item> specials = RxList.empty();
   RxBool _initialized = RxBool(false);
+
   bool get isInitialzed {
     return _initialized.value;
   }

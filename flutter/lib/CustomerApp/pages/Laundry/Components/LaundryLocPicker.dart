@@ -157,7 +157,11 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
                 final SavedLocation? _savedLocation =
                     await MezRouter.toNamed<void>(
                         PickLocationRoutes.pickLocationRoute,
-                        arguments: true) as SavedLocation?;
+                        arguments: {}
+                        //change argument
+                        //true
+
+                        ) as SavedLocation?;
                 mezDbgPrint("View Got result : $_savedLocation");
                 if (_savedLocation != null) {
                   // in case it's repeated with the same name or same address

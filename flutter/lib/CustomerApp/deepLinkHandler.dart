@@ -70,12 +70,13 @@ class DeepLinkHandler {
         mezDbgPrint("@deepLink@ ===> handling restaurant routing ! ");
         final Restaurant? _rest = await get_restaurant_by_id(id: providerId);
         if (_rest != null) {
-          Future<void>.delayed(
-            Duration.zero,
-            () => MezRouter.toNamed<void>(
-                RestaurantRouters().getRestaurantRoute(providerId),
-                arguments: {'id': providerId, "restaurant": _rest}),
-          );
+          Future<void>.delayed(Duration.zero,
+              () => RestaurantRouters.navigateToRestaurantRoute(providerId)
+
+              // MezRouter.toNamed<void>(
+              // RestaurantRouters().getRestaurantRoute(providerId),
+              // arguments: {'id': providerId, "restaurant": _rest}),
+              );
         }
         break;
       case CustomerDeepLinkType.Laundry:

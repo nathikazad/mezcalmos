@@ -190,9 +190,11 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     // we will route the user back to the Map
     if (newLocation?.id == -1) {
       final SavedLocation? _savedLocation = await MezRouter.toNamed(
-        PickLocationRoutes.pickLocationRoute,
-        arguments: true,
-      ) as SavedLocation?;
+          PickLocationRoutes.pickLocationRoute,
+          arguments: {}
+          //change argument
+          //true,
+          ) as SavedLocation?;
 
       if (_savedLocation != null &&
           (_savedLocation.location.isValidLocation())) {

@@ -90,7 +90,7 @@ class SavedLocationComponent extends StatelessWidget {
                   onTap: () {
                     MezRouter.toNamed<void>(
                       PickLocationRoutes.pickLocationEditRoute,
-                      parameters: <String, String>{
+                      arguments: <String, String>{
                         // TODO:544D-HASURA
 // added to.String()
                         "id": savelocation.id!.toString()

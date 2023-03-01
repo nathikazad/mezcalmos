@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestauSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/Controllers/CustomerRestaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart'
+    as customerController2;
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -35,10 +37,12 @@ class CustomerRestaurantView extends StatefulWidget {
 class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     with TickerProviderStateMixin {
   CustomerRestaurantController _viewController = CustomerRestaurantController();
+  customerController2.CustomerRestaurantController _viewController2 =
+      customerController2.CustomerRestaurantController();
 
   @override
   void initState() {
-    final int restaurantId = int.parse(QR.params["id"] as String);
+    final int restaurantId = int.parse(QR.params["id"].toString());
     _viewController.init(restaurantId: restaurantId, vsync: this);
     super.initState();
   }
@@ -53,7 +57,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Text('Test');
+    Scaffold(
       extendBodyBehindAppBar: true,
       floatingActionButton: FloatingCartComponent(),
       bottomSheet: (_viewController.restaurant.value?.isOpen() == false)
@@ -73,15 +78,15 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return CustomScrollView(
       controller: _viewController.scrollController,
       slivers: [
-        RestaurantSliverAppBar(controller: _viewController),
+        RestaurantSliverAppBar(controller: _viewController2),
         Obx(() {
           if (_viewController.showInfo.value)
             return SliverPadding(
               padding: const EdgeInsets.all(12),
               sliver: SliverToBoxAdapter(
                   child: RestaurantInfoTab(
-                restaurant: restaurant,
-                controller: _viewController,
+                restaurant: _viewController.restaurant.value!,
+                controller: _viewController2,
               )),
             );
           else if (_viewController.isInitialzed) {
@@ -175,7 +180,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           _buildResturantItems(
             items: category.items,
-            restaurantId: restaurant.info.hasuraId,
+            restaurantId: _viewController.restaurant.value!.info.hasuraId,
             isSpecial: false,
           ),
           SizedBox(
@@ -200,7 +205,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
-            restaurantId: restaurant.info.hasuraId,
+            restaurantId: _viewController.restaurant.value!.info.hasuraId,
             isSpecial: true,
           ),
         ],
@@ -213,7 +218,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       required int restaurantId,
       bool isSpecial = false}) {
     mezDbgPrint("[66] called :: _buildResturantItems");
-    if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
+    if (_viewController.restaurant.value!.restaurantsView ==
+            RestaurantsView.Rows ||
+        isSpecial) {
       return Container(
         margin: const EdgeInsets.only(top: 7),
         child: Column(
@@ -247,7 +254,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(items.length, (int index) {
           return RestaurantgridItemCard(
-              item: items[index], restaurant: restaurant);
+            item: items[index],
+            restaurant: _viewController.restaurant.value!,
+          );
         }),
       );
     }
