@@ -90,9 +90,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   
   // clear user cart 
   clearCart(customerId);
-  // return <CheckoutResponse> {
-  //   orderId: restaurantOrder.orderId
-  // }
+
   return {
     orderId: orderResponse.restaurantOrder.orderId
   }

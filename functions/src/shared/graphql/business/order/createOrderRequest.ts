@@ -6,12 +6,14 @@ import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { Business } from "../../../models/Services/Business/Business";
 import { BusinessOrder, BusinessOrderRequestStatus } from "../../../models/Services/Business/BusinessOrder";
+import { BusinessCart } from "../../../models/Services/Business/Cart";
 
 export async function createOrderRequest(
     customerId: number,
     orderRequestDetails: OrderRequestDetails, 
     business: Business, 
-    mezAdmins: MezAdmin[]
+    mezAdmins: MezAdmin[],
+    cart: BusinessCart
 ): Promise<BusinessOrder> {
     let chain = getHasura();
 
@@ -28,7 +30,13 @@ export async function createOrderRequest(
           app_type_id: AppType.MezAdmin
         };
     });
-
+    let items = cart.items.map((i) => {
+        return {
+            service_id: i.serviceId,
+            service_type: i.serviceType,
+            quantity: i.quantity,
+        }
+    })
     let response = await chain.mutation({
         insert_business_order_request_one: [{
             object: {
@@ -37,6 +45,9 @@ export async function createOrderRequest(
                 status: BusinessOrderRequestStatus.RequestReceived,
                 customer_app_type: orderRequestDetails.customerAppType,
                 notes: orderRequestDetails.notes,
+                items: {
+                    data: items
+                },
                 chat: {
                     data: {
                         chat_participants: {

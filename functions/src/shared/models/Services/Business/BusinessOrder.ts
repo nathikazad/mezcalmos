@@ -1,16 +1,25 @@
 import { Order } from "../../Generic/Order";
 import { OrderNotification } from "../../Notification";
-import { Business } from "./Business";
+import { Business, Class, Rental, ServiceType } from "./Business";
 
 export interface BusinessOrder extends Order {
     businessId: number;
     status: BusinessOrderRequestStatus;
     // categories?: Array<OrderCategory>;
     business?: Business;
+    items?: BusinessOrderRequestItem[];
+    estimatedCost: number;
+    finalCost?: number;
 }
 
 export interface BusinessOrderRequestItem {
-    
+    serviceId: number;
+    serviceType: ServiceType;
+    quantity: number;
+    id?: number;
+    available?: boolean;
+    finalCostPerOne?: number;
+    service?: Rental | Class | Event;
 }
 
 export enum BusinessOrderRequestStatus {
