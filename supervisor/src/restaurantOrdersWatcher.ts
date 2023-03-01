@@ -90,38 +90,3 @@ async function checkRestaurantOrders() {
 //     });
 // }
 
-// async function notifyOperators(orderId: number, operators: RestaurantOperator[]) {
-//     let notification: Notification = {
-//       foreground: <NewRestaurantOrderNotification>{
-//         time: (new Date()).toISOString(),
-//         notificationType: NotificationType.NewOrder,
-//         orderType: OrderType.Restaurant,
-//         orderId,
-//         notificationAction: NotificationAction.ShowSnackBarAlways,
-//       },
-//       background: {
-//         [Language.ES]: {
-//           title: "Nueva Pedido",
-//           body: `Hay una nueva orden de alimento`
-//         },
-//         [Language.EN]: {
-//           title: "New Order",
-//           body: `There is a new restaurant order`
-//         }
-//       },
-//       linkUrl: orderUrl(OrderType.Restaurant, orderId)
-//     }
-//     let snap = await firebase.database().ref(`/orders/restaurant/${orderId}`).once("value");
-//     let readOperators = snap.val();
-//     // console.log(readOperators)
-//     operators.forEach((r) => {
-//       if(!(readOperators && readOperators[r.id!]) &&  r.user) {
-//         pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
-//       }
-//     });
-//     mezAdmins.forEach((m) => {
-//       if(!(readOperators && readOperators[m.userId]) && m.user) {
-//         pushNotification(m.user.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
-//       }
-//     })
-//   }
