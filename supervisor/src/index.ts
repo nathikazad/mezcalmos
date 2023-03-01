@@ -7,6 +7,7 @@ import * as fs from 'fs';
 import { startWatchingMessageNotificationQueue } from "./messagesNotifier";
 import { startWatchingRestaurantOrders } from "./restaurantOrdersWatcher";
 import { startWatchingDeliveryOrders } from "./deliveryOrdersWatcher";
+import { startWatchingLaundryOrders } from "./laundryOrdersWatcher";
 
 enum Environment {
   Emulate = "emulate",
@@ -63,6 +64,7 @@ startWatchingMessageNotificationQueue(keys[env]);
 // startWatchingTaxiOrders(constructReturnUrl);
 startWatchingDeliveryOrders();
 startWatchingRestaurantOrders();
+startWatchingLaundryOrders();
 /****************************  Some Helper Functions *************************************/
 // function constructReturnUrl(orderId: string) {
 //   let url;
