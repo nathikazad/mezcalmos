@@ -45,7 +45,9 @@ class ConnectivityHelper {
         _internetStatusStreamController.add(InternetStatus.Offline);
       }
     });
-    Connectivity().onConnectivityChanged.listen(checkForInternet);
+    Connectivity().onConnectivityChanged.listen((c) async {
+      _internetStatusStreamController.add(await checkForInternet());
+    });
   }
 
   Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
