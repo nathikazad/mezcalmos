@@ -21,7 +21,7 @@ import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderN
 import { pushNotification } from "../../functions/src/utilities/senders/notifyUser";
 import * as firebase from "firebase-admin";
 import { MezAdmin } from "../../functions/src/shared/models/Generic/User";
-import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmin";
 
 const checkOrdersInterval: number = 10 //seconds 60
 
@@ -55,7 +55,7 @@ async function checkDeliveryOrders() {
         })
     }
     if(o.deliveryDriverId 
-      && ((o.status == DeliveryOrderStatus.OrderReceived)||(o.status == DeliveryOrderStatus.PackageReady))
+      && ((o.status == DeliveryOrderStatus.OrderReceived)||(o.packageReady))
     ) {
       let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
       let readDrivers = snap.val();

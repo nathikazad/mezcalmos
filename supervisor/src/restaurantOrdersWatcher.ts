@@ -7,7 +7,7 @@ import { MezAdmin } from "../../functions/src/shared/models/Generic/User";
 import { NotificationType, NotificationAction, Notification } from "../../functions/src/shared/models/Notification";
 import { orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import { pushNotification } from "../../functions/src/utilities/senders/notifyUser";
-import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmin";
 import * as firebase from "firebase-admin";
 
 
@@ -49,7 +49,7 @@ async function checkRestaurantOrders() {
       let snap = await firebase.database().ref(`/orders/restaurant/${o.orderId}`).once("value");
       let readOperators = snap.val();
       // console.log(readOperators)
-      o.restaurant!.restaurantOperators!.forEach((r) => {
+      o.restaurant!.operators!.forEach((r) => {
         if(!(readOperators && readOperators[r.userId!]) &&  r.user) {
           pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
         }
