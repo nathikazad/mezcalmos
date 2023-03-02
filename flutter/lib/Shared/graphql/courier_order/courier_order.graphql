@@ -1,0 +1,163 @@
+query get_courier_order_by_id($orderId: Int!) {
+  delivery_courier_order_by_pk(id: $orderId) {
+    customer_id
+    discount_value
+    from_location_gps
+    from_location_text
+    id
+    order_time
+    payment_type
+    refund_amount
+    stripe_fees
+    stripe_info
+    tax
+    to_location_adress
+    to_location_gps
+  
+    items {
+      actual_cost
+      estimated_cost
+      id
+      image
+      name
+      notes
+      unavailable
+    }
+    delivery_order {
+        customer {
+      user {
+        id
+        image
+        name
+        language_id
+      }
+    }
+      chat_with_customer_id
+        chat_with_service_provider_id
+       dropoff_address
+    dropoff_gps
+    estimated_arrival_at_dropoff_time
+    estimated_arrival_at_pickup_time
+    estimated_package_ready_time
+      pickup_address
+      pickup_gps
+      delivery_company {
+        id
+        details {
+          image
+          name
+           location {
+          gps
+          address
+        }
+        }
+      }
+      delivery_cost
+      in_process
+      id
+      schedule_time
+
+      status
+      service_provider_type
+      trip_distance
+      trip_duration
+      trip_polyline
+      package_ready
+      package_cost
+      estimated_arrival_at_dropoff_time
+      direction
+      service_provider_id
+      delivery_driver {
+        current_location
+
+        user {
+          name
+          image
+          id
+        }
+      }
+    }
+  }
+}
+
+subscription listen_on_courier_order_by_id($orderId: Int!) {
+  delivery_courier_order_by_pk(id: $orderId) {
+    customer_id
+    discount_value
+    from_location_gps
+    from_location_text
+    id
+    order_time
+    payment_type
+    refund_amount
+    stripe_fees
+    stripe_info
+    tax
+    to_location_adress
+    to_location_gps
+  
+    items {
+      actual_cost
+      estimated_cost
+      id
+      image
+      name
+      notes
+      unavailable
+    }
+    delivery_order {
+        customer {
+      user {
+        id
+        image
+        name
+        language_id
+      }
+    }
+      chat_with_customer_id
+        chat_with_service_provider_id
+       dropoff_address
+    dropoff_gps
+    estimated_arrival_at_dropoff_time
+    estimated_arrival_at_pickup_time
+    estimated_package_ready_time
+      pickup_address
+      pickup_gps
+      delivery_company {
+        id
+        details {
+          image
+          name
+           location {
+          gps
+          address
+        }
+        }
+      }
+      delivery_cost
+      in_process
+      id
+      schedule_time
+
+      status
+      service_provider_type
+      trip_distance
+      trip_duration
+      trip_polyline
+      package_ready
+      package_cost
+      estimated_arrival_at_dropoff_time
+      direction
+      service_provider_id
+      delivery_driver {
+      
+
+        user {
+          name
+          image
+          id
+        }
+      }
+    }
+  }
+}

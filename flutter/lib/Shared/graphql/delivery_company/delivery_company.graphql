@@ -14,7 +14,7 @@ query getDeliveryCompanyById($id: Int!) {
     }
     details {
       id
-      
+      schedule
       approved
       description_id
       image

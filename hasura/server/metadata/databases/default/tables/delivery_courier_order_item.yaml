@@ -1,3 +1,16 @@
 table:
   name: courier_order_item
   schema: delivery
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - unavailable
+        - id
+        - order_id
+        - actual_cost
+        - estimated_cost
+        - image
+        - name
+        - notes
+      filter: {}

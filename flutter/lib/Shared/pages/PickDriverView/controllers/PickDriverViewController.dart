@@ -109,7 +109,7 @@ class PickDriverViewController {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     await mapController.addOrUpdatePackageMarkerMarker(
-      latLng: order.value?.pickupLocation.toLatLng(),
+      latLng: order.value?.pickupLocation?.toLatLng(),
       fitWithinBounds: true,
     );
     // customer's

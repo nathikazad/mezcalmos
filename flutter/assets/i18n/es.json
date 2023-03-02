@@ -678,9 +678,9 @@
           "ready": "Paquete listo",
           "atPickUp": "En la recogida",
           "otwDropOff": "En el camino de caída",
-          "delivered": "Entregada",
-          "received": "Recibió",
-          "canceled": "Cancelada",
+          "delivered": "Orden entregada",
+          "received": "orden recibida",
+          "canceled": "Orden cancelada",
           "atDropOff": "En la caídaa"
         }
       },

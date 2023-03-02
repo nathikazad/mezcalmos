@@ -93,7 +93,7 @@ class DvOrderViewcontroller {
 
   void initOrderMap() {
     mezDbgPrint(
-        "Locations 📍  \n DROPOFF : ${_order.value!.dropoffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
+        "Locations 📍  \n DROPOFF : ${_order.value!.dropoffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation?.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
     Future<void>.microtask(
       () => deliveryAuthAuthController.currentLocation != null
           ? mapController.setLocation(
@@ -120,7 +120,7 @@ class DvOrderViewcontroller {
     );
     // Restaurant Marker
     mapController.addOrUpdatePackageMarkerMarker(
-      latLng: _order.value?.pickupLocation.toLatLng(),
+      latLng: _order.value?.pickupLocation?.toLatLng(),
     );
     //   if (_order.value != null) handleRestaurantOrder(_order.value!);
 

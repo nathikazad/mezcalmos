@@ -25,7 +25,7 @@ class OrderMapWidgetController {
       {required int deliveryOrderId,
       required bool updateDriver,
       required String? polyline,
-      required MezLocation from,
+      required MezLocation? from,
       required MezLocation to}) async {
     this.deliveryOrderId = deliveryOrderId;
     driver.value = await get_order_driver_info(orderId: deliveryOrderId);
@@ -49,7 +49,7 @@ class OrderMapWidgetController {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     await mGoogleMapController.addOrUpdatePackageMarkerMarker(
-      latLng: from.toLatLng(),
+      latLng: from?.toLatLng(),
       markerId: "from",
       fitWithinBounds: true,
     );

@@ -3,11 +3,11 @@ class CourierItem {
   String name;
   String? image;
   String? notes;
-  num estCost;
+  num? estCost;
   CourierItem({
     required this.name,
     this.image,
     this.notes,
-    required this.estCost,
+    this.estCost,
   });
 }

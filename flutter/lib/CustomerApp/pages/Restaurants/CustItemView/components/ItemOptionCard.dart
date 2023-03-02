@@ -44,32 +44,36 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //  margin: const EdgeInsets.only(top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(widget.option.name[userLanguage].toString().inCaps,
-              style: Get.theme.textTheme.bodyLarge),
-          if (widget.option.optionType == OptionType.Custom)
-            Container(
-              child: Text(
-                "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                style: Get.textTheme.titleLarge
-                    ?.copyWith(fontStyle: FontStyle.italic),
+    if (widget.option.haveAtLeastOneChoiceAvailable) {
+      return Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.option.name[userLanguage].toString().inCaps,
+                textAlign: TextAlign.left,
+                style: Get.theme.textTheme.bodyLarge),
+            if (widget.option.optionType == OptionType.Custom)
+              Container(
+                child: Text(
+                  "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
+                  style: Get.textTheme.titleLarge
+                      ?.copyWith(fontStyle: FontStyle.italic),
+                ),
+              ),
+            Column(
+              children: List.generate(
+                widget.option.choices.length,
+                (int index) => optionChoiceCard(
+                  choice: widget.option.choices[index],
+                ),
               ),
             ),
-          Column(
-            children: List.generate(
-              widget.option.choices.length,
-              (int index) => optionChoiceCard(
-                choice: widget.option.choices[index],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    } else
+      return SizedBox();
   }
 
   // Single choice card  //
@@ -84,6 +88,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               flex: 3,
               fit: FlexFit.tight,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(

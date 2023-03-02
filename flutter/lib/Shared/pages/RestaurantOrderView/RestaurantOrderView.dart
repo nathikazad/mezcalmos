@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpEstDeliveryTime.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderCustomer.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderEstTime.dart';
@@ -15,6 +14,7 @@ import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderHa
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderItems.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderStatusCard.dart';
+import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -125,8 +125,13 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   ),
                 ROpOrderNote(orderNote: viewController.order.value!.notes),
                 OrderSummaryCard(
-                  order: viewController.order.value!,
-                  margin: const EdgeInsets.only(bottom: 25),
+                  margin: const EdgeInsets.only(top: 15),
+                  orderCost: viewController.order.value!.itemsCost,
+                  refundAmmount: viewController.order.value!.refundAmount,
+                  shippingCost: viewController.order.value!.shippingCost,
+                  stripeOrderPaymentInfo:
+                      viewController.order.value!.stripePaymentInfo,
+                  totalCost: viewController.order.value!.totalCost,
                 ),
 
                 // ROpRefundButton(

@@ -13,3 +13,26 @@ array_relationships:
         table:
           name: courier_order_item
           schema: delivery
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - from_location_gps
+        - to_location_gps
+        - customer_id
+        - delivery_order_id
+        - id
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - customer_app_type
+        - from_location_text
+        - payment_type
+        - to_location_adress
+        - cancellation_time
+        - order_time
+        - stripe_info
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

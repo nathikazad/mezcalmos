@@ -676,9 +676,9 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
-          "delivered": "Delivered",
-          "received": "Received",
-          "canceled": "Cancelled",
+          "delivered": "Order Delivered",
+          "received": "Order Received",
+          "canceled": "Order Cancelled",
           "atDropOff": "At dropoff"
         }
       },

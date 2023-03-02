@@ -464,7 +464,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     required this.id,
     required this.minimum_cost,
     required this.radius,
-    this.cost_per_km_from_base,
+    required this.cost_per_km_from_base,
     required this.self_delivery,
     required this.$__typename,
   });
@@ -489,9 +489,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
       radius: (l$radius as int),
-      cost_per_km_from_base: l$cost_per_km_from_base == null
-          ? null
-          : moneyFromJson(l$cost_per_km_from_base),
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       self_delivery: (l$self_delivery as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -509,7 +507,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
 
   final int radius;
 
-  final double? cost_per_km_from_base;
+  final double cost_per_km_from_base;
 
   final bool self_delivery;
 
@@ -533,9 +531,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     final l$radius = radius;
     _resultData['radius'] = l$radius;
     final l$cost_per_km_from_base = cost_per_km_from_base;
-    _resultData['cost_per_km_from_base'] = l$cost_per_km_from_base == null
-        ? null
-        : moneyToJson(l$cost_per_km_from_base);
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
     final l$$__typename = $__typename;
@@ -699,9 +695,10 @@ class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
-        cost_per_km_from_base: cost_per_km_from_base == _undefined
-            ? _instance.cost_per_km_from_base
-            : (cost_per_km_from_base as double?),
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
@@ -1773,7 +1770,7 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     required this.id,
     required this.minimum_cost,
     required this.radius,
-    this.cost_per_km_from_base,
+    required this.cost_per_km_from_base,
     required this.self_delivery,
     required this.$__typename,
   });
@@ -1798,9 +1795,7 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
       radius: (l$radius as int),
-      cost_per_km_from_base: l$cost_per_km_from_base == null
-          ? null
-          : moneyFromJson(l$cost_per_km_from_base),
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       self_delivery: (l$self_delivery as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1818,7 +1813,7 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
 
   final int radius;
 
-  final double? cost_per_km_from_base;
+  final double cost_per_km_from_base;
 
   final bool self_delivery;
 
@@ -1842,9 +1837,7 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     final l$radius = radius;
     _resultData['radius'] = l$radius;
     final l$cost_per_km_from_base = cost_per_km_from_base;
-    _resultData['cost_per_km_from_base'] = l$cost_per_km_from_base == null
-        ? null
-        : moneyToJson(l$cost_per_km_from_base);
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
     final l$$__typename = $__typename;
@@ -2015,9 +2008,10 @@ class _CopyWithImpl$Mutation$updateDeliveryCost$update_delivery_details_by_pk<
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
-        cost_per_km_from_base: cost_per_km_from_base == _undefined
-            ? _instance.cost_per_km_from_base
-            : (cost_per_km_from_base as double?),
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),

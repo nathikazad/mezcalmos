@@ -565,7 +565,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
           orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: 0,
       paymentType: orderData.payment_type.toPaymentType(),
-      chatWithServiceProviderId: null);
+      chatWithServiceProviderId: null, estimatedArrivalAtDropoffTime: null, estimatedArrivalAtPickupTime: null, estimatedPackageReadyTime: null);
 }
 
 Future<UserInfo?> get_order_driver_info({required int orderId}) async {

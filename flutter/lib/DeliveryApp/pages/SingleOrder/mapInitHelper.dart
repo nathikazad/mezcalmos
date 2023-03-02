@@ -28,7 +28,7 @@ void initilizeMap(MGoogleMapController mapController, Rxn<DeliveryOrder> order,
     ),
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
-      latLng: order.value!.pickupLocation.toLatLng(),
+      latLng: order.value!.pickupLocation?.toLatLng(),
       markerId: service.hasuraId.toString(),
       customImgHttpUrl: service.image,
     )

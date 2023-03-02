@@ -271,41 +271,6 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'actual_arrival_at_dropoff_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'actual_arrival_at_pickup_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'actual_delivered_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'actual_package_ready_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'cancellation_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'chat_with_customer_id'),
             alias: null,
             arguments: [],
@@ -1355,11 +1320,6 @@ extension ClientExtension$Query$get_driver_order on graphql.GraphQLClient {
 
 class Query$get_driver_order$delivery_order_by_pk {
   Query$get_driver_order$delivery_order_by_pk({
-    this.actual_arrival_at_dropoff_time,
-    this.actual_arrival_at_pickup_time,
-    this.actual_delivered_time,
-    this.actual_package_ready_time,
-    this.cancellation_time,
     required this.chat_with_customer_id,
     required this.order_type,
     required this.direction,
@@ -1399,13 +1359,6 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   factory Query$get_driver_order$delivery_order_by_pk.fromJson(
       Map<String, dynamic> json) {
-    final l$actual_arrival_at_dropoff_time =
-        json['actual_arrival_at_dropoff_time'];
-    final l$actual_arrival_at_pickup_time =
-        json['actual_arrival_at_pickup_time'];
-    final l$actual_delivered_time = json['actual_delivered_time'];
-    final l$actual_package_ready_time = json['actual_package_ready_time'];
-    final l$cancellation_time = json['cancellation_time'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$order_type = json['order_type'];
     final l$direction = json['direction'];
@@ -1446,13 +1399,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk(
-      actual_arrival_at_dropoff_time:
-          (l$actual_arrival_at_dropoff_time as String?),
-      actual_arrival_at_pickup_time:
-          (l$actual_arrival_at_pickup_time as String?),
-      actual_delivered_time: (l$actual_delivered_time as String?),
-      actual_package_ready_time: (l$actual_package_ready_time as String?),
-      cancellation_time: (l$cancellation_time as String?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
       order_type: (l$order_type as String),
       direction: (l$direction as String),
@@ -1515,16 +1461,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final String? actual_arrival_at_dropoff_time;
-
-  final String? actual_arrival_at_pickup_time;
-
-  final String? actual_delivered_time;
-
-  final String? actual_package_ready_time;
-
-  final String? cancellation_time;
 
   final int chat_with_customer_id;
 
@@ -1603,18 +1539,6 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    _resultData['actual_arrival_at_dropoff_time'] =
-        l$actual_arrival_at_dropoff_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    _resultData['actual_arrival_at_pickup_time'] =
-        l$actual_arrival_at_pickup_time;
-    final l$actual_delivered_time = actual_delivered_time;
-    _resultData['actual_delivered_time'] = l$actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    _resultData['actual_package_ready_time'] = l$actual_package_ready_time;
-    final l$cancellation_time = cancellation_time;
-    _resultData['cancellation_time'] = l$cancellation_time;
     final l$chat_with_customer_id = chat_with_customer_id;
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
     final l$order_type = order_type;
@@ -1699,11 +1623,6 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   @override
   int get hashCode {
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final l$actual_delivered_time = actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final l$cancellation_time = cancellation_time;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$order_type = order_type;
     final l$direction = direction;
@@ -1742,11 +1661,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer = customer;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$actual_arrival_at_dropoff_time,
-      l$actual_arrival_at_pickup_time,
-      l$actual_delivered_time,
-      l$actual_package_ready_time,
-      l$cancellation_time,
       l$chat_with_customer_id,
       l$order_type,
       l$direction,
@@ -1792,35 +1706,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     }
     if (!(other is Query$get_driver_order$delivery_order_by_pk) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    final lOther$actual_arrival_at_dropoff_time =
-        other.actual_arrival_at_dropoff_time;
-    if (l$actual_arrival_at_dropoff_time !=
-        lOther$actual_arrival_at_dropoff_time) {
-      return false;
-    }
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final lOther$actual_arrival_at_pickup_time =
-        other.actual_arrival_at_pickup_time;
-    if (l$actual_arrival_at_pickup_time !=
-        lOther$actual_arrival_at_pickup_time) {
-      return false;
-    }
-    final l$actual_delivered_time = actual_delivered_time;
-    final lOther$actual_delivered_time = other.actual_delivered_time;
-    if (l$actual_delivered_time != lOther$actual_delivered_time) {
-      return false;
-    }
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final lOther$actual_package_ready_time = other.actual_package_ready_time;
-    if (l$actual_package_ready_time != lOther$actual_package_ready_time) {
-      return false;
-    }
-    final l$cancellation_time = cancellation_time;
-    final lOther$cancellation_time = other.cancellation_time;
-    if (l$cancellation_time != lOther$cancellation_time) {
       return false;
     }
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -2034,11 +1919,6 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
       _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk;
 
   TRes call({
-    String? actual_arrival_at_dropoff_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? cancellation_time,
     int? chat_with_customer_id,
     String? order_type,
     String? direction,
@@ -2112,11 +1992,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? actual_arrival_at_dropoff_time = _undefined,
-    Object? actual_arrival_at_pickup_time = _undefined,
-    Object? actual_delivered_time = _undefined,
-    Object? actual_package_ready_time = _undefined,
-    Object? cancellation_time = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? order_type = _undefined,
     Object? direction = _undefined,
@@ -2154,23 +2029,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_driver_order$delivery_order_by_pk(
-        actual_arrival_at_dropoff_time:
-            actual_arrival_at_dropoff_time == _undefined
-                ? _instance.actual_arrival_at_dropoff_time
-                : (actual_arrival_at_dropoff_time as String?),
-        actual_arrival_at_pickup_time:
-            actual_arrival_at_pickup_time == _undefined
-                ? _instance.actual_arrival_at_pickup_time
-                : (actual_arrival_at_pickup_time as String?),
-        actual_delivered_time: actual_delivered_time == _undefined
-            ? _instance.actual_delivered_time
-            : (actual_delivered_time as String?),
-        actual_package_ready_time: actual_package_ready_time == _undefined
-            ? _instance.actual_package_ready_time
-            : (actual_package_ready_time as String?),
-        cancellation_time: cancellation_time == _undefined
-            ? _instance.cancellation_time
-            : (cancellation_time as String?),
         chat_with_customer_id:
             chat_with_customer_id == _undefined || chat_with_customer_id == null
                 ? _instance.chat_with_customer_id
@@ -2376,11 +2234,6 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
   TRes _res;
 
   call({
-    String? actual_arrival_at_dropoff_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? cancellation_time,
     int? chat_with_customer_id,
     String? order_type,
     String? direction,

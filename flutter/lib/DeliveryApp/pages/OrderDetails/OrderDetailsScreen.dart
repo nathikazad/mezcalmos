@@ -60,18 +60,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                 Text(
                   "${_i18n()["from"]}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
 
                 Container(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text(order.value!.pickupLocation.address)),
+                    child: Text(order.value?.pickupLocation?.address ?? "")),
                 SizedBox(
                   height: 20,
                 ),
                 Text(
                   "${_i18n()["deliveredTo"]}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
                   height: 10,
@@ -97,11 +97,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   children: [
                     Text(
                       "${_i18n()["deliveryCost"]}",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                     Text(
                       order.value!.deliveryCost.toPriceString(),
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                   ],
                 ),
@@ -128,13 +128,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Text(
             DateFormat("dd MMMM, hh:mm a")
                 .format(order.value!.orderTime.toLocal()),
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
           Text(
               order.value!.isCanceled()
                   ? "${_i18n()["cancelled"]}"
                   : "${_i18n()["approved"]}",
-              style: Get.textTheme.bodyText1?.copyWith(
+              style: Get.textTheme.bodyLarge?.copyWith(
                   color: order.value!.isCanceled()
                       ? Colors.red
                       : primaryBlueColor))
@@ -159,7 +159,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             Text(
               "${order.value!.customerInfo.name}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             Spacer(),
             Text("${_i18n()["customer"]}")
@@ -185,7 +185,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             Text(
               "${order.value!.serviceInfo.name}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             Spacer(),
             Text(_getOrderType())

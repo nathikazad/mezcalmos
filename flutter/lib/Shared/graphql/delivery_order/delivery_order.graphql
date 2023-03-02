@@ -1,10 +1,6 @@
 query get_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-    actual_arrival_at_dropoff_time
-    actual_arrival_at_pickup_time
-    actual_delivered_time
-    actual_package_ready_time
-    cancellation_time
+   
     chat_with_customer_id
     order_type
     direction

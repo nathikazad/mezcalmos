@@ -87,9 +87,6 @@ class _CustItemViewState extends State<CustItemView> {
                                       option: viewController
                                           .getItem!.options[index],
                                     ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
                                   ],
                                 ),
                               ),

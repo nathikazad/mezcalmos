@@ -27,7 +27,7 @@ class DeliveryOrder {
   num deliveryCost;
   num packageCost;
   bool packageReady;
-  MezLocation pickupLocation;
+  MezLocation? pickupLocation;
   MezLocation dropoffLocation;
   LatLng? driverLocation;
   int chatWithCustomerId;
@@ -59,11 +59,11 @@ class DeliveryOrder {
     required this.driverInfo,
     required this.stripeOrderPaymentInfo,
     required this.packageReady,
-    this.estimatedArrivalAtDropoffTime,
-    this.serviceOrderId,
+    required this.estimatedArrivalAtDropoffTime,
+    required this.serviceOrderId,
     //  this.driverAssigned = false,
-    this.estimatedArrivalAtPickupTime,
-    this.estimatedPackageReadyTime,
+    required this.estimatedArrivalAtPickupTime,
+    required this.estimatedPackageReadyTime,
   });
 
   DeliveryOrder copyWith({
@@ -118,6 +118,7 @@ class DeliveryOrder {
           estimatedArrivalAtPickupTime ?? this.estimatedArrivalAtPickupTime,
       estimatedPackageReadyTime:
           estimatedPackageReadyTime ?? this.estimatedPackageReadyTime,
+      serviceOrderId: serviceOrderId,
     );
   }
 

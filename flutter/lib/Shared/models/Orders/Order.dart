@@ -91,12 +91,7 @@ abstract class Order {
 }
 
 // ignore: constant_identifier_names
-enum OrderType {
-  Taxi,
-  Restaurant,
-  Laundry,
-  Water,
-}
+enum OrderType { Taxi, Restaurant, Laundry, Water, Courier }
 
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
@@ -141,6 +136,8 @@ extension ParseOrderTypeToString on OrderType {
         return "laundries";
       case OrderType.Water:
         return "waters";
+      case OrderType.Courier:
+        return "couriers";
     }
   }
 }

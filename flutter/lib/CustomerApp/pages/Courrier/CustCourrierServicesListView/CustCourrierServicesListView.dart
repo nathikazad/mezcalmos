@@ -114,6 +114,7 @@ class _CustCourierServicesListViewState
   Widget _companyCard(DeliveryCompany company) {
     return MezCard(
         onClick: () {
+          mezDbgPrint("Clicked");
           MezRouter.toNamed(getCourierRoute(company.info.hasuraId));
         },
         firstAvatarBgImage: CachedNetworkImageProvider(company.info.image),

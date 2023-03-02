@@ -4828,7 +4828,7 @@ columns and relationships of "delivery.details"
 """
 type delivery_details {
   cost_per_km: money!
-  cost_per_km_from_base: money
+  cost_per_km_from_base: money!
   customer_pickup: Boolean!
   delivery_available: Boolean!
 

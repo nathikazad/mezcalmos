@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -13,10 +11,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     Key? key,
-    required this.order,
     this.margin,
+    required this.shippingCost,
+    required this.orderCost,
+    required this.totalCost,
+    required this.refundAmmount,
+    required this.stripeOrderPaymentInfo,
   }) : super(key: key);
-  final Order order;
+  // final Order order;
+  final num shippingCost;
+  final num? orderCost;
+  final num? totalCost;
+  final num? refundAmmount;
+  final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
 
   final EdgeInsets? margin;
 
@@ -50,21 +57,13 @@ class OrderSummaryCard extends StatelessWidget {
                         '${_i18n()["orderCost"]}',
                         style: txt.bodyMedium,
                       ),
-                      Text(_getOrderCost() == "\$0" ? "_" : _getOrderCost(),
-                          style: txt.bodyMedium?.copyWith(
-                              fontStyle:
-                                  (order.orderType == OrderType.Laundry &&
-                                          (order as LaundryOrder)
-                                                  .costsByType
-                                                  ?.weighedCost ==
-                                              null)
-                                      ? FontStyle.italic
-                                      : null)),
+                      Text(orderCost?.toPriceString() ?? "_",
+                          style: txt.bodyMedium?.copyWith()),
                     ],
                   ),
                 ),
-                if (order.stripePaymentInfo != null &&
-                    order.stripePaymentInfo!.chargeFeesOnCustomer == true)
+                if (stripeOrderPaymentInfo != null &&
+                    stripeOrderPaymentInfo!.chargeFeesOnCustomer == true)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
@@ -74,8 +73,7 @@ class OrderSummaryCard extends StatelessWidget {
                           '${_i18n()["stripeFees"]}',
                           style: txt.bodyMedium,
                         ),
-                        Text(
-                            order.stripePaymentInfo!.stripeFees.toPriceString(),
+                        Text(stripeOrderPaymentInfo!.stripeFees.toPriceString(),
                             style: txt.bodyMedium),
                       ],
                     ),
@@ -90,12 +88,12 @@ class OrderSummaryCard extends StatelessWidget {
                         style: txt.bodyMedium,
                       ),
                       ShippingCostComponent(
-                        shippingCost: _getShippingCost(),
+                        shippingCost: shippingCost,
                       )
                     ],
                   ),
                 ),
-                if (order.refundAmount != null && order.refundAmount! > 0)
+                if (refundAmmount != null && refundAmmount! > 0)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
@@ -106,7 +104,7 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         Text(
-                          "-" + order.refundAmount!.toPriceString(),
+                          "-" + refundAmmount!.toPriceString(),
                           style: txt.bodyMedium,
                         ),
                       ],
@@ -119,7 +117,7 @@ class OrderSummaryCard extends StatelessWidget {
                     children: <Widget>[
                       Text('${_i18n()["totalCost"]}',
                           style: txt.headlineMedium),
-                      Text(order.totalCost?.toPriceString() ?? "_",
+                      Text(totalCost?.toPriceString() ?? "_",
                           style: txt.headlineSmall),
                     ],
                   ),
@@ -133,29 +131,5 @@ class OrderSummaryCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  num _getShippingCost() {
-    switch (order.orderType) {
-      case OrderType.Restaurant:
-        return (order as RestaurantOrder).shippingCost;
-      case OrderType.Laundry:
-        return (order as LaundryOrder).shippingCost;
-
-      default:
-        return 0;
-    }
-  }
-
-  String _getOrderCost() {
-    switch (order.orderType) {
-      case OrderType.Restaurant:
-        return (order as RestaurantOrder).itemsCost.toPriceString();
-      case OrderType.Laundry:
-        return ((order as LaundryOrder).cost).toPriceString();
-
-      default:
-        return "-";
-    }
   }
 }

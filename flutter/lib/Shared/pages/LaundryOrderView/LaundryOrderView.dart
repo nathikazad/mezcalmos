@@ -114,8 +114,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                   OrderNoteCard(note: viewController.order.notes),
 
                   OrderSummaryCard(
-                    margin: const EdgeInsets.only(top: 20),
-                    order: viewController.order,
+                    margin: const EdgeInsets.only(top: 15),
+                    orderCost:
+                        viewController.order.costsByType?.weighedCost,
+                    refundAmmount: viewController.order.refundAmount,
+                    shippingCost: viewController.order.shippingCost,
+                    stripeOrderPaymentInfo:
+                        viewController.order!.stripePaymentInfo,
+                    totalCost: viewController.order!.totalCost,
                   ),
 
                   SizedBox(
