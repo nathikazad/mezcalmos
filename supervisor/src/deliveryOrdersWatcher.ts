@@ -27,7 +27,7 @@ async function checkDeliveryOrders() {
         let mezAdmins: MezAdmin[] = await getMezAdmins();
 
         let notification: Notification = buildNotification()
-        let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+        let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}/notified`).once("value");
         let readOperators = snap.val();
         console.log(readOperators)
         operators.forEach((r) => {
