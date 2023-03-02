@@ -31,7 +31,7 @@ async function checkDeliveryOrders() {
         let readOperators = snap.val();
         console.log(readOperators)
         operators.forEach((r) => {
-            if(!(readOperators && readOperators[r.userId!]) && r.user) {
+            if(!(readOperators && readOperators[r.userId!]) && r.user && r.online) {
                 pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.DeliveryOperator, r.user.language, false);
             }
         });

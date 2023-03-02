@@ -50,7 +50,7 @@ async function checkRestaurantOrders() {
       let readOperators = snap.val();
       // console.log(readOperators)
       o.restaurant!.operators!.forEach((r) => {
-        if(!(readOperators && readOperators[r.userId!]) &&  r.user) {
+        if(!(readOperators && readOperators[r.userId!]) &&  r.user && r.online) {
           pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user.language, false);
         }
       });

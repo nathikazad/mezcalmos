@@ -46,5 +46,6 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: addOperatorDetails.notificationInfo,
         owner: false,
+        online: true,
     }
 }

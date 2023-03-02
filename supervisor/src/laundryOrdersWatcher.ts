@@ -55,7 +55,7 @@ async function checkLaundryOrders() {
       let readOperators = snap.val();
       // console.log(readOperators)
       o.laundryStore!.operators!.forEach((r) => {
-        if(!(readOperators && readOperators[r.userId!]) &&  r.user) {
+        if(!(readOperators && readOperators[r.userId!]) &&  r.user && r.online) {
           pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.LaundryOperator, r.user.language, false);
         }
       });
