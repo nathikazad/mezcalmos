@@ -7,8 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenCho
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/ItemInformationCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
-import 'package:mezcalmos/CustomerApp/router/cartRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -70,8 +69,8 @@ class CartItemsBuilder extends StatelessWidget {
                     mezDbgPrint(
                         " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
                     if (cartItem.idInCart != null)
-                      MezRouter.toNamed(
-                          CartRoutes().getCartItemRoute(cartItem.idInCart!));
+                      CustItemView.navigateToCartItem(
+                          cartItemId: cartItem.idInCart!);
                   },
                 ),
               ));

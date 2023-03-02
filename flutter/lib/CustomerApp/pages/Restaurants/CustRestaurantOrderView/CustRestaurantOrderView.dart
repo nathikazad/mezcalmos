@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/ordersRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
@@ -29,11 +30,17 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath<void>(RestaurantRouter.restaurantOrdersRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   _ViewRestaurantOrderScreenState createState() =>
       _ViewRestaurantOrderScreenState();
@@ -47,8 +54,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   void initState() {
     super.initState();
 
-    final int orderId = int.parse(Get.parameters['orderId']!);
-    if (Get.parameters['orderId'] == null) MezRouter.back();
+    final int orderId = int.parse(MezRouter.urlArguments['orderId'].toString());
     viewController.init(orderId: orderId);
     super.initState();
   }

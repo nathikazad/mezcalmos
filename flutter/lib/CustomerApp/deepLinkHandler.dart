@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -70,7 +71,7 @@ class DeepLinkHandler {
         final Restaurant? _rest = await get_restaurant_by_id(id: providerId);
         if (_rest != null) {
           Future<void>.delayed(Duration.zero,
-              () => RestaurantRouters.navigateToRestaurantRoute(providerId)
+              () => CustomerRestaurantView.navigate(restaurantId: providerId)
 
               // MezRouter.toNamed<void>(
               // RestaurantRouters().getRestaurantRoute(providerId),

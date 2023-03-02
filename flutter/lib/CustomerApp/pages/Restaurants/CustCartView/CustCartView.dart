@@ -10,13 +10,19 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 class ViewCartScreen extends StatefulWidget {
+  static Future<void> navigate() {
+    return MezRouter.toNamed<void>(RestaurantRouter.cartRoute);
+  }
+
   @override
   _ViewCartScreenState createState() => _ViewCartScreenState();
 }

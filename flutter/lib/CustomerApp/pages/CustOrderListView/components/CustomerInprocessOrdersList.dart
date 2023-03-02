@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/restautantOrderRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -55,9 +55,8 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                             .getLaundryOrderWithId(
                                 viewController.currentOrders[index].id));
                       } else {
-                        MezRouter.toNamed(RestaurantOrderRoutes()
-                            .getRestaurantOrderRoute(
-                                viewController.currentOrders[index].id));
+                        ViewRestaurantOrderScreen.navigate(
+                            orderId: viewController.currentOrders[index].id);
                       }
                     },
                   );

@@ -4,12 +4,14 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemOptionCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemViewBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,16 +19,32 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewItemScreen"]["ViewItemScreen"];
 
 class CustItemView extends StatefulWidget {
-  const CustItemView({Key? key, required this.viewItemScreenMode})
-      : super(key: key);
-  final ViewItemScreenMode viewItemScreenMode;
+  const CustItemView({Key? key}) : super(key: key);
+  static Future<void> navigateToRestaurantItem(
+      {required int itemId, required int restaurantId}) {
+    return MezRouter.toPath<void>(
+        RestaurantRouter.restaurantItemViewRoute
+            .replaceAll(":restaurantId", restaurantId.toString())
+            .replaceAll(":itemId", itemId.toString()),
+        arguments: <String, dynamic>{
+          "viewItemScreenMode": ViewItemScreenMode.AddItemMode
+        });
+  }
+
+  static Future<void> navigateToCartItem({required int cartItemId}) {
+    return MezRouter.toPath<void>(
+        RestaurantRouter.cartItemViewRoute
+            .replaceAll(":cartItemId", cartItemId.toString()),
+        arguments: <String, dynamic>{
+          "viewItemScreenMode": ViewItemScreenMode.EditItemMode
+        });
+  }
 
   @override
   _CustItemViewState createState() => _CustItemViewState();
 }
 
 class _CustItemViewState extends State<CustItemView> {
-  bool showViewRestaurant = false;
   CustItemViewController viewController = CustItemViewController();
 
   @override
@@ -37,16 +55,18 @@ class _CustItemViewState extends State<CustItemView> {
 
   @override
   void initState() {
-    showViewRestaurant = QR.params["showViewRestaurant"] as bool;
     final int? restaurantId =
-        int.tryParse(QR.params['restaurantId'].toString());
-    final int? itemId = int.tryParse(QR.params['itemId'].toString());
-    final int? cartItemId = int.tryParse(QR.params["cartItemId"].toString());
+        int.tryParse(MezRouter.urlArguments['restaurantId'].toString());
+    final int? itemId =
+        int.tryParse(MezRouter.urlArguments['itemId'].toString());
+    final int? cartItemId =
+        int.tryParse(MezRouter.urlArguments["cartItemId"].toString());
     viewController.init(
         itemId: itemId,
         restaurantId: restaurantId,
         itemIdInCart: cartItemId,
-        mode: widget.viewItemScreenMode);
+        mode: MezRouter.bodyArguments?["viewItemScreenMode"] ??
+            ViewItemScreenMode.AddItemMode);
     super.initState();
   }
 
@@ -82,7 +102,7 @@ class _CustItemViewState extends State<CustItemView> {
                                   children: [
                                     ItemOptionCard(
                                       cartItem: viewController.cartItem,
-                                      editMode: widget.viewItemScreenMode ==
+                                      editMode: viewController.currentMode ==
                                           ViewItemScreenMode.EditItemMode,
                                       option: viewController
                                           .getItem!.options[index],
@@ -170,34 +190,26 @@ class _CustItemViewState extends State<CustItemView> {
                   Get.textTheme.displaySmall?.copyWith(color: primaryBlueColor),
             ),
           ),
-          if (showViewRestaurant)
-            InkWell(
-              borderRadius: BorderRadius.circular(18),
-              onTap: () {
-                RestaurantRouters.navigateToRestaurantRoute(
-                  viewController.restaurant.value!.restaurantId,
-                );
-                /* MezRouter.toNamed<void>(
-                    RestaurantRouters().getRestaurantRoute(
-                        viewController.restaurant.value!.restaurantId),
-                    arguments: {
-                      "id": viewController.restaurant.value!.restaurantId,
-                      "restaurant": viewController.restaurant.value!
-                    });*/
-              },
-              child: Ink(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                decoration: BoxDecoration(
-                    color: secondaryLightBlueColor,
-                    borderRadius: BorderRadius.circular(18)),
-                child: Text(
-                  '${_i18n()["viewRestaurant"]}',
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
-                ),
+          // if (viewController.showRestaurant())
+          InkWell(
+            borderRadius: BorderRadius.circular(18),
+            onTap: () {
+              CustomerRestaurantView.navigate(
+                restaurantId: viewController.restaurant.value!.restaurantId,
+              );
+            },
+            child: Ink(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+              decoration: BoxDecoration(
+                  color: secondaryLightBlueColor,
+                  borderRadius: BorderRadius.circular(18)),
+              child: Text(
+                '${_i18n()["viewRestaurant"]}',
+                style:
+                    Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
               ),
-            )
+            ),
+          )
         ],
       ),
     );

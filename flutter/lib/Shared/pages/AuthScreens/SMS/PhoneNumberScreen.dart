@@ -239,11 +239,9 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
                       if (response.success) {
                         MezSnackbar("Notice ~", "OTP Sent code to : $phone");
+                        // @abhishek call the navigate function
                         MezRouter.toNamed(SharedRoutes.kOtpConfirmRoute,
-                            arguments: {}
-                            //change argument
-                            //phone
-                            );
+                            arguments: {"phone": phone});
                       } else {
                         MezSnackbar(response.errorCode.toString(),
                             response.errorMessage.toString());

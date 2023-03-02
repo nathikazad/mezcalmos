@@ -48,7 +48,7 @@ class _PickLocationViewState extends State<PickLocationView> {
             LatLng(locData.latitude!, locData.longitude!));
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      currentLatLng = MezRouter.arguments as LatLng?;
+      currentLatLng = MezRouter.bodyArguments as LatLng?;
       mezDbgPrint("Current latlng from recent route =>>>>>$currentLatLng");
       if (currentLatLng != null) {
         geoCodeAndSetLocation(currentLatLng!);

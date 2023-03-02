@@ -2,9 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -39,16 +36,9 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
     if (widget.item.available) {
       return Card(
         child: InkWell(
-          onTap: () {
-            MezRouter.toNamed(
-              RestaurantRouters().getRestaurantItemRoute(
-                  widget.restaurant.info.hasuraId, widget.item.id!),
-              arguments: {
-                "mode": ViewItemScreenMode.AddItemMode,
-                "isSpecial": widget.isSpecial
-              },
-            );
-          },
+          onTap: () => CustItemView.navigateToRestaurantItem(
+              restaurantId: widget.restaurant.info.hasuraId,
+              itemId: widget.item.id!),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

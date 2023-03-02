@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
@@ -12,8 +13,10 @@ void dialogRequiredSignIn() {
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
           ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
       ["DialogRequiredSignIn"];
-  Get.dialog<void>(
-    Material(
+  // Get.dialog<void>(
+  showDialog(
+    context: QR.context!,
+    builder: (BuildContext context) => Material(
       child: Container(
         color: Colors.white,
         // padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),

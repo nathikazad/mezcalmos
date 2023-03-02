@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/RestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/RestaurantShimmerList.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
@@ -11,7 +12,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -19,6 +19,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class CustRestaurantListView extends StatefulWidget {
   const CustRestaurantListView({Key? key}) : super(key: key);
+  static Future<void> navigate() {
+    return MezRouter.toNamed<void>(RestaurantRouter.restaurantsListRoute);
+  }
 
   @override
   _CustRestaurantListViewState createState() => _CustRestaurantListViewState();
@@ -227,11 +230,10 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
               customerLocation: viewController.customerLocation,
-              onClick: () {
-                RestaurantRouters.navigateToRestaurantRoute(
-                  viewController.filteredRestaurants[index].info.hasuraId,
-                );
-              },
+              onClick: () => CustomerRestaurantView.navigate(
+                restaurantId:
+                    viewController.filteredRestaurants[index].info.hasuraId,
+              ),
             );
           }),
         );

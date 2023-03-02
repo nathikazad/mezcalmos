@@ -8,12 +8,11 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundryListRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/ordersRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/restautantOrderRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/savedCardRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -211,10 +210,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Restaurant,
-                  serviceRoute: RestaurantRouters.restaurantsListRoute,
+                  serviceRoute: CustRestaurantListView.navigate,
                   singleOrderRoute: (int orderId) {
-                    MezRouter.toNamed<void>(RestaurantOrderRoutes()
-                        .getRestaurantOrderRoute(orderId));
+                    ViewRestaurantOrderScreen.navigate(orderId: orderId);
                   });
             },
           ),
@@ -227,7 +225,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
-                  serviceRoute: LaundryListRouters.laundryListView,
+                  // serviceRoute: LaundryListRouters.laundryListView,
                   singleOrderRoute: (int v) {
                     MezRouter.toNamed<void>(
                         LaundryRouters().getLaundryOrderWithId(v));
@@ -248,17 +246,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   Future<void> getServiceRoute(
       {required OrderType orderType,
-      required String serviceRoute,
+      required Future<void> Function() serviceRoute,
       required void Function(int) singleOrderRoute}) async {
     if (Get.find<AuthController>().fireAuthUser != null &&
         _orderController != null) {
       if (_orderController!.firstOrderIdBasedOnType(orderType) != null) {
         singleOrderRoute(_orderController!.firstOrderIdBasedOnType(orderType)!);
       } else {
-        await MezRouter.toNamed<void>(serviceRoute);
+        await serviceRoute();
       }
     } else {
-      await MezRouter.toNamed<void>(serviceRoute);
+      await serviceRoute();
     }
   }
 
@@ -267,8 +265,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       await _orderController!.fetchCurrentOrders();
       if (_orderController!.hasOneOrder) {
         if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
-          MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
-              .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
+          // MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
+          //     .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
+          // ignore: unawaited_futures
+          MezRouter.popEverything().then((_) =>
+              ViewRestaurantOrderScreen.navigate(
+                  orderId: _orderController!.hasOneOrderId!));
           // } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
           //   MezRouter.popEverythingAndNavigateTo(
           //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));

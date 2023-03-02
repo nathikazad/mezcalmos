@@ -17,8 +17,9 @@ class MRoute {
 /// This does not support NestedNavigation yet.
 class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static final List<MRoute> _navigationStack = <MRoute>[];
-  static dynamic _arguments;
-  static dynamic get arguments => _arguments;
+  static Map<String, dynamic>? _arguments;
+  static Map<String, dynamic>? get bodyArguments => _arguments;
+  static QParams get urlArguments => QR.params;
   // This will act as a lock, basically if there's any push/pop happening, we lock other functionalities to avoid race conditions
   // static bool _isBusy = false;
   static final List<Function> _delegates = [];
@@ -40,37 +41,26 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   }
 
   /// Shortcut to [MezRouter.toNamed]
-  static Future<void>? toNamed<Q>(
+  static Future<void> toNamed<Q>(
     String page, {
     bool preventDuplicates = true,
-    arguments,
+    Map<String, dynamic>? arguments,
   }) {
     mezDbgPrint("Trynig to go to ======>>>>>>>$page");
-    try {
-      addToStack(page, preventDuplicates, arguments);
-      _arguments = arguments;
-      return QR.toName(page, ignoreSamePath: false);
-    } catch (e, s) {
-      mezDbgPrint("Error => $e");
-      mezDbgPrint("Stack => $s");
-    }
-    return null;
+    addToStack(page, preventDuplicates, arguments);
+    _arguments = arguments;
+    return QR.toName(page, ignoreSamePath: false);
   }
 
-  static Future<void>? toPath<Q>(
+  static Future<void> toPath<Q>(
     String page, {
     bool preventDuplicates = true,
-    Map<String, String>? parameters,
+    Map<String, dynamic>? arguments,
   }) {
     mezDbgPrint("Trynig to go to ======>>>>>>>$page");
-    try {
-      addToStack(page, preventDuplicates, parameters);
-      return QR.to(page, ignoreSamePath: false);
-    } catch (e, s) {
-      mezDbgPrint("Error => $e");
-      mezDbgPrint("Stack => $s");
-    }
-    return null;
+    addToStack(page, preventDuplicates, arguments);
+    _arguments = arguments;
+    return QR.to(page, ignoreSamePath: false);
   }
 
   static void addToStack(
@@ -99,13 +89,14 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
 
   /// USE THIS ONLY FOR ACTUAL VIEW THAT ARE ON STACK!
   /// PS: TO POP DIALOGS / SNACKBARS .. USE [MezRouter.popDialog]
-  static void back<T>({
+  static Future<void> back<T>({
     T? result,
     bool closeOverlays = false,
     bool canPop = true,
     int? id,
   }) {
-    Navigator.pop(QR.context!, result);
+    // Navigator.pop(QR.context!, result);
+    return QR.back();
     /* Get.back<T>(
       result: result,
       closeOverlays: closeOverlays,
@@ -188,7 +179,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
 
     final dynamic globalResult = Navigator.of(QR.context!)
         .popAndPushNamed(page, arguments: arguments, result: result)
-        .then((value) {
+        .then((Object? value) {
       return value;
     });
     printRoutes();
@@ -226,7 +217,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       page,
       arguments: arguments,
     )
-        .then((value) {
+        .then((Object? value) {
       return value;
     });
     /*final dynamic globalResult = Get
@@ -326,7 +317,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     final dynamic globalResult =
         Navigator.of(QR.context!).pushNamedAndRemoveUntil(
       page,
-      (route) {
+      (Route route) {
         final bool res = predicate.call(route);
         mezDbgPrint("[mezrouter] PREDICATE ==> $res");
         if (res) {
@@ -341,7 +332,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
         }
       },
       arguments: arguments,
-    ).then((value) {
+    ).then((Object? value) {
       return value;
     });
     _navigationStack
@@ -352,6 +343,11 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
 
   static void popEverythingAndNavigateTo(route, {args}) {
     popUntilAndNavigateTo(SharedRoutes.kHomeRoute, route, args: args);
+  }
+
+  static Future<void> popEverything() {
+    // @abhishek implement popEverything till kHomeRoute
+    return Future<void>.delayed(Duration.zero);
   }
 
   static void popUntilAndNavigateTo(untilRoute, toRoute, {args}) {
@@ -393,7 +389,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
     final MRoute? _rCurrent = currentRoute();
-    _navigationStack.forEach((element) {
+    _navigationStack.forEach((MRoute element) {
       mezDbgPrint("---> ${element.name}");
     });
     if (previousRoute is PageRoute && route is PageRoute && _rCurrent != null) {

@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
@@ -37,8 +38,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
   }
 
   TextEditingController _otpCodeTextController = TextEditingController();
-
-  String _phonePassed = Get.arguments;
+  //@abhishek pass this in as url paramaeter with navigate function expecting required arguments
+  String _phonePassed = MezRouter.bodyArguments?["phone"];
   String otpCode = '';
 
   @override

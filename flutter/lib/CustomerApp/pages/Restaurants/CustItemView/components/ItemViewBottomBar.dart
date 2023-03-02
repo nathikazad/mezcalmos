@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/router/cartRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -125,7 +125,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           try {
             await widget.viewController
                 .handleAddItem()
-                .whenComplete(() => MezRouter.toNamed(CartRoutes.cart));
+                .whenComplete(() => ViewCartScreen.navigate());
           } catch (e, stk) {
             mezDbgPrint(e);
             mezDbgPrint(stk);
@@ -135,7 +135,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
         try {
           await widget.viewController
               .handleEditItem()
-              .whenComplete(() => MezRouter.toNamed(CartRoutes.cart));
+              .whenComplete(() => ViewCartScreen.navigate());
         } catch (e, stk) {
           mezDbgPrint(e);
           mezDbgPrint(stk);
@@ -158,13 +158,13 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           '${_i18n()["subtitle"]} ${widget.viewController.cart.value?.restaurant?.info.name ?? ""} ${_i18n()["overwriteText"]} ',
       secondaryCallBack: () async {
         MezRouter.popDialog<void>();
-        await MezRouter.toNamed<void>(CartRoutes.cart);
+        await ViewCartScreen.navigate();
       },
       primaryCallBack: () async {
         await widget.viewController.handleAddItem();
         MezRouter.popDialog<void>();
-
-        await MezRouter.offNamed<void>(CartRoutes.cart);
+        await MezRouter.back<void>();
+        await ViewCartScreen.navigate();
       },
     );
   }
@@ -183,13 +183,14 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       description: _i18n()["specialSubtitle"],
       secondaryCallBack: () async {
         MezRouter.popDialog<void>();
-        await MezRouter.toNamed<void>(CartRoutes.cart);
+        await ViewCartScreen.navigate();
       },
       primaryCallBack: () async {
         mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
         await widget.viewController.cartController?.clearCart();
         await widget.viewController.handleAddItem();
-        await MezRouter.offNamed<void>(CartRoutes.cart);
+        await MezRouter.back<void>();
+        await ViewCartScreen.navigate();
       },
     );
   }

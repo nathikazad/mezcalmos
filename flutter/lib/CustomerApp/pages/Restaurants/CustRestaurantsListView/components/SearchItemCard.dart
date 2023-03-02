@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -21,15 +19,9 @@ class SearchItemCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (item.restaurantId != null && item.id != null) {
-            MezRouter.toNamed(
-              RestaurantRouters().getRestaurantItemRoute(
-                item.restaurantId!,
-                item.id!,
-              ),
-              arguments: {
-                "mode": ViewItemScreenMode.AddItemMode,
-                "showViewRestaurant": true
-              },
+            CustItemView.navigateToRestaurantItem(
+              restaurantId: item.restaurantId!,
+              itemId: item.id!,
             );
           }
         },

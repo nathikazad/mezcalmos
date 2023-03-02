@@ -6,14 +6,14 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router/restautantOrderRoutes.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/stripe_cards/hsCustomerStripeCards.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
-import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
+// import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
@@ -36,7 +36,7 @@ class CustCartViewController {
   RxList<PaymentOption> options = RxList<PaymentOption>();
   Rxn<loc.MezLocation> orderToLocation = Rxn();
 
-  CardChoice cartPaymentChoice = CardChoice.ApplePay;
+  // CardChoice cartPaymentChoice = CardChoice.ApplePay;
   CreditCard? savedCardChoice;
 
   // dropdown value
@@ -52,9 +52,9 @@ class CustCartViewController {
   TextEditingController noteText = TextEditingController();
 
   // getters //
-  CardChoice get getCardChoice {
-    return pickerChoice.value!.entries.first.key.toCardChoice();
-  }
+  // CardChoice get getCardChoice {
+  //   return pickerChoice.value!.entries.first.key.toCardChoice();
+  // }
 
   DeliveryCost? get deliveryCost {
     return cart.restaurant?.deliveryCost;
@@ -88,7 +88,7 @@ class CustCartViewController {
     }
     //
     await _setDefaultOptions();
-    await getCustomerCards();
+    // await getCustomerCards();
     await _addingValusToOptions();
     pickerChoice.value = options.first;
     if (_cartRxn.value?.toLocation != null) {
@@ -99,54 +99,54 @@ class CustCartViewController {
 
   Future<void> _setDefaultOptions() async {
     options.add({PickerChoice.Cash: null});
-    if (await isApplePaySupported()) {
-      options.add({PickerChoice.ApplePay: null});
-    }
-    if (await isGooglePaySupported()) {
-      options.add({PickerChoice.GooglePay: null});
-    }
+    // if (await isApplePaySupported()) {
+    //   options.add({PickerChoice.ApplePay: null});
+    // }
+    // if (await isGooglePaySupported()) {
+    //   options.add({PickerChoice.GooglePay: null});
+    // }
   }
 
   Future<void> _addingValusToOptions() async {
-    if (cart.restaurant?.acceptPayment(PaymentType.BankTransfer) == true) {
-      options.add({PickerChoice.BankTransfer: null});
-    }
+    // if (cart.restaurant?.acceptPayment(PaymentType.BankTransfer) == true) {
+    //   options.add({PickerChoice.BankTransfer: null});
+    // }
 
-    customerCards?.forEach((CreditCard element) {
-      options.add({PickerChoice.SavedCard: element});
-    });
-    options.add({PickerChoice.NewCard: null});
-  }
-
-  Future<void> getCustomerCards() async {
-    // TODO: hasura-ch
-    final List<CreditCard> data = await get_customer_cards(
-        customerId: Get.find<AuthController>().hasuraUserId!, withCache: false);
-    mezDbgPrint("Data from controller ==========>>> 😛${data.length}");
-    _cards.value = data;
-
-    if (_cards.value?.isEmpty == true) {
-      options.removeWhere((PaymentOption element) =>
-          element.entries.first.key == PickerChoice.SavedCard);
-    }
-    if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
-        _cards.value?.isEmpty == true) {
-      pickerChoice.value = options.first;
-    }
-    //   }
+    // customerCards?.forEach((CreditCard element) {
+    //   options.add({PickerChoice.SavedCard: element});
     // });
+    // options.add({PickerChoice.NewCard: null});
   }
 
-  void _updateListWithNewCard() {
-    options.removeWhere((PaymentOption element) =>
-        element.entries.first.key == PickerChoice.SavedCard);
+  // Future<void> getCustomerCards() async {
+  //   // TODO: hasura-ch
+  //   final List<CreditCard> data = await get_customer_cards(
+  //       customerId: Get.find<AuthController>().hasuraUserId!, withCache: false);
+  //   mezDbgPrint("Data from controller ==========>>> 😛${data.length}");
+  //   _cards.value = data;
 
-    customerCards?.forEach((CreditCard element) {
-      options.add({PickerChoice.SavedCard: element});
-    });
+  //   if (_cards.value?.isEmpty == true) {
+  //     options.removeWhere((PaymentOption element) =>
+  //         element.entries.first.key == PickerChoice.SavedCard);
+  //   }
+  //   if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
+  //       _cards.value?.isEmpty == true) {
+  //     pickerChoice.value = options.first;
+  //   }
+  //   //   }
+  //   // });
+  // }
 
-    options.refresh();
-  }
+  // void _updateListWithNewCard() {
+  //   options.removeWhere((PaymentOption element) =>
+  //       element.entries.first.key == PickerChoice.SavedCard);
+
+  //   customerCards?.forEach((CreditCard element) {
+  //     options.add({PickerChoice.SavedCard: element});
+  //   });
+
+  //   options.refresh();
+  // }
 
   bool get shoudSchedule {
     return (cart.restaurant?.isOpen() == false || cart.isSpecial);
@@ -164,73 +164,72 @@ class CustCartViewController {
   Future<void> switchPicker(PaymentOption value) async {
     if (value.keys.first == PickerChoice.Cash) {
       switchPaymentMedthod(paymentType: PaymentType.Cash);
-    } else if (value.keys.first == PickerChoice.BankTransfer) {
-      switchPaymentMedthod(paymentType: PaymentType.BankTransfer);
-    } else {
-      switchPaymentMedthod(paymentType: PaymentType.Card);
-      await handlePaymentChoice(value);
     }
+    // else if (value.keys.first == PickerChoice.BankTransfer) {
+    //   switchPaymentMedthod(paymentType: PaymentType.BankTransfer);
+    // } else {
+    //   switchPaymentMedthod(paymentType: PaymentType.Card);
+    //   await handlePaymentChoice(value);
+    // }
   }
 
-  Future<void> handlePaymentChoice(PaymentOption newValue) async {
-    switch (newValue.entries.first.key) {
-      case PickerChoice.SavedCard:
-        card.value = newValue.entries.first.value;
-        pickerChoice.value = newValue;
-        break;
+  // Future<void> handlePaymentChoice(PaymentOption newValue) async {
+  //   switch (newValue.entries.first.key) {
+  //     case PickerChoice.SavedCard:
+  //       card.value = newValue.entries.first.value;
+  //       pickerChoice.value = newValue;
+  //       break;
 
-      case PickerChoice.NewCard:
-        final String? newCardId = await addCardSheet();
-        if (newCardId != null) {
-          await getCustomerCards();
-          _updateListWithNewCard();
-          mezDbgPrint(
-              "Before first wheeeeereeee =========>${customerCards?.length}");
-          final CreditCard? newCard = customerCards
-              ?.firstWhere((CreditCard element) => element.cardId == newCardId);
+  //     case PickerChoice.NewCard:
+  //       final String? newCardId = await addCardSheet();
+  //       if (newCardId != null) {
+  //         await getCustomerCards();
+  //         _updateListWithNewCard();
+  //         mezDbgPrint(
+  //             "Before first wheeeeereeee =========>${customerCards?.length}");
+  //         final CreditCard? newCard = customerCards
+  //             ?.firstWhere((CreditCard element) => element.cardId == newCardId);
 
-          if (newCard != null) {
-            card.value = newCard;
-            // options
-            //     .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
-            pickerChoice.value = options.firstWhere((PaymentOption element) =>
-                element.entries.first.value?.cardId == newCard.cardId);
-          }
-        } else {
-          switchPaymentMedthod(paymentType: PaymentType.Cash);
-          pickerChoice.value = options.first;
+  //         if (newCard != null) {
+  //           card.value = newCard;
+  //           // options
+  //           //     .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
+  //           pickerChoice.value = options.firstWhere((PaymentOption element) =>
+  //               element.entries.first.value?.cardId == newCard.cardId);
+  //         }
+  //       } else {
+  //         switchPaymentMedthod(paymentType: PaymentType.Cash);
+  //         pickerChoice.value = options.first;
 
-          pickerChoice.refresh();
-        }
+  //         pickerChoice.refresh();
+  //       }
 
-        break;
+  //       break;
 
-      default:
-        pickerChoice.value = newValue;
-    }
-  }
+  //     default:
+  //       pickerChoice.value = newValue;
+  //   }
+  // }
 
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
     num? newOrderId;
     try {
-      if (cart.paymentType == PaymentType.Card) {
-        final String? stripePaymentId =
-            await acceptPaymentByCardChoice(getCardChoice);
-        if (stripePaymentId != null) {
-          newOrderId =
-              await cartController.checkout(stripePaymentId: stripePaymentId);
-        }
-      } else {
-        newOrderId = await cartController.checkout(stripePaymentId: null);
-      }
+      // if (cart.paymentType == PaymentType.Card) {
+      //   final String? stripePaymentId =
+      //       await acceptPaymentByCardChoice(getCardChoice);
+      //   if (stripePaymentId != null) {
+      //     newOrderId =
+      //         await cartController.checkout(stripePaymentId: stripePaymentId);
+      //   }
+      // } else {
+      newOrderId = await cartController.checkout(stripePaymentId: null);
+      // }
 
       if (newOrderId != null) {
-        MezRouter.popEverythingAndNavigateTo(
-          RestaurantOrderRoutes().getRestaurantOrderRoute(
-            newOrderId.toInt(),
-          ),
-        );
+        // ignore: unawaited_futures
+        MezRouter.popEverything().then((_) =>
+            ViewRestaurantOrderScreen.navigate(orderId: newOrderId!.toInt()));
       }
 
       mezDbgPrint("success funish checkout");
@@ -242,48 +241,48 @@ class CustCartViewController {
   }
 
   /// returns stripePaymentId
-  Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
-    String? stripePaymentId;
-    mezDbgPrint("Look here ============>${cart.restaurant!.serviceDetailsId}");
-    //viewCartController.getCardChoice
-    if (cart.paymentType == PaymentType.Card) {
-      switch (choice) {
-        case CardChoice.ApplePay:
-          cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
-              serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
-              paymentAmount: cart.totalCost);
-          if (paymentIntent != null) {
-            stripePaymentId = extractPaymentIdFromIntent(
-                paymentIntent.paymentIntent.toString());
-            await acceptPaymentWithApplePay(
-                paymentAmount: cart.totalCost,
-                paymentIntentData: paymentIntent,
-                merchantName: cart.restaurant!.info.name);
-          }
-          break;
-        case CardChoice.GooglePay:
-          cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
-              serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
-              paymentAmount: cart.totalCost);
-          if (paymentIntent != null) {
-            stripePaymentId = extractPaymentIdFromIntent(
-                paymentIntent.paymentIntent.toString());
-            await acceptPaymentWithGooglePay(
-                paymentAmount: cart.totalCost,
-                paymentIntentData: paymentIntent,
-                merchantName: cart.restaurant!.info.name);
-          }
-          break;
-        case CardChoice.SavedCard:
-          stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
-              paymentAmount: cart.totalCost,
-              card: card.value!);
-          break;
-      }
-    }
-    return stripePaymentId;
-  }
+  // Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
+  //   String? stripePaymentId;
+  //   mezDbgPrint("Look here ============>${cart.restaurant!.serviceDetailsId}");
+  //   //viewCartController.getCardChoice
+  //   if (cart.paymentType == PaymentType.Card) {
+  //     switch (choice) {
+  //       case CardChoice.ApplePay:
+  //         cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+  //             serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
+  //             paymentAmount: cart.totalCost);
+  //         if (paymentIntent != null) {
+  //           stripePaymentId = extractPaymentIdFromIntent(
+  //               paymentIntent.paymentIntent.toString());
+  //           await acceptPaymentWithApplePay(
+  //               paymentAmount: cart.totalCost,
+  //               paymentIntentData: paymentIntent,
+  //               merchantName: cart.restaurant!.info.name);
+  //         }
+  //         break;
+  //       case CardChoice.GooglePay:
+  //         cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+  //             serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
+  //             paymentAmount: cart.totalCost);
+  //         if (paymentIntent != null) {
+  //           stripePaymentId = extractPaymentIdFromIntent(
+  //               paymentIntent.paymentIntent.toString());
+  //           await acceptPaymentWithGooglePay(
+  //               paymentAmount: cart.totalCost,
+  //               paymentIntentData: paymentIntent,
+  //               merchantName: cart.restaurant!.info.name);
+  //         }
+  //         break;
+  //       case CardChoice.SavedCard:
+  //         stripePaymentId = await acceptPaymentWithSavedCard(
+  //             serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
+  //             paymentAmount: cart.totalCost,
+  //             card: card.value!);
+  //         break;
+  //     }
+  //   }
+  //   return stripePaymentId;
+  // }
 
   void dispose() {
     noteText.dispose();
@@ -432,36 +431,36 @@ class CustCartViewController {
 // helpers //
 
 enum PickerChoice {
-  SavedCard,
-  GooglePay,
-  ApplePay,
+  // SavedCard,
+  // GooglePay,
+  // ApplePay,
   Cash,
-  NewCard,
-  BankTransfer
+  // NewCard,
+  // BankTransfer
 }
 
-enum CardChoice { SavedCard, GooglePay, ApplePay }
+// enum CardChoice { SavedCard, GooglePay, ApplePay }
 
 typedef PaymentOption = Map<PickerChoice, CreditCard?>;
 
-extension pickerHelper on PickerChoice {
-  String toNormalString() {
-    final String str = toString().split('.').last.toLowerCase();
+// extension pickerHelper on PickerChoice {
+//   String toNormalString() {
+//     final String str = toString().split('.').last.toLowerCase();
 
-    return str.toLowerCase();
-  }
+//     return str.toLowerCase();
+//   }
 
-  CardChoice toCardChoice() {
-    switch (this) {
-      case PickerChoice.ApplePay:
-        return CardChoice.ApplePay;
-      case PickerChoice.GooglePay:
-        return CardChoice.GooglePay;
-      case PickerChoice.SavedCard:
-        return CardChoice.SavedCard;
+//   CardChoice toCardChoice() {
+//     switch (this) {
+//       case PickerChoice.ApplePay:
+//         return CardChoice.ApplePay;
+//       case PickerChoice.GooglePay:
+//         return CardChoice.GooglePay;
+//       case PickerChoice.SavedCard:
+//         return CardChoice.SavedCard;
 
-      default:
-        return CardChoice.SavedCard;
-    }
-  }
-}
+//       default:
+//         return CardChoice.SavedCard;
+//     }
+//   }
+// }

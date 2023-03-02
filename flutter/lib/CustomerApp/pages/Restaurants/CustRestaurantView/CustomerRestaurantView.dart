@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestauSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
@@ -28,6 +28,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class CustomerRestaurantView extends StatefulWidget {
   @override
   _CustomerRestaurantViewState createState() => _CustomerRestaurantViewState();
+  static Future<void> navigate({required int restaurantId}) {
+    return MezRouter.toPath<void>(RestaurantRouter.restaurantViewRoute
+        .replaceAll(":restaurantId", restaurantId.toString()));
+  }
 }
 
 class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
@@ -36,7 +40,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   @override
   void initState() {
-    final int restaurantId = int.parse(QR.params["id"].toString());
+    final int restaurantId =
+        int.parse(MezRouter.urlArguments["restaurantId"].toString());
     _viewController.init(restaurantId: restaurantId, vsync: this);
     super.initState();
   }
@@ -237,17 +242,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               (List<Widget> children, Item item) {
             children.add(RestaurantsListOfItemsComponent(
                 item: item,
-                function: () {
-                  MezRouter.toNamed(
-                    RestaurantRouters()
-                        .getRestaurantItemRoute(restaurantId, item.id!)
-                        .replaceAll(' ', ''),
-                    arguments: {
-                      "mode": ViewItemScreenMode.AddItemMode,
-                      "isSpecial": isSpecial
-                    },
-                  );
-                }));
+                function: () => CustItemView.navigateToRestaurantItem(
+                    restaurantId: restaurantId, itemId: item.id!)));
 
             return children;
           }),
