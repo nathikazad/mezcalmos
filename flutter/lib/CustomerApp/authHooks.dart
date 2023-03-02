@@ -16,7 +16,7 @@ class AuthHooks {
     );
 
     await Get.delete<CustomerAuthController>(force: true);
-    await Get.delete<CustomerCartController>(force: true);
+
     await Get.delete<CustomerOrderController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
@@ -35,7 +35,6 @@ class AuthHooks {
         ForegroundNotificationsController(),
         permanent: true);
     Get.put<CustomerAuthController>(CustomerAuthController(), permanent: true);
-    Get.put<CustomerCartController>(CustomerCartController(), permanent: true);
     Get.put<CustomerOrderController>(CustomerOrderController(),
         permanent: true);
   }

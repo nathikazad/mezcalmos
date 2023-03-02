@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -31,30 +32,33 @@ class CustomerAuthController extends GetxController {
 
     if (_authController.fireAuthUser?.uid != null) {
       // ignore: unawaited_futures
-      get_customer(user_id: _authController.hasuraUserId!)
-          .then((Customer? value) {
-        mezDbgPrint("[]9090] : get_customer::CUSTOMER : $value ");
-        _setCustomerInfos(value);
-      });
+
+      // ignore: unawaited_futures
+      fetchCustomerInfo().then((_) => {
+            Get.put<CustomerCartController>(CustomerCartController(),
+                permanent: true)
+          });
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }
   }
 
-  Future<void> _setCustomerInfos(Customer? customer) async {
+  Future<void> fetchCustomerInfo() async {
     final String _appVersion = GetStorage().read(getxAppVersion);
+    Customer? customer =
+        await get_customer(user_id: _authController.hasuraUserId!);
+
+    mezDbgPrint("[]9090] : get_customer::CUSTOMER : $customer ");
     mezDbgPrint("[]9090] : setting customr ! ");
 
-    Customer? _cus = customer;
-
-    if (_cus == null) {
-      _cus = await set_customer_info(
+    if (customer == null) {
+      customer = await set_customer_info(
           app_version: _appVersion, user_id: _authController.hasuraUserId!);
     }
     await fetchSavedLocations();
 
-    _customer.value = _cus;
-    _customer.value?.savedLocations = _cus?.savedLocations ?? [];
+    _customer.value = customer;
+    _customer.value?.savedLocations = customer?.savedLocations ?? [];
     mezDbgPrint(
         "Getting cust saved locations ====😀===========>>>${_customer.value?.savedLocations.length}");
     _customer.refresh();
@@ -110,6 +114,7 @@ class CustomerAuthController extends GetxController {
   @override
   Future<void> onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
+    await Get.delete<CustomerCartController>(force: true);
     super.onClose();
   }
 }
