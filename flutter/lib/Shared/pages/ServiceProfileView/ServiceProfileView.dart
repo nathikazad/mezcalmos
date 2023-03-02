@@ -64,13 +64,14 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-        appBar: _getAppBar(),
-        body: Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.all(16),
-          child: (_viewController.hasData)
-              ? SingleChildScrollView(
+      () {
+        if (_viewController.hasData) {
+          return Scaffold(
+            appBar: _getAppBar(),
+            body: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.all(16),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       _headerImageAndTitle(),
@@ -202,10 +203,17 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                       )
                     ],
                   ),
-                )
-              : CircularProgressIndicator(),
-        ),
-      ),
+                )),
+          );
+        } else {
+          return Scaffold(
+            body: Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 
