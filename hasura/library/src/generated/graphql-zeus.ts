@@ -40976,7 +40976,7 @@ export type delivery_courier_order_variance_fields = {
 export type delivery_details = {
 	__typename?: "delivery_details",
 	cost_per_km:money,
-	cost_per_km_from_base?:money,
+	cost_per_km_from_base:money,
 	customer_pickup:boolean,
 	delivery_available:boolean,
 	/** An object relationship */

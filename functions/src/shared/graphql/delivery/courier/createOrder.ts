@@ -84,7 +84,7 @@ export async function createNewCourierOrder(
                                 }
                             }
                         },
-                        delivery_cost: courierRequest.deliveryCost,
+                        delivery_cost: courierRequest.deliveryCost ?? 0,
                         
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: courierRequest.deliveryCompanyId,
@@ -138,7 +138,7 @@ export async function createNewCourierOrder(
             paymentType: PaymentType.Cash,
             status: DeliveryOrderStatus.OrderReceived,
             customerId,
-            deliveryCost: courierRequest.deliveryCost,
+            deliveryCost: courierRequest.deliveryCost ?? 0,
             packageCost,
             orderTime: response.insert_delivery_courier_order_one.order_time,
             tripDistance : courierRequest.tripDistance,
