@@ -50,13 +50,13 @@ async function checkRestaurantOrders() {
       let readOperators = snap.val();
       // console.log(readOperators)
       o.restaurant!.operators!.forEach((r) => {
-        if(!(readOperators && readOperators[r.userId!]) &&  r.user) {
-          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+        if(!(readOperators && readOperators[r.userId!]) &&  r.user && r.online) {
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user.language, false);
         }
       });
       mezAdmins.forEach((m) => {
         if(!(readOperators && readOperators[m.id])) {
-          pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+          pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language, false);
         }
       })
     }

@@ -100,7 +100,6 @@ function notify(laundryOrder: LaundryOrder, deliveryOrder: DeliveryOrder, laundr
   let notification: Notification = {
     foreground: <LaundryOrderStatusChangeNotification>{
       status: laundryOrder.status,
-      deliveryOrderStatus: deliveryOrder.status,
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Laundry,
@@ -130,7 +129,6 @@ function notify(laundryOrder: LaundryOrder, deliveryOrder: DeliveryOrder, laundr
         customer.language
       );
       break;
-    case LaundryOrderStatus.PickedUpFromCustomer:
     case LaundryOrderStatus.OtwPickupFromLaundry:
       laundryOperators.forEach((r) => {
         if (r.user) {

@@ -56,6 +56,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                         id: true,
                         status: true,
                         owner: true,
+                        online: true,
                         notification_info: {
                             token: true,
                             turn_off_notifications: true
@@ -85,6 +86,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                         id: true,
                         status: true,
                         owner: true,
+                        online: true,
                         notification_info: {
                             token: true,
                             turn_off_notifications: true
@@ -117,6 +119,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     serviceProviderId: r.restaurant_id,
                     status: r.operator_details.status as AuthorizationStatus,
                     owner: r.operator_details.owner,
+                    online: r.operator_details.online,
                     notificationInfo: (r.operator_details.notification_info) ? {
                         appType: AppType.RestaurantApp,
                         token: r.operator_details.notification_info.token,
@@ -187,6 +190,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     serviceProviderId: o.store_id,
                     userId: o.user_id,
                     detailsId: o.operator_details.id,
+                    online: o.operator_details.online,
                     status: o.operator_details.status as AuthorizationStatus,
                     user: {
                         id: o.user_id,

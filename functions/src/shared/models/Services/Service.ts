@@ -35,6 +35,7 @@ export interface Operator {
   serviceProviderId: number;
   userId: number;
   status: AuthorizationStatus;
+  online: boolean,
   owner?: boolean;
   appVersion?: string;
   currentGps?: Location;

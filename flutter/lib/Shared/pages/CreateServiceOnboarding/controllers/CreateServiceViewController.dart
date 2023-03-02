@@ -10,7 +10,6 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -147,9 +146,7 @@ class CreateServiceViewController {
   }
 
   void handleBack() {
-    if (currentPage == 0) {
-      MezRouter.back();
-    } else {
+    if (currentPage != 0) {
       pageController
           .animateToPage(currentPage.value - 1,
               duration: Duration(milliseconds: 500), curve: Curves.easeInOut)
@@ -168,9 +165,10 @@ class CreateServiceViewController {
       case 2:
         handleScheduleNext();
         break;
+      case 3:
+        return _createService();
 
       default:
-        return _createService();
     }
     return null;
   }
@@ -200,7 +198,7 @@ class CreateServiceViewController {
 
   Future<void> handleInfoPageNext() async {
     if (infoFromKey.currentState?.validate() == true) {
-      await _setImage();
+      // await _setImage();
       serviceInput.value.serviceInfo = ServiceInfo(
           location: newLocation.value!,
           hasuraId: Random().nextInt(5),
@@ -234,8 +232,10 @@ class CreateServiceViewController {
       case 0:
         return true;
       case 1:
-        return true;
+        return infoFromKey.currentState?.validate() == true;
       case 2:
+        return true;
+      case 3:
         if (!serviceInput.value.isSelfDelivery) {
           if (serviceInput.value.deliveryPartnerId == null) {
             Get.snackbar("${_i18n()['selectCompany']}",
@@ -252,23 +252,17 @@ class CreateServiceViewController {
     }
   }
 
-  bool get _infoIsValid =>
-      serviceName.text.length > 3 &&
-      newLocation.value != null &&
-      newImageUrl.value != null;
   bool get _isDeliveryCostValid {
     return costFormKey.currentState?.validate() == true;
   }
 
   Future<bool> _createService() async {
-    mezDbgPrint("Clciked");
     if (serviceInput.value.deliveryType == ServiceDeliveryType.Self_delivery) {
       serviceInput.value.deliveryPartnerId = null;
       serviceInput.value.selfDeliveryCost = _constructDeliveryCost();
     } else {
       serviceInput.value.selfDeliveryCost = null;
     }
-    mezDbgPrint(serviceInput.value.toString());
     final bool res = await _pushServiceToDb();
     return res;
   }
@@ -278,26 +272,30 @@ class CreateServiceViewController {
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
       await CloudFunctions.restaurant2_createRestaurant(
-          name: serviceInput.value.serviceInfo!.name,
-          image: serviceInput.value.serviceInfo!.image,
-          location: cModel.Location(
-              lat: serviceInput.value.serviceInfo!.location.latitude,
-              lng: serviceInput.value.serviceInfo!.location.longitude,
-              address: serviceInput.value.serviceInfo!.location.address),
-          schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
-          deliveryDetails: cModel.DeliveryDetails(
-            minimumCost: serviceInput.value.selfDeliveryCost!.minimumCost,
-            costPerKm: serviceInput.value.selfDeliveryCost!.costPerKm,
-            radius: int.parse(radius.text) * 1000,
-            freeDeliveryMinimumCost:
-                serviceInput.value.selfDeliveryCost!.freeDeliveryMinimumCost,
-            freeDeliveryKmRange:
-                serviceInput.value.selfDeliveryCost!.freeDeliveryKmRange,
-            deliveryAvailable: true,
-            customerPickup: false,
-            selfDelivery: serviceInput.value.isSelfDelivery,
-          ),
-          language: {cModel.Language.EN: true});
+        name: serviceInput.value.serviceInfo!.name,
+        image: serviceInput.value.serviceInfo!.image,
+        location: cModel.Location(
+            lat: serviceInput.value.serviceInfo!.location.latitude,
+            lng: serviceInput.value.serviceInfo!.location.longitude,
+            address: serviceInput.value.serviceInfo!.location.address),
+        schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
+        deliveryPartnerId: serviceInput.value.deliveryPartnerId,
+        deliveryDetails: cModel.DeliveryDetails(
+          minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
+          costPerKm: serviceInput.value.selfDeliveryCost?.costPerKm,
+          radius: 10,
+          freeDeliveryMinimumCost:
+              serviceInput.value.selfDeliveryCost?.freeDeliveryMinimumCost,
+          freeDeliveryKmRange:
+              serviceInput.value.selfDeliveryCost?.freeDeliveryKmRange,
+          deliveryAvailable: true,
+          customerPickup: false,
+          selfDelivery: serviceInput.value.isSelfDelivery,
+        ),
+        language: {
+          "en": true,
+        },
+      );
       return true;
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message?.toString() ?? "Unknown Error");

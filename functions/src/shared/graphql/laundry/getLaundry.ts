@@ -64,6 +64,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
                 user_id: true,
                 operator_details: {
                     status: true,
+                    online: true,
                 },
                 user: {
                     firebase_id: true,
@@ -85,6 +86,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             userId: o.user_id,
             detailsId: o.details_id,
             status: o.operator_details.status as AuthorizationStatus,
+            online: o.operator_details.online,
             user: {
                 id: o.user_id,
                 firebaseId: o.user.firebase_id,

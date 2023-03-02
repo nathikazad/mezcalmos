@@ -62,6 +62,7 @@ Future<MainService?> get_service_details_by_id(
   if (res.parsedData?.service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
+
   Query$getServiceDetails$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
   final PaymentInfo paymentInfo = PaymentInfo.fromData(

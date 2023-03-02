@@ -18,13 +18,13 @@ class CreateServiceImageComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField(
-      validator: (Object? value) {
-        if (viewController.newImageFile.value == null &&
-            viewController.newImageUrl.value == null) {
-          return "${_i18n()['imageError']}";
-        }
-        return null;
-      },
+      // validator: (Object? value) {
+      //   if (viewController.newImageFile.value == null &&
+      //       viewController.newImageUrl.value == null) {
+      //     return "${_i18n()['imageError']}";
+      //   }
+      //   return null;
+      // },
       builder: (FormFieldState state) {
         return Obx(
           () => Column(
@@ -52,7 +52,7 @@ class CreateServiceImageComponent extends StatelessWidget {
                                     padding: const EdgeInsets.all(5),
                                     child: Text(
                                       "${_i18n()['uploadImageText']}",
-                                      style: Get.textTheme.bodyText2?.copyWith(
+                                      style: Get.textTheme.bodyMedium?.copyWith(
                                           color: offLightShadeGreyColor),
                                       textAlign: TextAlign.center,
                                     ),
@@ -69,9 +69,9 @@ class CreateServiceImageComponent extends StatelessWidget {
                           child: InkWell(
                             customBorder: CircleBorder(),
                             onTap: () {
-                              // viewController.newImageUrl.value =
-                              //     "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
-                               viewController.editImage(context);
+                              viewController.newImageUrl.value =
+                                  "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
+                              viewController.editImage(context);
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),
@@ -92,8 +92,8 @@ class CreateServiceImageComponent extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 5),
                     child: Text(
                       state.errorText ?? "",
-                      style:
-                          Get.textTheme.subtitle1?.copyWith(color: Colors.red),
+                      style: Get.textTheme.titleMedium
+                          ?.copyWith(color: Colors.red),
                     ))
             ],
           ),

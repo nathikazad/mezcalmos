@@ -30,6 +30,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
       operator_details: {
         id: true,
         owner: true,
+        online: true,
         notification_info: {
           token: true,
           turn_off_notifications: true
@@ -56,6 +57,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
       serviceProviderId: restaurantId,
       status: AuthorizationStatus.Authorized,
       owner: r.operator_details.owner,
+      online: r.operator_details.online,
       notificationInfo: (r.operator_details.notification_info) ? {
         appType: AppType.RestaurantApp,
         token: r.operator_details.notification_info.token,
@@ -82,6 +84,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
         id: true,
         status: true,
         owner: true,
+        online: true,
         notification_info: {
           token: true,
           turn_off_notifications: true
@@ -107,6 +110,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     serviceProviderId: response.restaurant_operator_by_pk.restaurant_id,
     status: response.restaurant_operator_by_pk.operator_details.status as AuthorizationStatus,
     owner: response.restaurant_operator_by_pk.operator_details.owner,
+    online: response.restaurant_operator_by_pk.operator_details.online,
     notificationInfo: (response.restaurant_operator_by_pk.operator_details.notification_info) ? {
       appType: AppType.RestaurantApp,
       token: response.restaurant_operator_by_pk.operator_details.notification_info.token,
@@ -137,6 +141,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
         id: true,
         status: true,
         owner: true,
+        online: true,
         notification_info: {
         token: true,
         turn_off_notifications: true
@@ -161,6 +166,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
     serviceProviderId: response.restaurant_operator[0].restaurant_id,
     status: response.restaurant_operator[0].operator_details.status as AuthorizationStatus,
     owner: response.restaurant_operator[0].operator_details.owner,
+    online: response.restaurant_operator[0].operator_details.online,
     notificationInfo: (response.restaurant_operator[0].operator_details.notification_info) ? {
       appType: AppType.RestaurantApp,
       token: response.restaurant_operator[0].operator_details.notification_info.token,
