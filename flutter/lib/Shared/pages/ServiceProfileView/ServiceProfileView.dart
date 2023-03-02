@@ -6,12 +6,14 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ServiceProfileView extends StatefulWidget {
@@ -68,6 +70,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
         if (_viewController.hasData) {
           return Scaffold(
             appBar: _getAppBar(),
+            key: Get.find<SideMenuDrawerController>().getNewKey(),
+            drawer: MezSideMenu(),
             body: Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.all(16),
@@ -249,7 +253,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
       child: Obx(
         () => MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: MezRouter.back,
+          onClick: (asTab) ? null : MezRouter.back,
           title: "Dashboard",
           tabBar: (!_viewController.isApproved ||
                   _viewController.service.state.isClosedIndef)
