@@ -271,8 +271,6 @@ export async function getCustomerLaundryOrders(customerId: number): Promise<Laun
       order_time: true,
       to_customer_delivery_id: true,
       from_customer_delivery_id: true,
-      to_location_address: true,
-      estimated_food_ready_time: true,
       customer_app_type: true,
       delivery_cost: true,
       stripe_info: [{}, true],
@@ -333,15 +331,12 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
       delivery_type: true,
       status: true,
       payment_type: true,
-      refund_amount: true,
       customer_id: true,
       customer_location_gps: true,
       customer_address: true,
       order_time: true,
       to_customer_delivery_id: true,
       from_customer_delivery_id: true,
-      to_location_address: true,
-      estimated_food_ready_time: true,
       customer_app_type: true,
       delivery_cost: true,
       stripe_info: [{}, true],
@@ -360,8 +355,10 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
           id: true,
           user_id: true,
           operator_details: {
+            id: true,
             status: true,
             owner: true,
+            online: true,
             notification_info: {
               token: true,
               turn_off_notifications: true
@@ -394,14 +391,16 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
   });
   return response.laundry_order.map((o): LaundryOrder => {
     let laundryOperators: Operator[] = o.store.operators.map((r) => {
-      return <Operator>{
+      return {
         id: r.id,
         userId: r.user_id,
+        detailsId: r.operator_details.id,
         serviceProviderId: o.store_id,
         status: r.operator_details.status as AuthorizationStatus,
         owner: r.operator_details.owner,
+        online: r.operator_details.online,
         notificationInfo: (r.operator_details.notification_info) ? {
-          AppTypeId: AppType.LaundryApp,
+          appType: AppType.LaundryApp,
           token: r.operator_details.notification_info.token,
           turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
         } : undefined,
