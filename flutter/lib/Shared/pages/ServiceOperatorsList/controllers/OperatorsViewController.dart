@@ -38,6 +38,7 @@ abstract class OperatorsListViewController {
     required int serviceLinkId,
   }) async {
     this.serviceProviderId = serviceProviderId;
+    this.serviceLinkId = serviceLinkId;
     await fetchOperators();
     await fetchServiceLinks();
 
