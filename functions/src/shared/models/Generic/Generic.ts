@@ -13,6 +13,8 @@ export interface Review {
   toEntityType: string
 }
 
+export class MezError extends Error { /*...*/ }
+
 export enum Language {
   EN = "en",
   ES = "es",

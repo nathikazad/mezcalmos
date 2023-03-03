@@ -12,6 +12,7 @@ import { CustomerInfo } from '../../shared/models/Generic/User';
 import { ServiceProvider, ServiceProviderType } from '../../shared/models/Services/Service';
 import { updateLaundryOrderStripe } from '../../shared/graphql/laundry/order/updateOrder';
 import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvider';
+import { MezError } from '../../shared/models/Generic/Generic';
 
 let keys: Keys = getKeys();
 
@@ -219,16 +220,11 @@ export async function updateOrderIdAndFetchPaymentInfo(
       orderType = OrderType.Laundry
       break;
     default:
-      throw new HttpsError(
-        "internal",
-        "invalid order type"
-      );
+      throw new MezError("invalidOrderType");
+
   }
   if(!(serviceProvider.stripeInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Service provider does not have a stripe account"
-    );
+    throw new MezError("noStripeAccountOfServiceProvider");
   }
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);

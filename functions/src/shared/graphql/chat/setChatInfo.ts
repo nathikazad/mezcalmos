@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { ParticipantType } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
+import { MezError } from "../../models/Generic/Generic";
 import { DeliveryType, OrderType } from "../../models/Generic/Order";
 import { CustomerInfo } from "../../models/Generic/User";
 import { LaundryOrder } from "../../models/Services/Laundry/LaundryOrder";
@@ -11,16 +12,10 @@ import { ServiceProvider } from "../../models/Services/Service";
 export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: ServiceProvider, delivery: DeliveryOrder, customer: CustomerInfo) {
 
   if(restaurantOrder.chatId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No chat id"
-    );
+    throw new MezError("noChatId");
   }
   if(delivery.chatWithServiceProviderId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No delivery chat with restaurant id"
-    );
+    throw new MezError("noRestaurantDeliveryChatId");
   }
   let chain = getHasura();
   

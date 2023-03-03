@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
 import { DeliveryOperator } from "../../../models/Generic/Delivery";
 import { AddOperatorDetails } from "../../../operator/addOperator";
 
@@ -33,10 +32,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
         }]
     });
     if(mutationResponse.insert_delivery_operator_one == null) {
-        throw new HttpsError(
-          "internal",
-          "operator creation error or operator is already working for this delivery company"
-        );
+        throw new MezError("operatorCreationError");
     }
     return {
         id: mutationResponse.insert_delivery_operator_one.id,

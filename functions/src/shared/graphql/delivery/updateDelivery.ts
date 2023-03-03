@@ -1,14 +1,11 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { MezError } from "../../models/Generic/Generic";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
   if(deliveryOrder.deliveryId == null) {
-    throw new HttpsError(
-      "internal",
-      "delivery order id not provided"
-    );
+    throw new MezError("noDeliveryOrderId");
   }
   await chain.mutation({
     update_delivery_order_by_pk: [{

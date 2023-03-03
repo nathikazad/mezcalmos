@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../utilities/hasura";
-import { AuthorizationStatus, AppType, Language } from "../models/Generic/Generic";
+import { AuthorizationStatus, AppType, Language, MezError } from "../models/Generic/Generic";
 import { ServiceProvider, Operator, OpenStatus, ServiceProviderType } from "../models/Services/Service";
 
 
@@ -104,10 +103,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
         }]
     });
     if(response.service_provider_details_by_pk == null) {
-        throw new HttpsError(
-            "internal",
-            "No service provider with that id found"
-        );
+        throw new MezError("serviceProviderDetailsNotFound");
     }
     switch (response.service_provider_details_by_pk.service_provider_type) {
         case ServiceProviderType.Restaurant:
@@ -247,10 +243,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                 //     : undefined,
             }
         default:
-            throw new HttpsError(
-                "internal",
-                "Invalid service provider type"
-            );
+            throw new MezError("serviceProviderNotFound");
             
     }
 }

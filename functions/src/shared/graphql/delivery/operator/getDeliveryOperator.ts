@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, Language, NotificationInfo } from "../../../models/Generic/Generic";
+import { AppType, Language, MezError, NotificationInfo } from "../../../models/Generic/Generic";
 import { DeliveryOperator } from "../../../models/Generic/Delivery";
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
 
@@ -35,10 +35,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
         }]
     })
     if (response.delivery_operator == null) {
-        throw new HttpsError(
-            "internal",
-            "No delivery company with that id found or company has no operators"
-        );
+        throw new MezError("deliveryCompanyOperatorsNotFound");
     }
     return response.delivery_operator.map((d) => {
         return {

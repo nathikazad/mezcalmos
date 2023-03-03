@@ -1,5 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { MezError } from "../../../models/Generic/Generic";
 import { Cart, CartItem } from "../../../models/Services/Restaurant/Cart";
 
 export async function getCart(customerId: number): Promise<Cart> {
@@ -36,10 +36,7 @@ export async function getCart(customerId: number): Promise<Cart> {
     });
 
     if(response.restaurant_cart == null || response.restaurant_cart.length == 0) {
-        throw new HttpsError(
-          "internal",
-          "Cart for that customer does not exist"
-        );
+        throw new MezError("cartNotFound");
     }
     // console.log("[GLOBAL[0]] SelectedOptions ===> ", response.restaurant_cart[0].items[0].selected_options);
     

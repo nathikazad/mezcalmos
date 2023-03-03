@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType, Language } from "../../models/Generic/Generic";
+import { AppType, Language, MezError } from "../../models/Generic/Generic";
 import { OpenStatus, Operator, ServiceProvider } from "../../models/Services/Service";
 import { AuthorizationStatus } from "../../models/Generic/Generic";
 
@@ -81,10 +80,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
   });
 
   if(response.restaurant_restaurant_by_pk == null || response.restaurant_restaurant_by_pk.details == null) {
-    throw new HttpsError(
-      "internal",
-      "No restaurant with that id found"
-    );
+    throw new MezError("restaurantNotFound");
   }
 
   let operators: Operator[] = response.restaurant_restaurant_by_pk.restaurant_operators.map((r): Operator => {

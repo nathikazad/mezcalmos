@@ -14,6 +14,17 @@ export interface AddDriverDetails {
     notificationInfo?: NotificationInfo,
     deliveryServiceProviderType: DeliveryServiceProviderType
 }
+export interface AddDriverResponse {
+    success: boolean,
+    error?: AddDriverResponseError
+    unhandledError?: string,
+    orderId?: number,
+}
+enum AddDriverResponseError {
+    UserNotFound = "userNotFound",
+    OperatorCreationError = "operatorCreationError",
+    DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound"
+}
 
 export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {
     //first mutation
