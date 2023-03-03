@@ -2,16 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:sizer/sizer.dart';
 
 class CustRequestCourierView extends StatefulWidget {
   const CustRequestCourierView({super.key});
@@ -159,41 +163,73 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
     );
   }
 
-  Row _fromFeild() {
-    return Row(
+  Widget _fromFeild() {
+    return Column(
       children: [
-        Flexible(
-          fit: FlexFit.tight,
-          child: Material(
-            elevation: 0.5,
-            borderRadius: BorderRadius.circular(10),
-            child: TextFormField(
-                style: Get.textTheme.bodyLarge,
-                decoration: InputDecoration(
-                  isDense: true,
-                  fillColor: Colors.white,
-                  hintText: "Enter location",
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                      gapPadding: 0),
-                )),
-          ),
+        Row(
+          children: [
+            Flexible(
+              fit: FlexFit.tight,
+              child: Material(
+                elevation: 0.5,
+                borderRadius: BorderRadius.circular(10),
+                child: TextFormField(
+                    style: Get.textTheme.bodyLarge,
+                    controller: viewController.fromLocText,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      fillColor: Colors.white,
+                      hintText: "Enter location",
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                          gapPadding: 0),
+                    )),
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            MezIconButton(
+              icon: Icons.place,
+              iconColor: Colors.black,
+              padding: const EdgeInsets.all(12),
+              backgroundColor: Colors.white,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(5),
+              onTap: () async {
+                final SavedLocation? _savedLocation = await MezRouter.toNamed(
+                  kPickLocationRoute,
+                  arguments: true,
+                ) as SavedLocation?;
+                if (_savedLocation != null) {
+                  viewController.addFromLoc(location: _savedLocation.location);
+                }
+              },
+            )
+          ],
         ),
         SizedBox(
-          width: 5,
+          height: 8,
         ),
-        MezIconButton(
-          icon: Icons.place,
-          iconColor: Colors.black,
-          padding: const EdgeInsets.all(12),
-          backgroundColor: Colors.white,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(5),
-          onTap: () {},
+        Row(
+          children: [
+            Icon(
+              Icons.info_outline,
+              color: primaryBlueColor,
+              size: 16.sp,
+            ),
+            SizedBox(
+              width: 3,
+            ),
+            Text(
+              "This field can be empty",
+              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+            )
+          ],
         )
       ],
     );

@@ -22,7 +22,9 @@ class CustRequestCourierItems extends StatelessWidget {
               children: List.generate(
                   viewController.items.length,
                   (int index) => _buildItem(
-                      item: viewController.items[index], index: index)),
+                      item: viewController.items[index],
+                      index: index,
+                      context: context)),
             ),
           ),
           SizedBox(
@@ -38,7 +40,10 @@ class CustRequestCourierItems extends StatelessWidget {
     );
   }
 
-  Widget _buildItem({required CourierItem item, required int index}) {
+  Widget _buildItem(
+      {required CourierItem item,
+      required int index,
+      required BuildContext context}) {
     return Column(
       children: [
         SizedBox(
@@ -93,15 +98,50 @@ class CustRequestCourierItems extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                MezIconButton(
-                  icon: Icons.image,
-                  iconColor: Colors.black,
-                  padding: const EdgeInsets.all(12),
-                  backgroundColor: Colors.white,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () {},
+                Obx(
+                  () => InkWell(
+                    onTap: () async {
+                      await viewController.addItemImage(
+                          itemIndex: index, context: context);
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        image:
+                            (viewController.imagesFiles[index].path.isNotEmpty)
+                                ? DecorationImage(
+                                    image: FileImage(
+                                        viewController.imagesFiles[index]))
+                                : null,
+                      ),
+                      child: (viewController.imagesFiles[index].path.isNotEmpty)
+                          ? MezIconButton(
+                              onTap: () async {
+                                await viewController.addItemImage(
+                                    itemIndex: index, context: context);
+                              },
+                              iconSize: 12,
+                              icon: Icons.edit,
+                              backgroundColor:
+                                  secondaryLightBlueColor.withOpacity(0.5),
+                            )
+                          : (viewController.imagesLoading.contains(index))
+                              ? CircularProgressIndicator()
+                              : Icon(Icons.image),
+                    ),
+                  ),
                 )
+                // MezIconButton(
+                //   icon: Icons.image,
+                //   iconColor: Colors.black,
+                //   padding: const EdgeInsets.all(12),
+                //   backgroundColor: Colors.white,
+                //   shape: BoxShape.rectangle,
+                //   borderRadius: BorderRadius.circular(5),
+                //   onTap: () {},
+                // )
               ],
             ),
           ],
