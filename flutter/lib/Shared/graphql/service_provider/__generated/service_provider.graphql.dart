@@ -286,7 +286,7 @@ const documentNodeQuerygetServiceProviderLinks = DocumentNode(definitions: [
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'id'),
-            value: VariableNode(name: NameNode(value: 'id')),
+            value: VariableNode(name: NameNode(value: 'serviceLinkId')),
           )
         ],
         directives: [],

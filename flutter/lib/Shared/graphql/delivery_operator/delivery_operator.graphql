@@ -46,7 +46,7 @@ query getCompanyOerators($companyId: Int!) {
     id
     operator_details {
       owner
-      app_version
+      
 
       status
     }

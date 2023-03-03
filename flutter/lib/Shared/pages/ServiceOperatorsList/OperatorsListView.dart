@@ -57,7 +57,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   void _settingVariables() {
     serviceProviderId = widget.serviceProviderId ??
         int.tryParse(Get.parameters["serviceProviderId"]!);
-    serviceProviderId =
+    serviceLinkId =
         widget.serviceLinkId ?? int.tryParse(Get.parameters["serviceLinkId"]!);
     showAppBar =
         widget.showAppBar ?? Get.arguments?["showAppBar"] as bool? ?? true;

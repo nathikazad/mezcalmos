@@ -80,49 +80,7 @@ query getDeliveryCompanies {
   }
 }
 
-# mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
-#   update_service_provider_company_by_pk(pk_columns: { id: $id }, _set: $data) {
-#     id
-#     details{ id
-#       approved
-#       description_id
-#       image
-#       location_id
-#       name
-#       open_status
-#       creation_time
-#       service_provider_type
-#       description {
-#         id
-#         translations {
-#           language_id
-#           value
-#         }
-#       }
-#        location {
-#       gps
-#       address
-#     }
-#     }
 
-#   }
-# }
-query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
-  delivery_get_delivery_companies(args: $args) {
-    id
-     delivery_details {
-      cost_per_km
-      customer_pickup
-      delivery_available
-      free_delivery_km_range
-      free_delivery_minimum_cost
-      id
-      radius
-      minimum_cost
-      self_delivery
-    }
-  }
-}
 
 query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
   delivery_get_delivery_companies(args: $args) {

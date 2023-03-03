@@ -2647,13 +2647,6 @@ const documentNodeQuerygetCompanyOerators = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'app_version'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'status'),
                 alias: null,
                 arguments: [],
@@ -3449,7 +3442,6 @@ class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$delivery_comp
 class Query$getCompanyOerators$delivery_operator$operator_details {
   Query$getCompanyOerators$delivery_operator$operator_details({
     required this.owner,
-    this.app_version,
     required this.status,
     required this.$__typename,
   });
@@ -3457,20 +3449,16 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
   factory Query$getCompanyOerators$delivery_operator$operator_details.fromJson(
       Map<String, dynamic> json) {
     final l$owner = json['owner'];
-    final l$app_version = json['app_version'];
     final l$status = json['status'];
     final l$$__typename = json['__typename'];
     return Query$getCompanyOerators$delivery_operator$operator_details(
       owner: (l$owner as bool),
-      app_version: (l$app_version as String?),
       status: (l$status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final bool owner;
-
-  final String? app_version;
 
   final String status;
 
@@ -3480,8 +3468,6 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
     final _resultData = <String, dynamic>{};
     final l$owner = owner;
     _resultData['owner'] = l$owner;
-    final l$app_version = app_version;
-    _resultData['app_version'] = l$app_version;
     final l$status = status;
     _resultData['status'] = l$status;
     final l$$__typename = $__typename;
@@ -3492,12 +3478,10 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
   @override
   int get hashCode {
     final l$owner = owner;
-    final l$app_version = app_version;
     final l$status = status;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$owner,
-      l$app_version,
       l$status,
       l$$__typename,
     ]);
@@ -3516,11 +3500,6 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
     final l$owner = owner;
     final lOther$owner = other.owner;
     if (l$owner != lOther$owner) {
-      return false;
-    }
-    final l$app_version = app_version;
-    final lOther$app_version = other.app_version;
-    if (l$app_version != lOther$app_version) {
       return false;
     }
     final l$status = status;
@@ -3562,7 +3541,6 @@ abstract class CopyWith$Query$getCompanyOerators$delivery_operator$operator_deta
 
   TRes call({
     bool? owner,
-    String? app_version,
     String? status,
     String? $__typename,
   });
@@ -3587,7 +3565,6 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$operator_details<
 
   TRes call({
     Object? owner = _undefined,
-    Object? app_version = _undefined,
     Object? status = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -3595,9 +3572,6 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$operator_details<
         owner: owner == _undefined || owner == null
             ? _instance.owner
             : (owner as bool),
-        app_version: app_version == _undefined
-            ? _instance.app_version
-            : (app_version as String?),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -3619,7 +3593,6 @@ class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$operator_deta
 
   call({
     bool? owner,
-    String? app_version,
     String? status,
     String? $__typename,
   }) =>

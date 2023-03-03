@@ -4716,64 +4716,52 @@ extension ClientExtension$Query$getNearByCompanies on graphql.GraphQLClient {
 class Query$getNearByCompanies$delivery_get_delivery_companies {
   Query$getNearByCompanies$delivery_get_delivery_companies({
     required this.id,
-    required this.delivery_details,
-    required this.$__typename,
     this.details,
+    required this.$__typename,
   });
 
   factory Query$getNearByCompanies$delivery_get_delivery_companies.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$delivery_details = json['delivery_details'];
-    final l$$__typename = json['__typename'];
     final l$details = json['details'];
+    final l$$__typename = json['__typename'];
     return Query$getNearByCompanies$delivery_get_delivery_companies(
       id: (l$id as int),
-      delivery_details:
-          Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details
-              .fromJson((l$delivery_details as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
       details: l$details == null
           ? null
           : Query$getNearByCompanies$delivery_get_delivery_companies$details
               .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details
-      delivery_details;
-
-  final String $__typename;
-
   final Query$getNearByCompanies$delivery_get_delivery_companies$details?
       details;
+
+  final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$delivery_details = delivery_details;
-    _resultData['delivery_details'] = l$delivery_details.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
     return _resultData;
   }
 
   @override
   int get hashCode {
     final l$id = id;
-    final l$delivery_details = delivery_details;
-    final l$$__typename = $__typename;
     final l$details = details;
+    final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$delivery_details,
-      l$$__typename,
       l$details,
+      l$$__typename,
     ]);
   }
 
@@ -4791,19 +4779,14 @@ class Query$getNearByCompanies$delivery_get_delivery_companies {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$delivery_details = delivery_details;
-    final lOther$delivery_details = other.delivery_details;
-    if (l$delivery_details != lOther$delivery_details) {
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
       return false;
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
       return false;
     }
     return true;
@@ -4835,13 +4818,9 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies
 
   TRes call({
     int? id,
-    Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details?
-        delivery_details,
-    String? $__typename,
     Query$getNearByCompanies$delivery_get_delivery_companies$details? details,
+    String? $__typename,
   });
-  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-      TRes> get delivery_details;
   CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$details<
       TRes> get details;
 }
@@ -4865,32 +4844,19 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies<
 
   TRes call({
     Object? id = _undefined,
-    Object? delivery_details = _undefined,
-    Object? $__typename = _undefined,
     Object? details = _undefined,
+    Object? $__typename = _undefined,
   }) =>
       _then(Query$getNearByCompanies$delivery_get_delivery_companies(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        delivery_details: delivery_details == _undefined ||
-                delivery_details == null
-            ? _instance.delivery_details
-            : (delivery_details
-                as Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
         details: details == _undefined
             ? _instance.details
             : (details
                 as Query$getNearByCompanies$delivery_get_delivery_companies$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
       ));
-  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-      TRes> get delivery_details {
-    final local$delivery_details = _instance.delivery_details;
-    return CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details(
-        local$delivery_details, (e) => call(delivery_details: e));
-  }
-
   CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$details<
       TRes> get details {
     final local$details = _instance.details;
@@ -4914,332 +4880,15 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies
 
   call({
     int? id,
-    Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details?
-        delivery_details,
-    String? $__typename,
     Query$getNearByCompanies$delivery_get_delivery_companies$details? details,
+    String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-          TRes>
-      get delivery_details =>
-          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details
-              .stub(_res);
   CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$details<
           TRes>
       get details =>
           CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$details
               .stub(_res);
-}
-
-class Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details {
-  Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details({
-    required this.cost_per_km,
-    required this.customer_pickup,
-    required this.delivery_available,
-    this.free_delivery_km_range,
-    this.free_delivery_minimum_cost,
-    required this.id,
-    required this.radius,
-    required this.minimum_cost,
-    required this.self_delivery,
-    required this.$__typename,
-  });
-
-  factory Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details.fromJson(
-      Map<String, dynamic> json) {
-    final l$cost_per_km = json['cost_per_km'];
-    final l$customer_pickup = json['customer_pickup'];
-    final l$delivery_available = json['delivery_available'];
-    final l$free_delivery_km_range = json['free_delivery_km_range'];
-    final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
-    final l$id = json['id'];
-    final l$radius = json['radius'];
-    final l$minimum_cost = json['minimum_cost'];
-    final l$self_delivery = json['self_delivery'];
-    final l$$__typename = json['__typename'];
-    return Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details(
-      cost_per_km: moneyFromJson(l$cost_per_km),
-      customer_pickup: (l$customer_pickup as bool),
-      delivery_available: (l$delivery_available as bool),
-      free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
-      free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
-          ? null
-          : moneyFromJson(l$free_delivery_minimum_cost),
-      id: (l$id as int),
-      radius: (l$radius as int),
-      minimum_cost: moneyFromJson(l$minimum_cost),
-      self_delivery: (l$self_delivery as bool),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final double cost_per_km;
-
-  final bool customer_pickup;
-
-  final bool delivery_available;
-
-  final double? free_delivery_km_range;
-
-  final double? free_delivery_minimum_cost;
-
-  final int id;
-
-  final int radius;
-
-  final double minimum_cost;
-
-  final bool self_delivery;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$cost_per_km = cost_per_km;
-    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
-    final l$customer_pickup = customer_pickup;
-    _resultData['customer_pickup'] = l$customer_pickup;
-    final l$delivery_available = delivery_available;
-    _resultData['delivery_available'] = l$delivery_available;
-    final l$free_delivery_km_range = free_delivery_km_range;
-    _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
-    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
-    _resultData['free_delivery_minimum_cost'] =
-        l$free_delivery_minimum_cost == null
-            ? null
-            : moneyToJson(l$free_delivery_minimum_cost);
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$radius = radius;
-    _resultData['radius'] = l$radius;
-    final l$minimum_cost = minimum_cost;
-    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
-    final l$self_delivery = self_delivery;
-    _resultData['self_delivery'] = l$self_delivery;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$cost_per_km = cost_per_km;
-    final l$customer_pickup = customer_pickup;
-    final l$delivery_available = delivery_available;
-    final l$free_delivery_km_range = free_delivery_km_range;
-    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
-    final l$id = id;
-    final l$radius = radius;
-    final l$minimum_cost = minimum_cost;
-    final l$self_delivery = self_delivery;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$cost_per_km,
-      l$customer_pickup,
-      l$delivery_available,
-      l$free_delivery_km_range,
-      l$free_delivery_minimum_cost,
-      l$id,
-      l$radius,
-      l$minimum_cost,
-      l$self_delivery,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$cost_per_km = cost_per_km;
-    final lOther$cost_per_km = other.cost_per_km;
-    if (l$cost_per_km != lOther$cost_per_km) {
-      return false;
-    }
-    final l$customer_pickup = customer_pickup;
-    final lOther$customer_pickup = other.customer_pickup;
-    if (l$customer_pickup != lOther$customer_pickup) {
-      return false;
-    }
-    final l$delivery_available = delivery_available;
-    final lOther$delivery_available = other.delivery_available;
-    if (l$delivery_available != lOther$delivery_available) {
-      return false;
-    }
-    final l$free_delivery_km_range = free_delivery_km_range;
-    final lOther$free_delivery_km_range = other.free_delivery_km_range;
-    if (l$free_delivery_km_range != lOther$free_delivery_km_range) {
-      return false;
-    }
-    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
-    final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
-    if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$radius = radius;
-    final lOther$radius = other.radius;
-    if (l$radius != lOther$radius) {
-      return false;
-    }
-    final l$minimum_cost = minimum_cost;
-    final lOther$minimum_cost = other.minimum_cost;
-    if (l$minimum_cost != lOther$minimum_cost) {
-      return false;
-    }
-    final l$self_delivery = self_delivery;
-    final lOther$self_delivery = other.self_delivery;
-    if (l$self_delivery != lOther$self_delivery) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details
-    on Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details {
-  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-          Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details>
-      get copyWith =>
-          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-    TRes> {
-  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details(
-    Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details
-        instance,
-    TRes Function(
-            Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details)
-        then,
-  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details;
-
-  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details;
-
-  TRes call({
-    double? cost_per_km,
-    bool? customer_pickup,
-    bool? delivery_available,
-    double? free_delivery_km_range,
-    double? free_delivery_minimum_cost,
-    int? id,
-    int? radius,
-    double? minimum_cost,
-    bool? self_delivery,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-        TRes>
-    implements
-        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-            TRes> {
-  _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details
-      _instance;
-
-  final TRes Function(
-          Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? cost_per_km = _undefined,
-    Object? customer_pickup = _undefined,
-    Object? delivery_available = _undefined,
-    Object? free_delivery_km_range = _undefined,
-    Object? free_delivery_minimum_cost = _undefined,
-    Object? id = _undefined,
-    Object? radius = _undefined,
-    Object? minimum_cost = _undefined,
-    Object? self_delivery = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details(
-        cost_per_km: cost_per_km == _undefined || cost_per_km == null
-            ? _instance.cost_per_km
-            : (cost_per_km as double),
-        customer_pickup:
-            customer_pickup == _undefined || customer_pickup == null
-                ? _instance.customer_pickup
-                : (customer_pickup as bool),
-        delivery_available:
-            delivery_available == _undefined || delivery_available == null
-                ? _instance.delivery_available
-                : (delivery_available as bool),
-        free_delivery_km_range: free_delivery_km_range == _undefined
-            ? _instance.free_delivery_km_range
-            : (free_delivery_km_range as double?),
-        free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
-            ? _instance.free_delivery_minimum_cost
-            : (free_delivery_minimum_cost as double?),
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        radius: radius == _undefined || radius == null
-            ? _instance.radius
-            : (radius as int),
-        minimum_cost: minimum_cost == _undefined || minimum_cost == null
-            ? _instance.minimum_cost
-            : (minimum_cost as double),
-        self_delivery: self_delivery == _undefined || self_delivery == null
-            ? _instance.self_delivery
-            : (self_delivery as bool),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-        TRes>
-    implements
-        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details<
-            TRes> {
-  _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$delivery_details(
-      this._res);
-
-  TRes _res;
-
-  call({
-    double? cost_per_km,
-    bool? customer_pickup,
-    bool? delivery_available,
-    double? free_delivery_km_range,
-    double? free_delivery_minimum_cost,
-    int? id,
-    int? radius,
-    double? minimum_cost,
-    bool? self_delivery,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Query$getNearByCompanies$delivery_get_delivery_companies$details {
