@@ -117,6 +117,25 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   label: "Operators"),
                               _navigationLink(
                                   onClick: () async {
+                                    if (_viewController.service.serviceLinkId !=
+                                        null) {
+                                      navigateToDrivers(
+                                          serviceLinkId: _viewController
+                                              .service.serviceLinkId!,
+                                          serviceProviderId:
+                                              _viewController.serviceId,
+                                          controllerType: _viewController
+                                              .service.serviceProviderType!);
+                                    } else {
+                                      showErrorSnackBar(
+                                          errorText:
+                                              "This service have no links please add them first");
+                                    }
+                                  },
+                                  icon: Icons.delivery_dining,
+                                  label: "Drivers"),
+                              _navigationLink(
+                                  onClick: () async {
                                     await MezRouter.toNamed(
                                         kserviceScheduleEdit);
                                   },
