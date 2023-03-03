@@ -18,15 +18,15 @@ export interface CourierRequest {
     fromLocationText?: string,
     items: Array<CourierItem>;
     deliveryCompanyId: number;
-    deliveryCost: number,
+    deliveryCost?: number,
     customerAppType: CustomerAppType,
     tax?: number,
     scheduledTime?: string,
     stripeFees?: number,
     discountValue?: number,
-    tripDistance: number,
-    tripDuration: number,
-    tripPolyline: string
+    tripDistance?: number,
+    tripDuration?: number,
+    tripPolyline?: string
     distanceFromBase?: number,
     refundAmount?: number,
 }
