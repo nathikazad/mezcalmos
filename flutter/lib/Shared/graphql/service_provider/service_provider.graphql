@@ -1,5 +1,5 @@
 query getServiceProviderLinks($serviceLinkId: Int!) {
-  service_provider_service_link_by_pk(id: $id) {
+  service_provider_service_link_by_pk(id: $serviceLinkId) {
     id
     driver_deep_link
     driver_qr_image_link

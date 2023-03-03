@@ -72,13 +72,15 @@ class DeliverySettingsViewController {
 
   Future<void> _initEditMode(
       int serviceProviderId, ServiceProviderType serviceProviderType) async {
-    selfDelivery.value = deliveryCost.value!.selfDelivery;
-    deliveryType.value = selfDelivery.value!
-        ? ServiceDeliveryType.Self_delivery
-        : ServiceDeliveryType.Delivery_Partner;
+    if (serviceProviderType != ServiceProviderType.DeliveryCompany) {
+      selfDelivery.value = deliveryCost.value!.selfDelivery;
+      deliveryType.value = selfDelivery.value!
+          ? ServiceDeliveryType.Self_delivery
+          : ServiceDeliveryType.Delivery_Partner;
 
-    deliveryPartnerId.value = await get_service_delivery_partner(
-        serviceId: serviceProviderId, providerType: serviceProviderType);
+      deliveryPartnerId.value = await get_service_delivery_partner(
+          serviceId: serviceProviderId, providerType: serviceProviderType);
+    }
 
     mezDbgPrint(
         "👋 Delivery patner id ==================>>>>${deliveryPartnerId.value}");
@@ -140,7 +142,7 @@ class DeliverySettingsViewController {
   }
 
   Future<void> handleSave() async {
-    if (isSelfDelivery) {
+    if (isDeliveryCompany || isSelfDelivery) {
       return _handleSaveDeliveryCost();
     } else {
       if (deliveryPartnerId.value != null) {
