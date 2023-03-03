@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -56,6 +58,17 @@ class ROpCurrentOrdersController {
               .listen((List<MinimalOrder>? event) {
         if (event != null) {
           currentOrders.value = event;
+
+          currentOrders.value.forEach((MinimalOrder order) {
+            mezDbgPrint(
+                "orders/inProcess/restaurant/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}");
+            Get.find<FirebaseDb>()
+                .firebaseDatabase
+                .ref()
+                .child(
+                    "orders/inProcess/restaurant/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}")
+                .set(true);
+          });
         }
       });
     }, cancel: () {
