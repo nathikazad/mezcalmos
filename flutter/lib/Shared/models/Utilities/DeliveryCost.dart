@@ -18,7 +18,7 @@ class DeliveryCost {
     required this.selfDelivery,
     required this.costPerKm,
     this.freeDeliveryMinimumCost,
-    this.freeDeliveryKmRange,
+    this.freeDeliveryKmRange = 0,
     this.radius,
     this.costPerKmFromBase,
   });

@@ -1,17 +1,20 @@
 import 'dart:async';
 
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_operator/hsLaundryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-abstract class OperatorsListViewController {
+class OperatorsListViewController {
   // instances and streams subscriptions
 
   RxList<Operator> operators = RxList.empty();
@@ -33,12 +36,15 @@ abstract class OperatorsListViewController {
 
   late int serviceProviderId;
   late int serviceLinkId;
+  late ServiceProviderType serviceProviderType;
   Future<void> init({
     required int serviceProviderId,
     required int serviceLinkId,
+    required ServiceProviderType serviceProviderType,
   }) async {
     this.serviceProviderId = serviceProviderId;
     this.serviceLinkId = serviceLinkId;
+    this.serviceProviderType = serviceProviderType;
     await fetchOperators();
     await fetchServiceLinks();
 
@@ -55,124 +61,58 @@ abstract class OperatorsListViewController {
   }
 
   Future<void> fetchOperators() async {
-    // try {
-    //   operators.value = await get_drivers_by_service_provider_id(
-    //           serviceProviderId: serviceProviderId, withCache: false) ??
-    //       [];
-    // } on Exception catch (e, stk) {
-    //   mezDbgPrint("Service dont have drivers yet");
-    //   mezDbgPrint(e);
-    //   mezDbgPrint(stk);
-    // }
-  }
+    switch (serviceProviderType) {
+      case ServiceProviderType.DeliveryCompany:
+        operators.value = await get_delivery_company_operators(
+                companyId: serviceProviderId, withCache: false) ??
+            [];
 
-  Future<ServerResponse> approveOperator(
-      {required bool approved, required int opId}) async {
-    final HttpsCallable cloudFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-authorizeRestaurantOperator');
-    try {
-      final HttpsCallableResult response = await cloudFunction
-          .call({"newOperatorId": opId, "approved": approved});
-      mezDbgPrint("Response : ${response.data}");
-      await fetchOperators();
-      return ServerResponse(ResponseStatus.Success);
-    } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      mezDbgPrint("Errrooooooooor =======> $stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+        break;
+      case ServiceProviderType.Restaurant:
+        operators.value = await get_restaurant_operators(
+                restaurantId: serviceProviderId, withCache: false) ??
+            [];
+
+        break;
+      case ServiceProviderType.Laundry:
+        operators.value = await get_laundry_operators(
+                laundryId: serviceProviderId, withCache: false) ??
+            [];
+
+        break;
+      default:
     }
   }
-}
 
-class DeliveryOperatorsListViewController extends OperatorsListViewController {
-  // todo change to auhtorize from company
-  @override
-  Future<void> fetchOperators() async {
-    operators.clear();
-    operators.value = await get_delivery_company_operators(
-            companyId: serviceProviderId, withCache: false) ??
-        [];
-  }
-
-  @override
-  Future<ServerResponse> approveOperator(
+  Future<void> approveOperator(
       {required bool approved, required int opId}) async {
-    final HttpsCallable cloudFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-authorizeRestaurantOperator');
     try {
-      final HttpsCallableResult response = await cloudFunction
-          .call({"newOperatorId": opId, "approved": approved});
-      mezDbgPrint("Response : ${response.data}");
+      await CloudFunctions.serviceProvider_authorizeOperator(
+          newOperatorId: opId, approved: approved, participantType: partType);
       await fetchOperators();
-      return ServerResponse(ResponseStatus.Success);
+    } on FirebaseException catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.message.toString());
     } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      mezDbgPrint("Errrooooooooor =======> $stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
-  // todo delete //
-}
 
-class RestaurantOperatorsListViewController
-    extends OperatorsListViewController {
-  @override
-  Future<void> fetchOperators() async {
-    operators.clear();
-    operators.value = await get_restaurant_operators(
-            restaurantId: serviceProviderId, withCache: false) ??
-        [];
-  }
-
-  @override
-  Future<ServerResponse> approveOperator(
-      {required bool approved, required int opId}) async {
-    final HttpsCallable cloudFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-authorizeRestaurantOperator');
-    try {
-      final HttpsCallableResult response = await cloudFunction
-          .call({"newOperatorId": opId, "approved": approved});
-      mezDbgPrint("Response : ${response.data}");
-      await fetchOperators();
-      return ServerResponse(ResponseStatus.Success);
-    } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      mezDbgPrint("Errrooooooooor =======> $stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+  cModel.ParticipantType get partType {
+    switch (serviceProviderType) {
+      case ServiceProviderType.Restaurant:
+        return cModel.ParticipantType.RestaurantOperator;
+        break;
+      case ServiceProviderType.Laundry:
+        return cModel.ParticipantType.LaundryOperator;
+        break;
+      case ServiceProviderType.DeliveryCompany:
+        return cModel.ParticipantType.DeliveryOperator;
+        break;
+      default:
+        return cModel.ParticipantType.RestaurantOperator;
     }
   }
-  // todo delete //
-}
-
-class LaundryOperatorsListViewController extends OperatorsListViewController {
-  @override
-  Future<void> fetchOperators() async {
-    operators.clear();
-    operators.value = await get_laundry_operators(
-            laundryId: serviceProviderId, withCache: false) ??
-        [];
-  }
-
-  @override
-  Future<ServerResponse> approveOperator(
-      {required bool approved, required int opId}) async {
-    final HttpsCallable cloudFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-authorizeRestaurantOperator');
-    try {
-      final HttpsCallableResult response = await cloudFunction
-          .call({"newOperatorId": opId, "approved": approved});
-      mezDbgPrint("Response : ${response.data}");
-      await fetchOperators();
-      return ServerResponse(ResponseStatus.Success);
-    } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      mezDbgPrint("Errrooooooooor =======> $stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-  // todo delete //
 }

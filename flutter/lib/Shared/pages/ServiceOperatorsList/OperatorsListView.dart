@@ -35,7 +35,7 @@ class OperatorsListView extends StatefulWidget {
 }
 
 class _OperatorsListViewState extends State<OperatorsListView> {
-  late OperatorsListViewController viewController;
+  OperatorsListViewController viewController = OperatorsListViewController();
   int? serviceProviderId;
   int? serviceLinkId;
   bool showAppBar = true;
@@ -43,13 +43,11 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   @override
   void initState() {
     _settingVariables();
-    if (serviceProviderType == ServiceProviderType.DeliveryCompany) {
-      viewController = DeliveryOperatorsListViewController();
-    } else {
-      viewController = RestaurantOperatorsListViewController();
-    }
+
     viewController.init(
-        serviceProviderId: serviceProviderId!, serviceLinkId: serviceLinkId!);
+        serviceProviderId: serviceProviderId!,
+        serviceLinkId: serviceLinkId!,
+        serviceProviderType: serviceProviderType!);
 
     super.initState();
   }
