@@ -5,14 +5,16 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class ROpDeeplinkHandler {
   StreamSubscription<PendingDynamicLinkData?>? _inDeepLinkListener;
-  Uri testUri = Uri.parse(
-      "https://mezprovs.page.link/?link=https://www.mezcalmos.com/?app=restaurantApp&type=Restaurant&id=8");
+  // Uri testUri = Uri.parse(
+  //     "https://mezprovs.page.link/?link=https://www.mezcalmos.com/?app=restaurantApp&type=Restaurant&id=8");
 
   /// This checks if `queryParameters.containsKey('type') && queryParameters.containsKey('id')`
   ///
@@ -56,8 +58,6 @@ class ROpDeeplinkHandler {
     await addOperator(providerId);
     // await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
     //    if (res.success) {
-    // ignore: unawaited_futures
-    MezRouter.toNamed(kOpUnauth);
     //  }
   }
 
@@ -80,11 +80,13 @@ class ROpDeeplinkHandler {
   /// This actually do the whole thing, from Capturing Deep Links -> Validating -> Routing.
   Future<void> startDynamicLinkCheckRoutine() async {
     try {
+      mezDbgPrint("🪢🪢🪢🪢🪢🪢Starting dynamic link checker");
       final PendingDynamicLinkData? data =
           await FirebaseDynamicLinks.instanceFor(
         app: Get.find<FirebaseDb>().firebaseApp,
       ).getInitialLink();
       final Uri? deepLink = data?.link;
+      mezDbgPrint("🪢🪢🪢🪢🪢🪢 deeplink $data");
       if (deepLink != null) {
         await _checkQueryValidityAndHandleRouting(deepLink);
       }
@@ -95,14 +97,13 @@ class ROpDeeplinkHandler {
   }
 
   Future<ServerResponse> addOperator(int providerId) async {
-    final HttpsCallable cloudFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-addRestaurantOperator');
     try {
-      final HttpsCallableResult response = await cloudFunction.call({
-        "restaurantId": providerId,
-      });
-      mezDbgPrint("Response : ${response.data}");
-
+      await CloudFunctions.serviceProvider_addOperator(
+          serviceProviderId: providerId,
+          participantType: ParticipantType.RestaurantOperator);
+      // mezDbgPrint("Response : ${response.data}");
+      // ignore: unawaited_futures
+      MezRouter.toNamed(kOpUnauth);
       return ServerResponse(ResponseStatus.Success);
     } catch (e, stk) {
       mezDbgPrint("Errrooooooooor =======> $e,$stk");
