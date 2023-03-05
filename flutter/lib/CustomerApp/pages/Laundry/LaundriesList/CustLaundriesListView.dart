@@ -3,13 +3,19 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/controllers/CustLaundriesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
 
 class CustLaundriesListView extends StatefulWidget {
   const CustLaundriesListView({Key? key}) : super(key: key);
+
+  static Future<void> navigate() {
+    return MezRouter.toNamed<void>(LaundryRouters.laundriesListRoute);
+  }
 
   @override
   State<CustLaundriesListView> createState() => _CustLaundriesListViewState();
@@ -18,6 +24,7 @@ class CustLaundriesListView extends StatefulWidget {
 class _CustLaundriesListViewState extends State<CustLaundriesListView> {
   CustLaundriesListViewController viewController =
       CustLaundriesListViewController();
+
   @override
   void initState() {
     viewController.init();

@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['CreateServiceView'];
@@ -35,6 +36,7 @@ class CreateServiceViewController {
   PageController pageController = PageController(initialPage: 0);
   GlobalKey<FormState> costFormKey = GlobalKey();
   GlobalKey<FormState> infoFromKey = GlobalKey();
+
   // text inputs //
   TextEditingController serviceName = TextEditingController();
   TextEditingController freeKmRange = TextEditingController();
@@ -58,10 +60,12 @@ class CreateServiceViewController {
   final Rxn<File> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
+
   // schedule //
   final Rx<Schedule> newSchedule = Rx(Schedule.fromData(defaultSchedule));
   final Rx<Schedule> schedulePreview = Rx(Schedule.fromData(defaultSchedule));
   final Rx<Schedule> oldSchedule = Rx(Schedule.fromData(defaultSchedule));
+
   // vars
   late ServiceProviderType serviceType;
 
@@ -238,9 +242,10 @@ class CreateServiceViewController {
       case 2:
         if (!serviceInput.value.isSelfDelivery) {
           if (serviceInput.value.deliveryPartnerId == null) {
-            Get.snackbar("${_i18n()['selectCompany']}",
-                "${_i18n()['selectCompanyText']}",
-                backgroundColor: Colors.black, colorText: Colors.white);
+            customSnackBar(
+              title: "${_i18n()['selectCompany']}",
+              subTitle: "${_i18n()['selectCompanyText']}",
+            );
           }
           return serviceInput.value.isValid;
         } else {
@@ -256,6 +261,7 @@ class CreateServiceViewController {
       serviceName.text.length > 3 &&
       newLocation.value != null &&
       newImageUrl.value != null;
+
   bool get _isDeliveryCostValid {
     return costFormKey.currentState?.validate() == true;
   }

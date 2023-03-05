@@ -6,29 +6,46 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOr
     deferred as LaundryOrderRequestView;
 import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryScreen.dart'
     deferred as singleLaundryView;
-
+import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LaundryRouters {
-  static const String laundryOrderRequest = '/laundryOrderRequest';
-  static const String laundryCurrentOrder = '/laundryOrders';
-  static const String laundryListView = '/laundriesList';
+  static const String laundryOrderRequestRoute =
+      '/laundryOrderRequest/:laundryId';
+  static const String laundryOrdersRoute = '/laundryOrders/:orderId';
+  static const String laundriesListRoute = '/laundriesList';
+  static const String singleLaundryRoute = "/singleLaundry/:laundryId";
 
-  String getLaundryOrderWithId(int orderId) => '/laundryOrders/$orderId';
+  static String getLaundryOrderWithId(int orderId) => '/laundryOrders/$orderId';
 
-  final routes = QRoute(
-      path: laundryOrderRequest,
-      name: laundryOrderRequest,
-      builder: () => LaundryOrderRequestView.CustLaundryOrderRequestView(),
-      children: [
-        QRoute(
-          path: laundryCurrentOrder,
-          name: laundryCurrentOrder,
-          builder: () => laundryOrderView.CustLaundryOrderView(),
-        ),
-        QRoute(
-            name: laundryListView,
-            path: laundryListView,
-            builder: () => laundriesListView.CustLaundriesListView()),
-      ]);
+  final List<QRoute> routes = [
+    QRoute(
+        name: laundriesListRoute,
+        path: laundriesListRoute,
+        builder: () => laundriesListView.CustLaundriesListView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(laundriesListView.loadLibrary)
+        ]),
+    QRoute(
+        path: laundryOrderRequestRoute,
+        name: laundryOrderRequestRoute,
+        builder: () => LaundryOrderRequestView.CustLaundryOrderRequestView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(LaundryOrderRequestView.loadLibrary)
+        ]),
+    QRoute(
+        path: laundryOrdersRoute,
+        name: laundryOrdersRoute,
+        builder: () => laundryOrderView.CustLaundryOrderView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(laundryOrderView.loadLibrary)
+        ]),
+    QRoute(
+        name: singleLaundryRoute,
+        path: singleLaundryRoute,
+        builder: () => singleLaundryView.SingleLaundryScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(singleLaundryView.loadLibrary)
+        ]),
+  ];
 }

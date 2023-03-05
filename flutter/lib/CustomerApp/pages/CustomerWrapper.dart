@@ -8,11 +8,11 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
-import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/laundryListRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/ordersRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -225,10 +225,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
-                  // serviceRoute: LaundryListRouters.laundryListView,
-                  singleOrderRoute: (int v) {
-                    MezRouter.toNamed<void>(
-                        LaundryRouters().getLaundryOrderWithId(v));
+                  serviceRoute: CustLaundriesListView.navigate,
+                  singleOrderRoute: (int orderId) {
+                    CustLaundryOrderView.navigate(orderId: orderId);
                   });
             },
           ),
@@ -275,11 +274,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           //   MezRouter.popEverythingAndNavigateTo(
           //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));
         } else if (_orderController!.hasOneOrderType == OrderType.Laundry) {
-          MezRouter.popEverythingAndNavigateTo(LaundryRouters()
-              .getLaundryOrderWithId(_orderController!.hasOneOrderId!));
+          MezRouter.popEverythingAndNavigateTo(CustLaundryOrderView.navigate(
+              orderId: _orderController!.hasOneOrderId!));
         }
       } else if (_orderController!.hasManyOrders) {
-        MezRouter.popEverythingAndNavigateTo(OrdersRoutes.customerOrdersRoute);
+        MezRouter.popEverythingAndNavigateTo(
+            CustomerRoutes.customerOrdersRoute);
       }
     }
   }

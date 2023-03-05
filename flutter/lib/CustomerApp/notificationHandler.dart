@@ -11,6 +11,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
+import 'pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
 
@@ -57,7 +59,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.local_laundry_service,
-    linkUrl: LaundryRouters().getLaundryOrderWithId(value['orderId']),
+    linkUrl: LaundryRouters.getLaundryOrderWithId(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],

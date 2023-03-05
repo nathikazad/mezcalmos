@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpChoiceView"];
@@ -19,6 +20,7 @@ class ROpChoiceViewController {
   // vars //
   late int restaurantId;
   String? optionId;
+
   // form//
   bool firstTabValid = false;
   bool secondTabValid = false;
@@ -112,10 +114,11 @@ class ROpChoiceViewController {
     final bool response = await update_choice_by_id(
         choiceId: choice.value!.id, choice: _contructChoice());
     if (response) {
-      Get.snackbar("${_i18n()['saved']}", "${_i18n()['savedText']}",
+      customSnackBar(
+          title: _i18n()['saved'],
+          subTitle: _i18n()['savedText'],
           backgroundColor: Colors.black,
-          colorText: Colors.white,
-          shouldIconPulse: false,
+          textColor: Colors.white,
           icon: Icon(
             Icons.check_circle,
             color: Colors.green,
@@ -130,14 +133,16 @@ class ROpChoiceViewController {
         optionId: int.parse(optionId!),
         restaurantId: restaurantId);
     if (newChoiceId != null) {
-      Get.snackbar("${_i18n()['added']}", "${_i18n()['addedText']}",
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-          shouldIconPulse: false,
-          icon: Icon(
-            Icons.check_circle,
-            color: primaryBlueColor,
-          ));
+      customSnackBar(
+        title: _i18n()['added'],
+        subTitle: _i18n()['addedText'],
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        icon: Icon(
+          Icons.check_circle,
+          color: primaryBlueColor,
+        ),
+      );
       choice.value = await get_choice_by_id(newChoiceId);
       if (choice.value != null) {
         editMode.value = true;

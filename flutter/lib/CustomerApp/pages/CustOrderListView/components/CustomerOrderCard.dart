@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -257,8 +258,7 @@ class CustomerOrderCard extends StatelessWidget {
         ViewRestaurantOrderScreen.navigate(orderId: order.orderId);
         break;
       case OrderType.Laundry:
-        MezRouter.toNamed(
-            LaundryRouters().getLaundryOrderWithId(order.orderId));
+        CustLaundryOrderView.navigate(orderId: order.orderId);
 
         break;
       // case OrderType.Taxi:

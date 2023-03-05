@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleView/
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
@@ -25,6 +26,7 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
       ServiceScheduleViewController();
   late ServiceScheduleWidgets _viewWidgets;
   int? serviceProviderId;
+
   @override
   void initState() {
     _viewWidgets = ServiceScheduleWidgets(
@@ -88,11 +90,11 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
           withGradient: false,
           height: 70,
           onClick: () async {
-            await viewController.updateSchedule().then((bool value) =>
-                Get.snackbar('${_i18n()["saved"]}', '${_i18n()["savedText"]}',
-                    backgroundColor: Colors.black,
-                    colorText: Colors.white,
-                    shouldIconPulse: false,
+            await viewController
+                .updateSchedule()
+                .then((bool value) => customSnackBar(
+                    title: '${_i18n()["saved"]}',
+                    subTitle: '${_i18n()["savedText"]}',
                     icon: Icon(
                       Icons.check_circle,
                       color: Colors.green,

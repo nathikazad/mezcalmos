@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/controllers/CustLaundryOrderRequestViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
+import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -24,6 +26,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 class CustLaundryOrderRequestView extends StatefulWidget {
   const CustLaundryOrderRequestView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int laundryId}) {
+    return MezRouter.toPath<void>(LaundryRouters.laundryOrderRequestRoute
+        .replaceAll(":laundryId", laundryId.toString()));
+  }
+
   @override
   State<CustLaundryOrderRequestView> createState() =>
       _CustLaundryOrderRequestViewState();
@@ -34,9 +41,20 @@ class _CustLaundryOrderRequestViewState
   CustLaundryOrderRequestViewController viewController =
       CustLaundryOrderRequestViewController();
 
+  late final Laundry? _laundry;
+
   @override
   void initState() {
-    viewController.init(laundry: Get.arguments);
+    final int? laundryId =
+        int.tryParse(MezRouter.urlArguments["laundryId"].toString());
+
+    if (laundryId != null) {
+      Future(() async {
+        _laundry = await get_laundry_store_by_id(id: laundryId);
+        await viewController.init(laundry: _laundry!);
+      });
+    }
+
     super.initState();
   }
 
@@ -306,10 +324,7 @@ class _CustLaundryOrderRequestViewState
             final num? res = await viewController.createLaundryOrder();
             if (res != null) {
               MezRouter.popEverythingAndNavigateTo(
-                LaundryRouters().getLaundryOrderWithId(
-                  res.toInt(),
-                ),
-              );
+                  CustLaundryOrderView.navigate(orderId: res.toInt()));
             }
           } else {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =

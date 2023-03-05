@@ -39,6 +39,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
   }
 
   RxBool isClicked = RxBool(false);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -166,8 +167,13 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
         await _setOrderEstTime(selectedDate.value!);
 
         MezRouter.popDialog(closeOverlays: true);
-        showSuccessSnackBar(
-            tilte: "Done", subtitle: "Estimated food ready time saved");
+        customSnackBar(
+            title: 'Done',
+            subTitle: 'Estimated food ready time saved',
+            icon: Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ));
       },
       withGradient: true,
     );

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -21,6 +22,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class SingleLaundryScreen extends StatefulWidget {
   const SingleLaundryScreen({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int laundryId}) {
+    return MezRouter.toPath<void>(LaundryRouters.singleLaundryRoute
+        .replaceAll(":laundryId", laundryId.toString()));
+  }
+
   @override
   State<SingleLaundryScreen> createState() => _SingleLaundryScreenState();
 }
@@ -30,9 +36,10 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   Rxn<Laundry> laundry = Rxn();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
+
   @override
   void initState() {
-    laundryId = int.tryParse(Get.parameters["laundryId"] ?? "");
+    laundryId = int.tryParse(MezRouter.urlArguments["laundryId"].toString());
     if (laundryId != null) {
       Future(() async =>
           laundry.value = await get_laundry_store_by_id(id: laundryId!));
@@ -164,11 +171,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             backgroundColor: Colors.transparent),
         child: Text("${_i18n()["sendMyLaundry"]}"),
         onPressed: () {
-          MezRouter.toNamed(LaundryRouters.laundryOrderRequest, arguments: {}
-              //change argument
-              //laundry.value
-
-              );
+          CustLaundryOrderRequestView.navigate(laundryId: laundryId!);
         },
       ),
     );

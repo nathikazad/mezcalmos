@@ -18,8 +18,11 @@ class MRoute {
 class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static final List<MRoute> _navigationStack = <MRoute>[];
   static Map<String, dynamic>? _arguments;
+
   static Map<String, dynamic>? get bodyArguments => _arguments;
+
   static QParams get urlArguments => QR.params;
+
   // This will act as a lock, basically if there's any push/pop happening, we lock other functionalities to avoid race conditions
   // static bool _isBusy = false;
   static final List<Function> _delegates = [];
@@ -346,7 +349,8 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   }
 
   static Future<void> popEverything() {
-    // @abhishek implement popEverything till kHomeRoute
+    Navigator.of(QR.context!).pushNamedAndRemoveUntil(
+        SharedRoutes.kHomeRoute, (Route<dynamic> route) => false);
     return Future<void>.delayed(Duration.zero);
   }
 

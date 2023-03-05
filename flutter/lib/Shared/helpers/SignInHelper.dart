@@ -22,8 +22,10 @@ Future<void> signUp(String email, String password) async {
         .createUserWithEmailAndPassword(email: email, password: password);
     MezRouter.back<Null>();
   } catch (e) {
-    Get.snackbar("Error creating your account!", e.toString(),
-        snackPosition: SnackPosition.BOTTOM);
+    customSnackBar(
+      title: 'Error creating your account!',
+      subTitle: e.toString(),
+    );
   }
 }
 
@@ -37,8 +39,10 @@ Future<void> signIn(String email, String password) async {
         .then(
       (fireAuth.UserCredential value) {},
       onError: ((Object e, StackTrace stackTrace) {
-        Get.snackbar("Failed to Sign you in!", e.toString(),
-            snackPosition: SnackPosition.BOTTOM);
+        customSnackBar(
+          title: 'Failed to Sign you in!',
+          subTitle: e.toString(),
+        );
       }),
     );
   } catch (e, s) {
@@ -55,8 +59,10 @@ Future<void> signOut() async {
     Get.appUpdate();
     mezDbgPrint("AuthController: Sign out finished");
   } catch (e) {
-    Get.snackbar("Failed to Sign you out!", e.toString(),
-        snackPosition: SnackPosition.BOTTOM);
+    customSnackBar(
+      title: 'Failed to Sign you out!',
+      subTitle: e.toString(),
+    );
     print(e);
   }
 }

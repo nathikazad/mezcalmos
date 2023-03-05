@@ -6,6 +6,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:dart_ping/dart_ping.dart';
 
 enum InternetStatus { Online, Slow, Offline }
 
@@ -75,6 +76,9 @@ class ConnectivityHelper {
 
   Future<bool> _pingServer(String pingUrl) async {
     try {
+      final Ping result = Ping('google.com', count: 5);
+
+      return result.toString().isNotEmpty;
       // final List<InternetAddress> result =
       //     await InternetAddress.lookup(pingUrl);
       // return result.isNotEmpty;

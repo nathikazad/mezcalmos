@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -89,20 +90,6 @@ extension DateTimeCopy on DateTime {
   DateTime copyWithDate(DateTime newDate) {
     return new DateTime(newDate.year, newDate.month, newDate.day, hour, minute);
   }
-}
-
-SnackbarController showSuccessSnackBar(
-    {required String tilte,
-    required String subtitle,
-    Color? iconColor = Colors.green}) {
-  return Get.snackbar(tilte, subtitle,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
-      icon: Icon(
-        Icons.check_circle,
-        color: Colors.green,
-      ));
 }
 
 Future<DateTime?> getDatePicker(
@@ -588,12 +575,12 @@ Future<int?> showReviewDialog(
 
                   final int? reviewId = await insert_review(review: review);
                   if (reviewId != null) {
-                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
-                        "${_i18n()["review"]["successSubtitle"]}",
-                        backgroundColor: Colors.black, colorText: Colors.white);
+                    customSnackBar(
+                      title: _i18n()["review"]["successTitle"],
+                      subTitle: _i18n()["review"]["successSubtitle"],
+                    );
                   } else {
-                    Get.snackbar("Error", "error",
-                        backgroundColor: Colors.black, colorText: Colors.white);
+                    customSnackBar(title: 'Error', subTitle: 'error');
                   }
                   MezRouter.popDialog(result: reviewId, closeOverlays: true);
                 },
@@ -695,24 +682,20 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
   }
 }
 
-SnackbarController showSavedSnackBar({String? title, String? subtitle}) {
-  return Get.snackbar(
-      title ?? "${_i18n()['saved']}", subtitle ?? "${_i18n()['savedTitle']}",
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
+void showSavedSnackBar({String? title, String? subtitle}) {
+  return customSnackBar(
+      title: _i18n()['saved'],
+      subTitle: _i18n()['savedTitle'],
       icon: Icon(
         Icons.check_circle,
         color: Colors.green,
       ));
 }
 
-SnackbarController showErrorSnackBar(
-    {String errorTitle = "Error", String errorText = ""}) {
-  return Get.snackbar(errorTitle, errorText,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
+void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
+  return customSnackBar(
+      title: errorTitle,
+      subTitle: errorText,
       icon: Icon(
         Icons.cancel,
         color: Colors.redAccent,

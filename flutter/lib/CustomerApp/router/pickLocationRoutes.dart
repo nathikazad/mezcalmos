@@ -9,23 +9,22 @@ class PickLocationRoutes {
   static const String pickLocationNotAuth =
       '/pickLocationFromMap/addLocationNoAuth';
 
-  final routes = QRoute(
-      path: pickLocationRoute,
-      name: pickLocationRoute,
+  final List<QRoute> routes = [
+    QRoute(
+        path: pickLocationRoute,
+        name: pickLocationRoute,
+        builder: () => pickLocationView.PickLocationView(
+            pickLocationView.PickLocationMode.AddNewLocation)),
+    QRoute(
+      name: pickLocationEditRoute,
+      path: pickLocationEditRoute,
       builder: () => pickLocationView.PickLocationView(
-          pickLocationView.PickLocationMode.AddNewLocation),
-      children: [
-        QRoute(
-          name: pickLocationEditRoute,
-          path: pickLocationEditRoute,
-          builder: () => pickLocationView.PickLocationView(
-              pickLocationView.PickLocationMode.EditLocation),
-        ),
-        QRoute(
-          name: pickLocationNotAuth,
-          path: pickLocationNotAuth,
-          builder: () => pickLocationView.PickLocationView(
-              pickLocationView.PickLocationMode.NonLoggedInPick),
-        ),
-      ]);
+          pickLocationView.PickLocationMode.EditLocation),
+    ),
+    QRoute(
+        name: pickLocationNotAuth,
+        path: pickLocationNotAuth,
+        builder: () => pickLocationView.PickLocationView(
+            pickLocationView.PickLocationMode.NonLoggedInPick)),
+  ];
 }

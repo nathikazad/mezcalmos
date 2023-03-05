@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ROpItemViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -70,6 +71,7 @@ class ROpItemViewController {
 
   bool get isEditing => editMode.value && editableItem.value != null;
   late int restaurantId;
+
   Future<void> init(
       {String? itemId,
       String? categoryId,
@@ -193,10 +195,9 @@ class ROpItemViewController {
       final bool result = await update_item_by_id(
           itemId: editableItem.value!.id!, item: _contructItem());
       if (result) {
-        Get.snackbar('Saved', 'Item saved successfuly',
-            backgroundColor: Colors.black,
-            colorText: Colors.white,
-            shouldIconPulse: false,
+        customSnackBar(
+            title: 'Saved',
+            subTitle: 'Item saved successfuly',
             icon: Icon(
               Icons.check_circle,
               color: Colors.green,

@@ -19,6 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
+
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["MessagingScreen"];
 
@@ -43,7 +44,10 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   @override
   void initState() {
     if (Get.parameters['chatId'] == null) {
-      Get.snackbar("Error", "Does not have a valid chatId!");
+      customSnackBar(
+        title: 'Error',
+        subTitle: 'Does not have a valid chatId!',
+      );
       MezRouter.back<void>();
     }
 
@@ -237,6 +241,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void callAgora() {}
+
   Container _callButton(BuildContext context) {
     return Container(
       child: InkWell(
@@ -469,6 +474,7 @@ class SendMessageBox extends StatelessWidget {
   final TextEditingController _textEditingController;
   final MessageController controller;
   final int chatId;
+
   // final String? orderId;
   // final OrderType? orderType;
   @override

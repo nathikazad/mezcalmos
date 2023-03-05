@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
-import 'package:mezcalmos/CustomerApp/router/customerReviewRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -176,8 +176,8 @@ class RestaurantInfoTab extends StatelessWidget {
                   InkWell(
                     // borderRadius: BorderRadius.circular(8),
                     onTap: () {
-                      MezRouter.toNamed(CustomerReviewRoutes()
-                          .getReviewsListRoute(restaurant.restaurantId));
+                      MezRouter.toNamed(CustomerRoutes.getReviewsListRoute(
+                          restaurant.restaurantId));
                     },
                     child: Ink(
                       color: Colors.transparent,

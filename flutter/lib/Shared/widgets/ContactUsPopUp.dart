@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -31,7 +32,7 @@ class ContactUsPopUp extends StatelessWidget {
                 await launchUrl(_url);
               } catch (e) {
                 //To handle error and display error message
-                Get.snackbar("Error", "");
+                customSnackBar(title: 'Error', subTitle: '');
               } finally {
                 MezRouter.back();
               }
@@ -76,7 +77,7 @@ class ContactUsPopUp extends StatelessWidget {
                 await launchUrlString(whatsappUrl);
               } catch (e) {
                 //To handle error and display error message
-                Get.snackbar("Error", "");
+                customSnackBar(title: 'Error', subTitle: '');
               } finally {
                 MezRouter.back();
               }

@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -25,6 +26,7 @@ class OperatorsListView extends StatefulWidget {
     this.serviceLinkId,
     this.showAppBar,
   });
+
   final int? serviceProviderId;
   final int? serviceLinkId;
   final ServiceProviderType? serviceProviderType;
@@ -40,6 +42,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   int? serviceLinkId;
   bool showAppBar = true;
   ServiceProviderType? serviceProviderType;
+
   @override
   void initState() {
     _settingVariables();
@@ -185,11 +188,10 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   }
 }
 
-SnackbarController _copiedSnackBar() {
-  return Get.snackbar("${_i18n()['copied']}", "${_i18n()['copiedText']}",
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
+void _copiedSnackBar() {
+  return customSnackBar(
+      title: "${_i18n()['copied']}",
+      subTitle: "${_i18n()['copiedText']}",
       icon: Icon(
         Icons.check_circle,
         color: Colors.green,

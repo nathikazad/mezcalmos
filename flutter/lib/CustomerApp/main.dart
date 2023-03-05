@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksBase.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
@@ -22,8 +19,6 @@ Function signInCallback = CustomerAuthHooksNative.onSignInHook;
 Function signOutCallback = CustomerAuthHooksNative.onSignOutHook;
 List<QRoute> routes =
     XRouter.mainRoutes + NativeOnlyRoutes.routes + SharedRoutes.qRoutes;
-
-// List<GetPage<dynamic>> routes = XRouter.mainRoutes + NativeOnlyRoutes.routes;
 
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(

@@ -11,6 +11,8 @@ import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
+import 'pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+
 enum CustomerDeepLinkType {
   // ignore: constant_identifier_names
   Restaurant,
@@ -81,12 +83,8 @@ class DeepLinkHandler {
         break;
       case CustomerDeepLinkType.Laundry:
         mezDbgPrint("@deepLink@ ===> handling laundry routing ! ");
-        Future<void>.delayed(
-          Duration.zero,
-          () => MezRouter.toNamed<void>(
-            LaundryRouters().getLaundryOrderWithId(providerId),
-          ),
-        );
+        Future<void>.delayed(Duration.zero,
+            () => CustLaundryOrderView.navigate(orderId: providerId));
 
         break;
       default:

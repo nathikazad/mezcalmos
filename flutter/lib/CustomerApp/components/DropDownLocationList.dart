@@ -191,10 +191,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     if (newLocation?.id == -1) {
       final SavedLocation? _savedLocation = await MezRouter.toNamed(
           PickLocationRoutes.pickLocationRoute,
-          arguments: {}
-          //change argument
-          //true,
-          ) as SavedLocation?;
+          arguments: {"true": true}) as SavedLocation?;
 
       if (_savedLocation != null &&
           (_savedLocation.location.isValidLocation())) {
@@ -204,7 +201,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               savedLoc.name == _savedLocation.name ||
               (savedLoc.location.address == _savedLocation.location.address),
         );
-
         setState(() {
           listOfSavedLoacations.add(_savedLocation);
           // dropDownListValue =

@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ROpCreateRestuarantView extends StatefulWidget {
   const ROpCreateRestuarantView({super.key});
@@ -24,6 +25,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
   GlobalKey<FormState> _formKey = GlobalKey();
   ROpCreateRestuarantViewController viewController =
       ROpCreateRestuarantViewController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,11 +53,10 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
               );
               //
             } else {
-              Get.snackbar('Error',
-                  res.errorMessage ?? "Unkwown error, please try again",
-                  backgroundColor: Colors.black,
-                  colorText: Colors.white,
-                  shouldIconPulse: false,
+              customSnackBar(
+                  title: 'Error',
+                  subTitle:
+                      res.errorMessage ?? "Unkwown error, please try again",
                   icon: Icon(
                     Icons.error,
                     color: Colors.red,

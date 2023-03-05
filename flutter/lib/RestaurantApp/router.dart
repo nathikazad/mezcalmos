@@ -23,6 +23,7 @@ class RestaurantAppRoutes {
   static const String kCurrentOrdersListView = '/orders';
   static const String kTabsView = '/tabsView';
   static const String kOpUnauth = '/unauth';
+
 // static const String kReviewsView = '/reviews/:restaurantId';
   static const String kPastOrdersListView = '/pastorders';
   static const String kMenuView = '/menu/:restaurantId';
@@ -167,6 +168,6 @@ class RestaurantAppRoutes {
       ] +
       SharedRoutes.routes +
       SharedServiceProviderRoutes.routes;
-  //  +
-  // NativeOnlyRoutes.routes;
+//  +
+// NativeOnlyRoutes.routes;
 }
