@@ -11,7 +11,6 @@ import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaund
 
 export interface AddDriverDetails {
     uniqueId: string,
-    secret: string,
     notificationInfo?: NotificationInfo,
 }
 

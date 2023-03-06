@@ -18,7 +18,6 @@ export interface AddOperatorDetails {
     // serviceProviderId: number,
     // participantType: ParticipantType
     uniqueId: string,
-    secret: string,
     notificationInfo?: NotificationInfo,
     appVersion?: string
 }

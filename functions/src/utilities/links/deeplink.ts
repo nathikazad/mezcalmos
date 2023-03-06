@@ -44,43 +44,46 @@ enum DeepLinkType {
 // create a new function called serviceProvider-changeUniqueId
 // Modify add operator and add driver to accept unique-id and secret
 
-export async function generateDeepLinks(uniqueId: string, appType: AppType, secret: string): Promise<Record<DeepLinkType, IDeepLink>> {
+export async function generateDeepLinks(uniqueId: string, appType: AppType): Promise<Record<DeepLinkType, IDeepLink>> {
   let packageId = appPackageIds[AppType.Customer];
   let appStoreId = appStoreIds[AppType.Customer];
   
 
   // Customer Deep Links
-  let customerShorlink = `https://mezkala.app/${uniqueId}`
-  let customerLongLink = `https://mezc.co/${uniqueId}?link=${customerShorlink}&apn=${packageId}&ibi=${packageId}&isi=${appStoreId}`
-  let customerQrImageUrl = await generateDeepLink(customerLongLink, customerShorlink, uniqueId);
+  let customerShortLink = `https://mezc.co/${uniqueId}`
+  let customerDeeplink = `https://mezkala.app/${uniqueId}`
+  let customerLongLink = `${customerShortLink}?link=${customerDeeplink}&apn=${packageId}&ibi=${packageId}&isi=${appStoreId}` //&ifl=${customerDeeplink}&afl={customerDeeplink}
+  let customerQrImageUrl = await generateDeepLink(customerLongLink, customerDeeplink, uniqueId);
 
   // Add Operator Deep Links
   packageId = appPackageIds[appType];
   appStoreId = appStoreIds[appType];
 
-  let addOperatorShorlink = `https://mezkala.app/op/${uniqueId}?secret%3D${secret}`
-  let addOperatorLongLink = `https://mezc.co/op/${uniqueId}?link=${addOperatorShorlink}&apn=${packageId}&ibi=${packageId}`;
+  let addOperatorShortlink = `https://mezc.co/op/${generateString()}`
+  let addOperatorDeeplink = `https://mezkala.app/op/${uniqueId}`
+  let addOperatorLongLink = `${addOperatorShortlink}?link=${addOperatorDeeplink}&apn=${packageId}&ibi=${packageId}`;
   if(appStoreId)
     addOperatorLongLink += `&isi=${appStoreId}`
-  let addOperatorQrImageUrl = await generateDeepLink(addOperatorLongLink, addOperatorShorlink, uniqueId);
+  let addOperatorQrImageUrl = await generateDeepLink(addOperatorLongLink, addOperatorDeeplink, uniqueId);
 
-  let addDriverShorlink = `https://mezkala.app/dr/${uniqueId}?secret%3D${secret}`
-  let addDriverLongLink = `https://mezc.co/dr/${uniqueId}?link=${addDriverShorlink}&apn=${packageId}&ibi=${packageId}`;
+  let addDriverShortLink = `https://mezc.co/dr/${generateString()}`
+  let addDriverDeeplink = `https://mezkala.app/dr/${uniqueId}`
+  let addDriverLongLink = `https://mezc.co/dr/${uniqueId}?link=${addDriverDeeplink}&apn=${packageId}&ibi=${packageId}`;
   if(appStoreId)
   addDriverLongLink += `&isi=${appStoreId}`
-  let addDriverQrImageUrl = await generateDeepLink(addDriverLongLink, addDriverShorlink, uniqueId);
+  let addDriverQrImageUrl = await generateDeepLink(addDriverLongLink, addDriverDeeplink, uniqueId);
 
   return {
     [DeepLinkType.Customer]: {
-      url: customerShorlink,
+      url: customerShortLink,
       urlQrImage: customerQrImageUrl
     },
     [DeepLinkType.AddOperator]: {
-      url: addOperatorShorlink,
+      url: addOperatorShortlink,
       urlQrImage: addOperatorQrImageUrl
     },
     [DeepLinkType.AddDriver]: {
-      url: addDriverShorlink,
+      url: addDriverShortLink,
       urlQrImage: addDriverQrImageUrl
     },
   }
@@ -111,4 +114,8 @@ export async function generateDeepLink(longLink:string, shortLink:string, unique
   // if (qrUrl != null) result.urlQr = qrUrl;
 
   // return result;
+}
+
+function generateString(): string {
+  return "random"
 }
