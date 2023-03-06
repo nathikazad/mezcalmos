@@ -58,7 +58,7 @@ const String kAgoraCallScreen = '/agora';
 // const String kInAppReview = '/in-app_review';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickDriver = "/pickDriver/:orderId";
-const String kDriversList = "/driversList/:serviceProviderId";
+const String kDriversList = "/driversList/:serviceProviderId/:serviceLinkId";
 const String kServicePayments = "/servicePayments/:ServiceProviderId";
 const String kOperatorsList =
     "/operatorsList/:serviceProviderId/:serviceLinkId";
@@ -130,9 +130,11 @@ void navigateToPickDriver(
 
 void navigateToDrivers(
     {required int serviceProviderId,
+    required int serviceLinkId,
     required ServiceProviderType controllerType}) {
-  final String route =
+  String route =
       kDriversList.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  route = route.replaceFirst(":serviceLinkId", "$serviceLinkId");
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": controllerType,
     "showAppBar": true,

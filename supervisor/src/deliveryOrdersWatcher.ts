@@ -27,7 +27,7 @@ async function checkDeliveryOrders() {
         let mezAdmins: MezAdmin[] = await getMezAdmins();
 
         let notification: Notification = buildNotification()
-        let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+        let snap = await firebase.database().ref(`/orderNotifications/delivery/${o.deliveryId}`).once("value");
         let readOperators = snap.val();
         console.log(readOperators)
         operators.forEach((r) => {
@@ -44,7 +44,7 @@ async function checkDeliveryOrders() {
     if(o.deliveryDriverId 
       && (o.status == DeliveryOrderStatus.OrderReceived)
     ) {
-      let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+      let snap = await firebase.database().ref(`/orderNotifications/delivery/${o.deliveryId}`).once("value");
       let readDrivers = snap.val();
       if(!(readDrivers && readDrivers[o.deliveryDriver!.userId]) && o.deliveryDriver!.user) {
         pushNotification(

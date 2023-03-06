@@ -104,7 +104,7 @@ class DeliverySettingsViewController {
 
   void _assignDeliveryCost() {
     _freeKmRange.text =
-        deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "";
+        deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "0";
     _minCost.text = deliveryCost.value!.minimumCost.toString();
     _costPerKm.text = deliveryCost.value!.costPerKm.toString();
     costPerKmFromBase.text = deliveryCost.value!.costPerKmFromBase.toString();

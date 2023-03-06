@@ -193,7 +193,7 @@ class Sagora extends GetxController {
         case Event.ACTION_CALL_DECLINE:
           mezDbgPrint("CallEvent.DECLINED !");
           endCall(
-            chatId: event!.body['extra']['chatId'],
+            chatId: int.parse(event!.body['extra']['chatId']),
             callee: Participant(
               image: event.body['avatar'],
               name: event.body['nameCaller'],

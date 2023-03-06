@@ -26,7 +26,7 @@ class ROpUnauthorizedOpViewController {
     await restaurantOpAuthController.setupRestaurantOperator();
     _status.value =
         restaurantOpAuthController.operator.value!.state.operatorState;
-    if (_status.value! == AgentStatus.Awaiting_approval) {
+    if (_status.value! == AgentStatus.AwaitingApproval) {
       _startListeningOnSatus();
     }
   }

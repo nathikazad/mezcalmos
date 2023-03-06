@@ -16,6 +16,7 @@ class UnautthDriverViewController {
 
   // obs
   Rxn<AgentStatus> _status = Rxn();
+  AgentStatus? get status => _status.value;
 
   // stream sub
   StreamSubscription<AgentStatus>? statusStream;
@@ -24,7 +25,7 @@ class UnautthDriverViewController {
   Future<void> init() async {
     await dvAuthController.setupDeliveryDriver();
     _status.value = dvAuthController.driver?.deliveryDriverState.status;
-    if (_status.value! == AgentStatus.Awaiting_approval) {
+    if (_status.value! == AgentStatus.AwaitingApproval) {
       _startListeningOnSatus();
     }
   }

@@ -253,10 +253,14 @@ def printDartFormatFunction(key, value):
         prefix = prefix.replace("Record","Map")
         prefix = prefix.replace(" ",",")
         arr = prefix.split("<")[1].split(">")[0].split(",")
-        if(arr[0] in types):
+        if arr[0] in types:
           prefix = prefix.replace(arr[0], types[arr[0]])
-        if(arr[1] in types):
+        elif models[arr[0]]["type"] == "enum":
+          prefix = prefix.replace(arr[0], "String")
+        if arr[1] in types:
           prefix = prefix.replace(arr[1], types[arr[1]])
+        elif models[arr[1]]["type"] == "enum":
+          prefix = prefix.replace(arr[1], "String")
       # print(prefix)
       
         
@@ -316,10 +320,10 @@ def printDartFormatFunction(key, value):
         if v1[-1] == "?":
           p2 = p2.replace(".toFir","?.toFir")
         params += p2
-      elif value["arguments"][v1] == "JSON":
-        params += "\""+v+"\""+":json.encode("+v+"),"+"\n"+"        "
+      # elif value["arguments"][v1] == "JSON":
+      #   params += "\""+v+"\""+":json.encode("+v+"),"+"\n"+"        "
       else:
-        params += "\""+v+"\""+":"+v+","+"\n"+"        "
+        params += "\""+v+"\""+": "+v+","+"\n"+"        "
       # params = params.replace("?","")
     body = body.replace("<String, dynamic>{}",params[:-2]+"}")
 

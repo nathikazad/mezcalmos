@@ -253,12 +253,11 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
       await GetStorage().write(getxPackageName, pInfos.packageName);
       await GetStorage().write(getxAppName, pInfos.appName);
+      await GetStorage().write(getxAppVersion, pInfos.version);
       // We need appStoreId only in prod mode and ios platforms.
       if (Platform.isIOS && _launchMode == AppLaunchMode.prod) {
         // ignore: unawaited_futures
-        setupIosAppStoreId(pInfos.appName).then((value) {
-          GetStorage().write(getxAppVersion, pInfos.version);
-        });
+        await setupIosAppStoreId(pInfos.appName);
       }
 
       unawaited(GetStorage().write(

@@ -21,7 +21,7 @@ class OperatorState {
         serviceProviderDetailsId: null,
         deliveryDetailsId: null,
         owner: false,
-        operatorState: AgentStatus.Awaiting_approval);
+        operatorState: AgentStatus.AwaitingApproval);
   }
 
   Map<String, dynamic> toJson() => {
@@ -71,7 +71,7 @@ class Operator {
   }
 
   bool get isWaitingToBeApprovedByOwner {
-    return state.operatorState == AgentStatus.Awaiting_approval &&
+    return state.operatorState == AgentStatus.AwaitingApproval &&
         state.owner == false;
   }
 }

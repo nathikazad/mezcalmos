@@ -1,4 +1,4 @@
-enum AgentStatus { Awaiting_approval, Authorized, Banned }
+enum AgentStatus { AwaitingApproval, Authorized, Banned }
 
 extension ParseAgentStatusToString on AgentStatus {
   String toFirebaseFormatString() {
@@ -9,7 +9,7 @@ extension ParseAgentStatusToString on AgentStatus {
 
 extension ParseStringToAgentStatus on String {
   AgentStatus toAgentStatus() {
-    return AgentStatus.values.firstWhere(
-        (AgentStatus e) => e.toFirebaseFormatString().toLowerCase() == this);
+    return AgentStatus.values
+        .firstWhere((AgentStatus e) => e.toFirebaseFormatString() == this);
   }
 }

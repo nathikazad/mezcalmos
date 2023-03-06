@@ -47,6 +47,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
         restaurant_id: addOpDetails.serviceProviderId,
         operator_details: {
           data: {
+            user_id: operatorUserId,
             app_type_id: AppType.RestaurantApp,
             app_version: addOpDetails.appVersion,
             notification_info: (addOpDetails.notificationInfo) 

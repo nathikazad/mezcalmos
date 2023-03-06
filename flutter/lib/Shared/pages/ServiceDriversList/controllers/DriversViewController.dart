@@ -1,12 +1,14 @@
 import 'dart:async';
 
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -31,10 +33,13 @@ class DriversViewController {
   // late variables //
   late ServiceProviderType serviceProviderType;
   late int serviceProviderId;
+  late int serviceLinkId;
   Future<void> init(
       {required int serviceProviderId,
+      required int servLinkId,
       required ServiceProviderType serviceProviderType}) async {
     this.serviceProviderId = serviceProviderId;
+    serviceLinkId = servLinkId;
     this.serviceProviderType = serviceProviderType;
     await fetchDrivers();
     await fetchServiceLinks();
@@ -45,7 +50,7 @@ class DriversViewController {
   Future<void> fetchServiceLinks() async {
     try {
       serviceLink.value = await get_service_link_by_id(
-          serviceLinkId: serviceProviderId, withCache: false);
+          serviceLinkId: serviceLinkId, withCache: false);
     } on Exception {
       mezDbgPrint("Service dont have links");
     }
@@ -63,24 +68,38 @@ class DriversViewController {
     }
   }
 
-  Future<ServerResponse> approveDriver(
+  Future<void> approveDriver(
       {required bool approved, required int driverId}) async {
-    // todo check service provider get func name
-    final String funcName = "";
-    mezDbgPrint("Driver id =======>>>>$driverId");
-    final HttpsCallable cloudFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-authorizeRestaurantDriver');
     try {
-      final HttpsCallableResult response = await cloudFunction
-          .call({"deliveryDriverId": driverId, "approved": approved});
-      mezDbgPrint("Response : ${response.data}");
+      await CloudFunctions.serviceProvider_authorizeDriver(
+        deliveryDriverId: driverId,
+        approved: approved,
+        deliveryServiceProviderType: partType,
+      );
       await fetchDrivers();
-      return ServerResponse(ResponseStatus.Success);
+    } on FirebaseException catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.message.toString());
     } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      mezDbgPrint("Errrooooooooor =======> $stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
+
+  cModel.DeliveryServiceProviderType get partType {
+    switch (serviceProviderType) {
+      case ServiceProviderType.Restaurant:
+        return cModel.DeliveryServiceProviderType.Restaurant;
+        break;
+      case ServiceProviderType.Laundry:
+        return cModel.DeliveryServiceProviderType.Laundry;
+        break;
+      case ServiceProviderType.DeliveryCompany:
+        return cModel.DeliveryServiceProviderType.DeliveryCompany;
+        break;
+      default:
+        return cModel.DeliveryServiceProviderType.DeliveryCompany;
     }
   }
 }

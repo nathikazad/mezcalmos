@@ -194,10 +194,10 @@
               "toBeCalc": "Calculando ..."
             },
             "SaveLocationDailog": {
-              "addLocationDialogTitle": "ingrese el nombre de la ubicación",
+              "addLocationDialogTitle": "Ingrese el nombre de la ubicación",
               "editLocationDialogTitle": "Ingrese el nombre de la ubicación",
               "pickLocationHintText":"Ingrese su nombre",
-              "addLocationDialogButton": "Ahorrar",
+              "addLocationDialogButton": "Guardar",
               "editLocationDialogButton": "EDITAR",
               "addLocationDialogSkip": "Cerca"
             }
