@@ -15,8 +15,10 @@ import { Operator } from "../models/Services/Service";
 
 
 export interface AddOperatorDetails {
-    serviceProviderId: number,
-    participantType: ParticipantType
+    // serviceProviderId: number,
+    // participantType: ParticipantType
+    uniqueId: string,
+    secret: string,
     notificationInfo?: NotificationInfo,
     appVersion?: string
 }

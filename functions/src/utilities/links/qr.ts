@@ -1,12 +1,12 @@
 import axios from "axios";
 import { storage } from "firebase-admin";
 
-export async function generateQr(path:string, qrData:string): Promise<string|null>  {
+export async function generateQr(path:string, shortLink:string): Promise<string>  {
     try {
         const { data } = await axios.post(
             'https://api.qrcode-monkey.com/qr/custom',
             {
-                "data": qrData,
+                "data": shortLink,
                 "config": {
                     "body": "japnese",
                     "eye": "frame1",
@@ -52,17 +52,17 @@ export async function generateQr(path:string, qrData:string): Promise<string|nul
         );
         let imgUrl : string | null | undefined = data['imageUrl']
         if (!imgUrl)
-            return null
+            throw Error('Image Generation Error 1');
         else 
-            return await uploadRestaurantQrImg(path, (data['imageUrl'] as string).replace('//', 'https://'));
+            return await uploadQrImg(path, (data['imageUrl'] as string).replace('//', 'https://'));
     } catch (error) {
         console.log(`Error Happend when generating the QR code:\n${error}`);
-        return null;
+        throw Error('Image Generation Error 2');
     }
 };
 
 
-async function uploadRestaurantQrImg(path:string , qrExternalUrl: string): Promise<string|null> {
+async function uploadQrImg(path:string , qrExternalUrl: string): Promise<string> {
     console.log("[+] uploadRestaurantQrImg :: called  :: path ::", path);
     const response  = await axios
     .get(qrExternalUrl, {
@@ -96,6 +96,8 @@ async function uploadRestaurantQrImg(path:string , qrExternalUrl: string): Promi
         //     console.log(`Unable to upload encoded file ${err}`)
         //     return undefined
         // })
+    } else {
+        throw Error('Image Generation Error 3');
     }
     // .then(response => {
         
@@ -105,6 +107,6 @@ async function uploadRestaurantQrImg(path:string , qrExternalUrl: string): Promi
     //     return undefined
     // });
     
-    return null;
+    // return null;
   }
  

@@ -10,9 +10,9 @@ import { Operator } from "../shared/models/Services/Service";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 
 export interface AddDriverDetails {
-    deliveryCompanyId: number,
+    uniqueId: string,
+    secret: string,
     notificationInfo?: NotificationInfo,
-    deliveryServiceProviderType: DeliveryServiceProviderType
 }
 
 export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {

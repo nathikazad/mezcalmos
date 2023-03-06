@@ -1,100 +1,114 @@
 import { FirebaseDynamicLinks } from "firebase-dynamic-links";
+import { AppType } from "../../shared/models/Generic/Generic";
 import { generateQr } from "./qr";
 
-export enum providerType {
-
-    Restaurant = "Restaurant",
-    Laundry = "Laundry",
-    Taxi = "Taxi",
-}export enum linkRecipientType {
-
-  restaurantOperator = "restaurantOperator",
-    deliveryDriver = "deliveryDriver",
-  
-}
-
 export interface IDeepLink {
-  url:string|undefined
-  urlQr:string|undefined
+  url: string
+  urlQrImage: string
 }
 
 
-enum AppPackageId {
+const appPackageIds: Record<AppType, string> =  {
+  [AppType.DeliveryApp]: "com.mezcalmos.delivery",
+  [AppType.RestaurantApp]: "com.mezcalmos.restaurant",
+  [AppType.LaundryApp]: "com.mezcalmos.laundry",
+  [AppType.Customer]: "com.mezcalmos.customer",
+  [AppType.DeliveryAdmin]: "com.mezcalmos.deliveryadmin",
+  [AppType.MezAdmin]: "com.mezcalmos.mezadmin",
+}
 
-  Delivery = "com.mezcalmos.delivery",
-  Restaurant = "com.mezcalmos.restaurant",
-  Customer = "com.mezcalmos.customer"
+const appStoreIds: Record<AppType, string | undefined> =  {
+  [AppType.DeliveryApp]: undefined,
+  [AppType.RestaurantApp]: "com.mezcalmos.restaurant",
+  [AppType.LaundryApp]: undefined,
+  [AppType.Customer]: "com.mezcalmos.customer",
+  [AppType.DeliveryAdmin]: undefined,
+  [AppType.MezAdmin]: undefined,
+}
+
+enum DeepLinkType {
+  Customer,
+  AddDriver,
+  AddOperator
 }
 
 
+// first generate unique id
+// generate 5 character secret
+// call generate deeplinks
+// save response to database including unique_id(sp.details) and secret(sp.service_links)
 
-export async function generateDeepLink(appName:string, parameters:Record<string, any>): Promise<IDeepLink|null> {
-  console.log("[+] generateDeepLink :: called :: params :: ", parameters);
-  let result : IDeepLink|undefined = undefined; 
-  const firebaseLinks:FirebaseDynamicLinks = new FirebaseDynamicLinks("AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg");
-  let appPkgName : AppPackageId|undefined;
 
-  switch (appName.toLowerCase()) {
-    case "delivery":
-      appPkgName = AppPackageId.Delivery
-      break;
-    case "restaurant":
-      appPkgName = AppPackageId.Restaurant
-      break;
-    case "customer":
-      appPkgName = AppPackageId.Customer
-    default:
-      break;
-  }
-  console.log("-- AppName ----> ", appName);
-  console.log("-- Pkg ----> ", appPkgName);
-  if (!appPkgName || !checkParams(appPkgName , parameters) ) {
-    console.log("[+] appPkgName / checkParams -> Failed!");
+// write script to do this for all existing service providers
+// make this happen when user creates a new service provider and accept a new param called uniqueId
+// create a new function called serviceProvider-changeUniqueId
+// Modify add operator and add driver to accept unique-id and secret
 
-    return null;
-  }
+export async function generateDeepLinks(uniqueId: string, appType: AppType, secret: string): Promise<Record<DeepLinkType, IDeepLink>> {
+  let packageId = appPackageIds[AppType.Customer];
+  let appStoreId = appStoreIds[AppType.Customer];
+  
 
-  try {
-    const { shortLink } = await firebaseLinks.createLink({
-        longDynamicLink: `https://mezprovs.page.link/?link=https://www.mezcalmos.com/?app%3D${appName}%26?type%3D${parameters['providerType']}%26id%3D${parameters['providerId']}&apn=${appPkgName}&ibi=${appPkgName}`,
-    });
-    
+  // Customer Deep Links
+  let customerShorlink = `https://mezkala.app/${uniqueId}`
+  let customerLongLink = `https://mezc.co/${uniqueId}?link=${customerShorlink}&apn=${packageId}&ibi=${packageId}&isi=${appStoreId}`
+  let customerQrImageUrl = await generateDeepLink(customerLongLink, customerShorlink, uniqueId);
 
-    result = {
-      url : shortLink,
-      urlQr : undefined
-    }
+  // Add Operator Deep Links
+  packageId = appPackageIds[appType];
+  appStoreId = appStoreIds[appType];
 
-    console.log("[+] result / ", result);
+  let addOperatorShorlink = `https://mezkala.app/op/${uniqueId}?secret%3D${secret}`
+  let addOperatorLongLink = `https://mezc.co/op/${uniqueId}?link=${addOperatorShorlink}&apn=${packageId}&ibi=${packageId}`;
+  if(appStoreId)
+    addOperatorLongLink += `&isi=${appStoreId}`
+  let addOperatorQrImageUrl = await generateDeepLink(addOperatorLongLink, addOperatorShorlink, uniqueId);
 
-    // trying to generate the QR
-    // TODO : restaurants/<id>/ is hardcoded now
-    let qrUrl : string|null  = await generateQr(`restaurants/${parameters['providerId']}` , shortLink)
-    console.log("[+] qrUrl / ", qrUrl);
+  let addDriverShorlink = `https://mezkala.app/dr/${uniqueId}?secret%3D${secret}`
+  let addDriverLongLink = `https://mezc.co/dr/${uniqueId}?link=${addDriverShorlink}&apn=${packageId}&ibi=${packageId}`;
+  if(appStoreId)
+  addDriverLongLink += `&isi=${appStoreId}`
+  let addDriverQrImageUrl = await generateDeepLink(addDriverLongLink, addDriverShorlink, uniqueId);
 
-    if (qrUrl != null) result.urlQr = qrUrl;
-
-    return result;
-  } catch (error) {
-    console.log(`[+] Error happend while generating the deeplink => \n${error}`);
-    return null;
+  return {
+    [DeepLinkType.Customer]: {
+      url: customerShorlink,
+      urlQrImage: customerQrImageUrl
+    },
+    [DeepLinkType.AddOperator]: {
+      url: addOperatorShorlink,
+      urlQrImage: addOperatorQrImageUrl
+    },
+    [DeepLinkType.AddDriver]: {
+      url: addDriverShorlink,
+      urlQrImage: addDriverQrImageUrl
+    },
   }
 };
 
+// `https://mezprovs.page.link/?link=https://www.mezcalmos.com/?app%3D${appName}%26?type%3D${parameters['providerType']}%26id%3D${parameters['providerId']}&apn=${appPkgName}&ibi=${appPkgName}`
+export async function generateDeepLink(longLink:string, shortLink:string, uniqueId:string): Promise<string> {
+  const firebaseLinks: FirebaseDynamicLinks = new FirebaseDynamicLinks("AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg");
+  // const { shortLinkResponse } = 
+  await firebaseLinks.createLink({
+    longDynamicLink: longLink,
+  });
+  let qrUrl: string = await generateQr(`links/${uniqueId}/`, shortLink)
+  return qrUrl;
 
-function checkParams(appId: AppPackageId  , params:Record<string, any>) : boolean {
-  console.log("params :: ", params );
-  switch (appId) {
-    case AppPackageId.Customer:
-      return params['providerType'] != null && params['providerId'] != null;
-      
-    case AppPackageId.Delivery:
-      return params['providerType'] != null && params['providerId'] != null;
-      
-    case AppPackageId.Restaurant:
-      return params['providerId'] != null;
+  // result = {
+  //   url: shortLinkResponse,
+  //   urlQr: undefined
+  // }
 
-    default:
-      return false;
-  }
+  // console.log("[+] result / ", result);
+
+  // trying to generate the QR
+  // TODO : restaurants/<id>/ is hardcoded now
+
+  // console.log("[+] qrUrl / ", qrUrl);
+
+  // if (qrUrl != null) result.urlQr = qrUrl;
+
+  // return result;
 }
