@@ -37,7 +37,7 @@ export async function createNewCourierOrder(
                     "coordinates": [courierRequest.fromLocationGps.lng, courierRequest.fromLocationGps.lat ],
                 }): undefined,
                 from_location_text: courierRequest.fromLocationText,
-                to_location_adress: courierRequest.toLocation.address,
+                to_location_address: courierRequest.toLocation.address,
                 to_location_gps: JSON.stringify({
                     "type": "Point",
                     "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat ],

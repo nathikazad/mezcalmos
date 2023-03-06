@@ -13,3 +13,14 @@ array_relationships:
         table:
           name: courier_order_item
           schema: delivery
+computed_fields:
+  - name: actual_items_cost
+    definition:
+      function:
+        name: actualitemscost
+        schema: delivery
+  - name: total_cost
+    definition:
+      function:
+        name: totalcost
+        schema: delivery
