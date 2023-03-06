@@ -51,7 +51,7 @@ async function checkLaundryOrders() {
             },
             linkUrl: orderUrl(OrderType.Laundry, o.orderId)
         }
-      let snap = await firebase.database().ref(`/orders/laundry/${o.orderId}/notified`).once("value");
+      let snap = await firebase.database().ref(`/orderNotifications/laundry/${o.orderId}`).once("value");
       let readOperators = snap.val();
       // console.log(readOperators)
       o.laundryStore!.operators!.forEach((r) => {
