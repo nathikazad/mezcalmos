@@ -47,7 +47,7 @@ async function checkRestaurantOrders() {
         },
         linkUrl: orderUrl(OrderType.Restaurant, o.orderId!)
       }
-      let snap = await firebase.database().ref(`/orders/inProcess/restaurant/${o.orderId}/notified`).once("value");
+      let snap = await firebase.database().ref(`/orderNotifications/restaurant/${o.orderId}`).once("value");
       let readOperators = snap.val();
       // console.log("readOperators: ", readOperators)
       o.restaurant!.operators!.forEach((r) => {
