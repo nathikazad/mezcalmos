@@ -63,12 +63,12 @@ class LaundryOpCurrentOrdersController {
           currentOrders.value = event;
           currentOrders.value.forEach((MinimalOrder order) {
             mezDbgPrint(
-                "orders/inProcess/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}");
+                "orderNotifications/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}");
             Get.find<FirebaseDb>()
                 .firebaseDatabase
                 .ref()
                 .child(
-                    "orders/inProcess/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}")
+                    "orderNotifications/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}")
                 .set(true);
           });
         }
