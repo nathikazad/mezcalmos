@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { AssignDriverDetails } from "../../../../delivery/assignDriver";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType } from "../../../models/Generic/Generic";
+import { AppType, MezError } from "../../../models/Generic/Generic";
 
 export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDetails, driverUserId: number) {
   let chain = getHasura();
@@ -22,10 +21,7 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
     }]
   });
   if(response.update_delivery_order_by_pk == null) {
-    throw new HttpsError(
-      "internal",
-      "No delivery with that id found"
-    );
+    throw new MezError("deliveryOrderNotFound");
   }
   await chain.mutation({
     insert_chat_participant: [{

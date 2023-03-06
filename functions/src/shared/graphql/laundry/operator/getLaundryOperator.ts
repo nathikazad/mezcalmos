@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, Language } from "../../../models/Generic/Generic";
+import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { Operator } from "../../../models/Services/Service";
 import { AuthorizationStatus } from "../../../models/Generic/Generic"
 
@@ -97,10 +97,7 @@ export async function getLaundryOperatorByUserId(laundryOperatorUserId: number):
     }]
   });
   if(response.laundry_operator.length == null) {
-    throw new HttpsError(
-      "internal",
-      "No laundry operator with that user id or store id found"
-    );
+    throw new MezError("operatorNotFound");
   }
   return {
     id: response.laundry_operator[0].id,

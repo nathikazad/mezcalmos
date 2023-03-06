@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, AuthorizationStatus, Language } from "../../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, Language, MezError } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 // import { ParticipantType } from "../../../models/Generic/Chat";
 
@@ -75,10 +75,7 @@ export async function getDeliveryDriver(deliveryDriverId: number): Promise<Deliv
       }]
     });
     if (response.delivery_driver_by_pk == null) {
-      throw new HttpsError(
-        "internal",
-        "No delivery driver with that id found"
-      );
+      throw new MezError("driverNotFound");
     }
     return {
       id: deliveryDriverId,

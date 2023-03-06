@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType, AuthorizationStatus, Language } from "../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, Language, MezError } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
@@ -61,10 +60,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     }]
   });
   if (response.delivery_order_by_pk == null) {
-    throw new HttpsError(
-      "internal",
-      "No order with that id found"
-    );
+    throw new MezError("orderNotFound");
   }
   let delivery: DeliveryOrder = {
     packageReady: response.delivery_order_by_pk.package_ready,

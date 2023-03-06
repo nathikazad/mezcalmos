@@ -2,7 +2,7 @@ import { createDeliveryDriver } from "../shared/graphql/delivery/driver/createDe
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { NotificationInfo } from "../shared/models/Generic/Generic";
+import { MezError, NotificationInfo } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -16,23 +16,42 @@ export interface AddDriverDetails {
 }
 export interface AddDriverResponse {
     success: boolean,
-    error?: AddDriverResponseError
-    unhandledError?: string,
-    orderId?: number,
+    error?: AddDriverError
+    unhandledError?: string
 }
-enum AddDriverResponseError {
-    UserNotFound = "userNotFound",
-    OperatorCreationError = "operatorCreationError",
-    DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound"
+enum AddDriverError {
+    DriverAlreadyExists = "driverAlreadyExists",
+    DriverCreationError = "driverCreationError"
 }
 
-export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {
+export async function addDriver(userId: number, addDriverDetails: AddDriverDetails): Promise<AddDriverResponse> {
     //first mutation
     //second notify operators of the company
-    
-    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, addDriverDetails.deliveryServiceProviderType);
+    try {
+        let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, addDriverDetails.deliveryServiceProviderType);
 
-    notify(deliveryDriver, addDriverDetails.deliveryServiceProviderType, addDriverDetails);
+        notify(deliveryDriver, addDriverDetails.deliveryServiceProviderType, addDriverDetails);
+
+        return {
+            success: true
+        }
+    } catch (e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(AddDriverError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
+    }
 }
 
 async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: DeliveryServiceProviderType, addDriverDetails: AddDriverDetails) {

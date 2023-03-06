@@ -304,10 +304,7 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
   let chain = getHasura();
 
   if(delivery.chatWithServiceProviderId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No delivery chat with service provider id"
-    );
+    throw new MezError("serviceProviderDeliveryChatNotFound");
   }
   let response = await chain.query({
     chat_by_pk: [{

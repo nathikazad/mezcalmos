@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AuthorizationStatus } from "../../../models/Generic/Generic";
+import { AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
 
 export async function updateDriverStatustoAuthorized(deliveryDriverId: number) {
     let chain = getHasura();
@@ -18,9 +17,6 @@ export async function updateDriverStatustoAuthorized(deliveryDriverId: number) {
         }]
     });
     if(!(response.update_delivery_driver_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "incorrect delivery driver id"
-        );
+        throw new MezError("driverNotFound");
     }
 }

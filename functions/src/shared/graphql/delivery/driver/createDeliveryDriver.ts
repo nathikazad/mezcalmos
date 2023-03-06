@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, Language } from "../../../models/Generic/Generic";
+import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";;
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
 import { AddDriverDetails } from "../../../../delivery/addDriver";
@@ -37,10 +36,7 @@ export async function createDeliveryDriver(userId: number, addDriverDetails: Add
         }]
     })
     if(response.delivery_driver.length) {
-        throw new HttpsError(
-            "internal",
-            "The driver is already working for this delivery company or restaurant or laundry"
-        );
+        throw new MezError("driverAlreadyExists");
     }
     let mutationResponse = await chain.mutation({
         insert_delivery_driver_one: [{
@@ -61,10 +57,7 @@ export async function createDeliveryDriver(userId: number, addDriverDetails: Add
         }]
     })
     if(mutationResponse.insert_delivery_driver_one == null) {
-        throw new HttpsError(
-            "internal",
-            "driver creation error"
-        );
+        throw new MezError("driverCreationError");
     }
     if(!(response.notification_info.length) && addDriverDetails.notificationInfo) {
         await chain.mutation({
