@@ -8,6 +8,8 @@ class DeliveryCostSettingViewController {
   // text inputs //
   TextEditingController freeKmRange = TextEditingController();
   TextEditingController minCost = TextEditingController();
+  TextEditingController costPerKmFromBase = TextEditingController();
+  TextEditingController radius = TextEditingController();
   TextEditingController costPerKm = TextEditingController();
   TextEditingController distancePreview = TextEditingController();
 
@@ -38,6 +40,11 @@ class DeliveryCostSettingViewController {
     );
     if (deliveryCost.value != null) {
       isEditing.value = true;
+      radius.text = (deliveryCost.value?.radius != null)
+          ? (deliveryCost.value!.radius! / 1000).toString()
+          : "";
+      costPerKmFromBase.text =
+          deliveryCost.value!.costPerKmFromBase.toString() ?? "";
       freeKmRange.text =
           deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "";
       minCost.text = deliveryCost.value!.minimumCost.toString();
@@ -56,6 +63,8 @@ class DeliveryCostSettingViewController {
     return DeliveryCost(
         id: null,
         selfDelivery: false,
+        costPerKmFromBase: double.parse(costPerKmFromBase.text),
+        radius: (double.parse(radius.text) * 1000),
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: double.tryParse(freeKmRange.text),
         costPerKm: double.parse(costPerKm.text));

@@ -1,26 +1,26 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOperator } from "../../../models/Generic/Delivery";
+import { Operator } from "../../../models/Services/Service";
 
-export async function deleteDeliveryOperator(deliveryOperator: DeliveryOperator) {
+export async function deleteLaundryOperator(operator: Operator) {
     let chain = getHasura();
 
     let response = await chain.mutation({
-        delete_delivery_operator_by_pk: [{
-            id: deliveryOperator.id
+        delete_laundry_operator_by_pk: [{
+            id: operator.id
         }, {
             id: true,
         }],
         delete_service_provider_operator_details_by_pk: [{
-            id: deliveryOperator.operatorDetailsId
+            id: operator.detailsId
         }, {
             id: true
         }]
     });
-    if(!(response.delete_delivery_operator_by_pk)) {
+    if(!(response.delete_laundry_operator_by_pk)) {
         throw new HttpsError(
             "internal",
-            "incorrect delivery operator id"
+            "incorrect laundry operator id"
         );
     }
 }

@@ -72,13 +72,15 @@ class DeliverySettingsViewController {
 
   Future<void> _initEditMode(
       int serviceProviderId, ServiceProviderType serviceProviderType) async {
-    selfDelivery.value = deliveryCost.value!.selfDelivery;
-    deliveryType.value = selfDelivery.value!
-        ? ServiceDeliveryType.Self_delivery
-        : ServiceDeliveryType.Delivery_Partner;
+    if (serviceProviderType != ServiceProviderType.DeliveryCompany) {
+      selfDelivery.value = deliveryCost.value!.selfDelivery;
+      deliveryType.value = selfDelivery.value!
+          ? ServiceDeliveryType.Self_delivery
+          : ServiceDeliveryType.Delivery_Partner;
 
-    deliveryPartnerId.value = await get_service_delivery_partner(
-        serviceId: serviceProviderId, providerType: serviceProviderType);
+      deliveryPartnerId.value = await get_service_delivery_partner(
+          serviceId: serviceProviderId, providerType: serviceProviderType);
+    }
 
     mezDbgPrint(
         "👋 Delivery patner id ==================>>>>${deliveryPartnerId.value}");
@@ -102,7 +104,7 @@ class DeliverySettingsViewController {
 
   void _assignDeliveryCost() {
     _freeKmRange.text =
-        deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "";
+        deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "0";
     _minCost.text = deliveryCost.value!.minimumCost.toString();
     _costPerKm.text = deliveryCost.value!.costPerKm.toString();
     costPerKmFromBase.text = deliveryCost.value!.costPerKmFromBase.toString();
@@ -140,7 +142,7 @@ class DeliverySettingsViewController {
   }
 
   Future<void> handleSave() async {
-    if (isSelfDelivery) {
+    if (isDeliveryCompany || isSelfDelivery) {
       return _handleSaveDeliveryCost();
     } else {
       if (deliveryPartnerId.value != null) {

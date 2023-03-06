@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { pushNotification } from "../../utilities/senders/notifyUser";
 import { deleteDeliveryOperator } from "../graphql/delivery/operator/deleteOperator";
 import { getDeliveryOperatorByUserId, getDeliveryOperator } from "../graphql/delivery/operator/getDeliveryOperator";
+import { deleteLaundryOperator } from "../graphql/laundry/operator/deleteOperator";
 import { getLaundryOperator, getLaundryOperatorByUserId } from "../graphql/laundry/operator/getLaundryOperator";
 import { updateOperatorStatusToAuthorized } from "../graphql/operator/updateOperatorStatus";
 import { deleteRestaurantOperator } from "../graphql/restaurant/operators/deleteOperator";
@@ -34,7 +35,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             if (authorizeDetails.approved) {
                 operatorDetailsId = operator.detailsId;
             } else {
-                await deleteRestaurantOperator(authorizeDetails.newOperatorId);
+                await deleteRestaurantOperator(operator);
             }
             notifyOperator(ParticipantType.RestaurantOperator);
             break;
@@ -50,7 +51,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             if(authorizeDetails.approved) {
                 operatorDetailsId = deliveryOperator.operatorDetailsId;
             } else {
-                await deleteDeliveryOperator(authorizeDetails.newOperatorId);
+                await deleteDeliveryOperator(deliveryOperator);
             }
             notifyDeliveryOperator(deliveryOperator);
             break;
@@ -65,7 +66,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             if (authorizeDetails.approved) {
                 operatorDetailsId = operator.detailsId;
             } else {
-                await deleteRestaurantOperator(authorizeDetails.newOperatorId);
+                await deleteLaundryOperator(operator);
             }
             notifyOperator(ParticipantType.LaundryOperator);
             break;
