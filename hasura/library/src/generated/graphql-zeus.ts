@@ -2469,6 +2469,8 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 }>;
 	/** columns and relationships of "delivery.courier_order" */
 ["delivery_courier_order"]: AliasType<{
+	/** A computed field, executes function "delivery.actualitemscost" */
+	actual_items_cost?:true,
 	cancellation_time?:true,
 	customer_app_type?:true,
 	customer_id?:true,
@@ -2498,8 +2500,10 @@ items_aggregate?: [{	/** distinct select on columns */
 stripe_info?: [{	/** JSON select path */
 	path?:string},true],
 	tax?:true,
-	to_location_adress?:true,
+	to_location_address?:true,
 	to_location_gps?:true,
+	/** A computed field, executes function "delivery.totalcost" */
+	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregated selection of "delivery.courier_order" */
@@ -2547,6 +2551,7 @@ cancelled), serviceProviderAccount: string } */
 	_and?:ValueTypes["delivery_courier_order_bool_exp"][],
 	_not?:ValueTypes["delivery_courier_order_bool_exp"],
 	_or?:ValueTypes["delivery_courier_order_bool_exp"][],
+	actual_items_cost?:ValueTypes["money_comparison_exp"],
 	cancellation_time?:ValueTypes["timestamptz_comparison_exp"],
 	customer_app_type?:ValueTypes["String_comparison_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
@@ -2564,8 +2569,9 @@ cancelled), serviceProviderAccount: string } */
 	stripe_fees?:ValueTypes["money_comparison_exp"],
 	stripe_info?:ValueTypes["jsonb_comparison_exp"],
 	tax?:ValueTypes["money_comparison_exp"],
-	to_location_adress?:ValueTypes["String_comparison_exp"],
-	to_location_gps?:ValueTypes["geography_comparison_exp"]
+	to_location_address?:ValueTypes["String_comparison_exp"],
+	to_location_gps?:ValueTypes["geography_comparison_exp"],
+	total_cost?:ValueTypes["money_comparison_exp"]
 };
 	/** unique or primary key constraints on table "delivery.courier_order" */
 ["delivery_courier_order_constraint"]:delivery_courier_order_constraint;
@@ -2626,7 +2632,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:ValueTypes["jsonb"],
 	tax?:ValueTypes["money"],
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:ValueTypes["geography"]
 };
 	/** columns and relationships of "delivery.courier_order_item" */
@@ -2992,7 +2998,7 @@ columns of table "delivery.courier_order_item" */
 	refund_amount?:true,
 	stripe_fees?:true,
 	tax?:true,
-	to_location_adress?:true,
+	to_location_address?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
@@ -3009,7 +3015,7 @@ columns of table "delivery.courier_order_item" */
 	refund_amount?:true,
 	stripe_fees?:true,
 	tax?:true,
-	to_location_adress?:true,
+	to_location_address?:true,
 		__typename?: true
 }>;
 	/** response of any mutation on the table "delivery.courier_order" */
@@ -3028,6 +3034,7 @@ columns of table "delivery.courier_order_item" */
 };
 	/** Ordering options when selecting data from "delivery.courier_order". */
 ["delivery_courier_order_order_by"]: {
+	actual_items_cost?:ValueTypes["order_by"],
 	cancellation_time?:ValueTypes["order_by"],
 	customer_app_type?:ValueTypes["order_by"],
 	customer_id?:ValueTypes["order_by"],
@@ -3044,8 +3051,9 @@ columns of table "delivery.courier_order_item" */
 	stripe_fees?:ValueTypes["order_by"],
 	stripe_info?:ValueTypes["order_by"],
 	tax?:ValueTypes["order_by"],
-	to_location_adress?:ValueTypes["order_by"],
-	to_location_gps?:ValueTypes["order_by"]
+	to_location_address?:ValueTypes["order_by"],
+	to_location_gps?:ValueTypes["order_by"],
+	total_cost?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: delivery.courier_order */
 ["delivery_courier_order_pk_columns_input"]: {
@@ -3081,7 +3089,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:ValueTypes["jsonb"],
 	tax?:ValueTypes["money"],
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:ValueTypes["geography"]
 };
 	/** aggregate stddev on columns */
@@ -3144,7 +3152,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:ValueTypes["jsonb"],
 	tax?:ValueTypes["money"],
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:ValueTypes["geography"]
 };
 	/** aggregate sum on columns */
@@ -21879,6 +21887,8 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "delivery.courier_order" */
 ["delivery_courier_order"]: {
 		__typename?: "delivery_courier_order";
+			/** A computed field, executes function "delivery.actualitemscost" */
+	actual_items_cost?:PartialObjects["money"],
 			cancellation_time?:PartialObjects["timestamptz"],
 			customer_app_type?:string,
 			customer_id?:number,
@@ -21903,8 +21913,10 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:PartialObjects["jsonb"],
 			tax?:PartialObjects["money"],
-			to_location_adress?:string,
-			to_location_gps?:PartialObjects["geography"]
+			to_location_address?:string,
+			to_location_gps?:PartialObjects["geography"],
+			/** A computed field, executes function "delivery.totalcost" */
+	total_cost?:PartialObjects["money"]
 	},
 	/** aggregated selection of "delivery.courier_order" */
 ["delivery_courier_order_aggregate"]: {
@@ -21951,6 +21963,7 @@ cancelled), serviceProviderAccount: string } */
 	_and?:PartialObjects["delivery_courier_order_bool_exp"][],
 	_not?:PartialObjects["delivery_courier_order_bool_exp"],
 	_or?:PartialObjects["delivery_courier_order_bool_exp"][],
+	actual_items_cost?:PartialObjects["money_comparison_exp"],
 	cancellation_time?:PartialObjects["timestamptz_comparison_exp"],
 	customer_app_type?:PartialObjects["String_comparison_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
@@ -21968,8 +21981,9 @@ cancelled), serviceProviderAccount: string } */
 	stripe_fees?:PartialObjects["money_comparison_exp"],
 	stripe_info?:PartialObjects["jsonb_comparison_exp"],
 	tax?:PartialObjects["money_comparison_exp"],
-	to_location_adress?:PartialObjects["String_comparison_exp"],
-	to_location_gps?:PartialObjects["geography_comparison_exp"]
+	to_location_address?:PartialObjects["String_comparison_exp"],
+	to_location_gps?:PartialObjects["geography_comparison_exp"],
+	total_cost?:PartialObjects["money_comparison_exp"]
 },
 	/** unique or primary key constraints on table "delivery.courier_order" */
 ["delivery_courier_order_constraint"]:delivery_courier_order_constraint,
@@ -22030,7 +22044,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:PartialObjects["jsonb"],
 	tax?:PartialObjects["money"],
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:PartialObjects["geography"]
 },
 	/** columns and relationships of "delivery.courier_order_item" */
@@ -22397,7 +22411,7 @@ columns of table "delivery.courier_order_item" */
 			refund_amount?:PartialObjects["money"],
 			stripe_fees?:PartialObjects["money"],
 			tax?:PartialObjects["money"],
-			to_location_adress?:string
+			to_location_address?:string
 	},
 	/** aggregate min on columns */
 ["delivery_courier_order_min_fields"]: {
@@ -22414,7 +22428,7 @@ columns of table "delivery.courier_order_item" */
 			refund_amount?:PartialObjects["money"],
 			stripe_fees?:PartialObjects["money"],
 			tax?:PartialObjects["money"],
-			to_location_adress?:string
+			to_location_address?:string
 	},
 	/** response of any mutation on the table "delivery.courier_order" */
 ["delivery_courier_order_mutation_response"]: {
@@ -22432,6 +22446,7 @@ columns of table "delivery.courier_order_item" */
 },
 	/** Ordering options when selecting data from "delivery.courier_order". */
 ["delivery_courier_order_order_by"]: {
+	actual_items_cost?:PartialObjects["order_by"],
 	cancellation_time?:PartialObjects["order_by"],
 	customer_app_type?:PartialObjects["order_by"],
 	customer_id?:PartialObjects["order_by"],
@@ -22448,8 +22463,9 @@ columns of table "delivery.courier_order_item" */
 	stripe_fees?:PartialObjects["order_by"],
 	stripe_info?:PartialObjects["order_by"],
 	tax?:PartialObjects["order_by"],
-	to_location_adress?:PartialObjects["order_by"],
-	to_location_gps?:PartialObjects["order_by"]
+	to_location_address?:PartialObjects["order_by"],
+	to_location_gps?:PartialObjects["order_by"],
+	total_cost?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: delivery.courier_order */
 ["delivery_courier_order_pk_columns_input"]: {
@@ -22485,7 +22501,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:PartialObjects["jsonb"],
 	tax?:PartialObjects["money"],
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:PartialObjects["geography"]
 },
 	/** aggregate stddev on columns */
@@ -22548,7 +22564,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:PartialObjects["jsonb"],
 	tax?:PartialObjects["money"],
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:PartialObjects["geography"]
 },
 	/** aggregate sum on columns */
@@ -40248,6 +40264,8 @@ export type delivery_company_variance_fields = {
 /** columns and relationships of "delivery.courier_order" */
 export type delivery_courier_order = {
 	__typename?: "delivery_courier_order",
+	/** A computed field, executes function "delivery.actualitemscost" */
+	actual_items_cost?:money,
 	cancellation_time?:timestamptz,
 	customer_app_type:string,
 	customer_id:number,
@@ -40264,7 +40282,7 @@ export type delivery_courier_order = {
 	items_aggregate:delivery_courier_order_item_aggregate,
 	order_time:timestamptz,
 	payment_type:string,
-	refund_amount?:money,
+	refund_amount:money,
 	stripe_fees:money,
 	/** { id: string, stripeFees: number, amountCharged: number, amountRefunded:
 number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
@@ -40272,8 +40290,10 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:jsonb,
 	tax:money,
-	to_location_adress:string,
-	to_location_gps:geography
+	to_location_address:string,
+	to_location_gps:geography,
+	/** A computed field, executes function "delivery.totalcost" */
+	total_cost?:money
 }
 
 /** aggregated selection of "delivery.courier_order" */
@@ -40325,6 +40345,7 @@ export type delivery_courier_order_bool_exp = {
 		_and?:delivery_courier_order_bool_exp[],
 	_not?:delivery_courier_order_bool_exp,
 	_or?:delivery_courier_order_bool_exp[],
+	actual_items_cost?:money_comparison_exp,
 	cancellation_time?:timestamptz_comparison_exp,
 	customer_app_type?:String_comparison_exp,
 	customer_id?:Int_comparison_exp,
@@ -40342,8 +40363,9 @@ export type delivery_courier_order_bool_exp = {
 	stripe_fees?:money_comparison_exp,
 	stripe_info?:jsonb_comparison_exp,
 	tax?:money_comparison_exp,
-	to_location_adress?:String_comparison_exp,
-	to_location_gps?:geography_comparison_exp
+	to_location_address?:String_comparison_exp,
+	to_location_gps?:geography_comparison_exp,
+	total_cost?:money_comparison_exp
 }
 
 /** unique or primary key constraints on table "delivery.courier_order" */
@@ -40413,7 +40435,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:jsonb,
 	tax?:money,
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:geography
 }
 
@@ -40850,7 +40872,7 @@ export type delivery_courier_order_max_fields = {
 	refund_amount?:money,
 	stripe_fees?:money,
 	tax?:money,
-	to_location_adress?:string
+	to_location_address?:string
 }
 
 /** aggregate min on columns */
@@ -40868,7 +40890,7 @@ export type delivery_courier_order_min_fields = {
 	refund_amount?:money,
 	stripe_fees?:money,
 	tax?:money,
-	to_location_adress?:string
+	to_location_address?:string
 }
 
 /** response of any mutation on the table "delivery.courier_order" */
@@ -40889,7 +40911,8 @@ export type delivery_courier_order_on_conflict = {
 
 /** Ordering options when selecting data from "delivery.courier_order". */
 export type delivery_courier_order_order_by = {
-		cancellation_time?:order_by,
+		actual_items_cost?:order_by,
+	cancellation_time?:order_by,
 	customer_app_type?:order_by,
 	customer_id?:order_by,
 	delivery_order?:delivery_order_order_by,
@@ -40905,8 +40928,9 @@ export type delivery_courier_order_order_by = {
 	stripe_fees?:order_by,
 	stripe_info?:order_by,
 	tax?:order_by,
-	to_location_adress?:order_by,
-	to_location_gps?:order_by
+	to_location_address?:order_by,
+	to_location_gps?:order_by,
+	total_cost?:order_by
 }
 
 /** primary key columns input for table: delivery.courier_order */
@@ -40939,7 +40963,7 @@ export enum delivery_courier_order_select_column {
 	stripe_fees = "stripe_fees",
 	stripe_info = "stripe_info",
 	tax = "tax",
-	to_location_adress = "to_location_adress",
+	to_location_address = "to_location_address",
 	to_location_gps = "to_location_gps"
 }
 
@@ -40963,7 +40987,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:jsonb,
 	tax?:money,
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:geography
 }
 
@@ -41031,7 +41055,7 @@ number, expYear?: number, last4?: string, status: (authorized, captured,
 cancelled), serviceProviderAccount: string } */
 	stripe_info?:jsonb,
 	tax?:money,
-	to_location_adress?:string,
+	to_location_address?:string,
 	to_location_gps?:geography
 }
 
@@ -41063,7 +41087,7 @@ export enum delivery_courier_order_update_column {
 	stripe_fees = "stripe_fees",
 	stripe_info = "stripe_info",
 	tax = "tax",
-	to_location_adress = "to_location_adress",
+	to_location_address = "to_location_address",
 	to_location_gps = "to_location_gps"
 }
 
@@ -63718,6 +63742,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		actual_items_cost:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cancellation_time:{
 			type:"timestamptz_comparison_exp",
 			array:false,
@@ -63820,7 +63850,7 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		to_location_adress:{
+		to_location_address:{
 			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
@@ -63828,6 +63858,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		to_location_gps:{
 			type:"geography_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -63999,7 +64035,7 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		to_location_adress:{
+		to_location_address:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -64886,6 +64922,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_courier_order_order_by:{
+		actual_items_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cancellation_time:{
 			type:"order_by",
 			array:false,
@@ -64982,13 +65024,19 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		to_location_adress:{
+		to_location_address:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		to_location_gps:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -65097,7 +65145,7 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		to_location_adress:{
+		to_location_address:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -65209,7 +65257,7 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		to_location_adress:{
+		to_location_address:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -112449,6 +112497,7 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	delivery_courier_order:{
+		actual_items_cost:"money",
 		cancellation_time:"timestamptz",
 		customer_app_type:"String",
 		customer_id:"Int",
@@ -112466,8 +112515,9 @@ export const ReturnTypes: Record<string,any> = {
 		stripe_fees:"money",
 		stripe_info:"jsonb",
 		tax:"money",
-		to_location_adress:"String",
-		to_location_gps:"geography"
+		to_location_address:"String",
+		to_location_gps:"geography",
+		total_cost:"money"
 	},
 	delivery_courier_order_aggregate:{
 		aggregate:"delivery_courier_order_aggregate_fields",
@@ -112605,7 +112655,7 @@ export const ReturnTypes: Record<string,any> = {
 		refund_amount:"money",
 		stripe_fees:"money",
 		tax:"money",
-		to_location_adress:"String"
+		to_location_address:"String"
 	},
 	delivery_courier_order_min_fields:{
 		cancellation_time:"timestamptz",
@@ -112620,7 +112670,7 @@ export const ReturnTypes: Record<string,any> = {
 		refund_amount:"money",
 		stripe_fees:"money",
 		tax:"money",
-		to_location_adress:"String"
+		to_location_address:"String"
 	},
 	delivery_courier_order_mutation_response:{
 		affected_rows:"Int",
