@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
 
 class CustRequestCourierView extends StatefulWidget {
@@ -91,6 +92,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           periodOfTime: null,
                           schedule: viewController.company.value!.schedule,
                         ),
+                        OrderSummaryCard(
+                            shippingCost: viewController.shippingCost.value,
+                            orderCost: null,
+                            totalCost: null,
+                            refundAmmount: null,
+                            showNullValues: false,
+                            stripeOrderPaymentInfo: null)
                       ],
                     ),
                   ),
@@ -143,7 +151,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             DropDownLocationList(
               onValueChangeCallback: ({MezLocation? location}) {
                 if (location != null && location.isValidLocation()) {
-                  viewController.toLoc.value = location;
+                  viewController.setToLocation(location);
                 }
               },
               bgColor: Colors.white,
@@ -156,7 +164,10 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             CustRequestCourierItems(
               viewController: viewController,
-            )
+            ),
+            SizedBox(
+              height: 75,
+            ),
           ],
         ),
       ),

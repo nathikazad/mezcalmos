@@ -35,7 +35,7 @@ void logLongString(String s) {
   int endIndex = n;
   while (startIndex < s.length) {
     if (endIndex > s.length) endIndex = s.length;
-    mezDbgPrint(s.substring(startIndex, endIndex));
+    mezDbgPrint(s.substring(startIndex, endIndex) + "\n --END -- \n");
     startIndex += n;
     endIndex = startIndex + n;
   }

@@ -3969,6 +3969,9 @@ type delivery_courier_order_item {
   image: String
   name: String!
   notes: String
+
+  """An object relationship"""
+  order: delivery_courier_order!
   order_id: Int!
   unavailable: Boolean!
 }
@@ -4084,6 +4087,7 @@ input delivery_courier_order_item_bool_exp {
   image: String_comparison_exp
   name: String_comparison_exp
   notes: String_comparison_exp
+  order: delivery_courier_order_bool_exp
   order_id: Int_comparison_exp
   unavailable: Boolean_comparison_exp
 }
@@ -4118,6 +4122,7 @@ input delivery_courier_order_item_insert_input {
   image: String
   name: String
   notes: String
+  order: delivery_courier_order_obj_rel_insert_input
   order_id: Int
   unavailable: Boolean
 }
@@ -4200,6 +4205,7 @@ input delivery_courier_order_item_order_by {
   image: order_by
   name: order_by
   notes: order_by
+  order: delivery_courier_order_order_by
   order_id: order_by
   unavailable: order_by
 }
@@ -4502,6 +4508,16 @@ type delivery_courier_order_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [delivery_courier_order!]!
+}
+
+"""
+input type for inserting object relation for remote table "delivery.courier_order"
+"""
+input delivery_courier_order_obj_rel_insert_input {
+  data: delivery_courier_order_insert_input!
+
+  """upsert condition"""
+  on_conflict: delivery_courier_order_on_conflict
 }
 
 """

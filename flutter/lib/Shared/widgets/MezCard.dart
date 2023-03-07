@@ -90,9 +90,12 @@ class MezCard extends StatelessWidget {
                 ),
 
               SizedBox(
-                width: (firstAvatarBgImage != null ||
-                        firstAvatarIcon != null ||
-                        firstAvatarBgColor != null)
+                width: ((firstAvatarBgImage != null ||
+                            firstAvatarIcon != null ||
+                            firstAvatarBgColor != null) &&
+                        (secondAvatarBgColor != null ||
+                            secondAvatarBgImage != null ||
+                            secondAvatarIcon != null))
                     ? 40
                     : 8,
               ),

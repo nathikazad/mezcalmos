@@ -110,10 +110,9 @@ class HasuraDb {
         appLaunchMode == AppLaunchMode.dev,
       );
       tokenSnapshot = hasuraAuthToken;
-      // logToken(hasuraAuthToken);
 
-      // mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
-      // mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
+      mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
+      logLongString("✅ TOKKEN ✅: \n $hasuraAuthToken");
 
       headers = <String, String>{
         'Authorization': 'Bearer $hasuraAuthToken',

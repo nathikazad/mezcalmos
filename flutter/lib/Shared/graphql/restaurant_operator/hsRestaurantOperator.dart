@@ -37,6 +37,7 @@ Future<List<Operator>?> get_restaurant_operators(
           state: OperatorState(
               deliveryDetailsId: opData.restaurant?.delivery_details_id,
               owner: opData.operator_details.owner,
+              serviceLinkId: opData.restaurant!.details!.service_link_id,
               operatorState: opData.operator_details.status.toAgentStatus(),
               serviceProviderId: restaurantId,
               serviceProviderDetailsId: opData.restaurant?.details_id),
@@ -70,6 +71,7 @@ Future<Operator?> get_restaurant_operator({required int userId}) async {
         res.parsedData!.restaurant_operator.first;
     return Operator(
         state: OperatorState(
+            serviceLinkId: data.restaurant!.details!.service_link_id,
             deliveryDetailsId: data.restaurant?.delivery_details_id,
             serviceProviderDetailsId: data.restaurant?.details_id,
             operatorState: data.operator_details.status.toAgentStatus(),

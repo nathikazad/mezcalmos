@@ -12,6 +12,10 @@ query get_driver_order($orderId: Int!) {
         id
         image
         name
+          location {
+          gps
+          address
+        }
         service_provider_type
       }
     }
@@ -186,6 +190,10 @@ subscription listen_on_driver_order($orderId: Int!) {
     delivery_company {
       id
       details {
+          location {
+          gps
+          address
+        }
         id
         image
         name
@@ -618,6 +626,10 @@ query get_pick_driver_order($orderId: Int!) {
       id
       details {
         id
+          location {
+          gps
+          address
+        }
         image
         name
         service_provider_type

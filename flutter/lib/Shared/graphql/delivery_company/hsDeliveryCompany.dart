@@ -29,6 +29,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
   return DeliveryCompany(
       creationTime: DateTime.parse(data.details!.creation_time),
       schedule: Schedule.fromData(data.details!.schedule),
+      deliveryDetailsId: data.delivery_details.id,
       info: ServiceInfo(
         hasuraId: data.id,
         locationId: data.details!.location_id,

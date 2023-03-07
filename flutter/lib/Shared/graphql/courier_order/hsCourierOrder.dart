@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/__generated/courier_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -261,4 +262,64 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
     }
     return null;
   });
+}
+
+Future<List<CourierOrdeItem>?> get_courier_order_items(
+    {required int orderId, bool withCache = true}) async {
+  QueryResult<Query$get_courier_order_items_by_id> res =
+      await _hasuraDb.graphQLClient.query$get_courier_order_items_by_id(
+          Options$Query$get_courier_order_items_by_id(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              variables: Variables$Query$get_courier_order_items_by_id(
+                  orderId: orderId)));
+  if (res.parsedData?.delivery_courier_order == null ||
+      res.parsedData!.delivery_courier_order.isEmpty) {
+    throwError(res.exception);
+  } else {
+    return res.parsedData!.delivery_courier_order.first.items
+        .map<CourierOrdeItem>(
+            (Query$get_courier_order_items_by_id$delivery_courier_order$items
+                    item) =>
+                CourierOrdeItem(
+                    unavailable: item.unavailable,
+                    orderId: orderId,
+                    actualCost: item.actual_cost,
+                    id: item.id,
+                    name: item.name,
+                    image: item.image,
+                    notes: item.notes,
+                    estCost: item.estimated_cost))
+        .toList();
+  }
+  return null;
+}
+
+Future<CourierOrdeItem?> update_courier_order_item(
+    {required int itemId, num? actualCost, bool? available}) async {
+  QueryResult<Mutation$updateCourierOrderItem> res = await _hasuraDb
+      .graphQLClient
+      .mutate$updateCourierOrderItem(Options$Mutation$updateCourierOrderItem(
+          variables: Variables$Mutation$updateCourierOrderItem(
+              id: itemId,
+              data: Input$delivery_courier_order_item_set_input(
+                actual_cost: actualCost?.toDouble(),
+                unavailable: available,
+              ))));
+  if (res.parsedData?.update_delivery_courier_order_item_by_pk == null) {
+    throwError(res.exception);
+  } else {
+    Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+        data = res.parsedData!.update_delivery_courier_order_item_by_pk!;
+    return CourierOrdeItem(
+        unavailable: data.unavailable,
+        orderId: data.order_id,
+        actualCost: data.actual_cost,
+        id: data.id,
+        name: data.name,
+        image: data.image,
+        notes: data.notes,
+        estCost: data.estimated_cost);
+  }
+  return null;
 }

@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -248,12 +248,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(
           width: 15,
         ),
-        // todo fix obx @m66are
-        MessageButton(
-          withPadding: false,
-          onTap: onServiceMsgClick,
-          chatId: order.chatWithServiceProviderId!,
-        ),
+        if (order.chatWithServiceProviderId != null)
+          MessageButton(
+            withPadding: false,
+            onTap: onServiceMsgClick,
+            chatId: order.chatWithServiceProviderId!,
+          ),
       ],
     );
   }
@@ -310,15 +310,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
-          flex: 1,
           child: TwoCirclesAvatar(
-            topImg: serviceProviderImage,
-            // bottomImg: customerImage,
-            bottomIconData:
-                order.serviceProviderType == ServiceProviderType.Laundry
-                    ? Icons.local_laundry_service_outlined
-                    : Icons.restaurant_rounded,
-          ),
+              topImg: serviceProviderImage,
+              // bottomImg: customerImage,
+              bottomIconData: order.orderType.toIcon()),
         ),
         Flexible(
           flex: 9,

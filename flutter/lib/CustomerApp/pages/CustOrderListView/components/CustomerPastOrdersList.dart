@@ -69,6 +69,7 @@ class CustomerPastOrdersList extends StatelessWidget {
             return MinimalOrderCard(
               order: element,
               forCustomer: true,
+              showOrderType: true,
               onTap: () {
                 if (element.orderType == OrderType.Laundry) {
                   MezRouter.toNamed(getLaundryOrderRoute(element.id));

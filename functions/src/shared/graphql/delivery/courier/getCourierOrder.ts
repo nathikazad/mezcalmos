@@ -23,7 +23,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
                 refund_amount: true,
                 stripe_fees: true,
                 tax: true,
-                to_location_adress: true,
+                to_location_address: true,
                 to_location_gps: true,
                 customer_app_type: true,
                 delivery_order_id: true,

@@ -53,6 +53,7 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
         return ServiceDriversListView(
           serviceProviderId: Get.find<DeliveryOpAuthController>().companyId,
           serviceProviderType: ServiceProviderType.DeliveryCompany,
+          serviceLinkId: opAuthController.operator.value!.state.serviceLinkId,
         );
       case 2:
         return DeliveryCostSettingView(

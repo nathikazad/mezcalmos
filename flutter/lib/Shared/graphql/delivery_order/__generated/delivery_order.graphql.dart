@@ -339,6 +339,35 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'service_provider_type'),
                     alias: null,
                     arguments: [],
@@ -2498,6 +2527,7 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_company$details {
     required this.id,
     required this.image,
     required this.name,
+    required this.location,
     required this.service_provider_type,
     required this.$__typename,
   });
@@ -2507,12 +2537,16 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_company$details {
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$location = json['location'];
     final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$delivery_company$details(
       id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
+      location:
+          Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
       service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -2523,6 +2557,9 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_company$details {
   final String image;
 
   final String name;
+
+  final Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location
+      location;
 
   final String service_provider_type;
 
@@ -2536,6 +2573,8 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_company$details {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$service_provider_type = service_provider_type;
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$$__typename = $__typename;
@@ -2548,12 +2587,14 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_company$details {
     final l$id = id;
     final l$image = image;
     final l$name = name;
+    final l$location = location;
     final l$service_provider_type = service_provider_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$image,
       l$name,
+      l$location,
       l$service_provider_type,
       l$$__typename,
     ]);
@@ -2582,6 +2623,11 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_company$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$service_provider_type = service_provider_type;
@@ -2627,9 +2673,13 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_com
     int? id,
     String? image,
     String? name,
+    Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location?
+        location,
     String? service_provider_type,
     String? $__typename,
   });
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details<
@@ -2655,6 +2705,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? location = _undefined,
     Object? service_provider_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -2667,6 +2718,10 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -2675,6 +2730,12 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details<
@@ -2691,7 +2752,179 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_com
     int? id,
     String? image,
     String? name,
+    Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location?
+        location,
     String? service_provider_type,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location
+              .stub(_res);
+}
+
+class Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location {
+  Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location
+    on Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+          Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location(
+    Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location
+        instance,
+    TRes Function(
+            Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location
+      _instance;
+
+  final TRes Function(
+          Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -7301,6 +7534,35 @@ const documentNodeSubscriptionlisten_on_driver_order =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -9594,6 +9856,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 
 class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details {
   Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details({
+    required this.location,
     required this.id,
     required this.image,
     required this.name,
@@ -9603,12 +9866,16 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$
 
   factory Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details.fromJson(
       Map<String, dynamic> json) {
+    final l$location = json['location'];
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
     final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details(
+      location:
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
       id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
@@ -9616,6 +9883,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location
+      location;
 
   final int id;
 
@@ -9629,6 +9899,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -9644,12 +9916,14 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$
 
   @override
   int get hashCode {
+    final l$location = location;
     final l$id = id;
     final l$image = image;
     final l$name = name;
     final l$service_provider_type = service_provider_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$location,
       l$id,
       l$image,
       l$name,
@@ -9666,6 +9940,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$
     if (!(other
             is Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$id = id;
@@ -9723,12 +10002,16 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
       _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details;
 
   TRes call({
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location?
+        location,
     int? id,
     String? image,
     String? name,
     String? service_provider_type,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details<
@@ -9751,6 +10034,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$del
   static const _undefined = {};
 
   TRes call({
+    Object? location = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
@@ -9759,6 +10043,10 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$del
   }) =>
       _then(
           Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details(
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined || image == null
             ? _instance.image
@@ -9774,6 +10062,12 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$del
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details<
@@ -9787,10 +10081,182 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
   TRes _res;
 
   call({
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location?
+        location,
     int? id,
     String? image,
     String? name,
     String? service_provider_type,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location
+              .stub(_res);
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -28562,6 +29028,35 @@ const documentNodeQueryget_pick_driver_order = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'image'),
                     alias: null,
                     arguments: [],
@@ -29684,6 +30179,7 @@ class _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk$deliver
 class Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details {
   Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details({
     required this.id,
+    required this.location,
     required this.image,
     required this.name,
     required this.service_provider_type,
@@ -29693,12 +30189,16 @@ class Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details 
   factory Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$location = json['location'];
     final l$image = json['image'];
     final l$name = json['name'];
     final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
     return Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details(
       id: (l$id as int),
+      location:
+          Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
       image: (l$image as String),
       name: (l$name as String),
       service_provider_type: (l$service_provider_type as String),
@@ -29707,6 +30207,9 @@ class Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details 
   }
 
   final int id;
+
+  final Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location
+      location;
 
   final String image;
 
@@ -29720,6 +30223,8 @@ class Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details 
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$image = image;
     _resultData['image'] = l$image;
     final l$name = name;
@@ -29734,12 +30239,14 @@ class Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details 
   @override
   int get hashCode {
     final l$id = id;
+    final l$location = location;
     final l$image = image;
     final l$name = name;
     final l$service_provider_type = service_provider_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$location,
       l$image,
       l$name,
       l$service_provider_type,
@@ -29760,6 +30267,11 @@ class Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details 
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$image = image;
@@ -29813,11 +30325,15 @@ abstract class CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$deliver
 
   TRes call({
     int? id,
+    Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location?
+        location,
     String? image,
     String? name,
     String? service_provider_type,
     String? $__typename,
   });
+  CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details<
@@ -29841,6 +30357,7 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_co
 
   TRes call({
     Object? id = _undefined,
+    Object? location = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
     Object? service_provider_type = _undefined,
@@ -29849,6 +30366,10 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_co
       _then(
           Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -29863,6 +30384,12 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_co
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details<
@@ -29877,9 +30404,181 @@ class _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk$deliver
 
   call({
     int? id,
+    Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location?
+        location,
     String? image,
     String? name,
     String? service_provider_type,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location
+              .stub(_res);
+}
+
+class Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location {
+  Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location
+    on Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location {
+  CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+          Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location>
+      get copyWith =>
+          CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+    TRes> {
+  factory CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location(
+    Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location
+        instance,
+    TRes Function(
+            Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location)
+        then,
+  ) = _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location;
+
+  factory CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+            TRes> {
+  _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location
+      _instance;
+
+  final TRes Function(
+          Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk$delivery_company$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;

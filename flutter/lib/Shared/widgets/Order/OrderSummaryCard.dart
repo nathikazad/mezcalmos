@@ -16,13 +16,15 @@ class OrderSummaryCard extends StatelessWidget {
     required this.orderCost,
     required this.totalCost,
     required this.refundAmmount,
+    this.showNullValues = true,
     required this.stripeOrderPaymentInfo,
   }) : super(key: key);
   // final Order order;
-  final num shippingCost;
+  final num? shippingCost;
   final num? orderCost;
   final num? totalCost;
   final num? refundAmmount;
+  final bool showNullValues;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
 
   final EdgeInsets? margin;
@@ -48,20 +50,21 @@ class OrderSummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(bottom: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        '${_i18n()["orderCost"]}',
-                        style: txt.bodyMedium,
-                      ),
-                      Text(orderCost?.toPriceString() ?? "_",
-                          style: txt.bodyMedium?.copyWith()),
-                    ],
+                if (showNullValues || orderCost != null)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          '${_i18n()["orderCost"]}',
+                          style: txt.bodyMedium,
+                        ),
+                        Text(orderCost?.toPriceString() ?? "_",
+                            style: txt.bodyMedium?.copyWith()),
+                      ],
+                    ),
                   ),
-                ),
                 if (stripeOrderPaymentInfo != null &&
                     stripeOrderPaymentInfo!.chargeFeesOnCustomer == true)
                   Container(
@@ -78,21 +81,22 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        '${_i18n()["deliveryCost"]}',
-                        style: txt.bodyMedium,
-                      ),
-                      ShippingCostComponent(
-                        shippingCost: shippingCost,
-                      )
-                    ],
+                if (showNullValues || shippingCost != null)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          '${_i18n()["deliveryCost"]}',
+                          style: txt.bodyMedium,
+                        ),
+                        ShippingCostComponent(
+                          shippingCost: shippingCost!,
+                        )
+                      ],
+                    ),
                   ),
-                ),
                 if (refundAmmount != null && refundAmmount! > 0)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
@@ -110,18 +114,19 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                Container(
-                  margin: EdgeInsets.only(top: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text('${_i18n()["totalCost"]}',
-                          style: txt.headlineMedium),
-                      Text(totalCost?.toPriceString() ?? "_",
-                          style: txt.headlineSmall),
-                    ],
+                if (showNullValues || totalCost != null)
+                  Container(
+                    margin: EdgeInsets.only(top: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('${_i18n()["totalCost"]}',
+                            style: txt.headlineMedium),
+                        Text(totalCost?.toPriceString() ?? "_",
+                            style: txt.headlineSmall),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),

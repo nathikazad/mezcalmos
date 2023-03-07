@@ -5,13 +5,16 @@ import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/contro
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
@@ -63,7 +66,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     contentPadding: const EdgeInsets.all(12),
                     leading: viewController.order.getOrderStatusWidget(),
                     content: Text(
-                      viewController.order.orderStatusTitle(),
+                      viewController.order.orderStatusTitle().inCaps,
                       style: Get.textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
@@ -71,7 +74,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   if (viewController.order.estimatedArrivalAtDropoffTime !=
                       null)
                     _estTime(),
+
                   _driverCard(),
+                  _items(),
 
                   if (viewController.order.inDeliveryPhase)
                     OrderMapWidget(
@@ -126,6 +131,36 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           }
         },
       ),
+    );
+  }
+
+  Column _items() {
+    return Column(
+      children: List.generate(
+          viewController.order.items.length,
+          (int index) => MezExpandableCard(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    viewController.order.items[index].name,
+                    style: Get.textTheme.bodyLarge,
+                  ),
+                  Text(
+                    "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)!.toPriceString()}",
+                    style: Get.textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+              imageUrl: viewController.order.items[index].image,
+              expandableWidget:
+                  (viewController.order.items[index].notes?.isNotEmpty == true)
+                      ? [
+                          Text(
+                            viewController.order.items[index].notes!,
+                          )
+                        ]
+                      : [])),
     );
   }
 

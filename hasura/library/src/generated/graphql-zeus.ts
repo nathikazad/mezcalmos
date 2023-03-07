@@ -2643,6 +2643,8 @@ cancelled), serviceProviderAccount: string } */
 	image?:true,
 	name?:true,
 	notes?:true,
+	/** An object relationship */
+	order?:ValueTypes["delivery_courier_order"],
 	order_id?:true,
 	unavailable?:true,
 		__typename?: true
@@ -2738,6 +2740,7 @@ All fields are combined with a logical 'AND'. */
 	image?:ValueTypes["String_comparison_exp"],
 	name?:ValueTypes["String_comparison_exp"],
 	notes?:ValueTypes["String_comparison_exp"],
+	order?:ValueTypes["delivery_courier_order_bool_exp"],
 	order_id?:ValueTypes["Int_comparison_exp"],
 	unavailable?:ValueTypes["Boolean_comparison_exp"]
 };
@@ -2758,6 +2761,7 @@ All fields are combined with a logical 'AND'. */
 	image?:string,
 	name?:string,
 	notes?:string,
+	order?:ValueTypes["delivery_courier_order_obj_rel_insert_input"],
 	order_id?:number,
 	unavailable?:boolean
 };
@@ -2825,6 +2829,7 @@ All fields are combined with a logical 'AND'. */
 	image?:ValueTypes["order_by"],
 	name?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
+	order?:ValueTypes["delivery_courier_order_order_by"],
 	order_id?:ValueTypes["order_by"],
 	unavailable?:ValueTypes["order_by"]
 };
@@ -3026,6 +3031,12 @@ columns of table "delivery.courier_order_item" */
 	returning?:ValueTypes["delivery_courier_order"],
 		__typename?: true
 }>;
+	/** input type for inserting object relation for remote table "delivery.courier_order" */
+["delivery_courier_order_obj_rel_insert_input"]: {
+	data:ValueTypes["delivery_courier_order_insert_input"],
+	/** upsert condition */
+	on_conflict?:ValueTypes["delivery_courier_order_on_conflict"]
+};
 	/** on_conflict condition type for table "delivery.courier_order" */
 ["delivery_courier_order_on_conflict"]: {
 	constraint:ValueTypes["delivery_courier_order_constraint"],
@@ -22056,6 +22067,8 @@ cancelled), serviceProviderAccount: string } */
 			image?:string,
 			name?:string,
 			notes?:string,
+			/** An object relationship */
+	order?:PartialObjects["delivery_courier_order"],
 			order_id?:number,
 			unavailable?:boolean
 	},
@@ -22150,6 +22163,7 @@ All fields are combined with a logical 'AND'. */
 	image?:PartialObjects["String_comparison_exp"],
 	name?:PartialObjects["String_comparison_exp"],
 	notes?:PartialObjects["String_comparison_exp"],
+	order?:PartialObjects["delivery_courier_order_bool_exp"],
 	order_id?:PartialObjects["Int_comparison_exp"],
 	unavailable?:PartialObjects["Boolean_comparison_exp"]
 },
@@ -22170,6 +22184,7 @@ All fields are combined with a logical 'AND'. */
 	image?:string,
 	name?:string,
 	notes?:string,
+	order?:PartialObjects["delivery_courier_order_obj_rel_insert_input"],
 	order_id?:number,
 	unavailable?:boolean
 },
@@ -22237,6 +22252,7 @@ All fields are combined with a logical 'AND'. */
 	image?:PartialObjects["order_by"],
 	name?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
+	order?:PartialObjects["delivery_courier_order_order_by"],
 	order_id?:PartialObjects["order_by"],
 	unavailable?:PartialObjects["order_by"]
 },
@@ -22438,6 +22454,12 @@ columns of table "delivery.courier_order_item" */
 			/** data from the rows affected by the mutation */
 	returning?:PartialObjects["delivery_courier_order"][]
 	},
+	/** input type for inserting object relation for remote table "delivery.courier_order" */
+["delivery_courier_order_obj_rel_insert_input"]: {
+	data:PartialObjects["delivery_courier_order_insert_input"],
+	/** upsert condition */
+	on_conflict?:PartialObjects["delivery_courier_order_on_conflict"]
+},
 	/** on_conflict condition type for table "delivery.courier_order" */
 ["delivery_courier_order_on_conflict"]: {
 	constraint:PartialObjects["delivery_courier_order_constraint"],
@@ -40448,6 +40470,8 @@ export type delivery_courier_order_item = {
 	image?:string,
 	name:string,
 	notes?:string,
+	/** An object relationship */
+	order:delivery_courier_order,
 	order_id:number,
 	unavailable:boolean
 }
@@ -40553,6 +40577,7 @@ export type delivery_courier_order_item_bool_exp = {
 	image?:String_comparison_exp,
 	name?:String_comparison_exp,
 	notes?:String_comparison_exp,
+	order?:delivery_courier_order_bool_exp,
 	order_id?:Int_comparison_exp,
 	unavailable?:Boolean_comparison_exp
 }
@@ -40578,6 +40603,7 @@ export type delivery_courier_order_item_insert_input = {
 	image?:string,
 	name?:string,
 	notes?:string,
+	order?:delivery_courier_order_obj_rel_insert_input,
 	order_id?:number,
 	unavailable?:boolean
 }
@@ -40652,6 +40678,7 @@ export type delivery_courier_order_item_order_by = {
 	image?:order_by,
 	name?:order_by,
 	notes?:order_by,
+	order?:delivery_courier_order_order_by,
 	order_id?:order_by,
 	unavailable?:order_by
 }
@@ -40900,6 +40927,13 @@ export type delivery_courier_order_mutation_response = {
 	affected_rows:number,
 	/** data from the rows affected by the mutation */
 	returning:delivery_courier_order[]
+}
+
+/** input type for inserting object relation for remote table "delivery.courier_order" */
+export type delivery_courier_order_obj_rel_insert_input = {
+		data:delivery_courier_order_insert_input,
+	/** upsert condition */
+	on_conflict?:delivery_courier_order_on_conflict
 }
 
 /** on_conflict condition type for table "delivery.courier_order" */
@@ -64325,6 +64359,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		order:{
+			type:"delivery_courier_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		order_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -64398,6 +64438,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		notes:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order:{
+			type:"delivery_courier_order_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64556,6 +64602,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		notes:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order:{
+			type:"delivery_courier_order_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64896,6 +64948,20 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		order_id:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_courier_order_obj_rel_insert_input:{
+		data:{
+			type:"delivery_courier_order_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		on_conflict:{
+			type:"delivery_courier_order_on_conflict",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -112552,6 +112618,7 @@ export const ReturnTypes: Record<string,any> = {
 		image:"String",
 		name:"String",
 		notes:"String",
+		order:"delivery_courier_order",
 		order_id:"Int",
 		unavailable:"Boolean"
 	},

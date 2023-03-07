@@ -107,6 +107,8 @@ extension ParseOrderTypeToString on OrderType {
         return mat.Icons.local_laundry_service;
       case OrderType.Taxi:
         return mat.Icons.local_taxi;
+      case OrderType.Courier:
+        return mat.Icons.shopping_bag;
 
         break;
       default:
@@ -144,8 +146,8 @@ extension ParseOrderTypeToString on OrderType {
 
 extension ParseStringToOrderType on String {
   OrderType toOrderType() {
-    return OrderType.values.firstWhere(
-        (OrderType e) => e.toFirebaseFormatString().toLowerCase() == this);
+    return OrderType.values
+        .firstWhere((OrderType e) => e.toFirebaseFormatString() == this);
   }
 }
 

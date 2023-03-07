@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryOrder {
   int id;
+  int? courierOrderId;
   OrderType orderType;
 
   ServiceProviderType? serviceProviderType;
@@ -37,34 +38,34 @@ class DeliveryOrder {
   DateTime? estimatedArrivalAtPickupTime;
   DateTime? estimatedPackageReadyTime;
   //bool driverAssigned;
-  DeliveryOrder({
-    required this.orderType,
-    required this.id,
-    required this.deliveryCompany,
-    required this.serviceInfo,
-    required this.customerInfo,
-    required this.driverLocation,
-    required this.deliveryDirection,
-    required this.routeInformation,
-    required this.orderTime,
-    required this.status,
-    required this.serviceProviderType,
-    required this.deliveryCost,
-    required this.packageCost,
-    required this.pickupLocation,
-    required this.dropoffLocation,
-    required this.chatWithCustomerId,
-    required this.chatWithServiceProviderId,
-    required this.paymentType,
-    required this.driverInfo,
-    required this.stripeOrderPaymentInfo,
-    required this.packageReady,
-    required this.estimatedArrivalAtDropoffTime,
-    required this.serviceOrderId,
-    //  this.driverAssigned = false,
-    required this.estimatedArrivalAtPickupTime,
-    required this.estimatedPackageReadyTime,
-  });
+  DeliveryOrder(
+      {required this.orderType,
+      required this.id,
+      required this.deliveryCompany,
+      required this.serviceInfo,
+      required this.customerInfo,
+      required this.driverLocation,
+      required this.deliveryDirection,
+      required this.routeInformation,
+      required this.orderTime,
+      required this.status,
+      required this.serviceProviderType,
+      required this.deliveryCost,
+      required this.packageCost,
+      required this.pickupLocation,
+      required this.dropoffLocation,
+      required this.chatWithCustomerId,
+      required this.chatWithServiceProviderId,
+      required this.paymentType,
+      required this.driverInfo,
+      required this.stripeOrderPaymentInfo,
+      required this.packageReady,
+      required this.estimatedArrivalAtDropoffTime,
+      required this.serviceOrderId,
+      //  this.driverAssigned = false,
+      required this.estimatedArrivalAtPickupTime,
+      required this.estimatedPackageReadyTime,
+      this.courierOrderId});
 
   DeliveryOrder copyWith({
     int? id,

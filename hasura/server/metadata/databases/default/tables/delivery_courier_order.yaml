@@ -135,3 +135,19 @@ select_permissions:
           _where:
             user_id:
               _eq: X-Hasura-User-Id
+update_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - bill_image
+        - tax
+      filter:
+        delivery_order:
+          delivery_driver:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        delivery_order:
+          delivery_driver:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -1,3 +1,4 @@
+import '../../__generated/schema.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -358,7 +359,7 @@ const documentNodeQueryget_courier_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'to_location_adress'),
+            name: NameNode(value: 'to_location_address'),
             alias: null,
             arguments: [],
             directives: [],
@@ -943,11 +944,11 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     required this.id,
     required this.order_time,
     required this.payment_type,
-    this.refund_amount,
+    required this.refund_amount,
     required this.stripe_fees,
     this.stripe_info,
     required this.tax,
-    required this.to_location_adress,
+    required this.to_location_address,
     required this.to_location_gps,
     required this.items,
     required this.delivery_order,
@@ -967,7 +968,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     final l$stripe_fees = json['stripe_fees'];
     final l$stripe_info = json['stripe_info'];
     final l$tax = json['tax'];
-    final l$to_location_adress = json['to_location_adress'];
+    final l$to_location_address = json['to_location_address'];
     final l$to_location_gps = json['to_location_gps'];
     final l$items = json['items'];
     final l$delivery_order = json['delivery_order'];
@@ -982,12 +983,11 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
       id: (l$id as int),
       order_time: (l$order_time as String),
       payment_type: (l$payment_type as String),
-      refund_amount:
-          l$refund_amount == null ? null : moneyFromJson(l$refund_amount),
+      refund_amount: moneyFromJson(l$refund_amount),
       stripe_fees: moneyFromJson(l$stripe_fees),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       tax: moneyFromJson(l$tax),
-      to_location_adress: (l$to_location_adress as String),
+      to_location_address: (l$to_location_address as String),
       to_location_gps: geographyFromJson(l$to_location_gps),
       items: (l$items as List<dynamic>)
           .map((e) =>
@@ -1015,7 +1015,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
 
   final String payment_type;
 
-  final double? refund_amount;
+  final double refund_amount;
 
   final double stripe_fees;
 
@@ -1023,7 +1023,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
 
   final double tax;
 
-  final String to_location_adress;
+  final String to_location_address;
 
   final Geography to_location_gps;
 
@@ -1054,8 +1054,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     final l$payment_type = payment_type;
     _resultData['payment_type'] = l$payment_type;
     final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] =
-        l$refund_amount == null ? null : moneyToJson(l$refund_amount);
+    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$stripe_fees = stripe_fees;
     _resultData['stripe_fees'] = moneyToJson(l$stripe_fees);
     final l$stripe_info = stripe_info;
@@ -1063,8 +1062,8 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$tax = tax;
     _resultData['tax'] = moneyToJson(l$tax);
-    final l$to_location_adress = to_location_adress;
-    _resultData['to_location_adress'] = l$to_location_adress;
+    final l$to_location_address = to_location_address;
+    _resultData['to_location_address'] = l$to_location_address;
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] = geographyToJson(l$to_location_gps);
     final l$items = items;
@@ -1089,7 +1088,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     final l$stripe_fees = stripe_fees;
     final l$stripe_info = stripe_info;
     final l$tax = tax;
-    final l$to_location_adress = to_location_adress;
+    final l$to_location_address = to_location_address;
     final l$to_location_gps = to_location_gps;
     final l$items = items;
     final l$delivery_order = delivery_order;
@@ -1106,7 +1105,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
       l$stripe_fees,
       l$stripe_info,
       l$tax,
-      l$to_location_adress,
+      l$to_location_address,
       l$to_location_gps,
       Object.hashAll(l$items.map((v) => v)),
       l$delivery_order,
@@ -1179,9 +1178,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     if (l$tax != lOther$tax) {
       return false;
     }
-    final l$to_location_adress = to_location_adress;
-    final lOther$to_location_adress = other.to_location_adress;
-    if (l$to_location_adress != lOther$to_location_adress) {
+    final l$to_location_address = to_location_address;
+    final lOther$to_location_address = other.to_location_address;
+    if (l$to_location_address != lOther$to_location_address) {
       return false;
     }
     final l$to_location_gps = to_location_gps;
@@ -1250,7 +1249,7 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    String? to_location_adress,
+    String? to_location_address,
     Geography? to_location_gps,
     List<Query$get_courier_order_by_id$delivery_courier_order_by_pk$items>?
         items,
@@ -1297,7 +1296,7 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk<
     Object? stripe_fees = _undefined,
     Object? stripe_info = _undefined,
     Object? tax = _undefined,
-    Object? to_location_adress = _undefined,
+    Object? to_location_address = _undefined,
     Object? to_location_gps = _undefined,
     Object? items = _undefined,
     Object? delivery_order = _undefined,
@@ -1323,9 +1322,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk<
         payment_type: payment_type == _undefined || payment_type == null
             ? _instance.payment_type
             : (payment_type as String),
-        refund_amount: refund_amount == _undefined
+        refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
-            : (refund_amount as double?),
+            : (refund_amount as double),
         stripe_fees: stripe_fees == _undefined || stripe_fees == null
             ? _instance.stripe_fees
             : (stripe_fees as double),
@@ -1333,10 +1332,10 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk<
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
         tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
-        to_location_adress:
-            to_location_adress == _undefined || to_location_adress == null
-                ? _instance.to_location_adress
-                : (to_location_adress as String),
+        to_location_address:
+            to_location_address == _undefined || to_location_address == null
+                ? _instance.to_location_address
+                : (to_location_address as String),
         to_location_gps:
             to_location_gps == _undefined || to_location_gps == null
                 ? _instance.to_location_gps
@@ -1395,7 +1394,7 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    String? to_location_adress,
+    String? to_location_address,
     Geography? to_location_gps,
     List<Query$get_courier_order_by_id$delivery_courier_order_by_pk$items>?
         items,
@@ -3672,6 +3671,1729 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
       _res;
 }
 
+class Variables$Query$get_courier_order_items_by_id {
+  factory Variables$Query$get_courier_order_items_by_id(
+          {required int orderId}) =>
+      Variables$Query$get_courier_order_items_by_id._({
+        r'orderId': orderId,
+      });
+
+  Variables$Query$get_courier_order_items_by_id._(this._$data);
+
+  factory Variables$Query$get_courier_order_items_by_id.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    return Variables$Query$get_courier_order_items_by_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_courier_order_items_by_id<
+          Variables$Query$get_courier_order_items_by_id>
+      get copyWith => CopyWith$Variables$Query$get_courier_order_items_by_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_courier_order_items_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    return Object.hashAll([l$orderId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_courier_order_items_by_id<TRes> {
+  factory CopyWith$Variables$Query$get_courier_order_items_by_id(
+    Variables$Query$get_courier_order_items_by_id instance,
+    TRes Function(Variables$Query$get_courier_order_items_by_id) then,
+  ) = _CopyWithImpl$Variables$Query$get_courier_order_items_by_id;
+
+  factory CopyWith$Variables$Query$get_courier_order_items_by_id.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_courier_order_items_by_id;
+
+  TRes call({int? orderId});
+}
+
+class _CopyWithImpl$Variables$Query$get_courier_order_items_by_id<TRes>
+    implements CopyWith$Variables$Query$get_courier_order_items_by_id<TRes> {
+  _CopyWithImpl$Variables$Query$get_courier_order_items_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_courier_order_items_by_id _instance;
+
+  final TRes Function(Variables$Query$get_courier_order_items_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? orderId = _undefined}) =>
+      _then(Variables$Query$get_courier_order_items_by_id._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_courier_order_items_by_id<TRes>
+    implements CopyWith$Variables$Query$get_courier_order_items_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_courier_order_items_by_id(this._res);
+
+  TRes _res;
+
+  call({int? orderId}) => _res;
+}
+
+class Query$get_courier_order_items_by_id {
+  Query$get_courier_order_items_by_id({
+    required this.delivery_courier_order,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_items_by_id.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_courier_order = json['delivery_courier_order'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_items_by_id(
+      delivery_courier_order: (l$delivery_courier_order as List<dynamic>)
+          .map((e) => Query$get_courier_order_items_by_id$delivery_courier_order
+              .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_courier_order_items_by_id$delivery_courier_order>
+      delivery_courier_order;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_courier_order = delivery_courier_order;
+    _resultData['delivery_courier_order'] =
+        l$delivery_courier_order.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_courier_order = delivery_courier_order;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_courier_order.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_courier_order_items_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_courier_order = delivery_courier_order;
+    final lOther$delivery_courier_order = other.delivery_courier_order;
+    if (l$delivery_courier_order.length !=
+        lOther$delivery_courier_order.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_courier_order.length; i++) {
+      final l$delivery_courier_order$entry = l$delivery_courier_order[i];
+      final lOther$delivery_courier_order$entry =
+          lOther$delivery_courier_order[i];
+      if (l$delivery_courier_order$entry !=
+          lOther$delivery_courier_order$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_items_by_id
+    on Query$get_courier_order_items_by_id {
+  CopyWith$Query$get_courier_order_items_by_id<
+          Query$get_courier_order_items_by_id>
+      get copyWith => CopyWith$Query$get_courier_order_items_by_id(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_items_by_id<TRes> {
+  factory CopyWith$Query$get_courier_order_items_by_id(
+    Query$get_courier_order_items_by_id instance,
+    TRes Function(Query$get_courier_order_items_by_id) then,
+  ) = _CopyWithImpl$Query$get_courier_order_items_by_id;
+
+  factory CopyWith$Query$get_courier_order_items_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_items_by_id;
+
+  TRes call({
+    List<Query$get_courier_order_items_by_id$delivery_courier_order>?
+        delivery_courier_order,
+    String? $__typename,
+  });
+  TRes delivery_courier_order(
+      Iterable<Query$get_courier_order_items_by_id$delivery_courier_order> Function(
+              Iterable<
+                  CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order<
+                      Query$get_courier_order_items_by_id$delivery_courier_order>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_courier_order_items_by_id<TRes>
+    implements CopyWith$Query$get_courier_order_items_by_id<TRes> {
+  _CopyWithImpl$Query$get_courier_order_items_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_items_by_id _instance;
+
+  final TRes Function(Query$get_courier_order_items_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_courier_order = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_courier_order_items_by_id(
+        delivery_courier_order: delivery_courier_order == _undefined ||
+                delivery_courier_order == null
+            ? _instance.delivery_courier_order
+            : (delivery_courier_order as List<
+                Query$get_courier_order_items_by_id$delivery_courier_order>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_courier_order(
+          Iterable<Query$get_courier_order_items_by_id$delivery_courier_order> Function(
+                  Iterable<
+                      CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order<
+                          Query$get_courier_order_items_by_id$delivery_courier_order>>)
+              _fn) =>
+      call(
+          delivery_courier_order: _fn(_instance.delivery_courier_order.map((e) =>
+              CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_items_by_id<TRes>
+    implements CopyWith$Query$get_courier_order_items_by_id<TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_items_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_courier_order_items_by_id$delivery_courier_order>?
+        delivery_courier_order,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_courier_order(_fn) => _res;
+}
+
+const documentNodeQueryget_courier_order_items_by_id =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_courier_order_items_by_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_courier_order'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'delivery_order_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'orderId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'items'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'actual_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'estimated_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'notes'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'unavailable'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_courier_order_items_by_id
+    _parserFn$Query$get_courier_order_items_by_id(Map<String, dynamic> data) =>
+        Query$get_courier_order_items_by_id.fromJson(data);
+
+class Options$Query$get_courier_order_items_by_id
+    extends graphql.QueryOptions<Query$get_courier_order_items_by_id> {
+  Options$Query$get_courier_order_items_by_id({
+    String? operationName,
+    required Variables$Query$get_courier_order_items_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_courier_order_items_by_id,
+          parserFn: _parserFn$Query$get_courier_order_items_by_id,
+        );
+}
+
+class WatchOptions$Query$get_courier_order_items_by_id
+    extends graphql.WatchQueryOptions<Query$get_courier_order_items_by_id> {
+  WatchOptions$Query$get_courier_order_items_by_id({
+    String? operationName,
+    required Variables$Query$get_courier_order_items_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_courier_order_items_by_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_courier_order_items_by_id,
+        );
+}
+
+class FetchMoreOptions$Query$get_courier_order_items_by_id
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_courier_order_items_by_id({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_courier_order_items_by_id variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_courier_order_items_by_id,
+        );
+}
+
+extension ClientExtension$Query$get_courier_order_items_by_id
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_courier_order_items_by_id>>
+      query$get_courier_order_items_by_id(
+              Options$Query$get_courier_order_items_by_id options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_courier_order_items_by_id>
+      watchQuery$get_courier_order_items_by_id(
+              WatchOptions$Query$get_courier_order_items_by_id options) =>
+          this.watchQuery(options);
+  void writeQuery$get_courier_order_items_by_id({
+    required Query$get_courier_order_items_by_id data,
+    required Variables$Query$get_courier_order_items_by_id variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_courier_order_items_by_id),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_courier_order_items_by_id? readQuery$get_courier_order_items_by_id({
+    required Variables$Query$get_courier_order_items_by_id variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryget_courier_order_items_by_id),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$get_courier_order_items_by_id.fromJson(result);
+  }
+}
+
+class Query$get_courier_order_items_by_id$delivery_courier_order {
+  Query$get_courier_order_items_by_id$delivery_courier_order({
+    required this.items,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_items_by_id$delivery_courier_order.fromJson(
+      Map<String, dynamic> json) {
+    final l$items = json['items'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_items_by_id$delivery_courier_order(
+      items: (l$items as List<dynamic>)
+          .map((e) =>
+              Query$get_courier_order_items_by_id$delivery_courier_order$items
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_courier_order_items_by_id$delivery_courier_order$items>
+      items;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$items = items;
+    _resultData['items'] = l$items.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$items = items;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$items.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_courier_order_items_by_id$delivery_courier_order) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$items = items;
+    final lOther$items = other.items;
+    if (l$items.length != lOther$items.length) {
+      return false;
+    }
+    for (int i = 0; i < l$items.length; i++) {
+      final l$items$entry = l$items[i];
+      final lOther$items$entry = lOther$items[i];
+      if (l$items$entry != lOther$items$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_items_by_id$delivery_courier_order
+    on Query$get_courier_order_items_by_id$delivery_courier_order {
+  CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order<
+          Query$get_courier_order_items_by_id$delivery_courier_order>
+      get copyWith =>
+          CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order<
+    TRes> {
+  factory CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order(
+    Query$get_courier_order_items_by_id$delivery_courier_order instance,
+    TRes Function(Query$get_courier_order_items_by_id$delivery_courier_order)
+        then,
+  ) = _CopyWithImpl$Query$get_courier_order_items_by_id$delivery_courier_order;
+
+  factory CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_items_by_id$delivery_courier_order;
+
+  TRes call({
+    List<Query$get_courier_order_items_by_id$delivery_courier_order$items>?
+        items,
+    String? $__typename,
+  });
+  TRes items(
+      Iterable<Query$get_courier_order_items_by_id$delivery_courier_order$items> Function(
+              Iterable<
+                  CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+                      Query$get_courier_order_items_by_id$delivery_courier_order$items>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_courier_order_items_by_id$delivery_courier_order<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order<
+            TRes> {
+  _CopyWithImpl$Query$get_courier_order_items_by_id$delivery_courier_order(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_items_by_id$delivery_courier_order _instance;
+
+  final TRes Function(
+      Query$get_courier_order_items_by_id$delivery_courier_order) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? items = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_courier_order_items_by_id$delivery_courier_order(
+        items: items == _undefined || items == null
+            ? _instance.items
+            : (items as List<
+                Query$get_courier_order_items_by_id$delivery_courier_order$items>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes items(
+          Iterable<Query$get_courier_order_items_by_id$delivery_courier_order$items> Function(
+                  Iterable<
+                      CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+                          Query$get_courier_order_items_by_id$delivery_courier_order$items>>)
+              _fn) =>
+      call(
+          items: _fn(_instance.items.map((e) =>
+              CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_items_by_id$delivery_courier_order<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order<
+            TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_items_by_id$delivery_courier_order(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_courier_order_items_by_id$delivery_courier_order$items>?
+        items,
+    String? $__typename,
+  }) =>
+      _res;
+  items(_fn) => _res;
+}
+
+class Query$get_courier_order_items_by_id$delivery_courier_order$items {
+  Query$get_courier_order_items_by_id$delivery_courier_order$items({
+    this.actual_cost,
+    this.estimated_cost,
+    required this.id,
+    this.image,
+    required this.name,
+    this.notes,
+    required this.unavailable,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_items_by_id$delivery_courier_order$items.fromJson(
+      Map<String, dynamic> json) {
+    final l$actual_cost = json['actual_cost'];
+    final l$estimated_cost = json['estimated_cost'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$notes = json['notes'];
+    final l$unavailable = json['unavailable'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_items_by_id$delivery_courier_order$items(
+      actual_cost: l$actual_cost == null ? null : moneyFromJson(l$actual_cost),
+      estimated_cost:
+          l$estimated_cost == null ? null : moneyFromJson(l$estimated_cost),
+      id: (l$id as int),
+      image: (l$image as String?),
+      name: (l$name as String),
+      notes: (l$notes as String?),
+      unavailable: (l$unavailable as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? actual_cost;
+
+  final double? estimated_cost;
+
+  final int id;
+
+  final String? image;
+
+  final String name;
+
+  final String? notes;
+
+  final bool unavailable;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$actual_cost = actual_cost;
+    _resultData['actual_cost'] =
+        l$actual_cost == null ? null : moneyToJson(l$actual_cost);
+    final l$estimated_cost = estimated_cost;
+    _resultData['estimated_cost'] =
+        l$estimated_cost == null ? null : moneyToJson(l$estimated_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$notes = notes;
+    _resultData['notes'] = l$notes;
+    final l$unavailable = unavailable;
+    _resultData['unavailable'] = l$unavailable;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$actual_cost = actual_cost;
+    final l$estimated_cost = estimated_cost;
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$notes = notes;
+    final l$unavailable = unavailable;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$actual_cost,
+      l$estimated_cost,
+      l$id,
+      l$image,
+      l$name,
+      l$notes,
+      l$unavailable,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_courier_order_items_by_id$delivery_courier_order$items) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$actual_cost = actual_cost;
+    final lOther$actual_cost = other.actual_cost;
+    if (l$actual_cost != lOther$actual_cost) {
+      return false;
+    }
+    final l$estimated_cost = estimated_cost;
+    final lOther$estimated_cost = other.estimated_cost;
+    if (l$estimated_cost != lOther$estimated_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$notes = notes;
+    final lOther$notes = other.notes;
+    if (l$notes != lOther$notes) {
+      return false;
+    }
+    final l$unavailable = unavailable;
+    final lOther$unavailable = other.unavailable;
+    if (l$unavailable != lOther$unavailable) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_items_by_id$delivery_courier_order$items
+    on Query$get_courier_order_items_by_id$delivery_courier_order$items {
+  CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+          Query$get_courier_order_items_by_id$delivery_courier_order$items>
+      get copyWith =>
+          CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+    TRes> {
+  factory CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items(
+    Query$get_courier_order_items_by_id$delivery_courier_order$items instance,
+    TRes Function(
+            Query$get_courier_order_items_by_id$delivery_courier_order$items)
+        then,
+  ) = _CopyWithImpl$Query$get_courier_order_items_by_id$delivery_courier_order$items;
+
+  factory CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_items_by_id$delivery_courier_order$items;
+
+  TRes call({
+    double? actual_cost,
+    double? estimated_cost,
+    int? id,
+    String? image,
+    String? name,
+    String? notes,
+    bool? unavailable,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+            TRes> {
+  _CopyWithImpl$Query$get_courier_order_items_by_id$delivery_courier_order$items(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_items_by_id$delivery_courier_order$items
+      _instance;
+
+  final TRes Function(
+      Query$get_courier_order_items_by_id$delivery_courier_order$items) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? actual_cost = _undefined,
+    Object? estimated_cost = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? notes = _undefined,
+    Object? unavailable = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_courier_order_items_by_id$delivery_courier_order$items(
+        actual_cost: actual_cost == _undefined
+            ? _instance.actual_cost
+            : (actual_cost as double?),
+        estimated_cost: estimated_cost == _undefined
+            ? _instance.estimated_cost
+            : (estimated_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        notes: notes == _undefined ? _instance.notes : (notes as String?),
+        unavailable: unavailable == _undefined || unavailable == null
+            ? _instance.unavailable
+            : (unavailable as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_items_by_id$delivery_courier_order$items<
+            TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_items_by_id$delivery_courier_order$items(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? actual_cost,
+    double? estimated_cost,
+    int? id,
+    String? image,
+    String? name,
+    String? notes,
+    bool? unavailable,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateCourierOrderItem {
+  factory Variables$Mutation$updateCourierOrderItem({
+    Input$delivery_courier_order_item_set_input? data,
+    required int id,
+  }) =>
+      Variables$Mutation$updateCourierOrderItem._({
+        if (data != null) r'data': data,
+        r'id': id,
+      });
+
+  Variables$Mutation$updateCourierOrderItem._(this._$data);
+
+  factory Variables$Mutation$updateCourierOrderItem.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('data')) {
+      final l$data = data['data'];
+      result$data['data'] = l$data == null
+          ? null
+          : Input$delivery_courier_order_item_set_input.fromJson(
+              (l$data as Map<String, dynamic>));
+    }
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$updateCourierOrderItem._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$delivery_courier_order_item_set_input? get data =>
+      (_$data['data'] as Input$delivery_courier_order_item_set_input?);
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('data')) {
+      final l$data = data;
+      result$data['data'] = l$data?.toJson();
+    }
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateCourierOrderItem<
+          Variables$Mutation$updateCourierOrderItem>
+      get copyWith => CopyWith$Variables$Mutation$updateCourierOrderItem(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateCourierOrderItem) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$data = data;
+    final lOther$data = other.data;
+    if (_$data.containsKey('data') != other._$data.containsKey('data')) {
+      return false;
+    }
+    if (l$data != lOther$data) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$data = data;
+    final l$id = id;
+    return Object.hashAll([
+      _$data.containsKey('data') ? l$data : const {},
+      l$id,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateCourierOrderItem<TRes> {
+  factory CopyWith$Variables$Mutation$updateCourierOrderItem(
+    Variables$Mutation$updateCourierOrderItem instance,
+    TRes Function(Variables$Mutation$updateCourierOrderItem) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateCourierOrderItem;
+
+  factory CopyWith$Variables$Mutation$updateCourierOrderItem.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateCourierOrderItem;
+
+  TRes call({
+    Input$delivery_courier_order_item_set_input? data,
+    int? id,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateCourierOrderItem<TRes>
+    implements CopyWith$Variables$Mutation$updateCourierOrderItem<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateCourierOrderItem(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateCourierOrderItem _instance;
+
+  final TRes Function(Variables$Mutation$updateCourierOrderItem) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? data = _undefined,
+    Object? id = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateCourierOrderItem._({
+        ..._instance._$data,
+        if (data != _undefined)
+          'data': (data as Input$delivery_courier_order_item_set_input?),
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateCourierOrderItem<TRes>
+    implements CopyWith$Variables$Mutation$updateCourierOrderItem<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateCourierOrderItem(this._res);
+
+  TRes _res;
+
+  call({
+    Input$delivery_courier_order_item_set_input? data,
+    int? id,
+  }) =>
+      _res;
+}
+
+class Mutation$updateCourierOrderItem {
+  Mutation$updateCourierOrderItem({
+    this.update_delivery_courier_order_item_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateCourierOrderItem.fromJson(Map<String, dynamic> json) {
+    final l$update_delivery_courier_order_item_by_pk =
+        json['update_delivery_courier_order_item_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateCourierOrderItem(
+      update_delivery_courier_order_item_by_pk:
+          l$update_delivery_courier_order_item_by_pk == null
+              ? null
+              : Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+                  .fromJson((l$update_delivery_courier_order_item_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk?
+      update_delivery_courier_order_item_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_delivery_courier_order_item_by_pk =
+        update_delivery_courier_order_item_by_pk;
+    _resultData['update_delivery_courier_order_item_by_pk'] =
+        l$update_delivery_courier_order_item_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_delivery_courier_order_item_by_pk =
+        update_delivery_courier_order_item_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_delivery_courier_order_item_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateCourierOrderItem) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_delivery_courier_order_item_by_pk =
+        update_delivery_courier_order_item_by_pk;
+    final lOther$update_delivery_courier_order_item_by_pk =
+        other.update_delivery_courier_order_item_by_pk;
+    if (l$update_delivery_courier_order_item_by_pk !=
+        lOther$update_delivery_courier_order_item_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateCourierOrderItem
+    on Mutation$updateCourierOrderItem {
+  CopyWith$Mutation$updateCourierOrderItem<Mutation$updateCourierOrderItem>
+      get copyWith => CopyWith$Mutation$updateCourierOrderItem(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateCourierOrderItem<TRes> {
+  factory CopyWith$Mutation$updateCourierOrderItem(
+    Mutation$updateCourierOrderItem instance,
+    TRes Function(Mutation$updateCourierOrderItem) then,
+  ) = _CopyWithImpl$Mutation$updateCourierOrderItem;
+
+  factory CopyWith$Mutation$updateCourierOrderItem.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateCourierOrderItem;
+
+  TRes call({
+    Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk?
+        update_delivery_courier_order_item_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+      TRes> get update_delivery_courier_order_item_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateCourierOrderItem<TRes>
+    implements CopyWith$Mutation$updateCourierOrderItem<TRes> {
+  _CopyWithImpl$Mutation$updateCourierOrderItem(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateCourierOrderItem _instance;
+
+  final TRes Function(Mutation$updateCourierOrderItem) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_delivery_courier_order_item_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateCourierOrderItem(
+        update_delivery_courier_order_item_by_pk:
+            update_delivery_courier_order_item_by_pk == _undefined
+                ? _instance.update_delivery_courier_order_item_by_pk
+                : (update_delivery_courier_order_item_by_pk
+                    as Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+      TRes> get update_delivery_courier_order_item_by_pk {
+    final local$update_delivery_courier_order_item_by_pk =
+        _instance.update_delivery_courier_order_item_by_pk;
+    return local$update_delivery_courier_order_item_by_pk == null
+        ? CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk(
+            local$update_delivery_courier_order_item_by_pk,
+            (e) => call(update_delivery_courier_order_item_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateCourierOrderItem<TRes>
+    implements CopyWith$Mutation$updateCourierOrderItem<TRes> {
+  _CopyWithStubImpl$Mutation$updateCourierOrderItem(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk?
+        update_delivery_courier_order_item_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+          TRes>
+      get update_delivery_courier_order_item_by_pk =>
+          CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateCourierOrderItem = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateCourierOrderItem'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'data')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'delivery_courier_order_item_set_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_delivery_courier_order_item_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'data')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'actual_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'estimated_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'notes'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'unavailable'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateCourierOrderItem _parserFn$Mutation$updateCourierOrderItem(
+        Map<String, dynamic> data) =>
+    Mutation$updateCourierOrderItem.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateCourierOrderItem = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateCourierOrderItem?,
+);
+
+class Options$Mutation$updateCourierOrderItem
+    extends graphql.MutationOptions<Mutation$updateCourierOrderItem> {
+  Options$Mutation$updateCourierOrderItem({
+    String? operationName,
+    required Variables$Mutation$updateCourierOrderItem variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateCourierOrderItem? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateCourierOrderItem>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateCourierOrderItem(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateCourierOrderItem,
+          parserFn: _parserFn$Mutation$updateCourierOrderItem,
+        );
+
+  final OnMutationCompleted$Mutation$updateCourierOrderItem?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateCourierOrderItem
+    extends graphql.WatchQueryOptions<Mutation$updateCourierOrderItem> {
+  WatchOptions$Mutation$updateCourierOrderItem({
+    String? operationName,
+    required Variables$Mutation$updateCourierOrderItem variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateCourierOrderItem,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateCourierOrderItem,
+        );
+}
+
+extension ClientExtension$Mutation$updateCourierOrderItem
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateCourierOrderItem>>
+      mutate$updateCourierOrderItem(
+              Options$Mutation$updateCourierOrderItem options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateCourierOrderItem>
+      watchMutation$updateCourierOrderItem(
+              WatchOptions$Mutation$updateCourierOrderItem options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk {
+  Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk({
+    this.actual_cost,
+    this.estimated_cost,
+    required this.id,
+    this.image,
+    required this.name,
+    this.notes,
+    required this.unavailable,
+    required this.order_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$actual_cost = json['actual_cost'];
+    final l$estimated_cost = json['estimated_cost'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$notes = json['notes'];
+    final l$unavailable = json['unavailable'];
+    final l$order_id = json['order_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk(
+      actual_cost: l$actual_cost == null ? null : moneyFromJson(l$actual_cost),
+      estimated_cost:
+          l$estimated_cost == null ? null : moneyFromJson(l$estimated_cost),
+      id: (l$id as int),
+      image: (l$image as String?),
+      name: (l$name as String),
+      notes: (l$notes as String?),
+      unavailable: (l$unavailable as bool),
+      order_id: (l$order_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? actual_cost;
+
+  final double? estimated_cost;
+
+  final int id;
+
+  final String? image;
+
+  final String name;
+
+  final String? notes;
+
+  final bool unavailable;
+
+  final int order_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$actual_cost = actual_cost;
+    _resultData['actual_cost'] =
+        l$actual_cost == null ? null : moneyToJson(l$actual_cost);
+    final l$estimated_cost = estimated_cost;
+    _resultData['estimated_cost'] =
+        l$estimated_cost == null ? null : moneyToJson(l$estimated_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$notes = notes;
+    _resultData['notes'] = l$notes;
+    final l$unavailable = unavailable;
+    _resultData['unavailable'] = l$unavailable;
+    final l$order_id = order_id;
+    _resultData['order_id'] = l$order_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$actual_cost = actual_cost;
+    final l$estimated_cost = estimated_cost;
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$notes = notes;
+    final l$unavailable = unavailable;
+    final l$order_id = order_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$actual_cost,
+      l$estimated_cost,
+      l$id,
+      l$image,
+      l$name,
+      l$notes,
+      l$unavailable,
+      l$order_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$actual_cost = actual_cost;
+    final lOther$actual_cost = other.actual_cost;
+    if (l$actual_cost != lOther$actual_cost) {
+      return false;
+    }
+    final l$estimated_cost = estimated_cost;
+    final lOther$estimated_cost = other.estimated_cost;
+    if (l$estimated_cost != lOther$estimated_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$notes = notes;
+    final lOther$notes = other.notes;
+    if (l$notes != lOther$notes) {
+      return false;
+    }
+    final l$unavailable = unavailable;
+    final lOther$unavailable = other.unavailable;
+    if (l$unavailable != lOther$unavailable) {
+      return false;
+    }
+    final l$order_id = order_id;
+    final lOther$order_id = other.order_id;
+    if (l$order_id != lOther$order_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+    on Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk {
+  CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+          Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk(
+    Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+        instance,
+    TRes Function(
+            Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk;
+
+  factory CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk;
+
+  TRes call({
+    double? actual_cost,
+    double? estimated_cost,
+    int? id,
+    String? image,
+    String? name,
+    String? notes,
+    bool? unavailable,
+    int? order_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? actual_cost = _undefined,
+    Object? estimated_cost = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? notes = _undefined,
+    Object? unavailable = _undefined,
+    Object? order_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk(
+        actual_cost: actual_cost == _undefined
+            ? _instance.actual_cost
+            : (actual_cost as double?),
+        estimated_cost: estimated_cost == _undefined
+            ? _instance.estimated_cost
+            : (estimated_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        notes: notes == _undefined ? _instance.notes : (notes as String?),
+        unavailable: unavailable == _undefined || unavailable == null
+            ? _instance.unavailable
+            : (unavailable as bool),
+        order_id: order_id == _undefined || order_id == null
+            ? _instance.order_id
+            : (order_id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? actual_cost,
+    double? estimated_cost,
+    int? id,
+    String? image,
+    String? name,
+    String? notes,
+    bool? unavailable,
+    int? order_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Subscription$listen_on_courier_order_by_id {
   factory Variables$Subscription$listen_on_courier_order_by_id(
           {required int orderId}) =>
@@ -4041,7 +5763,7 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'to_location_adress'),
+            name: NameNode(value: 'to_location_address'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4589,11 +6311,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     required this.id,
     required this.order_time,
     required this.payment_type,
-    this.refund_amount,
+    required this.refund_amount,
     required this.stripe_fees,
     this.stripe_info,
     required this.tax,
-    required this.to_location_adress,
+    required this.to_location_address,
     required this.to_location_gps,
     required this.items,
     required this.delivery_order,
@@ -4613,7 +6335,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     final l$stripe_fees = json['stripe_fees'];
     final l$stripe_info = json['stripe_info'];
     final l$tax = json['tax'];
-    final l$to_location_adress = json['to_location_adress'];
+    final l$to_location_address = json['to_location_address'];
     final l$to_location_gps = json['to_location_gps'];
     final l$items = json['items'];
     final l$delivery_order = json['delivery_order'];
@@ -4628,12 +6350,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
       id: (l$id as int),
       order_time: (l$order_time as String),
       payment_type: (l$payment_type as String),
-      refund_amount:
-          l$refund_amount == null ? null : moneyFromJson(l$refund_amount),
+      refund_amount: moneyFromJson(l$refund_amount),
       stripe_fees: moneyFromJson(l$stripe_fees),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       tax: moneyFromJson(l$tax),
-      to_location_adress: (l$to_location_adress as String),
+      to_location_address: (l$to_location_address as String),
       to_location_gps: geographyFromJson(l$to_location_gps),
       items: (l$items as List<dynamic>)
           .map((e) =>
@@ -4661,7 +6382,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
 
   final String payment_type;
 
-  final double? refund_amount;
+  final double refund_amount;
 
   final double stripe_fees;
 
@@ -4669,7 +6390,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
 
   final double tax;
 
-  final String to_location_adress;
+  final String to_location_address;
 
   final Geography to_location_gps;
 
@@ -4701,8 +6422,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     final l$payment_type = payment_type;
     _resultData['payment_type'] = l$payment_type;
     final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] =
-        l$refund_amount == null ? null : moneyToJson(l$refund_amount);
+    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
     final l$stripe_fees = stripe_fees;
     _resultData['stripe_fees'] = moneyToJson(l$stripe_fees);
     final l$stripe_info = stripe_info;
@@ -4710,8 +6430,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$tax = tax;
     _resultData['tax'] = moneyToJson(l$tax);
-    final l$to_location_adress = to_location_adress;
-    _resultData['to_location_adress'] = l$to_location_adress;
+    final l$to_location_address = to_location_address;
+    _resultData['to_location_address'] = l$to_location_address;
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] = geographyToJson(l$to_location_gps);
     final l$items = items;
@@ -4736,7 +6456,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     final l$stripe_fees = stripe_fees;
     final l$stripe_info = stripe_info;
     final l$tax = tax;
-    final l$to_location_adress = to_location_adress;
+    final l$to_location_address = to_location_address;
     final l$to_location_gps = to_location_gps;
     final l$items = items;
     final l$delivery_order = delivery_order;
@@ -4753,7 +6473,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
       l$stripe_fees,
       l$stripe_info,
       l$tax,
-      l$to_location_adress,
+      l$to_location_address,
       l$to_location_gps,
       Object.hashAll(l$items.map((v) => v)),
       l$delivery_order,
@@ -4826,9 +6546,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     if (l$tax != lOther$tax) {
       return false;
     }
-    final l$to_location_adress = to_location_adress;
-    final lOther$to_location_adress = other.to_location_adress;
-    if (l$to_location_adress != lOther$to_location_adress) {
+    final l$to_location_address = to_location_address;
+    final lOther$to_location_address = other.to_location_address;
+    if (l$to_location_address != lOther$to_location_address) {
       return false;
     }
     final l$to_location_gps = to_location_gps;
@@ -4899,7 +6619,7 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    String? to_location_adress,
+    String? to_location_address,
     Geography? to_location_gps,
     List<Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$items>?
         items,
@@ -4948,7 +6668,7 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
     Object? stripe_fees = _undefined,
     Object? stripe_info = _undefined,
     Object? tax = _undefined,
-    Object? to_location_adress = _undefined,
+    Object? to_location_address = _undefined,
     Object? to_location_gps = _undefined,
     Object? items = _undefined,
     Object? delivery_order = _undefined,
@@ -4975,9 +6695,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
         payment_type: payment_type == _undefined || payment_type == null
             ? _instance.payment_type
             : (payment_type as String),
-        refund_amount: refund_amount == _undefined
+        refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
-            : (refund_amount as double?),
+            : (refund_amount as double),
         stripe_fees: stripe_fees == _undefined || stripe_fees == null
             ? _instance.stripe_fees
             : (stripe_fees as double),
@@ -4985,10 +6705,10 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
         tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
-        to_location_adress:
-            to_location_adress == _undefined || to_location_adress == null
-                ? _instance.to_location_adress
-                : (to_location_adress as String),
+        to_location_address:
+            to_location_address == _undefined || to_location_address == null
+                ? _instance.to_location_address
+                : (to_location_address as String),
         to_location_gps:
             to_location_gps == _undefined || to_location_gps == null
                 ? _instance.to_location_gps
@@ -5047,7 +6767,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    String? to_location_adress,
+    String? to_location_address,
     Geography? to_location_gps,
     List<Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$items>?
         items,

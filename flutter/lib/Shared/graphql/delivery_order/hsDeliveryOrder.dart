@@ -91,17 +91,19 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
             (orderData.estimated_arrival_at_dropoff_time != null)
                 ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
                 : null,
-        estimatedArrivalAtPickupTime: (orderData.estimated_arrival_at_pickup_time != null)
-            ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
-            : null,
+        estimatedArrivalAtPickupTime:
+            (orderData.estimated_arrival_at_pickup_time != null)
+                ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
+                : null,
         estimatedPackageReadyTime: (orderData.estimated_package_ready_time != null)
             ? DateTime.parse(orderData.estimated_package_ready_time!)
             : null,
         packageCost: orderData.package_cost,
-        pickupLocation: MezLocation(
-            orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
-        dropoffLocation:
-            MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
+        pickupLocation: (orderData.pickup_address != null &&
+                orderData.pickup_gps != null)
+            ? MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+            : null,
+        dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
         chatWithCustomerId: orderData.chat_with_customer_id,
         chatWithServiceProviderId: orderData.chat_with_service_provider_id,
         paymentType: orderData.payment_type.toPaymentType());
@@ -164,10 +166,9 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
               name: orderData.delivery_driver!.user.name,
               image: orderData.delivery_driver!.user.image)
           : null,
-      estimatedArrivalAtDropoffTime:
-          (orderData.estimated_arrival_at_dropoff_time != null)
-              ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
-              : null,
+      estimatedArrivalAtDropoffTime: (orderData.estimated_arrival_at_dropoff_time != null)
+          ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
+          : null,
       estimatedArrivalAtPickupTime: (orderData.estimated_arrival_at_pickup_time != null)
           ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
           : null,
@@ -184,8 +185,9 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
           ? LatLng(orderData.delivery_driver!.current_location!.latitude,
               orderData.delivery_driver!.current_location!.longitude)
           : null,
-      pickupLocation:
-          MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
+      pickupLocation: (orderData.pickup_address != null && orderData.pickup_gps != null)
+          ? MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+          : null,
       dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: orderData.chat_with_customer_id,
       chatWithServiceProviderId: orderData.chat_with_service_provider_id,
@@ -194,7 +196,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
 
 UserInfo? _getDeliveryCompany<T>(orderData) {
   mezDbgPrint(
-      "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData!.service_provider_type.toString()}");
+      "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData!.service_provider_type?.toString()}");
   final ServiceProviderType serviceProviderType =
       orderData!.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
@@ -241,6 +243,14 @@ ServiceInfo? _getServiceInfo(orderData) {
           hasuraId: laundryOrder.store.id,
           image: laundryOrder.store.details.image,
           name: laundryOrder.store.details.name);
+    case OrderType.Courier:
+      return ServiceInfo(
+          location: MezLocation.fromHasura(
+              orderData.delivery_company.details.location.gps,
+              orderData.delivery_company.details.location.address),
+          hasuraId: orderData.delivery_company.id,
+          image: orderData.delivery_company.details.image,
+          name: orderData.delivery_company.details.name);
 
     default:
   }
@@ -559,13 +569,18 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
           ? LatLng(orderData.delivery_driver!.current_location!.latitude,
               orderData.delivery_driver!.current_location!.longitude)
           : null,
-      pickupLocation: MezLocation(
-          orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
-      dropoffLocation: MezLocation(
-          orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
+      pickupLocation: (orderData.pickup_address != null && orderData.pickup_gps != null)
+          ? MezLocation(
+              orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+          : null,
+      dropoffLocation:
+          MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: 0,
       paymentType: orderData.payment_type.toPaymentType(),
-      chatWithServiceProviderId: null, estimatedArrivalAtDropoffTime: null, estimatedArrivalAtPickupTime: null, estimatedPackageReadyTime: null);
+      chatWithServiceProviderId: null,
+      estimatedArrivalAtDropoffTime: null,
+      estimatedArrivalAtPickupTime: null,
+      estimatedPackageReadyTime: null);
 }
 
 Future<UserInfo?> get_order_driver_info({required int orderId}) async {
