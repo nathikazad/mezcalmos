@@ -11,7 +11,11 @@ class MezEnv {
   static const bool _previewMode = false;
   static bool get previewMode => _previewMode;
 
-  static const AppType _appType = AppType.CustomerApp;
+  static AppType _appType = AppType.CustomerApp;
+  static void setAppType(AppType appType) {
+    _appType = appType;
+  }
+
   static AppType get appType => _appType;
 
   static const String _versionNumber = "0.0.0";
