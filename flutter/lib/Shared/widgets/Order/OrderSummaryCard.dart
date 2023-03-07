@@ -12,6 +12,7 @@ class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     Key? key,
     this.margin,
+    this.newRow,
     required this.shippingCost,
     required this.orderCost,
     required this.totalCost,
@@ -24,6 +25,7 @@ class OrderSummaryCard extends StatelessWidget {
   final num? orderCost;
   final num? totalCost;
   final num? refundAmmount;
+  final Widget? newRow;
   final bool showNullValues;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
 
@@ -114,6 +116,7 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                newRow ?? SizedBox(),
                 if (showNullValues || totalCost != null)
                   Container(
                     margin: EdgeInsets.only(top: 2),

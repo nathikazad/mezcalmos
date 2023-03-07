@@ -75,7 +75,7 @@ class UserProfileViewController {
 
   Future<void> _setImage() async {
     if (newImageFile.value != null) {
-      newImageUrl.value = await _authController.uploadUserImgToFbStorage(
+      newImageUrl.value = await _authController.uploadImgToFbStorage(
           imageFile: newImageFile.value!, isCompressed: false);
     }
   }

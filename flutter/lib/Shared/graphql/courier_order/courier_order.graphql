@@ -106,6 +106,16 @@ mutation updateCourierOrderItem($data: delivery_courier_order_item_set_input,$id
     order_id
   }
 }
+mutation updateCourierOrder($deliveryOrderId: Int!, $data: delivery_courier_order_set_input) {
+  update_delivery_courier_order(where: {delivery_order_id: {_eq: $deliveryOrderId}}, _set: $data) {
+    affected_rows
+    returning {
+      bill_image
+      id
+      tax
+    }
+  }
+}
 
 subscription listen_on_courier_order_by_id($orderId: Int!) {
   delivery_courier_order_by_pk(id: $orderId) {

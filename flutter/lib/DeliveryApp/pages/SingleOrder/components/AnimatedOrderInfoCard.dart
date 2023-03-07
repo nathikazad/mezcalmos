@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -5,11 +7,12 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAva
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -30,7 +33,6 @@ typedef void OnOrderInfoCardStateChange(OrderInfoCardState state);
 class AnimatedOrderInfoCard extends StatelessWidget {
   final OrderInfoCardState initialCardState;
   final OnOrderInfoCardStateChange? onCardStateChange;
-  bool showMsgIconInOneLine;
   bool isCustomerRowFirst;
   // customer part (top row of animated container)
   final String customerName;
@@ -51,7 +53,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
 
   AnimatedOrderInfoCard({
     required this.formattedOrderStatus,
-    this.showMsgIconInOneLine = false,
     this.isCustomerRowFirst = true,
     this.subtitle,
     this.secondSubtitle,
@@ -75,6 +76,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         cardHeader(),
+        routeInformationWidget(),
         Divider(),
         orderCardMainBody(),
         AnimatedSize(
@@ -94,23 +96,25 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                Container(
-                                  height: 18,
-                                  width: 18,
-                                  decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Color.fromRGBO(54, 54, 54, 1),
-                                      width: 5,
+                                if (order.pickupLocation != null)
+                                  Container(
+                                    height: 18,
+                                    width: 18,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Color.fromRGBO(54, 54, 54, 1),
+                                        width: 5,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  height: 60,
-                                  width: 1.5,
-                                  color: Color.fromRGBO(103, 121, 254, 1),
-                                ),
+                                if (order.pickupLocation != null)
+                                  Container(
+                                    height: 50,
+                                    width: 1.5,
+                                    color: Color.fromRGBO(103, 121, 254, 1),
+                                  ),
                                 Icon(
                                   Icons.location_on_rounded,
                                   size: 22,
@@ -119,12 +123,14 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                               ],
                             ),
                             SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: isCustomerRowFirst
-                                  ? mainAnimatedContainerItems
-                                  : mainAnimatedContainerItems.reversed
-                                      .toList(),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: isCustomerRowFirst
+                                    ? mainAnimatedContainerItems
+                                    : mainAnimatedContainerItems.reversed
+                                        .toList(),
+                              ),
                             )
                           ],
                         ),
@@ -170,35 +176,16 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              "\$${order.packageCost}",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w700,
-                fontSize: 13.sp,
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                if (enableExpand) {
-                  mezDbgPrint("log state ==> ${initialCardState.opposit()}");
-                  onCardStateChange?.call(initialCardState.opposit());
-                }
-              },
-              child: Icon(
-                initialCardState == OrderInfoCardState.Minimized
-                    ? Icons.keyboard_arrow_up_rounded
-                    : Icons.keyboard_arrow_down_rounded,
-                color: Colors.black,
-              ),
-            ),
-          ],
+        MezIconButton(
+          onTap: () {
+            if (enableExpand) {
+              onCardStateChange?.call(initialCardState.opposit());
+            }
+          },
+          padding: const EdgeInsets.all(3),
+          icon: initialCardState == OrderInfoCardState.Minimized
+              ? Icons.keyboard_arrow_up_rounded
+              : Icons.keyboard_arrow_down_rounded,
         )
       ],
     );
@@ -206,146 +193,187 @@ class AnimatedOrderInfoCard extends StatelessWidget {
 
   List<Widget> get mainAnimatedContainerItems => <Widget>[
         _customerAnimatedRow(),
-        SizedBox(
-          height: showMsgIconInOneLine ? 50 : 20,
-        ),
-        _serviceProviderAnimatedRow(),
+        if (order.pickupLocation != null)
+          SizedBox(
+            height: 38,
+          ),
+        if (order.pickupLocation != null) _serviceProviderAnimatedRow(),
       ];
 
   Row _serviceProviderAnimatedRow() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  serviceProviderName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+            Text(
+              serviceProviderName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+                color: Colors.black,
+              ),
             ),
-            if (!showMsgIconInOneLine)
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: serviceProviderTimeWidget,
-              )
+            SizedBox(
+              width: 8,
+            ),
+            if (order.chatWithServiceProviderId != null)
+              MessageButton(
+                withPadding: false,
+                onTap: onServiceMsgClick,
+                chatId: order.chatWithServiceProviderId!,
+              ),
           ],
         ),
-        SizedBox(
-          width: 15,
-        ),
-        if (order.chatWithServiceProviderId != null)
-          MessageButton(
-            withPadding: false,
-            onTap: onServiceMsgClick,
-            chatId: order.chatWithServiceProviderId!,
-          ),
-      ],
-    );
-  }
-
-  Row _customerAnimatedRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    customerName,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (!showMsgIconInOneLine)
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: customerTimeWidget,
-              )
-          ],
-        ),
-        SizedBox(width: 15),
-        MessageButton(
-          withPadding: false,
-          onTap: onCustomerMsgClick,
-          chatId: order.chatWithCustomerId,
-        ),
-      ],
-    );
-  }
-
-  Row orderCardMainBody() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Flexible(
-          child: TwoCirclesAvatar(
-              topImg: serviceProviderImage,
-              // bottomImg: customerImage,
-              bottomIconData: order.orderType.toIcon()),
-        ),
-        Flexible(
-          flex: 9,
+        Align(
+          alignment: Alignment.centerRight,
           child: Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.only(left: 5.0),
+            child: serviceProviderTimeWidget,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _customerAnimatedRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              customerName,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(width: 8),
+            MessageButton(
+              withPadding: false,
+              onTap: onCustomerMsgClick,
+              chatId: order.chatWithCustomerId,
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: customerTimeWidget,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget orderCardMainBody() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Flexible(
+            child: Row(
               children: [
-                orderTimeWidget(),
-                SizedBox(height: 10),
-                routeInformationWidget(),
+                Flexible(
+                  child: TwoCirclesAvatar(
+                      topImg: customerImage,
+                      // bottomImg: customerImage,
+                      bottomIconData: order.orderType.toIcon()),
+                ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: MezButton(
+                    height: 40,
+                    borderRadius: 30,
+                    icon: Icons.arrow_forward,
+                    label: "Details",
+                    onClick: () async {
+                      unawaited(MezRouter.toNamed<void>(
+                        getOrderDetailsRoute(order.id),
+                      ));
+                    },
+                  ),
+                ),
               ],
             ),
           ),
-        ),
-        InkWell(
-          onTap: () {
-            MezRouter.toNamed<void>(
-              getOrderDetailsRoute(order.id),
-            );
-          },
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Icon(
-              Icons.article_rounded,
-              color: Color.fromRGBO(103, 121, 254, 1),
-              size: 30,
-            ),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "\$${order.packageCost}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13.sp,
+                ),
+              ),
+              Text(
+                  "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
+            ],
           ),
-        ),
-      ],
+
+          Container(
+            margin: const EdgeInsets.only(left: 8),
+            child: MezIconButton(
+              onTap: () {},
+              icon: Icons.edit,
+              iconSize: 20,
+            ),
+          )
+          // Flexible(
+          //   flex: 9,
+          //   child: Padding(
+          //     padding: EdgeInsets.only(right: 20),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         orderTimeWidget(),
+          //         SizedBox(height: 10),
+          //         routeInformationWidget(),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     MezRouter.toNamed<void>(
+          //       getOrderDetailsRoute(order.id),
+          //     );
+          //   },
+          //   child: Align(
+          //     alignment: Alignment.centerRight,
+          //     child: Icon(
+          //       Icons.article_rounded,
+          //       color: Color.fromRGBO(103, 121, 254, 1),
+          //       size: 30,
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 
@@ -384,7 +412,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(width: 10),
+        // if (order.pickupLocation == null)
+        //   SizedBox(
+        //     width: 10,
+        //   ),
         Icon(
           Icons.delivery_dining,
           color: Color.fromRGBO(73, 73, 73, 1),
@@ -413,25 +444,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         Flexible(
           child: Text(
             order.routeInformation?.distance.toKmText() ?? '- - - -',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-            ),
-          ),
-        ),
-        SizedBox(width: 10),
-        Icon(
-          Icons.payments,
-          color: Color.fromRGBO(73, 73, 73, 1),
-          size: 18,
-        ),
-        SizedBox(width: 3),
-        Flexible(
-          child: Text(
-            " ${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}",
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: TextStyle(

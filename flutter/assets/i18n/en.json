@@ -1718,6 +1718,7 @@
               "oops": "Oops",
               "set": "Set",
               "time": "Time",
+              "setTime" : "Set time",
               "dvTime": "Delivery time",
               "dropoff": "Delivery",
               "pickup": "Pickup",
@@ -1732,7 +1733,8 @@
                 "deliveryOtw": "Delivery on the way",
                 "pickupOtw": "Pickup on the way",
                 "delivered": "Order Delivered",
-                "canceled": "Order Cancelled"
+                "canceled": "Order Cancelled",
+                "received" :"Order Received"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirm Order Pickup",

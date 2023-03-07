@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
@@ -7,12 +8,16 @@ import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDeta
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 
 //
@@ -96,15 +101,77 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 DvOrderItems(
                   viewController: viewController,
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                MezCard(
+                  content: Text(
+                    "Bill",
+                    style: Get.textTheme.bodyLarge,
+                  ),
+                  action: Container(
+                    child: (viewController.billLoading.isTrue)
+                        ? CircularProgressIndicator()
+                        : (viewController.newBillUrl.value == null)
+                            ? Flexible(
+                                child: MezButton(
+                                  label: "Upload bill",
+                                  onClick: () async {
+                                    await viewController.editImage(context);
+                                  },
+                                  height: 30,
+                                  borderRadius: 5,
+                                ),
+                              )
+                            : CachedNetworkImage(
+                                imageUrl: viewController.newBillUrl.value!,
+                                width: 70,
+                                height: 40,
+                              ),
+                  ),
+                ),
 
                 OrderSummaryCard(
-                    shippingCost: viewController.order.value!.deliveryCost,
-                    orderCost: viewController.order.value!.packageCost,
-                    totalCost: viewController.order.value!.totalCost,
-                    refundAmmount: viewController
-                        .order.value!.stripeOrderPaymentInfo?.amountRefunded,
-                    stripeOrderPaymentInfo:
-                        viewController.order.value!.stripeOrderPaymentInfo)
+                  shippingCost: viewController.order.value!.deliveryCost,
+                  orderCost: viewController.order.value!.packageCost,
+                  totalCost: viewController.order.value!.totalCost,
+                  refundAmmount: viewController
+                      .order.value!.stripeOrderPaymentInfo?.amountRefunded,
+                  stripeOrderPaymentInfo:
+                      viewController.order.value!.stripeOrderPaymentInfo,
+                  newRow: Container(
+                    margin: const EdgeInsets.only(bottom: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Text(
+                            'Tax',
+                            style: Get.textTheme.bodyMedium,
+                          ),
+                        ),
+                        MezIconButton(
+                          icon:
+                              viewController.taxSetted ? Icons.edit : Icons.add,
+                          iconSize: 17,
+                          padding: const EdgeInsets.all(3),
+                          onTap: () {
+                            viewController.taxText.text =
+                                viewController.tax.value?.toString() ?? "";
+                            _showTaxSheet(context);
+                          },
+                        ),
+                        if (viewController.taxSetted)
+                          Container(
+                            margin: const EdgeInsets.only(left: 3),
+                            child: Text(
+                                "${viewController.tax.value?.toPriceString() ?? "_"}"),
+                          )
+                      ],
+                    ),
+                  ),
+                )
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 //   children: [
@@ -228,5 +295,76 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       default:
         return "";
     }
+  }
+
+  Future<dynamic> _showTaxSheet(BuildContext context) {
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        )),
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding:
+                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+            child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Add tax cost",
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                    ),
+                    Divider(),
+                    TextFormField(
+                      controller: viewController.taxText,
+                      style: Get.textTheme.bodyLarge,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.attach_money_rounded),
+                      ),
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    MezButton(
+                      label: "Save",
+                      onClick: () async {
+                        await viewController.editTax();
+                        MezRouter.popDialog();
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    MezButton(
+                      label: "Cancel",
+                      backgroundColor: offRedColor,
+                      textColor: Colors.red,
+                      onClick: () async {
+                        MezRouter.popDialog();
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                )),
+          );
+        });
   }
 }

@@ -323,3 +323,42 @@ Future<CourierOrdeItem?> update_courier_order_item(
   }
   return null;
 }
+
+Future<double?> update_courier_order_tax(
+    {required int orderId, required num tax}) async {
+  QueryResult<Mutation$updateCourierOrder> res =
+      await _hasuraDb.graphQLClient.mutate$updateCourierOrder(
+    Options$Mutation$updateCourierOrder(
+      variables: Variables$Mutation$updateCourierOrder(
+          deliveryOrderId: orderId,
+          data: Input$delivery_courier_order_set_input(tax: tax.toDouble())),
+    ),
+  );
+  if (res.parsedData?.update_delivery_courier_order == null ||
+      res.parsedData!.update_delivery_courier_order!.returning.isEmpty) {
+    throwError(res.exception);
+  } else {
+    return res.parsedData!.update_delivery_courier_order!.returning.first.tax;
+  }
+  return null;
+}
+
+Future<String?> update_courier_order_bill(
+    {required int orderId, required String imageUrl}) async {
+  QueryResult<Mutation$updateCourierOrder> res =
+      await _hasuraDb.graphQLClient.mutate$updateCourierOrder(
+    Options$Mutation$updateCourierOrder(
+      variables: Variables$Mutation$updateCourierOrder(
+          deliveryOrderId: orderId,
+          data: Input$delivery_courier_order_set_input(bill_image: imageUrl)),
+    ),
+  );
+  if (res.parsedData?.update_delivery_courier_order == null ||
+      res.parsedData!.update_delivery_courier_order!.returning.isEmpty) {
+    throwError(res.exception);
+  } else {
+    return res
+        .parsedData!.update_delivery_courier_order!.returning.first.bill_image;
+  }
+  return null;
+}

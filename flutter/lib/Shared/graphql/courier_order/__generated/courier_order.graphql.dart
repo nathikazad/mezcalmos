@@ -5394,6 +5394,879 @@ class _CopyWithStubImpl$Mutation$updateCourierOrderItem$update_delivery_courier_
       _res;
 }
 
+class Variables$Mutation$updateCourierOrder {
+  factory Variables$Mutation$updateCourierOrder({
+    required int deliveryOrderId,
+    Input$delivery_courier_order_set_input? data,
+  }) =>
+      Variables$Mutation$updateCourierOrder._({
+        r'deliveryOrderId': deliveryOrderId,
+        if (data != null) r'data': data,
+      });
+
+  Variables$Mutation$updateCourierOrder._(this._$data);
+
+  factory Variables$Mutation$updateCourierOrder.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$deliveryOrderId = data['deliveryOrderId'];
+    result$data['deliveryOrderId'] = (l$deliveryOrderId as int);
+    if (data.containsKey('data')) {
+      final l$data = data['data'];
+      result$data['data'] = l$data == null
+          ? null
+          : Input$delivery_courier_order_set_input.fromJson(
+              (l$data as Map<String, dynamic>));
+    }
+    return Variables$Mutation$updateCourierOrder._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get deliveryOrderId => (_$data['deliveryOrderId'] as int);
+  Input$delivery_courier_order_set_input? get data =>
+      (_$data['data'] as Input$delivery_courier_order_set_input?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$deliveryOrderId = deliveryOrderId;
+    result$data['deliveryOrderId'] = l$deliveryOrderId;
+    if (_$data.containsKey('data')) {
+      final l$data = data;
+      result$data['data'] = l$data?.toJson();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateCourierOrder<
+          Variables$Mutation$updateCourierOrder>
+      get copyWith => CopyWith$Variables$Mutation$updateCourierOrder(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateCourierOrder) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$deliveryOrderId = deliveryOrderId;
+    final lOther$deliveryOrderId = other.deliveryOrderId;
+    if (l$deliveryOrderId != lOther$deliveryOrderId) {
+      return false;
+    }
+    final l$data = data;
+    final lOther$data = other.data;
+    if (_$data.containsKey('data') != other._$data.containsKey('data')) {
+      return false;
+    }
+    if (l$data != lOther$data) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$deliveryOrderId = deliveryOrderId;
+    final l$data = data;
+    return Object.hashAll([
+      l$deliveryOrderId,
+      _$data.containsKey('data') ? l$data : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateCourierOrder<TRes> {
+  factory CopyWith$Variables$Mutation$updateCourierOrder(
+    Variables$Mutation$updateCourierOrder instance,
+    TRes Function(Variables$Mutation$updateCourierOrder) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateCourierOrder;
+
+  factory CopyWith$Variables$Mutation$updateCourierOrder.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateCourierOrder;
+
+  TRes call({
+    int? deliveryOrderId,
+    Input$delivery_courier_order_set_input? data,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateCourierOrder<TRes>
+    implements CopyWith$Variables$Mutation$updateCourierOrder<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateCourierOrder(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateCourierOrder _instance;
+
+  final TRes Function(Variables$Mutation$updateCourierOrder) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? deliveryOrderId = _undefined,
+    Object? data = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateCourierOrder._({
+        ..._instance._$data,
+        if (deliveryOrderId != _undefined && deliveryOrderId != null)
+          'deliveryOrderId': (deliveryOrderId as int),
+        if (data != _undefined)
+          'data': (data as Input$delivery_courier_order_set_input?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateCourierOrder<TRes>
+    implements CopyWith$Variables$Mutation$updateCourierOrder<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateCourierOrder(this._res);
+
+  TRes _res;
+
+  call({
+    int? deliveryOrderId,
+    Input$delivery_courier_order_set_input? data,
+  }) =>
+      _res;
+}
+
+class Mutation$updateCourierOrder {
+  Mutation$updateCourierOrder({
+    this.update_delivery_courier_order,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateCourierOrder.fromJson(Map<String, dynamic> json) {
+    final l$update_delivery_courier_order =
+        json['update_delivery_courier_order'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateCourierOrder(
+      update_delivery_courier_order: l$update_delivery_courier_order == null
+          ? null
+          : Mutation$updateCourierOrder$update_delivery_courier_order.fromJson(
+              (l$update_delivery_courier_order as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateCourierOrder$update_delivery_courier_order?
+      update_delivery_courier_order;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_delivery_courier_order = update_delivery_courier_order;
+    _resultData['update_delivery_courier_order'] =
+        l$update_delivery_courier_order?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_delivery_courier_order = update_delivery_courier_order;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_delivery_courier_order,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateCourierOrder) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_delivery_courier_order = update_delivery_courier_order;
+    final lOther$update_delivery_courier_order =
+        other.update_delivery_courier_order;
+    if (l$update_delivery_courier_order !=
+        lOther$update_delivery_courier_order) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateCourierOrder
+    on Mutation$updateCourierOrder {
+  CopyWith$Mutation$updateCourierOrder<Mutation$updateCourierOrder>
+      get copyWith => CopyWith$Mutation$updateCourierOrder(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateCourierOrder<TRes> {
+  factory CopyWith$Mutation$updateCourierOrder(
+    Mutation$updateCourierOrder instance,
+    TRes Function(Mutation$updateCourierOrder) then,
+  ) = _CopyWithImpl$Mutation$updateCourierOrder;
+
+  factory CopyWith$Mutation$updateCourierOrder.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateCourierOrder;
+
+  TRes call({
+    Mutation$updateCourierOrder$update_delivery_courier_order?
+        update_delivery_courier_order,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order<TRes>
+      get update_delivery_courier_order;
+}
+
+class _CopyWithImpl$Mutation$updateCourierOrder<TRes>
+    implements CopyWith$Mutation$updateCourierOrder<TRes> {
+  _CopyWithImpl$Mutation$updateCourierOrder(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateCourierOrder _instance;
+
+  final TRes Function(Mutation$updateCourierOrder) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_delivery_courier_order = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateCourierOrder(
+        update_delivery_courier_order: update_delivery_courier_order ==
+                _undefined
+            ? _instance.update_delivery_courier_order
+            : (update_delivery_courier_order
+                as Mutation$updateCourierOrder$update_delivery_courier_order?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order<TRes>
+      get update_delivery_courier_order {
+    final local$update_delivery_courier_order =
+        _instance.update_delivery_courier_order;
+    return local$update_delivery_courier_order == null
+        ? CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order(
+            local$update_delivery_courier_order,
+            (e) => call(update_delivery_courier_order: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateCourierOrder<TRes>
+    implements CopyWith$Mutation$updateCourierOrder<TRes> {
+  _CopyWithStubImpl$Mutation$updateCourierOrder(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateCourierOrder$update_delivery_courier_order?
+        update_delivery_courier_order,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order<TRes>
+      get update_delivery_courier_order =>
+          CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order
+              .stub(_res);
+}
+
+const documentNodeMutationupdateCourierOrder = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateCourierOrder'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'deliveryOrderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'data')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'delivery_courier_order_set_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_delivery_courier_order'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'delivery_order_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value:
+                        VariableNode(name: NameNode(value: 'deliveryOrderId')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'data')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'returning'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'bill_image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tax'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateCourierOrder _parserFn$Mutation$updateCourierOrder(
+        Map<String, dynamic> data) =>
+    Mutation$updateCourierOrder.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateCourierOrder = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateCourierOrder?,
+);
+
+class Options$Mutation$updateCourierOrder
+    extends graphql.MutationOptions<Mutation$updateCourierOrder> {
+  Options$Mutation$updateCourierOrder({
+    String? operationName,
+    required Variables$Mutation$updateCourierOrder variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateCourierOrder? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateCourierOrder>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateCourierOrder(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateCourierOrder,
+          parserFn: _parserFn$Mutation$updateCourierOrder,
+        );
+
+  final OnMutationCompleted$Mutation$updateCourierOrder? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateCourierOrder
+    extends graphql.WatchQueryOptions<Mutation$updateCourierOrder> {
+  WatchOptions$Mutation$updateCourierOrder({
+    String? operationName,
+    required Variables$Mutation$updateCourierOrder variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateCourierOrder,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateCourierOrder,
+        );
+}
+
+extension ClientExtension$Mutation$updateCourierOrder on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateCourierOrder>>
+      mutate$updateCourierOrder(
+              Options$Mutation$updateCourierOrder options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateCourierOrder>
+      watchMutation$updateCourierOrder(
+              WatchOptions$Mutation$updateCourierOrder options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateCourierOrder$update_delivery_courier_order {
+  Mutation$updateCourierOrder$update_delivery_courier_order({
+    required this.affected_rows,
+    required this.returning,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateCourierOrder$update_delivery_courier_order.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$returning = json['returning'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateCourierOrder$update_delivery_courier_order(
+      affected_rows: (l$affected_rows as int),
+      returning: (l$returning as List<dynamic>)
+          .map((e) =>
+              Mutation$updateCourierOrder$update_delivery_courier_order$returning
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final List<
+          Mutation$updateCourierOrder$update_delivery_courier_order$returning>
+      returning;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$returning = returning;
+    _resultData['returning'] = l$returning.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$returning = returning;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      Object.hashAll(l$returning.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateCourierOrder$update_delivery_courier_order) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$returning = returning;
+    final lOther$returning = other.returning;
+    if (l$returning.length != lOther$returning.length) {
+      return false;
+    }
+    for (int i = 0; i < l$returning.length; i++) {
+      final l$returning$entry = l$returning[i];
+      final lOther$returning$entry = lOther$returning[i];
+      if (l$returning$entry != lOther$returning$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateCourierOrder$update_delivery_courier_order
+    on Mutation$updateCourierOrder$update_delivery_courier_order {
+  CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order<
+          Mutation$updateCourierOrder$update_delivery_courier_order>
+      get copyWith =>
+          CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order<
+    TRes> {
+  factory CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order(
+    Mutation$updateCourierOrder$update_delivery_courier_order instance,
+    TRes Function(Mutation$updateCourierOrder$update_delivery_courier_order)
+        then,
+  ) = _CopyWithImpl$Mutation$updateCourierOrder$update_delivery_courier_order;
+
+  factory CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateCourierOrder$update_delivery_courier_order;
+
+  TRes call({
+    int? affected_rows,
+    List<Mutation$updateCourierOrder$update_delivery_courier_order$returning>?
+        returning,
+    String? $__typename,
+  });
+  TRes returning(
+      Iterable<Mutation$updateCourierOrder$update_delivery_courier_order$returning> Function(
+              Iterable<
+                  CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+                      Mutation$updateCourierOrder$update_delivery_courier_order$returning>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$updateCourierOrder$update_delivery_courier_order<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order<
+            TRes> {
+  _CopyWithImpl$Mutation$updateCourierOrder$update_delivery_courier_order(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateCourierOrder$update_delivery_courier_order _instance;
+
+  final TRes Function(Mutation$updateCourierOrder$update_delivery_courier_order)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? returning = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateCourierOrder$update_delivery_courier_order(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        returning: returning == _undefined || returning == null
+            ? _instance.returning
+            : (returning as List<
+                Mutation$updateCourierOrder$update_delivery_courier_order$returning>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes returning(
+          Iterable<Mutation$updateCourierOrder$update_delivery_courier_order$returning> Function(
+                  Iterable<
+                      CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+                          Mutation$updateCourierOrder$update_delivery_courier_order$returning>>)
+              _fn) =>
+      call(
+          returning: _fn(_instance.returning.map((e) =>
+              CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$updateCourierOrder$update_delivery_courier_order<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateCourierOrder$update_delivery_courier_order(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
+    List<Mutation$updateCourierOrder$update_delivery_courier_order$returning>?
+        returning,
+    String? $__typename,
+  }) =>
+      _res;
+  returning(_fn) => _res;
+}
+
+class Mutation$updateCourierOrder$update_delivery_courier_order$returning {
+  Mutation$updateCourierOrder$update_delivery_courier_order$returning({
+    this.bill_image,
+    required this.id,
+    required this.tax,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateCourierOrder$update_delivery_courier_order$returning.fromJson(
+      Map<String, dynamic> json) {
+    final l$bill_image = json['bill_image'];
+    final l$id = json['id'];
+    final l$tax = json['tax'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateCourierOrder$update_delivery_courier_order$returning(
+      bill_image: (l$bill_image as String?),
+      id: (l$id as int),
+      tax: moneyFromJson(l$tax),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? bill_image;
+
+  final int id;
+
+  final double tax;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$bill_image = bill_image;
+    _resultData['bill_image'] = l$bill_image;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$tax = tax;
+    _resultData['tax'] = moneyToJson(l$tax);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$bill_image = bill_image;
+    final l$id = id;
+    final l$tax = tax;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$bill_image,
+      l$id,
+      l$tax,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateCourierOrder$update_delivery_courier_order$returning) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$bill_image = bill_image;
+    final lOther$bill_image = other.bill_image;
+    if (l$bill_image != lOther$bill_image) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$tax = tax;
+    final lOther$tax = other.tax;
+    if (l$tax != lOther$tax) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateCourierOrder$update_delivery_courier_order$returning
+    on Mutation$updateCourierOrder$update_delivery_courier_order$returning {
+  CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+          Mutation$updateCourierOrder$update_delivery_courier_order$returning>
+      get copyWith =>
+          CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+    TRes> {
+  factory CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning(
+    Mutation$updateCourierOrder$update_delivery_courier_order$returning
+        instance,
+    TRes Function(
+            Mutation$updateCourierOrder$update_delivery_courier_order$returning)
+        then,
+  ) = _CopyWithImpl$Mutation$updateCourierOrder$update_delivery_courier_order$returning;
+
+  factory CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateCourierOrder$update_delivery_courier_order$returning;
+
+  TRes call({
+    String? bill_image,
+    int? id,
+    double? tax,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+            TRes> {
+  _CopyWithImpl$Mutation$updateCourierOrder$update_delivery_courier_order$returning(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateCourierOrder$update_delivery_courier_order$returning
+      _instance;
+
+  final TRes Function(
+          Mutation$updateCourierOrder$update_delivery_courier_order$returning)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? bill_image = _undefined,
+    Object? id = _undefined,
+    Object? tax = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateCourierOrder$update_delivery_courier_order$returning(
+        bill_image: bill_image == _undefined
+            ? _instance.bill_image
+            : (bill_image as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCourierOrder$update_delivery_courier_order$returning<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateCourierOrder$update_delivery_courier_order$returning(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? bill_image,
+    int? id,
+    double? tax,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Subscription$listen_on_courier_order_by_id {
   factory Variables$Subscription$listen_on_courier_order_by_id(
           {required int orderId}) =>

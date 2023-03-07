@@ -16,7 +16,7 @@ class DvOrderItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => (viewController.items != null)
+      () => (viewController.items.value != null)
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

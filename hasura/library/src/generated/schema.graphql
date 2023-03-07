@@ -3711,6 +3711,7 @@ type delivery_courier_order {
   A computed field, executes function "delivery.actualitemscost"
   """
   actual_items_cost: money
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String!
   customer_id: Int!
@@ -3838,6 +3839,7 @@ input delivery_courier_order_bool_exp {
   _not: delivery_courier_order_bool_exp
   _or: [delivery_courier_order_bool_exp!]
   actual_items_cost: money_comparison_exp
+  bill_image: String_comparison_exp
   cancellation_time: timestamptz_comparison_exp
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
@@ -3932,6 +3934,7 @@ input delivery_courier_order_inc_input {
 input type for inserting data into table "delivery.courier_order"
 """
 input delivery_courier_order_insert_input {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4467,6 +4470,7 @@ input delivery_courier_order_item_variance_order_by {
 
 """aggregate max on columns"""
 type delivery_courier_order_max_fields {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4484,6 +4488,7 @@ type delivery_courier_order_max_fields {
 
 """aggregate min on columns"""
 type delivery_courier_order_min_fields {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4532,6 +4537,7 @@ input delivery_courier_order_on_conflict {
 """Ordering options when selecting data from "delivery.courier_order"."""
 input delivery_courier_order_order_by {
   actual_items_cost: order_by
+  bill_image: order_by
   cancellation_time: order_by
   customer_app_type: order_by
   customer_id: order_by
@@ -4573,6 +4579,9 @@ input delivery_courier_order_prepend_input {
 select columns of table "delivery.courier_order"
 """
 enum delivery_courier_order_select_column {
+  """column name"""
+  bill_image
+
   """column name"""
   cancellation_time
 
@@ -4626,6 +4635,7 @@ enum delivery_courier_order_select_column {
 input type for updating data in table "delivery.courier_order"
 """
 input delivery_courier_order_set_input {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4697,6 +4707,7 @@ input delivery_courier_order_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input delivery_courier_order_stream_cursor_value_input {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4737,6 +4748,9 @@ type delivery_courier_order_sum_fields {
 update columns of table "delivery.courier_order"
 """
 enum delivery_courier_order_update_column {
+  """column name"""
+  bill_image
+
   """column name"""
   cancellation_time
 

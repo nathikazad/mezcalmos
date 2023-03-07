@@ -67,6 +67,9 @@ class DeliveryOrder {
       required this.estimatedPackageReadyTime,
       this.courierOrderId});
 
+  bool get isPickUpTimeSetted => estimatedArrivalAtPickupTime != null;
+  bool get isDropOffTimeSetted => estimatedArrivalAtDropoffTime != null;
+
   DeliveryOrder copyWith({
     int? id,
     ServiceInfo? serviceInfo,

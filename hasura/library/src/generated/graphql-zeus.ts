@@ -2471,6 +2471,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 ["delivery_courier_order"]: AliasType<{
 	/** A computed field, executes function "delivery.actualitemscost" */
 	actual_items_cost?:true,
+	bill_image?:true,
 	cancellation_time?:true,
 	customer_app_type?:true,
 	customer_id?:true,
@@ -2552,6 +2553,7 @@ cancelled), serviceProviderAccount: string } */
 	_not?:ValueTypes["delivery_courier_order_bool_exp"],
 	_or?:ValueTypes["delivery_courier_order_bool_exp"][],
 	actual_items_cost?:ValueTypes["money_comparison_exp"],
+	bill_image?:ValueTypes["String_comparison_exp"],
 	cancellation_time?:ValueTypes["timestamptz_comparison_exp"],
 	customer_app_type?:ValueTypes["String_comparison_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
@@ -2612,6 +2614,7 @@ cancelled), serviceProviderAccount: string } */
 };
 	/** input type for inserting data into table "delivery.courier_order" */
 ["delivery_courier_order_insert_input"]: {
+	bill_image?:string,
 	cancellation_time?:ValueTypes["timestamptz"],
 	customer_app_type?:string,
 	customer_id?:number,
@@ -2991,6 +2994,7 @@ columns of table "delivery.courier_order_item" */
 };
 	/** aggregate max on columns */
 ["delivery_courier_order_max_fields"]: AliasType<{
+	bill_image?:true,
 	cancellation_time?:true,
 	customer_app_type?:true,
 	customer_id?:true,
@@ -3008,6 +3012,7 @@ columns of table "delivery.courier_order_item" */
 }>;
 	/** aggregate min on columns */
 ["delivery_courier_order_min_fields"]: AliasType<{
+	bill_image?:true,
 	cancellation_time?:true,
 	customer_app_type?:true,
 	customer_id?:true,
@@ -3046,6 +3051,7 @@ columns of table "delivery.courier_order_item" */
 	/** Ordering options when selecting data from "delivery.courier_order". */
 ["delivery_courier_order_order_by"]: {
 	actual_items_cost?:ValueTypes["order_by"],
+	bill_image?:ValueTypes["order_by"],
 	cancellation_time?:ValueTypes["order_by"],
 	customer_app_type?:ValueTypes["order_by"],
 	customer_id?:ValueTypes["order_by"],
@@ -3082,6 +3088,7 @@ cancelled), serviceProviderAccount: string } */
 ["delivery_courier_order_select_column"]:delivery_courier_order_select_column;
 	/** input type for updating data in table "delivery.courier_order" */
 ["delivery_courier_order_set_input"]: {
+	bill_image?:string,
 	cancellation_time?:ValueTypes["timestamptz"],
 	customer_app_type?:string,
 	customer_id?:number,
@@ -3145,6 +3152,7 @@ cancelled), serviceProviderAccount: string } */
 };
 	/** Initial value of the column from where the streaming should start */
 ["delivery_courier_order_stream_cursor_value_input"]: {
+	bill_image?:string,
 	cancellation_time?:ValueTypes["timestamptz"],
 	customer_app_type?:string,
 	customer_id?:number,
@@ -21900,6 +21908,7 @@ the end). throws an error if top level container is not an array */
 		__typename?: "delivery_courier_order";
 			/** A computed field, executes function "delivery.actualitemscost" */
 	actual_items_cost?:PartialObjects["money"],
+			bill_image?:string,
 			cancellation_time?:PartialObjects["timestamptz"],
 			customer_app_type?:string,
 			customer_id?:number,
@@ -21975,6 +21984,7 @@ cancelled), serviceProviderAccount: string } */
 	_not?:PartialObjects["delivery_courier_order_bool_exp"],
 	_or?:PartialObjects["delivery_courier_order_bool_exp"][],
 	actual_items_cost?:PartialObjects["money_comparison_exp"],
+	bill_image?:PartialObjects["String_comparison_exp"],
 	cancellation_time?:PartialObjects["timestamptz_comparison_exp"],
 	customer_app_type?:PartialObjects["String_comparison_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
@@ -22035,6 +22045,7 @@ cancelled), serviceProviderAccount: string } */
 },
 	/** input type for inserting data into table "delivery.courier_order" */
 ["delivery_courier_order_insert_input"]: {
+	bill_image?:string,
 	cancellation_time?:PartialObjects["timestamptz"],
 	customer_app_type?:string,
 	customer_id?:number,
@@ -22415,6 +22426,7 @@ columns of table "delivery.courier_order_item" */
 	/** aggregate max on columns */
 ["delivery_courier_order_max_fields"]: {
 		__typename?: "delivery_courier_order_max_fields";
+			bill_image?:string,
 			cancellation_time?:PartialObjects["timestamptz"],
 			customer_app_type?:string,
 			customer_id?:number,
@@ -22432,6 +22444,7 @@ columns of table "delivery.courier_order_item" */
 	/** aggregate min on columns */
 ["delivery_courier_order_min_fields"]: {
 		__typename?: "delivery_courier_order_min_fields";
+			bill_image?:string,
 			cancellation_time?:PartialObjects["timestamptz"],
 			customer_app_type?:string,
 			customer_id?:number,
@@ -22469,6 +22482,7 @@ columns of table "delivery.courier_order_item" */
 	/** Ordering options when selecting data from "delivery.courier_order". */
 ["delivery_courier_order_order_by"]: {
 	actual_items_cost?:PartialObjects["order_by"],
+	bill_image?:PartialObjects["order_by"],
 	cancellation_time?:PartialObjects["order_by"],
 	customer_app_type?:PartialObjects["order_by"],
 	customer_id?:PartialObjects["order_by"],
@@ -22505,6 +22519,7 @@ cancelled), serviceProviderAccount: string } */
 ["delivery_courier_order_select_column"]:delivery_courier_order_select_column,
 	/** input type for updating data in table "delivery.courier_order" */
 ["delivery_courier_order_set_input"]: {
+	bill_image?:string,
 	cancellation_time?:PartialObjects["timestamptz"],
 	customer_app_type?:string,
 	customer_id?:number,
@@ -22568,6 +22583,7 @@ cancelled), serviceProviderAccount: string } */
 },
 	/** Initial value of the column from where the streaming should start */
 ["delivery_courier_order_stream_cursor_value_input"]: {
+	bill_image?:string,
 	cancellation_time?:PartialObjects["timestamptz"],
 	customer_app_type?:string,
 	customer_id?:number,
@@ -40288,6 +40304,7 @@ export type delivery_courier_order = {
 	__typename?: "delivery_courier_order",
 	/** A computed field, executes function "delivery.actualitemscost" */
 	actual_items_cost?:money,
+	bill_image?:string,
 	cancellation_time?:timestamptz,
 	customer_app_type:string,
 	customer_id:number,
@@ -40368,6 +40385,7 @@ export type delivery_courier_order_bool_exp = {
 	_not?:delivery_courier_order_bool_exp,
 	_or?:delivery_courier_order_bool_exp[],
 	actual_items_cost?:money_comparison_exp,
+	bill_image?:String_comparison_exp,
 	cancellation_time?:timestamptz_comparison_exp,
 	customer_app_type?:String_comparison_exp,
 	customer_id?:Int_comparison_exp,
@@ -40437,7 +40455,8 @@ export type delivery_courier_order_inc_input = {
 
 /** input type for inserting data into table "delivery.courier_order" */
 export type delivery_courier_order_insert_input = {
-		cancellation_time?:timestamptz,
+		bill_image?:string,
+	cancellation_time?:timestamptz,
 	customer_app_type?:string,
 	customer_id?:number,
 	delivery_order?:delivery_order_obj_rel_insert_input,
@@ -40887,6 +40906,7 @@ export type delivery_courier_order_item_variance_order_by = {
 /** aggregate max on columns */
 export type delivery_courier_order_max_fields = {
 	__typename?: "delivery_courier_order_max_fields",
+	bill_image?:string,
 	cancellation_time?:timestamptz,
 	customer_app_type?:string,
 	customer_id?:number,
@@ -40905,6 +40925,7 @@ export type delivery_courier_order_max_fields = {
 /** aggregate min on columns */
 export type delivery_courier_order_min_fields = {
 	__typename?: "delivery_courier_order_min_fields",
+	bill_image?:string,
 	cancellation_time?:timestamptz,
 	customer_app_type?:string,
 	customer_id?:number,
@@ -40946,6 +40967,7 @@ export type delivery_courier_order_on_conflict = {
 /** Ordering options when selecting data from "delivery.courier_order". */
 export type delivery_courier_order_order_by = {
 		actual_items_cost?:order_by,
+	bill_image?:order_by,
 	cancellation_time?:order_by,
 	customer_app_type?:order_by,
 	customer_id?:order_by,
@@ -40983,6 +41005,7 @@ cancelled), serviceProviderAccount: string } */
 
 /** select columns of table "delivery.courier_order" */
 export enum delivery_courier_order_select_column {
+	bill_image = "bill_image",
 	cancellation_time = "cancellation_time",
 	customer_app_type = "customer_app_type",
 	customer_id = "customer_id",
@@ -41003,7 +41026,8 @@ export enum delivery_courier_order_select_column {
 
 /** input type for updating data in table "delivery.courier_order" */
 export type delivery_courier_order_set_input = {
-		cancellation_time?:timestamptz,
+		bill_image?:string,
+	cancellation_time?:timestamptz,
 	customer_app_type?:string,
 	customer_id?:number,
 	delivery_order_id?:number,
@@ -41071,7 +41095,8 @@ export type delivery_courier_order_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type delivery_courier_order_stream_cursor_value_input = {
-		cancellation_time?:timestamptz,
+		bill_image?:string,
+	cancellation_time?:timestamptz,
 	customer_app_type?:string,
 	customer_id?:number,
 	delivery_order_id?:number,
@@ -41107,6 +41132,7 @@ export type delivery_courier_order_sum_fields = {
 
 /** update columns of table "delivery.courier_order" */
 export enum delivery_courier_order_update_column {
+	bill_image = "bill_image",
 	cancellation_time = "cancellation_time",
 	customer_app_type = "customer_app_type",
 	customer_id = "customer_id",
@@ -63782,6 +63808,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		bill_image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cancellation_time:{
 			type:"timestamptz_comparison_exp",
 			array:false,
@@ -63973,6 +64005,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_courier_order_insert_input:{
+		bill_image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cancellation_time:{
 			type:"timestamptz",
 			array:false,
@@ -64994,6 +65032,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		bill_image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cancellation_time:{
 			type:"order_by",
 			array:false,
@@ -65127,6 +65171,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_courier_order_select_column: "enum",
 	delivery_courier_order_set_input:{
+		bill_image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cancellation_time:{
 			type:"timestamptz",
 			array:false,
@@ -65239,6 +65289,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_courier_order_stream_cursor_value_input:{
+		bill_image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cancellation_time:{
 			type:"timestamptz",
 			array:false,
@@ -112564,6 +112620,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_courier_order:{
 		actual_items_cost:"money",
+		bill_image:"String",
 		cancellation_time:"timestamptz",
 		customer_app_type:"String",
 		customer_id:"Int",
@@ -112710,6 +112767,7 @@ export const ReturnTypes: Record<string,any> = {
 		order_id:"Float"
 	},
 	delivery_courier_order_max_fields:{
+		bill_image:"String",
 		cancellation_time:"timestamptz",
 		customer_app_type:"String",
 		customer_id:"Int",
@@ -112725,6 +112783,7 @@ export const ReturnTypes: Record<string,any> = {
 		to_location_address:"String"
 	},
 	delivery_courier_order_min_fields:{
+		bill_image:"String",
 		cancellation_time:"timestamptz",
 		customer_app_type:"String",
 		customer_id:"Int",

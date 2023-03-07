@@ -95,7 +95,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
 
           // card Settings
           isCustomerRowFirst: widget.viewcontroller.inPickupPhase,
-          showMsgIconInOneLine: !widget.viewcontroller.order.inProcess(),
+
           initialCardState: orderInfoCardState.value,
           onCardStateChange: (OrderInfoCardState nwState) {
             orderInfoCardState.value = nwState;
@@ -132,7 +132,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         } else if (!widget.viewcontroller.order.packageReady) {
           return '${_i18n()["orderStatus"]["waiting"]}';
         } else
-          return "";
+          return "${_i18n()["orderStatus"]["received"]}";
 
       // case DeliveryOrderStatus.PackageReady:
       //   return '${_i18n()["orderStatus"]["justReady"]}';
@@ -162,7 +162,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     return (widget.viewcontroller.pickuSetted)
         ? Row(
             children: [
-              Text(DateFormat('EE, hh:mm a')
+              Text(DateFormat('hh:mm a')
                   .format(widget.viewcontroller.pickupTime!.toLocal())),
               const SizedBox(
                 width: 5,
@@ -192,7 +192,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     return (widget.viewcontroller.dropoffSetted)
         ? Row(
             children: [
-              Text(DateFormat('EE, hh:mm a')
+              Text(DateFormat('hh:mm a')
                   .format(widget.viewcontroller.dropoffTime!.toLocal())),
               const SizedBox(
                 width: 5,
@@ -251,15 +251,15 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         decoration: BoxDecoration(
             color: (widget.viewcontroller.isSettingDropoffTime.isTrue)
                 ? Colors.transparent
-                : secondaryLightBlueColor,
-            borderRadius: BorderRadius.circular(5)),
+                : redAccentColor,
+            borderRadius: BorderRadius.circular(30)),
         padding: const EdgeInsets.all(5),
         child: (widget.viewcontroller.isSettingDropoffTime.isTrue)
             ? CircularProgressIndicator()
             : Text(
-                "${_i18n()['set']} ${_i18n()['dropoff']} ${_i18n()['time']}",
+                "${_i18n()['setTime']}",
                 style: Get.textTheme.bodyMedium?.copyWith(
-                    color: primaryBlueColor, fontWeight: FontWeight.bold),
+                    color: Colors.white, fontWeight: FontWeight.bold),
               ),
       ),
     );
@@ -281,15 +281,15 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         decoration: BoxDecoration(
             color: (widget.viewcontroller.isSettingPickUpTime.isTrue)
                 ? Colors.transparent
-                : secondaryLightBlueColor,
-            borderRadius: BorderRadius.circular(5)),
+                : redAccentColor,
+            borderRadius: BorderRadius.circular(30)),
         padding: const EdgeInsets.all(5),
         child: (widget.viewcontroller.isSettingPickUpTime.isTrue)
             ? CircularProgressIndicator()
             : Text(
-                "${_i18n()['set']} ${_i18n()['pickup']} ${_i18n()['time']}",
+                "${_i18n()['setTime']}",
                 style: Get.textTheme.bodyMedium?.copyWith(
-                    color: primaryBlueColor, fontWeight: FontWeight.bold),
+                    color: Colors.white, fontWeight: FontWeight.bold),
               ),
       ),
     );

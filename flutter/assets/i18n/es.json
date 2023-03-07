@@ -155,7 +155,7 @@
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Método de pago",
-              "cash": "Dinero",
+              "cash": "Efectivo",
               "newcard": "Nueva tarjeta",
               "applepay": "Apple Pay",
               "googlepay": "Google Pay",
@@ -819,7 +819,7 @@
             "error": "Error",
             "bankTransfer": "Transferencia bancaria",
             "bankError": "El número de cuenta no es válido",
-            "cash": "Dinero",
+            "cash": "Efectivo",
             "card": "Tarjeta",
             "requirements": "Requisitos",
             "acceptedPayments": "Pagos aceptados",
@@ -1069,7 +1069,7 @@
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
-        "cash": "Dinero",
+        "cash": "Efectivo",
         "newcard": "Nueva tarjeta",
         "applepay": "Apple Pay",
         "googlepay": "Google Pay",
@@ -1598,7 +1598,7 @@
         "scheduled": "Programada",
         "dvTime": "El tiempo de entrega",
         "paymentMethod": "Método de pago",
-        "cash": "Dinero",
+        "cash": "Efectivo",
         "from": "De",
         "deliveredTo": "Entregado a",
         "deliveryCost": "Coste de envío",
@@ -1647,7 +1647,7 @@
           },
           "Components": {
             "AnimatedOrderInfoCard": {
-              "cash": "Dinero",
+              "cash": "Efectivo",
               "card": "Tarjeta"
             },
             "DriverBottomLaundryOrderCard": {
@@ -1693,6 +1693,7 @@
               "packageReady": "Paquete listo",
               "dvTime": "El tiempo de entrega",
               "set": "Establecer",
+              "setTime" : "Elige hora",
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
@@ -1707,7 +1708,8 @@
                 "justReady": "Listo para la entrega",
                 "scheduled": "Pedido programado",
                 "delivered": "Orden Entregado",
-                "canceled": "Orden Cancelada"
+                "canceled": "Orden Cancelada",
+                "received" :"orden recibida"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirmar la recogida",
@@ -2270,7 +2272,7 @@
             "error": "Error",
             "bankTransfer": "Transferencia bancaria",
             "bankError": "El número de cuenta no es válido",
-            "cash": "Dinero",
+            "cash": "Efectivo",
             "card": "Tarjeta",
             "requirements": "Requisitos",
             "acceptedPayments": "Pagos aceptados",
