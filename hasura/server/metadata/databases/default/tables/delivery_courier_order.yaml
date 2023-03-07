@@ -28,22 +28,23 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - id
+        - bill_image
+        - cancellation_time
+        - customer_app_type
+        - customer_id
+        - delivery_order_id
+        - discount_value
         - from_location_gps
         - from_location_text
-        - to_location_gps
-        - to_location_address
-        - delivery_order_id
-        - customer_id
+        - id
         - order_time
-        - stripe_info
         - payment_type
-        - tax
-        - stripe_fees
-        - discount_value
-        - customer_app_type
         - refund_amount
-        - cancellation_time
+        - stripe_fees
+        - stripe_info
+        - tax
+        - to_location_address
+        - to_location_gps
       computed_fields:
         - actual_items_cost
         - total_cost
@@ -62,6 +63,7 @@ select_permissions:
         - refund_amount
         - stripe_fees
         - tax
+        - bill_image
         - customer_app_type
         - from_location_text
         - payment_type
@@ -89,6 +91,7 @@ select_permissions:
         - refund_amount
         - stripe_fees
         - tax
+        - bill_image
         - customer_app_type
         - from_location_text
         - payment_type
@@ -117,6 +120,7 @@ select_permissions:
         - refund_amount
         - stripe_fees
         - tax
+        - bill_image
         - customer_app_type
         - from_location_text
         - payment_type
