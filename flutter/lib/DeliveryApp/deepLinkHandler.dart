@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DeliveryDeepLinkHandler {
   StreamSubscription<PendingDynamicLinkData?>? _inDeepLinkListener;
@@ -29,6 +32,7 @@ class DeliveryDeepLinkHandler {
       mezDbgPrint("@deepLink@ ===>checking query params");
 
       final int? providerId = int.tryParse(deepLink.queryParameters['id']!);
+      final String? providerType = deepLink.queryParameters['type']!;
       mezDbgPrint("@deepLink@ ===> query has =========>$providerId [id]");
 
       // final CustomerDeepLinkType? providerType =
@@ -36,22 +40,20 @@ class DeliveryDeepLinkHandler {
 
       // accepted type - We handle it
 
-      if (providerId != null) {
+      if (providerId != null && providerType != null) {
         await _handleRoutingByType(
-          providerId: providerId,
-        );
+            providerId: providerId, providerType: providerType);
       }
     }
   }
 
   /// This Do the routing magic depending on [providerType] given.
-  Future<void> _handleRoutingByType({
-    required int providerId,
-  }) async {
+  Future<void> _handleRoutingByType(
+      {required int providerId, required String providerType}) async {
     mezDbgPrint(
         " 🔗🔗🔗🔗 @deepLink@ ===> handling operator   =====>>> provider id : $providerId");
 
-    final ServerResponse res = await addDriver(providerId);
+    final ServerResponse res = await addDriver(providerId, providerType);
     // await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
   }
 
@@ -88,17 +90,18 @@ class DeliveryDeepLinkHandler {
     }
   }
 
-  Future<ServerResponse> addDriver(int providerId) async {
+  Future<ServerResponse> addDriver(int providerId, String providerType) async {
     final HttpsCallable cloudFunction = FirebaseFunctions.instance
         .httpsCallable('restaurant2-addRestaurantDriver');
     try {
-      final HttpsCallableResult response = await cloudFunction.call({
-        "deliveryCompanyId": providerId,
-      });
-      mezDbgPrint("Response : ${response.data}");
+      await CloudFunctions.serviceProvider_addDriver(
+          deliveryCompanyId: providerId,
+          deliveryServiceProviderType:
+              providerType.toDeliveryServiceProviderType());
 
       return ServerResponse(ResponseStatus.Success);
     } catch (e, stk) {
+      MezSnackbar("Error", "Unable to add you as driver");
       mezDbgPrint("Errrooooooooor =======> $e,$stk");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");

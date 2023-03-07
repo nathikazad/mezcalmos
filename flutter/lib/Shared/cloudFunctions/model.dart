@@ -155,6 +155,14 @@ extension ParseDeliveryServiceProviderTypeToString on DeliveryServiceProviderTyp
   }
 }
 
+extension ParseStringToDeliveryServiceProviderType on String {
+  DeliveryServiceProviderType toDeliveryServiceProviderType() {
+    return DeliveryServiceProviderType.values.firstWhere(
+        (DeliveryServiceProviderType deliveryServiceProviderType) =>
+            deliveryServiceProviderType.toFirebaseFormatString() == this);
+  }
+}
+
 class Location {
   num lat;
   num lng;
