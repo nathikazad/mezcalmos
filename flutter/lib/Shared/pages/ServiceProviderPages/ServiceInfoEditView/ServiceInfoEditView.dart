@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceImageEditComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -17,6 +18,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
 //
 class ServiceInfoEditView extends StatefulWidget {
   const ServiceInfoEditView({super.key});
+
+  static Future<void> navigate(
+      {required int serviceDetailsId,
+      required int serviceProviderId,
+      required ServiceProviderType serviceProviderType}) {
+    return MezRouter.toPath<void>(
+        SharedServiceProviderRoutes.kserviceInfoEditRoute
+            .replaceAll(":serviceDetailsId", serviceDetailsId.toString())
+            .replaceAll(":serviceProviderId", serviceProviderId.toString()),
+        arguments: <String, dynamic>{
+          "serviceProviderType": serviceProviderType,
+        });
+  }
 
   @override
   State<ServiceInfoEditView> createState() => _ServiceInfoEditViewState();
@@ -29,11 +43,15 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
 
   ServiceInfoEditViewController viewController =
       ServiceInfoEditViewController();
+
   @override
   void initState() {
-    detailsId = int.tryParse(Get.parameters["serviceDetailsId"]!);
-    serviceId = int.tryParse(Get.parameters["serviceProviderId"]!);
-    providerType = Get.arguments["serviceProviderType"] as ServiceProviderType?;
+    detailsId =
+        int.tryParse(MezRouter.urlArguments["serviceDetailsId"].toString());
+    serviceId =
+        int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
+    providerType = MezRouter.bodyArguments?["serviceProviderType"].toString()
+        as ServiceProviderType?;
 
     if (providerType != null && detailsId != null && serviceId != null) {
       viewController.init(

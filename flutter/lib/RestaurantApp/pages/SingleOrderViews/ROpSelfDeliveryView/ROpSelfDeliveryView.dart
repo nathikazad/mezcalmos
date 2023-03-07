@@ -6,10 +6,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/ROpControllButtons.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/ROpOrderFromTo.dart';
+import 'package:mezcalmos/RestaurantApp/router/deliveryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -25,6 +27,11 @@ import 'package:url_launcher/url_launcher_string.dart';
 class ROpSelfDeliveryView extends StatefulWidget {
   const ROpSelfDeliveryView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required String orderId}) {
+    return MezRouter.toPath<void>(
+        DeliveryRouter.selfDeliveryRoute.replaceAll(":orderId", orderId));
+  }
+
   @override
   _ROpSelfDeliveryViewState createState() => _ROpSelfDeliveryViewState();
 }
@@ -32,9 +39,11 @@ class ROpSelfDeliveryView extends StatefulWidget {
 class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
   MGoogleMapController mapController = MGoogleMapController();
   Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
+
   // ROpOrderController controller = Get.find<ROpOrderController>();
   StreamSubscription<Order?>? _orderListener;
   RestaurantOrderStatus? orderStatusSnapshot;
+
   // DeliveryAuthController deliveryAuthAuthController =
   //     Get.find<DeliveryAuthController>();
   @override

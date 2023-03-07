@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/components/ROpChoiceAv.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/controllers/ROpChoiceViewController.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -21,6 +22,20 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpChoiceView extends StatefulWidget {
   const ROpChoiceView({super.key});
 
+  static Future<void> navigate(
+      {required int? choiceId,
+      required String restaurantId,
+      required int optionId}) {
+    String route = RestaurantRouter.restaurantChoiceRoute
+        .replaceAll(":restaurantId", restaurantId)
+        .replaceAll(":optionId", optionId.toString());
+
+    if (choiceId != null) {
+      route = route.replaceFirst(":choiceId", "$choiceId");
+    }
+    return MezRouter.toPath<void>(route);
+  }
+
   @override
   State<ROpChoiceView> createState() => _ROpChoiceViewState();
 }
@@ -37,9 +52,9 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
 
   @override
   void initState() {
-    choiceId = Get.parameters["choiceId"] ?? null;
-    optionId = Get.parameters["optionId"];
-    restaurantId = Get.parameters["restaurantId"];
+    choiceId = MezRouter.urlArguments["choiceId"].toString() ?? '';
+    optionId = MezRouter.urlArguments["optionId"].toString();
+    restaurantId = MezRouter.urlArguments["restaurantId"].toString();
     if (restaurantId != null && optionId != null) {
       tabController = TabController(length: 2, vsync: this);
       viewController.init(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -126,9 +127,9 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                     return MinimalOrderCard(
                       order: viewController.currentOrders.value![index],
                       onTap: () {
-                        MezRouter.toNamed(
-                            DeliveryAdminRoutes.getDvCompanyOrderRoute(
-                                viewController.currentOrders.value![index].id));
+                        DvCompanyOrderView.navigate(
+                            orderId:
+                                viewController.currentOrders.value![index].id);
                       },
                     );
                   }),

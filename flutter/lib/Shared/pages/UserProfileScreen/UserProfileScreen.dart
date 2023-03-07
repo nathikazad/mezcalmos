@@ -21,7 +21,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 
 class UserProfile extends StatefulWidget {
   final AuthController authController = Get.find<AuthController>();
-  // this is just to controll incase we want to make a push to this route with a pre-defined mode.
+  // this is just to controll incase we want to make a push to this router with a pre-defined mode.
   final UserProfileMode pageInitMode;
   // UserProfileController
   final UserProfileController userProfileController = UserProfileController();

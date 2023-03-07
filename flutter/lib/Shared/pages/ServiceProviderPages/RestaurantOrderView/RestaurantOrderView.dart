@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -32,6 +33,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required String orderId}) {
+    return MezRouter.toPath<void>(
+        RestaurantRouter.restaurantOrderRoute.replaceAll(":orderId", orderId));
+  }
+
   @override
   State<RestaurantOrderView> createState() => _RestaurantOrderViewState();
 }
@@ -42,7 +48,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
   @override
   void initState() {
-    final String? orderId = Get.parameters['orderId'];
+    final String? orderId = MezRouter.urlArguments['orderId'].toString();
     mezDbgPrint("Restaurant Order View 🥥🥥🥥 ORDER ID $orderId");
     if (orderId != null && int.tryParse(orderId) != null) {
       viewController.init(orderId: int.parse(orderId));

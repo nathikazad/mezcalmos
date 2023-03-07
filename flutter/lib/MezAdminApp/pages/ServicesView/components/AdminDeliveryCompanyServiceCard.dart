@@ -1,14 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
-import 'package:mezcalmos/MezAdminApp/router.dart';
+import 'package:mezcalmos/MezAdminApp/router/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -19,6 +22,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
 class AdminDeliveryCompanyServiceCard extends StatelessWidget {
   const AdminDeliveryCompanyServiceCard(
       {super.key, required this.company, required this.viewController});
+
   final DeliveryCompany company;
   final AdminServicesViewController viewController;
 
@@ -86,27 +90,24 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         icon: Icons.price_check,
                         label: "${_i18n()['costs']}",
                         ontap: () {
-                          SharedServiceProviderRoutes.navigateToDeliveryCost(
+                          DeliveryCostSettingView.navigate(
                               deliveryDetailsId: company.deliveryDetailsId!);
                         }),
                     _smallBtn(
                         icon: Icons.history,
                         label: "${_i18n()['orders']}",
                         ontap: () {
-                          MezRouter.toNamed(
-                              MezAdminRoutes.getserviceOrdersRoute(
-                                  serviceProviderId: company.info.hasuraId),
-                              arguments: {
-                                "serviceProviderType":
-                                    ServiceProviderType.DeliveryCompany,
-                                "serviceName": company.info.name,
-                              });
+                          AdminServiceOrdersView.navigate(
+                              serviceProviderId: company.info.hasuraId,
+                              serviceName: company.info.name,
+                              serviceProviderType:
+                                  ServiceProviderType.DeliveryCompany);
                         }),
                     _smallBtn(
                         icon: Icons.person,
                         label: "${_i18n()['profile']}",
                         ontap: () {
-                          SharedServiceProviderRoutes.navigateToServiceProfile(
+                          ServiceProfileView.navigate(
                               deliveryDetailsId: company.deliveryDetailsId!,
                               serviceProviderId: company.info.hasuraId,
                               serviceDetailsId: company.serviceDetailsId);

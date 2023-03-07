@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
@@ -152,7 +152,7 @@ Notification newMessageNotification(String key, value) {
 Notification newDriverNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: SharedServiceProviderRoutes.kDriversList,
+      linkUrl: SharedServiceProviderRoutes.kDriversRoute,
       body: "${value["newDriverName"]} has request join your drivers",
       imgUrl: value['newDriverImage'],
       title: "New driver request",

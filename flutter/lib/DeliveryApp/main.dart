@@ -6,11 +6,12 @@ import 'package:mezcalmos/DeliveryApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
-List<GetPage<dynamic>> routes = DeliveryAppRoutes.routes;
+List<QRoute> routes = DeliveryAppRoutes.mainRoutes;
 
 void main() {
   runMainGuarded(

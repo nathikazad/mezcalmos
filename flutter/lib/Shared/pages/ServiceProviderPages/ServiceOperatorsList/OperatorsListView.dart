@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/components/ListOperatorCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -31,6 +32,20 @@ class OperatorsListView extends StatefulWidget {
   final int? serviceLinkId;
   final ServiceProviderType? serviceProviderType;
   final bool? showAppBar;
+
+  static Future<void> navigate(
+      {required int serviceProviderId,
+      required int serviceLinkId,
+      required ServiceProviderType serviceProviderType}) {
+    return MezRouter.toPath<void>(
+        SharedServiceProviderRoutes.kOperatorsListRoute
+            .replaceAll(":ServiceProviderId", serviceProviderId.toString())
+            .replaceAll(":serviceLinkId", serviceLinkId.toString()),
+        arguments: <String, dynamic>{
+          "serviceProviderType": serviceProviderType,
+          "showAppBar": true,
+        });
+  }
 
   @override
   State<OperatorsListView> createState() => _OperatorsListViewState();
@@ -59,13 +74,15 @@ class _OperatorsListViewState extends State<OperatorsListView> {
 
   void _settingVariables() {
     serviceProviderId = widget.serviceProviderId ??
-        int.tryParse(Get.parameters["serviceProviderId"]!);
-    serviceProviderId =
-        widget.serviceLinkId ?? int.tryParse(Get.parameters["serviceLinkId"]!);
-    showAppBar =
-        widget.showAppBar ?? Get.arguments?["showAppBar"] as bool? ?? true;
+        int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
+    serviceProviderId = widget.serviceLinkId ??
+        int.tryParse(MezRouter.urlArguments["serviceLinkId"].toString());
+    showAppBar = widget.showAppBar ??
+        MezRouter.bodyArguments?["showAppBar"].toString() as bool? ??
+        true;
     serviceProviderType = widget.serviceProviderType ??
-        Get.arguments?["serviceProviderType"] as ServiceProviderType;
+        MezRouter.bodyArguments?["serviceProviderType"].toString()
+            as ServiceProviderType;
   }
 
   @override

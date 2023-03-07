@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -22,6 +23,11 @@ class DeliveryCostSettingView extends StatefulWidget {
   }) : super(key: key);
   final int? deliveryDetailsId;
 
+  static Future<void> navigate({required int deliveryDetailsId}) {
+    return MezRouter.toPath<void>(SharedServiceProviderRoutes.kDeliveryCostRoute
+        .replaceAll(":deliveryDetailsId", deliveryDetailsId.toString()));
+  }
+
   @override
   State<DeliveryCostSettingView> createState() =>
       _DeliveryCostSettingViewState();
@@ -35,7 +41,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   @override
   void initState() {
     deliveryDetailsId = widget.deliveryDetailsId ??
-        int.tryParse(Get.parameters["deliveryDetailsId"]!);
+        int.tryParse(MezRouter.urlArguments["deliveryDetailsId"].toString());
 
     // provide service provider id and service Provider type
     if (deliveryDetailsId != null) {

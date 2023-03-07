@@ -54,7 +54,7 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
       // navigateToCreateService(
       //     serviceProviderType: ServiceProviderType.Restaurant);
     } else {
-      await MezRouter.toNamed(LaundryAppRoutes.kLaundryTabsView);
+      await MezRouter.toNamed(LaundryAppRoutes.kLaundryTabsViewRoute);
     }
   }
 

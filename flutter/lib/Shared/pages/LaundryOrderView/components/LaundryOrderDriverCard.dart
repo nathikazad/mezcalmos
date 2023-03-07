@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -22,6 +23,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
   const LaundryOrderDriverCard({Key? key, required this.viewController})
       : super(key: key);
   final LaundryOrderViewController viewController;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -74,7 +76,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                     MezIconButton(
                       icon: Icons.edit,
                       onTap: () {
-                        SharedServiceProviderRoutes.navigateToPickDriver(
+                        PickDriverView.navigate(
                             deliveryOrderId:
                                 viewController.order.deliveryOrderId,
                             showForwardButton: false);
@@ -128,7 +130,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                       MezIconButton(
                         icon: Icons.add,
                         onTap: () {
-                          SharedServiceProviderRoutes.navigateToPickDriver(
+                          PickDriverView.navigate(
                               deliveryOrderId:
                                   viewController.order.deliveryOrderId,
                               showForwardButton: false);

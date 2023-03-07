@@ -1,66 +1,102 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
-import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
-import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart';
-import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart';
+import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
+import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart'
+    deferred as laundryOpAdminView;
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart'
+    deferred as laundryOpCategoryView;
+import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart'
+    deferred as laundryWrapper;
+import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart'
+    deferred as laundryOpCurrentOrders;
+import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart'
+    deferred as laundryOpPastOrdersList;
+import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart'
+    deferred as laundryTabsView;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+
 // import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart'
+    deferred as laundryOrderView;
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 class LaundryAppRoutes {
-  static const String kCurrentOrdersListView = '/orders';
-  static const String kPastOrdersListView = '/pastorders';
-  static const String kAdminView = '/admin/:laundryId';
+  static const String kCurrentOrdersListViewRoute = '/orders';
+  static const String kPastOrdersListViewRoute = '/pastorders';
+  static const String kAdminViewRoute = '/admin/:laundryId';
 
   static const String kEditInfoView = '/editInfo/:laundryId';
 
-  static const String kCategoryView = '/categoryScreen/:laundryId/:categoryId';
-  static const String kOrderView = '/laundryOrders/:orderId';
-  static const String kLaundryTabsView = '/dashboard';
-
-  static String getCategoryRoute({int? categoryId, required int laundryId}) {
-    mezDbgPrint("Categ =========>$categoryId");
-    String catgRoute = kCategoryView.replaceFirst(":laundryId", "$laundryId");
-    if (categoryId != null) {
-      catgRoute = catgRoute.replaceFirst(":categoryId", "$categoryId");
-    }
-    mezDbgPrint("finalroute :======> $catgRoute");
-    return catgRoute;
-  }
-
-  static String getAdminRoute({required int laundryId}) {
-    return kAdminView.replaceFirst(":laundryId", "$laundryId");
-  }
+  static const String kCategoryViewRoute =
+      '/categoryScreen/:laundryId/:categoryId';
+  static const String kOrderViewRoute = '/laundryOrders/:orderId';
+  static const String kLaundryTabsViewRoute = '/dashboard';
 
   static String getEditInfoRoute({required int laundryId}) {
     return kEditInfoView.replaceFirst(":laundryId", "$laundryId");
   }
 
   static String getLaundryOpOrderRoute(int orderId) {
-    return kOrderView.replaceFirst(":orderId", "$orderId");
+    return kOrderViewRoute.replaceFirst(":orderId", "$orderId");
   }
 
-  static dynamic mainRoutes = [
-        GetPage(name: kAdminView, page: () => LaundryOpAdminView()),
-        GetPage(name: kLaundryTabsView, page: () => LaundryTabsView()),
-        GetPage(
-            name: kCurrentOrdersListView,
-            page: () => LaundryOpCurrentOrdersListView()),
-        GetPage(
-            name: kPastOrdersListView, page: () => LaundryOpPastOrdersList()),
-        GetPage(name: SharedRoutes.kHomeRoute, page: () => LaundryWrapper()),
-        GetPage(
-          name: kCategoryView,
-          page: () => LaundrOpCategoryView(),
-        ),
-        GetPage(name: kOrderView, page: () => LaundryOrderView())
+  static final List<QRoute> mainRoutes = <QRoute>[
+        QRoute(
+            path: kAdminViewRoute,
+            name: kAdminViewRoute,
+            builder: () => laundryOpAdminView.LaundryOpAdminView(),
+            middleware: <QMiddleware>[
+              DefferedLoader(laundryOpAdminView.loadLibrary)
+            ]),
+        QRoute(
+            path: kLaundryTabsViewRoute,
+            name: kLaundryTabsViewRoute,
+            builder: () => laundryTabsView.LaundryTabsView(),
+            middleware: <QMiddleware>[
+              DefferedLoader(laundryTabsView.loadLibrary)
+            ]),
+        QRoute(
+            path: kCurrentOrdersListViewRoute,
+            name: kCurrentOrdersListViewRoute,
+            builder: () =>
+                laundryOpCurrentOrders.LaundryOpCurrentOrdersListView(),
+            middleware: <QMiddleware>[
+              DefferedLoader(laundryOpCurrentOrders.loadLibrary)
+            ]),
+        QRoute(
+            path: kPastOrdersListViewRoute,
+            name: kPastOrdersListViewRoute,
+            builder: () => laundryOpPastOrdersList.LaundryOpPastOrdersList(),
+            middleware: <QMiddleware>[
+              DefferedLoader(laundryOpPastOrdersList.loadLibrary)
+            ]),
+        QRoute(
+            path: SharedRoutes.kHomeRoute,
+            name: SharedRoutes.kHomeRoute,
+            builder: () => laundryWrapper.LaundryWrapper(),
+            middleware: <QMiddleware>[
+              DefferedLoader(laundryWrapper.loadLibrary)
+            ]),
+        QRoute(
+            path: kCategoryViewRoute,
+            name: kCategoryViewRoute,
+            builder: () => laundryOpCategoryView.LaundrOpCategoryView(),
+            middleware: <QMiddleware>[
+              DefferedLoader(laundryOpCategoryView.loadLibrary)
+            ]),
+        QRoute(
+            path: kOrderViewRoute,
+            name: kOrderViewRoute,
+            builder: () => laundryOrderView.LaundryOrderView(),
+            middleware: <QMiddleware>[
+              DefferedLoader(laundryOrderView.loadLibrary)
+            ]),
       ] +
-      SharedRoutes.routes +
+      SharedRoutes.qRoutes +
       SharedServiceProviderRoutes.routes;
-  //  +
-  // NativeOnlyRoutes.routes;
+
+//  +
+// NativeOnlyRoutes.routes;
 }

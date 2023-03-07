@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/DeliverySettingsCompaniesList.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/ServiceDeliveryTypePicker.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -22,6 +23,22 @@ class DeliverySettingsView extends StatefulWidget {
     Key? key,
     this.createServiceViewController,
   }) : super(key: key);
+
+  static Future<void> navigate({
+    required int serviceProviderId,
+    required int detailsId,
+    required int deliveryDetailsID,
+    required ServiceProviderType serviceProviderType,
+  }) {
+    return MezRouter.toPath<void>(
+        SharedServiceProviderRoutes.kDeliverySettingsViewRoute
+            .replaceAll(":serviceProviderId", serviceProviderId.toString())
+            .replaceAll(":detailsId", detailsId.toString())
+            .replaceAll(":deliveryDetailsId", deliveryDetailsID.toString()),
+        arguments: <String, dynamic>{
+          "serviceProviderType": serviceProviderType,
+        });
+  }
 
   final CreateServiceViewController? createServiceViewController;
 
@@ -51,16 +68,19 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
   }
 
   void _settingVariables() {
-    if (Get.parameters["serviceProviderId"] != null &&
-        Get.arguments?["serviceProviderType"] != null &&
-        Get.parameters["deliveryDetailsId"] != null &&
-        Get.parameters["detailsId"] != null) {
-      serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
-      serviceDetailsId = int.tryParse(Get.parameters["detailsId"]!);
-      deliveryDetailsId = int.tryParse(Get.parameters["deliveryDetailsId"]!);
+    if (MezRouter.urlArguments["serviceProviderId"] != null &&
+        MezRouter.bodyArguments?["serviceProviderType"] != null &&
+        MezRouter.urlArguments["deliveryDetailsId"] != null &&
+        MezRouter.urlArguments["detailsId"] != null) {
+      serviceProviderId =
+          int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
+      serviceDetailsId =
+          int.tryParse(MezRouter.urlArguments["detailsId"].toString());
+      deliveryDetailsId =
+          int.tryParse(MezRouter.urlArguments["deliveryDetailsId"].toString());
 
-      serviceProviderType =
-          Get.arguments?["serviceProviderType"] as ServiceProviderType;
+      serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
+          .toString() as ServiceProviderType;
     }
   }
 

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:mezcalmos/RestaurantApp/authHooks.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/RestaurantApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
-List<GetPage<dynamic>> routes = RestaurantAppRoutes.mainRoutes;
+List<QRoute> routes = RestaurantAppRoutes.mainRoutes;
 
 void main() {
   runMainGuarded(

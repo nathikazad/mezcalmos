@@ -7,7 +7,9 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ROpI
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ROpSpecialItemTime.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -27,6 +29,30 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpItemView extends StatefulWidget {
   const ROpItemView({Key? key}) : super(key: key);
 
+  static Future<void> navigate(
+      {required int restaurantId,
+      required int itemId,
+      int? categoryId,
+      required Map<String, dynamic> arguments}) {
+    String route = RestaurantRouter.restaurantEditItemView
+        .replaceAll(":restaurantId", restaurantId.toString());
+    if (categoryId != null) {
+      route = route.replaceFirst(":categoryId", "$categoryId");
+    }
+    if (itemId != null) {
+      route = route.replaceFirst(":itemId", "$itemId");
+    }
+    return MezRouter.toPath<void>(route);
+  }
+
+  static Future<void> navigateToAdd(
+      {required int restaurantId, required Map<String, dynamic> arguments}) {
+    return MezRouter.toPath<void>(
+        RestaurantRouter.restaurantAddItemRoute
+            .replaceAll(":restaurantId", restaurantId.toString()),
+        arguments: arguments);
+  }
+
   @override
   _ROpItemViewState createState() => _ROpItemViewState();
 }
@@ -44,12 +70,14 @@ class _ROpItemViewState extends State<ROpItemView>
 
   @override
   void initState() {
-    itemId = Get.parameters["itemId"];
-    categoryId = Get.parameters["categoryId"];
-    restuarantID = Get.parameters["restaurantId"];
+    itemId = MezRouter.urlArguments["itemId"].toString();
+    categoryId = MezRouter.urlArguments["categoryId"].toString();
+    restuarantID = MezRouter.urlArguments["restaurantId"].toString();
     mezDbgPrint("Restuarnt id in item view ============> $restuarantID");
     if (restuarantID != null) {
-      specials = Get.arguments?["specials"] ?? false;
+      specials = MezRouter.bodyArguments?["specials"].toString() == 'true'
+          ? true
+          : false ?? false;
 
       _tabController = TabController(length: 2, vsync: this);
       viewController.init(
@@ -323,12 +351,11 @@ class _ROpItemViewState extends State<ROpItemView>
                     MezAddButton(
                       title: '${_i18n()["addOption"]}',
                       onClick: () async {
-                        final bool? result = await MezRouter.toNamed(
-                            RestaurantAppRoutes.getROpOptionRoute(
-                                restaurantId: restuarantID!,
-                                optionId: null,
-                                itemID: viewController.editableItem.value!.id!
-                                    .toString())) as bool?;
+                        final bool? result = await ROpOptionView.navigate(
+                            restaurantId: restuarantID!,
+                            optionId: null,
+                            itemId: viewController.editableItem.value!.id!
+                                .toString()) as bool?;
                         if (result == true) {
                           await viewController.fetchItem();
                         }

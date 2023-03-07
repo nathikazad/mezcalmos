@@ -59,7 +59,7 @@ class SharedRoutes {
 
 // shared navigation methods //
 
-  static var qRoutes = [
+  static List<QRoute> qRoutes = <QRoute>[
     QRoute(
         path: kSomethingWentWrongScreen,
         name: kSomethingWentWrongScreen,

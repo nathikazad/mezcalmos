@@ -151,7 +151,7 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
               setState(() {
                 dropDownListValue = newValue;
               });
-              // we will route the user back to the Map
+              // we will router the user back to the Map
               if (newValue?.id == "_pick_") {
                 final SavedLocation? _savedLocation =
                     await MezRouter.toNamed<void>(

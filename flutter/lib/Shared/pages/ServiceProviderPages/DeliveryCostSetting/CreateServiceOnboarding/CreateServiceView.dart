@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/pages/CreateServiceSchedulePage.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/pages/CreateServiceStartPage.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -26,6 +27,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 class CreateServiceView extends StatefulWidget {
   const CreateServiceView({super.key});
 
+  static Future<void> navigate(
+      {required ServiceProviderType serviceProviderType}) {
+    return MezRouter.toPath<void>(
+        SharedServiceProviderRoutes.kCreateServiceRoute,
+        arguments: <String, dynamic>{
+          "serviceProviderType": serviceProviderType,
+        });
+  }
+
   @override
   State<CreateServiceView> createState() => _CreateServiceViewState();
 }
@@ -33,10 +43,11 @@ class CreateServiceView extends StatefulWidget {
 class _CreateServiceViewState extends State<CreateServiceView> {
   CreateServiceViewController viewController = CreateServiceViewController();
   ServiceProviderType? serviceProviderType;
+
   @override
   void initState() {
-    serviceProviderType =
-        Get.arguments["serviceProviderType"] as ServiceProviderType;
+    serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
+        .toString() as ServiceProviderType;
     viewController.init(serviceProviderType: serviceProviderType!);
     super.initState();
   }
@@ -99,7 +110,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
           showSmallIcon: false,
           primaryCallBack: () {
             Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
-            MezRouter.popEverythingAndNavigateTo(RestaurantAppRoutes.kTabsView);
+            MezRouter.popEverythingAndNavigateTo(RestaurantAppRoutes.tabsRoute);
           },
           status: "${_i18n()['restTitle']}",
           description: "${_i18n()['restBody']}",

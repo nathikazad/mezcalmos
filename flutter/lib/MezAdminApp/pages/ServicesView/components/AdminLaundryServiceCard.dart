@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
-import 'package:mezcalmos/MezAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -19,8 +19,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
 class AdminLaundryServiceCard extends StatelessWidget {
   const AdminLaundryServiceCard(
       {super.key, required this.laundry, required this.viewController});
+
   final Laundry laundry;
   final AdminServicesViewController viewController;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -86,16 +88,16 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             icon: Icons.attach_money,
                             label: "${_i18n()['costs']}",
                             ontap: () {
-                              MezRouter.toNamed(getLaundryAdminRoute(
-                                  laundryId: laundry.info.hasuraId));
+                              LaundryOpAdminView.navigate(
+                                  laundryId: laundry.info.hasuraId);
                             }),
                         _smallBtn(
                             icon: Icons.history,
                             label: "${_i18n()['orders']}",
                             ontap: () {
-                              getserviceOrdersRoute(
-                                  serviceName: laundry.info.name,
+                              AdminServiceOrdersView.navigate(
                                   serviceProviderId: laundry.info.hasuraId,
+                                  serviceName: laundry.info.name,
                                   serviceProviderType:
                                       ServiceProviderType.Laundry);
                             }),
@@ -103,10 +105,11 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             icon: Icons.person,
                             label: "${_i18n()['profile']}",
                             ontap: () {
-                              navigateToServiceProfile(
+                              ServiceProfileView.navigate(
+                                serviceProviderId: laundry.info.hasuraId,
+                                serviceDetailsId: laundry.serviceDetailsId,
                                 deliveryDetailsId: laundry.deliveryDetailsId,
-                                  serviceProviderId: laundry.info.hasuraId,
-                                  serviceDetailsId: laundry.serviceDetailsId);
+                              );
                             }),
                       ],
                     ),

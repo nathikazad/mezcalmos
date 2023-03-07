@@ -50,7 +50,7 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
         .operator.value!.isWaitingToBeApprovedByOwner) {
       //  MezRouter.toNamed(kOpUnauth);
     } else {
-      MezRouter.toNamed(DeliveryAdminRoutes.kDeliveryOpHomeScreen);
+      MezRouter.toNamed(DeliveryAdminRoutes.kDeliveryOpHomeScreenRoute);
     }
   }
 

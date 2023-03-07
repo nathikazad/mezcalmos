@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -29,6 +30,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath<void>(LaundryAppRoutes.kOrderViewRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   State<LaundryOrderView> createState() => _LaundryOrderViewState();
 }
@@ -39,9 +45,9 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
   @override
   void initState() {
-    mezDbgPrint("Laundry order route 📥📥📥📥📥");
-    if (Get.parameters['orderId'] != null) {
-      orderId = int.parse(Get.parameters['orderId']!);
+    mezDbgPrint("Laundry order router 📥📥📥📥📥");
+    if (MezRouter.urlArguments['orderId'] != null) {
+      orderId = int.parse(MezRouter.urlArguments['orderId'].toString());
       viewController.init(orderId: orderId!);
     } else {
       mezDbgPrint("Order id null from the parameters ######");

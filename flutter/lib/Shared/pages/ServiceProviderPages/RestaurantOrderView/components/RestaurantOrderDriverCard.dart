@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -88,7 +89,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             widget.order.isSelfDelivery())
                           MezIconButton(
                             onTap: () async {
-                              SharedServiceProviderRoutes.navigateToPickDriver(
+                              PickDriverView.navigate(
                                   deliveryOrderId:
                                       widget.order.deliveryOrderId!,
                                   showForwardButton: true);
@@ -156,7 +157,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
         if (widget.order.isSelfDelivery() && widget.order.inProcess())
           InkWell(
               onTap: () async {
-                SharedServiceProviderRoutes.navigateToPickDriver(
+                PickDriverView.navigate(
                     deliveryOrderId: widget.order.deliveryOrderId!,
                     showForwardButton: true);
               },

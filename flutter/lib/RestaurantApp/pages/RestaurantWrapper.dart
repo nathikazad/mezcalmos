@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/ROpDeeplinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -36,6 +37,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
       Get.find<RestaurantOpAuthController>();
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
+
   @override
   void initState() {
     mezDbgPrint("RestaurantWrapper::init state");
@@ -55,13 +57,13 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
         "🫡 Start routing process 🫡 =>${restaurantOpAuthController.operator.value?.toJson()}");
 
     if (restaurantOpAuthController.operator.value == null) {
-      SharedServiceProviderRoutes.navigateToCreateService(
+      CreateServiceView.navigate(
           serviceProviderType: ServiceProviderType.Restaurant);
     } else if (restaurantOpAuthController
         .operator.value!.isWaitingToBeApprovedByOwner) {
-      MezRouter.toNamed(RestaurantAppRoutes.kOpUnauth);
+      MezRouter.toNamed(RestaurantAppRoutes.opUnauthRoute);
     } else {
-      MezRouter.toNamed(RestaurantAppRoutes.kTabsView);
+      MezRouter.toNamed(RestaurantAppRoutes.tabsRoute);
     }
   }
 

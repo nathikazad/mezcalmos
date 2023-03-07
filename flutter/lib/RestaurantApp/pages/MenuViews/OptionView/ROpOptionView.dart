@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionChoiceCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -21,6 +23,20 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 
 class ROpOptionView extends StatefulWidget {
   const ROpOptionView({Key? key}) : super(key: key);
+
+  static Future<void> navigate(
+      {required String restaurantId,
+      required int? optionId,
+      required String itemId}) {
+    String route = RestaurantRouter.restaurantChoiceRoute
+        .replaceAll(":restaurantId", restaurantId)
+        .replaceAll(":itemId", itemId);
+    if (optionId != null) {
+      route = route.replaceFirst(":optionId", "$optionId");
+    }
+
+    return MezRouter.toPath<void>(route);
+  }
 
   @override
   State<ROpOptionView> createState() => _ROpOptionViewState();
@@ -228,12 +244,11 @@ class _ROpOptionViewState extends State<ROpOptionView>
                       ),
                     ),
                     MezAddButton(onClick: () async {
-                      final bool? refetch = await MezRouter.toNamed(
-                          RestaurantAppRoutes.getROpChoiceRoute(
-                        choiceId: null,
-                        optionId: _viewController.editableOption.value!.id,
-                        restaurantId: restaurantId!,
-                      )) as bool?;
+                      final bool? refetch = await ROpChoiceView.navigate(
+                          choiceId: null,
+                          restaurantId: restaurantId!,
+                          optionId: _viewController
+                              .editableOption.value!.id) as bool?;
                       if (refetch == true) {
                         await _viewController.fetchOption();
                       }

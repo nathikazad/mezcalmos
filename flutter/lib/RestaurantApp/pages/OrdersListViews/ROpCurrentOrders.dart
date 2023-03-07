@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -140,8 +142,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                     borderRadius: 35,
                     label: '${_i18n()["pastButton"]}'.inCaps,
                     onClick: () async {
-                      await MezRouter.toNamed(
-                          RestaurantAppRoutes.kPastOrdersListView);
+                      await ROpPastOrdersList.navigate();
                     },
                   ),
                 ),
@@ -157,10 +158,9 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                         return MinimalOrderCard(
                           order: viewController.currentOrders[index],
                           onTap: () {
-                            MezRouter.toNamed(
-                                RestaurantAppRoutes.getROpOrderRoute(
-                                    viewController.currentOrders[index].id
-                                        .toString()));
+                            RestaurantOrderView.navigate(
+                                orderId: viewController.currentOrders[index].id
+                                    .toString());
                           },
                         );
                       }),

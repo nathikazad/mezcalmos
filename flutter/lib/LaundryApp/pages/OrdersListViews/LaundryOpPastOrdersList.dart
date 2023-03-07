@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/controllers/LaundryOpPastOrdersViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -23,6 +24,7 @@ class LaundryOpPastOrdersList extends StatefulWidget {
 class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
   LaundryOpPastOrdersController viewController =
       LaundryOpPastOrdersController();
+
   @override
   void initState() {
     viewController.init();
@@ -63,9 +65,8 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
                     return MinimalOrderCard(
                       order: viewController.pastOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(
-                            LaundryAppRoutes.getLaundryOpOrderRoute(
-                                viewController.pastOrders[index].id));
+                        LaundryOrderView.navigate(
+                            orderId: viewController.pastOrders[index].id);
                       },
                     );
                   },

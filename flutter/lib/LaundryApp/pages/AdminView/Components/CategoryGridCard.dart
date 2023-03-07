@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -24,6 +25,7 @@ class CategoryGridCard extends StatefulWidget {
   final LaundryCostLineItem item;
   final Laundry laundry;
   final LaundryOpAdminViewController viewController;
+
   @override
   State<CategoryGridCard> createState() => _CategoryGridCardState();
 }
@@ -35,6 +37,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   late LanguageType primaryLang;
   RxBool nameMissing = RxBool(false);
   late LanguageType? secondaryLang;
+
   @override
   void initState() {
     primaryLang = widget.laundry.primaryLanguage;
@@ -66,10 +69,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () async {
-                    bool? refetch = await MezRouter.toNamed(
-                        LaundryAppRoutes.getCategoryRoute(
-                            laundryId: widget.laundry.info.hasuraId,
-                            categoryId: widget.item.id)) as bool?;
+                    bool? refetch = await LaundrOpCategoryView.navigate(
+                        laundryId: widget.laundry.info.hasuraId,
+                        categoryId: widget.item.id) as bool?;
 
                     mezDbgPrint("RESULT ======>$refetch");
                     if (refetch == true) {

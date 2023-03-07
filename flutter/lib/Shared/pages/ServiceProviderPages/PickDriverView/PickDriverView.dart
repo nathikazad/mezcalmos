@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/router/deliveryRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -7,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/components/DriverSelectCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/components/ROpDriversMapComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/controllers/PickDriverViewController.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 //
@@ -20,6 +22,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class PickDriverView extends StatefulWidget {
   const PickDriverView({super.key});
 
+  static Future<void> navigate(
+      {required int deliveryOrderId, required bool showForwardButton}) {
+    return MezRouter.toPath<void>(
+        SharedServiceProviderRoutes.kPickDriverRoute
+            .replaceAll(":orderId", deliveryOrderId.toString()),
+        arguments: <String, dynamic>{"showForwardButton": showForwardButton});
+  }
+
   @override
   State<PickDriverView> createState() => _PickDriverViewState();
 }
@@ -32,9 +42,11 @@ class _PickDriverViewState extends State<PickDriverView> {
   @override
   void initState() {
     mezDbgPrint("Inside kpickdriver routre :::::::::");
-    if (Get.parameters["orderId"] != null) {
-      showForward = Get.arguments?["showForwardButton"] as bool? ?? false;
-      deliveryOrderId = int.tryParse(Get.parameters["orderId"]!);
+    if (MezRouter.urlArguments["orderId"] != null) {
+      showForward =
+          MezRouter.bodyArguments?["showForwardButton"] as bool? ?? false;
+      deliveryOrderId =
+          int.tryParse(MezRouter.urlArguments["orderId"].toString());
 
       if (deliveryOrderId != null) {
         viewController.init(orderId: deliveryOrderId!);
@@ -108,5 +120,5 @@ class _PickDriverViewState extends State<PickDriverView> {
         }));
   }
 
-  // return true;
+// return true;
 }

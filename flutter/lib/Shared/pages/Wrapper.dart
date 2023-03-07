@@ -100,7 +100,7 @@ class _WrapperState extends State<Wrapper> {
   //    -> getch user from hasura
 
   Future<void> handleAuthStateChange(fireAuth.User? user) async {
-    // We should Priotorize the AppNeedsUpdate route to force users to update
+    // We should Priotorize the AppNeedsUpdate router to force users to update
     // if (!MezRouter.isCurrentRoute(SharedRoutes.kAppNeedsUpdate)) {
     if (user == null) {
       mezDbgPrint("[777] user == null");
@@ -128,13 +128,13 @@ class _WrapperState extends State<Wrapper> {
         !MezRouter.isCurrentRoute(SharedRoutes.kUserWelcomeRoute)) {
       /* KEEEP THIS HERE FOR FUTURE REFRENCE
         We have so far 3 Scenarios here : 
-        - The Current route is kOtpConfirmRoute :
+        - The Current router is kOtpConfirmRoute :
           > this is basically when user Signs In using OTP and confirm :
             > the Navigation Stack is : kWrapper > kSignInRouteOptional > OtpSmsScreen > OtpConfirmationScreen
-        - The Current route is kSignInRouteOptional :
+        - The Current router is kSignInRouteOptional :
           > this is basically when the user clicks signIn using Facebook / Apple :
             > the navigation Stack is : kWrapper > kSignInRouteOptional
-        - The Current route is kWrapper:
+        - The Current router is kWrapper:
           > this is when the user already was SignedIn and was on ProfileScreen but closes the App and re-open it or a upon a hot Restart
             > Nav stack is : kWrapper
 

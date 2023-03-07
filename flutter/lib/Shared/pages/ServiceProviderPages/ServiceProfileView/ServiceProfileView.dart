@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
@@ -18,11 +22,23 @@ class ServiceProfileView extends StatefulWidget {
   final int? serviceDetailsId;
   final int? serviceId;
   final int? deliveryDetailsId;
+
   const ServiceProfileView(
       {super.key,
       this.serviceDetailsId,
       this.serviceId,
       this.deliveryDetailsId});
+
+  static Future<void> navigate(
+      {required int serviceProviderId,
+      required int serviceDetailsId,
+      required int deliveryDetailsId}) {
+    return MezRouter.toPath<void>(SharedServiceProviderRoutes
+        .kServiceProfileRoute
+        .replaceAll(":serviceId", serviceProviderId.toString())
+        .replaceAll(":serviceDetailsId", serviceDetailsId.toString())
+        .replaceAll(":deliveryDetailsId", deliveryDetailsId.toString()));
+  }
 
   @override
   State<ServiceProfileView> createState() => _ServiceProfileViewState();
@@ -34,6 +50,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   int? serviceDetailsId;
   int? serviceId;
   int? deliveryDetailsId;
+
   @override
   void initState() {
     mezDbgPrint(Get.parameters);
@@ -52,11 +69,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
 
   void _assignVars() {
     serviceDetailsId = widget.serviceDetailsId ??
-        int.tryParse(Get.parameters["serviceDetailsId"] ?? "");
-    serviceId =
-        widget.serviceId ?? int.tryParse(Get.parameters["serviceId"] ?? "");
+        int.tryParse(
+            MezRouter.urlArguments["serviceDetailsId"].toString() ?? "");
+    serviceId = widget.serviceId ??
+        int.tryParse(MezRouter.urlArguments["serviceId"].toString() ?? "");
     deliveryDetailsId = widget.deliveryDetailsId ??
-        int.tryParse(Get.parameters["deliveryDetailsId"] ?? "");
+        int.tryParse(
+            MezRouter.urlArguments["deliveryDetailsId"].toString() ?? "");
   }
 
   bool get asTab => widget.serviceDetailsId != null;
@@ -81,14 +100,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                             children: [
                               _navigationLink(
                                   onClick: () async {
-                                    SharedServiceProviderRoutes
-                                        .navigateToServiceInfoEdit(
-                                            serviceProviderId:
-                                                _viewController.serviceId,
-                                            serviceDetailsId:
-                                                _viewController.detailsId,
-                                            serviceProviderType: _viewController
-                                                .service.serviceProviderType!);
+                                    ServiceInfoEditView.navigate(
+                                        serviceDetailsId:
+                                            _viewController.detailsId,
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
                                   },
                                   icon: Icons.person,
                                   label: "Info"),
@@ -96,15 +114,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   onClick: () async {
                                     if (_viewController.service.serviceLinkId !=
                                         null) {
-                                      SharedServiceProviderRoutes
-                                          .navigateToOperators(
-                                              serviceLinkId: _viewController
-                                                  .service.serviceLinkId!,
-                                              serviceProviderId:
-                                                  _viewController.serviceId,
-                                              serviceProviderType:
-                                                  _viewController.service
-                                                      .serviceProviderType!);
+                                      OperatorsListView.navigate(
+                                          serviceProviderId:
+                                              _viewController.serviceId,
+                                          serviceLinkId: _viewController
+                                              .service.serviceLinkId!,
+                                          serviceProviderType: _viewController
+                                              .service.serviceProviderType!);
                                     } else {
                                       showErrorSnackBar(
                                           errorText:
@@ -117,18 +133,17 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   onClick: () async {
                                     await MezRouter.toNamed(
                                         SharedServiceProviderRoutes
-                                            .kserviceScheduleEdit);
+                                            .kserviceScheduleEditRoute);
                                   },
                                   icon: Icons.calendar_today,
                                   label: "Schedule"),
                               _navigationLink(
                                   onClick: () async {
-                                    SharedServiceProviderRoutes
-                                        .navigateToServicePayments(
-                                            serviceProviderId:
-                                                _viewController.serviceId,
-                                            serviceProviderType: _viewController
-                                                .service.serviceProviderType!);
+                                    ServicePaymentsView.navigate(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
                                   },
                                   icon: Icons.payment_rounded,
                                   label: "Payments"),
@@ -142,15 +157,14 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   label: "Reviews"),
                               _navigationLink(
                                 onClick: () async {
-                                  SharedServiceProviderRoutes
-                                      .navigateToDeliverySettings(
-                                          deliveryDetailsID:
-                                              _viewController.deliveryDetailsId,
-                                          detailsId: _viewController.detailsId,
-                                          serviceProviderId:
-                                              _viewController.serviceId,
-                                          serviceProviderType: _viewController
-                                              .service.serviceProviderType!);
+                                  DeliverySettingsView.navigate(
+                                      serviceProviderId:
+                                          _viewController.serviceId,
+                                      detailsId: _viewController.detailsId,
+                                      deliveryDetailsID:
+                                          _viewController.deliveryDetailsId,
+                                      serviceProviderType: _viewController
+                                          .service.serviceProviderType!);
                                 },
                                 label: "Delivery",
                                 icon: Icons.delivery_dining,

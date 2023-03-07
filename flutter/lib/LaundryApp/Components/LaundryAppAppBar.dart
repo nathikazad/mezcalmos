@@ -28,6 +28,6 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
         showLeftBtn: canGoBack,
         onClick: () => onClick?.call(),
         showNotifications: true,
-        ordersRoute: LaundryAppRoutes.kPastOrdersListView);
+        ordersRoute: LaundryAppRoutes.kPastOrdersListViewRoute);
   }
 }

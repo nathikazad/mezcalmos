@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/components/ServiceAcceptedPayments.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/components/ServiceStripePaymentSetup.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -15,6 +17,17 @@ class ServicePaymentsView extends StatefulWidget {
   const ServicePaymentsView({
     Key? key,
   }) : super(key: key);
+
+  static Future<void> navigate(
+      {required int serviceProviderId,
+      required ServiceProviderType serviceProviderType}) {
+    return MezRouter.toPath<void>(
+        SharedServiceProviderRoutes.kServicePaymentsRoute
+            .replaceAll(":ServiceProviderId", serviceProviderId.toString()),
+        arguments: <String, dynamic>{
+          "serviceProviderType": serviceProviderType,
+        });
+  }
 
   @override
   State<ServicePaymentsView> createState() => _ServicePaymentsViewState();

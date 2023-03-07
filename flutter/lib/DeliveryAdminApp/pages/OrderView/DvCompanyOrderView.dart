@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/controllers/DvCompanyOrderViewController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -26,6 +28,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 class DvCompanyOrderView extends StatefulWidget {
   const DvCompanyOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath<void>(DeliveryAdminRoutes.kOrderViewRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   _DvCompanyOrderViewState createState() => _DvCompanyOrderViewState();
 }
@@ -35,7 +42,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
 
   @override
   void initState() {
-    final String orderId = Get.parameters['orderId']!;
+    final String orderId = MezRouter.urlArguments['orderId'].toString();
     mezDbgPrint("Calling init dispose 🥸");
     viewController.init(orderId: int.parse(orderId));
 
@@ -267,7 +274,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
         children: [
           MezIconButton(
             onTap: () {
-              SharedServiceProviderRoutes.navigateToPickDriver(
+              PickDriverView.navigate(
                   deliveryOrderId: viewController.order.value!.id,
                   showForwardButton: false);
             },
@@ -280,6 +287,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             MessageButton(
                 chatId: 55,
                 onTap: () {
+                  //recheck
                   MezRouter.toNamed(getMessagesRoute(
                       chatId: viewController
                           .order.value!.chatWithServiceProviderId!));

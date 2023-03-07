@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/controllers/LaundryOpCurrentOrdersController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -143,7 +144,7 @@ class _LaundryOpCurrentOrdersListViewState
                     label: '${_i18n()["pastButton"]}'.inCaps,
                     onClick: () async {
                       await MezRouter.toNamed(
-                          LaundryAppRoutes.kPastOrdersListView);
+                          LaundryAppRoutes.kPastOrdersListViewRoute);
                     },
                   ),
                 ),
@@ -159,9 +160,9 @@ class _LaundryOpCurrentOrdersListViewState
                         return MinimalOrderCard(
                           order: viewController.currentOrders[index],
                           onTap: () {
-                            MezRouter.toNamed(
-                                LaundryAppRoutes.getLaundryOpOrderRoute(
-                                    viewController.currentOrders[index].id));
+                            LaundryOrderView.navigate(
+                                orderId:
+                                    viewController.currentOrders[index].id);
                           },
                         );
                       }),

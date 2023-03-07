@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -31,6 +32,7 @@ class ROpItemOptionCard extends StatefulWidget {
 
 class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -106,11 +108,10 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        final bool? result = await MezRouter.toNamed(
-            RestaurantAppRoutes.getROpOptionRoute(
-                restaurantId: widget.restaurantID,
-                optionId: option.id,
-                itemID: widget.itemId!)) as bool?;
+        final bool? result = ROpOptionView.navigate(
+            restaurantId: widget.restaurantID,
+            optionId: option.id,
+            itemId: widget.itemId!) as bool?;
         if (result == true) {
           await widget.viewController.fetchItem();
         }

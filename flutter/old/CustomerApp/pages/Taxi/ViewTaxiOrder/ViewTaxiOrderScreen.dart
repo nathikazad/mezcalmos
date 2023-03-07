@@ -187,7 +187,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         ]);
   }
 
-  /// The map view to show the route and location of the agents
+  /// The map view to show the router and location of the agents
   Container mGoogleMap() {
     return Container(
       width: Get.width,

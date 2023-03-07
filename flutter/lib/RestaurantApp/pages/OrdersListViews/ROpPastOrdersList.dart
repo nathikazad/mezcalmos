@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpPastOrdersViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -15,12 +17,17 @@ class ROpPastOrdersList extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  static Future<void> navigate() {
+    return MezRouter.toPath<void>(RestaurantRouter.pastOrdersRoute);
+  }
+
   @override
   State<ROpPastOrdersList> createState() => _ROpPastOrdersListState();
 }
 
 class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
   ROpPastOrdersController viewController = ROpPastOrdersController();
+
   @override
   void initState() {
     viewController.init();
@@ -61,8 +68,9 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                     return MinimalOrderCard(
                       order: viewController.pastOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(RestaurantAppRoutes.getROpOrderRoute(
-                            viewController.pastOrders[index].id.toString()));
+                        RestaurantOrderView.navigate(
+                            orderId:
+                                viewController.pastOrders[index].id.toString());
                       },
                     );
                   },

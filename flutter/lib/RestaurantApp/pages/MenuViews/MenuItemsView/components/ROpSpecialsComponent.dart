@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpSpecialItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -54,10 +55,10 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                 ),
                 MezAddButton(
                   onClick: () async {
-                    final bool? newItemAdded = await MezRouter.toNamed(
-                        RestaurantAppRoutes.getROpAddItemRoute(
-                            restaurantId: widget.viewController.restaurnatId),
-                        arguments: {"specials": true}) as bool?;
+                    final bool? newItemAdded = await ROpItemView.navigateToAdd(
+                            restaurantId: widget.viewController.restaurnatId,
+                            arguments: <String, dynamic>{"specials": true})
+                        as bool?;
                     if (newItemAdded == true) {
                       await widget.viewController.fetchSpecials();
                     }

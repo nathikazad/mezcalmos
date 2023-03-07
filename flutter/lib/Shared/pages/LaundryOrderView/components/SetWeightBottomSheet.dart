@@ -186,5 +186,4 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
       );
     });
   }
-
 }

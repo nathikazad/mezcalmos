@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -32,10 +33,10 @@ class ROpSpecialItemCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
-          final bool? shouldRefresh = await MezRouter.toNamed(
-              RestaurantAppRoutes.getEditItemRoute(
-                  itemId: item.id!, restaurntID: viewController.restaurnatId),
-              arguments: {"specials": true}) as bool;
+          final bool? shouldRefresh = await ROpItemView.navigate(
+              itemId: item.id!,
+              restaurantId: viewController.restaurnatId,
+              arguments: <String, dynamic>{"specials": true}) as bool;
 
           if (shouldRefresh == true) {
             await viewController.fetchSpecials();
@@ -91,7 +92,9 @@ class ROpSpecialItemCard extends StatelessWidget {
                           value: item.available,
                           onChanged: (bool v) {
                             viewController.switchItemAv(
-                                item: item, value: v,);
+                              item: item,
+                              value: v,
+                            );
                           },
                           activeColor: primaryBlueColor,
                           activeTrackColor: secondaryLightBlueColor,

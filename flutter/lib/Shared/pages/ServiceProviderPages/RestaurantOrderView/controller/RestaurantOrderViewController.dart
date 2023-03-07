@@ -35,7 +35,7 @@ class RestaurantOrderViewController {
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
       if (order.value!.routeInformation != null) {
         mezDbgPrint(
-            "Order route informations ====🥸🥸🥸🥸===== => ${order.value!.dropoffDriver?.toFirebaseFormatJson()}");
+            "Order router informations ====🥸🥸🥸🥸===== => ${order.value!.dropoffDriver?.toFirebaseFormatJson()}");
         mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: order.value!.routeInformation!.polyline);
       }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 //
@@ -18,6 +20,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 //
 class OrderDetailsScreen extends StatefulWidget {
   const OrderDetailsScreen({Key? key}) : super(key: key);
+
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath<void>(DeliveryAppRoutes.kOrderDetailsViewRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
 
   @override
   _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
@@ -29,7 +36,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   @override
   void initState() {
-    final String orderId = Get.parameters['orderId']!;
+    final String orderId = MezRouter.urlArguments['orderId'].toString();
     mezDbgPrint("Get.parameters ===> $orderId");
     if (int.tryParse(orderId) != null) {
       get_driver_order_by_id(orderId: int.parse(orderId))

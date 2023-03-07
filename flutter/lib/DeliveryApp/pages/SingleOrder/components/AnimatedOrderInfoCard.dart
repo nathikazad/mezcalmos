@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -32,11 +33,13 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   final OnOrderInfoCardStateChange? onCardStateChange;
   bool showMsgIconInOneLine;
   bool isCustomerRowFirst;
+
   // customer part (top row of animated container)
   final String customerName;
   final String customerImage;
   final Widget customerTimeWidget;
   final VoidCallback onCustomerMsgClick;
+
   // service provider part (bottom row)
   final String serviceProviderName;
   final String serviceProviderImage;
@@ -337,9 +340,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            MezRouter.toNamed<void>(
-              DeliveryAppRoutes.getOrderDetailsRoute(order.id),
-            );
+            OrderDetailsScreen.navigate(orderId: order.id);
           },
           child: Align(
             alignment: Alignment.centerRight,

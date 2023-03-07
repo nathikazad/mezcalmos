@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -29,6 +30,7 @@ class DriverOrderCard extends StatelessWidget {
   final Order order;
   final bool isPastOrder;
   final bool showLeftIcon;
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -37,8 +39,7 @@ class DriverOrderCard extends StatelessWidget {
           onCardTap: () {
             // MezRouter.toNamed(getOrderDetailsRoute(order.orderId));
             if (order.orderType == OrderType.Restaurant) {
-              MezRouter.toNamed(
-                  DeliveryAppRoutes.getRestaurantOrderRoute(order.orderId));
+              DvOrderView.navigate(orderId: order.orderId);
             } else if (order.orderType == OrderType.Laundry) {
               MezRouter.toNamed(
                   DeliveryAppRoutes.getLaundryOrderRoute(order.orderId));

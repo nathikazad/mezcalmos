@@ -131,7 +131,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   ///
   /// [id] is for when you are using nested navigation, as explained in documentation
   ///
-  /// [predicate] can be used like this: Get.until((route) => Get.currentRoute == '/home')so when you get to home page,
+  /// [predicate] can be used like this: Get.until((router) => Get.currentRoute == '/home')so when you get to home page,
   static void untill(bool Function(Route<dynamic>) predicate, {int? id}) {
     Navigator.popUntil(QR.context!, (Route<dynamic> route) {
       final bool res = predicate(route);
@@ -145,8 +145,8 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       }
     });
 
-    /* Get.until((Route<dynamic> route) {
-      final bool res = predicate(route);
+    /* Get.until((Route<dynamic> router) {
+      final bool res = predicate(router);
       if (res) {
         return true;
       } else {
@@ -164,9 +164,9 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   ///
   /// Pop the current named page and pushes a new page to the stack in its place
   ///
-  /// You can send any type of value to the other route in the [arguments]. It is very similar to offNamed() but use a different approach
+  /// You can send any type of value to the other router in the [arguments]. It is very similar to offNamed() but use a different approach
   ///
-  /// The offNamed() pop a page, and goes to the next. The offAndToNamed() goes to the next page, and removes the previous one. The route transition animation is different.
+  /// The offNamed() pop a page, and goes to the next. The offAndToNamed() goes to the next page, and removes the previous one. The router transition animation is different.
   static Future<Q?>? offAndToNamed<Q>(
     String page, {
     arguments,
@@ -196,13 +196,13 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   ///
   /// It has the advantage of not needing context, so you can call from your business logic.
   ///
-  /// You can send any type of value to the other route in the [arguments].
+  /// You can send any type of value to the other router in the [arguments].
   ///
   /// [id] is for when you are using nested navigation, as explained in documentation
   ///
-  /// By default, GetX will prevent you from push a route that you already in, if you want to push anyway, set [preventDuplicates] to false
+  /// By default, GetX will prevent you from push a router that you already in, if you want to push anyway, set [preventDuplicates] to false
   ///
-  /// Note: Always put a slash on the route ('/page1'), to avoid unnexpected errors
+  /// Note: Always put a slash on the router ('/page1'), to avoid unnexpected errors
   static Future<Q?>? offNamed<Q>(
     String page, {
     arguments,
@@ -247,18 +247,18 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   /// It has the advantage of not needing context, so you can
   /// call from your business logic.
   ///
-  /// You can send any type of value to the other route in the [arguments].
+  /// You can send any type of value to the other router in the [arguments].
   ///
   /// [predicate] can be used like this:
-  /// `Get.until((route) => Get.currentRoute == '/home')`so when you get to home page,
+  /// `Get.until((router) => Get.currentRoute == '/home')`so when you get to home page,
   /// or also like
-  /// `Get.until((route) => !Get.isDialogOpen())`, to make sure the dialog
+  /// `Get.until((router) => !Get.isDialogOpen())`, to make sure the dialog
   /// is closed
   ///
   /// [id] is for when you are using nested navigation,
   /// as explained in documentation
   ///
-  /// Note: Always put a slash on the route ('/page1'), to avoid unexpected errors
+  /// Note: Always put a slash on the router ('/page1'), to avoid unexpected errors
 /*  static Future<Q?>? offAllNamed<Q>(
     String newRouteName, {
     RoutePredicate? predicate,
@@ -271,8 +271,8 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
       arguments: arguments,
       parameters: parameters,
       predicate: predicate != null
-          ? (Route<dynamic> route) {
-              final bool res = predicate.call(route);
+          ? (Route<dynamic> router) {
+              final bool res = predicate.call(router);
               if (res) {
                 return true;
               } else {
@@ -296,7 +296,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   /// Push the given named `page`, and then pop several pages in the stack
   /// until [predicate] returns true
   ///
-  /// You can send any type of value to the other route in the [arguments].
+  /// You can send any type of value to the other router in the [arguments].
   ///
   /// [id] is for when you are using nested navigation,
   /// as explained in documentation
@@ -305,10 +305,10 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   /// `Get.offNamedUntil(page, ModalRoute.withName('/home'))`
   /// to pop routes in stack until home,
   /// or like this:
-  /// `Get.offNamedUntil((route) => !Get.isDialogOpen())`,
+  /// `Get.offNamedUntil((router) => !Get.isDialogOpen())`,
   /// to make sure the dialog is closed
   ///
-  /// Note: Always put a slash on the route name ('/page1'), to avoid unexpected errors
+  /// Note: Always put a slash on the router name ('/page1'), to avoid unexpected errors
 
   static Future<Q?>? offNamedUntil<Q>(
     String page,
@@ -366,13 +366,13 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static MRoute? currentRoute() =>
       _navigationStack.isEmpty ? null : _navigationStack.last;
 
-  /// This basically gives a route based on the [level] given.
+  /// This basically gives a router based on the [level] given.
   ///
   /// a [Level] is basically how many steps to go back from [this.currentRoute].
   ///
-  /// exp : In the following navigation stack [home -> Settings -> UserInfo], so basically UserInfo was last in which means we are currently in [UserInfo] Route, and we wanna check what's the route on our navigation stack that is sitting behind UserInfo, so the use of our function will be like this : getRouteByLevel(level: 1).
+  /// exp : In the following navigation stack [home -> Settings -> UserInfo], so basically UserInfo was last in which means we are currently in [UserInfo] Route, and we wanna check what's the router on our navigation stack that is sitting behind UserInfo, so the use of our function will be like this : getRouteByLevel(level: 1).
   ///
-  /// Note : calling getRouteByLevel(level:0) will simply return current route, which is basically a shortcut to [this.currentRoute]
+  /// Note : calling getRouteByLevel(level:0) will simply return current router, which is basically a shortcut to [this.currentRoute]
   ///
   /// Note : Giving a level that is out of range, will return null.
   static MRoute? getRouteByLevel({required int level}) {
@@ -384,7 +384,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   }
 
   /// to
-  /// This checks if a route is in NavigationStack.
+  /// This checks if a router is in NavigationStack.
   static bool isRouteInStack<String>(String routeName) => _navigationStack
       .where((MRoute routeInstance) => routeInstance.name == routeName)
       .isNotEmpty;

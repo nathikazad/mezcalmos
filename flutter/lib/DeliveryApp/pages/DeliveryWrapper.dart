@@ -57,7 +57,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
 
       MezRouter.toNamed(DeliveryAppRoutes.kCurrentOrdersListRoute);
     } else {
-      MezRouter.toNamed(DeliveryAppRoutes.kDriverUnAuth);
+      MezRouter.toNamed(DeliveryAppRoutes.kDriverUnAuthRoute);
       mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
     }
   }

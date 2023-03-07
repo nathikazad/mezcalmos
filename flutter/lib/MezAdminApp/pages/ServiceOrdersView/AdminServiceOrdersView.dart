@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminServiceOrdersViewController.dart';
+import 'package:mezcalmos/MezAdminApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -18,6 +19,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
 class AdminServiceOrdersView extends StatefulWidget {
   const AdminServiceOrdersView({super.key});
 
+  static Future<void> navigate(
+      {required int serviceProviderId,
+      required String serviceName,
+      required ServiceProviderType serviceProviderType}) {
+    return MezRouter.toPath<void>(
+        MezAdminRoutes.kServiceOrdersRoute
+            .replaceAll(":serviceProviderId", serviceProviderId.toString()),
+        arguments: <String, dynamic>{
+          'serviceProviderType': serviceProviderType,
+          'serviceName': serviceName
+        });
+  }
+
   @override
   State<AdminServiceOrdersView> createState() => _AdminServiceOrdersViewState();
 }
@@ -33,12 +47,14 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
       serviceProviderId != null &&
       serviceProviderType != null &&
       serviceName != null;
+
   @override
   void initState() {
-    serviceProviderType =
-        Get.arguments?["serviceProviderType"] as ServiceProviderType?;
-    serviceName = Get.arguments?["serviceName"] as String?;
-    serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
+    serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
+        .toString() as ServiceProviderType?;
+    serviceName = MezRouter.bodyArguments?["serviceName"].toString();
+    serviceProviderId =
+        int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
 
     if (hasValues) {
       viewController.init(

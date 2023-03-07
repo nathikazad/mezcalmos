@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -34,7 +35,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   @override
   void initState() {
     Get.find<SideMenuDrawerController>().pastOrdersRoute =
-        DeliveryAppRoutes.kPastOrdersView;
+        DeliveryAppRoutes.kPastOrdersViewRoute;
 
     viewController.init();
 
@@ -55,7 +56,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         drawer: MezSideMenu(),
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             showNotifications: true,
-            ordersRoute: DeliveryAppRoutes.kPastOrdersView),
+            ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15),
@@ -123,9 +124,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 (int index) => MinimalOrderCard(
                       order: viewController.currentOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(
-                            DeliveryAppRoutes.getRestaurantOrderRoute(
-                                viewController.currentOrders[index].id));
+                        DvOrderView.navigate(
+                            orderId: viewController.currentOrders[index].id);
                       },
                     )).reversed.toList(),
           ),

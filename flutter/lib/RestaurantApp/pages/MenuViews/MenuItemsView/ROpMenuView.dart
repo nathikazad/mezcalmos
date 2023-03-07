@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpCategoryItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpSpecialsComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -23,8 +26,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpMenuView extends StatefulWidget {
   const ROpMenuView({Key? key, this.restID, this.canGoBack = true})
       : super(key: key);
+
+  static Future<void> navigate({required int restaurantId}) {
+    return MezRouter.toPath<void>(RestaurantRouter.menuViewRoute
+        .replaceAll(":restaurantId", restaurantId.toString()));
+  }
+
   final int? restID;
   final bool canGoBack;
+
   @override
   _ROpMenuViewState createState() => _ROpMenuViewState();
 }
@@ -34,6 +44,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
   late TabController _tabController;
   ROpMenuViewController viewController = ROpMenuViewController();
   int? restaurantID;
+
   @override
   void initState() {
     restaurantID = widget.restID ?? int.parse(Get.parameters["restaurantId"]!);
@@ -130,9 +141,9 @@ class _ROpMenuViewState extends State<ROpMenuView>
                   onClick: () async {
                     mezDbgPrint("Tapped");
 
-                    final bool? newCategoryAdded = await MezRouter.toNamed(
-                        RestaurantAppRoutes.getROpCategoryRoute(
-                            restaurantId: restaurantID!)) as bool?;
+                    final bool? newCategoryAdded =
+                        await ROpCategoryView.navigate(
+                            restaurantId: restaurantID!) as bool?;
                     if (newCategoryAdded == true) {
                       await viewController.fetchCategories();
                     }
@@ -144,9 +155,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
               if (viewController.reOrderMode.isFalse)
                 MezAddButton(
                   onClick: () async {
-                    final bool? newItemAdded = await MezRouter.toNamed(
-                        RestaurantAppRoutes.getROpAddItemRoute(
-                            restaurantId: restaurantID!)) as bool?;
+                    final bool? newItemAdded = await ROpItemView.navigateToAdd(
+                            restaurantId: restaurantID!,
+                            arguments: <String, dynamic>{"specials": false})
+                        as bool?;
                     if (newItemAdded == true) {
                       await viewController.fetchCategories();
                     }
