@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
@@ -51,6 +52,7 @@ void main() {
           DeviceType deviceType,
         ) {
           return StartingPointBase(
+            appType: AppType.CustomerApp,
             appTheme: CustomerAppTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,

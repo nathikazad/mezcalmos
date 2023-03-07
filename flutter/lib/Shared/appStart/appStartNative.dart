@@ -19,11 +19,12 @@ final ThemeData _defaultAppTheme = ThemeData(
 
 class StartingPointNative extends StartingPointBase {
   //  Sideminu
-  const StartingPointNative({
+  StartingPointNative({
     super.appTheme = null,
     required super.signInCallback,
     required super.signOutCallback,
     required super.routes,
+    required super.appType,
     super.sideMenuItems,
     super.locationPermissionType = LocationPermissionType.None,
   });

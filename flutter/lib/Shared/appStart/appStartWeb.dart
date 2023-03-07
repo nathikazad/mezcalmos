@@ -18,11 +18,12 @@ final ThemeData _defaultAppTheme = ThemeData(
 
 class StartingPointWeb extends StartingPointBase {
   //  Sideminu
-  const StartingPointWeb({
+  StartingPointWeb({
     super.appTheme = null,
     required super.signInCallback,
     required super.signOutCallback,
     required super.routes,
+    required super.appType,
     super.sideMenuItems,
     super.locationPermissionType = LocationPermissionType.None,
   });

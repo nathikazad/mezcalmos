@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksBase.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -56,6 +57,7 @@ void main() {
           DeviceType deviceType,
         ) {
           return StartingPointWeb(
+            appType: AppType.CustomerApp,
             appTheme: CustomerAppTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,

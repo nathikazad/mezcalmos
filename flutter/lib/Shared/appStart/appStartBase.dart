@@ -43,6 +43,9 @@ final ThemeData _defaultAppTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );
 
+AppType _appType = AppType.CustomerApp;
+AppType get appType => _appType;
+
 class StartingPointBase extends StatefulWidget {
   final ThemeData? appTheme;
   final Function signInCallback;
@@ -50,18 +53,22 @@ class StartingPointBase extends StatefulWidget {
   final List<QRoute> routes;
   final List<SideMenuItem>? sideMenuItems;
   final LocationPermissionType locationPermissionType;
+  final AppType appType;
 
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
-  const StartingPointBase({
+  StartingPointBase({
     this.appTheme = null,
     required this.signInCallback,
     required this.signOutCallback,
     required this.routes,
+    required this.appType,
     this.sideMenuItems,
     this.locationPermissionType = LocationPermissionType.None,
-  });
+  }) {
+    MezEnv.setAppType(appType);
+  }
 
   @override
   StartingPointBaseState createState() => StartingPointBaseState();

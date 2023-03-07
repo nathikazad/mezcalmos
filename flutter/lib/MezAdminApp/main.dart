@@ -4,6 +4,7 @@ import 'package:mezcalmos/MezAdminApp/authHooks.dart';
 import 'package:mezcalmos/MezAdminApp/theme.dart';
 import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -23,6 +24,7 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointBase(
+            appType: AppType.MezAdminApp,
             appTheme: MezAdminTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,
