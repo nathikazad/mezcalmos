@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrder
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
@@ -87,9 +86,8 @@ class LaundryOrderDriverCard extends StatelessWidget {
                         chatId: _getCorrectChatId(),
                         onTap: () {
                           MezRouter.toNamed(SharedRoutes.getMessagesRoute(
-                              orderType: OrderType.Laundry,
-                              chatId: _getCorrectChatId(),
-                              recipientType: ParticipantType.DeliveryDriver));
+                            chatId: _getCorrectChatId(),
+                          ));
                         }),
                   )
                 ])
@@ -189,17 +187,13 @@ class LaundryOrderDriverCard extends StatelessWidget {
 
   void _laundryDropOffDriverMessageRoute() {
     MezRouter.toNamed<dynamic>(SharedRoutes.getMessagesRoute(
-        orderId: viewController.order.orderId,
-        orderType: OrderType.Laundry,
-        chatId: viewController.order.serviceProviderDropOffDriverChatId!,
-        recipientType: ParticipantType.DeliveryDriver));
+      chatId: viewController.order.serviceProviderDropOffDriverChatId!,
+    ));
   }
 
   void _laundryPickupDriverMessageRoute() {
     MezRouter.toNamed<dynamic>(SharedRoutes.getMessagesRoute(
-        orderId: viewController.order.orderId,
-        orderType: OrderType.Laundry,
-        chatId: viewController.order.serviceProviderPickupDriverChatId!,
-        recipientType: ParticipantType.DeliveryDriver));
+      chatId: viewController.order.serviceProviderPickupDriverChatId!,
+    ));
   }
 }

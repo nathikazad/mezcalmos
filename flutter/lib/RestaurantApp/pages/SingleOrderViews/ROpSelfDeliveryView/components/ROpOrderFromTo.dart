@@ -63,11 +63,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
             MezRouter.toNamed(
-              SharedRoutes.getMessagesRoute(
-                  orderType: OrderType.Restaurant,
-                  chatId: widget.order.orderId,
-                  orderId: widget.order.orderId,
-                  recipientType: ParticipantType.Customer),
+              SharedRoutes.getMessagesRoute(chatId: widget.order.orderId),
             );
           },
           // landry

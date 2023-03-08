@@ -331,7 +331,7 @@
             },
             "pubspec": {
                 "dependencies": {
-                    "agora_rtc_engine": "5.3.0"
+                    "agora_rtc_engine": "6.1.0"
                 },
                 "assets": [
                     "assets/images/",
@@ -394,7 +394,7 @@
             },
             "pubspec": {
                 "dependencies": {
-                    "agora_rtc_engine": "5.3.0"
+                    "agora_rtc_engine": "6.1.0"
                 },
                 "assets": [
                     "assets/images/",
@@ -452,7 +452,7 @@
             ],
             "pubspec": {
                 "dependencies": {
-                    "agora_rtc_engine": "5.3.0"
+                    "agora_rtc_engine": "6.1.0"
                 },
                 "assets": [
                     "assets/images/",
@@ -545,7 +545,7 @@
             },
             "pubspec": {
                 "dependencies": {
-                    "agora_rtc_engine": "5.3.0"
+                    "agora_rtc_engine": "6.1.0"
                 },
                 "assets": [
                     "assets/images/",
@@ -584,7 +584,7 @@
             },
             "pubspec": {
                 "dependencies": {
-                    "agora_rtc_engine": "5.3.0"
+                    "agora_rtc_engine": "6.1.0"
                 },
                 "assets": [
                     "assets/images/",
@@ -635,7 +635,7 @@
             },
             "pubspec": {
                 "dependencies": {
-                    "agora_rtc_engine": "5.3.0"
+                    "agora_rtc_engine": "6.1.0"
                 },
                 "assets": [
                     "assets/images/",

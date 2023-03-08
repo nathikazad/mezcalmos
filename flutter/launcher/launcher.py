@@ -445,6 +445,7 @@ class Launcher:
         f =  open('../lib/env.dart', 'w')
         f.write(data)
         f.close()
+        print("written")
     
     def __build_temp(self):
         # TODO : Auto versioning checks.
@@ -531,7 +532,7 @@ class Launcher:
 
 
     def __launch__(self):        
-        open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=open('patches/pubspec.yaml').read()))
+        open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=open('patches/pubspec_ref.yaml').read()))
         PRINTLN(f"App =--> {self.user_args['app']}")
         if self.user_args['app'] != "WebApp":
             self.__patcher__()
@@ -667,7 +668,7 @@ class Config:
             PRINTLN(f"[!] Error -> Incorrect Version {v} , type launcher.py help!")
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
         original_pubspec = self.conf['settings']['pubspec.yaml']
-        patchable_pubspec = 'patches/pubspec.yaml'
+        patchable_pubspec = 'patches/pubspec_ref.yaml'
         localProperties = self.conf['settings']['local.properties']
         if not os.path.exists(patchable_pubspec):
             PRINTLN(f'[!] config.json::{patchable_pubspec} not found !')

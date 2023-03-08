@@ -32,7 +32,7 @@ Future<DeliveryCost?> get_delivery_cost(
       id: data.id,
       selfDelivery: data.self_delivery,
       radius: data.radius.toDouble(),
-      costPerKmFromBase: data.cost_per_km_from_base?.toDouble(),
+      costPerKmFromBase: data.cost_per_km_from_base.toDouble(),
       minimumCost: data.minimum_cost,
       costPerKm: data.cost_per_km,
       freeDeliveryMinimumCost: data.free_delivery_minimum_cost,

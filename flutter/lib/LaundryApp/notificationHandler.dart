@@ -129,9 +129,7 @@ Notification newMessageNotification(String key, value) {
   mezDbgPrint("notification Data =================================> $value");
   return Notification(
       id: key,
-      linkUrl: SharedRoutes.getMessagesRoute(
-          chatId: value['chatId'],
-          orderLink: LaundryAppRoutes.getLaundryOpOrderRoute(value['orderId'])),
+      linkUrl: SharedRoutes.getMessagesRoute(chatId: value['chatId']),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

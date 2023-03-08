@@ -91,9 +91,6 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                       MezRouter.toNamed(
                         SharedRoutes.getMessagesRoute(
                           chatId: order.customerDropOffDriverChatId!,
-                          recipientType: ParticipantType.DeliveryDriver,
-                          orderType: OrderType.Restaurant,
-                          orderId: order.orderId,
                         ),
                       );
                     },

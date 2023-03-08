@@ -23,7 +23,7 @@ class CustItemView extends StatefulWidget {
   static Future<void> navigateToRestaurantItem(
       {required int itemId, required int restaurantId}) {
     return MezRouter.toPath<void>(
-        RestaurantRouter.restaurantItemViewRoute
+        RestaurantRoutes.restaurantItemViewRoute
             .replaceAll(":restaurantId", restaurantId.toString())
             .replaceAll(":itemId", itemId.toString()),
         arguments: <String, dynamic>{
@@ -33,7 +33,7 @@ class CustItemView extends StatefulWidget {
 
   static Future<void> navigateToCartItem({required int cartItemId}) {
     return MezRouter.toPath<void>(
-        RestaurantRouter.cartItemViewRoute
+        RestaurantRoutes.cartItemViewRoute
             .replaceAll(":cartItemId", cartItemId.toString()),
         arguments: <String, dynamic>{
           "viewItemScreenMode": ViewItemScreenMode.EditItemMode

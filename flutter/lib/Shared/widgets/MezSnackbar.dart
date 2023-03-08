@@ -50,8 +50,7 @@ void customSnackBar(
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                        text: '$title\n' ?? '',
-                        style: TextStyle(color: textColor)),
+                        text: '$title\n', style: TextStyle(color: textColor)),
                     WidgetSpan(
                         child: SizedBox(
                       height: 10,

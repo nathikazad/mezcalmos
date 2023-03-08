@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -21,11 +22,11 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 class CustCourierOrderView extends StatefulWidget {
-  static String navigate(
+  static Future<void> navigate(
     int orderId,
   ) {
-    return CourierRouter.kCourierOrderView
-        .replaceFirst(":orderId", orderId.toString());
+    return MezRouter.toPath(CourierRoutes.kCourierOrderView
+        .replaceFirst(":orderId", orderId.toString()));
   }
 
   const CustCourierOrderView({super.key});
@@ -217,7 +218,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             MessageButton(
                 chatId: 55,
                 onTap: () {
-                  MezRouter.toNamed(getMessagesRoute(
+                  MezRouter.toNamed(SharedRoutes.getMessagesRoute(
                       chatId: viewController.order.chatWithCustomerId));
                 })
         ],

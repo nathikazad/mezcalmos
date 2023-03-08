@@ -9,7 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryS
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class LaundryRouters {
+class LaundryRoutes {
   static const String laundryOrderRequestRoute =
       '/laundryOrderRequest/:laundryId';
   static const String laundryOrdersRoute = '/laundryOrders/:orderId';

@@ -29,7 +29,7 @@ class CustomerRestaurantView extends StatefulWidget {
   @override
   _CustomerRestaurantViewState createState() => _CustomerRestaurantViewState();
   static Future<void> navigate({required int restaurantId}) {
-    return MezRouter.toPath<void>(RestaurantRouter.restaurantViewRoute
+    return MezRouter.toPath<void>(RestaurantRoutes.restaurantViewRoute
         .replaceAll(":restaurantId", restaurantId.toString()));
   }
 }

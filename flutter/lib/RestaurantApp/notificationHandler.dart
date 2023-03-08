@@ -135,10 +135,8 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: SharedRoutes.getMessagesRoute(
-          chatId: int.parse(value['chatId']),
-          orderLink: RestaurantAppRoutes.getROpOrderRoute(
-              value['orderId'].toString())),
+      linkUrl:
+          SharedRoutes.getMessagesRoute(chatId: int.parse(value['chatId'])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

@@ -8,7 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/Cus
     deferred as requestCourier;
 import 'package:qlevar_router/qlevar_router.dart';
 
-class CourierRouter {
+class CourierRoutes {
   static const String kCouriersRoute = '/couriers';
   static const String kCourierRequestRoute = '/requestCourier/:courierId';
   static const String kCourierOrderView = '/courierOrders/:orderId';

@@ -27,7 +27,7 @@ class CustLaundryOrderRequestView extends StatefulWidget {
   const CustLaundryOrderRequestView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int laundryId}) {
-    return MezRouter.toPath<void>(LaundryRouters.laundryOrderRequestRoute
+    return MezRouter.toPath<void>(LaundryRoutes.laundryOrderRequestRoute
         .replaceAll(":laundryId", laundryId.toString()));
   }
 

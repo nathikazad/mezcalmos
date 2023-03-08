@@ -20,7 +20,7 @@ import 'package:sizer/sizer.dart';
 
 class ViewCartScreen extends StatefulWidget {
   static Future<void> navigate() {
-    return MezRouter.toNamed<void>(RestaurantRouter.cartRoute);
+    return MezRouter.toNamed<void>(RestaurantRoutes.cartRoute);
   }
 
   @override

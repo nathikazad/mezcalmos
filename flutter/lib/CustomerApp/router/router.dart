@@ -1,5 +1,6 @@
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart'
     deferred as customerWrapper;
+import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
@@ -20,7 +21,8 @@ class XRouter {
               DefferedLoader(customerWrapper.loadLibrary)
             ]),
       ] +
-      LaundryRouters().routes +
+      LaundryRoutes().routes +
       PickLocationRoutes().routes +
-      RestaurantRouter().routes;
+      RestaurantRoutes().routes +
+      CourierRoutes().routes;
 }

@@ -57,14 +57,7 @@ class SharedRoutes {
   static const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
   static const String kNoInternetRoute = '/noInternet';
 
-  static String getMessagesRoute({
-    required int chatId,
-    String? orderLink,
-    int? orderId,
-    OrderType? orderType,
-    ParticipantType recipientType = ParticipantType.Customer,
-    String? recipientId,
-  }) {
+  static String getMessagesRoute({required int chatId}) {
     final String mainUrl =
         kMessagesRoute.replaceFirst(":chatId", chatId.toString());
     return mainUrl;

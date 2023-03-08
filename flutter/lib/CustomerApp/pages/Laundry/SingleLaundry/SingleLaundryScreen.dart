@@ -23,7 +23,7 @@ class SingleLaundryScreen extends StatefulWidget {
   const SingleLaundryScreen({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int laundryId}) {
-    return MezRouter.toPath<void>(LaundryRouters.singleLaundryRoute
+    return MezRouter.toPath<void>(LaundryRoutes.singleLaundryRoute
         .replaceAll(":laundryId", laundryId.toString()));
   }
 

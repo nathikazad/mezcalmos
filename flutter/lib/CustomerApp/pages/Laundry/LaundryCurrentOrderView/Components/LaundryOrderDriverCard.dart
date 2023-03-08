@@ -77,9 +77,6 @@ class LaundryOrderDriverCard extends StatelessWidget {
                       MezRouter.toNamed(
                         SharedRoutes.getMessagesRoute(
                           chatId: _getRightChatId()!,
-                          recipientType: ParticipantType.DeliveryDriver,
-                          orderType: OrderType.Laundry,
-                          orderId: order.orderId,
                         ),
                       );
                     },

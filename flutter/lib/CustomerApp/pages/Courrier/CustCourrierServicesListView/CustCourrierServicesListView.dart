@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
+import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -14,6 +15,10 @@ import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
 class CustCourierServicesListView extends StatefulWidget {
+  static Future<void> navigate() {
+    return MezRouter.toPath(CourierRoutes.kCouriersRoute);
+  }
+
   const CustCourierServicesListView({super.key});
 
   @override
@@ -115,7 +120,7 @@ class _CustCourierServicesListViewState
     return MezCard(
         onClick: () {
           mezDbgPrint("Clicked");
-          MezRouter.toNamed(getCourierRoute(company.info.hasuraId));
+          CustRequestCourierView.navigate(company.info.hasuraId);
         },
         firstAvatarBgImage: CachedNetworkImageProvider(company.info.image),
         content: Column(

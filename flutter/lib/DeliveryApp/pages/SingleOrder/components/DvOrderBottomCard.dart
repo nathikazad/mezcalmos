@@ -64,10 +64,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
           onCustomerMsgClick: () {
             MezRouter.toNamed(
               SharedRoutes.getMessagesRoute(
-                  orderType: widget.viewcontroller.order.orderType,
-                  chatId: widget.viewcontroller.order.chatWithCustomerId,
-                  orderId: widget.viewcontroller.order.id,
-                  recipientType: ParticipantType.Customer),
+                chatId: widget.viewcontroller.order.chatWithCustomerId,
+              ),
             );
           },
           // landry
@@ -80,11 +78,9 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
             if (widget.viewcontroller.order.chatWithServiceProviderId != null) {
               MezRouter.toNamed(
                 SharedRoutes.getMessagesRoute(
-                    orderType: widget.viewcontroller.order.orderType,
-                    chatId:
-                        widget.viewcontroller.order.chatWithServiceProviderId!,
-                    orderId: widget.viewcontroller.order.id,
-                    recipientType: ParticipantType.DeliveryAdmin),
+                  chatId:
+                      widget.viewcontroller.order.chatWithServiceProviderId!,
+                ),
               );
             }
           },

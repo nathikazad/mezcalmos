@@ -100,9 +100,6 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                           MezRouter.toNamed(
                             SharedRoutes.getMessagesRoute(
                               chatId: viewController.order.chatId,
-                              recipientType: ParticipantType.Customer,
-                              orderType: OrderType.Laundry,
-                              orderId: viewController.order.orderId,
                             ),
                           );
                         }),
@@ -121,8 +118,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(top: 15),
-                    orderCost:
-                        viewController.order.costsByType?.weighedCost,
+                    orderCost: viewController.order.costsByType?.weighedCost,
                     refundAmmount: viewController.order.refundAmount,
                     shippingCost: viewController.order.shippingCost,
                     stripeOrderPaymentInfo:

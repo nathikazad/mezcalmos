@@ -227,12 +227,7 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??
-          SharedRoutes.getMessagesRoute(
-              chatId: value["chatId"],
-              orderId: value["orderId"],
-              recipientType: value["sender"]["particpantType"]
-                  .toString()
-                  .toParticipantType()),
+          SharedRoutes.getMessagesRoute(chatId: value["chatId"]),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

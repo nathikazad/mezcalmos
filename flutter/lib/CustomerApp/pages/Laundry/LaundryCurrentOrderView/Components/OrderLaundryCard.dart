@@ -65,9 +65,6 @@ class OrderLaundryCard extends StatelessWidget {
                 MezRouter.toNamed(
                   SharedRoutes.getMessagesRoute(
                     chatId: order.chatId,
-                    recipientType: ParticipantType.Laundry,
-                    orderType: OrderType.Laundry,
-                    orderId: order.orderId,
                   ),
                 );
               },
@@ -82,11 +79,8 @@ class OrderLaundryCard extends StatelessWidget {
   Widget _messageButton(BuildContext context) {
     return IconButton(
       onPressed: () {
-        MezRouter.toNamed<void>(SharedRoutes.getMessagesRoute(
-            orderId: order.orderId,
-            chatId: order.orderId,
-            orderType: OrderType.Laundry,
-            recipientType: ParticipantType.DeliveryAdmin));
+        MezRouter.toNamed<void>(
+            SharedRoutes.getMessagesRoute(chatId: order.orderId));
       },
       icon: Stack(
         alignment: Alignment.center,

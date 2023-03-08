@@ -7,9 +7,12 @@ import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/com
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -18,11 +21,11 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
 
 class CustRequestCourierView extends StatefulWidget {
-  static String getCourierRoute(
+  static Future<void> navigate(
     int courierId,
   ) {
-    return CourierRouter.kCourierRequestRoute
-        .replaceFirst(":courierId", courierId.toString());
+    return MezRouter.toPath(CourierRoutes.kCourierRequestRoute
+        .replaceFirst(":courierId", courierId.toString()));
   }
 
   const CustRequestCourierView({super.key});
@@ -51,7 +54,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        ordersRoute: kOrdersRoute,
+        ordersRoute: CustomerRoutes.customerOrdersRoute,
         onClick: viewController.handleBack,
         title: "Courier",
       ),
@@ -219,8 +222,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               borderRadius: BorderRadius.circular(5),
               onTap: () async {
                 final SavedLocation? _savedLocation = await MezRouter.toNamed(
-                  kPickLocationRoute,
-                  arguments: true,
+                  SharedRoutes.kPickLocationNew,
                 ) as SavedLocation?;
                 if (_savedLocation != null) {
                   viewController.addFromLoc(location: _savedLocation.location);

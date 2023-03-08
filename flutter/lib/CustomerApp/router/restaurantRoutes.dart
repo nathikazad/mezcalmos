@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartVie
     deferred as viewCart;
 import 'package:qlevar_router/qlevar_router.dart';
 
-class RestaurantRouter {
+class RestaurantRoutes {
   static const String restaurantsListRoute = "/restaurantsList";
   static const String restaurantViewRoute = "/restaurantView/:restaurantId";
   static const String restaurantItemViewRoute =

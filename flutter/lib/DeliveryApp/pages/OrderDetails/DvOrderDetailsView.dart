@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:flutter/services.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
@@ -292,13 +293,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             MessageButton(
                 chatId: viewController.order.value!.chatWithCustomerId,
                 onTap: () {
-                  MezRouter.toNamed(
-                    getMessagesRoute(
-                        orderType: viewController.order.value!.orderType,
-                        chatId: viewController.order.value!.chatWithCustomerId,
-                        orderId: viewController.order.value!.id,
-                        recipientType: ParticipantType.Customer),
-                  );
+                  MezRouter.toNamed(SharedRoutes.getMessagesRoute(
+                    chatId: viewController.order.value!.chatWithCustomerId,
+                  ));
                 })
           ],
         ),

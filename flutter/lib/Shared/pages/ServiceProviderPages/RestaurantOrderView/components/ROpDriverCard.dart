@@ -102,9 +102,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             onTap: () {
                               MezRouter.toNamed(SharedRoutes.getMessagesRoute(
                                   chatId: widget.order
-                                      .serviceProviderDropOffDriverChatId!,
-                                  recipientType: ParticipantType.DeliveryDriver,
-                                  orderId: widget.order.orderId));
+                                      .serviceProviderDropOffDriverChatId!));
                             },
                             chatId: widget
                                 .order.serviceProviderDropOffDriverChatId!,

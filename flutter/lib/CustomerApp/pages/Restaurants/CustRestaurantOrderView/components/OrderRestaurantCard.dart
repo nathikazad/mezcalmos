@@ -95,9 +95,6 @@ class OrderRestaurantCard extends StatelessWidget {
                     MezRouter.toNamed(
                       SharedRoutes.getMessagesRoute(
                         chatId: order.chatId,
-                        recipientType: ParticipantType.RestaurantOperator,
-                        orderType: OrderType.Restaurant,
-                        orderId: order.orderId,
                       ),
                     );
                   },

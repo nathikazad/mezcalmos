@@ -59,7 +59,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.local_laundry_service,
-    linkUrl: LaundryRouters.getLaundryOrderWithId(value['orderId']),
+    linkUrl: LaundryRoutes.getLaundryOrderWithId(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -311,11 +311,6 @@ Notification newMessageNotification(String key, value) {
       linkUrl: value["linkUrl"] ??
           SharedRoutes.getMessagesRoute(
             chatId: int.parse(value["chatId"]),
-            orderId:
-                value["orderId"] != null ? int.parse(value["orderId"]) : null,
-            recipientType: value["sender"]["particpantType"]
-                .toString()
-                .toParticipantType(),
           ),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
