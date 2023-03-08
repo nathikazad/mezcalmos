@@ -1,21 +1,34 @@
-import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
-import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
-import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
-import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart'
+    deferred as otpConfirmationScreen;
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart'
+    deferred as phoneNumberScreen;
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart'
+    deferred as signInScreen;
+import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart'
+    deferred as unauthorizedScreen;
+import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart'
+    deferred as locationPermissionScreen;
+import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart'
+    deferred as noInternetConnectionScreen;
+import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart'
+    deferred as noInternetScreen;
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
-import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
-import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
-import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart';
-import 'package:mezcalmos/Shared/pages/Wrapper.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationview.dart'
+    deferred as pickLocationView;
+import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart'
+    deferred as somethingWentWrong;
+import 'package:mezcalmos/Shared/pages/SplashScreen.dart'
+    deferred as splashScreen;
+import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart'
+    deferred as userProfileScreen;
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart'
+    deferred as userProfileView;
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart'
+    deferred as UserWelcomeView;
+import 'package:mezcalmos/Shared/pages/Wrapper.dart' deferred as wrapper;
 import 'package:qlevar_router/qlevar_router.dart';
 
 // GetX based Router (For navigating)
@@ -58,125 +71,123 @@ class SharedRoutes {
   }
 
 // shared navigation methods //
-
   static List<QRoute> qRoutes = <QRoute>[
     QRoute(
         path: kSomethingWentWrongScreen,
         name: kSomethingWentWrongScreen,
-        builder: () => SomethingWentWrongScreen()),
+        builder: () => somethingWentWrong.SomethingWentWrongScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(somethingWentWrong.loadLibrary)
+        ]),
     QRoute(
-        path: kUserProfile, name: kUserProfile, builder: () => UserProfile()),
-    QRoute(path: kWrapperRoute, name: kWrapperRoute, builder: () => Wrapper()),
+        path: kUserProfile,
+        name: kUserProfile,
+        builder: () => userProfileScreen.UserProfile(),
+        middleware: <QMiddleware>[
+          DefferedLoader(userProfileScreen.loadLibrary)
+        ]),
     QRoute(
-        path: kSplashRoute, name: kSplashRoute, builder: () => SplashScreen()),
+        path: kWrapperRoute,
+        name: kWrapperRoute,
+        builder: () => wrapper.Wrapper(),
+        middleware: <QMiddleware>[DefferedLoader(wrapper.loadLibrary)]),
+    QRoute(
+        path: kSplashRoute,
+        name: kSplashRoute,
+        builder: () => splashScreen.SplashScreen(),
+        middleware: <QMiddleware>[DefferedLoader(splashScreen.loadLibrary)]),
     QRoute(
         path: kSignInRouteRequired,
         name: kSignInRouteRequired,
-        builder: () => SignIn(mode: SignInMode.RequiredSignIn)),
+        builder: () =>
+            signInScreen.SignIn(mode: signInScreen.SignInMode.RequiredSignIn),
+        middleware: <QMiddleware>[DefferedLoader(signInScreen.loadLibrary)]),
     QRoute(
         path: kSignInRouteOptional,
         name: kSignInRouteOptional,
-        builder: () => SignIn(mode: SignInMode.OptionalSignIn)),
+        builder: () =>
+            signInScreen.SignIn(mode: signInScreen.SignInMode.OptionalSignIn),
+        middleware: <QMiddleware>[DefferedLoader(signInScreen.loadLibrary)]),
     QRoute(
-        path: kOtpRoute, name: kOtpRoute, builder: () => PhoneNumberScreen()),
+        path: kOtpRoute,
+        name: kOtpRoute,
+        builder: () => phoneNumberScreen.PhoneNumberScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(phoneNumberScreen.loadLibrary)
+        ]),
     QRoute(
         path: kOtpConfirmRoute,
         name: kOtpConfirmRoute,
-        builder: () => OtpConfirmationScreen()),
+        builder: () => otpConfirmationScreen.OtpConfirmationScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(otpConfirmationScreen.loadLibrary)
+        ]),
     QRoute(
         path: kPickLocationEdit,
         name: kPickLocationEdit,
-        builder: () => PickLocationView(PickLocationMode.EditLocation)),
+        builder: () => pickLocationView.PickLocationView(
+            pickLocationView.PickLocationMode.EditLocation),
+        middleware: <QMiddleware>[
+          DefferedLoader(pickLocationView.loadLibrary)
+        ]),
     QRoute(
         path: kPickLocationNew,
         name: kPickLocationNew,
-        builder: () => PickLocationView(PickLocationMode.AddNewLocation)),
+        builder: () => pickLocationView.PickLocationView(
+            pickLocationView.PickLocationMode.AddNewLocation),
+        middleware: <QMiddleware>[
+          DefferedLoader(pickLocationView.loadLibrary)
+        ]),
     QRoute(
         path: kUnauthorizedRoute,
         name: kUnauthorizedRoute,
-        builder: () => UnauthorizedScreen()),
+        builder: () => unauthorizedScreen.UnauthorizedScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(unauthorizedScreen.loadLibrary)
+        ]),
     QRoute(
         path: kLocationPermissionPage,
         name: kLocationPermissionPage,
-        builder: () => LocationPermissionScreen()),
+        builder: () => locationPermissionScreen.LocationPermissionScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(locationPermissionScreen.loadLibrary)
+        ]),
     QRoute(
         path: kNoInternetConnectionPage,
         name: kNoInternetConnectionPage,
-        builder: () => NoInternetConnectionScreen()),
+        builder: () => noInternetConnectionScreen.NoInternetConnectionScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(noInternetConnectionScreen.loadLibrary)
+        ]),
     QRoute(
-        path: kNotificationsRoute,
-        name: kNotificationsRoute,
-        builder: () => ViewNotifications()),
+      path: kNotificationsRoute,
+      name: kNotificationsRoute,
+      builder: () => ViewNotifications(),
+    ),
     QRoute(
         path: kPickLocationWithoutAuth,
         name: kPickLocationWithoutAuth,
-        builder: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
+        builder: () => pickLocationView.PickLocationView(
+            pickLocationView.PickLocationMode.NonLoggedInPick),
+        middleware: <QMiddleware>[
+          DefferedLoader(pickLocationView.loadLibrary)
+        ]),
     QRoute(
         path: kUserWelcomeRoute,
         name: kUserWelcomeRoute,
-        builder: () => UserWelcomeView()),
+        builder: () => UserWelcomeView.UserWelcomeView(),
+        middleware: <QMiddleware>[DefferedLoader(UserWelcomeView.loadLibrary)]),
     QRoute(
         path: kUserNewProfile,
         name: kUserNewProfile,
-        builder: () => UserProfileView()),
+        builder: () => userProfileView.UserProfileView(),
+        middleware: <QMiddleware>[DefferedLoader(userProfileView.loadLibrary)]),
     QRoute(
         path: kNoInternetRoute,
         name: kNoInternetRoute,
-        builder: () => NoInternetScreen()),
-  ];
-
-  static List<GetPage> routes = [
-    GetPage(
-        name: kSomethingWentWrongScreen,
-        page: () => SomethingWentWrongScreen()),
-    GetPage(name: kUserProfile, page: () => UserProfile()),
-    GetPage(name: kWrapperRoute, page: () => Wrapper()),
-    GetPage(name: kSplashRoute, page: () => SplashScreen()),
-    GetPage(
-      name: kSignInRouteRequired,
-      page: () => SignIn(mode: SignInMode.RequiredSignIn),
-    ),
-    GetPage(
-      name: kSignInRouteOptional,
-      page: () => SignIn(
-        mode: SignInMode.OptionalSignIn,
-      ),
-    ),
-    GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
-    GetPage(
-      name: kOtpConfirmRoute,
-      page: () => OtpConfirmationScreen(),
-    ),
-    GetPage(
-        name: kPickLocationEdit,
-        page: () => PickLocationView(PickLocationMode.EditLocation)),
-    GetPage(
-        name: kPickLocationNew,
-        page: () => PickLocationView(PickLocationMode.AddNewLocation)),
-    GetPage(
-      name: kUnauthorizedRoute,
-      page: () => UnauthorizedScreen(),
-    ),
-    GetPage(
-      name: kLocationPermissionPage,
-      page: () => LocationPermissionScreen(),
-    ),
-    GetPage(
-      name: kNoInternetConnectionPage,
-      page: () => NoInternetConnectionScreen(),
-    ),
-    GetPage(
-      name: kNotificationsRoute,
-      page: () => ViewNotifications(),
-    ),
-    GetPage(
-        name: kPickLocationWithoutAuth,
-        page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
-    GetPage(name: kUserWelcomeRoute, page: () => UserWelcomeView()),
-    GetPage(name: kUserNewProfile, page: () => UserProfileView()),
-    GetPage(
-      name: kNoInternetRoute,
-      page: () => NoInternetScreen(),
-    ),
+        builder: () => noInternetScreen.NoInternetScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(noInternetScreen.loadLibrary)
+        ]),
   ];
 }

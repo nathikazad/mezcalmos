@@ -1,4 +1,6 @@
-import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart'
+    deferred as customerWrapper;
+import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
@@ -11,10 +13,12 @@ const String kHomeRoute = '/';
 class XRouter {
   static List<QRoute> mainRoutes = [
         QRoute(
-          name: kHomeRoute,
-          path: kHomeRoute,
-          builder: () => CustomerWrapper(),
-        ),
+            name: kHomeRoute,
+            path: kHomeRoute,
+            builder: () => customerWrapper.CustomerWrapper(),
+            middleware: <QMiddleware>[
+              DefferedLoader(customerWrapper.loadLibrary)
+            ]),
       ] +
       LaundryRouters().routes +
       PickLocationRoutes().routes +

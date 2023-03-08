@@ -1,16 +1,9 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart'
-    deferred as categoryView;
-import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart'
-    deferred as rOpChoiceView;
-import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart'
-    deferred as roPItemView;
-import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart'
-    deferred as roPMenuView;
-import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart'
-    deferred as rOptionView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart'
-    deferred as restaurantOrderView;
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MezAdminRestaurantRoutes {
@@ -29,46 +22,44 @@ class MezAdminRestaurantRoutes {
 
   static final List<QRoute> mainRoutes = <QRoute>[
     QRoute(
-        path: menuViewRoute,
-        name: menuViewRoute,
-        builder: () => roPMenuView.ROpMenuView(),
-        middleware: <QMiddleware>[DefferedLoader(roPMenuView.loadLibrary)]),
+      path: menuViewRoute,
+      name: menuViewRoute,
+      builder: () => ROpMenuView(),
+    ),
     QRoute(
-        path: categoryViewRoute,
-        name: categoryViewRoute,
-        builder: () => categoryView.ROpCategoryView(),
-        middleware: <QMiddleware>[DefferedLoader(categoryView.loadLibrary)]),
+      path: categoryViewRoute,
+      name: categoryViewRoute,
+      builder: () => ROpCategoryView(),
+    ),
     QRoute(
-        path: editCategoryScreenRoute,
-        name: editCategoryScreenRoute,
-        builder: () => categoryView.ROpCategoryView(),
-        middleware: <QMiddleware>[DefferedLoader(categoryView.loadLibrary)]),
+      path: editCategoryScreenRoute,
+      name: editCategoryScreenRoute,
+      builder: () => ROpCategoryView(),
+    ),
     QRoute(
-        path: addItemViewRoute,
-        name: addItemViewRoute,
-        builder: () => roPItemView.ROpItemView(),
-        middleware: <QMiddleware>[DefferedLoader(roPItemView.loadLibrary)]),
+      path: addItemViewRoute,
+      name: addItemViewRoute,
+      builder: () => ROpItemView(),
+    ),
     QRoute(
-        path: editItemViewRoute,
-        name: editItemViewRoute,
-        builder: () => roPItemView.ROpItemView(),
-        middleware: <QMiddleware>[DefferedLoader(roPItemView.loadLibrary)]),
+      path: editItemViewRoute,
+      name: editItemViewRoute,
+      builder: () => ROpItemView(),
+    ),
     QRoute(
-        path: restaurantOrderViewRoute,
-        name: restaurantOrderViewRoute,
-        builder: () => restaurantOrderView.RestaurantOrderView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(restaurantOrderView.loadLibrary)
-        ]),
+      path: restaurantOrderViewRoute,
+      name: restaurantOrderViewRoute,
+      builder: () => RestaurantOrderView(),
+    ),
     QRoute(
-        path: restaurantOptionRoute,
-        name: restaurantOptionRoute,
-        builder: () => rOptionView.ROpOptionView(),
-        middleware: <QMiddleware>[DefferedLoader(rOptionView.loadLibrary)]),
+      path: restaurantOptionRoute,
+      name: restaurantOptionRoute,
+      builder: () => ROpOptionView(),
+    ),
     QRoute(
-        path: restaurantChoiceView,
-        name: restaurantChoiceView,
-        builder: () => rOpChoiceView.ROpChoiceView(),
-        middleware: <QMiddleware>[DefferedLoader(rOpChoiceView.loadLibrary)]),
+      path: restaurantChoiceView,
+      name: restaurantChoiceView,
+      builder: () => ROpChoiceView(),
+    ),
   ];
 }

@@ -76,8 +76,7 @@ class ConnectivityHelper {
 
   Future<bool> _pingServer(String pingUrl) async {
     try {
-      final Ping result = Ping('google.com', count: 5);
-
+      final Ping result = Ping(pingUrl, count: 5);
       return result.toString().isNotEmpty;
       // final List<InternetAddress> result =
       //     await InternetAddress.lookup(pingUrl);

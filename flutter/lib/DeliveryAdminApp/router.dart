@@ -1,5 +1,3 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpTabsView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';

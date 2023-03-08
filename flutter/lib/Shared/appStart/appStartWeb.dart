@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'dart:html' as html;
 import 'dart:js' as js;
-
 import 'package:mezcalmos/env.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(

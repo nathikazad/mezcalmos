@@ -22,7 +22,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class PickLocationView extends StatefulWidget {
   final PickLocationMode? pickLocationMode;
+
   const PickLocationView(this.pickLocationMode);
+
   @override
   _PickLocationViewState createState() => _PickLocationViewState();
 }
@@ -98,6 +100,7 @@ class _PickLocationViewState extends State<PickLocationView> {
         ),
         body: mezPickLocationViewBody());
   }
+
   // ------------------------------------------- Functions -------------------------------------------
 
   /// Get the related Address to a given [latLng], without awaiting the GeoCoding , mainly used onInit

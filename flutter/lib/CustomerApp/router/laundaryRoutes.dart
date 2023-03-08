@@ -18,7 +18,7 @@ class LaundryRouters {
 
   static String getLaundryOrderWithId(int orderId) => '/laundryOrders/$orderId';
 
-  final List<QRoute> routes = [
+  final List<QRoute> routes = <QRoute>[
     QRoute(
         name: laundriesListRoute,
         path: laundriesListRoute,

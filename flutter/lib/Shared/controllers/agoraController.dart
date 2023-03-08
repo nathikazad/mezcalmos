@@ -18,7 +18,6 @@ import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
-import 'package:mezcalmos/env.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:uuid/uuid.dart';

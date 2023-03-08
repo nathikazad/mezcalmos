@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -287,8 +288,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             MessageButton(
                 chatId: 55,
                 onTap: () {
-                  //recheck
-                  MezRouter.toNamed(getMessagesRoute(
+                  MezRouter.toNamed(SharedRoutes.getMessagesRoute(
                       chatId: viewController
                           .order.value!.chatWithServiceProviderId!));
                 })

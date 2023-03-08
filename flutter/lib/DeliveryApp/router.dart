@@ -1,17 +1,9 @@
-import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart'
-    deferred as deliveryWrapper;
-import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart'
-    deferred as orderDetailsScreen;
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.dart'
-    deferred as currentOrderList;
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart'
-    deferred as pastOrdersView;
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart'
-    deferred as dvOrderView;
-import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.dart'
-    deferred as unAuthorizedDriverView;
+import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.dart';
 
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -37,45 +29,35 @@ class DeliveryAppRoutes {
 
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(
-            path: kCurrentOrdersListRoute,
-            name: kCurrentOrdersListRoute,
-            builder: () => currentOrderList.CurrentOrdersListScreen(),
-            middleware: <QMiddleware>[
-              DefferedLoader(currentOrderList.loadLibrary)
-            ]),
+          path: kCurrentOrdersListRoute,
+          name: kCurrentOrdersListRoute,
+          builder: () => CurrentOrdersListScreen(),
+        ),
         QRoute(
-            path: SharedRoutes.kHomeRoute,
-            name: SharedRoutes.kHomeRoute,
-            builder: () => deliveryWrapper.DeliveryWrapper(),
-            middleware: <QMiddleware>[
-              DefferedLoader(deliveryWrapper.loadLibrary)
-            ]),
+          path: SharedRoutes.kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
+          builder: () => DeliveryWrapper(),
+        ),
         QRoute(
-            path: kRestaurantOrderViewRoute,
-            name: kRestaurantOrderViewRoute,
-            builder: () => dvOrderView.DvOrderView(),
-            middleware: <QMiddleware>[DefferedLoader(dvOrderView.loadLibrary)]),
+          path: kRestaurantOrderViewRoute,
+          name: kRestaurantOrderViewRoute,
+          builder: () => DvOrderView(),
+        ),
         QRoute(
-            path: kOrderDetailsViewRoute,
-            name: kOrderDetailsViewRoute,
-            builder: () => orderDetailsScreen.OrderDetailsScreen(),
-            middleware: <QMiddleware>[
-              DefferedLoader(orderDetailsScreen.loadLibrary)
-            ]),
+          path: kOrderDetailsViewRoute,
+          name: kOrderDetailsViewRoute,
+          builder: () => OrderDetailsScreen(),
+        ),
         QRoute(
-            path: kPastOrdersViewRoute,
-            name: kPastOrdersViewRoute,
-            builder: () => pastOrdersView.DriverPastOrdersView(),
-            middleware: <QMiddleware>[
-              DefferedLoader(pastOrdersView.loadLibrary)
-            ]),
+          path: kPastOrdersViewRoute,
+          name: kPastOrdersViewRoute,
+          builder: () => DriverPastOrdersView(),
+        ),
         QRoute(
-            path: kDriverUnAuthRoute,
-            name: kDriverUnAuthRoute,
-            builder: () => unAuthorizedDriverView.UnAuthorizedDriverView(),
-            middleware: <QMiddleware>[
-              DefferedLoader(unAuthorizedDriverView.loadLibrary)
-            ]),
+          path: kDriverUnAuthRoute,
+          name: kDriverUnAuthRoute,
+          builder: () => UnAuthorizedDriverView(),
+        ),
       ] +
       SharedRoutes.qRoutes +
       NativeOnlyRoutes.routes;
