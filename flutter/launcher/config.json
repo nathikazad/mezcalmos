@@ -33,10 +33,8 @@
                 "google_fonts": "^3.0.1",
                 "http": "^0.13.3",
                 "url_launcher": "^6.0.9",
-                "jwt_decoder": "^2.0.1",
-                "jaguar_jwt": "^3.0.0",
-                "graphql_codegen": "^0.11.2",
                 "get": "^4.3.8",
+                "qlevar_router": "^1.6.3",
                 "get_storage": "^2.0.3",
                 "image": "^3.0.0",
                 "cached_network_image": "^3.2.0",
@@ -89,7 +87,10 @@
                 "dart_ping": "^8.0.1",
                 "flutter_countdown_timer": "^4.1.0",
                 "crypto": "^3.0.0-nullsafety.0",
-                "graphql": "\tpath: ./packages/graphql"
+                "graphql": "\tpath: ./packages/graphql",
+                "rect_getter": "^1.1.0",
+                "scroll_to_index": "^3.0.1",
+                "html": "^0.15.0"
             },
             "fonts": {
                 "psr": {
@@ -238,17 +239,13 @@
             },
             "pubspec": {
                 "dependencies": {
-                    "qlevar_router": "^1.6.3",
-                    "rect_getter": "^1.1.0",
-                    "scroll_to_index": "^3.0.1",
                     "google_maps_flutter_web": "^0.4.0+2",
                     "sticky_headers": "^0.3.0+2",
                     "flutter_svg": "^1.1.5",
                     "another_flushbar": "^1.12.29",
                     "image_compression_flutter": "^1.0.2",
                     "image_picker_web": "^3.0.0+1",
-                    "mime_type": "^1.0.0",
-                    "html": "^0.15.0"
+                    "mime_type": "^1.0.0"
                 },
                 "assets": [
                     "assets/i18n/en.json",

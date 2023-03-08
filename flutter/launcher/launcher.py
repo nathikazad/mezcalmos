@@ -527,7 +527,7 @@ class Launcher:
         if assets.replace(' ', '').strip().__len__() > 1:
             assets = f'{PUBSPECT_TAB(1)}assets:\n'+assets
 
-        return patchable_pub_file.replace('<mez-dependencies>' , deps).replace('<mez-assets>', assets).replace('<mez-fonts>', fonts).replace(" 	path: ./packages/graphql", "\n\t\tpath: ./packages/graphql")
+        return patchable_pub_file.replace('<mez-dependencies>' , deps).replace('<mez-assets>', assets).replace('<mez-fonts>', fonts).replace(" 	path: ./packages/graphql", "\n    path: ./packages/graphql")
 
 
     def __launch__(self):        
