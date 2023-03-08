@@ -206,6 +206,7 @@ extension StringToParseOrderType on String {
 
 const Color purpleColor = Color(0xFFAC59FC);
 const Color primaryBlueColor = Color(0xFF6779FE);
+const Color redAccentColor = Color(0xFFE21233);
 const Color cancelledBackgroundColor = Color(0XFFFDECEF);
 const Color deliveredBackgroundColor = Color(0xFFEAECFF);
 const Color pickLocationTextFieldColor = Color(0xFFF5F5F5);

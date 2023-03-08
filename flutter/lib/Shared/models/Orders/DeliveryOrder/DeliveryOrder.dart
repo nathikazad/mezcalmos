@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryOrder {
   int id;
+  int? courierOrderId;
   OrderType orderType;
 
   ServiceProviderType? serviceProviderType;
@@ -27,7 +28,7 @@ class DeliveryOrder {
   num deliveryCost;
   num packageCost;
   bool packageReady;
-  MezLocation pickupLocation;
+  MezLocation? pickupLocation;
   MezLocation dropoffLocation;
   LatLng? driverLocation;
   int chatWithCustomerId;
@@ -36,35 +37,40 @@ class DeliveryOrder {
   DateTime? estimatedArrivalAtDropoffTime;
   DateTime? estimatedArrivalAtPickupTime;
   DateTime? estimatedPackageReadyTime;
+  DateTime? scheduleTime;
   //bool driverAssigned;
-  DeliveryOrder({
-    required this.orderType,
-    required this.id,
-    required this.deliveryCompany,
-    required this.serviceInfo,
-    required this.customerInfo,
-    required this.driverLocation,
-    required this.deliveryDirection,
-    required this.routeInformation,
-    required this.orderTime,
-    required this.status,
-    required this.serviceProviderType,
-    required this.deliveryCost,
-    required this.packageCost,
-    required this.pickupLocation,
-    required this.dropoffLocation,
-    required this.chatWithCustomerId,
-    required this.chatWithServiceProviderId,
-    required this.paymentType,
-    required this.driverInfo,
-    required this.stripeOrderPaymentInfo,
-    required this.packageReady,
-    this.estimatedArrivalAtDropoffTime,
-    this.serviceOrderId,
-    //  this.driverAssigned = false,
-    this.estimatedArrivalAtPickupTime,
-    this.estimatedPackageReadyTime,
-  });
+  DeliveryOrder(
+      {required this.orderType,
+      required this.id,
+      required this.deliveryCompany,
+      required this.serviceInfo,
+      required this.customerInfo,
+      required this.driverLocation,
+      required this.deliveryDirection,
+      required this.routeInformation,
+      required this.orderTime,
+      required this.status,
+      required this.serviceProviderType,
+      required this.deliveryCost,
+      required this.packageCost,
+      required this.pickupLocation,
+      required this.dropoffLocation,
+      required this.chatWithCustomerId,
+      required this.chatWithServiceProviderId,
+      required this.paymentType,
+      required this.driverInfo,
+      required this.stripeOrderPaymentInfo,
+      required this.packageReady,
+      required this.estimatedArrivalAtDropoffTime,
+      required this.serviceOrderId,
+      required this.scheduleTime,
+      //  this.driverAssigned = false,
+      required this.estimatedArrivalAtPickupTime,
+      required this.estimatedPackageReadyTime,
+      this.courierOrderId});
+
+  bool get isPickUpTimeSetted => estimatedArrivalAtPickupTime != null;
+  bool get isDropOffTimeSetted => estimatedArrivalAtDropoffTime != null;
 
   DeliveryOrder copyWith({
     int? id,
@@ -92,6 +98,7 @@ class DeliveryOrder {
     return DeliveryOrder(
       id: id ?? this.id,
       packageReady: packageReady,
+      scheduleTime: scheduleTime,
       orderType: orderType,
       serviceInfo: serviceInfo ?? this.serviceInfo,
       driverInfo: driverInfo ?? this.driverInfo,
@@ -118,6 +125,7 @@ class DeliveryOrder {
           estimatedArrivalAtPickupTime ?? this.estimatedArrivalAtPickupTime,
       estimatedPackageReadyTime:
           estimatedPackageReadyTime ?? this.estimatedPackageReadyTime,
+      serviceOrderId: serviceOrderId,
     );
   }
 

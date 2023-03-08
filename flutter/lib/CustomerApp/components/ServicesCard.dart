@@ -46,7 +46,7 @@ class ServicesCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(3),
                       alignment: Alignment.centerLeft,
-                      child: Text("$title", style: textTheme.headline3),
+                      child: Text("$title", style: textTheme.displaySmall),
                     ),
                     //================ subtitle============
                     Container(
@@ -58,10 +58,10 @@ class ServicesCard extends StatelessWidget {
                       // padding:
                       //     subtitle == null ? EdgeInsets.only(left: 10) : null,
                       child: subtitle != null
-                          ? Text("$subtitle", style: textTheme.subtitle1)
+                          ? Text("$subtitle", style: textTheme.titleMedium)
                           : Text(
                               "${i18n["comingSoon"]}",
-                              style: textTheme.subtitle1,
+                              style: textTheme.titleMedium,
                             ),
                     )
                   ],
@@ -69,7 +69,7 @@ class ServicesCard extends StatelessWidget {
               ),
               const SizedBox(width: 15),
               Container(
-                width: 20.w,
+                width: 25.w,
                 height: 20.w,
                 child: Image.asset(
                   url,

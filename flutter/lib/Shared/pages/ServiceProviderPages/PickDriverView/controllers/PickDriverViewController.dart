@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -109,7 +110,7 @@ class PickDriverViewController {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     await mapController.addOrUpdatePackageMarkerMarker(
-      latLng: order.value?.pickupLocation.toLatLng(),
+      latLng: order.value?.pickupLocation?.toLatLng(),
       fitWithinBounds: true,
     );
     // customer's

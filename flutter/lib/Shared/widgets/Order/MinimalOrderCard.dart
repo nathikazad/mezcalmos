@@ -20,10 +20,12 @@ class MinimalOrderCard extends StatefulWidget {
     required this.order,
     required this.onTap,
     this.forCustomer = false,
+    this.showOrderType = false,
   }) : super(key: key);
 
   final MinimalOrder order;
   final bool forCustomer;
+  final bool showOrderType;
   final Function()? onTap;
   @override
   State<MinimalOrderCard> createState() => _MinimalOrderCardState();
@@ -144,7 +146,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                           children: [
                             Container(
                                 margin: EdgeInsets.only(
-                                    right: widget.forCustomer ? 28 : 0),
+                                    right: widget.showOrderType ? 28 : 0),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white,
                                   radius: 26,
@@ -160,7 +162,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                                     },
                                   ),
                                 )),
-                            if (widget.forCustomer)
+                            if (widget.showOrderType)
                               Positioned(
                                 right: -8,
                                 child: Container(

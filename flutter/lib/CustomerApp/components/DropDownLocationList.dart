@@ -87,7 +87,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   Future<void> validateFirstDistance() async {
-    if (await _lessThanDistance(dropDownListValue!.location) == false) {
+    if (await _lessThanDistance(dropDownListValue!.location) == false &&
+        widget.serviceProviderLocation != null) {
       mezDbgPrint("[cc]  _lessThanDistance ==> True");
       showError.value = true;
     } else

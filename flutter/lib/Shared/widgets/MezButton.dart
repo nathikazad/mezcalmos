@@ -91,15 +91,6 @@ class _MezButtonState extends State<MezButton> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          if (widget.icon != null)
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5),
-                              child: Icon(
-                                widget.icon,
-                                color: widget.textColor ?? Colors.white,
-                                size: 15.sp,
-                              ),
-                            ),
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 2),
@@ -112,6 +103,15 @@ class _MezButtonState extends State<MezButton> {
                               ),
                             ),
                           ),
+                          if (widget.icon != null)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Icon(
+                                widget.icon,
+                                color: widget.textColor ?? Colors.white,
+                                size: 15.sp,
+                              ),
+                            ),
                         ],
                       ),
               ),

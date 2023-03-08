@@ -1,3 +1,92 @@
 table:
   name: courier_order_item
   schema: delivery
+object_relationships:
+  - name: order
+    using:
+      foreign_key_constraint_on: order_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - unavailable
+        - id
+        - order_id
+        - actual_cost
+        - estimated_cost
+        - image
+        - name
+        - notes
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+        - name
+        - image
+        - estimated_cost
+        - actual_cost
+        - order_id
+        - unavailable
+        - notes
+      filter:
+        order:
+          delivery_order:
+            delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - unavailable
+        - id
+        - order_id
+        - actual_cost
+        - estimated_cost
+        - image
+        - name
+        - notes
+      filter:
+        order:
+          delivery_order:
+            delivery_company:
+              delivery_operators:
+                user_id:
+                  _eq: X-Hasura-User-Id
+update_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - actual_cost
+        - unavailable
+      filter:
+        order:
+          delivery_order:
+            delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        order:
+          delivery_order:
+            delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - actual_cost
+        - unavailable
+      filter:
+        order:
+          delivery_order:
+            delivery_company:
+              delivery_operators:
+                user_id:
+                  _eq: X-Hasura-User-Id
+      check:
+        order:
+          delivery_order:
+            delivery_company:
+              delivery_operators:
+                user_id:
+                  _eq: X-Hasura-User-Id

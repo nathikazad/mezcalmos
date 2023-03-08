@@ -208,6 +208,7 @@ class CloudFunctions {
       String? scheduledTime,
       String? stripePaymentId,
       num? stripeFees,
+      num? distanceFromBase,
       num? tax,
       num? discountValue}  ) async {
     return CheckoutResponse.fromFirebaseFormattedJson(await callCloudFunction(
@@ -226,6 +227,7 @@ class CloudFunctions {
         "scheduledTime": scheduledTime,
         "stripePaymentId": stripePaymentId,
         "stripeFees": stripeFees,
+        "distanceFromBase": distanceFromBase,
         "tax": tax,
         "discountValue": discountValue,
       }));
@@ -316,7 +318,8 @@ class CloudFunctions {
       num? discountValue,
       required num tripDistance,
       required num tripDuration,
-      required String tripPolyline}  ) async {
+      required String tripPolyline,
+      num? distanceFromBase}  ) async {
     return ReqLaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "laundry2-requestLaundry",
       parameters: <String, dynamic>{
@@ -335,6 +338,7 @@ class CloudFunctions {
         "tripDistance": tripDistance,
         "tripDuration": tripDuration,
         "tripPolyline": tripPolyline,
+        "distanceFromBase": distanceFromBase,
       }));
   }
 
@@ -387,6 +391,49 @@ class CloudFunctions {
         "deliveryId": deliveryId,
         "newStatus":newStatus.toFirebaseFormatString(),
       });
+  }
+
+  static Future<CreateCourierResponse> delivery2_createCourierOrder(
+      {required Location toLocation,
+      Location? fromLocationGps,
+      String? fromLocationText,
+      required List<CourierItem> items,
+      required num deliveryCompanyId,
+      num? deliveryCost,
+      required CustomerAppType customerAppType,
+      num? tax,
+      String? scheduledTime,
+      num? stripeFees,
+      num? discountValue,
+      num? tripDistance,
+      num? tripDuration,
+      String? tripPolyline,
+      num? distanceFromBase,
+      num? refundAmount}  ) async {
+    return CreateCourierResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "delivery2-createCourierOrder",
+      parameters: <String, dynamic>{
+        "toLocation":toLocation.toFirebaseFormattedJson(),
+        "fromLocationGps":fromLocationGps?.toFirebaseFormattedJson(),
+        "fromLocationText": fromLocationText,
+        "items":items.fold<List<dynamic>>([],
+              (List<dynamic> value, CourierItem element) {
+            value.add(element.toFirebaseFormattedJson());
+            return value;
+          }),
+        "deliveryCompanyId": deliveryCompanyId,
+        "deliveryCost": deliveryCost,
+        "customerAppType":customerAppType.toFirebaseFormatString(),
+        "tax": tax,
+        "scheduledTime": scheduledTime,
+        "stripeFees": stripeFees,
+        "discountValue": discountValue,
+        "tripDistance": tripDistance,
+        "tripDuration": tripDuration,
+        "tripPolyline": tripPolyline,
+        "distanceFromBase": distanceFromBase,
+        "refundAmount": refundAmount,
+      }));
   }
 
 }

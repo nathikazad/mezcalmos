@@ -676,9 +676,9 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
-          "delivered": "Delivered",
-          "received": "Received",
-          "canceled": "Cancelled",
+          "delivered": "Order Delivered",
+          "received": "Order Received",
+          "canceled": "Order Cancelled",
           "atDropOff": "At dropoff"
         }
       },
@@ -1601,10 +1601,26 @@
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
         "approved": "Approved",
+        "schTime" : "Scheduled time",
+        "orderDetails" : "Order details",
+        "orderItems" : "Order Items",
+        "addCost" : "Add cost",
+        "save" : "Save",
+        "cancel" : "Cancel",
+        "markAv" : "Mark as available",
+        "markUnav" : "Mark as unavailable",
+        "actualCost" : "Actual cost",
+        "note" : "Note",
+        "estCost" : "Estimated cost",
+        "addTax" : "Add tax cost",
+        "bill" : "Bill",
+        "upload" : "Upload",
+        "tax" : "Tax",
         "scheduled": "Scheduled",
         "dvTime": "Delivery time",
         "paymentMethod": "Payment method",
         "cash": "Cash",
+        "card" : "Card",
         "from": "From",
         "deliveredTo": "Delivered to",
         "deliveryCost": "Delivery Cost",
@@ -1637,6 +1653,7 @@
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Current orders",
+          "openOrders": "Open orders",
           "pastOrders": "Past orders",
           "title": "Incoming  Orders",
           "offlineTitle": "You are offline",
@@ -1673,6 +1690,7 @@
           "Components": {
             "AnimatedOrderInfoCard": {
               "cash": "Cash",
+              "details" : "Details",
               "card": "Card"
             },
             "DriverBottomLaundryOrderCard": {
@@ -1718,6 +1736,7 @@
               "oops": "Oops",
               "set": "Set",
               "time": "Time",
+              "setTime" : "Set time",
               "dvTime": "Delivery time",
               "dropoff": "Delivery",
               "pickup": "Pickup",
@@ -1732,7 +1751,8 @@
                 "deliveryOtw": "Delivery on the way",
                 "pickupOtw": "Pickup on the way",
                 "delivered": "Order Delivered",
-                "canceled": "Order Cancelled"
+                "canceled": "Order Cancelled",
+                "received" :"Order Received"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirm Order Pickup",
@@ -2369,6 +2389,7 @@
     "error": "Error",
     "noRoute": "No route found. please enter a valid destination",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "minutes" :"minutes"
   }
 }

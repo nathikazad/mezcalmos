@@ -36,7 +36,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 _i18n()['orders']["onGoingOrders"],
-                style: txt.bodyText1,
+                style: txt.bodyLarge,
               ),
             ),
             ListView.builder(
@@ -49,6 +49,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                   return MinimalOrderCard(
                     order: viewController.currentOrders[index],
                     forCustomer: true,
+                    showOrderType: true,
                     onTap: () {
                       if (viewController.currentOrders[index].orderType ==
                           OrderType.Laundry) {

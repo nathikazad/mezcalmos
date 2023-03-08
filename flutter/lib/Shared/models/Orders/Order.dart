@@ -91,12 +91,7 @@ abstract class Order {
 }
 
 // ignore: constant_identifier_names
-enum OrderType {
-  Taxi,
-  Restaurant,
-  Laundry,
-  Water,
-}
+enum OrderType { Taxi, Restaurant, Laundry, Water, Courier }
 
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
@@ -112,6 +107,8 @@ extension ParseOrderTypeToString on OrderType {
         return mat.Icons.local_laundry_service;
       case OrderType.Taxi:
         return mat.Icons.local_taxi;
+      case OrderType.Courier:
+        return mat.Icons.shopping_bag;
 
         break;
       default:
@@ -141,14 +138,16 @@ extension ParseOrderTypeToString on OrderType {
         return "laundries";
       case OrderType.Water:
         return "waters";
+      case OrderType.Courier:
+        return "couriers";
     }
   }
 }
 
 extension ParseStringToOrderType on String {
   OrderType toOrderType() {
-    return OrderType.values.firstWhere(
-        (OrderType e) => e.toFirebaseFormatString().toLowerCase() == this);
+    return OrderType.values
+        .firstWhere((OrderType e) => e.toFirebaseFormatString() == this);
   }
 }
 

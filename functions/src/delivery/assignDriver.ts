@@ -33,8 +33,10 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
   let deliveryDriver: DeliveryDriver = promiseResponse[1];
 
   if((await isMezAdmin(userId)) == false) {
+    if(deliveryDriver.userId != userId) {
 
-    await checkIfOperatorAuthorized(deliveryOrder, userId);
+      await checkIfOperatorAuthorized(deliveryOrder, userId);
+    }
   }
   if(deliveryDriver.status != AuthorizationStatus.Authorized) {
     throw new HttpsError(

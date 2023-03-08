@@ -3707,6 +3707,11 @@ type delivery_company_variance_fields {
 columns and relationships of "delivery.courier_order"
 """
 type delivery_courier_order {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String!
   customer_id: Int!
@@ -3756,7 +3761,7 @@ type delivery_courier_order {
   ): delivery_courier_order_item_aggregate!
   order_time: timestamptz!
   payment_type: String!
-  refund_amount: money
+  refund_amount: money!
   stripe_fees: money!
 
   """
@@ -3770,8 +3775,13 @@ type delivery_courier_order {
     path: String
   ): jsonb
   tax: money!
-  to_location_adress: String!
+  to_location_address: String!
   to_location_gps: geography!
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -3828,6 +3838,8 @@ input delivery_courier_order_bool_exp {
   _and: [delivery_courier_order_bool_exp!]
   _not: delivery_courier_order_bool_exp
   _or: [delivery_courier_order_bool_exp!]
+  actual_items_cost: money_comparison_exp
+  bill_image: String_comparison_exp
   cancellation_time: timestamptz_comparison_exp
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
@@ -3845,8 +3857,9 @@ input delivery_courier_order_bool_exp {
   stripe_fees: money_comparison_exp
   stripe_info: jsonb_comparison_exp
   tax: money_comparison_exp
-  to_location_adress: String_comparison_exp
+  to_location_address: String_comparison_exp
   to_location_gps: geography_comparison_exp
+  total_cost: money_comparison_exp
 }
 
 """
@@ -3921,6 +3934,7 @@ input delivery_courier_order_inc_input {
 input type for inserting data into table "delivery.courier_order"
 """
 input delivery_courier_order_insert_input {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -3944,7 +3958,7 @@ input delivery_courier_order_insert_input {
   """
   stripe_info: jsonb
   tax: money
-  to_location_adress: String
+  to_location_address: String
   to_location_gps: geography
 }
 
@@ -3958,6 +3972,9 @@ type delivery_courier_order_item {
   image: String
   name: String!
   notes: String
+
+  """An object relationship"""
+  order: delivery_courier_order!
   order_id: Int!
   unavailable: Boolean!
 }
@@ -4073,6 +4090,7 @@ input delivery_courier_order_item_bool_exp {
   image: String_comparison_exp
   name: String_comparison_exp
   notes: String_comparison_exp
+  order: delivery_courier_order_bool_exp
   order_id: Int_comparison_exp
   unavailable: Boolean_comparison_exp
 }
@@ -4107,6 +4125,7 @@ input delivery_courier_order_item_insert_input {
   image: String
   name: String
   notes: String
+  order: delivery_courier_order_obj_rel_insert_input
   order_id: Int
   unavailable: Boolean
 }
@@ -4189,6 +4208,7 @@ input delivery_courier_order_item_order_by {
   image: order_by
   name: order_by
   notes: order_by
+  order: delivery_courier_order_order_by
   order_id: order_by
   unavailable: order_by
 }
@@ -4450,6 +4470,7 @@ input delivery_courier_order_item_variance_order_by {
 
 """aggregate max on columns"""
 type delivery_courier_order_max_fields {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4462,11 +4483,12 @@ type delivery_courier_order_max_fields {
   refund_amount: money
   stripe_fees: money
   tax: money
-  to_location_adress: String
+  to_location_address: String
 }
 
 """aggregate min on columns"""
 type delivery_courier_order_min_fields {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4479,7 +4501,7 @@ type delivery_courier_order_min_fields {
   refund_amount: money
   stripe_fees: money
   tax: money
-  to_location_adress: String
+  to_location_address: String
 }
 
 """
@@ -4494,6 +4516,16 @@ type delivery_courier_order_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "delivery.courier_order"
+"""
+input delivery_courier_order_obj_rel_insert_input {
+  data: delivery_courier_order_insert_input!
+
+  """upsert condition"""
+  on_conflict: delivery_courier_order_on_conflict
+}
+
+"""
 on_conflict condition type for table "delivery.courier_order"
 """
 input delivery_courier_order_on_conflict {
@@ -4504,6 +4536,8 @@ input delivery_courier_order_on_conflict {
 
 """Ordering options when selecting data from "delivery.courier_order"."""
 input delivery_courier_order_order_by {
+  actual_items_cost: order_by
+  bill_image: order_by
   cancellation_time: order_by
   customer_app_type: order_by
   customer_id: order_by
@@ -4520,8 +4554,9 @@ input delivery_courier_order_order_by {
   stripe_fees: order_by
   stripe_info: order_by
   tax: order_by
-  to_location_adress: order_by
+  to_location_address: order_by
   to_location_gps: order_by
+  total_cost: order_by
 }
 
 """primary key columns input for table: delivery.courier_order"""
@@ -4544,6 +4579,9 @@ input delivery_courier_order_prepend_input {
 select columns of table "delivery.courier_order"
 """
 enum delivery_courier_order_select_column {
+  """column name"""
+  bill_image
+
   """column name"""
   cancellation_time
 
@@ -4587,7 +4625,7 @@ enum delivery_courier_order_select_column {
   tax
 
   """column name"""
-  to_location_adress
+  to_location_address
 
   """column name"""
   to_location_gps
@@ -4597,6 +4635,7 @@ enum delivery_courier_order_select_column {
 input type for updating data in table "delivery.courier_order"
 """
 input delivery_courier_order_set_input {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4618,7 +4657,7 @@ input delivery_courier_order_set_input {
   """
   stripe_info: jsonb
   tax: money
-  to_location_adress: String
+  to_location_address: String
   to_location_gps: geography
 }
 
@@ -4668,6 +4707,7 @@ input delivery_courier_order_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input delivery_courier_order_stream_cursor_value_input {
+  bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
   customer_id: Int
@@ -4689,7 +4729,7 @@ input delivery_courier_order_stream_cursor_value_input {
   """
   stripe_info: jsonb
   tax: money
-  to_location_adress: String
+  to_location_address: String
   to_location_gps: geography
 }
 
@@ -4708,6 +4748,9 @@ type delivery_courier_order_sum_fields {
 update columns of table "delivery.courier_order"
 """
 enum delivery_courier_order_update_column {
+  """column name"""
+  bill_image
+
   """column name"""
   cancellation_time
 
@@ -4751,7 +4794,7 @@ enum delivery_courier_order_update_column {
   tax
 
   """column name"""
-  to_location_adress
+  to_location_address
 
   """column name"""
   to_location_gps
@@ -4828,7 +4871,7 @@ columns and relationships of "delivery.details"
 """
 type delivery_details {
   cost_per_km: money!
-  cost_per_km_from_base: money
+  cost_per_km_from_base: money!
   customer_pickup: Boolean!
   delivery_available: Boolean!
 

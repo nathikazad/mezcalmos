@@ -1,10 +1,6 @@
 query get_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-    actual_arrival_at_dropoff_time
-    actual_arrival_at_pickup_time
-    actual_delivered_time
-    actual_package_ready_time
-    cancellation_time
+   schedule_time
     chat_with_customer_id
     order_type
     direction
@@ -16,6 +12,10 @@ query get_driver_order($orderId: Int!) {
         id
         image
         name
+          location {
+          gps
+          address
+        }
         service_provider_type
       }
     }
@@ -186,10 +186,15 @@ subscription listen_on_driver_order($orderId: Int!) {
     chat_with_customer_id
     order_type
     direction
+    schedule_time
     chat_with_service_provider_id
     delivery_company {
       id
       details {
+          location {
+          gps
+          address
+        }
         id
         image
         name
@@ -493,6 +498,76 @@ query get_inprocess_driver_orders($driverId: Int!) {
     }
   }
 }
+query get_open_driver_orders() {
+  delivery_order(
+   where: {delivery_driver_id: {_is_null: true}}
+  ) {
+    id
+    order_time
+    status
+    order_type
+    package_cost
+    package_ready
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
+      }
+    }
+  }
+}
+subscription listen_open_driver_orders() {
+  delivery_order(
+    where: {delivery_driver_id: {_is_null: true}}
+  ) {
+    id
+    order_time
+    status
+    order_type
+    package_cost
+    package_ready
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
+      }
+    }
+  }
+}
 subscription listen_delivery_company_current_orders($companyId: Int!) {
   delivery_order(
     where: {
@@ -622,6 +697,10 @@ query get_pick_driver_order($orderId: Int!) {
       id
       details {
         id
+          location {
+          gps
+          address
+        }
         image
         name
         service_provider_type

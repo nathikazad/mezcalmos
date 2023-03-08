@@ -3,20 +3,17 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:gql_exec/gql_exec.dart';
+import 'package:graphql/src/core/query_options.dart' show WithType;
 import 'package:graphql/src/links/gql_links.dart';
 import 'package:graphql/src/utilities/platform.dart';
 import 'package:meta/meta.dart';
-
-import 'package:graphql/src/core/query_options.dart' show WithType;
-import 'package:gql_exec/gql_exec.dart';
-
-import 'package:stream_channel/stream_channel.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as ws_status;
-
 import 'package:rxdart/rxdart.dart';
+import 'package:stream_channel/stream_channel.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
+import 'package:web_socket_channel/status.dart' as ws_status;
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import './websocket_messages.dart';
 

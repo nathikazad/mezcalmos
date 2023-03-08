@@ -94,8 +94,46 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                         secondLine: "${_i18n()["offlineBody"]}",
                       ),
                     )
+                  else if (viewController.currentOrders.isNotEmpty ||
+                      viewController.openOrders.isNotEmpty)
+                    Column(
+                      children: [
+                        if (viewController.currentOrders.isNotEmpty)
+                          _incomingOrdersList(),
+                        if (viewController.openOrders.isNotEmpty)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (viewController.currentOrders.isNotEmpty)
+                                Divider(),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  "${_i18n()["openOrders"]}",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Column(
+                                children: List.generate(
+                                    viewController.openOrders.length,
+                                    (int index) => MinimalOrderCard(
+                                          order:
+                                              viewController.openOrders[index],
+                                          showOrderType: true,
+                                          onTap: () {
+                                            DvOrderView.navigate(
+                                                orderId: viewController
+                                                    .currentOrders[index].id);
+                                          },
+                                        )).reversed.toList(),
+                              ),
+                            ],
+                          ),
+                      ],
+                    )
                   else
-                    _incomingOrdersList()
+                    NoOrdersComponent(),
                 ],
               ),
             ),
@@ -106,33 +144,30 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   }
 
   Widget _incomingOrdersList() {
-    if (viewController.currentOrders.isNotEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(5),
-            child: Text(
-              "${_i18n()["currentOrders"]}",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(5),
+          child: Text(
+            "${_i18n()["currentOrders"]}",
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          SizedBox(height: 5),
-          Column(
-            children: List.generate(
-                viewController.currentOrders.length,
-                (int index) => MinimalOrderCard(
-                      order: viewController.currentOrders[index],
-                      onTap: () {
-                        DvOrderView.navigate(
-                            orderId: viewController.currentOrders[index].id);
-                      },
-                    )).reversed.toList(),
-          ),
-        ],
-      );
-    } else {
-      return NoOrdersComponent();
-    }
+        ),
+        SizedBox(height: 5),
+        Column(
+          children: List.generate(
+              viewController.currentOrders.length,
+              (int index) => MinimalOrderCard(
+                    order: viewController.currentOrders[index],
+                    showOrderType: true,
+                    onTap: () {
+                      DvOrderView.navigate(
+                          orderId: viewController.currentOrders[index].id);
+                    },
+                  )).reversed.toList(),
+        ),
+      ],
+    );
   }
 }

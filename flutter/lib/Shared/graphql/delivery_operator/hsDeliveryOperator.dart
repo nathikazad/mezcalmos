@@ -25,6 +25,7 @@ Future<Operator?> get_delivery_operator({required int userId}) async {
         state: OperatorState(
             deliveryDetailsId: data.delivery_company.delivery_details_id,
             serviceProviderDetailsId: data.delivery_company.details_id,
+            serviceLinkId: data.delivery_company.details!.service_link_id,
             operatorState: data.operator_details.status.toAgentStatus(),
             owner: data.operator_details.owner,
             serviceProviderId: data.delivery_company_id),
@@ -72,8 +73,8 @@ Future<List<Operator>?> get_delivery_company_operators(
   return data
       .map((Query$getCompanyOerators$delivery_operator opData) => Operator(
           state: OperatorState(
-              deliveryDetailsId:
-                  opData.delivery_company.delivery_details_id,
+              serviceLinkId: opData.delivery_company.details!.service_link_id,
+              deliveryDetailsId: opData.delivery_company.delivery_details_id,
               serviceProviderDetailsId: data.first.delivery_company.details_id,
               owner: opData.operator_details.owner,
               operatorState: opData.operator_details.status.toAgentStatus(),

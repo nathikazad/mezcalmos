@@ -4,6 +4,7 @@ import { ParticipantType } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
 import { DeliveryType, OrderType } from "../../models/Generic/Order";
 import { CustomerInfo } from "../../models/Generic/User";
+import { CourierOrder } from "../../models/Services/Courier/Courier";
 import { LaundryOrder } from "../../models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
 import { ServiceProvider } from "../../models/Services/Service";
@@ -308,7 +309,7 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
 export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDriver: DeliveryDriver, orderType: OrderType) {
   let chain = getHasura();
 
-  if(delivery.chatWithServiceProviderId == undefined) {
+  if((orderType != OrderType.Courier) && delivery.chatWithServiceProviderId == undefined) {
     throw new HttpsError(
       "internal",
       "No delivery chat with service provider id"
@@ -340,9 +341,13 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
       id: true
     }]
   });
+
+  if(orderType == OrderType.Courier) 
+    return;
+
   response = await chain.query({
     chat_by_pk: [{
-      id: delivery.chatWithServiceProviderId
+      id: delivery.chatWithServiceProviderId!
     }, {
       chat_info: [{}, true]
     }]
@@ -378,7 +383,7 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
   chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
-        id: delivery.chatWithServiceProviderId
+        id: delivery.chatWithServiceProviderId!
       },
       _set: {
         chat_info: JSON.stringify(chatInfo),
@@ -389,47 +394,40 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
   });
 }
 
+export async function setCourierChatInfo(courierOrder: CourierOrder, customer: CustomerInfo) {
 
-// TODO: @sanchit to remove
-// export async function setUserAgoraInfo(chatId: number, userId: number, participantType: ParticipantType, agoraDetails: ParticipantAgoraDetails) {
-//   let chain = getHasura();
-//   let response = await chain.query({
-//     chat_by_pk: [{
-//       id: chatId
-//     }, {
-//       agora_info: [{}, true]
-//     }]
-//   });
-//   if((!response.chat_by_pk)) {
-//     throw new HttpsError(
-//       "internal",
-//       "Incorrect chat id"
-//     );
-//   }
-//   let agoraInfo: Record<ParticipantType, Record<number, ParticipantAgoraDetails>> = {
-//     [ParticipantType.Customer]: {},
-//     [ParticipantType.DeliveryDriver]: {},
-//     [ParticipantType.DeliveryOperator]: {},
-//     [ParticipantType.LaundryOperator]: {},
-//     [ParticipantType.MezAdmin]: {},
-//     [ParticipantType.RestaurantOperator]: {},
-//     [ParticipantType.Taxi]: {},
-//   };
-//   if(response.chat_by_pk.agora_info) {
-//     agoraInfo = JSON.parse(response.chat_by_pk.agora_info);
-//   }
-//   agoraInfo[participantType][userId] = agoraDetails;
-//   await chain.mutation({
-//     update_chat_by_pk: [{
-//       pk_columns: {
-//         id: chatId
-//       },
-//       _set: {
-//         agora_info: JSON.stringify(agoraInfo)
-//       }
-//     }, {
-//       id: true,
-//     }]
-//   })
+  let chain = getHasura();
   
-// }
+  chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: courierOrder.deliveryOrder.chatWithCustomerId
+      },
+      _set: {
+        chat_info: JSON.stringify({
+          DeliveryApp: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
+            parentLink: `/Orders/${courierOrder.deliveryOrder.deliveryId}`
+          },
+          CustomerApp: {
+            parentLink: `/courierOrders/${courierOrder.id}`,
+            participantType: ParticipantType.DeliveryDriver
+          },
+          MezAdminApp: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
+            parentLink: `/courierOrders/${courierOrder.id}`
+          }
+        })
+      }
+    }, {
+      id: true
+    },]
+  });
+  
+}

@@ -1802,6 +1802,13 @@ const documentNodeQueryget_service_reviews = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'app_version'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'user'),
                 alias: null,
                 arguments: [],
@@ -2268,20 +2275,25 @@ class _CopyWithStubImpl$Query$get_service_reviews$review<TRes>
 
 class Query$get_service_reviews$review$customer {
   Query$get_service_reviews$review$customer({
+    this.app_version,
     required this.user,
     required this.$__typename,
   });
 
   factory Query$get_service_reviews$review$customer.fromJson(
       Map<String, dynamic> json) {
+    final l$app_version = json['app_version'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$get_service_reviews$review$customer(
+      app_version: (l$app_version as String?),
       user: Query$get_service_reviews$review$customer$user.fromJson(
           (l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? app_version;
 
   final Query$get_service_reviews$review$customer$user user;
 
@@ -2289,6 +2301,8 @@ class Query$get_service_reviews$review$customer {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$app_version = app_version;
+    _resultData['app_version'] = l$app_version;
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
@@ -2298,9 +2312,11 @@ class Query$get_service_reviews$review$customer {
 
   @override
   int get hashCode {
+    final l$app_version = app_version;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$app_version,
       l$user,
       l$$__typename,
     ]);
@@ -2313,6 +2329,11 @@ class Query$get_service_reviews$review$customer {
     }
     if (!(other is Query$get_service_reviews$review$customer) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$app_version = app_version;
+    final lOther$app_version = other.app_version;
+    if (l$app_version != lOther$app_version) {
       return false;
     }
     final l$user = user;
@@ -2349,6 +2370,7 @@ abstract class CopyWith$Query$get_service_reviews$review$customer<TRes> {
       _CopyWithStubImpl$Query$get_service_reviews$review$customer;
 
   TRes call({
+    String? app_version,
     Query$get_service_reviews$review$customer$user? user,
     String? $__typename,
   });
@@ -2369,10 +2391,14 @@ class _CopyWithImpl$Query$get_service_reviews$review$customer<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? app_version = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_reviews$review$customer(
+        app_version: app_version == _undefined
+            ? _instance.app_version
+            : (app_version as String?),
         user: user == _undefined || user == null
             ? _instance.user
             : (user as Query$get_service_reviews$review$customer$user),
@@ -2394,6 +2420,7 @@ class _CopyWithStubImpl$Query$get_service_reviews$review$customer<TRes>
   TRes _res;
 
   call({
+    String? app_version,
     Query$get_service_reviews$review$customer$user? user,
     String? $__typename,
   }) =>

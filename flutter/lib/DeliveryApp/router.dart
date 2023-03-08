@@ -1,5 +1,5 @@
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';

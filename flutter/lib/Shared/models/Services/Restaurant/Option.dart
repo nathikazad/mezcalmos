@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -50,6 +51,11 @@ class Option {
       costPerExtra: data["costPerExtra"],
     );
     return option;
+  }
+  bool get haveAtLeastOneChoiceAvailable {
+    return choices
+            .firstWhereOrNull((Choice element) => element.available == true) !=
+        null;
   }
 
   void sortChoices() {

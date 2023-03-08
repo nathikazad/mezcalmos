@@ -180,14 +180,14 @@ class _DvOrderStatusControllButtonsState
                 GradientProgressIndicator(
                   radius: 11,
                   duration: 3,
-                  strokeWidth: 1,
+                  strokeWidth: 3,
                   gradientStops: const [
                     0.2,
                     0.8,
                   ],
                   gradientColors: const [
-                    Colors.white,
-                    Colors.grey,
+                    primaryBlueColor,
+                    secondaryLightBlueColor
                   ],
                   child: SizedBox(),
                 ),

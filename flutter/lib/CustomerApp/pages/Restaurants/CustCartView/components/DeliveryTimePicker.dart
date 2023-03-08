@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,9 +16,24 @@ dynamic _i18n() =>
 
 //
 class DeliveryTimePicker extends StatefulWidget {
-  const DeliveryTimePicker({Key? key, required this.viewCartController})
+  const DeliveryTimePicker(
+      {Key? key,
+      required this.deliveryTime,
+      required this.periodOfTime,
+      required this.isServiceOpen,
+      required this.fixed7days,
+      required this.numberOfDays,
+      required this.onValue,
+      required this.schedule})
       : super(key: key);
-  final CustCartViewController viewCartController;
+  // final CustCartViewController viewCartController;
+  final PeriodOfTime? periodOfTime;
+  final DateTime? deliveryTime;
+  final Schedule? schedule;
+  final bool isServiceOpen;
+  final bool fixed7days;
+  final int numberOfDays;
+  final Function(DateTime?) onValue;
 
   @override
   State<DeliveryTimePicker> createState() => _DeliveryTimePickerState();
@@ -26,11 +42,6 @@ class DeliveryTimePicker extends StatefulWidget {
 class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   @override
   void initState() {
-    if (widget.viewCartController.cart.cartPeriod != null) {
-      widget.viewCartController.cart.deliveryTime =
-          widget.viewCartController.cart.getStartTime();
-      //  controller.saveCart();
-    }
     super.initState();
   }
 
@@ -52,15 +63,15 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
             '${_i18n()["dvTime"]}',
             style: Get.textTheme.bodyLarge,
           ),
-          if (widget.viewCartController.cart.cartPeriod != null)
+          if (widget.periodOfTime != null)
             Container(
               margin: const EdgeInsets.only(
                 top: 5,
               ),
               child: Text(
-                  "(${widget.viewCartController.cart.cartPeriod!.toNormalString(format: DateFormat.MMMd(userLangCode))})"),
+                  "(${widget.periodOfTime!.toNormalString(format: DateFormat.MMMd(userLangCode))})"),
             ),
-          if (widget.viewCartController.cart.restaurant?.isOpen() == false)
+          if (widget.isServiceOpen == false)
             Container(
               margin: const EdgeInsets.only(
                 top: 5,
@@ -89,7 +100,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           ),
           Card(
             child: InkWell(
-              onTap: (widget.viewCartController.cart.deliveryTime != null)
+              onTap: (widget.deliveryTime != null)
                   ? null
                   : () async {
                       await _pickDeliveryTime(context);
@@ -111,13 +122,11 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                       SizedBox(
                         width: 9,
                       ),
-                      (widget.viewCartController.cart.deliveryTime == null)
+                      (widget.deliveryTime == null)
                           ? Flexible(
                               fit: FlexFit.tight,
                               child: Text(
-                                  (widget.viewCartController.cart.restaurant
-                                              ?.isOpen() ==
-                                          false)
+                                  (widget.isServiceOpen == false)
                                       ? '${_i18n()["pickTime"]}'
                                       : '${_i18n()["now"]}',
                                   style: Get.textTheme.bodyLarge?.copyWith(
@@ -131,12 +140,12 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                     fontSize: 12.sp,
                                   )),
                             ),
-                      if (widget.viewCartController.cart.deliveryTime == null)
+                      if (widget.deliveryTime == null)
                         Icon(
                           Icons.chevron_right,
                           color: Colors.black,
                         ),
-                      if (widget.viewCartController.cart.deliveryTime != null)
+                      if (widget.deliveryTime != null)
                         InkWell(
                           onTap: () {
                             _pickDeliveryTime(context);
@@ -154,14 +163,14 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                             ),
                           ),
                         ),
-                      // if (widget.viewCartController.cart.deliveryTime != null &&
+                      // if (widget.deliveryTime != null &&
                       //     widget.viewCartController.shoudSchedule == false)
                       //   Padding(
                       //     padding: const EdgeInsets.only(left: 8),
                       //     child: InkWell(
                       //      // customBorder: CircleBorder(),
                       //       onTap: () {
-                      //         widget.viewCartController.cart.deliveryTime =
+                      //         widget.deliveryTime =
                       //             null;
                       //         widget.viewCartController.cartController.cart
                       //             .refresh();
@@ -181,10 +190,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
               ),
             ),
           ),
-          if (widget.viewCartController.cart.deliveryTime != null &&
-              widget.viewCartController.cart.deliveryTime!
-                  .toLocal()
-                  .isBefore(DateTime.now().toLocal()))
+          if (widget.deliveryTime != null &&
+              widget.deliveryTime!.toLocal().isBefore(DateTime.now().toLocal()))
             _timeError()
         ],
       ),
@@ -192,7 +199,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   }
 
   Future<void> _pickDeliveryTime(BuildContext context) async {
-    if (widget.viewCartController.cart.restaurant?.schedule != null) {
+    if (widget.schedule != null) {
       await showModalBottomSheet<DateTime>(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -204,23 +211,17 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           isDismissible: true,
           builder: (BuildContext ctx) {
             return MezDateTimePicker(
-              fixed7days: !widget.viewCartController.cart.isSpecial,
-              startDate: widget.viewCartController.cart.deliveryTime?.toLocal(),
-              periodOfTime: widget.viewCartController.cart.cartPeriod,
-              numberOfDaysInterval:
-                  widget.viewCartController.cart.isSpecial ? 1 : 7,
-              serviceSchedule:
-                  widget.viewCartController.cart.restaurant!.schedule!,
+              fixed7days: widget.fixed7days,
+              startDate: widget.deliveryTime?.toLocal(),
+              periodOfTime: widget.periodOfTime,
+              numberOfDaysInterval: widget.numberOfDays,
+              serviceSchedule: widget.schedule!,
             );
           }).then((DateTime? value) {
-        if (value != null) {
-          widget.viewCartController.cart.deliveryTime = value;
-          widget.viewCartController.cartController.cart.refresh();
-        }
+        widget.onValue.call(value);
       });
     } else {
-      mezDbgPrint(
-          "[OPS] Restaurant have no schedule!=>${widget.viewCartController.cart.restaurant?.toJson()}}");
+      mezDbgPrint("[OPS] Restaurant have no schedule!=>");
     }
   }
 
@@ -250,5 +251,5 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   }
 
   String get _formattedTime =>
-      "${DateFormat.MMMEd(userLangCode).format(widget.viewCartController.cart.deliveryTime!.toLocal()).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(widget.viewCartController.cart.deliveryTime!.toLocal())}";
+      "${DateFormat.MMMEd(userLangCode).format(widget.deliveryTime!.toLocal()).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(widget.deliveryTime!.toLocal())}";
 }

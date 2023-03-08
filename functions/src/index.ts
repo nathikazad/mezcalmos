@@ -22,6 +22,7 @@ import { cancelLaundryFromCustomer } from "./laundry/cancelLaundryFromCustomer";
 import { changeDeliveryStatus } from "./delivery/statusChange";
 import { addOperator } from "./shared/operator/addOperator";
 import { authorizeOperator } from "./shared/operator/authorizeOperator";
+import { createCourierOrder } from "./delivery/createCourierOrder";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -86,7 +87,17 @@ export const laundry2 = {
 export const delivery2 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
-  
+  createCourierOrder: authenticatedCall((userId, data) => createCourierOrder(userId, data)),
+
+  // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
+  // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
+  // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
+  // laundryPickedUpFromCustomer: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromCustomer(userId, data)),
+  // laundryAtFacility: authenticatedCall((userId, data) => laundryDelivery.atFacility(userId, data)),
+  // laundryStartPickupFromLaundry: authenticatedCall((userId, data) => laundryDelivery.startPickupFromLaundry(userId, data)),
+  // laundryPickedUpFromLaundry: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromLaundry(userId, data)),
+  // laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
+  // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
 }
 
 type AuthenticatedFunction = (userId:number, data:any) => any;

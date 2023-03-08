@@ -1,0 +1,204 @@
+query get_courier_order_by_id($orderId: Int!) {
+  delivery_courier_order_by_pk(id: $orderId) {
+    customer_id
+    discount_value
+    from_location_gps
+    from_location_text
+    id
+    order_time
+    payment_type
+    refund_amount
+    stripe_fees
+    stripe_info
+    tax
+    
+    to_location_address
+    to_location_gps
+  
+    items {
+      actual_cost
+      estimated_cost
+      id
+      image
+      name
+      notes
+      unavailable
+    }
+    delivery_order {
+      schedule_time
+        customer {
+      user {
+        id
+        image
+        name
+        language_id
+      }
+    }
+      chat_with_customer_id
+        chat_with_service_provider_id
+       dropoff_address
+    dropoff_gps
+    estimated_arrival_at_dropoff_time
+    estimated_arrival_at_pickup_time
+    estimated_package_ready_time
+      pickup_address
+      pickup_gps
+      delivery_company {
+        id
+        details {
+          image
+          name
+           location {
+          gps
+          address
+        }
+        }
+      }
+      delivery_cost
+      in_process
+      id
+      schedule_time
+
+      status
+      service_provider_type
+      trip_distance
+      trip_duration
+      trip_polyline
+      package_ready
+      package_cost
+      estimated_arrival_at_dropoff_time
+      direction
+      service_provider_id
+      delivery_driver {
+        current_location
+
+        user {
+          name
+          image
+          id
+        }
+      }
+    }
+  }
+}
+query get_courier_order_items_by_id($orderId: Int!) {
+  delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}) {
+    items {
+      actual_cost
+      estimated_cost
+      id
+      image
+      name
+      notes
+      unavailable
+    }
+    
+    }
+  
+}
+mutation updateCourierOrderItem($data: delivery_courier_order_item_set_input,$id: Int!) {
+  update_delivery_courier_order_item_by_pk(pk_columns: {id: $id}, _set: $data) {
+    actual_cost
+    estimated_cost
+    id
+    image
+    name
+    notes
+    unavailable
+    order_id
+  }
+}
+mutation updateCourierOrder($deliveryOrderId: Int!, $data: delivery_courier_order_set_input) {
+  update_delivery_courier_order(where: {delivery_order_id: {_eq: $deliveryOrderId}}, _set: $data) {
+    affected_rows
+    returning {
+      bill_image
+      id
+      tax
+    }
+  }
+}
+
+subscription listen_on_courier_order_by_id($orderId: Int!) {
+  delivery_courier_order_by_pk(id: $orderId) {
+    customer_id
+    discount_value
+    from_location_gps
+    from_location_text
+    id
+    order_time
+    payment_type
+    refund_amount
+    stripe_fees
+    stripe_info
+    
+    tax
+    to_location_address
+    to_location_gps
+  
+    items {
+      actual_cost
+      estimated_cost
+      id
+      image
+      name
+      notes
+      unavailable
+    }
+    delivery_order {
+      schedule_time
+        customer {
+      user {
+        id
+        image
+        name
+        language_id
+      }
+    }
+      chat_with_customer_id
+        chat_with_service_provider_id
+       dropoff_address
+    dropoff_gps
+    estimated_arrival_at_dropoff_time
+    estimated_arrival_at_pickup_time
+    estimated_package_ready_time
+      pickup_address
+      pickup_gps
+      delivery_company {
+        id
+        details {
+          image
+          name
+           location {
+          gps
+          address
+        }
+        }
+      }
+      delivery_cost
+      in_process
+      id
+      schedule_time
+
+      status
+      service_provider_type
+      trip_distance
+      trip_duration
+      trip_polyline
+      package_ready
+      package_cost
+      estimated_arrival_at_dropoff_time
+      direction
+      service_provider_id
+      delivery_driver {
+      
+
+        user {
+          name
+          image
+          id
+        }
+      }
+    }
+  }
+}

@@ -14,10 +14,8 @@ import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -174,8 +172,9 @@ class AuthController extends GetxController {
   /// This Functions takes a File (Image) and an optional [isCompressed]
   ///
   /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
-  Future<String> uploadUserImgToFbStorage({
+  Future<String> uploadImgToFbStorage({
     required File imageFile,
+    String? path,
     bool isCompressed = false,
   }) async {
     File compressedFile = imageFile;
@@ -191,7 +190,7 @@ class AuthController extends GetxController {
     }
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
-    final String imgPath =
+    final String imgPath = path ??
         "users/$hasuraUserId/avatar/$hasuraUserId.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance

@@ -91,7 +91,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             trip_distance: checkoutReq.tripDistance,
             trip_duration: checkoutReq.tripDuration,
             trip_polyline: checkoutReq.tripPolyline,
-            package_cost: customerCart.cost
+            package_cost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
+            distance_from_base: checkoutReq.distanceFromBase
           }
         }: undefined,
         payment_type: checkoutReq.paymentType,
@@ -127,7 +128,6 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       id: true,
       chat_id: true,
       order_time: true,
-      items_cost: true,
       delivery: {
         id: true,
         chat_with_customer_id: true,
@@ -191,7 +191,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       status: DeliveryOrderStatus.OrderReceived,
       customerId: customerCart.customerId,
       deliveryCost: checkoutReq.deliveryCost,
-      packageCost: checkoutReq.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
+      packageCost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
       orderTime: response.insert_restaurant_order_one.order_time,
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
@@ -200,6 +200,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       serviceProviderType: DeliveryServiceProviderType.Restaurant,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
+      distanceFromBase: checkoutReq.distanceFromBase
     }
   } else {
     deliveryOrder = {
@@ -213,7 +214,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       status: DeliveryOrderStatus.OrderReceived,
       customerId: customerCart.customerId,
       deliveryCost: checkoutReq.deliveryCost,
-      packageCost: checkoutReq.paymentType == PaymentType.Cash ? response.insert_restaurant_order_one.items_cost : 0,
+      packageCost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
       orderTime: response.insert_restaurant_order_one.order_time,
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,

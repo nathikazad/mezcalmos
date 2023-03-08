@@ -71,6 +71,7 @@ class CustomerPastOrdersList extends StatelessWidget {
             return MinimalOrderCard(
               order: order,
               forCustomer: true,
+              showOrderType: true,
               onTap: () {
                 if (order.orderType == OrderType.Laundry) {
                   CustLaundryOrderView.navigate(orderId: order.id);

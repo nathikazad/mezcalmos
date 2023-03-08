@@ -70,7 +70,8 @@ Future<List<Review>?> get_service_reviews(
   if (data == null) {
     throw Exception("🚨🚨🚨 Hasura query  exception =>${response.exception}");
   } else {
-    mezDbgPrint(" 😍😍😍😍 Getting avg rating =======>>>>>>>>>>>>$data");
+    mezDbgPrint(
+        " 😍😍😍😍 Getting service reviews =======>>>>>>>>>>>>${response.parsedData?.toJson()}");
     return data.map<Review>((Query$get_service_reviews$review reviewData) {
       return Review(
           id: reviewData.id,

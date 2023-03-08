@@ -155,7 +155,7 @@
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Método de pago",
-              "cash": "Dinero",
+              "cash": "Efectivo",
               "newcard": "Nueva tarjeta",
               "applepay": "Apple Pay",
               "googlepay": "Google Pay",
@@ -678,9 +678,9 @@
           "ready": "Paquete listo",
           "atPickUp": "En la recogida",
           "otwDropOff": "En el camino de caída",
-          "delivered": "Entregada",
-          "received": "Recibió",
-          "canceled": "Cancelada",
+          "delivered": "Orden entregada",
+          "received": "orden recibida",
+          "canceled": "Orden cancelada",
           "atDropOff": "En la caídaa"
         }
       },
@@ -819,7 +819,7 @@
             "error": "Error",
             "bankTransfer": "Transferencia bancaria",
             "bankError": "El número de cuenta no es válido",
-            "cash": "Dinero",
+            "cash": "Efectivo",
             "card": "Tarjeta",
             "requirements": "Requisitos",
             "acceptedPayments": "Pagos aceptados",
@@ -1069,7 +1069,7 @@
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
-        "cash": "Dinero",
+        "cash": "Efectivo",
         "newcard": "Nueva tarjeta",
         "applepay": "Apple Pay",
         "googlepay": "Google Pay",
@@ -1598,8 +1598,24 @@
         "scheduled": "Programada",
         "dvTime": "El tiempo de entrega",
         "paymentMethod": "Método de pago",
-        "cash": "Dinero",
+        "schTime" : "Hora programada",
+        "actualCost" : "Costo real",
+        "orderDetails" : "Detalles del pedido",
+        "orderItems" : "Encargar artículos",
+        "addCost" : "Agregar costo",
+        "save" : "Ahorrar",
+        "note" : "Nota",
+        "tax" : "Impuesto",
+        "estCost" : "Costo estimado",
+        "addTax" : "Agregar costo fiscal",
+        "bill" : "Factura",
+        "upload" : "Subir",
+        "cancel" : "Cancelar",
+        "markAv" : "Marca como disponible",
+        "markUnav" : "Marca como no disponible",
+        "cash": "Efectivo",
         "from": "De",
+        "card" : "Card",
         "deliveredTo": "Entregado a",
         "deliveryCost": "Coste de envío",
         "customer": "Cliente",
@@ -1609,6 +1625,7 @@
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Órdenes actuales",
+          "openOrders": "Ordenes abiertas",
           "offlineTitle": "Estas desconectado",
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Órdenes Pasadas",
@@ -1647,7 +1664,8 @@
           },
           "Components": {
             "AnimatedOrderInfoCard": {
-              "cash": "Dinero",
+              "cash": "Efectivo",
+              "details" : "Detalles",
               "card": "Tarjeta"
             },
             "DriverBottomLaundryOrderCard": {
@@ -1693,6 +1711,7 @@
               "packageReady": "Paquete listo",
               "dvTime": "El tiempo de entrega",
               "set": "Establecer",
+              "setTime" : "Elige hora",
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
@@ -1707,7 +1726,8 @@
                 "justReady": "Listo para la entrega",
                 "scheduled": "Pedido programado",
                 "delivered": "Orden Entregado",
-                "canceled": "Orden Cancelada"
+                "canceled": "Orden Cancelada",
+                "received" :"orden recibida"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirmar la recogida",
@@ -2270,7 +2290,7 @@
             "error": "Error",
             "bankTransfer": "Transferencia bancaria",
             "bankError": "El número de cuenta no es válido",
-            "cash": "Dinero",
+            "cash": "Efectivo",
             "card": "Tarjeta",
             "requirements": "Requisitos",
             "acceptedPayments": "Pagos aceptados",
@@ -2362,6 +2382,7 @@
     "to": "a",
     "required": "Requerida",
     "error": "error",
-    "noRoute": "No se encontró ruta.Ingrese un destino válido"
+    "noRoute": "No se encontró ruta.Ingrese un destino válido",
+    "minutes" :"minutos"
   }
 }

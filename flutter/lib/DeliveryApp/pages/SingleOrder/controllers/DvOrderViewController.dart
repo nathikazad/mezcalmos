@@ -10,7 +10,9 @@ import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
@@ -93,7 +95,7 @@ class DvOrderViewcontroller {
 
   void initOrderMap() {
     mezDbgPrint(
-        "Locations 📍  \n DROPOFF : ${_order.value!.dropoffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
+        "Locations 📍  \n DROPOFF : ${_order.value!.dropoffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation?.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
     Future<void>.microtask(
       () => deliveryAuthAuthController.currentLocation != null
           ? mapController.setLocation(
@@ -120,7 +122,7 @@ class DvOrderViewcontroller {
     );
     // Restaurant Marker
     mapController.addOrUpdatePackageMarkerMarker(
-      latLng: _order.value?.pickupLocation.toLatLng(),
+      latLng: _order.value?.pickupLocation?.toLatLng(),
     );
     //   if (_order.value != null) handleRestaurantOrder(_order.value!);
 
@@ -239,7 +241,9 @@ class DvOrderViewcontroller {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
       await CloudFunctions.delivery2_changeStatus(
-          deliveryId: order.id, newStatus: status);
+        deliveryId: order.id,
+        newStatus: status,
+      );
     } on FirebaseFunctionsException catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);

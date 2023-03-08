@@ -10,6 +10,7 @@ class DeliveryCompany extends Service {
       required super.state,
       required super.serviceDetailsId,
       required super.languages,
+      required super.schedule,
       // required this.deliveryRaidus,
       required this.creationTime});
   // int deliveryRaidus;
@@ -22,10 +23,15 @@ class DeliveryCompany extends Service {
   }) {
     return DeliveryCompany(
         info: userInfo ?? info,
+        schedule: schedule,
         state: state ?? this.state,
         serviceDetailsId: serviceDetailsId,
         // deliveryRaidus: deliveryRaidus,
         creationTime: creationTime,
         languages: languages ?? this.languages);
+  }
+
+  bool isOpen() {
+    return state.isOpen && (schedule?.isOpen() ?? true);
   }
 }

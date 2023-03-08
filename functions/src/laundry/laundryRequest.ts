@@ -1,17 +1,16 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { deliveryNewOrderMessage } from "../delivery/bgNotificationMessages";
 import { setLaundryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
-import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { updateDeliveryOrderCompany } from "../shared/graphql/delivery/updateDelivery";
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundryOrder";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
+import { notifyDeliveryCompany } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { CustomerAppType, Language, Location } from "../shared/models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { LaundryOrder, NewLaundryOrderNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import { ServiceProvider } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
@@ -34,6 +33,7 @@ export interface LaundryRequestDetails {
     tripDistance: number,
     tripDuration: number,
     tripPolyline: string
+    distanceFromBase?: number
 }
 export interface ReqLaundryResponse {
     orderId: number
@@ -59,6 +59,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
     if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
         updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
+        notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry)
     }
 
     notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
@@ -146,24 +147,5 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
           }
         });
     }
-    if(laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
-        let deliveryOperators = await getDeliveryOperators(laundryStore.deliveryPartnerId!);
-
-        let fromCustomerNotification: Notification = {
-            foreground: <OrderNotification>{
-                time: (new Date()).toISOString(),
-                notificationType: NotificationType.NewOrder,
-                orderType: OrderType.Laundry,
-                notificationAction: NotificationAction.ShowPopUp,
-                orderId: laundryOrder.fromCustomerDeliveryId
-            },
-            background: deliveryNewOrderMessage,
-            linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
-        }
-        deliveryOperators.forEach((d) => {
-            pushNotification(d.user?.firebaseId!, fromCustomerNotification, d.notificationInfo, ParticipantType.DeliveryOperator);
-        });
-    }
-
 }
   

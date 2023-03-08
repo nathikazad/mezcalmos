@@ -1,4 +1,4 @@
-import { NewRestaurantOrderNotification, RestaurantOrder  } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { NewRestaurantOrderNotification  } from '../shared/models/Services/Restaurant/RestaurantOrder';
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { Location, Language, CustomerAppType } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
@@ -11,16 +11,15 @@ import { getCart } from "../shared/graphql/restaurant/cart/getCart";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Cart } from "../shared/models/Services/Restaurant/Cart";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
-import { deliveryNewOrderMessage } from '../delivery/bgNotificationMessages';
-import { getDeliveryOperators } from '../shared/graphql/delivery/operator/getDeliveryOperator';
 import { ServiceProvider } from '../shared/models/Services/Service';
+import { notifyDeliveryCompany } from '../shared/helper';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
@@ -36,6 +35,7 @@ export interface CheckoutRequest {
   scheduledTime?: string,
   stripePaymentId?: string,
   stripeFees?: number,
+  distanceFromBase?: number
   tax?: number,
   discountValue?: number
 }
@@ -76,7 +76,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
     updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, restaurant.deliveryPartnerId!);
-    notifyDeliveryOperators(orderResponse.restaurantOrder, restaurant.deliveryPartnerId!);
+    notifyDeliveryCompany(orderResponse.deliveryOrder, restaurant.deliveryPartnerId!, OrderType.Restaurant);
   }
   
  
@@ -202,24 +202,4 @@ function notifyOperators(orderId: number, restaurant: ServiceProvider) {
       }
     });
   }
-}
-
-async function notifyDeliveryOperators(restaurantOrder: RestaurantOrder, deliveryPartnerId: number) {
-  let deliveryOperators = await getDeliveryOperators(deliveryPartnerId);
-
-    let notification: Notification = {
-        foreground: <OrderNotification>{
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
-        orderType: OrderType.Restaurant,
-        notificationAction: NotificationAction.ShowPopUp,
-        orderId: restaurantOrder.deliveryId
-        },
-        background: deliveryNewOrderMessage,
-        linkUrl: orderUrl(OrderType.Restaurant, restaurantOrder.orderId!)
-    }
-
-    deliveryOperators.forEach((d) => {
-        pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
-    });
 }

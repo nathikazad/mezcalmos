@@ -58,7 +58,7 @@ extension DeliveryOrderHelper on DeliveryOrder {
         return Container(
           // padding: const EdgeInsets.only(right: 10.0),
           child: Icon(
-            Icons.move_to_inbox_rounded,
+            Icons.shopping_bag,
             size: 35,
             color: primaryBlueColor,
           ),

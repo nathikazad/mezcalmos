@@ -120,6 +120,16 @@ export const deliveryOrderStatusChangeMessages: { [id in DeliveryOrderStatus]: B
       body: ""
     }
   },
+  [DeliveryOrderStatus.CancelledByAdmin]: {
+    [Language.EN]: {
+      title: "",
+      body: ""
+    },
+    [Language.ES]: {
+      title: "",
+      body: ""
+    }
+  },
   [DeliveryOrderStatus.OrderReceived]: {
     [Language.EN]: {
       title: "",

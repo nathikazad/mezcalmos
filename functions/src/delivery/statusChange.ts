@@ -8,6 +8,12 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { changeRestaurantOrderStatus } from "./restaurantStatusChange";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 import { changeLaundryOrderStatus } from "./laundryStatusChange";
+import { CourierOrderStatusChangeNotification } from "../shared/models/Services/Courier/Courier";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { isMezAdmin } from "../shared/helper";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
@@ -19,9 +25,17 @@ let statusArrayInSeq: Array<DeliveryOrderStatus> = [
 ]
 
 function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
+  if(newStatus == DeliveryOrderStatus.CancelledByAdmin) {
+    if(!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
+      throw new HttpsError(
+        "internal",
+        "order cannot be cancelled since it is not in process"
+      );
+    }
+    return;
+  }
   if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
     && (currentStatus != DeliveryOrderStatus.OrderReceived)
-   
   ) {
     throw new HttpsError(
       "internal",
@@ -34,7 +48,7 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
     );
   }
 }
-
+ 
 export interface ChangeDeliveryStatusDetails {
   deliveryId: number,
   newStatus: DeliveryOrderStatus
@@ -44,7 +58,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
 
   let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
 
-  errorChecks(deliveryOrder, userId);
+  await errorChecks(deliveryOrder, userId, changeDeliveryStatusDetails.newStatus);
 
   let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
 
@@ -60,12 +74,14 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
     case OrderType.Laundry:
       changeLaundryOrderStatus(changeDeliveryStatusDetails, customer, deliveryOrder)
       break;
+    case OrderType.Courier:
+      notifyCourierStatusChange(deliveryOrder, customer);
     default:
       break;
   }
 }
 
-function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
+async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStatus: DeliveryOrderStatus) {
   if (deliveryOrder.deliveryDriver == null) {
     throw new HttpsError(
       "internal",
@@ -82,10 +98,56 @@ function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
       "delivery order is complete or cancelled"
     );
   }
-  if (userId != deliveryOrder.deliveryDriver.userId) {
-    throw new HttpsError(
-      "internal",
-      "order driver mismatch"
-    );
+  if((await isMezAdmin(userId))) {
+    if(newStatus != DeliveryOrderStatus.CancelledByAdmin)
+      throw new HttpsError(
+        "internal",
+        "Mez admin cannot change delivery status"
+      );
+  } else {
+    if (userId != deliveryOrder.deliveryDriver.userId) {
+      throw new HttpsError(
+        "internal",
+        "order driver mismatch"
+      );
+    }
+    if(newStatus == DeliveryOrderStatus.CancelledByAdmin)
+      throw new HttpsError(
+        "internal",
+        "Delivery driver cannot cancel delivery from admin"
+      );
+  }
+}
+
+function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
+  
+  let notification: Notification = {
+    foreground: <CourierOrderStatusChangeNotification>{
+      status: deliveryOrder.status,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Courier,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      orderId: deliveryOrder.deliveryId
+    },
+    // todo @SanchitUke fix the background message based on Restaurant Order Status
+    background: deliveryOrderStatusChangeMessages[deliveryOrder.status],
+    linkUrl: '/'
+  };
+
+  pushNotification(
+    customer.firebaseId,
+    notification,
+    customer.notificationInfo,
+    ParticipantType.Customer,
+    customer.language
+  );
+  if(deliveryOrder.status == DeliveryOrderStatus.CancelledByAdmin && deliveryOrder.deliveryDriver) {
+    pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!,
+      notification,
+      deliveryOrder.deliveryDriver.notificationInfo,
+      ParticipantType.DeliveryDriver,
+      deliveryOrder.deliveryDriver.user?.language
+  );
   }
 }

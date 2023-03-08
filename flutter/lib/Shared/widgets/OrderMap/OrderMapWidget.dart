@@ -14,7 +14,7 @@ class OrderMapWidget extends StatefulWidget {
   final int deliveryOrderId;
   final bool updateDriver;
   final String? polyline;
-  final MezLocation from;
+  final MezLocation? from;
   final MezLocation to;
 
   @override
