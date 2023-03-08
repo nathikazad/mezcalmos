@@ -49,6 +49,9 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           orderData.restaurant_order!.stripe_info);
     }
     return DeliveryOrder(
+        scheduleTime: (orderData.schedule_time != null)
+            ? DateTime.tryParse(orderData.schedule_time!)
+            : null,
         id: orderData.id,
         packageReady: orderData.package_ready,
         orderType: orderData.order_type.toOrderType(),
@@ -99,10 +102,10 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
             ? DateTime.parse(orderData.estimated_package_ready_time!)
             : null,
         packageCost: orderData.package_cost,
-        pickupLocation: (orderData.pickup_address != null &&
-                orderData.pickup_gps != null)
-            ? MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
-            : null,
+        pickupLocation:
+            (orderData.pickup_address != null && orderData.pickup_gps != null)
+                ? MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+                : null,
         dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
         chatWithCustomerId: orderData.chat_with_customer_id,
         chatWithServiceProviderId: orderData.chat_with_service_provider_id,
@@ -138,6 +141,9 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
   }
   return DeliveryOrder(
       id: orderData.id,
+      scheduleTime: (orderData.schedule_time != null)
+          ? DateTime.tryParse(orderData.schedule_time!)
+          : null,
       packageReady: orderData.package_ready,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: _paymentInfo,
@@ -180,11 +186,11 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
           orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,
       packageCost: orderData.package_cost,
-      driverLocation: (orderData.delivery_driver != null &&
-              orderData.delivery_driver?.current_location != null)
-          ? LatLng(orderData.delivery_driver!.current_location!.latitude,
-              orderData.delivery_driver!.current_location!.longitude)
-          : null,
+      driverLocation:
+          (orderData.delivery_driver != null && orderData.delivery_driver?.current_location != null)
+              ? LatLng(orderData.delivery_driver!.current_location!.latitude,
+                  orderData.delivery_driver!.current_location!.longitude)
+              : null,
       pickupLocation: (orderData.pickup_address != null && orderData.pickup_gps != null)
           ? MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
           : null,
@@ -525,6 +531,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
   return DeliveryOrder(
       deliveryDirection: DeliveryDirection.FromCustomer,
       packageReady: false,
+      scheduleTime: null,
       id: orderData.id,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: null,

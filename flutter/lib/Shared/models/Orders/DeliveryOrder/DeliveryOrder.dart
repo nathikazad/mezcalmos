@@ -37,6 +37,7 @@ class DeliveryOrder {
   DateTime? estimatedArrivalAtDropoffTime;
   DateTime? estimatedArrivalAtPickupTime;
   DateTime? estimatedPackageReadyTime;
+  DateTime? scheduleTime;
   //bool driverAssigned;
   DeliveryOrder(
       {required this.orderType,
@@ -62,6 +63,7 @@ class DeliveryOrder {
       required this.packageReady,
       required this.estimatedArrivalAtDropoffTime,
       required this.serviceOrderId,
+      required this.scheduleTime,
       //  this.driverAssigned = false,
       required this.estimatedArrivalAtPickupTime,
       required this.estimatedPackageReadyTime,
@@ -96,6 +98,7 @@ class DeliveryOrder {
     return DeliveryOrder(
       id: id ?? this.id,
       packageReady: packageReady,
+      scheduleTime: scheduleTime,
       orderType: orderType,
       serviceInfo: serviceInfo ?? this.serviceInfo,
       driverInfo: driverInfo ?? this.driverInfo,

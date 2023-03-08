@@ -11,6 +11,7 @@ query get_courier_order_by_id($orderId: Int!) {
     stripe_fees
     stripe_info
     tax
+    
     to_location_address
     to_location_gps
   
@@ -24,6 +25,7 @@ query get_courier_order_by_id($orderId: Int!) {
       unavailable
     }
     delivery_order {
+      schedule_time
         customer {
       user {
         id
@@ -129,6 +131,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
     refund_amount
     stripe_fees
     stripe_info
+    
     tax
     to_location_address
     to_location_gps
@@ -143,6 +146,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
       unavailable
     }
     delivery_order {
+      schedule_time
         customer {
       user {
         id

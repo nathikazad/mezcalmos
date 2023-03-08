@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAva
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -25,7 +26,6 @@ extension OrderCardInfoExtension on OrderInfoCardState {
       : OrderInfoCardState.Maximized;
 }
 
-// ignore: constant_identifier_names
 enum OrderInfoCardState { Maximized, Minimized }
 
 typedef void OnOrderInfoCardStateChange(OrderInfoCardState state);
@@ -34,12 +34,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   final OrderInfoCardState initialCardState;
   final OnOrderInfoCardStateChange? onCardStateChange;
   bool isCustomerRowFirst;
-  // customer part (top row of animated container)
+
   final String customerName;
   final String customerImage;
   final Widget customerTimeWidget;
   final VoidCallback onCustomerMsgClick;
-  // service provider part (bottom row)
+
   final String serviceProviderName;
   final String serviceProviderImage;
   final Widget serviceProviderTimeWidget;
@@ -143,7 +143,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     );
   }
 
-  // widgets
   Row cardHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,6 +181,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               onCardStateChange?.call(initialCardState.opposit());
             }
           },
+          iconSize: 20,
           padding: const EdgeInsets.all(3),
           icon: initialCardState == OrderInfoCardState.Minimized
               ? Icons.keyboard_arrow_up_rounded
@@ -294,7 +294,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                 Flexible(
                   child: TwoCirclesAvatar(
                       topImg: customerImage,
-                      // bottomImg: customerImage,
                       bottomIconData: order.orderType.toIcon()),
                 ),
                 Flexible(
@@ -303,7 +302,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     height: 40,
                     borderRadius: 30,
                     icon: Icons.arrow_forward,
-                    label: "Details",
+                    label: "${_i18n()['details']}",
                     onClick: () async {
                       unawaited(MezRouter.toNamed<void>(
                         getOrderDetailsRoute(order.id),
@@ -314,12 +313,11 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ],
             ),
           ),
-
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "\$${order.packageCost}",
+                "${order.packageCost.toPriceString(rounded: true)}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -333,45 +331,15 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
             ],
           ),
-
           Container(
             margin: const EdgeInsets.only(left: 8),
             child: MezIconButton(
               onTap: () {},
               icon: Icons.edit,
               iconSize: 20,
+              padding: const EdgeInsets.all(3),
             ),
           )
-          // Flexible(
-          //   flex: 9,
-          //   child: Padding(
-          //     padding: EdgeInsets.only(right: 20),
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         orderTimeWidget(),
-          //         SizedBox(height: 10),
-          //         routeInformationWidget(),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // InkWell(
-          //   onTap: () {
-          //     MezRouter.toNamed<void>(
-          //       getOrderDetailsRoute(order.id),
-          //     );
-          //   },
-          //   child: Align(
-          //     alignment: Alignment.centerRight,
-          //     child: Icon(
-          //       Icons.article_rounded,
-          //       color: Color.fromRGBO(103, 121, 254, 1),
-          //       size: 30,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -379,7 +347,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
 
   Row orderTimeWidget() {
     return Row(
-      // direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -392,7 +359,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         SizedBox(width: 3),
         Text(
-          // 'Today, 10:53 AM',
           DateFormat('EE, hh:mm a').format(order.orderTime.toLocal()),
           overflow: TextOverflow.visible,
           style: TextStyle(
@@ -407,15 +373,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
 
   Flex routeInformationWidget() {
     return Row(
-      // direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // if (order.pickupLocation == null)
-        //   SizedBox(
-        //     width: 10,
-        //   ),
         Icon(
           Icons.delivery_dining,
           color: Color.fromRGBO(73, 73, 73, 1),

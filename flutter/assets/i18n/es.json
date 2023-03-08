@@ -1598,8 +1598,24 @@
         "scheduled": "Programada",
         "dvTime": "El tiempo de entrega",
         "paymentMethod": "Método de pago",
+        "schTime" : "Hora programada",
+        "actualCost" : "Costo real",
+        "orderDetails" : "Detalles del pedido",
+        "orderItems" : "Encargar artículos",
+        "addCost" : "Agregar costo",
+        "save" : "Ahorrar",
+        "note" : "Nota",
+        "tax" : "Impuesto",
+        "estCost" : "Costo estimado",
+        "addTax" : "Agregar costo fiscal",
+        "bill" : "Factura",
+        "upload" : "Subir",
+        "cancel" : "Cancelar",
+        "markAv" : "Marca como disponible",
+        "markUnav" : "Marca como no disponible",
         "cash": "Efectivo",
         "from": "De",
+        "card" : "Card",
         "deliveredTo": "Entregado a",
         "deliveryCost": "Coste de envío",
         "customer": "Cliente",
@@ -1648,6 +1664,7 @@
           "Components": {
             "AnimatedOrderInfoCard": {
               "cash": "Efectivo",
+              "details" : "Detalles",
               "card": "Tarjeta"
             },
             "DriverBottomLaundryOrderCard": {
@@ -2364,6 +2381,7 @@
     "to": "a",
     "required": "Requerida",
     "error": "error",
-    "noRoute": "No se encontró ruta.Ingrese un destino válido"
+    "noRoute": "No se encontró ruta.Ingrese un destino válido",
+    "minutes" :"minutos"
   }
 }

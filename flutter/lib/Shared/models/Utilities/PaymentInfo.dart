@@ -5,7 +5,6 @@
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as cloudFunctionModels;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/BankInfo.dart';
 
 enum PaymentType { Cash, Card, BankTransfer }
@@ -141,7 +140,7 @@ class PaymentInfo {
       PaymentType.BankTransfer: false,
       PaymentType.Cash: true
     };
-  
+
     acceptedPayments?.forEach((String key, data) {
       _acceptedPayments[key.toPaymentType()] = data;
     });

@@ -1,6 +1,6 @@
 query get_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-   
+   schedule_time
     chat_with_customer_id
     order_type
     direction
@@ -186,6 +186,7 @@ subscription listen_on_driver_order($orderId: Int!) {
     chat_with_customer_id
     order_type
     direction
+    schedule_time
     chat_with_service_provider_id
     delivery_company {
       id

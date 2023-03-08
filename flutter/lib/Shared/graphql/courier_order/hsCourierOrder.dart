@@ -41,6 +41,9 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
     return CourierOrder(
       orderType: OrderType.Courier,
       id: orderData.id,
+      scheduleTime: (orderData.delivery_order.schedule_time != null)
+          ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
+          : null,
       deliveryDirection:
           orderData.delivery_order.direction.toDeliveryDirection(),
       customerInfo: UserInfo(
@@ -163,6 +166,9 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
       }
       return CourierOrder(
         orderType: OrderType.Courier,
+        scheduleTime: (orderData.delivery_order.schedule_time != null)
+            ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
+            : null,
         id: orderData.id,
         deliveryDirection:
             orderData.delivery_order.direction.toDeliveryDirection(),

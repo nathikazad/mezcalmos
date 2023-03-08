@@ -26,6 +26,7 @@ class CourierOrder extends DeliveryOrder {
       required super.chatWithCustomerId,
       required super.chatWithServiceProviderId,
       required super.paymentType,
+      required super.scheduleTime,
       required super.driverInfo,
       required this.items,
       required super.stripeOrderPaymentInfo,

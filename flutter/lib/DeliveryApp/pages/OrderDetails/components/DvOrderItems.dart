@@ -4,10 +4,14 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["OrderDetailsScreen"];
 
 class DvOrderItems extends StatelessWidget {
   const DvOrderItems({super.key, required this.viewController});
@@ -20,6 +24,16 @@ class DvOrderItems extends StatelessWidget {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "${_i18n()['orderItems']}",
+                  style: Get.textTheme.bodyLarge,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
                 Column(
                     children: List.generate(
                         viewController.items.value!.length,
@@ -29,7 +43,7 @@ class DvOrderItems extends StatelessWidget {
                                     viewController.items.value![index].image,
                                 expandableWidget: [
                                   Text(
-                                    "Estimated cost",
+                                    "${_i18n()['estCost']}",
                                     style: Get.textTheme.bodyLarge,
                                   ),
                                   SizedBox(
@@ -46,7 +60,7 @@ class DvOrderItems extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Note",
+                                          "${_i18n()['note']}",
                                           style: Get.textTheme.bodyLarge,
                                         ),
                                         SizedBox(
@@ -60,8 +74,8 @@ class DvOrderItems extends StatelessWidget {
                                   MezButton(
                                     label: (viewController
                                             .items.value![index].unavailable)
-                                        ? "Mark as available"
-                                        : "Mark as unavailable",
+                                        ? "${_i18n()['markAv']}"
+                                        : "${_i18n()['markUnav']}",
                                     backgroundColor: (!viewController
                                             .items.value![index].unavailable)
                                         ? offRedColor
@@ -103,7 +117,7 @@ class DvOrderItems extends StatelessWidget {
           (viewController.items.value![index].actualCost == null &&
                   !viewController.items.value![index].unavailable)
               ? MezButton(
-                  label: "Add cost",
+                  label: "${_i18n()['addCost']}",
                   height: 30,
                   width: 90,
                   borderRadius: 5,
@@ -176,9 +190,11 @@ class DvOrderItems extends StatelessWidget {
                         style: Get.textTheme.bodyLarge,
                       ),
                     ),
-                    Divider(),
+                    Divider(
+                      height: 15,
+                    ),
                     Text(
-                      "Actual cost",
+                      "${_i18n()['actualCost']}",
                       style: Get.textTheme.bodyMedium,
                     ),
                     SizedBox(
@@ -198,27 +214,37 @@ class DvOrderItems extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 25,
-                    ),
-                    MezButton(
-                      label: "Save",
-                      onClick: () async {
-                        await viewController.saveCost(
-                            itemId: viewController.items.value![index].id,
-                            index: index);
-                        MezRouter.popDialog();
-                      },
-                    ),
-                    SizedBox(
                       height: 15,
                     ),
-                    MezButton(
-                      label: "Cancel",
-                      backgroundColor: offRedColor,
-                      textColor: Colors.red,
-                      onClick: () async {
-                        MezRouter.popDialog();
-                      },
+                    Row(
+                      children: [
+                        Flexible(
+                          child: MezButton(
+                            height: 45,
+                            label: "${_i18n()['cancel']}",
+                            backgroundColor: offRedColor,
+                            textColor: Colors.red,
+                            onClick: () async {
+                              MezRouter.popDialog();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Flexible(
+                          child: MezButton(
+                            height: 45,
+                            label: "${_i18n()['save']}",
+                            onClick: () async {
+                              await viewController.saveCost(
+                                  itemId: viewController.items.value![index].id,
+                                  index: index);
+                              MezRouter.popDialog();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 15,

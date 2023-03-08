@@ -8,10 +8,12 @@ class MezExpandableCard extends StatefulWidget {
       {super.key,
       this.showImage = true,
       this.imageUrl,
+      this.marging = const EdgeInsets.only(bottom: 15),
       required this.title,
       this.imageShape = BoxShape.rectangle,
       required this.expandableWidget});
   final bool showImage;
+  final EdgeInsets marging;
 
   final String? imageUrl;
   final Widget title;
@@ -27,7 +29,7 @@ class _MezExpandableCardState extends State<MezExpandableCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.only(top: 15),
+      margin: widget.marging,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: (widget.expandableWidget.isEmpty)

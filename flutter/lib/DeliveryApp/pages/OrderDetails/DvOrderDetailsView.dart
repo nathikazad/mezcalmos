@@ -8,9 +8,11 @@ import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDeta
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -63,74 +65,95 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-
                 Text(
-                  "${_i18n()["from"]}",
-                  style: Get.textTheme.bodyLarge,
-                ),
-
-                Container(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                        viewController.order.value?.pickupLocation?.address ??
-                            "")),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "${_i18n()["deliveredTo"]}",
+                  "${_i18n()['orderDetails']}",
                   style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
-                Text("${viewController.order.value!.dropoffLocation.address}"),
-                SizedBox(
-                  height: 20,
+                Card(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (viewController.order.value!.scheduleTime != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${_i18n()["schTime"]}",
+                                style: Get.textTheme.bodyLarge,
+                              ),
+                              Container(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(viewController
+                                      .order.value!.scheduleTime!
+                                      .getOrderTime())),
+                              SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
+                        if (viewController.order.value!.pickupLocation != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${_i18n()["from"]}",
+                                style: Get.textTheme.bodyLarge,
+                              ),
+                              Container(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(viewController.order.value
+                                          ?.pickupLocation?.address ??
+                                      "")),
+                              SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
+                        Text(
+                          "${_i18n()["deliveredTo"]}",
+                          style: Get.textTheme.bodyLarge,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                            "${viewController.order.value!.dropoffLocation.address}"),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "${_i18n()["paymentMethod"]}",
+                          style: Get.textTheme.bodyLarge,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                            "${_i18n()[viewController.order.value!.paymentType.toNormalString().toLowerCase()]}"),
+                      ],
+                    ),
+                  ),
                 ),
-                //     OrderPaymentMethod(order: viewController.order.value!),
-
-                _serviceProviderCard(),
                 SizedBox(
-                  height: 10,
+                  height: 15,
+                ),
+                Text(
+                  "${_i18n()['customer']}",
+                  style: Get.textTheme.bodyLarge,
+                ),
+                SizedBox(
+                  height: 5,
                 ),
                 _customerCard(),
-                SizedBox(
-                  height: 20,
-                ),
                 DvOrderItems(
                   viewController: viewController,
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                MezCard(
-                  content: Text(
-                    "Bill",
-                    style: Get.textTheme.bodyLarge,
-                  ),
-                  action: Container(
-                    child: (viewController.billLoading.isTrue)
-                        ? CircularProgressIndicator()
-                        : (viewController.newBillUrl.value == null)
-                            ? Flexible(
-                                child: MezButton(
-                                  label: "Upload bill",
-                                  onClick: () async {
-                                    await viewController.editImage(context);
-                                  },
-                                  height: 30,
-                                  borderRadius: 5,
-                                ),
-                              )
-                            : CachedNetworkImage(
-                                imageUrl: viewController.newBillUrl.value!,
-                                width: 70,
-                                height: 40,
-                              ),
-                  ),
-                ),
-
+                _billCard(context),
                 OrderSummaryCard(
                   shippingCost: viewController.order.value!.deliveryCost,
                   orderCost: viewController.order.value!.packageCost,
@@ -147,7 +170,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         Flexible(
                           fit: FlexFit.tight,
                           child: Text(
-                            'Tax',
+                            "${_i18n()['tax']}",
                             style: Get.textTheme.bodyMedium,
                           ),
                         ),
@@ -172,19 +195,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     ),
                   ),
                 )
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Text(
-                //       "${_i18n()["deliveryCost"]}",
-                //       style: Get.textTheme.bodyLarge,
-                //     ),
-                //     Text(
-                //       viewController.order.value!.deliveryCost.toPriceString(),
-                //       style: Get.textTheme.bodyLarge,
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           );
@@ -194,6 +204,35 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           );
         }
       }),
+    );
+  }
+
+  MezCard _billCard(BuildContext context) {
+    return MezCard(
+      content: Text(
+        "${_i18n()['bill']}",
+        style: Get.textTheme.bodyLarge,
+      ),
+      action: Container(
+        child: (viewController.billLoading.isTrue)
+            ? CircularProgressIndicator()
+            : (viewController.newBillUrl.value == null)
+                ? Flexible(
+                    child: MezButton(
+                      label: "${_i18n()['upload']}",
+                      onClick: () async {
+                        await viewController.editImage(context);
+                      },
+                      height: 30,
+                      borderRadius: 5,
+                    ),
+                  )
+                : CachedNetworkImage(
+                    imageUrl: viewController.newBillUrl.value!,
+                    width: 70,
+                    height: 40,
+                  ),
+      ),
     );
   }
 
@@ -259,32 +298,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Card _serviceProviderCard() {
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(
-                  viewController.order.value!.serviceInfo.image),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Text(
-              "${viewController.order.value!.serviceInfo.name}",
-              style: Get.textTheme.bodyLarge,
-            ),
-            Spacer(),
-            Text(_getOrderType())
-          ],
-        ),
-      ),
-    );
-  }
-
   String _getOrderType() {
     switch (viewController.order.value!.serviceProviderType) {
       case ServiceProviderType.Restaurant:
@@ -320,11 +333,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        "Add tax cost",
+                        "${_i18n()['addTax']}",
                         style: Get.textTheme.bodyLarge,
                       ),
                     ),
-                    Divider(),
+                    Divider(
+                      height: 25,
+                    ),
                     TextFormField(
                       controller: viewController.taxText,
                       style: Get.textTheme.bodyLarge,
@@ -339,25 +354,35 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 25,
-                    ),
-                    MezButton(
-                      label: "Save",
-                      onClick: () async {
-                        await viewController.editTax();
-                        MezRouter.popDialog();
-                      },
-                    ),
-                    SizedBox(
                       height: 15,
                     ),
-                    MezButton(
-                      label: "Cancel",
-                      backgroundColor: offRedColor,
-                      textColor: Colors.red,
-                      onClick: () async {
-                        MezRouter.popDialog();
-                      },
+                    Row(
+                      children: [
+                        Flexible(
+                          child: MezButton(
+                            height: 45,
+                            label: "${_i18n()['cancel']}",
+                            backgroundColor: offRedColor,
+                            textColor: Colors.red,
+                            onClick: () async {
+                              MezRouter.popDialog();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: MezButton(
+                            height: 45,
+                            label: "${_i18n()['save']}",
+                            onClick: () async {
+                              await viewController.editTax();
+                              MezRouter.popDialog();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 15,

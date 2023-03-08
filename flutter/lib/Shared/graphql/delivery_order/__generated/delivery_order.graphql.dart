@@ -271,6 +271,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'schedule_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'chat_with_customer_id'),
             alias: null,
             arguments: [],
@@ -1349,6 +1356,7 @@ extension ClientExtension$Query$get_driver_order on graphql.GraphQLClient {
 
 class Query$get_driver_order$delivery_order_by_pk {
   Query$get_driver_order$delivery_order_by_pk({
+    this.schedule_time,
     required this.chat_with_customer_id,
     required this.order_type,
     required this.direction,
@@ -1388,6 +1396,7 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   factory Query$get_driver_order$delivery_order_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$schedule_time = json['schedule_time'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$order_type = json['order_type'];
     final l$direction = json['direction'];
@@ -1428,6 +1437,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk(
+      schedule_time: (l$schedule_time as String?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
       order_type: (l$order_type as String),
       direction: (l$direction as String),
@@ -1490,6 +1500,8 @@ class Query$get_driver_order$delivery_order_by_pk {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? schedule_time;
 
   final int chat_with_customer_id;
 
@@ -1568,6 +1580,8 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$schedule_time = schedule_time;
+    _resultData['schedule_time'] = l$schedule_time;
     final l$chat_with_customer_id = chat_with_customer_id;
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
     final l$order_type = order_type;
@@ -1652,6 +1666,7 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   @override
   int get hashCode {
+    final l$schedule_time = schedule_time;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$order_type = order_type;
     final l$direction = direction;
@@ -1690,6 +1705,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer = customer;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$schedule_time,
       l$chat_with_customer_id,
       l$order_type,
       l$direction,
@@ -1735,6 +1751,11 @@ class Query$get_driver_order$delivery_order_by_pk {
     }
     if (!(other is Query$get_driver_order$delivery_order_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$schedule_time = schedule_time;
+    final lOther$schedule_time = other.schedule_time;
+    if (l$schedule_time != lOther$schedule_time) {
       return false;
     }
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -1948,6 +1969,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
       _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk;
 
   TRes call({
+    String? schedule_time,
     int? chat_with_customer_id,
     String? order_type,
     String? direction,
@@ -2021,6 +2043,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? schedule_time = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? order_type = _undefined,
     Object? direction = _undefined,
@@ -2058,6 +2081,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_driver_order$delivery_order_by_pk(
+        schedule_time: schedule_time == _undefined
+            ? _instance.schedule_time
+            : (schedule_time as String?),
         chat_with_customer_id:
             chat_with_customer_id == _undefined || chat_with_customer_id == null
                 ? _instance.chat_with_customer_id
@@ -2263,6 +2289,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
   TRes _res;
 
   call({
+    String? schedule_time,
     int? chat_with_customer_id,
     String? order_type,
     String? direction,
@@ -7508,6 +7535,13 @@ const documentNodeSubscriptionlisten_on_driver_order =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'schedule_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'chat_with_service_provider_id'),
             alias: null,
             arguments: [],
@@ -8547,6 +8581,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     required this.chat_with_customer_id,
     required this.order_type,
     required this.direction,
+    this.schedule_time,
     this.chat_with_service_provider_id,
     this.delivery_company,
     required this.customer_id,
@@ -8593,6 +8628,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$order_type = json['order_type'];
     final l$direction = json['direction'];
+    final l$schedule_time = json['schedule_time'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$delivery_company = json['delivery_company'];
@@ -8640,6 +8676,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       chat_with_customer_id: (l$chat_with_customer_id as int),
       order_type: (l$order_type as String),
       direction: (l$direction as String),
+      schedule_time: (l$schedule_time as String?),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       delivery_company: l$delivery_company == null
           ? null
@@ -8716,6 +8753,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
   final String order_type;
 
   final String direction;
+
+  final String? schedule_time;
 
   final int? chat_with_service_provider_id;
 
@@ -8809,6 +8848,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     _resultData['order_type'] = l$order_type;
     final l$direction = direction;
     _resultData['direction'] = l$direction;
+    final l$schedule_time = schedule_time;
+    _resultData['schedule_time'] = l$schedule_time;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
@@ -8895,6 +8936,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$order_type = order_type;
     final l$direction = direction;
+    final l$schedule_time = schedule_time;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$delivery_company = delivery_company;
     final l$customer_id = customer_id;
@@ -8938,6 +8980,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$chat_with_customer_id,
       l$order_type,
       l$direction,
+      l$schedule_time,
       l$chat_with_service_provider_id,
       l$delivery_company,
       l$customer_id,
@@ -9024,6 +9067,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$direction = direction;
     final lOther$direction = other.direction;
     if (l$direction != lOther$direction) {
+      return false;
+    }
+    final l$schedule_time = schedule_time;
+    final lOther$schedule_time = other.schedule_time;
+    if (l$schedule_time != lOther$schedule_time) {
       return false;
     }
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -9234,6 +9282,7 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? chat_with_customer_id,
     String? order_type,
     String? direction,
+    String? schedule_time,
     int? chat_with_service_provider_id,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
@@ -9317,6 +9366,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? chat_with_customer_id = _undefined,
     Object? order_type = _undefined,
     Object? direction = _undefined,
+    Object? schedule_time = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? delivery_company = _undefined,
     Object? customer_id = _undefined,
@@ -9378,6 +9428,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
+        schedule_time: schedule_time == _undefined
+            ? _instance.schedule_time
+            : (schedule_time as String?),
         chat_with_service_provider_id:
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
@@ -9586,6 +9639,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? chat_with_customer_id,
     String? order_type,
     String? direction,
+    String? schedule_time,
     int? chat_with_service_provider_id,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,

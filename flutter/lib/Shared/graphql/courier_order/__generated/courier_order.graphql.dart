@@ -443,6 +443,13 @@ const documentNodeQueryget_courier_order_by_id = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'schedule_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'customer'),
                 alias: null,
                 arguments: [],
@@ -1672,6 +1679,7 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
 
 class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order {
   Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
+    this.schedule_time,
     required this.customer,
     required this.chat_with_customer_id,
     this.chat_with_service_provider_id,
@@ -1686,7 +1694,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     required this.delivery_cost,
     this.in_process,
     required this.id,
-    this.schedule_time,
     required this.status,
     required this.service_provider_type,
     this.trip_distance,
@@ -1702,6 +1709,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   factory Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order.fromJson(
       Map<String, dynamic> json) {
+    final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$chat_with_service_provider_id =
@@ -1719,7 +1727,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$delivery_cost = json['delivery_cost'];
     final l$in_process = json['in_process'];
     final l$id = json['id'];
-    final l$schedule_time = json['schedule_time'];
     final l$status = json['status'];
     final l$service_provider_type = json['service_provider_type'];
     final l$trip_distance = json['trip_distance'];
@@ -1732,6 +1739,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
     return Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+      schedule_time: (l$schedule_time as String?),
       customer:
           Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
               .fromJson((l$customer as Map<String, dynamic>)),
@@ -1753,7 +1761,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       delivery_cost: moneyFromJson(l$delivery_cost),
       in_process: (l$in_process as bool?),
       id: (l$id as int),
-      schedule_time: (l$schedule_time as String?),
       status: (l$status as String),
       service_provider_type: (l$service_provider_type as String),
       trip_distance: (l$trip_distance as int?),
@@ -1770,6 +1777,8 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? schedule_time;
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
       customer;
@@ -1801,8 +1810,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   final int id;
 
-  final String? schedule_time;
-
   final String status;
 
   final String service_provider_type;
@@ -1828,6 +1835,8 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$schedule_time = schedule_time;
+    _resultData['schedule_time'] = l$schedule_time;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -1862,8 +1871,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     _resultData['in_process'] = l$in_process;
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$schedule_time = schedule_time;
-    _resultData['schedule_time'] = l$schedule_time;
     final l$status = status;
     _resultData['status'] = l$status;
     final l$service_provider_type = service_provider_type;
@@ -1891,6 +1898,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   @override
   int get hashCode {
+    final l$schedule_time = schedule_time;
     final l$customer = customer;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -1906,7 +1914,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$delivery_cost = delivery_cost;
     final l$in_process = in_process;
     final l$id = id;
-    final l$schedule_time = schedule_time;
     final l$status = status;
     final l$service_provider_type = service_provider_type;
     final l$trip_distance = trip_distance;
@@ -1919,6 +1926,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$schedule_time,
       l$customer,
       l$chat_with_customer_id,
       l$chat_with_service_provider_id,
@@ -1933,7 +1941,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       l$delivery_cost,
       l$in_process,
       l$id,
-      l$schedule_time,
       l$status,
       l$service_provider_type,
       l$trip_distance,
@@ -1956,6 +1963,11 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     if (!(other
             is Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$schedule_time = schedule_time;
+    final lOther$schedule_time = other.schedule_time;
+    if (l$schedule_time != lOther$schedule_time) {
       return false;
     }
     final l$customer = customer;
@@ -2034,11 +2046,6 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$schedule_time = schedule_time;
-    final lOther$schedule_time = other.schedule_time;
-    if (l$schedule_time != lOther$schedule_time) {
       return false;
     }
     final l$status = status;
@@ -2126,6 +2133,7 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
       _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order;
 
   TRes call({
+    String? schedule_time,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
     int? chat_with_customer_id,
@@ -2142,7 +2150,6 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
     double? delivery_cost,
     bool? in_process,
     int? id,
-    String? schedule_time,
     String? status,
     String? service_provider_type,
     int? trip_distance,
@@ -2184,6 +2191,7 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
   static const _undefined = {};
 
   TRes call({
+    Object? schedule_time = _undefined,
     Object? customer = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? chat_with_service_provider_id = _undefined,
@@ -2198,7 +2206,6 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
     Object? delivery_cost = _undefined,
     Object? in_process = _undefined,
     Object? id = _undefined,
-    Object? schedule_time = _undefined,
     Object? status = _undefined,
     Object? service_provider_type = _undefined,
     Object? trip_distance = _undefined,
@@ -2213,6 +2220,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
   }) =>
       _then(
           Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+        schedule_time: schedule_time == _undefined
+            ? _instance.schedule_time
+            : (schedule_time as String?),
         customer: customer == _undefined || customer == null
             ? _instance.customer
             : (customer
@@ -2260,9 +2270,6 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
             ? _instance.in_process
             : (in_process as bool?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        schedule_time: schedule_time == _undefined
-            ? _instance.schedule_time
-            : (schedule_time as String?),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -2339,6 +2346,7 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
   TRes _res;
 
   call({
+    String? schedule_time,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
     int? chat_with_customer_id,
@@ -2355,7 +2363,6 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
     double? delivery_cost,
     bool? in_process,
     int? id,
-    String? schedule_time,
     String? status,
     String? service_provider_type,
     int? trip_distance,
@@ -6720,6 +6727,13 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'schedule_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'customer'),
                 alias: null,
                 arguments: [],
@@ -7921,6 +7935,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
 
 class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order {
   Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
+    this.schedule_time,
     required this.customer,
     required this.chat_with_customer_id,
     this.chat_with_service_provider_id,
@@ -7935,7 +7950,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     required this.delivery_cost,
     this.in_process,
     required this.id,
-    this.schedule_time,
     required this.status,
     required this.service_provider_type,
     this.trip_distance,
@@ -7951,6 +7965,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order.fromJson(
       Map<String, dynamic> json) {
+    final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$chat_with_service_provider_id =
@@ -7968,7 +7983,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_cost = json['delivery_cost'];
     final l$in_process = json['in_process'];
     final l$id = json['id'];
-    final l$schedule_time = json['schedule_time'];
     final l$status = json['status'];
     final l$service_provider_type = json['service_provider_type'];
     final l$trip_distance = json['trip_distance'];
@@ -7981,6 +7995,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+      schedule_time: (l$schedule_time as String?),
       customer:
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
               .fromJson((l$customer as Map<String, dynamic>)),
@@ -8002,7 +8017,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       delivery_cost: moneyFromJson(l$delivery_cost),
       in_process: (l$in_process as bool?),
       id: (l$id as int),
-      schedule_time: (l$schedule_time as String?),
       status: (l$status as String),
       service_provider_type: (l$service_provider_type as String),
       trip_distance: (l$trip_distance as int?),
@@ -8019,6 +8033,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? schedule_time;
 
   final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
       customer;
@@ -8050,8 +8066,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   final int id;
 
-  final String? schedule_time;
-
   final String status;
 
   final String service_provider_type;
@@ -8077,6 +8091,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$schedule_time = schedule_time;
+    _resultData['schedule_time'] = l$schedule_time;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -8111,8 +8127,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     _resultData['in_process'] = l$in_process;
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$schedule_time = schedule_time;
-    _resultData['schedule_time'] = l$schedule_time;
     final l$status = status;
     _resultData['status'] = l$status;
     final l$service_provider_type = service_provider_type;
@@ -8140,6 +8154,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   @override
   int get hashCode {
+    final l$schedule_time = schedule_time;
     final l$customer = customer;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -8155,7 +8170,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_cost = delivery_cost;
     final l$in_process = in_process;
     final l$id = id;
-    final l$schedule_time = schedule_time;
     final l$status = status;
     final l$service_provider_type = service_provider_type;
     final l$trip_distance = trip_distance;
@@ -8168,6 +8182,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$schedule_time,
       l$customer,
       l$chat_with_customer_id,
       l$chat_with_service_provider_id,
@@ -8182,7 +8197,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       l$delivery_cost,
       l$in_process,
       l$id,
-      l$schedule_time,
       l$status,
       l$service_provider_type,
       l$trip_distance,
@@ -8205,6 +8219,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     if (!(other
             is Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$schedule_time = schedule_time;
+    final lOther$schedule_time = other.schedule_time;
+    if (l$schedule_time != lOther$schedule_time) {
       return false;
     }
     final l$customer = customer;
@@ -8283,11 +8302,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$schedule_time = schedule_time;
-    final lOther$schedule_time = other.schedule_time;
-    if (l$schedule_time != lOther$schedule_time) {
       return false;
     }
     final l$status = status;
@@ -8375,6 +8389,7 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
       _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order;
 
   TRes call({
+    String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
     int? chat_with_customer_id,
@@ -8391,7 +8406,6 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
     double? delivery_cost,
     bool? in_process,
     int? id,
-    String? schedule_time,
     String? status,
     String? service_provider_type,
     int? trip_distance,
@@ -8433,6 +8447,7 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   static const _undefined = {};
 
   TRes call({
+    Object? schedule_time = _undefined,
     Object? customer = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? chat_with_service_provider_id = _undefined,
@@ -8447,7 +8462,6 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
     Object? delivery_cost = _undefined,
     Object? in_process = _undefined,
     Object? id = _undefined,
-    Object? schedule_time = _undefined,
     Object? status = _undefined,
     Object? service_provider_type = _undefined,
     Object? trip_distance = _undefined,
@@ -8462,6 +8476,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   }) =>
       _then(
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+        schedule_time: schedule_time == _undefined
+            ? _instance.schedule_time
+            : (schedule_time as String?),
         customer: customer == _undefined || customer == null
             ? _instance.customer
             : (customer
@@ -8509,9 +8526,6 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
             ? _instance.in_process
             : (in_process as bool?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        schedule_time: schedule_time == _undefined
-            ? _instance.schedule_time
-            : (schedule_time as String?),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -8588,6 +8602,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
   TRes _res;
 
   call({
+    String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
     int? chat_with_customer_id,
@@ -8604,7 +8619,6 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
     double? delivery_cost,
     bool? in_process,
     int? id,
-    String? schedule_time,
     String? status,
     String? service_provider_type,
     int? trip_distance,

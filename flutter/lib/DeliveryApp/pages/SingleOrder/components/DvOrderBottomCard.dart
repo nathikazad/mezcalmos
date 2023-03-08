@@ -180,8 +180,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                   }
                 },
                 icon: Icons.edit_rounded,
-                padding: EdgeInsets.all(3),
                 iconSize: 20,
+                padding: const EdgeInsets.all(3),
               )
             ],
           )
@@ -217,8 +217,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                   }
                 },
                 icon: Icons.edit_rounded,
-                padding: EdgeInsets.all(3),
                 iconSize: 20,
+                padding: const EdgeInsets.all(3),
               )
             ],
           )
@@ -253,7 +253,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                 ? Colors.transparent
                 : redAccentColor,
             borderRadius: BorderRadius.circular(30)),
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(8),
         child: (widget.viewcontroller.isSettingDropoffTime.isTrue)
             ? CircularProgressIndicator()
             : Text(
@@ -283,7 +283,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                 ? Colors.transparent
                 : redAccentColor,
             borderRadius: BorderRadius.circular(30)),
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(8),
         child: (widget.viewcontroller.isSettingPickUpTime.isTrue)
             ? CircularProgressIndicator()
             : Text(
