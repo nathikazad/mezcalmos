@@ -51,6 +51,7 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
                 store_id: addOpDetails.serviceProviderId,
                 operator_details: {
                     data: {
+                        user_id: operatorUserId,
                         app_type_id: AppType.LaundryApp,
                         app_version: addOpDetails.appVersion,
                         notification_info: (addOpDetails.notificationInfo) 
@@ -83,6 +84,7 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
       detailsId: mutationResponse.insert_laundry_operator_one.details_id,
       serviceProviderId: addOpDetails.serviceProviderId,
       status: AuthorizationStatus.AwaitingApproval,
+      online: true,
       notificationInfo: addOpDetails.notificationInfo,
     }
   }

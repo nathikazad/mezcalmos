@@ -116,7 +116,9 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
                   ServiceDeliveryTypePicker(
                     viewController: viewController,
                   ),
-                (viewController.isSelfDelivery)
+                (viewController.isSelfDelivery ||
+                        serviceProviderType ==
+                            ServiceProviderType.DeliveryCompany)
                     ? DeliverySettingCostComponent(
                         viewController: viewController)
                     : DeliverySettingsCompaniesList(

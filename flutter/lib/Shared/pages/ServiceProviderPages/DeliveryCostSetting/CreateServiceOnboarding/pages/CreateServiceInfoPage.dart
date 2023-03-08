@@ -91,9 +91,9 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             TextFormField(
               controller: viewController.phone,
+              keyboardType: TextInputType.phone,
               validator: (String? v) {
-                if (v == null || v.isEmpty) {
-                  //ask with montasaare for phone validation.
+                if (v == null || v.isEmpty || v.isPhoneNumber == false) {
                   return "${_i18n()['phoneTextError']}";
                 }
                 return null;
@@ -114,6 +114,9 @@ class CreateServiceInfoPage extends StatelessWidget {
               height: 10,
             ),
             _locationCard(),
+            SizedBox(
+              height: 35,
+            ),
           ],
         ),
       ),

@@ -28,8 +28,8 @@ class CloudFunctions {
     return SendOtpResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "otp2-sendOTPForLogin",
       parameters: <String, dynamic>{
-        "language":language,
-        "phoneNumber":phoneNumber,
+        "language": language,
+        "phoneNumber": phoneNumber,
       }));
   }
 
@@ -39,8 +39,8 @@ class CloudFunctions {
     return AuthResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "otp2-getAuthUsingOTP",
       parameters: <String, dynamic>{
-        "phoneNumber":phoneNumber,
-        "OTPCode":OTPCode,
+        "phoneNumber": phoneNumber,
+        "OTPCode": OTPCode,
       }));
   }
 
@@ -50,8 +50,8 @@ class CloudFunctions {
     return PaymentIntentResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe2-getPaymentIntent",
       parameters: <String, dynamic>{
-        "serviceProviderDetailsId":serviceProviderDetailsId,
-        "paymentAmount":paymentAmount,
+        "serviceProviderDetailsId": serviceProviderDetailsId,
+        "paymentAmount": paymentAmount,
       }));
   }
 
@@ -60,7 +60,7 @@ class CloudFunctions {
     return AddCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe2-addCard",
       parameters: <String, dynamic>{
-        "paymentMethod":paymentMethod,
+        "paymentMethod": paymentMethod,
       }));
   }
 
@@ -71,9 +71,9 @@ class CloudFunctions {
     return ChargeCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe2-chargeCard",
       parameters: <String, dynamic>{
-        "serviceProviderDetailsId":serviceProviderDetailsId,
-        "cardId":cardId,
-        "paymentAmount":paymentAmount,
+        "serviceProviderDetailsId": serviceProviderDetailsId,
+        "cardId": cardId,
+        "paymentAmount": paymentAmount,
       }));
   }
 
@@ -82,7 +82,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "stripe2-removeCard",
       parameters: <String, dynamic>{
-        "cardId":cardId,
+        "cardId": cardId,
       });
   }
 
@@ -91,7 +91,7 @@ class CloudFunctions {
     return SetupResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe2-setupServiceProvider",
       parameters: <String, dynamic>{
-        "serviceProviderDetailsId":serviceProviderDetailsId,
+        "serviceProviderDetailsId": serviceProviderDetailsId,
       }));
   }
 
@@ -100,7 +100,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "stripe2-updateServiceProvider",
       parameters: <String, dynamic>{
-        "serviceProviderDetailsId":serviceProviderDetailsId,
+        "serviceProviderDetailsId": serviceProviderDetailsId,
       });
   }
 
@@ -110,7 +110,7 @@ class CloudFunctions {
     return CallUserResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "agora-callChatUser",
       parameters: <String, dynamic>{
-        "chatId":chatId,
+        "chatId": chatId,
         "callerParticipantType":callerParticipantType.toFirebaseFormatString(),
       }));
   }
@@ -123,10 +123,10 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "serviceProvider-addOperator",
       parameters: <String, dynamic>{
-        "serviceProviderId":serviceProviderId,
+        "serviceProviderId": serviceProviderId,
         "participantType":participantType.toFirebaseFormatString(),
         "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-        "appVersion":appVersion,
+        "appVersion": appVersion,
       });
   }
 
@@ -137,8 +137,8 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "serviceProvider-authorizeOperator",
       parameters: <String, dynamic>{
-        "newOperatorId":newOperatorId,
-        "approved":approved,
+        "newOperatorId": newOperatorId,
+        "approved": approved,
         "participantType":participantType.toFirebaseFormatString(),
       });
   }
@@ -150,7 +150,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "serviceProvider-addDriver",
       parameters: <String, dynamic>{
-        "deliveryCompanyId":deliveryCompanyId,
+        "deliveryCompanyId": deliveryCompanyId,
         "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
         "deliveryServiceProviderType":deliveryServiceProviderType.toFirebaseFormatString(),
       });
@@ -163,8 +163,8 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "serviceProvider-authorizeDriver",
       parameters: <String, dynamic>{
-        "deliveryDriverId":deliveryDriverId,
-        "approved":approved,
+        "deliveryDriverId": deliveryDriverId,
+        "approved": approved,
         "deliveryServiceProviderType":deliveryServiceProviderType.toFirebaseFormatString(),
       });
   }
@@ -178,19 +178,19 @@ class CloudFunctions {
       String? firebaseId,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
-      required Map<Language,bool> language}  ) async {
+      required Map<String,bool> language}  ) async {
     return await callCloudFunction(
       functionName: "restaurant2-createRestaurant",
       parameters: <String, dynamic>{
-        "name":name,
-        "image":image,
+        "name": name,
+        "image": image,
         "location":location.toFirebaseFormattedJson(),
-        "schedule":json.encode(schedule),
-        "restaurantOperatorNotificationToken":restaurantOperatorNotificationToken,
-        "firebaseId":firebaseId,
-        "deliveryPartnerId":deliveryPartnerId,
+        "schedule": schedule,
+        "restaurantOperatorNotificationToken": restaurantOperatorNotificationToken,
+        "firebaseId": firebaseId,
+        "deliveryPartnerId": deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
-        "language":language,
+        "language": language,
       });
   }
 
@@ -215,19 +215,19 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "customerAppType":customerAppType.toFirebaseFormatString(),
         "customerLocation":customerLocation.toFirebaseFormattedJson(),
-        "deliveryCost":deliveryCost,
+        "deliveryCost": deliveryCost,
         "paymentType":paymentType.toFirebaseFormatString(),
-        "notes":notes,
-        "restaurantId":restaurantId,
+        "notes": notes,
+        "restaurantId": restaurantId,
         "deliveryType":deliveryType?.toFirebaseFormatString(),
-        "tripDistance":tripDistance,
-        "tripDuration":tripDuration,
-        "tripPolyline":tripPolyline,
-        "scheduledTime":scheduledTime,
-        "stripePaymentId":stripePaymentId,
-        "stripeFees":stripeFees,
-        "tax":tax,
-        "discountValue":discountValue,
+        "tripDistance": tripDistance,
+        "tripDuration": tripDuration,
+        "tripPolyline": tripPolyline,
+        "scheduledTime": scheduledTime,
+        "stripePaymentId": stripePaymentId,
+        "stripeFees": stripeFees,
+        "tax": tax,
+        "discountValue": discountValue,
       }));
   }
 
@@ -236,7 +236,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "restaurant2-prepareOrder",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -245,7 +245,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "restaurant2-readyForOrderPickup",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -254,7 +254,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "restaurant2-orderPickedUpByCustomer",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -263,7 +263,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "restaurant2-cancelOrderFromAdmin",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -272,7 +272,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "restaurant2-cancelOrderFromCustomer",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -285,19 +285,19 @@ class CloudFunctions {
       String? firebaseId,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
-      required Map<Language,bool> language}  ) async {
+      required Map<String,bool> language}  ) async {
     return await callCloudFunction(
       functionName: "laundry2-createLaundry",
       parameters: <String, dynamic>{
-        "name":name,
-        "image":image,
+        "name": name,
+        "image": image,
         "location":location.toFirebaseFormattedJson(),
-        "schedule":json.encode(schedule),
-        "laundryOperatorNotificationToken":laundryOperatorNotificationToken,
-        "firebaseId":firebaseId,
-        "deliveryPartnerId":deliveryPartnerId,
+        "schedule": schedule,
+        "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
+        "firebaseId": firebaseId,
+        "deliveryPartnerId": deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
-        "language":language,
+        "language": language,
       });
   }
 
@@ -320,21 +320,21 @@ class CloudFunctions {
     return ReqLaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "laundry2-requestLaundry",
       parameters: <String, dynamic>{
-        "storeId":storeId,
+        "storeId": storeId,
         "paymentType":paymentType.toFirebaseFormatString(),
         "deliveryType":deliveryType.toFirebaseFormatString(),
         "customerLocation":customerLocation.toFirebaseFormattedJson(),
-        "deliveryCost":deliveryCost,
+        "deliveryCost": deliveryCost,
         "customerAppType":customerAppType.toFirebaseFormatString(),
-        "notes":notes,
-        "tax":tax,
-        "scheduledTime":scheduledTime,
-        "stripeFees":stripeFees,
-        "stripePaymentId":stripePaymentId,
-        "discountValue":discountValue,
-        "tripDistance":tripDistance,
-        "tripDuration":tripDuration,
-        "tripPolyline":tripPolyline,
+        "notes": notes,
+        "tax": tax,
+        "scheduledTime": scheduledTime,
+        "stripeFees": stripeFees,
+        "stripePaymentId": stripePaymentId,
+        "discountValue": discountValue,
+        "tripDistance": tripDistance,
+        "tripDuration": tripDuration,
+        "tripPolyline": tripPolyline,
       }));
   }
 
@@ -343,7 +343,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "laundry2-readyForDeliveryOrder",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -352,7 +352,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "laundry2-cancelFromCustomer",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -361,7 +361,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "laundry2-cancelFromAdmin",
       parameters: <String, dynamic>{
-        "orderId":orderId,
+        "orderId": orderId,
       });
   }
 
@@ -372,9 +372,9 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "delivery2-assignDriver",
       parameters: <String, dynamic>{
-        "deliveryOrderId":deliveryOrderId,
-        "deliveryDriverId":deliveryDriverId,
-        "changeDriver":changeDriver,
+        "deliveryOrderId": deliveryOrderId,
+        "deliveryDriverId": deliveryDriverId,
+        "changeDriver": changeDriver,
       });
   }
 
@@ -384,7 +384,7 @@ class CloudFunctions {
     return await callCloudFunction(
       functionName: "delivery2-changeStatus",
       parameters: <String, dynamic>{
-        "deliveryId":deliveryId,
+        "deliveryId": deliveryId,
         "newStatus":newStatus.toFirebaseFormatString(),
       });
   }

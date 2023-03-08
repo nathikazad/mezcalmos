@@ -24,6 +24,7 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
           id: true,
           status: true,
           owner: true,
+          online: true,
           notification_info: {
             token: true,
             turn_off_notifications: true
@@ -50,6 +51,7 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
         serviceProviderId: laundryStoreId,
         status: r.operator_details.status as AuthorizationStatus,
         owner: r.operator_details.owner,
+        online: r.operator_details.online,
         notificationInfo: (r.operator_details.notification_info) ? {
           appType: AppType.LaundryApp,
           token: r.operator_details.notification_info.token,
@@ -82,6 +84,7 @@ export async function getLaundryOperatorByUserId(laundryOperatorUserId: number):
         id: true,
         status: true,
         owner: true,
+        online: true,
         notification_info: {
         token: true,
         turn_off_notifications: true
@@ -106,6 +109,7 @@ export async function getLaundryOperatorByUserId(laundryOperatorUserId: number):
     serviceProviderId: response.laundry_operator[0].store_id,
     status: response.laundry_operator[0].operator_details.status as AuthorizationStatus,
     owner: response.laundry_operator[0].operator_details.owner,
+    online: response.laundry_operator[0].operator_details.online,
     notificationInfo: (response.laundry_operator[0].operator_details.notification_info) ? {
       appType: AppType.LaundryApp,
       token: response.laundry_operator[0].operator_details.notification_info.token,
@@ -132,6 +136,7 @@ export async function getLaundryOperator(operatorId: number): Promise<Operator> 
         id: true,
         status: true,
         owner: true,
+        online: true,
         notification_info: {
         token: true,
         turn_off_notifications: true
@@ -157,6 +162,7 @@ export async function getLaundryOperator(operatorId: number): Promise<Operator> 
     serviceProviderId: response.laundry_operator_by_pk.store_id,
     status: response.laundry_operator_by_pk.operator_details.status as AuthorizationStatus,
     owner: response.laundry_operator_by_pk.operator_details.owner,
+    online: response.laundry_operator_by_pk.operator_details.online,
     notificationInfo: (response.laundry_operator_by_pk.operator_details.notification_info) ? {
       appType: AppType.LaundryApp,
       token: response.laundry_operator_by_pk.operator_details.notification_info.token,

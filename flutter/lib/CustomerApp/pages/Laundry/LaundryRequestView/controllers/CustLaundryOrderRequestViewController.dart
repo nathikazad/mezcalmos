@@ -153,11 +153,10 @@ class CustLaundryOrderRequestViewController {
         storeId: laundryRequest.laundryId,
         customerAppType: cloudFunctionModels.CustomerAppType.Native,
         customerLocation: cloudFunctionModels.Location(
-            laundryRequest.to!.latitude,
-            laundryRequest.to!.longitude,
-            laundryRequest.to!.address),
+            lat: laundryRequest.to!.latitude,
+            lng: laundryRequest.to!.longitude,
+            address: laundryRequest.to!.address),
         deliveryCost: shippingCost.value! * 2,
-
         paymentType: laundryRequest.paymentType.toFirebaseFormatEnum(),
         notes: laundryRequest.notes,
         tripDistance:

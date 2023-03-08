@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
@@ -14,7 +15,6 @@ class CustomerAuthController extends GetxController {
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
 
-  @override
   Future<void> onInit() async {
     super.onInit();
 
@@ -23,7 +23,10 @@ class CustomerAuthController extends GetxController {
       get_customer(user_id: authController.hasuraUserId!)
           .then((Customer? value) {
         mezDbgPrint("[]9090] : get_customer::CUSTOMER : $value ");
-        _setCustomerInfos(value);
+        _setCustomerInfos(value).then((_) => {
+              Get.put<CustomerCartController>(CustomerCartController(),
+                  permanent: true)
+            });
       });
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
@@ -34,16 +37,15 @@ class CustomerAuthController extends GetxController {
     final String _appVersion = PlatformOSHelper.getAppVersion;
     mezDbgPrint("[]9090] : setting customr ! ");
 
-    Customer? _cus = customer;
-
-    if (_cus == null) {
-      _cus = await set_customer_info(
+    if (customer == null) {
+      customer = await set_customer_info(
           app_version: _appVersion, user_id: authController.hasuraUserId!);
     }
+
     await fetchSavedLocations();
 
-    _customer.value = _cus;
-    _customer.value?.savedLocations = _cus?.savedLocations ?? [];
+    _customer.value = customer;
+    _customer.value?.savedLocations = customer?.savedLocations ?? [];
     mezDbgPrint(
         "Getting cust saved locations ====😀===========>>>${_customer.value?.savedLocations.length}");
     _customer.refresh();
@@ -92,6 +94,7 @@ class CustomerAuthController extends GetxController {
   @override
   Future<void> onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
+    await Get.delete<CustomerCartController>(force: true);
     super.onClose();
   }
 }

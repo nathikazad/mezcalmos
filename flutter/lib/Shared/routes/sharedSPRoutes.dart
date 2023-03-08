@@ -26,7 +26,8 @@ import 'package:qlevar_router/qlevar_router.dart';
 // GetX based Router (For navigating)
 class SharedServiceProviderRoutes {
   static const String kPickDriverRoute = "/pickDriver/:orderId";
-  static const String kDriversRoute = "/driversList/:serviceProviderId";
+  static const String kDriversRoute =
+      "/driversList/:serviceProviderId/:serviceLinkId";
   static const String kServicePaymentsRoute =
       "/servicePayments/:ServiceProviderId";
   static const String kDeliveryCostRoute = "/deliveryCost/:deliveryDetailsId";
@@ -44,17 +45,6 @@ class SharedServiceProviderRoutes {
   static const String kserviceReview = "/reviews";
   static const String kServiceProfileRoute =
       '/service/:serviceId/:serviceDetailsId/:deliveryDetailsId';
-
-  static void navigateToDrivers(
-      {required int serviceProviderId,
-      required ServiceProviderType controllerType}) {
-    final String route =
-        kDriversRoute.replaceFirst(":serviceProviderId", "$serviceProviderId");
-    MezRouter.toNamed(route, arguments: {
-      "serviceProviderType": controllerType,
-      "showAppBar": true,
-    });
-  }
 
   static final List<QRoute> routes = [
     QRoute(

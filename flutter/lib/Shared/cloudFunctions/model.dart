@@ -3,26 +3,31 @@ class SendOtpResponse {
   num? secondsLeft;
   ServerResponseStatus status;
   SendOtpResponse(this.errorMessage, this.secondsLeft, this.status);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "errorMessage": errorMessage,
       "secondsLeft": secondsLeft,
-      "status": status};
+      "status": status,
+    };
   }
-factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return SendOtpResponse(json["errorMessage"], json["secondsLeft"], json["status"]);
+
+  factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) {
+    return SendOtpResponse(
+        json["errorMessage?"], json["secondsLeft?"], json["status"]);
   }
 }
 
 class AuthResponse {
   String? token;
   AuthResponse(this.token);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "token": token};
+      "token": token,
+    };
   }
-factory AuthResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AuthResponse(json["token"]);
+
+  factory AuthResponse.fromFirebaseFormattedJson(dynamic json) {
+    return AuthResponse(json["token"]);
   }
 }
 
@@ -32,29 +37,35 @@ class PaymentIntentResponse {
   String? customer;
   String publishableKey;
   String stripeAccountId;
-  PaymentIntentResponse(this.paymentIntent, this.ephemeralKey, this.customer, this.publishableKey, this.stripeAccountId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  PaymentIntentResponse(this.paymentIntent, this.ephemeralKey, this.customer,
+      this.publishableKey, this.stripeAccountId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "paymentIntent": paymentIntent,
       "ephemeralKey": ephemeralKey,
       "customer": customer,
       "publishableKey": publishableKey,
-      "stripeAccountId": stripeAccountId};
+      "stripeAccountId": stripeAccountId,
+    };
   }
-factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
+
+  factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) {
+    return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey?"],
+        json["customer?"], json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
 class AddCardResponse {
   String cardId;
   AddCardResponse(this.cardId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "cardId": cardId};
+      "cardId": cardId,
+    };
   }
-factory AddCardResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AddCardResponse(json["cardId"]);
+
+  factory AddCardResponse.fromFirebaseFormattedJson(dynamic json) {
+    return AddCardResponse(json["cardId"]);
   }
 }
 
@@ -63,16 +74,20 @@ class ChargeCardResponse {
   String customer;
   String publishableKey;
   String stripeAccountId;
-  ChargeCardResponse(this.paymentIntent, this.customer, this.publishableKey, this.stripeAccountId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  ChargeCardResponse(this.paymentIntent, this.customer, this.publishableKey,
+      this.stripeAccountId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "paymentIntent": paymentIntent,
       "customer": customer,
       "publishableKey": publishableKey,
-      "stripeAccountId": stripeAccountId};
+      "stripeAccountId": stripeAccountId,
+    };
   }
-factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ChargeCardResponse(json["paymentIntent"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
+
+  factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) {
+    return ChargeCardResponse(json["paymentIntent"], json["customer"],
+        json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
@@ -82,19 +97,31 @@ class SetupResponse {
   num expires_at;
   String url;
   SetupResponse(this.object, this.created, this.expires_at, this.url);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "object": object,
       "created": created,
       "expires_at": expires_at,
-      "url": url};
+      "url": url,
+    };
   }
-factory SetupResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return SetupResponse(json["object"], json["created"], json["expires_at"], json["url"]);
+
+  factory SetupResponse.fromFirebaseFormattedJson(dynamic json) {
+    return SetupResponse(
+        json["object"], json["created"], json["expires_at"], json["url"]);
   }
 }
 
-enum ParticipantType { Customer, Taxi, DeliveryOperator, DeliveryDriver, LaundryOperator, RestaurantOperator, MezAdmin }
+enum ParticipantType {
+  Customer,
+  Taxi,
+  DeliveryOperator,
+  DeliveryDriver,
+  LaundryOperator,
+  RestaurantOperator,
+  MezAdmin
+}
+
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -117,18 +144,27 @@ class CallUserResponse {
   String? image;
   String expirationTime;
   ParticipantType participantType;
-  CallUserResponse(this.id, this.token, this.name, this.image, this.expirationTime, this.participantType);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  CallUserResponse(this.id, this.token, this.name, this.image,
+      this.expirationTime, this.participantType);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
       "token": token,
       "name": name,
       "image": image,
       "expirationTime": expirationTime,
-      "participantType": participantType};
+      "participantType": participantType,
+    };
   }
-factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CallUserResponse(json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"].toString().toHasuraParticipantType());
+
+  factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) {
+    return CallUserResponse(
+        json["id"],
+        json["token"],
+        json["name"],
+        json["image"],
+        json["expirationTime"],
+        json["participantType"].toString().toHasuraParticipantType());
   }
 }
 
@@ -136,21 +172,34 @@ class NotificationInfo {
   String token;
   bool turnOffNotifications;
   AppType appType;
-  NotificationInfo(this.token, this.turnOffNotifications, this.appType);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  NotificationInfo(
+      {required this.token,
+      required this.turnOffNotifications,
+      required this.appType});
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "token": token,
       "turnOffNotifications": turnOffNotifications,
-      "appType": appType};
+      "appType": appType,
+    };
   }
-
 }
 
 enum DeliveryServiceProviderType { Restaurant, DeliveryCompany, Laundry }
-extension ParseDeliveryServiceProviderTypeToString on DeliveryServiceProviderType {
+
+extension ParseDeliveryServiceProviderTypeToString
+    on DeliveryServiceProviderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToDeliveryServiceProviderType on String {
+  DeliveryServiceProviderType toDeliveryServiceProviderType() {
+    return DeliveryServiceProviderType.values.firstWhere(
+        (DeliveryServiceProviderType deliveryServiceProviderType) =>
+            deliveryServiceProviderType.toFirebaseFormatString() == this);
   }
 }
 
@@ -158,14 +207,14 @@ class Location {
   num lat;
   num lng;
   String? address;
-  Location(this.lat, this.lng, this.address);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Location({required this.lat, required this.lng, this.address});
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "lat": lat,
       "lng": lng,
-      "address": address};
+      "address": address,
+    };
   }
-
 }
 
 class DeliveryDetails {
@@ -177,8 +226,16 @@ class DeliveryDetails {
   bool deliveryAvailable;
   bool customerPickup;
   bool selfDelivery;
-  DeliveryDetails(this.minimumCost, this.costPerKm, this.radius, this.freeDeliveryMinimumCost, this.freeDeliveryKmRange, this.deliveryAvailable, this.customerPickup, this.selfDelivery);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  DeliveryDetails(
+      {this.minimumCost,
+      this.costPerKm,
+      this.radius,
+      this.freeDeliveryMinimumCost,
+      this.freeDeliveryKmRange,
+      required this.deliveryAvailable,
+      required this.customerPickup,
+      required this.selfDelivery});
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "minimumCost": minimumCost,
       "costPerKm": costPerKm,
@@ -187,12 +244,13 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "freeDeliveryKmRange": freeDeliveryKmRange,
       "deliveryAvailable": deliveryAvailable,
       "customerPickup": customerPickup,
-      "selfDelivery": selfDelivery};
+      "selfDelivery": selfDelivery,
+    };
   }
-
 }
 
 enum CustomerAppType { Native, Web }
+
 extension ParseCustomerAppTypeToString on CustomerAppType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -201,6 +259,7 @@ extension ParseCustomerAppTypeToString on CustomerAppType {
 }
 
 enum PaymentType { Cash, Card, BankTransfer }
+
 extension ParsePaymentTypeToString on PaymentType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -209,6 +268,7 @@ extension ParsePaymentTypeToString on PaymentType {
 }
 
 enum DeliveryType { Pickup, Delivery }
+
 extension ParseDeliveryTypeToString on DeliveryType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -219,28 +279,43 @@ extension ParseDeliveryTypeToString on DeliveryType {
 class CheckoutResponse {
   num orderId;
   CheckoutResponse(this.orderId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "orderId": orderId};
+      "orderId": orderId,
+    };
   }
-factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CheckoutResponse(json["orderId"]);
+
+  factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) {
+    return CheckoutResponse(json["orderId"]);
   }
 }
 
 class ReqLaundryResponse {
   num orderId;
   ReqLaundryResponse(this.orderId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "orderId": orderId};
+      "orderId": orderId,
+    };
   }
-factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ReqLaundryResponse(json["orderId"]);
+
+  factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
+    return ReqLaundryResponse(json["orderId"]);
   }
 }
 
-enum DeliveryOrderStatus { OrderReceived, OnTheWayToPickup, AtPickup, OnTheWayToDropoff, AtDropoff, Delivered, CancelledByCustomer, CancelledByDeliverer, CancelledByServiceProvider }
+enum DeliveryOrderStatus {
+  OrderReceived,
+  OnTheWayToPickup,
+  AtPickup,
+  OnTheWayToDropoff,
+  AtDropoff,
+  Delivered,
+  CancelledByCustomer,
+  CancelledByDeliverer,
+  CancelledByServiceProvider
+}
+
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -248,7 +323,15 @@ extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   }
 }
 
-enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin, LaundryApp }
+enum AppType {
+  Customer,
+  RestaurantApp,
+  DeliveryApp,
+  DeliveryAdmin,
+  MezAdmin,
+  LaundryApp
+}
+
 extension ParseAppTypeToString on AppType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -257,6 +340,7 @@ extension ParseAppTypeToString on AppType {
 }
 
 enum Language { EN, ES }
+
 extension ParseLanguageToString on Language {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -265,10 +349,10 @@ extension ParseLanguageToString on Language {
 }
 
 enum ServerResponseStatus { Success, Error }
+
 extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
-

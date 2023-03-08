@@ -73,7 +73,7 @@ android {
         applicationId packageProperties.getProperty('package.name')
         // applicationId "com.meztaxi.stagingDriver"
         minSdkVersion 23 // google map's package we;re using needs  >= 20 .. but 21 has multidex by default .
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

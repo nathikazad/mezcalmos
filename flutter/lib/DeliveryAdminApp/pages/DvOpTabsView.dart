@@ -56,7 +56,11 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
         );
       case 2:
         return DeliveryCostSettingView(
-          deliveryDetailsId: 1,
+          deliveryDetailsId: Get.find<DeliveryOpAuthController>()
+              .operator
+              .value!
+              .state
+              .deliveryDetailsId,
         );
       case 3:
         return ServiceProfileView(

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
@@ -59,6 +61,16 @@ class LaundryOpCurrentOrdersController {
               .listen((List<MinimalOrder>? event) {
         if (event != null) {
           currentOrders.value = event;
+          currentOrders.value.forEach((MinimalOrder order) {
+            mezDbgPrint(
+                "orderNotifications/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}");
+            Get.find<FirebaseDb>()
+                .firebaseDatabase
+                .ref()
+                .child(
+                    "orderNotifications/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}")
+                .set(true);
+          });
         }
       });
     }, cancel: () {

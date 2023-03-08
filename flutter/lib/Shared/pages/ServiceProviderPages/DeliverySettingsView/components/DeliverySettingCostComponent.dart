@@ -36,6 +36,7 @@ class _DeliverySettingCostComponentState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _costComponent(
+                          req: false,
                           controller: widget.viewController.freeKmRange,
                           suffixTitle: 'Km',
                           title: "${_i18n()['freeKmRange']}"),
@@ -175,6 +176,7 @@ class _DeliverySettingCostComponentState
 
   Widget _costComponent(
       {required String title,
+      bool req = true,
       required String suffixTitle,
       required TextEditingController controller}) {
     return Row(
@@ -194,12 +196,14 @@ class _DeliverySettingCostComponentState
             child: TextFormField(
               controller: controller,
 
-              validator: (String? value) {
-                if (value == null || double.tryParse(value) == null) {
-                  return "${_i18n()['numberError']}";
-                }
-                return null;
-              },
+              validator: (req)
+                  ? (String? value) {
+                      if (value == null || double.tryParse(value) == null) {
+                        return "${_i18n()['numberError']}";
+                      }
+                      return null;
+                    }
+                  : null,
               style: Get.textTheme.bodyLarge,
               textAlignVertical: TextAlignVertical.center,
               keyboardType: TextInputType.numberWithOptions(decimal: true),

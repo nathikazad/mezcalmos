@@ -47,6 +47,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
         restaurant_id: addOpDetails.serviceProviderId,
         operator_details: {
           data: {
+            user_id: operatorUserId,
             app_type_id: AppType.RestaurantApp,
             app_version: addOpDetails.appVersion,
             notification_info: (addOpDetails.notificationInfo) 
@@ -77,6 +78,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
     id: mutationResponse.insert_restaurant_operator_one.id,
     detailsId: mutationResponse.insert_restaurant_operator_one.details_id,
     userId: operatorUserId,
+    online: true,
     serviceProviderId: addOpDetails.serviceProviderId,
     status: AuthorizationStatus.AwaitingApproval,
     notificationInfo: addOpDetails.notificationInfo,

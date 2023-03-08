@@ -1,7 +1,10 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
@@ -9,6 +12,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -17,6 +21,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 class ServiceProfileView extends StatefulWidget {
   final int? serviceDetailsId;
@@ -69,13 +74,11 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
 
   void _assignVars() {
     serviceDetailsId = widget.serviceDetailsId ??
-        int.tryParse(
-            MezRouter.urlArguments["serviceDetailsId"].toString() ?? "");
+        int.tryParse(MezRouter.urlArguments["serviceDetailsId"].toString());
     serviceId = widget.serviceId ??
-        int.tryParse(MezRouter.urlArguments["serviceId"].toString() ?? "");
+        int.tryParse(MezRouter.urlArguments["serviceId"].toString());
     deliveryDetailsId = widget.deliveryDetailsId ??
-        int.tryParse(
-            MezRouter.urlArguments["deliveryDetailsId"].toString() ?? "");
+        int.tryParse(MezRouter.urlArguments["deliveryDetailsId"].toString());
   }
 
   bool get asTab => widget.serviceDetailsId != null;
@@ -83,13 +86,16 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-        appBar: _getAppBar(),
-        body: Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.all(16),
-          child: (_viewController.hasData)
-              ? SingleChildScrollView(
+      () {
+        if (_viewController.hasData) {
+          return Scaffold(
+            appBar: _getAppBar(),
+            key: Get.find<SideMenuDrawerController>().getNewKey(),
+            drawer: MezSideMenu(),
+            body: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.all(16),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       _headerImageAndTitle(),
@@ -114,6 +120,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   onClick: () async {
                                     if (_viewController.service.serviceLinkId !=
                                         null) {
+                                      // ignore: unawaited_futures
                                       OperatorsListView.navigate(
                                           serviceProviderId:
                                               _viewController.serviceId,
@@ -129,6 +136,25 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.support_agent,
                                   label: "Operators"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    if (_viewController.service.serviceLinkId !=
+                                        null) {
+                                      ServiceDriversListView.navigateToDrivers(
+                                          serviceLinkId: _viewController
+                                              .service.serviceLinkId!,
+                                          serviceProviderId:
+                                              _viewController.serviceId,
+                                          controllerType: _viewController
+                                              .service.serviceProviderType!);
+                                    } else {
+                                      showErrorSnackBar(
+                                          errorText:
+                                              "This service have no links please add them first");
+                                    }
+                                  },
+                                  icon: Icons.delivery_dining,
+                                  label: "Drivers"),
                               _navigationLink(
                                   onClick: () async {
                                     await MezRouter.toNamed(
@@ -224,10 +250,17 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                       )
                     ],
                   ),
-                )
-              : CircularProgressIndicator(),
-        ),
-      ),
+                )),
+          );
+        } else {
+          return Scaffold(
+            body: Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -257,11 +290,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
 
   PreferredSize _getAppBar() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(_viewController.getAppbarHeight),
+      preferredSize: _viewController.hasData
+          ? Size.fromHeight(_viewController.getAppbarHeight)
+          : Size.fromHeight(kTextTabBarHeight),
       child: Obx(
         () => MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: MezRouter.back,
+          onClick: (asTab) ? null : MezRouter.back,
           title: "Dashboard",
           tabBar: (!_viewController.isApproved ||
                   _viewController.service.state.isClosedIndef)

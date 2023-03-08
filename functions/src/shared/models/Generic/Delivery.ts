@@ -73,6 +73,7 @@ export interface DeliveryOperator {
     status: AuthorizationStatus,
     owner: boolean,
     appVersion?: string,
+    online: boolean,
     // deliveryDriverType:,
     notificationInfo?: NotificationInfo,
     user?: UserInfo

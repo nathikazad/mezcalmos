@@ -26,6 +26,7 @@ async function checkRestaurantOrders() {
   let mezAdmins: MezAdmin[] = response[1];
   restaurantOrders.forEach(async(o) => {
     if((new Date()).getTime() - (new Date(o.orderTime!)).getTime() < 60 * 1000) {
+      // console.log("orderId: ", o.orderId)
       let notification: Notification = {
         foreground: <NewRestaurantOrderNotification>{
           time: (new Date()).toISOString(),
@@ -46,17 +47,21 @@ async function checkRestaurantOrders() {
         },
         linkUrl: orderUrl(OrderType.Restaurant, o.orderId!)
       }
-      let snap = await firebase.database().ref(`/orders/restaurant/${o.orderId}`).once("value");
+      let snap = await firebase.database().ref(`/orderNotifications/restaurant/${o.orderId}`).once("value");
       let readOperators = snap.val();
-      // console.log(readOperators)
+      // console.log("readOperators: ", readOperators)
       o.restaurant!.operators!.forEach((r) => {
-        if(!(readOperators && readOperators[r.userId!]) &&  r.user) {
-          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+        if(!(readOperators && readOperators[r.userId!]) &&  r.user && r.online) {
+          // console.log("operators: ", r.userId);
+          // console.log("notificationInfo: ", r.notificationInfo);
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user.language, false);
         }
       });
       mezAdmins.forEach((m) => {
         if(!(readOperators && readOperators[m.id])) {
-          pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+          // console.log("mezAdmin: ", m.id);
+          // console.log("notificationInfo: ", m.notificationInfo);
+          pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language, false);
         }
       })
     }

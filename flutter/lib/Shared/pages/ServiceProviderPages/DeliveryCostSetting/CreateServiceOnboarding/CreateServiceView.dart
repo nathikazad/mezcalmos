@@ -55,7 +55,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kTextTabBarHeight + 5),
         child: Obx(
@@ -100,7 +100,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
   }
 
   Future<void> _handleButton() async {
-    if (viewController.currentPage.value == 2) {
+    if (viewController.currentPage.value == 3) {
       final bool? res = await viewController.handleNext();
       if (res == true) {
         await showStatusInfoDialog(

@@ -27,27 +27,34 @@ async function checkDeliveryOrders() {
         let mezAdmins: MezAdmin[] = await getMezAdmins();
 
         let notification: Notification = buildNotification()
-        let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+        let snap = await firebase.database().ref(`/orderNotifications/delivery/${o.deliveryId}`).once("value");
         let readOperators = snap.val();
         console.log(readOperators)
         operators.forEach((r) => {
-            if(!(readOperators && readOperators[r.userId!]) && r.user) {
-                pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.DeliveryOperator);
+            if(!(readOperators && readOperators[r.userId!]) && r.user && r.online) {
+                pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.DeliveryOperator, r.user.language, false);
             }
         });
         mezAdmins.forEach((m) => {
           if(!(readOperators && readOperators[m.id])) {
-            pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+            pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language, false);
           }
         })
     }
     if(o.deliveryDriverId 
       && (o.status == DeliveryOrderStatus.OrderReceived)
     ) {
-      let snap = await firebase.database().ref(`/orders/delivery/${o.deliveryId}`).once("value");
+      let snap = await firebase.database().ref(`/orderNotifications/delivery/${o.deliveryId}`).once("value");
       let readDrivers = snap.val();
       if(!(readDrivers && readDrivers[o.deliveryDriver!.userId]) && o.deliveryDriver!.user) {
-        pushNotification(o.deliveryDriver!.user.firebaseId, buildNotification(), o.deliveryDriver!.notificationInfo, ParticipantType.DeliveryDriver);
+        pushNotification(
+          o.deliveryDriver!.user.firebaseId, 
+          buildNotification(), 
+          o.deliveryDriver!.notificationInfo, 
+          ParticipantType.DeliveryDriver,
+          o.deliveryDriver!.user.language,
+          false
+        );
       }
     }
 
@@ -63,11 +70,11 @@ async function checkDeliveryOrders() {
         background: {
           [Language.ES]: {
             title: "Nueva Pedido",
-            body: `Hay una nueva orden de alimento`
+            body: `Hay un nuevo orden`
           },
           [Language.EN]: {
             title: "New Order",
-            body: `There is a new restaurant order`
+            body: `There is a new order`
           }
         },
         linkUrl: `/`
