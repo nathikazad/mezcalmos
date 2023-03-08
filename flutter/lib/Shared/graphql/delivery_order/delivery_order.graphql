@@ -498,6 +498,76 @@ query get_inprocess_driver_orders($driverId: Int!) {
     }
   }
 }
+query get_open_driver_orders() {
+  delivery_order(
+   where: {delivery_driver_id: {_is_null: true}}
+  ) {
+    id
+    order_time
+    status
+    order_type
+    package_cost
+    package_ready
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
+      }
+    }
+  }
+}
+subscription listen_open_driver_orders() {
+  delivery_order(
+    where: {delivery_driver_id: {_is_null: true}}
+  ) {
+    id
+    order_time
+    status
+    order_type
+    package_cost
+    package_ready
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
+      }
+    }
+  }
+}
 subscription listen_delivery_company_current_orders($companyId: Int!) {
   delivery_order(
     where: {

@@ -180,9 +180,17 @@ select_permissions:
         - in_process
         - notification_token
       filter:
-        delivery_driver:
-          user_id:
-            _eq: X-Hasura-User-Id
+        _or:
+          - delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
+          - _and:
+              - delivery_driver_id:
+                  _is_null: true
+              - delivery_company:
+                  drivers:
+                    user_id:
+                      _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:

@@ -22,6 +22,16 @@ array_relationships:
         table:
           name: operator
           schema: delivery
+  - name: drivers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: delivery_company_id
+          service_provider_type: delivery_company_type
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
   - name: reviews
     using:
       manual_configuration:

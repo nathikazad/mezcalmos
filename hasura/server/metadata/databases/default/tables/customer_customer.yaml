@@ -79,11 +79,7 @@ select_permissions:
     permission:
       columns:
         - user_id
-      filter:
-        deliveries:
-          delivery_driver:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: delivery_operator
     permission:
       columns:

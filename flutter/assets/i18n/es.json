@@ -1625,6 +1625,7 @@
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Órdenes actuales",
+          "openOrders": "Ordenes abiertas",
           "offlineTitle": "Estas desconectado",
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Órdenes Pasadas",

@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutati
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -231,7 +232,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   bool showReviewBtn() {
     return viewController.order.value != null &&
-        //  viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
+        viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
         viewController.order.value!.review == null;
   }
 }
