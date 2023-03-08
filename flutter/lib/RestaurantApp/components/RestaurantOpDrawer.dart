@@ -7,17 +7,18 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/env.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/env_example.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
 
 class ROpDrawer extends StatefulWidget {
   const ROpDrawer({Key? key}) : super(key: key);
+
   // controllers //
 
   @override
@@ -29,6 +30,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
   final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
   AuthController authController = Get.find<AuthController>();
+
   // static RestaurantInfoController restaurantInfoController =
   //     Get.find<RestaurantInfoController>();
   RestaurantOpAuthController restaurantOpAuthController =
