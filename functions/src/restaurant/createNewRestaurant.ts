@@ -21,7 +21,8 @@ export interface RestaurantDetails {
   firebaseId?: string,
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
-  language: Record<Language, boolean>
+  language: Record<Language, boolean>,
+  uniqueId: string
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {

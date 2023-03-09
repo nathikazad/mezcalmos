@@ -23,7 +23,8 @@ export interface LaundryDetails {
   firebaseId?: string,
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
-  language: Record<Language, boolean>
+  language: Record<Language, boolean>,
+  uniqueId: string
 }
 
 export async function createLaundry(userId: number, laundryDetails: LaundryDetails) {

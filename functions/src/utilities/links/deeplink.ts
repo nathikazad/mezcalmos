@@ -1,4 +1,4 @@
-import { FirebaseDynamicLinks } from "firebase-dynamic-links";
+import { FirebaseDynamicLinks, ShortLinkRequestBody, ShortLinkResponse } from "firebase-dynamic-links";
 import { AppType } from "../../shared/models/Generic/Generic";
 import { generateQr } from "./qr";
 
@@ -19,14 +19,14 @@ const appPackageIds: Record<AppType, string> =  {
 
 const appStoreIds: Record<AppType, string | undefined> =  {
   [AppType.DeliveryApp]: undefined,
-  [AppType.RestaurantApp]: "com.mezcalmos.restaurant",
+  [AppType.RestaurantApp]: "6443621484",
   [AppType.LaundryApp]: undefined,
-  [AppType.Customer]: "com.mezcalmos.customer",
+  [AppType.Customer]: "1595882320",
   [AppType.DeliveryAdmin]: undefined,
   [AppType.MezAdmin]: undefined,
 }
 
-enum DeepLinkType {
+export enum DeepLinkType {
   Customer,
   AddDriver,
   AddOperator
@@ -47,58 +47,113 @@ enum DeepLinkType {
 export async function generateDeepLinks(uniqueId: string, appType: AppType): Promise<Record<DeepLinkType, IDeepLink>> {
   let packageId = appPackageIds[AppType.Customer];
   let appStoreId = appStoreIds[AppType.Customer];
-  
+  let prefix = `https://mezc.co`
 
   // Customer Deep Links
-  let customerShortLink = `https://mezc.co/${uniqueId}`
-  let customerDeeplink = `https://mezkala.app/${uniqueId}`
-  let customerLongLink = `${customerShortLink}?link=${customerDeeplink}&apn=${packageId}&ibi=${packageId}&isi=${appStoreId}` //&ifl=${customerDeeplink}&afl={customerDeeplink}
-  let customerQrImageUrl = await generateDeepLink(customerLongLink, customerDeeplink, uniqueId);
+  let customerDeeplink = `https://mezkala.app/${uniqueId}/`
+  // let customerParameterisedLink = `${prefix}?link=${customerDeeplink}&apn=${packageId}&ibi=${packageId}&isi=${appStoreId}` //&ifl=${customerDeeplink}&afl={customerDeeplink}
+  let customerRequestBody: ShortLinkRequestBody = {
+    // longDynamicLink: customerParameterisedLink,
+    dynamicLinkInfo: {
+      domainUriPrefix: prefix,
+      link: customerDeeplink,
+      androidInfo: {
+        androidPackageName: packageId
+      },
+      iosInfo: {
+        iosBundleId: packageId,
+        iosAppStoreId: appStoreId
+      },
+    },
+    suffix: {
+      option: 'SHORT'
+    }
+  }
+  let customerLinkResponse = await generateDeepLink(customerRequestBody, uniqueId, "customer");
+  // console.log("customerLinkResponse: ", customerLinkResponse)
 
   // Add Operator Deep Links
   packageId = appPackageIds[appType];
   appStoreId = appStoreIds[appType];
 
-  let addOperatorShortlink = `https://mezc.co/op/${generateString()}`
-  let addOperatorDeeplink = `https://mezkala.app/op/${uniqueId}`
-  let addOperatorLongLink = `${addOperatorShortlink}?link=${addOperatorDeeplink}&apn=${packageId}&ibi=${packageId}`;
-  if(appStoreId)
-    addOperatorLongLink += `&isi=${appStoreId}`
-  let addOperatorQrImageUrl = await generateDeepLink(addOperatorLongLink, addOperatorDeeplink, uniqueId);
+  let addOperatorDeeplink = `https://mezkala.app/op/${uniqueId}/`
+  
+  // let addOperatorParameterisedLink = `${prefix}?link=${addOperatorDeeplink}&apn=${packageId}&ibi=${packageId}`;
+  // if(appStoreId)
+  //   addOperatorParameterisedLink += `&isi=${appStoreId}`
 
-  let addDriverShortLink = `https://mezc.co/dr/${generateString()}`
-  let addDriverDeeplink = `https://mezkala.app/dr/${uniqueId}`
-  let addDriverLongLink = `https://mezc.co/dr/${uniqueId}?link=${addDriverDeeplink}&apn=${packageId}&ibi=${packageId}`;
-  if(appStoreId)
-  addDriverLongLink += `&isi=${appStoreId}`
-  let addDriverQrImageUrl = await generateDeepLink(addDriverLongLink, addDriverDeeplink, uniqueId);
+  let addOperatorRequestBody: ShortLinkRequestBody = {
+    // longDynamicLink: addOperatorParameterisedLink,
+    dynamicLinkInfo: {
+      domainUriPrefix: prefix,
+      link: addOperatorDeeplink,
+      androidInfo: {
+        androidPackageName: packageId
+      },
+      iosInfo: {
+        iosBundleId: packageId,
+        iosAppStoreId: appStoreId
+      },
+    },
+    suffix: {
+      option: 'SHORT'
+    }
+  }
+  let addOperatorLinkResponse = await generateDeepLink(addOperatorRequestBody, uniqueId, "operator");
+
+  packageId = appPackageIds[AppType.DeliveryApp];
+  appStoreId = appStoreIds[AppType.DeliveryApp];
+
+  let addDriverDeeplink = `https://mezkala.app/dr/${uniqueId}/`
+  // let addDriverParameterisedLink = `${prefix}?link=${addDriverDeeplink}&apn=${packageId}&ibi=${packageId}`;
+  // if(appStoreId)
+  // addDriverParameterisedLink += `&isi=${appStoreId}`
+
+  let addDriverRequestBody: ShortLinkRequestBody = {
+    // longDynamicLink: addDriverParameterisedLink,
+    dynamicLinkInfo: {
+      domainUriPrefix: prefix,
+      link: addDriverDeeplink,
+      androidInfo: {
+        androidPackageName: packageId
+      },
+      iosInfo: {
+        iosBundleId: packageId,
+        iosAppStoreId: appStoreIds[appType]
+      },
+    },
+    suffix: {
+      option: 'SHORT'
+    }
+  }
+  let addDriverLinkResponse = await generateDeepLink(addDriverRequestBody, uniqueId, "driver");
 
   return {
-    [DeepLinkType.Customer]: {
-      url: customerShortLink,
-      urlQrImage: customerQrImageUrl
-    },
-    [DeepLinkType.AddOperator]: {
-      url: addOperatorShortlink,
-      urlQrImage: addOperatorQrImageUrl
-    },
-    [DeepLinkType.AddDriver]: {
-      url: addDriverShortLink,
-      urlQrImage: addDriverQrImageUrl
-    },
+    [DeepLinkType.Customer]: customerLinkResponse,
+    [DeepLinkType.AddOperator]: addOperatorLinkResponse,
+    [DeepLinkType.AddDriver]: addDriverLinkResponse,
   }
 };
 
 // `https://mezprovs.page.link/?link=https://www.mezcalmos.com/?app%3D${appName}%26?type%3D${parameters['providerType']}%26id%3D${parameters['providerId']}&apn=${appPkgName}&ibi=${appPkgName}`
-export async function generateDeepLink(longLink:string, shortLink:string, uniqueId:string): Promise<string> {
+export async function generateDeepLink(requestBody: ShortLinkRequestBody, uniqueId: string, fileName: string): Promise<IDeepLink> {
   const firebaseLinks: FirebaseDynamicLinks = new FirebaseDynamicLinks("AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg");
-  // const { shortLinkResponse } = 
-  await firebaseLinks.createLink({
-    longDynamicLink: longLink,
-  });
-  let qrUrl: string = await generateQr(`links/${uniqueId}/`, shortLink)
-  return qrUrl;
+  let response: ShortLinkResponse
+  try {
+    response = 
+    await firebaseLinks.createLink(requestBody)
+    console.log("response: ", response.shortLink)
+  } catch(err: any) {
+    console.log("create link Error: ", err)
+    throw Error('create link Error');
+  }
 
+  let qrUrl: string = await generateQr(`links/${uniqueId}/${fileName}`, response.shortLink)
+  return {
+    url: response.shortLink,
+    urlQrImage: qrUrl
+  }
+  
   // result = {
   //   url: shortLinkResponse,
   //   urlQr: undefined
@@ -116,6 +171,14 @@ export async function generateDeepLink(longLink:string, shortLink:string, unique
   // return result;
 }
 
-function generateString(): string {
-  return "random"
-}
+// function generateString(): string {
+//   let result = '';
+//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//   const charactersLength = characters.length;
+//   let counter = 0;
+//   while (counter < 5) {
+//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+//     counter += 1;
+//   }
+//   return result;
+// }

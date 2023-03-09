@@ -15047,6 +15047,7 @@ schedule?: [{	/** JSON select path */
 	stripe_id?:true,
 	/** An object relationship */
 	stripe_info?:ValueTypes["service_provider_stripe_info"],
+	unique_id?:true,
 		__typename?: true
 }>;
 	/** aggregated selection of "service_provider.details" */
@@ -15113,7 +15114,8 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	service_link_id?:ValueTypes["Int_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	stripe_id?:ValueTypes["Int_comparison_exp"],
-	stripe_info?:ValueTypes["service_provider_stripe_info_bool_exp"]
+	stripe_info?:ValueTypes["service_provider_stripe_info_bool_exp"],
+	unique_id?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "service_provider.details" */
 ["service_provider_details_constraint"]:service_provider_details_constraint;
@@ -15172,7 +15174,8 @@ end). throws an error if top level container is not an array */
 	service_link_id?:number,
 	service_provider_type?:string,
 	stripe_id?:number,
-	stripe_info?:ValueTypes["service_provider_stripe_info_obj_rel_insert_input"]
+	stripe_info?:ValueTypes["service_provider_stripe_info_obj_rel_insert_input"],
+	unique_id?:string
 };
 	/** aggregate max on columns */
 ["service_provider_details_max_fields"]: AliasType<{
@@ -15188,6 +15191,7 @@ end). throws an error if top level container is not an array */
 	service_link_id?:true,
 	service_provider_type?:true,
 	stripe_id?:true,
+	unique_id?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
@@ -15204,6 +15208,7 @@ end). throws an error if top level container is not an array */
 	service_link_id?:true,
 	service_provider_type?:true,
 	stripe_id?:true,
+	unique_id?:true,
 		__typename?: true
 }>;
 	/** response of any mutation on the table "service_provider.details" */
@@ -15250,7 +15255,8 @@ end). throws an error if top level container is not an array */
 	service_link_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
 	stripe_id?:ValueTypes["order_by"],
-	stripe_info?:ValueTypes["service_provider_stripe_info_order_by"]
+	stripe_info?:ValueTypes["service_provider_stripe_info_order_by"],
+	unique_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: service_provider.details */
 ["service_provider_details_pk_columns_input"]: {
@@ -15283,7 +15289,8 @@ end). throws an error if top level container is not an array */
 	schedule?:ValueTypes["jsonb"],
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 };
 	/** aggregate stddev on columns */
 ["service_provider_details_stddev_fields"]: AliasType<{
@@ -15337,7 +15344,8 @@ end). throws an error if top level container is not an array */
 	schedule?:ValueTypes["jsonb"],
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 };
 	/** aggregate sum on columns */
 ["service_provider_details_sum_fields"]: AliasType<{
@@ -32641,7 +32649,8 @@ the end). throws an error if top level container is not an array */
 			service_provider_type?:string,
 			stripe_id?:number,
 			/** An object relationship */
-	stripe_info?:PartialObjects["service_provider_stripe_info"]
+	stripe_info?:PartialObjects["service_provider_stripe_info"],
+			unique_id?:string
 	},
 	/** aggregated selection of "service_provider.details" */
 ["service_provider_details_aggregate"]: {
@@ -32707,7 +32716,8 @@ the end). throws an error if top level container is not an array */
 	service_link_id?:PartialObjects["Int_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	stripe_id?:PartialObjects["Int_comparison_exp"],
-	stripe_info?:PartialObjects["service_provider_stripe_info_bool_exp"]
+	stripe_info?:PartialObjects["service_provider_stripe_info_bool_exp"],
+	unique_id?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "service_provider.details" */
 ["service_provider_details_constraint"]:service_provider_details_constraint,
@@ -32766,7 +32776,8 @@ end). throws an error if top level container is not an array */
 	service_link_id?:number,
 	service_provider_type?:string,
 	stripe_id?:number,
-	stripe_info?:PartialObjects["service_provider_stripe_info_obj_rel_insert_input"]
+	stripe_info?:PartialObjects["service_provider_stripe_info_obj_rel_insert_input"],
+	unique_id?:string
 },
 	/** aggregate max on columns */
 ["service_provider_details_max_fields"]: {
@@ -32782,7 +32793,8 @@ end). throws an error if top level container is not an array */
 			phone_number?:string,
 			service_link_id?:number,
 			service_provider_type?:string,
-			stripe_id?:number
+			stripe_id?:number,
+			unique_id?:string
 	},
 	/** aggregate min on columns */
 ["service_provider_details_min_fields"]: {
@@ -32798,7 +32810,8 @@ end). throws an error if top level container is not an array */
 			phone_number?:string,
 			service_link_id?:number,
 			service_provider_type?:string,
-			stripe_id?:number
+			stripe_id?:number,
+			unique_id?:string
 	},
 	/** response of any mutation on the table "service_provider.details" */
 ["service_provider_details_mutation_response"]: {
@@ -32844,7 +32857,8 @@ end). throws an error if top level container is not an array */
 	service_link_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
 	stripe_id?:PartialObjects["order_by"],
-	stripe_info?:PartialObjects["service_provider_stripe_info_order_by"]
+	stripe_info?:PartialObjects["service_provider_stripe_info_order_by"],
+	unique_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: service_provider.details */
 ["service_provider_details_pk_columns_input"]: {
@@ -32877,7 +32891,8 @@ end). throws an error if top level container is not an array */
 	schedule?:PartialObjects["jsonb"],
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 },
 	/** aggregate stddev on columns */
 ["service_provider_details_stddev_fields"]: {
@@ -32931,7 +32946,8 @@ end). throws an error if top level container is not an array */
 	schedule?:PartialObjects["jsonb"],
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 },
 	/** aggregate sum on columns */
 ["service_provider_details_sum_fields"]: {
@@ -52001,7 +52017,8 @@ export type service_provider_details = {
 	service_provider_type:string,
 	stripe_id?:number,
 	/** An object relationship */
-	stripe_info?:service_provider_stripe_info
+	stripe_info?:service_provider_stripe_info,
+	unique_id?:string
 }
 
 /** aggregated selection of "service_provider.details" */
@@ -52072,7 +52089,8 @@ export type service_provider_details_bool_exp = {
 	service_link_id?:Int_comparison_exp,
 	service_provider_type?:String_comparison_exp,
 	stripe_id?:Int_comparison_exp,
-	stripe_info?:service_provider_stripe_info_bool_exp
+	stripe_info?:service_provider_stripe_info_bool_exp,
+	unique_id?:String_comparison_exp
 }
 
 /** unique or primary key constraints on table "service_provider.details" */
@@ -52143,7 +52161,8 @@ export type service_provider_details_insert_input = {
 	service_link_id?:number,
 	service_provider_type?:string,
 	stripe_id?:number,
-	stripe_info?:service_provider_stripe_info_obj_rel_insert_input
+	stripe_info?:service_provider_stripe_info_obj_rel_insert_input,
+	unique_id?:string
 }
 
 /** aggregate max on columns */
@@ -52160,7 +52179,8 @@ export type service_provider_details_max_fields = {
 	phone_number?:string,
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 }
 
 /** aggregate min on columns */
@@ -52177,7 +52197,8 @@ export type service_provider_details_min_fields = {
 	phone_number?:string,
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 }
 
 /** response of any mutation on the table "service_provider.details" */
@@ -52227,7 +52248,8 @@ export type service_provider_details_order_by = {
 	service_link_id?:order_by,
 	service_provider_type?:order_by,
 	stripe_id?:order_by,
-	stripe_info?:service_provider_stripe_info_order_by
+	stripe_info?:service_provider_stripe_info_order_by,
+	unique_id?:order_by
 }
 
 /** primary key columns input for table: service_provider.details */
@@ -52260,7 +52282,8 @@ export enum service_provider_details_select_column {
 	schedule = "schedule",
 	service_link_id = "service_link_id",
 	service_provider_type = "service_provider_type",
-	stripe_id = "stripe_id"
+	stripe_id = "stripe_id",
+	unique_id = "unique_id"
 }
 
 /** input type for updating data in table "service_provider.details" */
@@ -52281,7 +52304,8 @@ export type service_provider_details_set_input = {
 	schedule?:jsonb,
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 }
 
 /** aggregate stddev on columns */
@@ -52340,7 +52364,8 @@ export type service_provider_details_stream_cursor_value_input = {
 	schedule?:jsonb,
 	service_link_id?:number,
 	service_provider_type?:string,
-	stripe_id?:number
+	stripe_id?:number,
+	unique_id?:string
 }
 
 /** aggregate sum on columns */
@@ -52370,7 +52395,8 @@ export enum service_provider_details_update_column {
 	schedule = "schedule",
 	service_link_id = "service_link_id",
 	service_provider_type = "service_provider_type",
-	stripe_id = "stripe_id"
+	stripe_id = "stripe_id",
+	unique_id = "unique_id"
 }
 
 export type service_provider_details_updates = {
@@ -96680,6 +96706,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		unique_id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_details_constraint: "enum",
@@ -96913,6 +96945,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		unique_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_details_obj_rel_insert_input:{
@@ -97087,6 +97125,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		unique_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_details_pk_columns_input:{
@@ -97214,6 +97258,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		unique_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_details_stream_cursor_input:{
@@ -97323,6 +97373,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		stripe_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		unique_id:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -111378,7 +111434,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_link_id:"Int",
 		service_provider_type:"String",
 		stripe_id:"Int",
-		stripe_info:"service_provider_stripe_info"
+		stripe_info:"service_provider_stripe_info",
+		unique_id:"String"
 	},
 	service_provider_details_aggregate:{
 		aggregate:"service_provider_details_aggregate_fields",
@@ -111416,7 +111473,8 @@ export const ReturnTypes: Record<string,any> = {
 		phone_number:"String",
 		service_link_id:"Int",
 		service_provider_type:"String",
-		stripe_id:"Int"
+		stripe_id:"Int",
+		unique_id:"String"
 	},
 	service_provider_details_min_fields:{
 		creation_time:"timestamptz",
@@ -111430,7 +111488,8 @@ export const ReturnTypes: Record<string,any> = {
 		phone_number:"String",
 		service_link_id:"Int",
 		service_provider_type:"String",
-		stripe_id:"Int"
+		stripe_id:"Int",
+		unique_id:"String"
 	},
 	service_provider_details_mutation_response:{
 		affected_rows:"Int",

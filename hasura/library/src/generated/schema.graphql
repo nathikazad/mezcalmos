@@ -25921,6 +25921,7 @@ type service_provider_details {
 
   """An object relationship"""
   stripe_info: service_provider_stripe_info
+  unique_id: String
 }
 
 """
@@ -25996,6 +25997,7 @@ input service_provider_details_bool_exp {
   service_provider_type: String_comparison_exp
   stripe_id: Int_comparison_exp
   stripe_info: service_provider_stripe_info_bool_exp
+  unique_id: String_comparison_exp
 }
 
 """
@@ -26102,6 +26104,7 @@ input service_provider_details_insert_input {
   service_provider_type: String
   stripe_id: Int
   stripe_info: service_provider_stripe_info_obj_rel_insert_input
+  unique_id: String
 }
 
 """aggregate max on columns"""
@@ -26118,6 +26121,7 @@ type service_provider_details_max_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """aggregate min on columns"""
@@ -26134,6 +26138,7 @@ type service_provider_details_min_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """
@@ -26191,6 +26196,7 @@ input service_provider_details_order_by {
   service_provider_type: order_by
   stripe_id: order_by
   stripe_info: service_provider_stripe_info_order_by
+  unique_id: order_by
 }
 
 """primary key columns input for table: service_provider.details"""
@@ -26258,6 +26264,9 @@ enum service_provider_details_select_column {
 
   """column name"""
   stripe_id
+
+  """column name"""
+  unique_id
 }
 
 """
@@ -26282,6 +26291,7 @@ input service_provider_details_set_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """aggregate stddev on columns"""
@@ -26342,6 +26352,7 @@ input service_provider_details_stream_cursor_value_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """aggregate sum on columns"""
@@ -26404,6 +26415,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   stripe_id
+
+  """column name"""
+  unique_id
 }
 
 input service_provider_details_updates {
