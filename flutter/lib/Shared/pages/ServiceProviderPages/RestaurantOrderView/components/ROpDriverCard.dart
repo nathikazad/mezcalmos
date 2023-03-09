@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -100,9 +101,9 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             null)
                           MessageButton(
                             onTap: () {
-                              MezRouter.toNamed(SharedRoutes.getMessagesRoute(
+                              BaseMessagingScreen.navigate(
                                   chatId: widget.order
-                                      .serviceProviderDropOffDriverChatId!));
+                                      .serviceProviderDropOffDriverChatId!);
                             },
                             chatId: widget
                                 .order.serviceProviderDropOffDriverChatId!,

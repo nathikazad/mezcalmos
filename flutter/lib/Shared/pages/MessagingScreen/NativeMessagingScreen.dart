@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
@@ -16,6 +17,7 @@ import 'package:mezcalmos/env.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
+
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["MessagingScreen"];
 
@@ -70,15 +72,13 @@ class MessagingScreenStateForApps extends BaseMessagingScreenState {
             "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
         sagora!.callStatus.value = CallStatus.calling;
-        Get.toNamed<void>(NativeOnlyRoutes.kAgoraCallScreen, arguments: {
-          "chatId": chatId,
-          "talkingTo": Participant(
-              id: response.id.toInt(),
-              image: response.image!,
-              name: response.name!,
-              participantType:
-                  response.participantType.toString().toParticipantType()),
-        });
+
+        AgoraCall.navigate(
+            chatId: chatId,
+            participantId: response.id.toInt(),
+            participantImage: response.image!,
+            participantName: response.name!,
+            participantType: response.participantType.toString());
       }).onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint("Error ===> $error | $stackTrace");
         sagora!.callStatus.value = CallStatus.none;

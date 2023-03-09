@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -26,6 +27,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
 class BaseMessagingScreen extends StatefulWidget {
   @override
   BaseMessagingScreenState createState() => BaseMessagingScreenState();
+
+  static Future<void> navigate({required int chatId}) {
+    return MezRouter.toPath<void>(
+        SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()));
+  }
 }
 
 class BaseMessagingScreenState extends State<BaseMessagingScreen> {
@@ -43,7 +49,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
   @override
   void initState() {
-    if (Get.parameters['chatId'] == null) {
+    if (MezRouter.urlArguments['chatId'] == null) {
       customSnackBar(
         title: 'Error',
         subTitle: 'Does not have a valid chatId!',
@@ -51,10 +57,11 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
       MezRouter.back<void>();
     }
 
-    chatId = int.parse(Get.parameters['chatId']!);
-    if (Get.parameters['recipientType'] != null) {
-      recipientType =
-          Get.parameters['recipientType']!.toString().toParticipantType();
+    chatId = int.parse(MezRouter.urlArguments['chatId'].toString());
+    if (MezRouter.urlArguments['recipientType'] != null) {
+      recipientType = MezRouter.urlArguments['recipientType']!
+          .toString()
+          .toParticipantType();
     }
     controller.clearMessageNotifications(chatId: chatId);
     // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -38,6 +39,7 @@ class CustCourierOrderView extends StatefulWidget {
 class _CustCourierOrderViewState extends State<CustCourierOrderView> {
   CustCourierOrderViewController viewController =
       CustCourierOrderViewController();
+
   @override
   void initState() {
     if (int.tryParse(Get.parameters['orderId'] ?? "") != null) {
@@ -218,8 +220,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             MessageButton(
                 chatId: 55,
                 onTap: () {
-                  MezRouter.toNamed(SharedRoutes.getMessagesRoute(
-                      chatId: viewController.order.chatWithCustomerId));
+                  BaseMessagingScreen.navigate(
+                      chatId: viewController.order.chatWithCustomerId);
                 })
         ],
       ),

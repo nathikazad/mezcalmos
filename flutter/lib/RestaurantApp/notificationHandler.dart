@@ -21,7 +21,8 @@ Notification restaurantNotificationHandler(String key, value) {
               RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/shared/notifications/readyOrderNotificationIcon.png', // needs to be changed
+              'assets/images/shared/notifications/readyOrderNotificationIcon.png',
+          // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
@@ -37,7 +38,8 @@ Notification restaurantNotificationHandler(String key, value) {
               : "You have been rejected",
           imgUrl: (value["approved"] == true)
               ? 'assets/images/shared/notifications/delivered.png'
-              : 'assets/images/shared/notifications/cancel.png', // needs to be changed
+              : 'assets/images/shared/notifications/cancel.png',
+          // needs to be changed
           title:
               (value["approved"] == true) ? "Congrats !!" : "Unfortunately !",
           timestamp: DateTime.parse(value['time']),

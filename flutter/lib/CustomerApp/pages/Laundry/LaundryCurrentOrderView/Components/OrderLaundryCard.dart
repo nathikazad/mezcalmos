@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -62,11 +63,7 @@ class OrderLaundryCard extends StatelessWidget {
                 )),
             MessageButton(
               onTap: () {
-                MezRouter.toNamed(
-                  SharedRoutes.getMessagesRoute(
-                    chatId: order.chatId,
-                  ),
-                );
+                BaseMessagingScreen.navigate(chatId: order.chatId);
               },
               chatId: order.chatId,
             ),
@@ -79,8 +76,7 @@ class OrderLaundryCard extends StatelessWidget {
   Widget _messageButton(BuildContext context) {
     return IconButton(
       onPressed: () {
-        MezRouter.toNamed<void>(
-            SharedRoutes.getMessagesRoute(chatId: order.orderId));
+        BaseMessagingScreen.navigate(chatId: order.orderId);
       },
       icon: Stack(
         alignment: Alignment.center,

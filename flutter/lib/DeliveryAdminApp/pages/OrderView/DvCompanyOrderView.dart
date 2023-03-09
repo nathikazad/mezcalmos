@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/controllers/DvCompanyOrderViewController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -288,9 +289,9 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             MessageButton(
                 chatId: 55,
                 onTap: () {
-                  MezRouter.toNamed(SharedRoutes.getMessagesRoute(
+                  BaseMessagingScreen.navigate(
                       chatId: viewController
-                          .order.value!.chatWithServiceProviderId!));
+                          .order.value!.chatWithServiceProviderId!);
                 })
         ],
       ),

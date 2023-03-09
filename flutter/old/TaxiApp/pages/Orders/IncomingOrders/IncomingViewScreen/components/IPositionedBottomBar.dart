@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -360,13 +361,16 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
               child: Obx(
                 () => MessageButton(
                   onTap: () {
-                    MezRouter.toNamed<void>(
-                      getMessagesRoute(
-                          orderType: OrderType.Taxi,
-                          chatId: order.orderId,
-                          orderId: order.orderId,
-                          recipientType: ParticipantType.Customer),
+                    BaseMessagingScreen.navigate(
+                      chatId: order.orderId,
                     );
+                    // MezRouter.toNamed<void>(
+                    //   getMessagesRoute(
+                    //       orderType: OrderType.Taxi,
+                    //       chatId: order.orderId,
+                    //       orderId: order.orderId,
+                    //       recipientType: ParticipantType.Customer),
+                    // );
                   },
                   showRedDot:
                       Get.find<OrderController>().hasNewMessageNotification(),

@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderT
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundrySetCategoryComponent.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -97,11 +98,8 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                     action: MessageButton(
                         chatId: viewController.order.chatId,
                         onTap: () {
-                          MezRouter.toNamed(
-                            SharedRoutes.getMessagesRoute(
-                              chatId: viewController.order.chatId,
-                            ),
-                          );
+                          BaseMessagingScreen.navigate(
+                              chatId: viewController.order.chatId);
                         }),
                     firstAvatarBgImage: CachedNetworkImageProvider(
                         viewController.order.customer.image),

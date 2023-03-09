@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
@@ -192,11 +193,9 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
   return Obx(
     () => GestureDetector(
       onTap: () {
-        MezRouter.toNamed<void>(SharedRoutes.getMessagesRoute(
-            chatId: order.value!.orderId,
-            orderId: order.value!.orderId,
-            orderType: OrderType.Taxi,
-            recipientType: ParticipantType.Taxi));
+        BaseMessagingScreen.navigate(
+          chatId: order.value!.orderId,
+        );
       },
       child: Container(
         height: 30,

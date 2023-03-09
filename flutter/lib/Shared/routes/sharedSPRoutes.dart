@@ -1,29 +1,15 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart'
-    deferred as serviceProfileView;
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart'
-    deferred as createServiceView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart'
-    deferred as deliveryCostSettingView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart'
-    deferred as deliverySettingView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart'
-    deferred as pickDriverView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart'
-    deferred as serviceDriverListView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart'
-    deferred as serviceInfoEditView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart'
-    deferred as operatorsListView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart'
-    deferred as servicePaymentsView;
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleView/ServiceScheduleView.dart'
-    deferred as serviceScheduleView;
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleView/ServiceScheduleView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-// GetX based Router (For navigating)
 class SharedServiceProviderRoutes {
   static const String kPickDriverRoute = "/pickDriver/:orderId";
   static const String kDriversRoute =
@@ -48,80 +34,60 @@ class SharedServiceProviderRoutes {
 
   static final List<QRoute> routes = [
     QRoute(
-        path: kDeliveryCostSettingRoute,
-        name: kDeliveryCostSettingRoute,
-        builder: () => deliveryCostSettingView.DeliveryCostSettingView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(deliveryCostSettingView.loadLibrary)
-        ]),
+      path: kDeliveryCostSettingRoute,
+      name: kDeliveryCostSettingRoute,
+      builder: () => DeliveryCostSettingView(),
+    ),
     QRoute(
-        path: kPickDriverRoute,
-        name: kPickDriverRoute,
-        builder: () => pickDriverView.PickDriverView(),
-        middleware: <QMiddleware>[DefferedLoader(pickDriverView.loadLibrary)]),
+      path: kPickDriverRoute,
+      name: kPickDriverRoute,
+      builder: () => PickDriverView(),
+    ),
     QRoute(
-        path: kDriversRoute,
-        name: kDriversRoute,
-        builder: () => serviceDriverListView.ServiceDriversListView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(serviceDriverListView.loadLibrary)
-        ]),
+      path: kDriversRoute,
+      name: kDriversRoute,
+      builder: () => ServiceDriversListView(),
+    ),
     QRoute(
-        path: kOperatorsListRoute,
-        name: kOperatorsListRoute,
-        builder: () => operatorsListView.OperatorsListView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(operatorsListView.loadLibrary)
-        ]),
+      path: kOperatorsListRoute,
+      name: kOperatorsListRoute,
+      builder: () => OperatorsListView(),
+    ),
     QRoute(
-        path: kDeliveryCostRoute,
-        name: kDeliveryCostRoute,
-        builder: () => deliveryCostSettingView.DeliveryCostSettingView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(deliveryCostSettingView.loadLibrary)
-        ]),
+      path: kDeliveryCostRoute,
+      name: kDeliveryCostRoute,
+      builder: () => DeliveryCostSettingView(),
+    ),
     QRoute(
-        path: kServicePaymentsRoute,
-        name: kServicePaymentsRoute,
-        builder: () => servicePaymentsView.ServicePaymentsView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(servicePaymentsView.loadLibrary)
-        ]),
+      path: kServicePaymentsRoute,
+      name: kServicePaymentsRoute,
+      builder: () => ServicePaymentsView(),
+    ),
     QRoute(
-        path: kserviceInfoEditRoute,
-        name: kserviceInfoEditRoute,
-        builder: () => serviceInfoEditView.ServiceInfoEditView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(serviceInfoEditView.loadLibrary)
-        ]),
+      path: kserviceInfoEditRoute,
+      name: kserviceInfoEditRoute,
+      builder: () => ServiceInfoEditView(),
+    ),
     QRoute(
-        path: kCreateServiceRoute,
-        name: kCreateServiceRoute,
-        builder: () => createServiceView.CreateServiceView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(createServiceView.loadLibrary)
-        ]),
+      path: kCreateServiceRoute,
+      name: kCreateServiceRoute,
+      builder: () => CreateServiceView(),
+    ),
     QRoute(
-        path: kDeliverySettingsViewRoute,
-        name: kDeliverySettingsViewRoute,
-        builder: () => deliverySettingView.DeliverySettingsView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(deliverySettingView.loadLibrary)
-        ]),
+      path: kDeliverySettingsViewRoute,
+      name: kDeliverySettingsViewRoute,
+      builder: () => DeliverySettingsView(),
+    ),
     QRoute(
-        path: kserviceScheduleEditRoute,
-        name: kserviceScheduleEditRoute,
-        builder: () => serviceScheduleView.ServiceScheduleView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(serviceScheduleView.loadLibrary)
-        ]),
+      path: kserviceScheduleEditRoute,
+      name: kserviceScheduleEditRoute,
+      builder: () => ServiceScheduleView(),
+    ),
     //need to confirm
     QRoute(
-        path: kServiceProfileRoute,
-        name: kServiceProfileRoute,
-        builder: () => serviceProfileView.ServiceProfileView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(serviceProfileView.loadLibrary)
-        ]),
+      path: kServiceProfileRoute,
+      name: kServiceProfileRoute,
+      builder: () => ServiceProfileView(),
+    ),
   ];
 }
