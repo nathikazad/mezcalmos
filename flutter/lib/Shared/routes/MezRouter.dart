@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -28,6 +26,7 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static final List<Function> _delegates = [];
 
   static bool isCurrentRoute(String route) =>
+      _navigationStack.isNotEmpty &&
       routeMatch(route, _navigationStack.last.name);
 
   static bool routeMatch(String routeA, String routeB) {
