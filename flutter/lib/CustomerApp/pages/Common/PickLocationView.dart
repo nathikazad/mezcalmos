@@ -222,7 +222,6 @@ class _PickLocationViewState extends State<PickLocationView> {
           mezDbgPrint(
               "locationPickerController.location.value ==/ ${locationPickerController.location.value?.address}");
           await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
-          
 
           savedLocation = SavedLocation(
               id: null,

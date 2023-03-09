@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -62,10 +63,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               : _dropOffTimeSetter(),
 
           onCustomerMsgClick: () {
-            MezRouter.toNamed(
-              SharedRoutes.getMessagesRoute(
-                chatId: widget.viewcontroller.order.chatWithCustomerId,
-              ),
+            BaseMessagingScreen.navigate(
+              chatId: widget.viewcontroller.order.chatWithCustomerId,
             );
           },
           // landry
@@ -76,11 +75,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               : _pickUpTimeSetter(),
           onServiceMsgClick: () {
             if (widget.viewcontroller.order.chatWithServiceProviderId != null) {
-              MezRouter.toNamed(
-                SharedRoutes.getMessagesRoute(
-                  chatId:
-                      widget.viewcontroller.order.chatWithServiceProviderId!,
-                ),
+              BaseMessagingScreen.navigate(
+                chatId: widget.viewcontroller.order.chatWithServiceProviderId!,
               );
             }
           },

@@ -8,10 +8,27 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class AgoraCall extends StatefulWidget {
+  static Future<void> navigate(
+      {required int chatId,
+      required int participantId,
+      required String participantImage,
+      required String participantName,
+      required String participantType}) {
+    return MezRouter.toPath<void>(NativeOnlyRoutes.kAgoraCallScreenRoute,
+        arguments: <String, dynamic>{
+          'chatId': chatId,
+          'participantId': participantId,
+          'participantImage': participantImage,
+          'participantName': participantName,
+          'participantType': participantType,
+        });
+  }
+
   @override
   State<AgoraCall> createState() => _AgoraCallState();
 }
@@ -20,11 +37,19 @@ class _AgoraCallState extends State<AgoraCall> {
   final MessageController _msgController = MessageController();
   final SettingsController _settingsController = Get.find<SettingsController>();
   final Sagora _sagora = Get.find<Sagora>();
-  final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
-  final int chatId = Get.arguments?['chatId'];
+  final Participant talkingTo = Participant(
+      image: MezRouter.bodyArguments?['participantImage'],
+      name: MezRouter.bodyArguments?['participantImage'],
+      participantType: MezRouter.bodyArguments?['participantType'].toString()
+          as ParticipantType,
+      id: MezRouter.bodyArguments?['participantId']);
+
+  // final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
+  final int chatId = MezRouter.bodyArguments?['chatId'];
   StreamSubscription? callStatusStream;
 
   late CallStatus callStatus;
+
   // used for call timing
   Timer? callTimer;
   RxInt callSeconds = 0.obs;

@@ -36,7 +36,9 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   ForegroundNotificationsController fbNotificationsController =
       Get.find<ForegroundNotificationsController>();
   TaxiOrder order;
+
   CurrentPositionedBottomBar(this.order);
+
   @override
   Widget build(BuildContext context) {
     return Positioned(

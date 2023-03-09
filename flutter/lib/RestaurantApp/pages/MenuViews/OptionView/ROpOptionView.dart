@@ -56,9 +56,9 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   @override
   void initState() {
-    restaurantId = Get.parameters["restaurantId"];
-    optionId = Get.parameters["optionId"];
-    itemId = Get.parameters["itemId"];
+    restaurantId = MezRouter.urlArguments["restaurantId"].toString();
+    optionId = MezRouter.urlArguments["optionId"].toString();
+    itemId = MezRouter.urlArguments["itemId"].toString();
 
     if (restaurantId != null && itemId != null) {
       _tabController = TabController(length: 2, vsync: this);

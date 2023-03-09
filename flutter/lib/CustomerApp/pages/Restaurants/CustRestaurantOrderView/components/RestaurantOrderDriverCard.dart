@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -88,11 +89,8 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                 if (order.customerDropOffDriverChatId != null)
                   MessageButton(
                     onTap: () {
-                      MezRouter.toNamed(
-                        SharedRoutes.getMessagesRoute(
-                          chatId: order.customerDropOffDriverChatId!,
-                        ),
-                      );
+                      BaseMessagingScreen.navigate(
+                          chatId: order.customerDropOffDriverChatId!);
                     },
                     chatId: order.customerDropOffDriverChatId!,
                   ),

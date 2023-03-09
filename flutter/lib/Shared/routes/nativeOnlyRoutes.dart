@@ -10,12 +10,12 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 // GetX based Router (For navigating)
 class NativeOnlyRoutes {
-  static const String kAgoraCallScreen = '/agora';
-  static const String kAppNeedsUpdate = '/needs_update';
+  static const String kAgoraCallScreenRoute = '/agora';
+  static const String kAppNeedsUpdateRoute = '/needs_update';
   static List<QRoute> routes = [
     QRoute(
-      name: kAgoraCallScreen,
-      path: kAgoraCallScreen,
+      name: kAgoraCallScreenRoute,
+      path: kAgoraCallScreenRoute,
       builder: () => AgoraCall(),
     ),
     QRoute(
@@ -24,8 +24,8 @@ class NativeOnlyRoutes {
       builder: () => NativeMessagingScreen(),
     ),
     QRoute(
-      name: kAppNeedsUpdate,
-      path: kAppNeedsUpdate,
+      name: kAppNeedsUpdateRoute,
+      path: kAppNeedsUpdateRoute,
       builder: () => AppNeedsUpdateScreen(),
     ),
 

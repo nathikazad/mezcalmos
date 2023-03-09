@@ -51,7 +51,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
     _categoryId = MezRouter.urlArguments["categoryId"].toString();
     restaurantId = MezRouter.urlArguments["restaurantId"].toString();
     mezDbgPrint("Restif =======>$restaurantId");
-    if (Get.arguments != null) {
+    if (MezRouter.bodyArguments != null) {
       shouldSave = MezRouter.bodyArguments?["shouldSave"].toString() == 'true'
           ? true
           : false;

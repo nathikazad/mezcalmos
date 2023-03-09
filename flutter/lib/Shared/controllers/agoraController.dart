@@ -257,10 +257,10 @@ class Sagora extends GetxController {
                 id: int.parse(event.body['extra']['callerId']),
               ),
             };
-            if (Get.currentRoute == NativeOnlyRoutes.kAgoraCallScreen) {
+            if (Get.currentRoute == NativeOnlyRoutes.kAgoraCallScreenRoute) {
               Future<void>.microtask(
                 () => MezRouter.offAndToNamed<void>(
-                    NativeOnlyRoutes.kAgoraCallScreen,
+                    NativeOnlyRoutes.kAgoraCallScreenRoute,
                     arguments: <String, dynamic>{
                       "chatId": int.parse(event.body?['extra']?['chatId']),
                       "talkingTo": Participant(
@@ -278,7 +278,7 @@ class Sagora extends GetxController {
               // Pushing to call screen + awaiting in case we wanna return with value.
               // ignore: unawaited_futures
               Future.microtask(() => MezRouter.toNamed<void>(
-                  NativeOnlyRoutes.kAgoraCallScreen,
+                  NativeOnlyRoutes.kAgoraCallScreenRoute,
                   arguments: args));
             }
           }

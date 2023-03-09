@@ -1,11 +1,7 @@
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart'
-    deferred as restaurantWrapper;
-import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart'
-    deferred as RoTabsView;
-import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart'
-    deferred as UnAuthorizedOpView;
-
+import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
+import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
 import 'package:mezcalmos/RestaurantApp/router/deliveryRoutes.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
@@ -22,24 +18,20 @@ class RestaurantAppRoutes {
 
   static List<QRoute> mainRoutes = [
         QRoute(
-            path: SharedRoutes.kHomeRoute,
-            name: SharedRoutes.kHomeRoute,
-            builder: () => restaurantWrapper.RestaurantWrapper(),
-            middleware: <QMiddleware>[
-              DefferedLoader(restaurantWrapper.loadLibrary)
-            ]),
+          path: SharedRoutes.kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
+          builder: () => RestaurantWrapper(),
+        ),
         QRoute(
-            path: tabsRoute,
-            name: tabsRoute,
-            builder: () => RoTabsView.ROpTabsViewView(),
-            middleware: <QMiddleware>[DefferedLoader(RoTabsView.loadLibrary)]),
+          path: tabsRoute,
+          name: tabsRoute,
+          builder: () => ROpTabsViewView(),
+        ),
         QRoute(
-            path: opUnauthRoute,
-            name: opUnauthRoute,
-            builder: () => UnAuthorizedOpView.ROpUnauthorizedOpView(),
-            middleware: <QMiddleware>[
-              DefferedLoader(UnAuthorizedOpView.loadLibrary)
-            ]),
+          path: opUnauthRoute,
+          name: opUnauthRoute,
+          builder: () => ROpUnauthorizedOpView(),
+        ),
       ] +
       DeliveryRouter().routes +
       RestaurantRouter().routes +

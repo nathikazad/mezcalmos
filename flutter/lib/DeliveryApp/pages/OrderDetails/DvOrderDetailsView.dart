@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -45,6 +46,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late String orderId;
   Rxn<DeliveryOrder> order = Rxn();
   DvOrderDetailsViewController viewController = DvOrderDetailsViewController();
+
   @override
   void initState() {
     final String orderId = MezRouter.urlArguments['orderId'].toString();
@@ -293,9 +295,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             MessageButton(
                 chatId: viewController.order.value!.chatWithCustomerId,
                 onTap: () {
-                  MezRouter.toNamed(SharedRoutes.getMessagesRoute(
-                    chatId: viewController.order.value!.chatWithCustomerId,
-                  ));
+                  BaseMessagingScreen.navigate(
+                      chatId: viewController.order.value!.chatWithCustomerId);
                 })
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/AnimatedOrderInfoCard.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -40,6 +41,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
 
   RxBool isSettingPickUpTime = false.obs;
   RxBool isSettingDropoffTime = false.obs;
+
   @override
   void initState() {
     super.initState();
@@ -62,9 +64,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
           enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
-            MezRouter.toNamed(
-              SharedRoutes.getMessagesRoute(chatId: widget.order.orderId),
-            );
+            BaseMessagingScreen.navigate(chatId: widget.order.orderId);
           },
           // landry
           serviceProviderImage: widget.order.restaurant.image,
