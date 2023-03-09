@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -22,7 +23,7 @@ class PlatformOSHelper {
     _packageName = packageName;
   }
 
-  static late String _appName;
+  static String _appName = MezEnv.appType.toHasuraString();
   static String get getAppName => _appName;
   static void setAppName(String appName) {
     _appName = appName;
