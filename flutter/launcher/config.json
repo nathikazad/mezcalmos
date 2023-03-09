@@ -249,8 +249,7 @@
                 },
                 "assets": [
                     "assets/i18n/en.json",
-                    "assets/i18n/es.json",
-                    "assets/images/web/"
+                    "assets/i18n/es.json"
                 ]
             }
         },
