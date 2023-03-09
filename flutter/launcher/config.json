@@ -248,8 +248,21 @@
                     "mime_type": "^1.0.0"
                 },
                 "assets": [
-                    "assets/i18n/en.json",
-                    "assets/i18n/es.json"
+                    "assets/images/",
+                    "assets/images/customer/",
+                    "assets/images/shared/",
+                    "assets/images/laundryApp/",
+                    "assets/images/shared/notifications/",
+                    "assets/images/shared/notifications/laundry/",
+                    "assets/images/deliveryAdmin/",
+                    "assets/images/customer/restaurants/",
+                    "assets/images/customer/taxi/",
+                    "assets/images/customer/laundry/",
+                    "assets/fonts/",
+                    "assets/i18n/",
+                    "assets/animation/",
+                    "assets/sounds/",
+                    "assets/icons/appstore.png"
                 ]
             }
         },
