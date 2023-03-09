@@ -22,9 +22,11 @@ class ServiceDriversListView extends StatefulWidget {
   const ServiceDriversListView({
     super.key,
     this.serviceProviderType,
+    this.serviceLinkId,
     this.serviceProviderId,
   });
   final int? serviceProviderId;
+  final int? serviceLinkId;
   final ServiceProviderType? serviceProviderType;
 
   @override
@@ -34,6 +36,8 @@ class ServiceDriversListView extends StatefulWidget {
 class _ServiceDriversListViewState extends State<ServiceDriversListView> {
   DriversViewController viewController = DriversViewController();
   int? serviceProviderId;
+  int? serviceLinkId;
+
   bool showAppBar = true;
   ServiceProviderType? serviceProviderType;
   @override
@@ -42,6 +46,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
 
     viewController.init(
         serviceProviderId: serviceProviderId!,
+        servLinkId: serviceLinkId!,
         serviceProviderType: serviceProviderType!);
 
     super.initState();
@@ -50,6 +55,8 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
   void _settingVariables() {
     serviceProviderId = widget.serviceProviderId ??
         int.tryParse(Get.parameters["serviceProviderId"]!);
+    serviceLinkId =
+        widget.serviceLinkId ?? int.tryParse(Get.parameters["serviceLinkId"]!);
 
     serviceProviderType = widget.serviceProviderType ??
         Get.arguments?["serviceProviderType"] as ServiceProviderType;
@@ -77,7 +84,6 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                   backgroundColor: secondaryLightBlueColor,
                   textColor: primaryBlueColor,
                   onClick: () async {
-                    await viewController.fetchServiceLinks();
                     if (viewController.hasLinks) {
                       await _addDriverSheet();
                     }
@@ -123,7 +129,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                     alignment: Alignment.center,
                     child: Text(
                       "${_i18n()['title']}",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),

@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/controllers/UnauthDriverViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 
 class UnAuthorizedDriverView extends StatefulWidget {
   const UnAuthorizedDriverView({super.key});
@@ -38,43 +40,49 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
       ),
       body: Container(
         alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: secondaryLightBlueColor,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.sentiment_dissatisfied,
-                color: primaryBlueColor,
-                size: 35,
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              child: Text(
-                "Invitation needed",
-                style: Get.textTheme.displaySmall,
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              child: Text(
-                "You need an invitation to use our delivery app",
-                style: Get.textTheme.bodyMedium,
-              ),
-            )
-          ],
-        ),
+        child: (viewController.status == AgentStatus.AwaitingApproval)
+            ? ServiceWaitingForApproval()
+            : _invitNedded(),
       ),
+    );
+  }
+
+  Widget _invitNedded() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: secondaryLightBlueColor,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            Icons.sentiment_dissatisfied,
+            color: primaryBlueColor,
+            size: 35,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          child: Text(
+            "Invitation needed",
+            style: Get.textTheme.displaySmall,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          child: Text(
+            "You need an invitation to use our delivery app",
+            style: Get.textTheme.bodyMedium,
+          ),
+        )
+      ],
     );
   }
 }

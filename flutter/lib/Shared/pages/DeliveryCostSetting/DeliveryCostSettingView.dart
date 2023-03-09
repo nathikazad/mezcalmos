@@ -97,6 +97,20 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                       controller: viewController.costPerKm,
                       suffixTitle: '\$/Km',
                       title: "${_i18n()['costPerKm']}"),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  _costComponent(
+                      controller: viewController.radius,
+                      suffixTitle: 'KM',
+                      title: "${_i18n()['radius']}"),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  _costComponent(
+                      controller: viewController.costPerKmFromBase,
+                      suffixTitle: '\$/Km',
+                      title: "${_i18n()['costPerKmFromBase']}"),
                 ],
               ),
             ),
@@ -143,7 +157,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                 fit: FlexFit.tight,
                 child: Text(
                   "${_i18n()['custDistance']}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
               ),
               SizedBox(
@@ -161,7 +175,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                     },
                     controller: viewController.distancePreview,
                     textAlignVertical: TextAlignVertical.center,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [
@@ -175,7 +189,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                           child: Text(
                             "Km",
                             textAlign: TextAlign.right,
-                            style: Get.textTheme.bodyText1,
+                            style: Get.textTheme.bodyLarge,
                           ),
                         ),
                         fillColor: Colors.white),
@@ -190,14 +204,14 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
             children: [
               Text(
                 "${_i18n()['cost']}",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               Obx(
                 () => Text(
                   viewController.previewCost.value
                           ?.toPriceString(rounded: false) ??
                       "_",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
               )
             ],
@@ -217,7 +231,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
           fit: FlexFit.tight,
           child: Text(
             title,
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
         SizedBox(
@@ -227,7 +241,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
             flex: 1,
             child: TextFormField(
               controller: controller,
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               textAlignVertical: TextAlignVertical.center,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
@@ -242,7 +256,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                     child: Text(
                       suffixTitle,
                       textAlign: TextAlign.right,
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                   ),
                   fillColor: secondaryLightBlueColor),

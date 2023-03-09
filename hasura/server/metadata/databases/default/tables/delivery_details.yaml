@@ -69,6 +69,7 @@ select_permissions:
         - self_delivery
         - id
         - cost_per_km
+        - cost_per_km_from_base
         - free_delivery_minimum_cost
         - minimum_cost
         - free_delivery_km_range
@@ -148,6 +149,7 @@ update_permissions:
     permission:
       columns:
         - cost_per_km
+        - cost_per_km_from_base
         - customer_pickup
         - delivery_available
         - free_delivery_km_range
@@ -187,6 +189,7 @@ update_permissions:
     permission:
       columns:
         - cost_per_km
+        - cost_per_km_from_base
         - customer_pickup
         - delivery_available
         - free_delivery_km_range
