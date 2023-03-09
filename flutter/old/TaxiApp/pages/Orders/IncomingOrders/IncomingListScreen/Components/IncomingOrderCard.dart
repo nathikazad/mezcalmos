@@ -19,7 +19,7 @@ class IncomingOrderCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Future.delayed(
         Duration.zero,
-        () => MezRouter.toNamed<void>(
+        () => MezRouter.toNamed(
           order.status != TaxiOrdersStatus.Scheduled && !isPast
               ? getIncomingOrderRoute(order.orderId)
               : getTaxiOrderRoute(order.orderId),

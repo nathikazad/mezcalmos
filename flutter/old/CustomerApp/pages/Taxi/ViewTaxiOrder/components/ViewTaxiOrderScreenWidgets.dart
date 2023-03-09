@@ -62,7 +62,8 @@ class ViewTaxiOrderScreenWidgets {
                     resp.errorMessage ?? "Failed canceling taxi :(",
                   );
                 }
-                MezRouter.popDialog<void>();
+                MezRouter.closeDialog()
+
               },
             );
           },

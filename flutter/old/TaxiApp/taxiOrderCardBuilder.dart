@@ -44,7 +44,7 @@ OrderCardSubWidgets buildTaxiOrderCardWidgets(TaxiOrder order) {
   // upon Card Tap
   final void Function() onTap = () => Future.delayed(
         Duration.zero,
-        () => MezRouter.toNamed<void>(
+        () => MezRouter.toNamed(
           order.status != TaxiOrdersStatus.Scheduled && !order.isPastOrder()
               ? getIncomingOrderRoute(order.orderId)
               : getTaxiOrderRoute(order.orderId),

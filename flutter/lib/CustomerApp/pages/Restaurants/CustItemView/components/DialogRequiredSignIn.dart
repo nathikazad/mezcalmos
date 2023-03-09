@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 void dialogRequiredSignIn() {
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -31,7 +31,7 @@ void dialogRequiredSignIn() {
                   icon: Icon(Icons.close),
                   onPressed: () {
                     mezDbgPrint("Clicked back");
-                    MezRouter.popDialog<void>();
+                    MezRouter.closeDialog();
                   },
                 ),
               ),
@@ -46,7 +46,7 @@ void dialogRequiredSignIn() {
                     child: Text(
                       "${_i18n()["title"]}",
                       textAlign: TextAlign.center,
-                      style: Get.textTheme.headline3
+                      style: Get.textTheme.displaySmall
                           ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),
@@ -61,13 +61,12 @@ void dialogRequiredSignIn() {
                   MezButton(
                     onClick: () async {
                       // to remove the SignIn popUp first!
-                      MezRouter.back<void>();
+                      await MezRouter.back();
                       // then head to kSignInRoute.
                       Get.find<AuthController>()
                           .preserveNavigationStackAfterSignIn = true;
                       // ignore: unawaited_futures
-                      MezRouter.toNamed<void>(
-                          SharedRoutes.kSignInRouteOptional);
+                      MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
                     },
                     label: "${_i18n()["signBtn"]}",
                     withGradient: true,
@@ -75,7 +74,7 @@ void dialogRequiredSignIn() {
                   const SizedBox(height: 15),
                   InkWell(
                     onTap: () {
-                      MezRouter.popDialog<void>();
+                      MezRouter.closeDialog();
                     },
                     child: Ink(
                       padding: const EdgeInsets.all(8),

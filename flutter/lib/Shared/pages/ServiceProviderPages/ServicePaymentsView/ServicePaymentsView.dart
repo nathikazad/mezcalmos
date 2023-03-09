@@ -21,7 +21,7 @@ class ServicePaymentsView extends StatefulWidget {
   static Future<void> navigate(
       {required int serviceProviderId,
       required ServiceProviderType serviceProviderType}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         SharedServiceProviderRoutes.kServicePaymentsRoute
             .replaceAll(":ServiceProviderId", serviceProviderId.toString()),
         arguments: <String, dynamic>{

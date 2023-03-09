@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -25,7 +25,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
       // Get.find<SideMenuDrawerController>().closeMenu();
-      MezRouter.toNamed<void>(kSavedCards);
+      MezRouter.toNamed(kSavedCards);
     },
     icon: Icons.credit_card,
     title: "CustomerApp/main/savedCards",
@@ -34,7 +34,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
       // Get.find<SideMenuDrawerController>().closeMenu();
-      MezRouter.toNamed<void>(kSavedLocations);
+      MezRouter.toNamed(kSavedLocations);
     },
     icon: Icons.near_me_outlined,
     title: "CustomerApp/main/savedLocations",

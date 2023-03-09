@@ -153,10 +153,9 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
               });
               // we will router the user back to the Map
               if (newValue?.id == "_pick_") {
-                final SavedLocation? _savedLocation =
-                    await MezRouter.toNamed<void>(
-                        PickLocationRoutes.pickLocationRoute,
-                        arguments: {"true": true}) as SavedLocation?;
+                final SavedLocation? _savedLocation = await MezRouter.toNamed(
+                    PickLocationRoutes.pickLocationRoute,
+                    arguments: {"true": true}) as SavedLocation?;
                 mezDbgPrint("View Got result : $_savedLocation");
                 if (_savedLocation != null) {
                   // in case it's repeated with the same name or same address

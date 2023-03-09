@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/controllers/LaundrOpCategoryViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -21,7 +21,7 @@ class LaundrOpCategoryView extends StatefulWidget {
     if (categoryId != null) {
       route = route.replaceAll(":categoryId", categoryId.toString());
     }
-    return MezRouter.toPath<void>(route);
+    return MezRouter.toPath(route);
   }
 
   @override

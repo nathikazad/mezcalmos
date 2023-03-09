@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/components/ListOperatorCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
@@ -37,7 +37,7 @@ class OperatorsListView extends StatefulWidget {
       {required int serviceProviderId,
       required int serviceLinkId,
       required ServiceProviderType serviceProviderType}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         SharedServiceProviderRoutes.kOperatorsListRoute
             .replaceAll(":ServiceProviderId", serviceProviderId.toString())
             .replaceAll(":serviceLinkId", serviceLinkId.toString()),

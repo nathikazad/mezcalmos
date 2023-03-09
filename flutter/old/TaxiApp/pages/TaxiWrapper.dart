@@ -99,10 +99,10 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       mezDbgPrint("TaxiWrapper::handleState ${state.toJson().toString()}");
       if (!state.isAuthorized) {
         mezDbgPrint("TaxiWrapper::handleState going to unauthorized");
-        MezRouter.toNamed<void>(kUnauthorizedRoute);
+        MezRouter.toNamed(kUnauthorizedRoute);
       } else if (state.currentOrder != null) {
         mezDbgPrint("TaxiWrapper::handleState going to current order");
-        MezRouter.toNamed<void>(getTaxiOrderRoute(state.currentOrder!));
+        MezRouter.toNamed(getTaxiOrderRoute(state.currentOrder!));
       } else if (state.inOrderNegotation != null) {
         await handleInNegotationMode(state.inOrderNegotation!);
       } else {

@@ -8,12 +8,11 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
-import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -24,6 +23,7 @@ import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -268,19 +268,22 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           // MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
           //     .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
           // ignore: unawaited_futures
-          MezRouter.popEverything().then((_) =>
+          MezRouter.popEverythingTillBeforeHome().then((_) =>
               ViewRestaurantOrderScreen.navigate(
                   orderId: _orderController!.hasOneOrderId!));
           // } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
           //   MezRouter.popEverythingAndNavigateTo(
           //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));
         } else if (_orderController!.hasOneOrderType == OrderType.Laundry) {
-          MezRouter.popEverythingAndNavigateTo(CustLaundryOrderView.navigate(
-              orderId: _orderController!.hasOneOrderId!));
+          // ignore: unawaited_futures
+          MezRouter.popEverythingTillBeforeHome().then((_) =>
+              CustLaundryOrderView.navigate(
+                  orderId: _orderController!.hasOneOrderId!));
         }
       } else if (_orderController!.hasManyOrders) {
-        MezRouter.popEverythingAndNavigateTo(
-            CustomerRoutes.customerOrdersRoute);
+        // ignore: unawaited_futures
+        MezRouter.popEverythingTillBeforeHome()
+            .then((_) => CustomerOrdersListView.navigate());
       }
     }
   }

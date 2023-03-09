@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as LocationLibrary;
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -27,7 +28,6 @@ import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
@@ -62,7 +62,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     mezDbgPrint("_orderSnapshot :: $_orderSnapshot");
 
     if (_orderSnapshot == null) {
-      MezRouter.back<void>();
+      MezRouter.back();
       mezcalmosDialogOrderNoMoreAvailable(context);
     } else {
       // firstTimeExecution
@@ -299,7 +299,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                       }
                       setState(() {});
                       _clickedBottomButton.value = false;
-                      MezRouter.back<void>();
+                      MezRouter.back();
                     },
                   );
                 },
@@ -374,7 +374,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     //     }
     //     _clickedBottomButton.value = false;
     //     setState(() {});
-    //     MezRouter.back<void>();
+    //     MezRouter.back();
     //   },
     // );
   }
@@ -392,7 +392,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               if (!resp.success) {
                 MezSnackbar("Error", "Server Error");
               }
-              MezRouter.back<void>();
+              MezRouter.back();
             }).whenComplete(() => _clickedBottomButton.value = false);
           },
         ),

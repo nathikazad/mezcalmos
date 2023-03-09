@@ -24,7 +24,7 @@ class DeliveryCostSettingView extends StatefulWidget {
   final int? deliveryDetailsId;
 
   static Future<void> navigate({required int deliveryDetailsId}) {
-    return MezRouter.toPath<void>(SharedServiceProviderRoutes.kDeliveryCostRoute
+    return MezRouter.toPath(SharedServiceProviderRoutes.kDeliveryCostRoute
         .replaceAll(":deliveryDetailsId", deliveryDetailsId.toString()));
   }
 

@@ -8,7 +8,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/compo
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -18,7 +17,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:qlevar_router/qlevar_router.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -29,7 +28,7 @@ class CustomerRestaurantView extends StatefulWidget {
   @override
   _CustomerRestaurantViewState createState() => _CustomerRestaurantViewState();
   static Future<void> navigate({required int restaurantId}) {
-    return MezRouter.toPath<void>(RestaurantRoutes.restaurantViewRoute
+    return MezRouter.toPath(RestaurantRoutes.restaurantViewRoute
         .replaceAll(":restaurantId", restaurantId.toString()));
   }
 }

@@ -225,7 +225,7 @@ class DvOrderItems extends StatelessWidget {
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
                             onClick: () async {
-                              MezRouter.popDialog();
+                              await MezRouter.closeDialog();
                             },
                           ),
                         ),
@@ -240,7 +240,7 @@ class DvOrderItems extends StatelessWidget {
                               await viewController.saveCost(
                                   itemId: viewController.items.value![index].id,
                                   index: index);
-                              MezRouter.popDialog();
+                              await MezRouter.closeDialog();
                             },
                           ),
                         ),

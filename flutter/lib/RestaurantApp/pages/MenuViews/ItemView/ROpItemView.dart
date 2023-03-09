@@ -9,13 +9,12 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/RopI
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/RestaurantApp/router/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -42,12 +41,12 @@ class ROpItemView extends StatefulWidget {
     if (itemId != null) {
       route = route.replaceFirst(":itemId", "$itemId");
     }
-    return MezRouter.toPath<void>(route);
+    return MezRouter.toPath(route);
   }
 
   static Future<void> navigateToAdd(
       {required int restaurantId, required Map<String, dynamic> arguments}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         RestaurantRouter.restaurantAddItemRoute
             .replaceAll(":restaurantId", restaurantId.toString()),
         arguments: arguments);

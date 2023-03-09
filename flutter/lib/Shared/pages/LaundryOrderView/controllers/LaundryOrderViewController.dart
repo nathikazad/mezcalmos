@@ -253,7 +253,7 @@ class LaundryOrderViewController {
     }
     if (res != null) {
       closeEditMode();
-      MezRouter.popDialog();
+      MezRouter.closeDialog();
     }
   }
 

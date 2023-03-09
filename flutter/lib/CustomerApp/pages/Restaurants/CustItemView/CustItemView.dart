@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemOptionCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemViewBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -22,7 +21,7 @@ class CustItemView extends StatefulWidget {
   const CustItemView({Key? key}) : super(key: key);
   static Future<void> navigateToRestaurantItem(
       {required int itemId, required int restaurantId}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         RestaurantRoutes.restaurantItemViewRoute
             .replaceAll(":restaurantId", restaurantId.toString())
             .replaceAll(":itemId", itemId.toString()),
@@ -32,7 +31,7 @@ class CustItemView extends StatefulWidget {
   }
 
   static Future<void> navigateToCartItem({required int cartItemId}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         RestaurantRoutes.cartItemViewRoute
             .replaceAll(":cartItemId", cartItemId.toString()),
         arguments: <String, dynamic>{

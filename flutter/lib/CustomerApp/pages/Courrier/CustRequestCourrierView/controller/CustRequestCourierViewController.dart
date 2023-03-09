@@ -130,7 +130,7 @@ class CustRequestCourierViewController {
           tripPolyline: routeInfo?.polyline,
         );
         // ignore: unawaited_futures
-        MezRouter.popEverything()
+        MezRouter.popEverythingTillBeforeHome()
             .then((_) => CustCourierOrderView.navigate(res.orderId.toInt()));
       } on FirebaseFunctionsException catch (e, stk) {
         showErrorSnackBar(errorText: e.message.toString());

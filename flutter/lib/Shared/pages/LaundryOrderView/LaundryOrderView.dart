@@ -5,8 +5,6 @@ import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderTimes.dart';
@@ -15,7 +13,6 @@ import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/OrderEstimate
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -32,7 +29,7 @@ class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-    return MezRouter.toPath<void>(LaundryAppRoutes.kOrderViewRoute
+    return MezRouter.toPath(LaundryAppRoutes.kOrderViewRoute
         .replaceAll(":orderId", orderId.toString()));
   }
 
@@ -52,7 +49,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
       viewController.init(orderId: orderId!);
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
   }
 

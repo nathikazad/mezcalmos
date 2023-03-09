@@ -219,7 +219,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           Obx(
                             () => MessageButton(
                               onTap: () {
-                                MezRouter.toNamed<void>(
+                                MezRouter.toNamed(
                                   getMessagesRoute(
                                     orderType: OrderType.Taxi,
                                     chatId: order.orderId,

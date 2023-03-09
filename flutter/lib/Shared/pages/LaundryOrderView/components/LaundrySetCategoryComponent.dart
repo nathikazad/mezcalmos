@@ -177,7 +177,8 @@ class _LaundrySetCategoryComponentState
     //   if (oldCosts.lineItems.length > 1) {
     //     int? res = await widget.viewController.deleteCategory(item.id);
     //     if (res != null) {
-    //       MezRouter.popDialog();
+    //       MezRouter.closeDialog()
+
     //     }
     //   } else {
     //     Get.snackbar(

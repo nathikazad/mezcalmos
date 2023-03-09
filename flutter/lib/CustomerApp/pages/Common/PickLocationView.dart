@@ -9,12 +9,12 @@ import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -64,7 +64,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       final int? id = int.tryParse(Get.parameters["id"] ?? "");
       if (id == null) {
         mezDbgPrint("Get.parameters['id'] - Location ID Was null!");
-        MezRouter.back<void>();
+        MezRouter.back();
       }
       _initEditMode(id);
     } else {
@@ -257,7 +257,7 @@ class _PickLocationViewState extends State<PickLocationView> {
               .setLocation(locationPickerController.location.value!);
         });
 
-        MezRouter.back<SavedLocation?>(result: savedLocation);
+        await MezRouter.back(backResult: savedLocation);
       } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
         _result = await savedLocationDailog(
             comingFromCart: Get.arguments,
@@ -291,11 +291,11 @@ class _PickLocationViewState extends State<PickLocationView> {
             locationPickerController
                 .setLocation(locationPickerController.location.value!);
           });
-          MezRouter.back<SavedLocation?>(result: savedLocation);
+          await MezRouter.back(backResult: savedLocation);
         }
       } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-        MezRouter.back<MezLocation>(
-            result: locationPickerController.location.value);
+        await MezRouter.back(
+            backResult: locationPickerController.location.value);
       }
     }
   }

@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-
 import 'package:url_launcher/url_launcher_string.dart';
 
 //
@@ -28,7 +27,7 @@ class ROpSelfDeliveryView extends StatefulWidget {
   const ROpSelfDeliveryView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required String orderId}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         DeliveryRouter.selfDeliveryRoute.replaceAll(":orderId", orderId));
   }
 

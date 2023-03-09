@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpEstDeliveryTime.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderCustomer.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderEstTime.dart';
@@ -16,7 +14,9 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderItems.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderStatusCard.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -34,7 +34,7 @@ class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required String orderId}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         RestaurantRouter.restaurantOrderRoute.replaceAll(":orderId", orderId));
   }
 

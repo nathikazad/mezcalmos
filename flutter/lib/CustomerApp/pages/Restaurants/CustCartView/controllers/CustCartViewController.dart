@@ -7,9 +7,6 @@ import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/stripe_cards/hsCustomerStripeCards.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
@@ -228,7 +225,7 @@ class CustCartViewController {
 
       if (newOrderId != null) {
         // ignore: unawaited_futures
-        MezRouter.popEverything().then((_) =>
+        MezRouter.popEverythingTillBeforeHome().then((_) =>
             ViewRestaurantOrderScreen.navigate(orderId: newOrderId!.toInt()));
       }
 

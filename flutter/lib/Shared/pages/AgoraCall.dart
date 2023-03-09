@@ -8,9 +8,9 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class AgoraCall extends StatefulWidget {
   static Future<void> navigate(
@@ -136,7 +136,7 @@ class _AgoraCallState extends State<AgoraCall> {
         );
         _sagora.engine.leaveChannel();
         _sagora.callStatus.value = CallStatus.none;
-        // MezRouter.back<void>();
+        // MezRouter.back();
         MezSnackbar(
           "Oops",
           "You have reached max time for your call!",

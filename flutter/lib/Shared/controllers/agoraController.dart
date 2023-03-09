@@ -1,12 +1,13 @@
 // ignore_for_file: avoid_void_async, always_specify_types, unawaited_futures
 
 import 'dart:async';
+
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -16,12 +17,12 @@ import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/env_example.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:uuid/uuid.dart';
-import 'package:flutter_callkit_incoming/entities/entities.dart';
 
 enum CallStatus { none, calling, inCall, timedOut }
 
@@ -206,7 +207,7 @@ class Sagora extends GetxController {
           callStatus.value = CallStatus.none;
           await FlutterCallkitIncoming.endAllCalls();
           // change to decline to update view parts.
-          // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back<void>();
+          // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back();
           break;
         case Event.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");

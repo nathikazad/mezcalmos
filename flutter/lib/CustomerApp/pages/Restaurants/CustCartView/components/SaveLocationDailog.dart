@@ -55,7 +55,7 @@ Future<String?> savedLocationDailog({
                       ? '${_i18n()["addLocationDialogTitle"]}'
                       : '${_i18n()["editLocationDialogTitle"]}',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               const SizedBox(height: 10),
@@ -65,7 +65,7 @@ Future<String?> savedLocationDailog({
                 child: TextField(
                   style: Theme.of(context)
                       .textTheme
-                      .headline2!
+                      .displayMedium!
                       .copyWith(fontSize: 13),
                   controller: txtController,
                   decoration: InputDecoration(
@@ -73,7 +73,7 @@ Future<String?> savedLocationDailog({
                     // hintText: lang.strings["customer"]["savedLocations"]
                     //     ["addLocationDialog"]["textHint"],
                     hintText: '${_i18n()["pickLocationHintText"]}',
-                    hintStyle: Get.textTheme.headline6
+                    hintStyle: Get.textTheme.titleLarge
                         ?.copyWith(color: pickLocationHintTextFieldColor),
                     filled: true,
                     fillColor: pickLocationTextFieldColor,
@@ -98,7 +98,7 @@ Future<String?> savedLocationDailog({
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    MezRouter.popDialog(result: txtController.text);
+                    MezRouter.closeDialog(backResult: txtController.text);
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.only(bottom: 4),
@@ -110,7 +110,7 @@ Future<String?> savedLocationDailog({
                     nameVal != null
                         ? _i18n()["editLocationDialogButton"]
                         : _i18n()["addLocationDialogButton"],
-                    style: Get.textTheme.headline4?.copyWith(
+                    style: Get.textTheme.headlineMedium?.copyWith(
                       color: primaryBlueColor,
                       fontSize: 11.sp,
                     ),
@@ -136,7 +136,7 @@ Future<String?> savedLocationDailog({
                       alignment: Alignment.topCenter,
                       child: Text(
                         _i18n()["addLocationDialogSkip"],
-                        style: Get.textTheme.headline4?.copyWith(
+                        style: Get.textTheme.headlineMedium?.copyWith(
                           color: offShadeGreyColor,
                           fontSize: 11.sp,
                         ),
@@ -181,7 +181,7 @@ InkWell skipButton(
       ),
     ),
     onTap: () {
-      MezRouter.back(result: txtController.text);
+      MezRouter.closeDialog(backResult: txtController.text);
     },
   );
 }

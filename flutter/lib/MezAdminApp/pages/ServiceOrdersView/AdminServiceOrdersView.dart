@@ -23,7 +23,7 @@ class AdminServiceOrdersView extends StatefulWidget {
       {required int serviceProviderId,
       required String serviceName,
       required ServiceProviderType serviceProviderType}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         MezAdminRoutes.kServiceOrdersRoute
             .replaceAll(":serviceProviderId", serviceProviderId.toString()),
         arguments: <String, dynamic>{

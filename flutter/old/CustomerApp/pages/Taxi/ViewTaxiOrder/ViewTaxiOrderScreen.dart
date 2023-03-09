@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/NearByOnlineTaxiDriversWidget.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/CounterOfferWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/ViewTaxiOrderScreenWidgets.dart';
@@ -9,17 +10,16 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/OrderFromToBar.dart';
 import 'package:mezcalmos/Shared/widgets/OrderTimeBar.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
@@ -49,13 +49,13 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     // Order handling
     if (Get.parameters['orderId'] == null) {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
     viewController
         .init(int.parse(Get.parameters['orderId']!))
         .then((bool initSuccess) {
       if (!initSuccess) {
-        MezRouter.back<void>();
+        MezRouter.back();
         MezSnackbar("Error", "Order does not exist");
       }
     });

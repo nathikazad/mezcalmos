@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -157,13 +157,14 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       description:
           '${_i18n()["subtitle"]} ${widget.viewController.cart.value?.restaurant?.info.name ?? ""} ${_i18n()["overwriteText"]} ',
       secondaryCallBack: () async {
-        MezRouter.popDialog<void>();
+        await MezRouter.closeDialog();
+
         await ViewCartScreen.navigate();
       },
       primaryCallBack: () async {
         await widget.viewController.handleAddItem();
-        MezRouter.popDialog<void>();
-        await MezRouter.back<void>();
+        await MezRouter.closeDialog();
+
         await ViewCartScreen.navigate();
       },
     );
@@ -182,14 +183,15 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       secondaryClickTitle: _i18n()["leftBtn"],
       description: _i18n()["specialSubtitle"],
       secondaryCallBack: () async {
-        MezRouter.popDialog<void>();
+        await MezRouter.closeDialog();
+
         await ViewCartScreen.navigate();
       },
       primaryCallBack: () async {
         mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
         await widget.viewController.cartController?.clearCart();
         await widget.viewController.handleAddItem();
-        await MezRouter.back<void>();
+        await MezRouter.back();
         await ViewCartScreen.navigate();
       },
     );

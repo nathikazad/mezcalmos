@@ -364,7 +364,7 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
                     BaseMessagingScreen.navigate(
                       chatId: order.orderId,
                     );
-                    // MezRouter.toNamed<void>(
+                    // MezRouter.toNamed(
                     //   getMessagesRoute(
                     //       orderType: OrderType.Taxi,
                     //       chatId: order.orderId,

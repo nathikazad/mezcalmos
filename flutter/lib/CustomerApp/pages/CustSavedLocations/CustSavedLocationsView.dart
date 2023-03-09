@@ -5,9 +5,9 @@ import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedL
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedLocationIsEmpty.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/controllers/CustSavedLocationsViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -57,7 +57,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         label: "${_i18n()["addNewLoc"]}",
         onClick: () async {
           // ignore: unawaited_futures
-          MezRouter.toNamed<void>(PickLocationRoutes.pickLocationRoute,
+          MezRouter.toNamed(PickLocationRoutes.pickLocationRoute,
               arguments: {"false": false});
         },
       ),

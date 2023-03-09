@@ -24,7 +24,7 @@ class DvOrderView extends StatefulWidget {
   const DvOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-    return MezRouter.toPath<void>(DeliveryAppRoutes.kRestaurantOrderViewRoute
+    return MezRouter.toPath(DeliveryAppRoutes.kRestaurantOrderViewRoute
         .replaceAll(":orderId", orderId.toString()));
   }
 

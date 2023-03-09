@@ -91,7 +91,7 @@ class PlatformOSHelper {
   //       break;
   //     default:
   //       // Major/Minor - forcing the app to stay in AppNeedsUpdate
-  //       MezRouter.toNamed<void>(
+  //       MezRouter.toNamed(
   //         SharedRoutes.kAppNeedsUpdate,
   //         arguments: <String, dynamic>{
   //           "versionStatus": status,

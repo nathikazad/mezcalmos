@@ -24,7 +24,7 @@ class PickDriverView extends StatefulWidget {
 
   static Future<void> navigate(
       {required int deliveryOrderId, required bool showForwardButton}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         SharedServiceProviderRoutes.kPickDriverRoute
             .replaceAll(":orderId", deliveryOrderId.toString()),
         arguments: <String, dynamic>{"showForwardButton": showForwardButton});

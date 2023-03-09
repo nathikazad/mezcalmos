@@ -14,7 +14,7 @@ class CustLaundriesListView extends StatefulWidget {
   const CustLaundriesListView({Key? key}) : super(key: key);
 
   static Future<void> navigate() {
-    return MezRouter.toNamed<void>(LaundryRoutes.laundriesListRoute);
+    return MezRouter.toNamed(LaundryRoutes.laundriesListRoute);
   }
 
   @override

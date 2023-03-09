@@ -1,24 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:flutter/services.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -34,7 +32,7 @@ class OrderDetailsScreen extends StatefulWidget {
   const OrderDetailsScreen({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-    return MezRouter.toPath<void>(DeliveryAppRoutes.kOrderDetailsViewRoute
+    return MezRouter.toPath(DeliveryAppRoutes.kOrderDetailsViewRoute
         .replaceAll(":orderId", orderId.toString()));
   }
 
@@ -371,7 +369,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
                             onClick: () async {
-                              MezRouter.popDialog();
+                              await MezRouter.closeDialog();
                             },
                           ),
                         ),
@@ -384,7 +382,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             label: "${_i18n()['save']}",
                             onClick: () async {
                               await viewController.editTax();
-                              MezRouter.popDialog();
+                              await MezRouter.closeDialog();
                             },
                           ),
                         ),

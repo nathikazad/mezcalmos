@@ -8,10 +8,10 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -20,7 +20,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class CustRestaurantListView extends StatefulWidget {
   const CustRestaurantListView({Key? key}) : super(key: key);
   static Future<void> navigate() {
-    return MezRouter.toNamed<void>(RestaurantRoutes.restaurantsListRoute);
+    return MezRouter.toNamed(RestaurantRoutes.restaurantsListRoute);
   }
 
   @override

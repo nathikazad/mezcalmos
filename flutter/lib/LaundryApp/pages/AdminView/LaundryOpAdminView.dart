@@ -8,10 +8,10 @@ import 'package:mezcalmos/LaundryApp/pages/AdminView/components/MinmumCostCard.d
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -24,7 +24,7 @@ class LaundryOpAdminView extends StatefulWidget {
   final int? laundryId;
 
   static Future<void> navigate({required int laundryId}) {
-    return MezRouter.toPath<void>(LaundryAppRoutes.kAdminViewRoute
+    return MezRouter.toPath(LaundryAppRoutes.kAdminViewRoute
         .replaceAll(":laundryId", laundryId.toString()));
   }
 

@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -46,7 +45,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
       viewController.init(orderId: int.parse(Get.parameters['orderId']!));
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
     super.initState();
   }

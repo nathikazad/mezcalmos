@@ -30,7 +30,7 @@ class DeliverySettingsView extends StatefulWidget {
     required int deliveryDetailsID,
     required ServiceProviderType serviceProviderType,
   }) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         SharedServiceProviderRoutes.kDeliverySettingsViewRoute
             .replaceAll(":serviceProviderId", serviceProviderId.toString())
             .replaceAll(":detailsId", detailsId.toString())

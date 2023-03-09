@@ -31,7 +31,7 @@ class CustLaundryOrderView extends StatefulWidget {
   const CustLaundryOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-    return MezRouter.toPath<void>(LaundryRoutes.laundryOrdersRoute
+    return MezRouter.toPath(LaundryRoutes.laundryOrdersRoute
         .replaceAll(":orderId", orderId.toString()));
   }
 
@@ -61,7 +61,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       viewController.init(orderId: orderId!);
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
 
     super.initState();

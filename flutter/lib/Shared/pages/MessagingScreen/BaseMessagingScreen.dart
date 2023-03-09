@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -29,7 +29,7 @@ class BaseMessagingScreen extends StatefulWidget {
   BaseMessagingScreenState createState() => BaseMessagingScreenState();
 
   static Future<void> navigate({required int chatId}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()));
   }
 }
@@ -54,7 +54,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         title: 'Error',
         subTitle: 'Does not have a valid chatId!',
       );
-      MezRouter.back<void>();
+      MezRouter.back();
     }
 
     chatId = int.parse(MezRouter.urlArguments['chatId'].toString());
@@ -201,7 +201,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                             child: InkWell(
                               borderRadius: BorderRadius.circular(10),
                               onTap: () {
-                                MezRouter.toNamed<void>(
+                                MezRouter.toNamed(
                                   controller.chat.value!.chatInfo.parentlink,
                                 );
                               },
@@ -300,7 +300,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
               InkWell(
                 onTap: () {
                   callAgora();
-                  MezRouter.popDialog();
+                  MezRouter.closeDialog()
+
                 },
                 child: Ink(
                     padding: const EdgeInsets.all(6),
@@ -328,7 +329,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                   mezDbgPrint(await canLaunchUrl(launchUri));
                   if (await canLaunchUrl(launchUri)) {
                     await launchUrl(launchUri);
-                    MezRouter.popDialog();
+                    MezRouter.closeDialog()
+
                   }
                 },
                 child: Ink(
@@ -350,7 +352,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
               Divider(),
               InkWell(
                 onTap: () {
-                  MezRouter.popDialog();
+                  MezRouter.closeDialog()
+
                 },
                 child: Ink(
                     padding: const EdgeInsets.all(6),

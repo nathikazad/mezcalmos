@@ -23,7 +23,7 @@ class ServiceInfoEditView extends StatefulWidget {
       {required int serviceDetailsId,
       required int serviceProviderId,
       required ServiceProviderType serviceProviderType}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         SharedServiceProviderRoutes.kserviceInfoEditRoute
             .replaceAll(":serviceDetailsId", serviceDetailsId.toString())
             .replaceAll(":serviceProviderId", serviceProviderId.toString()),

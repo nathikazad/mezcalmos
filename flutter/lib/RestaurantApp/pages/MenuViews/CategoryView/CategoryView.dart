@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -18,7 +18,7 @@ class ROpCategoryView extends StatefulWidget {
   const ROpCategoryView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int restaurantId}) {
-    return MezRouter.toPath<void>(
+    return MezRouter.toPath(
         RestaurantRouter.restaurantCategoryRoute
             .replaceAll(":restaurantId", restaurantId.toString()),
         arguments: <String, dynamic>{"shouldSave": false});
@@ -26,7 +26,7 @@ class ROpCategoryView extends StatefulWidget {
 
   static Future<void> navigateWithCategory(
       {required int categoryId, required int restaurantId}) {
-    return MezRouter.toPath<void>(RestaurantRouter.restaurantEditCategoryRoute
+    return MezRouter.toPath(RestaurantRouter.restaurantEditCategoryRoute
         .replaceAll(":categoryId", categoryId.toString())
         .replaceAll(":restaurantId", restaurantId.toString()));
   }

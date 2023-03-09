@@ -29,8 +29,7 @@ class CreateServiceView extends StatefulWidget {
 
   static Future<void> navigate(
       {required ServiceProviderType serviceProviderType}) {
-    return MezRouter.toPath<void>(
-        SharedServiceProviderRoutes.kCreateServiceRoute,
+    return MezRouter.toPath(SharedServiceProviderRoutes.kCreateServiceRoute,
         arguments: <String, dynamic>{
           "serviceProviderType": serviceProviderType,
         });
