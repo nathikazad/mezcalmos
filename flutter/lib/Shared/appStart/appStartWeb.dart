@@ -58,11 +58,14 @@ class _StartingPointState extends StartingPointBaseState {
     else
       return Firebase.initializeApp(
         options: FirebaseOptions(
-          apiKey: "AIzaSyAKu4WzLR4iZPk4qnEgYdVh1SWqnRXbS-M",
-          appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc",
-          messagingSenderId: "606383265109",
-          projectId: "mezcalmos-85ff1",
-        ),
+            apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+            authDomain: "mezcalmos-31f1c.firebaseapp.com",
+            databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+            projectId: "mezcalmos-31f1c",
+            storageBucket: "mezcalmos-31f1c.appspot.com",
+            messagingSenderId: "804036698204",
+            appId: "1:804036698204:web:39b22436cbb4ef633f8699",
+            measurementId: "G-5R20EL7CL9"),
       );
   }
 }
