@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksBase.dart';
+import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
+import 'package:mezcalmos/Shared/appStart/appStartWeb.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
+    deferred as baseMessagingScreen;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/appStart/appStartWeb.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 Function signInCallback = CustomerAuthHooksBase.onSignInHook;
 Function signOutCallback = CustomerAuthHooksBase.onSignOutHook;
@@ -20,10 +21,12 @@ List<QRoute> routes = XRouter.mainRoutes +
     SharedRoutes.qRoutes +
     [
       QRoute(
-        name: SharedRoutes.kMessagesRoute,
-        path: SharedRoutes.kMessagesRoute,
-        builder: () => BaseMessagingScreen(),
-      )
+          path: SharedRoutes.kMessagesRoute,
+          name: SharedRoutes.kMessagesRoute,
+          builder: () => baseMessagingScreen.BaseMessagingScreen(),
+          middleware: <QMiddleware>[
+            DefferedLoader(baseMessagingScreen.loadLibrary)
+          ]),
     ];
 
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
