@@ -39,10 +39,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                     showConfirmationDialog(context, onYesClick: () async {
                       final bool resp = await widget.cancelOrderFunction.call();
                       if (resp) {
-                        MezRouter.untill(
-                          (Route<dynamic> route) =>
-                              route.settings.name == SharedRoutes.kHomeRoute,
-                        );
+                        MezRouter.popEverythingTillBeforeHome();
                         MezSnackbar(
                           _i18n()["titleSuccess"],
                           _i18n()["orderCancelSuccess"],

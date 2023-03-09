@@ -19,7 +19,7 @@ class AgoraCall extends StatefulWidget {
       required String participantImage,
       required String participantName,
       required String participantType}) {
-    return MezRouter.toPath<void>(NativeOnlyRoutes.kAgoraCallScreenRoute,
+    return MezRouter.toPath(NativeOnlyRoutes.kAgoraCallScreenRoute,
         arguments: <String, dynamic>{
           'chatId': chatId,
           'participantId': participantId,
@@ -132,7 +132,7 @@ class _AgoraCallState extends State<AgoraCall> {
 
         _sagora.endCall(
           chatId: chatId,
-          callee: talkingTo!,
+          callee: talkingTo,
         );
         _sagora.engine.leaveChannel();
         _sagora.callStatus.value = CallStatus.none;
@@ -176,10 +176,10 @@ class _AgoraCallState extends State<AgoraCall> {
                       decoration: BoxDecoration(
                         color: Colors.grey.shade400,
                         shape: BoxShape.circle,
-                        image: talkingTo?.image != null
+                        image: talkingTo.image != null
                             ? DecorationImage(
                                 fit: BoxFit.cover,
-                                image: Image.network(talkingTo!.image).image,
+                                image: Image.network(talkingTo.image).image,
                               )
                             : null,
                       ),
@@ -212,7 +212,7 @@ class _AgoraCallState extends State<AgoraCall> {
                     ],
                     SizedBox(height: 10),
                     Text(
-                      talkingTo?.name ?? "_",
+                      talkingTo.name,
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Montserrat',
@@ -264,11 +264,11 @@ class _AgoraCallState extends State<AgoraCall> {
               onTap: () {
                 _sagora.endCall(
                   chatId: chatId,
-                  callee: talkingTo!,
+                  callee: talkingTo,
                 );
                 _sagora.engine.leaveChannel();
                 // get back will dispose the view and reset the call Action back to CallAction.None
-                MezRouter.back<void>();
+                MezRouter.back();
               },
               child: Container(
                 padding: EdgeInsets.all(12),
@@ -315,11 +315,11 @@ class _AgoraCallState extends State<AgoraCall> {
               onTap: () {
                 _sagora.endCall(
                   chatId: chatId,
-                  callee: talkingTo!,
+                  callee: talkingTo,
                 );
                 _sagora.engine.leaveChannel();
                 // get back will dispose the view and reset the call Action back to CallAction.None
-                MezRouter.back<void>();
+                MezRouter.back();
               },
               child: Container(
                 padding: EdgeInsets.all(12),
@@ -363,14 +363,14 @@ class _AgoraCallState extends State<AgoraCall> {
           Flexible(
             child: InkWell(
               onTap: () async {
-                await _sagora.callUser(chatId: chatId, callee: talkingTo!);
+                await _sagora.callUser(chatId: chatId, callee: talkingTo);
 
                 // Request Agora auth
                 // @Nathik this part does not work
                 final dynamic _agoraAuth = (await _sagora.getAgoraToken(
                   chatId,
                   Get.find<AuthController>().user!.hasuraId.toString(),
-                  talkingTo!.participantType == ParticipantType.Customer
+                  talkingTo.participantType == ParticipantType.Customer
                       ? ParticipantType.DeliveryDriver
                       : ParticipantType.Customer,
                 ))

@@ -28,8 +28,12 @@ class ROpMenuView extends StatefulWidget {
       : super(key: key);
 
   static Future<void> navigate({required int restaurantId}) {
-    return MezRouter.toPath<void>(RestaurantRouter.menuViewRoute
-        .replaceAll(":restaurantId", restaurantId.toString()));
+    return MezRouter.toPath(constructPath(restaurantId: restaurantId));
+  }
+
+  static String constructPath({required int restaurantId}) {
+    return RestaurantRouter.menuViewRoute
+        .replaceAll(":restaurantId", restaurantId.toString());
   }
 
   final int? restID;

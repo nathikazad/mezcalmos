@@ -81,9 +81,9 @@ class MezSideMenu extends GetWidget<AuthController> {
           onClick: () {
             _drawerController.closeMenu();
             if (controller.isUserSignedIn) {
-              MezRouter.toNamed<void>(SharedRoutes.kUserNewProfile);
+              MezRouter.toNamed(SharedRoutes.kUserNewProfile);
             } else
-              MezRouter.toNamed<void>(SharedRoutes.kSignInRouteOptional);
+              MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
           },
         ),
         if (_drawerController.pastOrdersRoute != null)
@@ -93,7 +93,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toNamed<void>(_drawerController.pastOrdersRoute!);
+              MezRouter.toNamed(_drawerController.pastOrdersRoute!);
             },
           ),
         SideMenuItem(

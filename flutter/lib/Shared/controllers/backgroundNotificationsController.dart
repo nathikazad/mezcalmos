@@ -99,25 +99,23 @@ class BackgroundNotificationsController extends GetxController {
     if (message.data['linkUrl'].toString().contains('/messages/')) {
       if (MezRouter.isCurrentRoute(SharedRoutes.kWrapperRoute)) {
         Future<void>.delayed(Duration(milliseconds: 100), () {
-          MezRouter.toNamed<void>(SharedRoutes.kHomeRoute);
-          MezRouter.toNamed<void>(
+          MezRouter.toNamed(SharedRoutes.kHomeRoute);
+          MezRouter.toNamed(
             message.data["linkUrl"],
-            arguments: <String, bool>{'showViewOrderBtn': true},
           );
         });
       } else {
         Future<void>.delayed(
           Duration(milliseconds: 100),
-          () => MezRouter.toNamed<void>(
+          () => MezRouter.toNamed(
             message.data["linkUrl"],
-            arguments: <String, bool>{'showViewOrderBtn': true},
           ),
         );
       }
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),
-        () => MezRouter.toNamed<void>(message.data["linkUrl"]),
+        () => MezRouter.toNamed(message.data["linkUrl"]),
       );
   }
 

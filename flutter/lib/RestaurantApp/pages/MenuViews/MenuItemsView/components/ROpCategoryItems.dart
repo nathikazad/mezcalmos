@@ -5,7 +5,6 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuVie
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -140,7 +139,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     ),
                     InkWell(
                       onTap: () async {
-                        MezRouter.popDialog(closeOverlays: true);
+                        MezRouter.closeDialog();
                         final bool? result =
                             await ROpCategoryView.navigateWithCategory(
                                 categoryId: widget.category.id!,
@@ -171,10 +170,8 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               .deleteCategory(categoryId: widget.category.id!)
                               .then((bool value) {
                             if (value) {
-                              MezRouter.untill((Route route) =>
-                                  route.settings.name ==
-                                  ROpMenuView.navigate(
-                                      restaurantId: widget.restaurantId));
+                              MezRouter.popTill(ROpMenuView.constructPath(
+                                  restaurantId: widget.restaurantId));
                             }
                           });
                         });

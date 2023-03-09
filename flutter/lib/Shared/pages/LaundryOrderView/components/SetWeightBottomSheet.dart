@@ -84,8 +84,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                             .deleteCategory()
                             .then((int? value) {
                           if (value != null) {
-                            MezRouter.untill((Route route) =>
-                                route.settings.name ==
+                            MezRouter.popTill(
                                 LaundryAppRoutes.getLaundryOpOrderRoute(
                                     widget.viewController.order.orderId));
                           }

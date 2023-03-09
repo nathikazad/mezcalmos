@@ -9,8 +9,6 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart'
     deferred as unauthorizedScreen;
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart'
     deferred as locationPermissionScreen;
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
-    deferred as baseMessagingScreen;
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart'
     deferred as noInternetConnectionScreen;
 import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart'
@@ -71,13 +69,6 @@ class SharedRoutes {
         builder: () => somethingWentWrong.SomethingWentWrongScreen(),
         middleware: <QMiddleware>[
           DefferedLoader(somethingWentWrong.loadLibrary)
-        ]),
-    QRoute(
-        path: kMessagesRoute,
-        name: kMessagesRoute,
-        builder: () => baseMessagingScreen.BaseMessagingScreen(),
-        middleware: <QMiddleware>[
-          DefferedLoader(baseMessagingScreen.loadLibrary)
         ]),
     QRoute(
         path: kUserProfile,

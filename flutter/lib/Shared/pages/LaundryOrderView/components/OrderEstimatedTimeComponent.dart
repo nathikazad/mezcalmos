@@ -166,7 +166,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
       onClick: () async {
         await _setOrderEstTime(selectedDate.value!);
 
-        MezRouter.popDialog(closeOverlays: true);
+        Get.back(closeOverlays: true);
         showSavedSnackBar();
       },
       withGradient: true,
@@ -177,7 +177,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        MezRouter.back(closeOverlays: true);
+        MezRouter.closeDialog();
       },
       child: Ink(
         height: 50,

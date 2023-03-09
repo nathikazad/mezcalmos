@@ -53,12 +53,12 @@ class _WrapperState extends State<Wrapper> {
       if (internetStatus == InternetStatus.Offline) {
         if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
           mezDbgPrint("No internet going so going to no internet page");
-          unawaited(MezRouter.toNamed<void>(SharedRoutes.kNoInternetRoute));
+          unawaited(MezRouter.toNamed(SharedRoutes.kNoInternetRoute));
         }
       } else {
         if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
           mezDbgPrint("Internet is back so going to back");
-          MezRouter.back<Null>();
+          MezRouter.back();
         }
       }
 
@@ -82,7 +82,7 @@ class _WrapperState extends State<Wrapper> {
         //  bool preventDuplicates = true (byDefault om GetX)
         Future<void>.delayed(
           Duration(milliseconds: 500),
-          () => MezRouter.toNamed<void>(SharedRoutes.kLocationPermissionPage),
+          () => MezRouter.toNamed(SharedRoutes.kLocationPermissionPage),
         );
       }
     });
@@ -106,13 +106,11 @@ class _WrapperState extends State<Wrapper> {
       mezDbgPrint("[777] user == null");
       if (AppType.CustomerApp == MezEnv.appType) {
         mezDbgPrint("[777] app = customerApp .. routing to home!");
-        await MezRouter.offNamedUntil<void>(SharedRoutes.kHomeRoute,
-            ModalRoute.withName(SharedRoutes.kWrapperRoute));
+        await MezRouter.popEverythingTillBeforeWrapper();
+        await MezRouter.toNamed(SharedRoutes.kHomeRoute);
       } else {
-        await MezRouter.offNamedUntil<void>(
-          SharedRoutes.kSignInRouteRequired,
-          ModalRoute.withName(SharedRoutes.kWrapperRoute),
-        );
+        await MezRouter.popEverythingTillBeforeWrapper();
+        await MezRouter.toNamed(SharedRoutes.kSignInRouteRequired);
       }
     } else {
       mezDbgPrint("[777] user != null");
@@ -149,7 +147,7 @@ class _WrapperState extends State<Wrapper> {
       //     kHomeRoute, ModalRoute.withName(kWrapperRoute));
 
       // then we push kUserProfile on top of kHomeRoute
-      MezRouter.toNamed<void>(SharedRoutes.kUserWelcomeRoute);
+      MezRouter.toNamed(SharedRoutes.kUserWelcomeRoute);
       // now the Nav Stack is correct and looks like this :  wrapper > kuserwelcome
     } else {
       // if user has all infos set and a successfull SignIn then we proceed with the usual.
@@ -159,15 +157,14 @@ class _WrapperState extends State<Wrapper> {
 
   void checkIfSignInRouteOrRedirectToHome() {
     if (authController.preserveNavigationStackAfterSignIn)
-      MezRouter.untill((Route<dynamic> route) =>
-          route.settings.name == SharedRoutes.kSignInRouteOptional);
+      MezRouter.popTill(SharedRoutes.kSignInRouteOptional);
 
     if (MezRouter.isCurrentRoute(SharedRoutes.kSignInRouteOptional)) {
-      MezRouter.back<void>();
+      MezRouter.back();
     } else {
       if (!Get.currentRoute.contains('/messages/'))
-        MezRouter.offNamedUntil<void>(SharedRoutes.kHomeRoute,
-            ModalRoute.withName(SharedRoutes.kWrapperRoute));
+        MezRouter.popEverythingTillBeforeWrapper()
+            .then((_) => MezRouter.toNamed(SharedRoutes.kHomeRoute));
     }
     authController.preserveNavigationStackAfterSignIn = false;
   }

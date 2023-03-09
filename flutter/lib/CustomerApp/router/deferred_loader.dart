@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DefferedLoader extends QMiddleware {

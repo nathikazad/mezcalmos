@@ -58,7 +58,7 @@ Future<void> decideWhichButtonDialogToUse(
       showSmallIcon: notification.secondaryIcon != null,
       bottomRightIcon: notification.secondaryIcon,
       primaryCallBack: () {
-        MezRouter.back(closeOverlays: true);
+        MezRouter.closeDialog();
       },
       secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
     );

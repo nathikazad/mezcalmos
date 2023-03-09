@@ -20,7 +20,7 @@ Future<void> signUp(String email, String password) async {
   try {
     await fireAuth.FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
-    MezRouter.back<Null>();
+    MezRouter.back();
   } catch (e) {
     customSnackBar(
       title: 'Error creating your account!',

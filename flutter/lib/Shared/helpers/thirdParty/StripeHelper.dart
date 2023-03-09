@@ -470,7 +470,7 @@ class _CardFormState extends State<CardForm> {
       String? res = await addCard(paymentMethod: paymentMethod.id);
       mezDbgPrint("Response ====> $res");
       if (res != null) {
-        MezRouter.back(result: res);
+        MezRouter.closeDialog(backResult: res);
       }
     } on StripeException catch (e) {
       mezDbgPrint("Error add stripe ======>>>>$e");

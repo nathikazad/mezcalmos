@@ -136,10 +136,9 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
             if (widget.viewController.cart.quantity() == 0) {
               await widget.viewController.cartController.clearCart();
 
-              MezRouter.untill((Route route) =>
-                  route.settings.name == SharedRoutes.kHomeRoute);
+              MezRouter.popEverythingTillBeforeHome();
             } else {
-              MezRouter.popDialog(closeOverlays: true);
+              MezRouter.closeDialog();
             }
           });
         },

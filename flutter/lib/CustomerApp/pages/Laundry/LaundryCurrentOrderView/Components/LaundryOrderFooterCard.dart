@@ -43,10 +43,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                           await widget.viewController.cancelOrder();
 
                       if (resp) {
-                        MezRouter.untill(
-                          (Route<dynamic> route) =>
-                              route.settings.name == SharedRoutes.kHomeRoute,
-                        );
+                        MezRouter.popEverythingTillBeforeHome();
                         MezSnackbar(
                           _i18n()["titleSuccess"],
                           _i18n()["orderCancelSuccess"],

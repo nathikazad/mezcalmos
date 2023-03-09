@@ -69,7 +69,9 @@ class UserProfileViewController {
       switchMode(UserProfileViewMode.None);
     } else if (mode == UserProfileViewMode.FirstTime) {
       // ignore: inference_failure_on_function_invocation, unawaited_futures
-      MezRouter.offAndToNamed(SharedRoutes.kHomeRoute);
+      await MezRouter.back();
+      // ignore: unawaited_futures
+      MezRouter.toNamed(SharedRoutes.kHomeRoute);
     }
   }
 

@@ -258,26 +258,26 @@ class Sagora extends GetxController {
               ),
             };
             if (Get.currentRoute == NativeOnlyRoutes.kAgoraCallScreenRoute) {
-              Future<void>.microtask(
-                () => MezRouter.offAndToNamed<void>(
-                    NativeOnlyRoutes.kAgoraCallScreenRoute,
-                    arguments: <String, dynamic>{
-                      "chatId": int.parse(event.body?['extra']?['chatId']),
-                      "talkingTo": Participant(
-                        image: event.body?['avatar'],
-                        name: event.body?['nameCaller'],
-                        participantType: event.body['extra']['callerType']
-                            .toString()
-                            .toParticipantType(),
-                        // wrong actual user id, it's more like an agora generated id
-                        id: event.body['extra']['callerId'],
-                      ),
-                    }),
-              );
+              Future<void>.microtask(() => MezRouter.back().then(
+                    (_) => MezRouter.toNamed(
+                        NativeOnlyRoutes.kAgoraCallScreenRoute,
+                        arguments: <String, dynamic>{
+                          "chatId": int.parse(event.body?['extra']?['chatId']),
+                          "talkingTo": Participant(
+                            image: event.body?['avatar'],
+                            name: event.body?['nameCaller'],
+                            participantType: event.body['extra']['callerType']
+                                .toString()
+                                .toParticipantType(),
+                            // wrong actual user id, it's more like an agora generated id
+                            id: event.body['extra']['callerId'],
+                          ),
+                        }),
+                  ));
             } else {
               // Pushing to call screen + awaiting in case we wanna return with value.
               // ignore: unawaited_futures
-              Future.microtask(() => MezRouter.toNamed<void>(
+              Future.microtask(() => MezRouter.toNamed(
                   NativeOnlyRoutes.kAgoraCallScreenRoute,
                   arguments: args));
             }

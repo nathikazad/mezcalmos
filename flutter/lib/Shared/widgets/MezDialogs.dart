@@ -185,7 +185,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
                       child: rightButton,
                       onTap: onTapButtonRight ??
                           () {
-                            MezRouter.back<void>();
+                            MezRouter.back();
                             twoButtonDialogButton = TwoButtonDialogButton.Right;
                             rightButtonCallback?.call();
                           },
@@ -480,7 +480,7 @@ class MezUpdaterDialog {
                     flex: 1,
                     child: Container(
                       child: GestureDetector(
-                        onTap: () => MezRouter.back<void>(closeOverlays: true),
+                        onTap: () => MezRouter.closeDialog(),
                         child: Obx(
                           () => FittedBox(
                             fit: BoxFit.fitWidth,
