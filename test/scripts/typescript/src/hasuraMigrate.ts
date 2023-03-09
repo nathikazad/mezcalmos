@@ -36,7 +36,8 @@ const firebase = firebaseAdmin.initializeApp(
 //   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
 //   credential: firebaseAdmin.credential.cert(serviceAccount),
 // }
-, "production");
+)
+// , "production");
 
 functions.config()
 
