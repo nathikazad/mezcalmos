@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminServiceOrdersViewController.dart';
 import 'package:mezcalmos/MezAdminApp/router/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
@@ -61,7 +61,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
           serviceId: serviceProviderId!,
           serviceProviderType: serviceProviderType!);
     } else {
-      MezRouter.back<Null>();
+      MezRouter.back();
     }
     super.initState();
   }

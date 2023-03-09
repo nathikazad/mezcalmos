@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:sizer/sizer.dart';
@@ -146,15 +146,15 @@ class _PickLocationViewState extends State<PickLocationView> {
         // showScreenLoading = true;
       });
       if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-        MezRouter.back<MezLocation>(
-            result: locationPickerController.location.value);
+        await MezRouter.back(
+            backResult: locationPickerController.location.value);
       } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-        MezRouter.back<MezLocation>(
-            result: locationPickerController.location.value);
+        await MezRouter.back(
+            backResult: locationPickerController.location.value);
         mezDbgPrint(locationPickerController.location.value!.address);
       } else {
-        MezRouter.back<MezLocation>(
-            result: locationPickerController.location.value);
+        await MezRouter.back(
+            backResult: locationPickerController.location.value);
       }
     }
   }
@@ -171,7 +171,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                   child: Text(_i18n()["pickLocation"],
                       style: Theme.of(context)
                           .textTheme
-                          .headline2!
+                          .displayMedium!
                           .copyWith(color: Colors.white, fontSize: 12.sp))),
             ),
           )

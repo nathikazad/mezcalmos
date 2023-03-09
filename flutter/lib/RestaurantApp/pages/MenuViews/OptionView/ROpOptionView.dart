@@ -124,13 +124,13 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyText1),
+            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyLarge),
             SizedBox(
               height: 8,
             ),
             TextFormField(
                 controller: _viewController.scOptionName,
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return '${_i18n()["required"]}';
@@ -146,7 +146,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                   ),
                   Text(
                     '${_i18n()["optionChoices"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 8,
@@ -188,13 +188,13 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyText1),
+            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyLarge),
             SizedBox(
               height: 8,
             ),
             TextFormField(
                 controller: _viewController.prOptionName,
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return '${_i18n()["required"]}';
@@ -206,7 +206,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
             ),
             Text(
               '${_i18n()["optionType"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 8,
@@ -219,7 +219,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
             ),
             Text(
               '${_i18n()["optionChoices"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 8,
@@ -285,7 +285,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                           .deleteOption()
                           .then((bool? hasBennDeleted) {
                         if (hasBennDeleted == true) {
-                          MezRouter.back(result: true);
+                          MezRouter.back(backResult: true);
                         }
                       });
                     },
@@ -300,7 +300,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   AppBar _appBar() {
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-      MezRouter.back(result: _viewController.needToFetch.value);
+      MezRouter.back(backResult: _viewController.needToFetch.value);
     },
         titleWidget: Obx(
           () => Text((_viewController.editMode.isTrue)
@@ -353,7 +353,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
   Future<void> _handleSecondTab() async {
     if (_viewController.firstTabValid == true &&
         _scFormKey.currentState?.validate() == true) {
-      //  MezRouter.back(result: viewController.saveOption());
+      //  MezRouter.back(backResult:
+      await _viewController.saveOption();
     } else if (_scFormKey.currentState?.validate() == true &&
         _prFormKey.currentState?.validate() != true) {
       _viewController.secondTabValid = true;
@@ -366,7 +367,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
         (_scFormKey.currentState?.validate() == true ||
             _viewController.secondTabValid)) {
       await _viewController.saveOption();
-      // MezRouter.back(result: viewController.saveOption());
+      // MezRouter.back(backResult:
+      await _viewController.saveOption();
     } else if (_prFormKey.currentState?.validate() == true &&
         _scFormKey.currentState?.validate() != true) {
       _viewController.firstTabValid = true;

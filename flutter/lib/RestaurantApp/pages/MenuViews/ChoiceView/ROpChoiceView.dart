@@ -99,14 +99,14 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Text(
                         "${_i18n()['choiceName']}",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         controller: viewController.prChoiceName,
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -119,14 +119,14 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Text(
                         "${_i18n()['choicePrice']}",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         controller: viewController.choicePriceText,
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -157,7 +157,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                                   .deleteChoice()
                                   .then((bool? hasBennDeleted) {
                                 if (hasBennDeleted == true) {
-                                  MezRouter.back(result: true);
+                                  MezRouter.closeDialog(backResult: true);
                                 }
                               });
                             },
@@ -184,7 +184,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       Obx(
                         () => Text(
                           "${_i18n()['choiceNameIn']} ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
-                          style: Get.textTheme.bodyText1,
+                          style: Get.textTheme.bodyLarge,
                         ),
                       ),
                       SizedBox(
@@ -192,7 +192,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       TextFormField(
                         controller: viewController.scChoiceName,
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -222,7 +222,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
     return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
       onClick: () {
-        MezRouter.back(result: viewController.needToFetch.value);
+        MezRouter.back(backResult: viewController.needToFetch.value);
       },
       tabBar: TabBar(controller: tabController, tabs: [
         Tab(

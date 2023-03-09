@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -199,7 +199,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        MezRouter.popDialog(closeOverlays: true);
+        MezRouter.closeDialog();
       },
       child: Ink(
         height: 50,
@@ -359,7 +359,8 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
       //   isClicked.value = false;
       // }).then((ServerResponse value) {
       //   if (value.success) {
-      //     MezRouter.popDialog(closeOverlays: true);
+      //     MezRouter.closeDialog();
+
       //   }
       // }).onError((Object? error, StackTrace stackTrace) {
       //   mezDbgPrint("Error seeting time =====>$error");

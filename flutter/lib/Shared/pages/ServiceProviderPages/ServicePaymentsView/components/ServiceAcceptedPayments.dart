@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -320,7 +320,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                         backgroundColor: offRedColor,
                         textColor: Colors.red,
                         onClick: () async {
-                          MezRouter.back();
+                          await MezRouter.back();
                         },
                       )),
                       SizedBox(
@@ -335,8 +335,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                                   bankName: widget.viewController.bankName.text,
                                   bankNumber: num.parse(
                                       widget.viewController.bankNumber.text))
-                              .then((value) =>
-                                  MezRouter.popDialog(closeOverlays: true));
+                              .then((value) => MezRouter.closeDialog());
                         },
                       )),
                     ],

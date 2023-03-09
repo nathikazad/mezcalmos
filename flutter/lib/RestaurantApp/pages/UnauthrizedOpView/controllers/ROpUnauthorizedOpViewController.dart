@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/router/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -54,7 +52,7 @@ class ROpUnauthorizedOpViewController {
     if (_status.value == AgentStatus.Authorized) {
       await restaurantOpAuthController.setupRestaurantOperator();
       // ignore: inference_failure_on_function_invocation, unawaited_futures
-      MezRouter.offAndToNamed(RestaurantAppRoutes.tabsRoute);
+      //   MezRouter.offAndToNamed(RestaurantAppRoutes.tabsRoute);
     }
   }
 

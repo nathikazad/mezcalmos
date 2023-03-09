@@ -99,10 +99,11 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
             if (shouldSave) {
               final bool hasSaved = await _viewController.saveCategory();
               if (hasSaved) {
-                MezRouter.back(result: true);
+                await MezRouter.back(backResult: true);
               }
             } else {
-              MezRouter.back(result: _viewController.constructCategory());
+              await MezRouter.back(
+                  backResult: _viewController.constructCategory());
             }
           }
         },
@@ -133,7 +134,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               const SizedBox(height: 8),
               Text(
                 "${_i18n()["categoryName"]}",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
@@ -144,7 +145,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
@@ -155,7 +156,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["catDesc"]}",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               SizedBox(
                 height: 10,
@@ -163,7 +164,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
                 controller: _viewController.primaryCatDesc,
                 decoration: InputDecoration(
                   hintText: '${_i18n()["categoryDescHint"]}',
@@ -174,7 +175,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["catDescIn"]} ${_viewController.secondaryLang.value!.toLanguageName()}",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               SizedBox(
                 height: 10,
@@ -182,7 +183,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
                 controller: _viewController.secondaryCatDesc,
                 decoration: InputDecoration(
                   hintText: '${_i18n()["categoryDescHint"]}',
@@ -200,7 +201,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       required LanguageType languageType}) {
     return TextFormField(
       controller: controller,
-      style: Get.textTheme.bodyText1,
+      style: Get.textTheme.bodyLarge,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? v) {
         mezDbgPrint(v?.trim().toLowerCase());

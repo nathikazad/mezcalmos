@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -166,7 +166,8 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
       onClick: () async {
         await _setOrderEstTime(selectedDate.value!);
 
-        MezRouter.popDialog(closeOverlays: true);
+        MezRouter.closeDialog();
+
         customSnackBar(
             title: 'Done',
             subTitle: 'Estimated food ready time saved',
@@ -183,7 +184,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        MezRouter.back(closeOverlays: true);
+        MezRouter.closeDialog();
       },
       child: Ink(
         height: 50,

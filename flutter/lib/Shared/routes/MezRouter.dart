@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -121,6 +119,7 @@ class MezRouter {
       while (!isCurrentRoute(routeName)) {
         await back();
       }
+    await back();
   }
 
   // static Future<void> offAndToNamed(

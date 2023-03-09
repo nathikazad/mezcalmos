@@ -38,9 +38,7 @@ class ROpItemView extends StatefulWidget {
     if (categoryId != null) {
       route = route.replaceFirst(":categoryId", "$categoryId");
     }
-    if (itemId != null) {
-      route = route.replaceFirst(":itemId", "$itemId");
-    }
+    route = route.replaceFirst(":itemId", "$itemId");
     return MezRouter.toPath(route);
   }
 
@@ -151,7 +149,7 @@ class _ROpItemViewState extends State<ROpItemView>
 
   AppBar _appBar() {
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-      MezRouter.back(result: viewController.needToRefetch.value);
+      MezRouter.back(backResult: viewController.needToRefetch.value);
     },
         title: '${_i18n()["item"]}',
         showNotifications: true,
@@ -180,13 +178,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemName"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.scItemNameController,
               validator: (String? value) {
@@ -206,13 +204,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemDesc"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               minLines: 4,
               maxLines: 6,
               controller: viewController.scItemDescController,
@@ -245,13 +243,13 @@ class _ROpItemViewState extends State<ROpItemView>
               ROpSpecialItemTime(viewController: viewController),
             Text(
               '${_i18n()["itemName"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.prItemNameController,
               validator: (String? value) {
@@ -271,7 +269,7 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemPrice"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -288,7 +286,7 @@ class _ROpItemViewState extends State<ROpItemView>
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
               textAlignVertical: TextAlignVertical.center,
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               decoration: InputDecoration(
                   prefixIconColor: primaryBlueColor,
                   prefixIcon: Icon(Icons.attach_money)),
@@ -298,13 +296,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemDesc"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               maxLines: 6,
               minLines: 4,
               controller: viewController.prItemDescController,
@@ -318,7 +316,7 @@ class _ROpItemViewState extends State<ROpItemView>
                 children: [
                   Text(
                     '${_i18n()["category"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   const SizedBox(
                     height: 10,
@@ -331,7 +329,7 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemOptions"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -394,7 +392,7 @@ class _ROpItemViewState extends State<ROpItemView>
                           .deleteItem(itemId: itemId!, catgeoryId: categoryId)
                           .then((bool? value) {
                         if (value == true) {
-                          MezRouter.back(result: true);
+                          MezRouter.back(backResult: true);
                         }
                       });
                     },

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 // import 'package:app_settings/app_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -8,8 +9,8 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 typedef void OnLocationPermissionChange(LocationPermissionsStatus? status);
 typedef String? LangValueRefGetter();
@@ -41,7 +42,7 @@ class LocationPermissionController {
         .listen((LocationPermissionsStatus? statusEvent) async {
       if (statusEvent == LocationPermissionsStatus.Ok) {
         dispose();
-        Future<void>.delayed(Duration.zero, () => MezRouter.back<void>());
+        Future<void>.delayed(Duration.zero, () => MezRouter.back());
       }
 
       onLocationPermissionsStatusChange(statusEvent);

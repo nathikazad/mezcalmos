@@ -86,7 +86,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
     return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
       onClick: () {
-        MezRouter.back(result: _viewController.shouldRefetch);
+        MezRouter.back(backResult: _viewController.shouldRefetch);
       },
       titleWidget: Obx(
         () => Text((_viewController.editMode.value &&

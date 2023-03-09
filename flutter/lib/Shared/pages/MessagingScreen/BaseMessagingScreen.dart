@@ -136,7 +136,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         centerTitle: true,
         leading: Center(
           child: GestureDetector(
-            onTap: () => MezRouter.back<void>(closeOverlays: true),
+            onTap: () => MezRouter.closeDialog(),
             child: Container(
               height: 30,
               width: 30,
@@ -300,8 +300,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
               InkWell(
                 onTap: () {
                   callAgora();
-                  MezRouter.closeDialog()
-
+                  MezRouter.closeDialog();
                 },
                 child: Ink(
                     padding: const EdgeInsets.all(6),
@@ -329,8 +328,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                   mezDbgPrint(await canLaunchUrl(launchUri));
                   if (await canLaunchUrl(launchUri)) {
                     await launchUrl(launchUri);
-                    MezRouter.closeDialog()
-
+                    await MezRouter.closeDialog();
                   }
                 },
                 child: Ink(
@@ -352,8 +350,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
               Divider(),
               InkWell(
                 onTap: () {
-                  MezRouter.closeDialog()
-
+                  MezRouter.closeDialog();
                 },
                 child: Ink(
                     padding: const EdgeInsets.all(6),
