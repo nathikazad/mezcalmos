@@ -26,7 +26,7 @@ export interface ServiceProvider {
   deliveryPartnerId?: number;
   deliveryDetails: DeliveryDetails;
   operators?: Operator[];
-  serviceProviderType?: ServiceProviderType;
+  serviceProviderType: ServiceProviderType;
 }
 
 export interface Operator {
@@ -82,6 +82,7 @@ export interface ServiceLink{
 export enum ServiceProviderType {
   Restaurant = "restaurant",
   Laundry = "laundry",
+  Delivery = "delivery",
   Taxi = "taxi"
 }
 

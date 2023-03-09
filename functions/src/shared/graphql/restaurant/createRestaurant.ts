@@ -180,5 +180,6 @@ export async function createRestaurant(
     deliveryDetails: restaurantDetails.deliveryDetails,
     language: restaurantDetails.language,
     firebaseId: restaurantDetails.firebaseId,
+    serviceProviderType: ServiceProviderType.Restaurant
   };
 }

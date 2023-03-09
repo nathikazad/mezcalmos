@@ -116,7 +116,8 @@ export async function createLaundryStore(
         deliveryPartnerId: laundryDetails.deliveryPartnerId,
         deliveryDetails: laundryDetails.deliveryDetails,
         language: laundryDetails.language,
-        firebaseId: laundryDetails.firebaseId
+        firebaseId: laundryDetails.firebaseId,
+        serviceProviderType: ServiceProviderType.Laundry
       }
     // if(laundryDetails.deliveryPartnerId) {
     //     await chain.mutation({

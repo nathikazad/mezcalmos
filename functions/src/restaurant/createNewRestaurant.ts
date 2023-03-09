@@ -28,7 +28,7 @@ export interface RestaurantDetails {
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
 
   if(restaurantDetails.deliveryDetails.deliveryAvailable) {
-    if(restaurantDetails.deliveryDetails.deliveryAvailable && restaurantDetails.deliveryDetails.radius == 0) {
+    if(restaurantDetails.deliveryDetails.selfDelivery && restaurantDetails.deliveryDetails.radius == 0) {
       throw new HttpsError(
         "unknown",
         "Restaurant delivery details not set"

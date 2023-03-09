@@ -26,7 +26,7 @@ export async function insertServiceLinks() {
         // if(d.name.includes("Lavander")) {
         //     uniqueId = d.name.split(" ")[1].slice(0, 8).toLowerCase();
         // }
-        let appType: AppType = AppType.DeliveryApp
+        let appType: AppType
         switch (d.service_provider_type) {
             case ServiceProviderType.Restaurant:
                 appType = AppType.RestaurantApp
@@ -38,11 +38,9 @@ export async function insertServiceLinks() {
             //     appType = AppType.
             //     break;
             default:
+                appType = AppType.DeliveryAdmin
                 break;
         }
-        if(appType == AppType.DeliveryApp)
-            continue;
-
         console.log("id: ", d.id)
         if(d.unique_id == null) {
             console.log("Error: unique id not found")

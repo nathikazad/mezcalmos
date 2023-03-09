@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { Language } from "../../models/Generic/Generic";
-import { OpenStatus, Operator, ServiceProvider } from "../../models/Services/Service";
+import { OpenStatus, Operator, ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { AuthorizationStatus } from "../../models/Generic/Generic"
 
 export async function getLaundryStore(storeId: number): Promise<ServiceProvider> {
@@ -140,5 +140,6 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
         deliveryPartnerId: response.laundry_store_by_pk.delivery_partners[0] 
             ? response.laundry_store_by_pk.delivery_partners[0].delivery_company_id
             : undefined,
+        serviceProviderType: ServiceProviderType.Laundry
     }
 }
