@@ -39,8 +39,8 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper> {
   AuthController authController = Get.find<AuthController>();
-  CustomerAuthController customerAuthController =
-      Get.find<CustomerAuthController>();
+  CustomerAuthController? customerAuthController;
+
   CustomerOrderController? _orderController;
 
   AppLifeCycleController appLifeCycleController =
@@ -66,8 +66,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     super.initState();
 
     if (authController.fireAuthUser != null) {
-      Get.put(CustomerOrderController(), permanent: true);
       _orderController = Get.find<CustomerOrderController>();
+      customerAuthController = Get.find<CustomerAuthController>();
 
       _doIfFireAuthUserIsNotNull();
     }
@@ -155,7 +155,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
             customerNotificationsNode(userId!), customerNotificationHandler);
     if (MezRouter.isCurrentRoute(SharedRoutes.kHomeRoute)) {
       await Future.microtask(() async {
-        await customerAuthController.awaitInitialization();
+        await customerAuthController?.awaitInitialization();
         // ignore: unawaited_futures
         _navigateToOrdersIfNecessary();
       });
