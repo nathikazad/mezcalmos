@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
@@ -38,6 +39,8 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper> {
   AuthController authController = Get.find<AuthController>();
+  CustomerAuthController customerAuthController =
+      Get.find<CustomerAuthController>();
   CustomerOrderController? _orderController;
 
   AppLifeCycleController appLifeCycleController =
@@ -151,7 +154,9 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
     if (MezRouter.isCurrentRoute(SharedRoutes.kHomeRoute)) {
-      await Future.microtask(() {
+      await Future.microtask(() async {
+        await customerAuthController.awaitInitialization();
+        // ignore: unawaited_futures
         _navigateToOrdersIfNecessary();
       });
     }

@@ -14,23 +14,30 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
-
+  bool _initialized = false;
+  StreamController<bool> _cusAuthControllerInitializedStreamController =
+      StreamController<bool>();
   Future<void> onInit() async {
     super.onInit();
 
     if (authController.fireAuthUser?.uid != null) {
       // ignore: unawaited_futures
-      get_customer(user_id: authController.hasuraUserId!)
-          .then((Customer? value) {
-        mezDbgPrint("[]9090] : get_customer::CUSTOMER : $value ");
-        _setCustomerInfos(value).then((_) => {
-              Get.put<CustomerCartController>(CustomerCartController(),
-                  permanent: true)
-            });
-      });
+      Customer? value =
+          await get_customer(user_id: authController.hasuraUserId!);
+      mezDbgPrint("[]9090] : get_customer::CUSTOMER : $value ");
+      await _setCustomerInfos(value);
+      Get.put<CustomerCartController>(CustomerCartController(),
+          permanent: true);
+      _initialized = true;
+      _cusAuthControllerInitializedStreamController.add(true);
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }
+  }
+
+  Future<void> awaitInitialization() {
+    if (_initialized) return Future<void>(() => null);
+    return _cusAuthControllerInitializedStreamController.stream.first;
   }
 
   Future<void> _setCustomerInfos(Customer? customer) async {
