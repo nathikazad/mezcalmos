@@ -28,16 +28,15 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
+
 class CustomerWrapper extends StatefulWidget {
   @override
   _CustomerWrapperState createState() => _CustomerWrapperState();
 }
 
-class _CustomerWrapperState extends State<CustomerWrapper>
-    with WidgetsBindingObserver {
-  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-      ['pages']['CustomerWrapper'];
-
+class _CustomerWrapperState extends State<CustomerWrapper> {
   AuthController authController = Get.find<AuthController>();
   CustomerOrderController? _orderController;
 
@@ -62,10 +61,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void initState() {
     super.initState();
-    Get.put(CustomerOrderController(), permanent: true);
-    _orderController = Get.find<CustomerOrderController>();
-    WidgetsBinding.instance.addObserver(this);
+
     if (authController.fireAuthUser != null) {
+      Get.put(CustomerOrderController(), permanent: true);
+      _orderController = Get.find<CustomerOrderController>();
+
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();

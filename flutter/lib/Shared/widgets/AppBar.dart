@@ -1,12 +1,12 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
@@ -34,7 +34,6 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       default:
         return _MenuButtonAppBar();
     }
-    return null;
   }
 
   Widget _ordersAppBarIcon() {
@@ -84,7 +83,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       title: (title != null)
           ? Text(
               title,
-              style: Get.textTheme.headline3,
+              style: Get.textTheme.displaySmall,
               textAlign: TextAlign.center,
             )
           : (titleWidget != null)

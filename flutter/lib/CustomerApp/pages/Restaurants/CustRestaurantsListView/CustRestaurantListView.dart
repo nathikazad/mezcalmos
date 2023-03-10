@@ -47,6 +47,15 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text("${_i18n()['restaurants']}"),
+      // ),
+      // appBar: MezcalmosAppBar(
+      //   AppBarLeftButtonType.Back,
+      //   onClick: MezRouter.back,
+      //   title: "${_i18n()['restaurants']}",
+      // ),
+
       appBar: CustomerAppBar(
         title: "${_i18n()['restaurants']}",
         autoBack: true,
@@ -153,7 +162,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             "${_i18n()["restaurants"]}",
-                            style: Get.textTheme.bodyText1?.copyWith(
+                            style: Get.textTheme.bodyLarge?.copyWith(
                               color: !viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
@@ -199,7 +208,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             '${_i18n()["meal"]}',
-                            style: Get.textTheme.bodyText1?.copyWith(
+                            style: Get.textTheme.bodyLarge?.copyWith(
                               color: viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
