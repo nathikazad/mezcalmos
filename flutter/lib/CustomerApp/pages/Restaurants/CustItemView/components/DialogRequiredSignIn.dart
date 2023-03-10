@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -46,7 +47,7 @@ void dialogRequiredSignIn() {
                     child: Text(
                       "${_i18n()["title"]}",
                       textAlign: TextAlign.center,
-                      style: Get.textTheme.displaySmall
+                      style: context.txt.displaySmall
                           ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),

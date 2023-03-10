@@ -1,10 +1,12 @@
 // ----------------- CONNECTIVITY STRINGS ----------------- //
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
 // import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rive/rive.dart' as rive;

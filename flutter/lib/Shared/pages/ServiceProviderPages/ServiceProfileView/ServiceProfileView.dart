@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
@@ -218,7 +219,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   iconColor: Colors.red,
                                   labelWidget: Text(
                                     'Logout',
-                                    style: Get.textTheme.bodyLarge
+                                    style: context.txt.bodyLarge
                                         ?.copyWith(color: Colors.red),
                                   )),
                             ],
@@ -277,7 +278,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
         ),
         Text(
           _viewController.service.info.name,
-          style: Get.textTheme.displaySmall,
+          style: context.txt.displaySmall,
           textAlign: TextAlign.center,
         ),
         SizedBox(
@@ -322,7 +323,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                 child: Text(
                                   "Service is closed indefinitely",
                                   textAlign: TextAlign.center,
-                                  style: Get.textTheme.bodyLarge
+                                  style: context.txt.bodyLarge
                                       ?.copyWith(color: Colors.redAccent),
                                 ),
                               ),
@@ -335,7 +336,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                           color: secondaryLightBlueColor,
                           child: Text(
                             "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
-                            style: Get.textTheme.bodyLarge
+                            style: context.txt.bodyLarge
                                 ?.copyWith(color: primaryBlueColor),
                           ),
                         ),
@@ -381,7 +382,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                     child: labelWidget ??
                         Text(
                           label,
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         )),
                 SizedBox(
                   width: 5,

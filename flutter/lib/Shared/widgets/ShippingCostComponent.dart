@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,7 +33,7 @@ class ShippingCostComponent extends StatelessWidget {
           ? Flexible(
               child: Text(
                 "${_i18n()["free"]}",
-                style: Get.textTheme.bodyLarge
+                style: context.txt.bodyLarge
                     ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
               ),
             )

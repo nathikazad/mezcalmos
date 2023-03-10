@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/Custo
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -183,7 +184,7 @@ class _CustItemViewState extends State<CustItemView> {
             child: Text(
               viewController.getItem!.cost.toPriceString(),
               style:
-                  Get.textTheme.displaySmall?.copyWith(color: primaryBlueColor),
+                  context.txt.displaySmall?.copyWith(color: primaryBlueColor),
             ),
           ),
           // if (viewController.showRestaurant())
@@ -201,8 +202,7 @@ class _CustItemViewState extends State<CustItemView> {
                   borderRadius: BorderRadius.circular(18)),
               child: Text(
                 '${_i18n()["viewRestaurant"]}',
-                style:
-                    Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+                style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
               ),
             ),
           )
@@ -217,12 +217,12 @@ class _CustItemViewState extends State<CustItemView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyLarge),
+          Text("${_i18n()["itemDescription"]}", style: context.txt.bodyLarge),
           SizedBox(height: 5),
           Text(
             "${item.description![userLanguage]?.inCaps}",
             textAlign: TextAlign.left,
-            style: Get.textTheme.bodyMedium,
+            style: context.txt.bodyMedium,
           ),
         ],
       ),
@@ -238,7 +238,7 @@ class _CustItemViewState extends State<CustItemView> {
           Container(
               child: Text(
             "${_i18n()["itemNotes"]}",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           )),
           SizedBox(height: 2),
           Container(
@@ -247,7 +247,7 @@ class _CustItemViewState extends State<CustItemView> {
               controller: viewController.notesController,
               minLines: 3,
               maxLines: 7,
-              style: Get.textTheme.titleMedium?.copyWith(
+              style: context.txt.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(

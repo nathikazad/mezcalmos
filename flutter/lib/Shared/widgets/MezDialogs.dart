@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:sizer/sizer.dart';
 
 enum TwoButtonDialogButton { Left, Right }
 

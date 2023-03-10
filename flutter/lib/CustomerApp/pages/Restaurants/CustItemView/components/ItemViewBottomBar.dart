@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -59,7 +60,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
             child: Center(
               child: Text(
                 "\$${widget.viewController.cartItem.value!.totalCost().toInt()} ",
-                style: Get.textTheme.displaySmall,
+                style: context.txt.displaySmall,
               ),
             ),
           ),
@@ -85,7 +86,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                     ? _i18n()['addToCart']
                     : _i18n()['modifyItem'],
                 textAlign: TextAlign.center,
-                style: Get.textTheme.headlineLarge
+                style: context.txt.headlineLarge
                     ?.copyWith(color: Colors.white, fontSize: 18),
               ),
             ),
@@ -106,7 +107,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       child: Center(
         child: Text(
           "${_i18n()["notAvailable"]}",
-          style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+          style: context.txt.bodyLarge?.copyWith(color: Colors.red),
         ),
       ),
     );

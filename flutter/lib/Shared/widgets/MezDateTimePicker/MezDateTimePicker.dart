@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
 
@@ -65,17 +66,17 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
               margin: const EdgeInsets.all(8),
               child: Text(
                 widget.title ?? '${_i18n()["title"]}',
-                style: Get.textTheme.headline3,
+                style: context.txt.headline3,
               ),
             ),
-           // Divider(),
+            // Divider(),
             const SizedBox(
               height: 15,
             ),
             // date picker
             Text(
               '${_i18n()["sDate"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
             const SizedBox(
               height: 10,
@@ -88,7 +89,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             // date picker
             Text(
               '${_i18n()["sTime"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
 
             const SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
@@ -132,7 +133,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyLarge)),
+                        style: context.txt.bodyLarge)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,

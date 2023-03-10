@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -57,7 +58,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       children: <Widget>[
                         Text(
                           widget.order.title.inCaps,
-                          style: Get.textTheme.headlineMedium,
+                          style: context.txt.headlineMedium,
                         ),
                         SizedBox(
                           height: 8,
@@ -81,7 +82,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                                   ),
                                   Text(
                                     widget.order.totalCost!.toPriceString(),
-                                    style: Get.textTheme.titleSmall?.copyWith(
+                                    style: context.txt.titleSmall?.copyWith(
                                       color: blackColor,
                                     ),
                                   )
@@ -104,7 +105,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                                   ),
                                   Text(
                                     widget.order.deliveryCost!.toPriceString(),
-                                    style: Get.textTheme.titleSmall?.copyWith(
+                                    style: context.txt.titleSmall?.copyWith(
                                       color: blackColor,
                                     ),
                                   )
@@ -116,7 +117,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                             widget.forCustomer == false)
                           Text(
                             widget.order.toAdress!.inCaps,
-                            style: Get.textTheme.bodyMedium,
+                            style: context.txt.bodyMedium,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -129,7 +130,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     children: [
                       Text(
                         widget.order.orderTime.toDayAmPm(),
-                        style: Get.textTheme.bodyMedium?.copyWith(
+                        style: context.txt.bodyMedium?.copyWith(
                           color: blackColor,
                         ),
                       ),
@@ -210,7 +211,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                   if (widget.order.totalCost != null)
                     Text(
                       widget.order.totalCost?.toPriceString() ?? "_",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   Spacer(),
                   getOrderWidget()
@@ -233,7 +234,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["canceled"]}',
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(color: Colors.red, fontSize: 10.sp),
           ),
         );
@@ -246,7 +247,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["delivered"]}',
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(color: Color(0xFF6779FE), fontSize: 10.sp),
           ),
         );
@@ -258,7 +259,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["waiting"]}',
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(color: Color(0xFFFF9900), fontSize: 10.sp),
           ),
         );

@@ -1,13 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 //
@@ -34,7 +31,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
           ),
           SizedBox(
@@ -83,7 +80,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     order.dropoffDriver!.name,
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyText1,
                   ),
                 ),
                 if (order.customerDropOffDriverChatId != null)
@@ -111,7 +108,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
           ),
           SizedBox(
@@ -153,7 +150,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                     children: [
                       Text(
                         order.restaurant.name,
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                       const SizedBox(
                         height: 5,

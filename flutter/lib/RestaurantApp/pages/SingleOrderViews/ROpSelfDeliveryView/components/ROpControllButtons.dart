@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -139,12 +140,12 @@ class _ROpControllButtonsState extends State<ROpControllButtons> {
             children: [
               Text(
                 '${_i18n()["orderStatus"]["delivered"]}',
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
               ),
               Text(
                 DateFormat('dd MMM yy h:m')
                     .format(widget.order.orderTime.toLocal()),
-                style: Get.textTheme.subtitle1,
+                style: context.txt.subtitle1,
               )
             ],
           ))
@@ -204,11 +205,11 @@ class _ROpControllButtonsState extends State<ROpControllButtons> {
             children: [
               Text(
                 header,
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
               ),
               Text(
                 body,
-                style: Get.textTheme.subtitle1,
+                style: context.txt.subtitle1,
               )
             ],
           ))
@@ -239,12 +240,12 @@ class _ROpControllButtonsState extends State<ROpControllButtons> {
             children: [
               Text(
                 '${_i18n()["orderStatus"]["canceled"]}',
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
               ),
               Text(
                 DateFormat('dd MMM yy h:m')
                     .format(widget.order.orderTime.toLocal()),
-                style: Get.textTheme.subtitle1,
+                style: context.txt.subtitle1,
               )
             ],
           ))

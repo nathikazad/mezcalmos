@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -110,7 +111,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
                       ),
                       Text(
                         "${_i18n()["estLaundryFinish"]}",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 25,
@@ -154,8 +155,8 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
                 )
               : Text(
                   '${_i18n()["set"]}',
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
+                  style:
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
         ));
   }
@@ -190,7 +191,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()["cancel"]}",
-            style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+            style: context.txt.bodyLarge?.copyWith(color: Colors.red),
           ),
         ),
       ),

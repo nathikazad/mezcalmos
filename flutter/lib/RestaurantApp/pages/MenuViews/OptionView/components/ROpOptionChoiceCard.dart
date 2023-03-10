@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
@@ -40,7 +41,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       choice.name[userLanguage] ?? "Choice name error",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   MezIconButton(
@@ -70,7 +71,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     choice.cost.toPriceString(),
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 Text("Available"),

@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
-
 import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -67,7 +67,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                 ),
                 Text(
                   '${_i18n()['unauthorized']}',
-                  style: Get.textTheme.headline3,
+                  style: context.txt.headline3,
                 ),
                 SizedBox(
                   height: 10,
@@ -88,14 +88,14 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                           children: <TextSpan>[
                             TextSpan(
                                 text: '${_i18n()['subTitle1']} ',
-                                style: Get.textTheme.bodyText2),
+                                style: context.txt.bodyText2),
                             TextSpan(
                                 text: '+52 954 118 4711',
-                                style: Get.textTheme.bodyText1
+                                style: context.txt.bodyText1
                                     ?.copyWith(color: primaryBlueColor)),
                             TextSpan(
                                 text: '${_i18n()['subTitle2']}',
-                                style: Get.textTheme.bodyText2),
+                                style: context.txt.bodyText2),
                           ],
                         ),
                       ),

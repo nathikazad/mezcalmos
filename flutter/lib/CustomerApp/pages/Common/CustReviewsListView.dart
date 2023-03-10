@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:sizer/sizer.dart';
@@ -101,7 +102,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
         children: [
           Text(
             rating.value!.toStringAsFixed(1),
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(fontSize: 25.sp, fontWeight: FontWeight.w700),
           ),
           const SizedBox(

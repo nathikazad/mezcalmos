@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
@@ -57,7 +58,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
           children: [
             Text(
               _getRightName().inCaps,
-              style: Get.textTheme.displaySmall?.copyWith(fontSize: 12.sp),
+              style: context.txt.displaySmall?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               maxLines: 3,

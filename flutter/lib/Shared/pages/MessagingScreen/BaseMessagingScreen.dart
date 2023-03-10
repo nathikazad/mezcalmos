@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
@@ -165,7 +166,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                 ? ThreeDotsLoading()
                 : Text(
                     controller.chat.value!.chatInfo.chatTite,
-                    style: Get.textTheme.displaySmall,
+                    style: context.txt.displaySmall,
                   );
           },
         ),
@@ -211,7 +212,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                                       vertical: 10, horizontal: 6),
                                   child: Text(
                                     "${_i18n()['viewOrder']}",
-                                    style: Get.textTheme.bodyLarge
+                                    style: context.txt.bodyLarge
                                         ?.copyWith(color: primaryBlueColor),
                                   ),
                                 ),
@@ -314,7 +315,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                           width: 5,
                         ),
                         Text("${_i18n()['callApp']}",
-                            style: Get.textTheme.bodyLarge)
+                            style: context.txt.bodyLarge)
                       ],
                     )),
               ),
@@ -343,7 +344,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                           width: 5,
                         ),
                         Text("${_i18n()['callPhone']}",
-                            style: Get.textTheme.bodyLarge)
+                            style: context.txt.bodyLarge)
                       ],
                     )),
               ),
@@ -358,8 +359,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                     child: Text(
                       "${_i18n()['cancel']}",
                       textAlign: TextAlign.center,
-                      style:
-                          Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+                      style: context.txt.bodyLarge?.copyWith(color: Colors.red),
                     )),
               ),
             ],

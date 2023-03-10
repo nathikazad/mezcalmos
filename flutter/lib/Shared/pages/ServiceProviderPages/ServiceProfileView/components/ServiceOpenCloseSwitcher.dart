@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
 import 'package:sizer/sizer.dart';
 
@@ -50,12 +51,12 @@ class ServiceOpenCloseSwitcher extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: Get.textTheme.headline6?.copyWith(
-                              color: Colors.grey.shade900),
+                          style: context.txt.headline6
+                              ?.copyWith(color: Colors.grey.shade900),
                         ),
                         Text(
                           subtitle!,
-                          style: Get.textTheme.subtitle1
+                          style: context.txt.subtitle1
                               ?.copyWith(color: Colors.grey.shade600),
                         ),
                       ],
@@ -64,7 +65,7 @@ class ServiceOpenCloseSwitcher extends StatelessWidget {
                 )
               : Text(
                   title,
-                  style: Get.textTheme.headline6?.copyWith(
+                  style: context.txt.headline6?.copyWith(
                       fontSize: 11.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey.shade900),

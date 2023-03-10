@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -73,7 +74,7 @@ Future<String?> savedLocationDailog({
                     // hintText: lang.strings["customer"]["savedLocations"]
                     //     ["addLocationDialog"]["textHint"],
                     hintText: '${_i18n()["pickLocationHintText"]}',
-                    hintStyle: Get.textTheme.titleLarge
+                    hintStyle: context.txt.titleLarge
                         ?.copyWith(color: pickLocationHintTextFieldColor),
                     filled: true,
                     fillColor: pickLocationTextFieldColor,
@@ -110,7 +111,7 @@ Future<String?> savedLocationDailog({
                     nameVal != null
                         ? _i18n()["editLocationDialogButton"]
                         : _i18n()["addLocationDialogButton"],
-                    style: Get.textTheme.headlineMedium?.copyWith(
+                    style: context.txt.headlineMedium?.copyWith(
                       color: primaryBlueColor,
                       fontSize: 11.sp,
                     ),
@@ -136,7 +137,7 @@ Future<String?> savedLocationDailog({
                       alignment: Alignment.topCenter,
                       child: Text(
                         _i18n()["addLocationDialogSkip"],
-                        style: Get.textTheme.headlineMedium?.copyWith(
+                        style: context.txt.headlineMedium?.copyWith(
                           color: offShadeGreyColor,
                           fontSize: 11.sp,
                         ),

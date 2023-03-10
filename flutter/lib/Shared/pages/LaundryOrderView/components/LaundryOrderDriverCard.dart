@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
@@ -65,7 +62,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                       children: [
                         Text(
                           _getDriver()!.name,
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         if (_getTime() != null) Text(_getTime()!)
                       ],
@@ -121,7 +118,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                       fit: FlexFit.tight,
                       child: Text(
                         "${_i18n()["noDriver"]}",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     if (viewController.order.isSelfDelivery())

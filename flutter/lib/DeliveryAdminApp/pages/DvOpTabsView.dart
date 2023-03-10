@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpCurrentOrders.dart';
@@ -84,8 +85,8 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
 
   Widget _navBar() {
     return Obx(() => BottomNavigationBar(
-            selectedLabelStyle: Get.textTheme.bodyLarge,
-            unselectedLabelStyle: Get.textTheme.bodyMedium,
+            selectedLabelStyle: context.txt.bodyLarge,
+            unselectedLabelStyle: context.txt.bodyMedium,
             selectedItemColor: primaryBlueColor,
             currentIndex: _index.value,
             onTap: (int v) {

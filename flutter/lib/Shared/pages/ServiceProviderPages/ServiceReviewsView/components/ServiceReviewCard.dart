@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
@@ -36,18 +36,18 @@ class _ServiceReviewCardState extends State<ServiceReviewCard> {
                   children: [
                     Text(
                       widget.review.customer?.name ?? "",
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                     ),
                     Text(
                       widget.review.reviewTime.timeAgo().toLowerCase(),
-                      style: Get.textTheme.subtitle1,
+                      style: context.txt.subtitle1,
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
                       widget.review.comment ?? "",
-                      style: Get.textTheme.bodyText2,
+                      style: context.txt.bodyText2,
                     ),
                     const SizedBox(
                       height: 5,

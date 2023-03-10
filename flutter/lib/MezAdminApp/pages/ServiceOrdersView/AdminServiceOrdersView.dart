@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminServiceOrdersViewController.dart';
 import 'package:mezcalmos/MezAdminApp/router/router.dart';
@@ -96,7 +97,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
               children: [
                 Text(
                   "${_i18n()['currentOrders']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 20,
@@ -119,7 +120,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                   children: [
                     Text(
                       "${_i18n()['pastOrders']}",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 20,

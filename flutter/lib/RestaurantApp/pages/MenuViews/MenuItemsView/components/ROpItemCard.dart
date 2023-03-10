@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
@@ -87,7 +88,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                       fit: FlexFit.tight,
                       child: Text(
                         widget.item.name[userLanguage] ?? "",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                         maxLines: 2,
                       ),
                     ),
@@ -95,7 +96,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                         ? ROpRerorderIcon()
                         : Text(
                             widget.item.cost.toPriceString(),
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                     SizedBox(
                       width: 10,
@@ -121,7 +122,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                                 Text(
                                   widget.category?.name![userLanguage] ??
                                       "Error",
-                                  style: Get.textTheme.bodyMedium,
+                                  style: context.txt.bodyMedium,
                                 ),
                               ],
                             ),

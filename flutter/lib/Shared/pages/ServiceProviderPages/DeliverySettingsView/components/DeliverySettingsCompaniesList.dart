@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -46,7 +47,7 @@ class _DeliverySettingsCompaniesListState
                     margin: const EdgeInsets.all(5),
                     child: Text(
                       "${_i18n()['title']}",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     )),
                 SizedBox(
                   height: 15,
@@ -105,7 +106,7 @@ class _DeliverySettingsCompaniesListState
                   ),
                   Text(
                     "${_i18n()['notFoundTitle']}",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -163,7 +164,7 @@ class _DeliverySettingsCompaniesListState
                 children: [
                   Text(
                     company.info.name,
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   Text("${_i18n()['joined']} " +
                       "${DateFormat.yMMMEd().format(company.creationTime)}")

@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -90,7 +91,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 Container(
                   //alignment: Alignment.centerLeft,
                   child: Text("${_i18n()['notesTitle']}",
-                      style: Get.textTheme.bodyLarge),
+                      style: context.txt.bodyLarge),
                 ),
                 SizedBox(
                   height: 8,
@@ -125,7 +126,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           alignment: Alignment.centerLeft,
           child: Text(
             "${_i18n()["deliveryLocation"]}",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
             textAlign: TextAlign.left,
           ),
         ),
@@ -155,8 +156,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       child: Padding(
         padding: EdgeInsets.all(8),
         child: TextFormField(
-          style:
-              Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+          style: context.txt.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
           controller: viewController.noteText,
           maxLines: 7,
           minLines: 2,
@@ -166,7 +166,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             ),
             hintText: "${_i18n()["notes"]}",
             fillColor: Colors.white,
-            hintStyle: Get.textTheme.titleMedium,
+            hintStyle: context.txt.titleMedium,
           ),
         ),
       ),

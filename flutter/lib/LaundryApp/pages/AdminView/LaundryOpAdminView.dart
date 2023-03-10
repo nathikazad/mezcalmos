@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/CategoryGridCard.dart';
@@ -88,7 +89,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                         alignment: Alignment.center,
                         child: Text(
                           viewController.laundry!.info.name,
-                          style: Get.textTheme.displaySmall
+                          style: context.txt.displaySmall
                               ?.copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -98,7 +99,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                       Container(
                         child: Text(
                           "${_i18n()["categories"]}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                       ),
                       SizedBox(

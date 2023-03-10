@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -138,7 +139,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               margin: const EdgeInsets.only(top: 15),
                               child: Text(
                                 '${_i18n()["deliveryDeatils"]}',
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                             ),
                             OrderDeliveryLocation(
@@ -195,7 +196,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       titleWidget: Obx(
         () => Text(
           '${viewController.order.value?.laundry?.name ?? ""}',
-          style: Get.textTheme.displaySmall,
+          style: context.txt.displaySmall,
         ),
       ),
       showNotifications: true,

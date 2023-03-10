@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
-import 'package:mezcalmos/MezAdminApp/router/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
@@ -52,7 +49,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                       fit: FlexFit.tight,
                       child: Text(
                         company.info.name,
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     SizedBox(
@@ -88,6 +85,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                     //     ontap: () {}),
                     _smallBtn(
                         icon: Icons.price_check,
+                        context: context,
                         label: "${_i18n()['costs']}",
                         ontap: () {
                           DeliveryCostSettingView.navigate(
@@ -95,6 +93,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         }),
                     _smallBtn(
                         icon: Icons.history,
+                        context: context,
                         label: "${_i18n()['orders']}",
                         ontap: () {
                           AdminServiceOrdersView.navigate(
@@ -105,6 +104,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         }),
                     _smallBtn(
                         icon: Icons.person,
+                        context: context,
                         label: "${_i18n()['profile']}",
                         ontap: () {
                           ServiceProfileView.navigate(
@@ -153,6 +153,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
   InkWell _smallBtn(
       {required IconData icon,
       required String label,
+      required BuildContext context,
       required Function()? ontap}) {
     return InkWell(
       borderRadius: BorderRadius.circular(5),
@@ -172,7 +173,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
             ),
             Text(
               label,
-              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
             )
           ],
         ),

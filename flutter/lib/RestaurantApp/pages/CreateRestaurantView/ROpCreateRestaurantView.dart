@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
@@ -84,7 +85,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   }
                   return null;
                 },
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant name",
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -101,7 +102,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   }
                   return null;
                 },
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant description",
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -168,7 +169,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                         viewController.restaurantLocation.value?.address ??
                             "Pick location",
                         maxLines: 1,
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                     ),
                     Icon(
@@ -184,7 +185,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   margin: const EdgeInsets.only(top: 5, left: 22),
                   child: Text(
                     state.errorText ?? "",
-                    style: Get.textTheme.subtitle1
+                    style: context.txt.subtitle1
                         ?.copyWith(color: Colors.red.shade800),
                   ))
           ],

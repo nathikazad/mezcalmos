@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router/deliveryRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -111,7 +112,7 @@ class _PickDriverViewState extends State<PickDriverView> {
                     ),
                     Text(
                       '${_i18n()["assigning"]}',
-                      style: Get.textTheme.bodyMedium
+                      style: context.txt.bodyMedium
                           ?.copyWith(color: primaryBlueColor),
                     )
                   ],

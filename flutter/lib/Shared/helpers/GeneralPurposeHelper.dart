@@ -5,16 +5,17 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -244,7 +245,7 @@ Future<void> showConfirmationDialog(
                 SizedBox(height: 2),
                 Text('${_i18n()["subtitle"]}',
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headlineLarge
+                    style: context.txt.headlineLarge
                         ?.copyWith(color: Color(0xFF494949))),
                 SizedBox(height: 4),
                 GestureDetector(
@@ -556,7 +557,7 @@ Future<int?> showReviewDialog(
               ),
               const SizedBox(height: 18),
               MezButton(
-                textStyle: Get.textTheme.headlineMedium?.copyWith(
+                textStyle: context.txt.headlineMedium?.copyWith(
                   color: primaryBlueColor,
                 ),
                 label: "${_i18n()["review"]["send"]}",
@@ -596,7 +597,7 @@ Future<int?> showReviewDialog(
                   child: Text(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headlineMedium?.copyWith(
+                    style: context.txt.headlineMedium?.copyWith(
                       color: offShadeGreyColor,
                     ),
                   ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class LaundryPricingCompnent extends StatelessWidget {
   final LaundryOrder order;
@@ -51,11 +52,11 @@ class LaundryPricingCompnent extends StatelessWidget {
                       children: [
                         Text(
                           '${_i18n()["total"]}',
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyText1,
                         ),
                         Text(
                           order.costsByType!.weighedCost.toPriceString(),
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyText1,
                         )
                       ],
                     ),

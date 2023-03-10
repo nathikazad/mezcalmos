@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:graphql/client.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/controllers/CustCardsListViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -28,7 +27,6 @@ class _CustCardsListViewState extends State<CustCardsListView> {
   @override
   void initState() {
     viewController.init();
-   
 
     super.initState();
   }
@@ -88,7 +86,7 @@ class _CustCardsListViewState extends State<CustCardsListView> {
             ),
             Text(
               '${_i18n()["card"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               width: 15,

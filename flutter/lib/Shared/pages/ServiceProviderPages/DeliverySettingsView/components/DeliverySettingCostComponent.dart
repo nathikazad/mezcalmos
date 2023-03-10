@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -45,7 +46,7 @@ class _DeliverySettingCostComponentState
                       ),
                       Text(
                         "${_i18n()['freeKmRangeText']}",
-                        style: Get.textTheme.bodyMedium,
+                        style: context.txt.bodyMedium,
                       ),
                       Divider(
                         height: 35,
@@ -110,7 +111,7 @@ class _DeliverySettingCostComponentState
                 fit: FlexFit.tight,
                 child: Text(
                   "${_i18n()['custDistance']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
               ),
               SizedBox(
@@ -128,7 +129,7 @@ class _DeliverySettingCostComponentState
                     },
                     controller: widget.viewController.distancePreview,
                     textAlignVertical: TextAlignVertical.center,
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [
@@ -142,7 +143,7 @@ class _DeliverySettingCostComponentState
                           child: Text(
                             "Km",
                             textAlign: TextAlign.center,
-                            style: Get.textTheme.bodyMedium,
+                            style: context.txt.bodyMedium,
                           ),
                         ),
                         fillColor: Colors.white),
@@ -157,14 +158,14 @@ class _DeliverySettingCostComponentState
             children: [
               Text(
                 "${_i18n()['cost']}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Obx(
                 () => Text(
                   widget.viewController.previewCost.value
                           ?.toPriceString(rounded: false) ??
                       "_",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
               )
             ],
@@ -185,7 +186,7 @@ class _DeliverySettingCostComponentState
           fit: FlexFit.tight,
           child: Text(
             title,
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
         ),
         SizedBox(
@@ -204,7 +205,7 @@ class _DeliverySettingCostComponentState
                       return null;
                     }
                   : null,
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               textAlignVertical: TextAlignVertical.center,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
@@ -218,7 +219,7 @@ class _DeliverySettingCostComponentState
                   suffixIcon: Text(
                     suffixTitle,
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.bodyMedium,
+                    style: context.txt.bodyMedium,
                   ),
                   fillColor: secondaryLightBlueColor),
             ))

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/controllers/LaundrOpCategoryViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
@@ -112,7 +113,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                     const SizedBox(height: 20),
                     Text(
                       "${_i18n()["categoryName"]}",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                     const SizedBox(height: 15),
                     _categoryNameComponent(
@@ -127,7 +128,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                           ),
                           Text(
                             "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                           const SizedBox(height: 15),
                           _categoryNameComponent(
@@ -182,7 +183,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
       children: [
         Text(
           "${_i18n()["categoryPrice"]}",
-          style: Get.textTheme.bodyLarge,
+          style: context.txt.bodyLarge,
         ),
         const SizedBox(height: 8),
         TextFormField(

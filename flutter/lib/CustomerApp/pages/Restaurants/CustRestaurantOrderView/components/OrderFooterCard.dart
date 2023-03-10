@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -53,7 +54,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                     alignment: Alignment.center,
                     child: Text(
                       '${_i18n()["cancelOrder"]}',
-                      style: Get.textTheme.bodyLarge
+                      style: context.txt.bodyLarge
                           ?.copyWith(color: Color(0XFFE21132)),
                     ),
                   ),

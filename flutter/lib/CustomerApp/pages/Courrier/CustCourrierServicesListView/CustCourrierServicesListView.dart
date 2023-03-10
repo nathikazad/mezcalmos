@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/Cus
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -71,7 +72,7 @@ class _CustCourierServicesListViewState
                           elevation: 0.5,
                           borderRadius: BorderRadius.circular(5),
                           child: TextFormField(
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                             decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 hintText: "Search...",
@@ -99,8 +100,10 @@ class _CustCourierServicesListViewState
                     height: 15,
                   ),
                   Column(
-                    children: List.generate(companies.value!.length,
-                        (int index) => _companyCard(companies.value![index])),
+                    children: List.generate(
+                        companies.value!.length,
+                        (int index) =>
+                            _companyCard(companies.value![index], context)),
                   )
                 ],
               ),
@@ -116,7 +119,7 @@ class _CustCourierServicesListViewState
     );
   }
 
-  Widget _companyCard(DeliveryCompany company) {
+  Widget _companyCard(DeliveryCompany company, BuildContext context) {
     return MezCard(
         onClick: () {
           mezDbgPrint("Clicked");
@@ -128,18 +131,18 @@ class _CustCourierServicesListViewState
           children: [
             Text(
               company.info.name,
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
             ),
-            _detailsRow(company)
+            _detailsRow(company, context)
           ],
         ));
   }
 }
 
-Widget _detailsRow(DeliveryCompany company) {
+Widget _detailsRow(DeliveryCompany company, BuildContext context) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -159,7 +162,7 @@ Widget _detailsRow(DeliveryCompany company) {
               shippingCost: 50,
               showPerKm: true,
               alignment: MainAxisAlignment.start,
-              textStyle: Get.textTheme.bodyMedium,
+              textStyle: context.txt.bodyMedium,
             ),
           ],
         ),
@@ -205,7 +208,7 @@ Widget _detailsRow(DeliveryCompany company) {
               ),
               Text(
                 0.toString(),
-                style: Get.textTheme.bodyMedium,
+                style: context.txt.bodyMedium,
               )
             ],
           ),

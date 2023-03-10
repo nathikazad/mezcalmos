@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -31,7 +32,7 @@ class ServiceNoReviewsComponent extends StatelessWidget {
           ),
           Text(
             '${_i18n()["noRevTitle"]}',
-            style: Get.textTheme.bodyText1,
+            style: context.txt.bodyText1,
           ),
           SizedBox(
             height: 5,

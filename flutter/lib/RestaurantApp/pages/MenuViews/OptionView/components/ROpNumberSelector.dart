@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 
 class ROpNumberSelector extends StatelessWidget {
@@ -49,7 +50,7 @@ class ROpNumberSelector extends StatelessWidget {
             child: (value.toString() != null)
                 ? Text(
                     value.toString(),
-                    style: Get.textTheme.bodyText2?.copyWith(
+                    style: context.txt.bodyText2?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   )

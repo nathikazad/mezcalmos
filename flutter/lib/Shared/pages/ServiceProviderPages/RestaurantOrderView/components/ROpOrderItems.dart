@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -87,7 +88,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 Theme.of(context).copyWith(dividerColor: Colors.grey.shade400),
             child: Column(
               children: buildChoices(
-                  widget.item.chosenChoices, widget.item.optionNames),
+                  context, widget.item.chosenChoices, widget.item.optionNames),
             ),
           ),
           if (widget.item.notes != null)
@@ -101,7 +102,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   Container(
                     child: Text(
                       '${_i18n()["note"]} :',
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   SizedBox(
@@ -110,7 +111,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   Container(
                     child: Text(
                       widget.item.notes!,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                 ],
@@ -167,7 +168,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                       Text(
                         widget.item.name[userLanguage]! +
                             " x${widget.item.quantity}",
-                        style: txt.bodyText1?.copyWith(
+                        style: txt.bodyLarge?.copyWith(
                             color: widget.item.unavailable
                                 ? Colors.black.withOpacity(0.5)
                                 : Colors.black,
@@ -181,7 +182,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                         height: 5,
                       ),
                       Text('\$' + widget.item.totalCost.toInt().toString(),
-                          style: txt.bodyText1?.copyWith(
+                          style: txt.bodyLarge?.copyWith(
                               color: widget.item.unavailable
                                   ? Colors.black.withOpacity(0.5)
                                   : Colors.black,
@@ -262,7 +263,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   (widget.item.unavailable)
                       ? "${_i18n()["itemUnav"]}".capitalizeFirstofEach
                       : '${_i18n()["markitemUnav"]}',
-                  style: Get.textTheme.headline6?.copyWith(
+                  style: context.txt.titleLarge?.copyWith(
                       color:
                           widget.item.unavailable ? Colors.red : Colors.white),
                 ),
@@ -284,11 +285,12 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
     }
   }
 
-  List<Widget> buildChoices(
+  List<Widget> buildChoices(BuildContext context,
       Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {
     final List<Widget> viewWidgets = [];
     choices.forEach((String key, List<Choice> value) {
       viewWidgets.add(_itemChoiche(
+        context: context,
         choices: value,
         optionName: optionNames[key]!,
       ));
@@ -299,6 +301,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
 
 Widget _itemChoiche(
     {required List<Choice> choices,
+    required BuildContext context,
     required Map<LanguageType, String> optionName}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,7 +314,7 @@ Widget _itemChoiche(
       ),
       Text(
         optionName[userLanguage] ?? "Error",
-        style: Get.textTheme.bodyText1,
+        style: context.txt.bodyLarge,
       ),
       SizedBox(
         height: 5,
@@ -327,14 +330,14 @@ Widget _itemChoiche(
                       Flexible(
                         child: Text(
                           choices[index].name[userLanguage] ?? "Error",
-                          style: Get.theme.textTheme.bodyText2,
+                          style: Get.theme.textTheme.bodyMedium,
                           maxLines: 2,
                         ),
                       ),
                       if (choices[index].cost > 0)
                         Text(
                           "\$${choices[index].cost}",
-                          style: Get.theme.textTheme.bodyText2!
+                          style: Get.theme.textTheme.bodyMedium!
                               .copyWith(color: Get.theme.primaryColorLight),
                         ),
                     ],

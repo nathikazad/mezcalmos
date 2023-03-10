@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -89,7 +90,7 @@ class _ServiceLanguageSelectorComponentState
                       child: (value.toLanguageName() != null)
                           ? Text(
                               value.toLanguageName()!,
-                              style: Get.textTheme.bodyText2?.copyWith(
+                              style: context.txt.bodyText2?.copyWith(
                                 fontWeight: FontWeight.w700,
                               ),
                             )

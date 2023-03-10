@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -70,7 +71,7 @@ class _ListDriverCardState extends State<ListDriverCard> {
                       children: <Widget>[
                         Text(
                           widget.driver.driverInfo.name,
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyText1,
                         ),
                         const SizedBox(height: 5),
                         Row(

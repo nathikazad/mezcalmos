@@ -15,7 +15,7 @@ void MezSnackbar(String title, String msg,
 //   duration: duration,
 //   messageText: Text(
 //     "$msg",
-//     style: Get.textTheme.bodyText2?.copyWith(color: Colors.white),
+//     style: context.txt.bodyText2?.copyWith(color: Colors.white),
 //     maxLines: 2,
 //   ),
 //   colorText: Colors.white,

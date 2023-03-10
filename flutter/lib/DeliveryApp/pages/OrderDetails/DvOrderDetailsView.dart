@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -76,7 +77,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 Text(
                   "${_i18n()['orderDetails']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 5,
@@ -93,7 +94,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             children: [
                               Text(
                                 "${_i18n()["schTime"]}",
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                               Container(
                                   padding: const EdgeInsets.only(top: 10),
@@ -111,7 +112,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             children: [
                               Text(
                                 "${_i18n()["from"]}",
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                               Container(
                                   padding: const EdgeInsets.only(top: 10),
@@ -125,7 +126,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           ),
                         Text(
                           "${_i18n()["deliveredTo"]}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 10,
@@ -137,7 +138,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                         Text(
                           "${_i18n()["paymentMethod"]}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 10,
@@ -153,7 +154,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 Text(
                   "${_i18n()['customer']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 5,
@@ -180,7 +181,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           fit: FlexFit.tight,
                           child: Text(
                             "${_i18n()['tax']}",
-                            style: Get.textTheme.bodyMedium,
+                            style: context.txt.bodyMedium,
                           ),
                         ),
                         MezIconButton(
@@ -220,7 +221,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     return MezCard(
       content: Text(
         "${_i18n()['bill']}",
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
       ),
       action: Container(
         child: (viewController.billLoading.isTrue)
@@ -256,13 +257,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Text(
             DateFormat("dd MMMM, hh:mm a")
                 .format(viewController.order.value!.orderTime.toLocal()),
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           Text(
               viewController.order.value!.isCanceled()
                   ? "${_i18n()["cancelled"]}"
                   : "${_i18n()["approved"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(
+              style: context.txt.bodyLarge?.copyWith(
                   color: viewController.order.value!.isCanceled()
                       ? Colors.red
                       : primaryBlueColor))
@@ -287,7 +288,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             Text(
               "${viewController.order.value!.customerInfo.name}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             Spacer(),
             MessageButton(
@@ -338,7 +339,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         "${_i18n()['addTax']}",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     Divider(
@@ -346,7 +347,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     ),
                     TextFormField(
                       controller: viewController.taxText,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.attach_money_rounded),

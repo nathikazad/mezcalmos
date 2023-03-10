@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -73,7 +74,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           showNotifications: true,
           titleWidget: Obx(() => Text(
                 viewController.order.value?.restaurant.name ?? "",
-                style: Get.textTheme.displaySmall,
+                style: context.txt.displaySmall,
               ))),
       bottomNavigationBar: Obx(() {
         if (showReviewBtn() && viewController.order.value != null) {
@@ -153,7 +154,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               margin: const EdgeInsets.only(top: 15),
                               child: Text(
                                 '${_i18n()["deliveryDet"]}',
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                             ),
                             OrderScheduledTimeCard(

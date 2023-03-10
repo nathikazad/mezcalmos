@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleView/controllers/ServiceScheduleViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -68,7 +69,7 @@ class ServiceScheduleWidgets {
                 width: 15.w,
                 child: Text(
                   "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                  style: Get.textTheme.bodyMedium
+                  style: context.txt.bodyMedium
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -117,7 +118,7 @@ class ServiceScheduleWidgets {
                     viewController.newSchedule.value!.openHours[weekday]!.isOpen
                         ? "${_i18n()["workingHoursCard"]["open"]}"
                         : "${_i18n()["workingHoursCard"]["closed"]}",
-                    style: Get.textTheme.bodyMedium?.copyWith(
+                    style: context.txt.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: viewController
                                 .newSchedule.value!.openHours[weekday]!.isOpen
@@ -202,7 +203,7 @@ class ServiceScheduleWidgets {
                     child: Row(
                       children: [
                         Text('${_i18n()["workingHoursCard"]["open"]}',
-                            style: Get.textTheme.bodyLarge),
+                            style: context.txt.bodyLarge),
                         Spacer(),
                         radioCircleButton(
                             value: viewController.schedulePreview.value!
@@ -223,7 +224,7 @@ class ServiceScheduleWidgets {
                     child: Row(
                       children: [
                         Text('${_i18n()["workingHoursCard"]["closed"]}',
-                            style: Get.textTheme.bodyLarge),
+                            style: context.txt.bodyLarge),
                         Spacer(),
                         radioCircleButton(
                             value: viewController.schedulePreview.value!
@@ -252,7 +253,7 @@ class ServiceScheduleWidgets {
                       height: 10,
                     ),
                     Text("${_i18n()["workingHoursCard"]["from"]}",
-                        style: Get.textTheme.bodyLarge),
+                        style: context.txt.bodyLarge),
                     SizedBox(
                       height: 15,
                     ),
@@ -261,7 +262,7 @@ class ServiceScheduleWidgets {
                       height: 25,
                     ),
                     Text("${_i18n()["workingHoursCard"]["to"]}",
-                        style: Get.textTheme.bodyLarge),
+                        style: context.txt.bodyLarge),
                     SizedBox(
                       height: 15,
                     ),
@@ -296,7 +297,7 @@ class ServiceScheduleWidgets {
         style: TextButton.styleFrom(
             fixedSize: Size(double.infinity, 50),
             backgroundColor: offRedColor,
-            textStyle: Get.textTheme.bodyLarge?.copyWith(color: Colors.red)),
+            textStyle: context.txt.bodyLarge?.copyWith(color: Colors.red)),
         onPressed: () {
           Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.schedulePreview.value =
@@ -308,7 +309,7 @@ class ServiceScheduleWidgets {
         child: Container(
           alignment: Alignment.center,
           child: Text("${_i18n()["cancel"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red)),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.red)),
         ));
   }
 
@@ -329,7 +330,7 @@ class ServiceScheduleWidgets {
             alignment: Alignment.center,
             child: Text(
               "${_i18n()["save"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.white),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.white),
             )));
   }
 

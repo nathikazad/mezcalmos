@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/Utils/Themes/AppColors.dart';
 import 'package:mezcalmos/Shared/Utils/Themes/styles.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';

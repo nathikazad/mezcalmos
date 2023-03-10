@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 class FloatingCartComponent extends StatelessWidget {
   const FloatingCartComponent({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class FloatingCartComponent extends StatelessWidget {
                         .cartItems
                         .length
                         .toStringAsFixed(0),
-                    style: Get.textTheme.bodyLarge
+                    style: context.txt.bodyLarge
                         ?.copyWith(color: primaryBlueColor),
                   ),
                   position: badge.BadgePosition.topEnd(top: -8, end: 0),

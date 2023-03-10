@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionChoiceCard.dart';
@@ -124,13 +125,13 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyLarge),
+            Text('${_i18n()["optionName"]}', style: context.txt.bodyLarge),
             SizedBox(
               height: 8,
             ),
             TextFormField(
                 controller: _viewController.scOptionName,
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return '${_i18n()["required"]}';
@@ -146,7 +147,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                   ),
                   Text(
                     '${_i18n()["optionChoices"]}',
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 8,
@@ -188,13 +189,13 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyLarge),
+            Text('${_i18n()["optionName"]}', style: context.txt.bodyLarge),
             SizedBox(
               height: 8,
             ),
             TextFormField(
                 controller: _viewController.prOptionName,
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return '${_i18n()["required"]}';
@@ -206,7 +207,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
             ),
             Text(
               '${_i18n()["optionType"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 8,
@@ -219,7 +220,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
             ),
             Text(
               '${_i18n()["optionChoices"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 8,

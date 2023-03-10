@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
@@ -51,7 +52,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     fit: FlexFit.tight,
                     child: Text(
                       widget.category.name?[userLanguage] ?? "",
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                     ),
                   ),
                   (widget.viewController.reOrderMode.isTrue)
@@ -64,7 +65,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
                     widget.category.dialog![userLanguage]!,
-                    style: Get.textTheme.bodyText2,
+                    style: context.txt.bodyText2,
                   ),
                 ),
               if (widget.category.items.isEmpty)
@@ -154,7 +155,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                           alignment: Alignment.center,
                           child: Text(
                             '${_i18n()["editCatgeory"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyText1,
                           )),
                     ),
                     Divider(),
@@ -182,7 +183,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               vertical: 12, horizontal: 5),
                           child: Text(
                             '${_i18n()["deleteCatgeory"]}',
-                            style: Get.textTheme.bodyText1
+                            style: context.txt.bodyText1
                                 ?.copyWith(color: Colors.red),
                           )),
                     ),

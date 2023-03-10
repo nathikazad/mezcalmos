@@ -4,22 +4,22 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
@@ -389,8 +389,8 @@ Future<dynamic> addCardSheet() {
                         fit: FlexFit.tight,
                         child: Text(
                           '${_i18n()["addCard"]}',
-                          style: Get.textTheme.displaySmall
-                              ?.copyWith(fontSize: 17.sp),
+                          style:
+                              ctx.txt.displaySmall?.copyWith(fontSize: 17.sp),
                         ),
                       ),
                       Get.find<LanguageController>().userLanguageKey ==
@@ -470,7 +470,7 @@ class _CardFormState extends State<CardForm> {
       String? res = await addCard(paymentMethod: paymentMethod.id);
       mezDbgPrint("Response ====> $res");
       if (res != null) {
-        MezRouter.closeDialog(backResult: res);
+        await MezRouter.closeDialog(backResult: res);
       }
     } on StripeException catch (e) {
       mezDbgPrint("Error add stripe ======>>>>$e");

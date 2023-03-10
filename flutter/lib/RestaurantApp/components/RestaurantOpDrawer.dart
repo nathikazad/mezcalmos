@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -90,7 +91,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       icon: Icons.alternate_email,
                       titleWidget: Text(
                         '${_i18n()["contact"]}',
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                     ),
                     _languageSwitcher(),
@@ -103,8 +104,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       icon: Icons.logout,
                       titleWidget: Text(
                         '${_i18n()["logout"]}',
-                        style: Get.textTheme.bodyText1
-                            ?.copyWith(color: Colors.red),
+                        style:
+                            context.txt.bodyText1?.copyWith(color: Colors.red),
                       ),
                     ),
                   ],
@@ -133,7 +134,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
           children: [
             Text(
               "${_i18n()["language"]}",
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
             SizedBox(
               height: 5,
@@ -177,7 +178,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
             icon: Icons.notifications,
             titleWidget: Text(
               "${_i18n()["notifications"]}",
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             )),
       ],
     );
@@ -209,7 +210,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     ),
                     Text(
                       restaurantOpAuthController.operator.value!.info.name,
-                      style: Get.textTheme.headline3,
+                      style: context.txt.headline3,
                     ),
                     SizedBox(
                       height: 30,

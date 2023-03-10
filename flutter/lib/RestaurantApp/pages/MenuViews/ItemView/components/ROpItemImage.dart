@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -40,7 +41,7 @@ class ROpItemImage extends StatelessWidget {
                               ? Center(
                                   child: Text(
                                     '${_i18n()["addImage"]}',
-                                    style: Get.textTheme.bodyText1,
+                                    style: context.txt.bodyText1,
                                     textAlign: TextAlign.center,
                                   ),
                                 )

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
@@ -62,7 +63,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                   children: [
                     Text(
                       item.name[userLanguage] ?? "",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 5,
@@ -79,7 +80,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(item.cost.toPriceString(),
-                        style: Get.textTheme.bodyLarge),
+                        style: context.txt.bodyLarge),
                     SizedBox(
                       height: 5,
                     ),

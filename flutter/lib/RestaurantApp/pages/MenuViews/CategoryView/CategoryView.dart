@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/controllers/addCategoryController.dart';
@@ -134,7 +135,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               const SizedBox(height: 8),
               Text(
                 "${_i18n()["categoryName"]}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
@@ -145,7 +146,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
@@ -156,7 +157,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["catDesc"]}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 10,
@@ -164,7 +165,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
                 controller: _viewController.primaryCatDesc,
                 decoration: InputDecoration(
                   hintText: '${_i18n()["categoryDescHint"]}',
@@ -175,7 +176,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["catDescIn"]} ${_viewController.secondaryLang.value!.toLanguageName()}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 10,
@@ -183,7 +184,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
                 controller: _viewController.secondaryCatDesc,
                 decoration: InputDecoration(
                   hintText: '${_i18n()["categoryDescHint"]}',
@@ -201,7 +202,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       required LanguageType languageType}) {
     return TextFormField(
       controller: controller,
-      style: Get.textTheme.bodyLarge,
+      style: context.txt.bodyLarge,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? v) {
         mezDbgPrint(v?.trim().toLowerCase());

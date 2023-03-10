@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
@@ -34,7 +35,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
         children: [
           Text(
             '${_i18n()["driver"]}',
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           SizedBox(
             height: 10,
@@ -80,7 +81,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             children: [
                               Text(
                                 widget.order.dropoffDriver!.name,
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                             ],
                           ),
@@ -150,7 +151,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           fit: FlexFit.tight,
           child: Text(
             '${_i18n()["noDriver"]}',
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
         ),
         if (widget.order.isSelfDelivery() && widget.order.inProcess())
@@ -174,7 +175,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                       )
                     : Text(
                         '${_i18n()["set"]}',
-                        style: Get.textTheme.bodyLarge
+                        style: context.txt.bodyLarge
                             ?.copyWith(color: primaryBlueColor),
                       ),
               ))

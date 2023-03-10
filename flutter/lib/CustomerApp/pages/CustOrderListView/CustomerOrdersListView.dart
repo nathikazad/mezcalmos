@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/Custome
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -86,7 +87,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
         ),
         Text(
           "${_i18n()["orders"]["noOrders"]}",
-          style: Get.textTheme.displaySmall,
+          style: context.txt.displaySmall,
         ),
         SizedBox(
           height: 8,
@@ -95,7 +96,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
           margin: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             "${_i18n()["orders"]["noOrdersBody"]}",
-            style: Get.textTheme.bodyMedium,
+            style: context.txt.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),

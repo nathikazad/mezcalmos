@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -72,7 +73,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   ),
                   Text(
                     laundry.value!.info.name,
-                    style: Get.textTheme.headlineSmall,
+                    style: context.txt.headlineSmall,
                   ),
                   SizedBox(
                     height: 9,
@@ -88,14 +89,14 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                         ),
                         Text(
                           "${_i18n()["description"]}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 4,
                         ),
                         Text(
                           "${laundry.value!.info.description![userLanguage]}",
-                          style: Get.textTheme.titleSmall,
+                          style: context.txt.titleSmall,
                         ),
                       ],
                     ),
@@ -104,7 +105,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   ),
                   Text(
                     "${_i18n()["categories"]}",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 4,
@@ -145,7 +146,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             flex: 1,
             child: Text(
               item.name[userLanguage]?.toString().inCaps ?? "",
-              style: Get.textTheme.titleSmall,
+              style: context.txt.titleSmall,
               maxLines: 1,
             ),
           ),
@@ -154,7 +155,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
           Text(
             "${item.cost.toPriceString()}/kg",
-            style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+            style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
           )
         ],
       ),
@@ -198,7 +199,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
           //maxLines: 1,
           textAlign: TextAlign.center,
-          style: Get.textTheme.bodyMedium?.copyWith(
+          style: context.txt.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
               fontSize: 14),
@@ -215,7 +216,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${laundry.value!.averageNumberOfDays} ${_i18n()["daysReturn"]}",
           maxLines: 1,
           textAlign: TextAlign.center,
-          style: Get.textTheme.bodyMedium?.copyWith(
+          style: context.txt.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
               fontSize: 14),
@@ -232,7 +233,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory.toPriceString()}/kg",
           //maxLines: 2,
           textAlign: TextAlign.center,
-          style: Get.textTheme.bodyMedium?.copyWith(
+          style: context.txt.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
               fontSize: 14),

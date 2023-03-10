@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
@@ -36,7 +37,7 @@ class CreateServiceStartPage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 15),
             child: Text(
               '${_i18n()['openNewRestaurantText']}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               textAlign: TextAlign.center,
             ),
           ),

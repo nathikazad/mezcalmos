@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -50,7 +51,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                   alignment: Alignment.center,
                   child: Text(
                     '${_i18n()["title"]}',
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 const SizedBox(
@@ -69,7 +70,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${_i18n()["bankName"]}',
-                                    style: Get.textTheme.bodyLarge?.copyWith(
+                                    style: context.txt.bodyLarge?.copyWith(
                                       fontSize: 10.sp,
                                     )),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
@@ -102,7 +103,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               children: [
                                 Text(
                                   '${_i18n()["accountNumber"]}',
-                                  style: Get.textTheme.bodyLarge
+                                  style: context.txt.bodyLarge
                                       ?.copyWith(fontSize: 10.sp),
                                 ),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
@@ -146,7 +147,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
           const SizedBox(width: 5),
           Text(
             "Copied",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
         ],
       ),

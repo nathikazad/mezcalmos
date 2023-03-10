@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -36,7 +37,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
         children: [
           Text(
             '${_i18n()["acceptedPayments"]}',
-            style: Get.textTheme.bodyMedium,
+            style: context.txt.bodyMedium,
           ),
           SizedBox(
             height: 10,
@@ -50,7 +51,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                   fit: FlexFit.tight,
                   child: Text(
                     '${_i18n()["cash"]}',
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 SizedBox(
@@ -83,7 +84,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //         fit: FlexFit.tight,
           //         child: Text(
           //           'Bank Transfer',
-          //           style: Get.textTheme.bodyText1,
+          //           style: context.txt.bodyText1,
           //         ),
           //       ),
           //       // SizedBox(
@@ -133,7 +134,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                         children: [
                           Text(
                             '${_i18n()["card"]}',
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                           const SizedBox(
                             width: 3,
@@ -184,7 +185,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //           children: [
           //             Text(
           //               '${_i18n()["card"]}',
-          //               style: Get.textTheme.bodyText1,
+          //               style: context.txt.bodyText1,
           //             ),
           //             const SizedBox(
           //               width: 3,
@@ -265,7 +266,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                     alignment: Alignment.center,
                     child: Text(
                       "Bank account informations",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   Divider(),
@@ -274,7 +275,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                   ),
                   Text(
                     "Bank name",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -292,7 +293,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                   ),
                   Text(
                     "Account number",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -367,7 +368,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
               ),
               Text(
                 '${_i18n()["setup"]}',
-                style: Get.textTheme.bodyLarge?.copyWith(color: Colors.white),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.white),
               ),
               const SizedBox(
                 width: 3,
@@ -408,7 +409,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
               ),
               Text(
                 '${_i18n()["requirements"]}',
-                style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.red),
               ),
             ]),
           )),
@@ -443,14 +444,14 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                     )),
                     TextSpan(
                         text: '${_i18n()["reqsHelper"]}',
-                        style: Get.textTheme.bodyMedium),
+                        style: context.txt.bodyMedium),
                   ],
                 ),
               ),
               Divider(),
               Text(
                 "${_i18n()["reqs"]} :",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 5,
@@ -474,7 +475,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                     Divider(),
                     Text(
                       "${_i18n()["emailId"]} : ${widget.viewController.paymentInfo?.stripe?.email}",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ],
                 ),

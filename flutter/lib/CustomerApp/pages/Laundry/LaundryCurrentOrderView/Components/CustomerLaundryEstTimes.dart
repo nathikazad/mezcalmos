@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -67,12 +68,12 @@ class CustomerLaundryOrderEst extends StatelessWidget {
                       children: [
                         Text(
                           _getRightTitle()!.inCaps,
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                           maxLines: 1,
                         ),
                         Text(
                           _getEstimatedText()!.inCaps,
-                          style: Get.textTheme.bodyMedium,
+                          style: context.txt.bodyMedium,
                           maxLines: 1,
                         ),
                       ],

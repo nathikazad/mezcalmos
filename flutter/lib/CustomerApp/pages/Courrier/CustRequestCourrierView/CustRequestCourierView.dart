@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -73,7 +74,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                       children: [
                         Text(
                           "Delivery company",
-                          style: Get.textTheme.bodyMedium,
+                          style: context.txt.bodyMedium,
                         ),
                         SizedBox(
                           height: 5,
@@ -84,7 +85,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                                   viewController.company.value!.info.image),
                               content: Text(
                                 viewController.company.value!.info.name,
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               )),
                         SizedBox(
                           height: 15,
@@ -141,7 +142,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           children: [
             Text(
               "From",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
@@ -152,7 +153,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             Text(
               "To",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
@@ -194,7 +195,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                 elevation: 0.5,
                 borderRadius: BorderRadius.circular(10),
                 child: TextFormField(
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                     controller: viewController.fromLocText,
                     decoration: InputDecoration(
                       isDense: true,
@@ -246,7 +247,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             Text(
               "This field can be empty",
-              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
             )
           ],
         )

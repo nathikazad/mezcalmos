@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -67,7 +68,7 @@ class CreateServiceScheduleWidgets {
                 width: 15.w,
                 child: Text(
                   "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                  style: Get.textTheme.bodyText2
+                  style: context.txt.bodyText2
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -116,7 +117,7 @@ class CreateServiceScheduleWidgets {
                     viewController.newSchedule.value.openHours[weekday]!.isOpen
                         ? "${_i18n()["workingHoursCard"]["open"]}"
                         : "${_i18n()["workingHoursCard"]["closed"]}",
-                    style: Get.textTheme.bodyText2?.copyWith(
+                    style: context.txt.bodyText2?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: viewController
                                 .newSchedule.value.openHours[weekday]!.isOpen
@@ -201,7 +202,7 @@ class CreateServiceScheduleWidgets {
                     child: Row(
                       children: [
                         Text('${_i18n()["workingHoursCard"]["open"]}',
-                            style: Get.textTheme.bodyText1),
+                            style: context.txt.bodyText1),
                         Spacer(),
                         radioCircleButton(
                             value: viewController.schedulePreview.value
@@ -222,7 +223,7 @@ class CreateServiceScheduleWidgets {
                     child: Row(
                       children: [
                         Text('${_i18n()["workingHoursCard"]["closed"]}',
-                            style: Get.textTheme.bodyText1),
+                            style: context.txt.bodyText1),
                         Spacer(),
                         radioCircleButton(
                             value: viewController.schedulePreview.value
@@ -250,7 +251,7 @@ class CreateServiceScheduleWidgets {
                       height: 10,
                     ),
                     Text("${_i18n()["workingHoursCard"]["from"]}",
-                        style: Get.textTheme.bodyText1),
+                        style: context.txt.bodyText1),
                     SizedBox(
                       height: 15,
                     ),
@@ -259,7 +260,7 @@ class CreateServiceScheduleWidgets {
                       height: 25,
                     ),
                     Text("${_i18n()["workingHoursCard"]["to"]}",
-                        style: Get.textTheme.bodyText1),
+                        style: context.txt.bodyText1),
                     SizedBox(
                       height: 15,
                     ),
@@ -294,7 +295,7 @@ class CreateServiceScheduleWidgets {
         style: TextButton.styleFrom(
             fixedSize: Size(double.infinity, 50),
             backgroundColor: offRedColor,
-            textStyle: Get.textTheme.bodyText1?.copyWith(color: Colors.red)),
+            textStyle: context.txt.bodyText1?.copyWith(color: Colors.red)),
         onPressed: () {
           Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.schedulePreview.value =
@@ -306,7 +307,7 @@ class CreateServiceScheduleWidgets {
         child: Container(
           alignment: Alignment.center,
           child: Text("${_i18n()["cancel"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red)),
+              style: context.txt.bodyText1?.copyWith(color: Colors.red)),
         ));
   }
 
@@ -327,7 +328,7 @@ class CreateServiceScheduleWidgets {
             alignment: Alignment.center,
             child: Text(
               "${_i18n()["save"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+              style: context.txt.bodyText1?.copyWith(color: Colors.white),
             )));
   }
 

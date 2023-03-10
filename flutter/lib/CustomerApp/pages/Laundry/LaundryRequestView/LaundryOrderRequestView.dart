@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -67,7 +68,7 @@ class _CustLaundryOrderRequestViewState
           onClick: MezRouter.back,
           titleWidget: Obx(() => Text(
                 viewController.laundry.value?.info.name ?? "",
-                style: Get.textTheme.displaySmall,
+                style: context.txt.displaySmall,
               )),
         ),
         body: Obx(
@@ -94,7 +95,7 @@ class _CustLaundryOrderRequestViewState
                             height: 20,
                           ),
                           Text(viewController.laundry.value!.info.name,
-                              style: Get.textTheme.headlineSmall),
+                              style: context.txt.headlineSmall),
                           SizedBox(
                             height: 9,
                           ),
@@ -117,7 +118,7 @@ class _CustLaundryOrderRequestViewState
                                   viewController
                                       .laundry.value!.info.location.address,
                                   maxLines: 2,
-                                  style: Get.textTheme.titleSmall,
+                                  style: context.txt.titleSmall,
                                 ),
                               )
                             ],
@@ -178,7 +179,7 @@ class _CustLaundryOrderRequestViewState
                                     width: Get.width,
                                     child: Text(
                                       "${_i18n()["summaryText"]}",
-                                      style: Get.textTheme.bodyLarge,
+                                      style: context.txt.bodyLarge,
                                     ),
                                   ),
                                   SizedBox(height: 4),
@@ -195,19 +196,18 @@ class _CustLaundryOrderRequestViewState
                                           child: Container(
                                             child: Text(
                                                 "${_i18n()["deliveryCost"]}",
-                                                style:
-                                                    Get.textTheme.bodyMedium),
+                                                style: context.txt.bodyMedium),
                                           ),
                                         ),
                                         (viewController.shippingCost.value !=
                                                 null)
                                             ? Text(
                                                 "${(viewController.shippingCost.value! * 2).toPriceString()}",
-                                                style: Get.textTheme.bodyMedium,
+                                                style: context.txt.bodyMedium,
                                               )
                                             : Text(
                                                 "_",
-                                                style: Get.textTheme.bodyMedium,
+                                                style: context.txt.bodyMedium,
                                               ),
                                       ],
                                     ),
@@ -251,7 +251,7 @@ class _CustLaundryOrderRequestViewState
           ),
           Card(
             child: TextField(
-              style: Get.textTheme.titleMedium?.copyWith(
+              style: context.txt.titleMedium?.copyWith(
                 color: blackColor,
               ),
               controller: viewController.orderNote,
@@ -259,8 +259,7 @@ class _CustLaundryOrderRequestViewState
               minLines: 3,
               decoration: InputDecoration(
                 hintText: "${_i18n()["noteHint"]}",
-                hintStyle:
-                    Get.textTheme.titleMedium?.copyWith(color: blackColor),
+                hintStyle: context.txt.titleMedium?.copyWith(color: blackColor),
                 filled: true,
                 fillColor: Theme.of(context).primaryColor,
               ),
@@ -347,7 +346,7 @@ class _CustLaundryOrderRequestViewState
             flex: 1,
             child: Text(
               item.name[userLanguage]?.toString().inCaps ?? "",
-              style: Get.textTheme.bodyMedium,
+              style: context.txt.bodyMedium,
               maxLines: 1,
             ),
           ),
@@ -356,7 +355,7 @@ class _CustLaundryOrderRequestViewState
           ),
           Text(
             "${item.cost.toPriceString()}/KG",
-            style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+            style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
           )
         ],
       ),

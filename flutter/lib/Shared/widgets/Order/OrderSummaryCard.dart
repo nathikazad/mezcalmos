@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
@@ -44,7 +45,7 @@ class OrderSummaryCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
           ),
           Container(

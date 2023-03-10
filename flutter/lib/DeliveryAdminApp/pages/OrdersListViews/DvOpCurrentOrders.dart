@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpCurrentOrdersController.dart';
@@ -103,7 +104,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyText1)),
+                        style: context.txt.bodyText1)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,

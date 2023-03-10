@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
@@ -27,14 +28,14 @@ class ROpOrderNote extends StatelessWidget {
             children: <Widget>[
               Text(
                 '${_i18n()["notes"]} ',
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
                 textAlign: TextAlign.left,
               ),
               const SizedBox(height: 10),
               Container(
                 child: Text(
                   orderNote!,
-                  style: Get.textTheme.subtitle2,
+                  style: context.txt.subtitle2,
                 ),
               ),
             ],

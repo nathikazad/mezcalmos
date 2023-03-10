@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/controllers/DvCompanyOrderViewController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
@@ -106,7 +107,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     "Customer Info",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 MezCard(
@@ -116,14 +117,14 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                         viewController.order.value!.customerInfo.image),
                     content: Text(
                       viewController.order.value!.customerInfo.name,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     )),
 
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     'Delivery Details',
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 OrderScheduledTimeCard(
@@ -157,8 +158,8 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 ),
                 Text(
                   "Getting you order info...",
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
+                  style:
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
               ],
             ),
@@ -176,7 +177,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
             "Estimated Times",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
         ),
         if (viewController.order.value!.estimatedPackageReadyTime != null)
@@ -193,7 +194,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Package ready :",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -216,7 +217,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Arrival at pickup :",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -239,7 +240,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Arrival at dropoff :",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -268,7 +269,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
       content: Text(
         viewController.order.value!.driverInfo?.name ??
             "No driver assigned yet",
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
       ),
       action: Row(
         children: [
@@ -311,7 +312,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           children: [
             Text(
               viewController.order.value!.serviceInfo.name,
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -327,7 +328,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 Flexible(
                   child: Text(
                     viewController.order.value!.serviceInfo.location.address,
-                    style: Get.textTheme.bodyMedium,
+                    style: context.txt.bodyMedium,
                     maxLines: 1,
                   ),
                 ),

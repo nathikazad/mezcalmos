@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
@@ -88,7 +89,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
                 // enabled: (widget.oppositeLanguageValue != null &&
                 //     widget.oppositeLanguageValue!.value != value),
                 child: Text(value.name![userLanguage] ?? "error",
-                    style: Get.textTheme.bodyText2?.copyWith(
+                    style: context.txt.bodyText2?.copyWith(
                       fontWeight: FontWeight.w700,
                     )));
           }).toList(),

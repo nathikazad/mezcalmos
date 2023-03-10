@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
@@ -177,7 +178,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 children: [
                   Text(
                     '${_i18n()["categories"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyText1,
                   ),
                   (viewController.reOrderMode.isTrue)
                       ? SizedBox()
@@ -214,8 +215,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     : null,
                 labelColor: primaryBlueColor,
                 unselectedLabelColor: Colors.grey.shade800,
-                labelStyle: Get.textTheme.bodyText1,
-                unselectedLabelStyle: Get.textTheme.bodyText2,
+                labelStyle: context.txt.bodyText1,
+                unselectedLabelStyle: context.txt.bodyText2,
                 tabs: [
                   Tab(
                     text: '${_i18n()["myItems"]}',
@@ -254,7 +255,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
             ),
             Text(
               '${_i18n()["reorder"]}',
-              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyText1?.copyWith(color: primaryBlueColor),
             ),
           ],
         ),

@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
@@ -111,7 +112,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noItemTitle"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -162,7 +163,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             "${_i18n()["restaurants"]}",
-                            style: Get.textTheme.bodyLarge?.copyWith(
+                            style: context.txt.bodyLarge?.copyWith(
                               color: !viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
@@ -208,7 +209,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             '${_i18n()["meal"]}',
-                            style: Get.textTheme.bodyLarge?.copyWith(
+                            style: context.txt.bodyLarge?.copyWith(
                               color: viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
@@ -262,7 +263,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noOpenRestaurant"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             )
           ],
         );
@@ -282,8 +283,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         title: Text(
           "${_i18n()["showOnlyOpen"]}",
-          style:
-              Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+          style: context.txt.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
     );
@@ -292,7 +292,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   Widget _searchInput() {
     return TextFormField(
       textAlignVertical: TextAlignVertical.center,
-      style: Get.textTheme.bodyLarge,
+      style: context.txt.bodyLarge,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
         viewController.filter();

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -72,7 +73,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
               ),
               Text(
                 "\$${widget.item.cost}",
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
                 textAlign: TextAlign.center,
               ),
               SizedBox(

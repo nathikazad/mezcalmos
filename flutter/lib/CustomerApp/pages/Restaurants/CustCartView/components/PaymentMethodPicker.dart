@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:sizer/sizer.dart';
@@ -45,7 +45,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
               children: [
                 Text(
                   '${_i18n()["paymentMethod"]}',
-                  style: Get.textTheme.bodyText1,
+                  style: context.txt.bodyText1,
                 ),
                 SizedBox(
                   height: 9,
@@ -112,7 +112,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                   //           PickerChoice.SavedCard)
                                   //       ? value.entries.first.value!.brand.name
                                   //       : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
-                                  //   style: Get.textTheme.bodyText1?.copyWith(
+                                  //   style: context.txt.bodyText1?.copyWith(
                                   //     fontSize: 12.sp,
                                   //   ),
                                   // ),
@@ -123,7 +123,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                         "*" * 12 +
                                             value.entries.first.value!.last4
                                                 .toString(),
-                                        style: Get.textTheme.subtitle1,
+                                        style: context.txt.subtitle1,
                                       ),
                                     ),
                                 ],

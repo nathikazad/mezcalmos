@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
@@ -48,7 +49,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
               children: [
                 Text(
                   '${_i18n()["currentSp"]}',
-                  style: Get.textTheme.bodyText1,
+                  style: context.txt.bodyText1,
                 ),
                 SizedBox(
                   height: 15,
@@ -99,7 +100,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                                   element.startsAt!
                                       .toLocal()
                                       .toDayName(withDateNumber: true),
-                                  style: Get.textTheme.bodyText1,
+                                  style: context.txt.bodyText1,
                                 ),
                               );
                             },
@@ -132,7 +133,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                           ),
                           Text(
                             '${_i18n()["recentSp"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyText1,
                           ),
                           SizedBox(
                             height: 15,

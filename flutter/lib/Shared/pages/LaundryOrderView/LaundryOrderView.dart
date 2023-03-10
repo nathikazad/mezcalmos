@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderStatusCard.dart';
@@ -102,7 +103,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                         viewController.order.customer.image),
                     content: Text(
                       viewController.order.customer.name,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   //  if (viewController.order.afterAtLaundry())
@@ -167,7 +168,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                   )
                 : Text(
                     '${_i18n()["toBeCalculated"]}',
-                    style: Get.textTheme.bodyMedium
+                    style: context.txt.bodyMedium
                         ?.copyWith(fontStyle: FontStyle.italic),
                   ),
           ],

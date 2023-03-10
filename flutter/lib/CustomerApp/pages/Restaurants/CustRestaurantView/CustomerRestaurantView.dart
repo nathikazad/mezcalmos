@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/contr
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -97,7 +98,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             //   alignment: Alignment.center,
             //   child: Text(
             //     "Some magic is happening ...",
-            //     style: Get.textTheme.bodyLarge?.copyWith(
+            //     style: context.txt.bodyLarge?.copyWith(
             //         color: primaryBlueColor, fontStyle: FontStyle.italic),
             //   ),
             // ))
@@ -110,7 +111,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           alignment: Alignment.center,
           child: Text(
             "Some magic is happening ...",
-            style: Get.textTheme.bodyLarge?.copyWith(
+            style: context.txt.bodyLarge?.copyWith(
                 color: primaryBlueColor, fontStyle: FontStyle.italic),
           ),
         );
@@ -176,7 +177,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                   '${_i18n()["undefinedCategory"]}',
               style: category.name?[userLanguage] != null
                   ? Get.theme.textTheme.headlineSmall
-                  : Get.textTheme.bodyMedium?.copyWith(
+                  : context.txt.bodyMedium?.copyWith(
                       color: Color(0xFF787878),
                     ),
             ),
@@ -186,7 +187,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             Container(
               child: Text(
                 category.dialog![userLanguage]!.inCaps,
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: context.txt.bodyMedium?.copyWith(
                   color: offLightShadeGreyColor,
                 ),
               ),
@@ -279,7 +280,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
-              style: Get.textTheme.bodyLarge?.copyWith(
+              style: context.txt.bodyLarge?.copyWith(
                 color: offLightShadeGreyColor,
               ),
               maxLines: 2,

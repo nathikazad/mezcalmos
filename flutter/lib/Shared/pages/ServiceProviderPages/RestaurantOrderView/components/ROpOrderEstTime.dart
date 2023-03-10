@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -111,7 +112,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
                       ),
                       Text(
                         "${_i18n()["title"]}",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 25,
@@ -154,8 +155,8 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
                 )
               : Text(
                   '${_i18n()["set"]}',
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
+                  style:
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
         ));
   }
@@ -197,7 +198,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()["cancel"]}",
-            style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+            style: context.txt.bodyLarge?.copyWith(color: Colors.red),
           ),
         ),
       ),

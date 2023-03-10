@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/components/ROpChoiceAv.dart';
@@ -99,14 +100,14 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Text(
                         "${_i18n()['choiceName']}",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         controller: viewController.prChoiceName,
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -119,14 +120,14 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Text(
                         "${_i18n()['choicePrice']}",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         controller: viewController.choicePriceText,
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -184,7 +185,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       Obx(
                         () => Text(
                           "${_i18n()['choiceNameIn']} ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                       ),
                       SizedBox(
@@ -192,7 +193,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       TextFormField(
                         controller: viewController.scChoiceName,
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";

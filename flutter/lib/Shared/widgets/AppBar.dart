@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:sizer/sizer.dart';
 
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
@@ -83,7 +84,12 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       title: (title != null)
           ? Text(
               title,
-              style: Get.textTheme.displaySmall,
+              style: TextStyle(
+                fontFamily: "Montserrat",
+                fontWeight: FontWeight.w600,
+                fontSize: 16.sp,
+                color: Colors.black,
+              ),
               textAlign: TextAlign.center,
             )
           : (titleWidget != null)

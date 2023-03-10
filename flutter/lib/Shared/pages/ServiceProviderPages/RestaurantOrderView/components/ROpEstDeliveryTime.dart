@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -108,7 +109,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                       ),
                       Text(
                         "${_i18n()["deliveryTitle"]}",
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                       SizedBox(
                         height: 25,
@@ -151,8 +152,8 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                 )
               : Text(
                   '${_i18n()["set"]}',
-                  style: Get.textTheme.bodyText1
-                      ?.copyWith(color: primaryBlueColor),
+                  style:
+                      context.txt.bodyText1?.copyWith(color: primaryBlueColor),
                 ),
         ));
   }
@@ -186,8 +187,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                   )
                 : Text(
                     '${_i18n()["confirm"]}',
-                    style:
-                        Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+                    style: context.txt.bodyText1?.copyWith(color: Colors.white),
                   ),
           ),
         ),
@@ -212,7 +212,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()["cancel"]}",
-            style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+            style: context.txt.bodyText1?.copyWith(color: Colors.red),
           ),
         ),
       ),

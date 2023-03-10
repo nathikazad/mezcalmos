@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -52,7 +53,7 @@ class CreateServiceImageComponent extends StatelessWidget {
                                     padding: const EdgeInsets.all(5),
                                     child: Text(
                                       "${_i18n()['uploadImageText']}",
-                                      style: Get.textTheme.bodyMedium?.copyWith(
+                                      style: context.txt.bodyMedium?.copyWith(
                                           color: offLightShadeGreyColor),
                                       textAlign: TextAlign.center,
                                     ),
@@ -92,8 +93,8 @@ class CreateServiceImageComponent extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 5),
                     child: Text(
                       state.errorText ?? "",
-                      style: Get.textTheme.titleMedium
-                          ?.copyWith(color: Colors.red),
+                      style:
+                          context.txt.titleMedium?.copyWith(color: Colors.red),
                     ))
             ],
           ),

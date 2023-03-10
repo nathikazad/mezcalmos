@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -121,7 +122,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                       ),
                       Text(
                         "Review : ",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 10,
@@ -182,7 +183,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         children: [
           Text(
             '${_i18n()["orderItems"]}',
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           SizedBox(
             height: 10,

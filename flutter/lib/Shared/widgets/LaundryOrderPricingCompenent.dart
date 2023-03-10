@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -55,11 +56,11 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                       children: [
                         Text(
                           '${_i18n()["total"]}',
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyText1,
                         ),
                         Text(
                           order.costsByType!.weighedCost.toPriceString(),
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyText1,
                         ),
                       ],
                     ),
@@ -83,7 +84,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                     Flexible(
                       child: Text(
                         _i18n()['laundryPricingNote'],
-                        style: Get.textTheme.bodyText2,
+                        style: context.txt.bodyText2,
                         maxLines: 3,
                       ),
                     ),

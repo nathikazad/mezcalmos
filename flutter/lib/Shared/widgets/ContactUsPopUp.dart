@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -53,7 +53,7 @@ class ContactUsPopUp extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '${_i18n()["contactEmail"]}',
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                       maxLines: 1,
                     ),
                   )
@@ -98,7 +98,7 @@ class ContactUsPopUp extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '${_i18n()["contactWhatsapp"]}',
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                       maxLines: 1,
                     ),
                   )

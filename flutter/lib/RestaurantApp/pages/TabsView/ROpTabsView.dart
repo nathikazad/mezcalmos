@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
@@ -80,8 +81,8 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
     return Obx(
       () => tabsViewViewController.showTabs.value
           ? BottomNavigationBar(
-              selectedLabelStyle: Get.textTheme.bodyLarge,
-              unselectedLabelStyle: Get.textTheme.bodyMedium,
+              selectedLabelStyle: context.txt.bodyLarge,
+              unselectedLabelStyle: context.txt.bodyMedium,
               currentIndex: _index.value,
               onTap: (int v) {
                 _index.value = v;

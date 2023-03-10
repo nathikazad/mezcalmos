@@ -2,6 +2,7 @@
 
 // DO NOT TOUCH OR IMPORT ANYTHING IN THIS MAIN PLEASE.
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';

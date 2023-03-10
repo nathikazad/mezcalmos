@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 Function signInCallback = CustomerAuthHooksBase.onSignInHook;
 Function signOutCallback = CustomerAuthHooksBase.onSignOutHook;

@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -40,7 +41,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
         expandedHeight: 270,
         leadingWidth: 35,
         automaticallyImplyLeading: false,
-        bottom: getBottom,
+        bottom: getBottom(context),
         leading: _BackButtonAppBar(),
         actions: <Widget>[
           getAppbarIconsButton(),
@@ -70,7 +71,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                         (controller.showInfo.value)
                             ? "${_i18n()["info"]}"
                             : controller.restaurant.value!.info.name,
-                        style: Get.textTheme.displaySmall
+                        style: context.txt.displaySmall
                             ?.copyWith(color: Colors.white, fontSize: 14.sp),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -101,14 +102,14 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget? get getBottom {
+  PreferredSizeWidget? getBottom(BuildContext context) {
     if (controller.isInitialzed == false) {
       return PreferredSize(
         preferredSize: Size.fromHeight(15),
         child: LinearProgressIndicator(color: primaryBlueColor),
       );
     } else if (controller.showInfo.isFalse) {
-      return bottomFilters;
+      return bottomFilters(context);
     }
     return null;
   }
@@ -173,7 +174,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget get bottomFilters {
+  PreferredSizeWidget bottomFilters(BuildContext context) {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return PreferredSize(
@@ -182,15 +183,15 @@ class RestaurantSliverAppBar extends StatelessWidget {
         data: Get.theme.copyWith(dividerColor: Colors.transparent),
         child: Column(
           children: [
-            if (controller.showSpecials) _mainMenuTabs(),
-            _menuFilterChips(userLanguage),
+            if (controller.showSpecials) _mainMenuTabs(context),
+            _menuFilterChips(userLanguage, context),
           ],
         ),
       ),
     );
   }
 
-  Widget _menuFilterChips(LanguageType userLanguage) {
+  Widget _menuFilterChips(LanguageType userLanguage, BuildContext context) {
     return Container(
       width: double.infinity,
       color: Get.theme.scaffoldBackgroundColor,
@@ -203,8 +204,8 @@ class RestaurantSliverAppBar extends StatelessWidget {
               isScrollable: true,
               controller: controller.getTabController,
               labelColor: primaryBlueColor,
-              labelStyle: Get.textTheme.bodyLarge,
-              unselectedLabelStyle: Get.textTheme.bodyLarge?.copyWith(
+              labelStyle: context.txt.bodyLarge,
+              unselectedLabelStyle: context.txt.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w500,
                 color: Colors.grey.shade800,
               ),
@@ -255,7 +256,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
-  Widget _mainMenuTabs() {
+  Widget _mainMenuTabs(BuildContext context) {
     return Obx(
       () => Container(
         width: double.infinity,
@@ -287,10 +288,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["menu"]}',
                       style: controller.isOnMenuView
-                          ? Get.textTheme.headlineMedium?.copyWith(
+                          ? context.txt.headlineMedium?.copyWith(
                               color: primaryBlueColor,
                             )
-                          : Get.textTheme.titleSmall,
+                          : context.txt.titleSmall,
                     ),
                   ),
                 ),
@@ -316,10 +317,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["specials"]}',
                       style: controller.isOnSpecialView
-                          ? Get.textTheme.headlineMedium?.copyWith(
+                          ? context.txt.headlineMedium?.copyWith(
                               color: primaryBlueColor,
                             )
-                          : Get.textTheme.titleSmall,
+                          : context.txt.titleSmall,
                     ),
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -102,7 +103,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         alignment: Alignment.center,
                         child: Text(
                           viewController.service.value?.name ?? "",
-                          style: Get.textTheme.displaySmall,
+                          style: context.txt.displaySmall,
                         ),
                       )
                       // Laundry name fiels
@@ -124,7 +125,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       ),
                       TextFormField(
                         controller: viewController.phoneNumber,
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                         keyboardType: TextInputType.phone,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
@@ -187,7 +188,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
   TextFormField _restNameTextField() {
     return TextFormField(
       controller: viewController.serviceNameTxt,
-      style: Get.textTheme.bodyLarge,
+      style: context.txt.bodyLarge,
       validator: (String? v) {
         if (v == null || v.isEmpty) {
           return "";
@@ -200,7 +201,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
   TextFormField _prdescTextField() {
     return TextFormField(
       controller: viewController.primaryServiceDesc,
-      style: Get.textTheme.bodyLarge,
+      style: context.txt.bodyLarge,
       maxLines: 5,
       minLines: 3,
     );
@@ -209,7 +210,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
   TextFormField _scdescTextField() {
     return TextFormField(
       controller: viewController.secondayServiceDesc,
-      style: Get.textTheme.bodyLarge,
+      style: context.txt.bodyLarge,
       maxLines: 5,
       minLines: 3,
     );

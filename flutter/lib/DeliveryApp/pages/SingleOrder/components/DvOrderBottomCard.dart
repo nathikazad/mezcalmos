@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
@@ -250,7 +251,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
             ? CircularProgressIndicator()
             : Text(
                 "${_i18n()['setTime']}",
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: context.txt.bodyMedium?.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),
       ),
@@ -280,7 +281,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
             ? CircularProgressIndicator()
             : Text(
                 "${_i18n()['setTime']}",
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: context.txt.bodyMedium?.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),
       ),

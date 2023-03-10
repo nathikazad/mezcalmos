@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 //
@@ -36,7 +37,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['name']}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -49,9 +50,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                 }
                 return null;
               },
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               decoration: InputDecoration(
-                  hintStyle: Get.textTheme.bodyMedium,
+                  hintStyle: context.txt.bodyMedium,
                   hintText: "${_i18n()['hintNameText']}"),
             ),
             SizedBox(
@@ -59,7 +60,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['description']}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -74,9 +75,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                 }
                 return null;
               },
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               decoration: InputDecoration(
-                  hintStyle: Get.textTheme.bodyMedium,
+                  hintStyle: context.txt.bodyMedium,
                   hintText: "${_i18n()['descriptionHintText']}"),
             ),
             SizedBox(
@@ -84,7 +85,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['phoneText']}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -98,9 +99,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                 }
                 return null;
               },
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               decoration: InputDecoration(
-                  hintStyle: Get.textTheme.bodyMedium,
+                  hintStyle: context.txt.bodyMedium,
                   hintText: "${_i18n()['phoneTextDescription']}"),
             ),
             SizedBox(
@@ -108,12 +109,12 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['location']}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 10,
             ),
-            _locationCard(),
+            _locationCard(context),
             SizedBox(
               height: 35,
             ),
@@ -123,7 +124,7 @@ class CreateServiceInfoPage extends StatelessWidget {
     );
   }
 
-  Widget _locationCard() {
+  Widget _locationCard(BuildContext context) {
     return FormField(validator: (Object? value) {
       if (viewController.newLocation.value == null) {
         return "${_i18n()['locationError']}";
@@ -183,8 +184,7 @@ class CreateServiceInfoPage extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 5),
                   child: Text(
                     state.errorText ?? "",
-                    style:
-                        Get.textTheme.titleMedium?.copyWith(color: Colors.red),
+                    style: context.txt.titleMedium?.copyWith(color: Colors.red),
                   ))
           ],
         ),

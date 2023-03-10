@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -47,7 +48,7 @@ class SavedLocationComponent extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(savelocation.name.capitalizeFirst.toString(),
-                      style: Get.textTheme.headlineMedium),
+                      style: context.txt.headlineMedium),
                 ),
                 InkWell(
                   onTap: () {
@@ -146,7 +147,7 @@ class SavedLocationComponent extends StatelessWidget {
               margin: const EdgeInsets.only(top: 5),
               child: Text(
                 savelocation.location.address,
-                style: Get.textTheme.titleMedium?.copyWith(
+                style: context.txt.titleMedium?.copyWith(
                   color: offShadeGreyColor,
                   fontWeight: FontWeight.w600,
                 ),

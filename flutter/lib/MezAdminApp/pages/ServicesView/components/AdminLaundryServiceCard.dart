@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
@@ -58,7 +59,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
                           fit: FlexFit.tight,
                           child: Text(
                             laundry.info.name,
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                         ),
                         SizedBox(
@@ -86,6 +87,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
                       children: [
                         _smallBtn(
                             icon: Icons.attach_money,
+                             context: context,
                             label: "${_i18n()['costs']}",
                             ontap: () {
                               LaundryOpAdminView.navigate(
@@ -93,6 +95,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             }),
                         _smallBtn(
                             icon: Icons.history,
+                             context: context,
                             label: "${_i18n()['orders']}",
                             ontap: () {
                               AdminServiceOrdersView.navigate(
@@ -103,6 +106,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             }),
                         _smallBtn(
                             icon: Icons.person,
+                            context: context,
                             label: "${_i18n()['profile']}",
                             ontap: () {
                               ServiceProfileView.navigate(
@@ -154,6 +158,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
   InkWell _smallBtn(
       {required IconData icon,
       required String label,
+        required BuildContext context,
       required Function()? ontap}) {
     return InkWell(
       borderRadius: BorderRadius.circular(5),
@@ -172,7 +177,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
             ),
             Text(
               label,
-              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
             )
           ],
         ),

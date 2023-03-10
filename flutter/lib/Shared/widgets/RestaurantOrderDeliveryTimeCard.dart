@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
+
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["RestaurantOrderDeliveryTimeCard"];
@@ -49,7 +51,7 @@ class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
                     Flexible(
                       child: Text(
                         "${DateFormat.MMMEd(userLangCode).format(order.deliveryTime!).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(order.deliveryTime!.toLocal())}",
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                     ),
                   ],

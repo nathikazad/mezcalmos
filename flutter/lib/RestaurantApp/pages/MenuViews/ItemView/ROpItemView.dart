@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ItemCategorySelector.dart';
@@ -178,13 +179,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemName"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.scItemNameController,
               validator: (String? value) {
@@ -204,13 +205,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemDesc"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               minLines: 4,
               maxLines: 6,
               controller: viewController.scItemDescController,
@@ -243,13 +244,13 @@ class _ROpItemViewState extends State<ROpItemView>
               ROpSpecialItemTime(viewController: viewController),
             Text(
               '${_i18n()["itemName"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.prItemNameController,
               validator: (String? value) {
@@ -269,7 +270,7 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemPrice"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -286,7 +287,7 @@ class _ROpItemViewState extends State<ROpItemView>
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
               textAlignVertical: TextAlignVertical.center,
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               decoration: InputDecoration(
                   prefixIconColor: primaryBlueColor,
                   prefixIcon: Icon(Icons.attach_money)),
@@ -296,13 +297,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemDesc"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               maxLines: 6,
               minLines: 4,
               controller: viewController.prItemDescController,
@@ -316,7 +317,7 @@ class _ROpItemViewState extends State<ROpItemView>
                 children: [
                   Text(
                     '${_i18n()["category"]}',
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   const SizedBox(
                     height: 10,
@@ -329,7 +330,7 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemOptions"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,

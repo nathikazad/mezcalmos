@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -37,7 +38,7 @@ class DeliveryOrderCard extends StatelessWidget {
           },
           cardTitle: _getOrderTitle(),
           primaryBodyContent: Text(order.dropoffLocation.address),
-          cardStatus: _getOrderWidget(),
+          cardStatus: _getOrderWidget(context),
           cardTime: Text(order.orderTime.getOrderTime().inCaps),
           rightImage: _getOrderIcon()),
       order: order,
@@ -64,7 +65,7 @@ class DeliveryOrderCard extends StatelessWidget {
     );
   }
 
-  Widget _getOrderWidget() {
+  Widget _getOrderWidget(BuildContext context) {
     // if (order.orderType == OrderType.Restaurant) {
     switch (order.status) {
       case DeliveryOrderStatus.CancelledByCustomer:
@@ -79,7 +80,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["cancelled"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.red),
             ),
           ),
         );
@@ -93,7 +94,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["delivered"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.green),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.green),
             ),
           ),
         );
@@ -107,7 +108,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["inTransit"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.amber),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
             ),
           ),
         );
@@ -122,7 +123,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["waiting"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.amber),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
             ),
           ),
         );
@@ -137,7 +138,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["waiting"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.amber),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
             ),
           ),
         );

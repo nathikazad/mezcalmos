@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
@@ -96,7 +97,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
             fit: FlexFit.tight,
             child: Text(
               option.name[userLanguage]!,
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
           ),
           _editBtn(option: option)
@@ -142,7 +143,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
                 fit: FlexFit.tight,
                 child: Text(
                   option.choices[index].name[userLanguage]!,
-                  style: Get.textTheme.bodyText1,
+                  style: context.txt.bodyText1,
                 ),
               ),
               // Switch(

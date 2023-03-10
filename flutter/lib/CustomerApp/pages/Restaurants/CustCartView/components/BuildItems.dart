@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -94,7 +95,7 @@ class CartItemsBuilder extends StatelessWidget {
           Container(
             child: Text(
               "${_i18n()["itemNotes"]}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
           ),
           SizedBox(

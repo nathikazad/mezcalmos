@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
@@ -27,7 +28,7 @@ class _LaundryOpMinimumCostState extends State<LaundryOpMinimumCost> {
       children: [
         Text(
           '${_i18n()["minCost"]}',
-          style: Get.textTheme.bodyLarge,
+          style: context.txt.bodyLarge,
         ),
         SizedBox(
           height: 10,
@@ -39,7 +40,7 @@ class _LaundryOpMinimumCostState extends State<LaundryOpMinimumCost> {
               widget.viewController.newMin.value = num.parse(v);
             }
           },
-          style: Get.textTheme.bodyLarge,
+          style: context.txt.bodyLarge,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.attach_money_rounded),

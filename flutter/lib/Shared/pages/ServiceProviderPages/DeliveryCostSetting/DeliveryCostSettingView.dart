@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -163,7 +164,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                 fit: FlexFit.tight,
                 child: Text(
                   "${_i18n()['custDistance']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
               ),
               SizedBox(
@@ -181,7 +182,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                     },
                     controller: viewController.distancePreview,
                     textAlignVertical: TextAlignVertical.center,
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [
@@ -195,7 +196,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                           child: Text(
                             "Km",
                             textAlign: TextAlign.right,
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                         ),
                         fillColor: Colors.white),
@@ -210,14 +211,14 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
             children: [
               Text(
                 "${_i18n()['cost']}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Obx(
                 () => Text(
                   viewController.previewCost.value
                           ?.toPriceString(rounded: false) ??
                       "_",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
               )
             ],
@@ -237,7 +238,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
           fit: FlexFit.tight,
           child: Text(
             title,
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
         ),
         SizedBox(
@@ -247,7 +248,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
             flex: 1,
             child: TextFormField(
               controller: controller,
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
               textAlignVertical: TextAlignVertical.center,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
@@ -262,7 +263,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                     child: Text(
                       suffixTitle,
                       textAlign: TextAlign.right,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   fillColor: secondaryLightBlueColor),

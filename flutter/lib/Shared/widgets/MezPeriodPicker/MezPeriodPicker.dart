@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/controller/MezPeriodPickerController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -59,7 +60,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
               margin: const EdgeInsets.all(8),
               child: Text(
                 widget.title ?? '${_i18n()["title"]}',
-                style: Get.textTheme.headline3,
+                style: context.txt.headline3,
               ),
             ),
             Divider(),
@@ -69,7 +70,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
             // date picker
             Text(
               '${_i18n()["sDate"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
             const SizedBox(
               height: 10,
@@ -82,7 +83,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
             // date picker
             Text(
               '${_i18n()["startsAt"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
             const SizedBox(
               height: 10,
@@ -127,7 +128,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
                   ),
                   Text(
                     '${_i18n()["endsAt"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyText1,
                   ),
                   const SizedBox(
                     height: 10,

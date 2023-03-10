@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
@@ -71,7 +72,7 @@ class _LaundryOrderWeightSelectorState
                               child: Text(
                                 value.name[userLanguage] ??
                                     "Error catgeory name",
-                                style: Get.textTheme.bodyLarge
+                                style: context.txt.bodyLarge
                                     ?.copyWith(fontSize: 11.sp),
                               ),
                             ),

@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -195,7 +196,7 @@ class _AgoraCallState extends State<AgoraCall> {
                     SizedBox(height: 20),
                     Text(
                       _getCallStatusText(),
-                      style: Get.textTheme.bodyText1?.copyWith(
+                      style: context.txt.bodyText1?.copyWith(
                         color: Colors.white,
                       ),
                     ),

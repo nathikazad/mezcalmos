@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -76,7 +77,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     leading: viewController.order.getOrderStatusWidget(),
                     content: Text(
                       viewController.order.orderStatusTitle().inCaps,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -153,11 +154,11 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 children: [
                   Text(
                     viewController.order.items[index].name,
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   Text(
                     "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)!.toPriceString()}",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ],
               ),
@@ -187,7 +188,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           children: [
             Text(
               "Delivery :",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 2,
@@ -211,7 +212,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           : CachedNetworkImageProvider(viewController.order.driverInfo!.image),
       content: Text(
         viewController.order.driverInfo?.name ?? "No driver assigned yet",
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
       ),
       action: Row(
         children: [

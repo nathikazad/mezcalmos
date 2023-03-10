@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
@@ -38,7 +39,7 @@ class ServiceStripePaymentSetup extends StatelessWidget {
                   Text("Stripe"),
                   Text(
                     viewController.currentUrl.value,
-                    style: Get.textTheme.titleMedium,
+                    style: context.txt.titleMedium,
                   ),
                   if (viewController.showLinarProgress.isTrue)
                     LinearProgressIndicator(

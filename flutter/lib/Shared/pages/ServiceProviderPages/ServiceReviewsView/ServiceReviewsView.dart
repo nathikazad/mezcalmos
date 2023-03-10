@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceNoReviews.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceReviewCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceReviewsFilters.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -94,7 +95,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
         children: [
           Text(
             viewController.rating.toStringAsFixed(1),
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(fontSize: 25.sp, fontWeight: FontWeight.w700),
           ),
           const SizedBox(
@@ -132,14 +133,14 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
         children: [
           Text(
             "${_i18n()["perfomTitle"]}",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           SizedBox(
             height: 5,
           ),
           Text(
             " ${_i18n()[viewController.performanceString()]} !",
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(color: viewController.performTextColor()),
           ),
         ],

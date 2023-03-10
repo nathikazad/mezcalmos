@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/env.dart';
@@ -114,7 +115,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             children: [
               Text(
                 "${_i18n()["language"]}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 5,
@@ -300,7 +301,7 @@ class SideMenuItem extends StatelessWidget {
                       (isI18nPath)
                           ? Get.find<LanguageController>().getLMap(title!)
                           : title!,
-                      style: Get.textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     )
                   : titleWidget ?? Container(),
             )
