@@ -88,7 +88,8 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
             id: deliveryOrder.deliveryId
           },
           _set: {
-            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
+            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest),
+            delivery_cost: deliveryOrder.deliveryCost
           }
         }, {
           delivery_cost: true
@@ -96,18 +97,20 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
       })
       break;
     default:
+      await chain.mutation({
+        update_delivery_order_by_pk: [{
+          pk_columns: {
+            id: deliveryOrder.deliveryId
+          },
+          _set: {
+            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest),
+            delivery_driver_id: undefined,
+          }
+        }, {
+          delivery_cost: true
+        }]
+      })
       break;
   }
-  await chain.mutation({
-    update_delivery_order_by_pk: [{
-      pk_columns: {
-        id: deliveryOrder.deliveryId
-      },
-      _set: {
-        change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
-      }
-    }, {
-      delivery_cost: true
-    }]
-  })
+  
 }

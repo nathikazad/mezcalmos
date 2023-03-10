@@ -55,7 +55,7 @@ export async function createLaundryToCustomerDeliveryOrder(
                     }
                 },
                 payment_type: laundryOrder.paymentType,
-                delivery_cost: laundryOrder.deliveryCost / 2,
+                delivery_cost: laundryOrder.deliveryCost - fromCustomerDelivery.deliveryCost,
             
                 status: DeliveryOrderStatus.OrderReceived,
                 service_provider_id: (laundryStore.deliveryDetails.selfDelivery) 

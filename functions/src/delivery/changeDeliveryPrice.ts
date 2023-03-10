@@ -1,12 +1,15 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getCourierOrder, getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
+import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { updateDeliveryChangePriceRequest } from "../shared/graphql/delivery/updateDelivery";
 import { getLaundryOrder, getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/getLaundryOrder";
+import { updateLaundryOrderDeliveryCost } from "../shared/graphql/laundry/order/updateOrder";
 import { getRestaurantOrder, getRestaurantOrderFromDelivery } from "../shared/graphql/restaurant/order/getRestaurantOrder";
+import { updateRestaurantOrderDeliveryCost } from "../shared/graphql/restaurant/order/updateOrder";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { ChangePriceStatus, DeliveryOrder } from "../shared/models/Generic/Delivery";
+import { ChangePriceStatus, DeliveryDriver, DeliveryOrder } from "../shared/models/Generic/Delivery";
 import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
@@ -53,19 +56,27 @@ export async function changeDeliveryPriceResponse(userId: number, changePriceRes
     //accepted -> mutation to change delivery price of delivery and sp order
     //rejected -> remove driver
     //notify driver
+
     let customerId: number;
+    let deliveryOrder: DeliveryOrder;
     switch (changePriceResponseDetails.orderType) {
         case OrderType.Restaurant:
             let restaurantOrder: RestaurantOrder = await getRestaurantOrder(changePriceResponseDetails.orderId);
             customerId = restaurantOrder.customerId;
+            deliveryOrder = await getDeliveryOrder(restaurantOrder.deliveryId!);
             break;
         case OrderType.Laundry:
             let laundryOrder: LaundryOrder = await getLaundryOrder(changePriceResponseDetails.orderId);
             customerId = laundryOrder.customerId;
+            if(laundryOrder.toCustomerDeliveryId)
+                deliveryOrder = await getDeliveryOrder(laundryOrder.toCustomerDeliveryId);
+            else
+                deliveryOrder = await getDeliveryOrder(laundryOrder.fromCustomerDeliveryId!);
             break;
         default:
             let courierOrder: CourierOrder = await getCourierOrder(changePriceResponseDetails.orderId);
             customerId = courierOrder.customerId;
+            deliveryOrder = courierOrder.deliveryOrder;
             break;
     }
     if(userId != customerId) {
@@ -74,20 +85,34 @@ export async function changeDeliveryPriceResponse(userId: number, changePriceRes
             `Order does not belong to this customer`,
         );
     }
-
-    if(changePriceResponseDetails.accepted) {
-        
-    } else {
-
+    if(deliveryOrder.changePriceRequest == null) {
+        throw new HttpsError(
+            "internal",
+            `change price request not set`,
+        );
     }
+    if(changePriceResponseDetails.accepted) {
 
-    // deliveryOrder.changePriceRequest = {
-    //     newPrice: changePriceDetails.newPrice,
-    //     oldPrice: deliveryOrder.deliveryCost,
-    //     reason: changePriceDetails.reason,
-    //     status: ChangePriceStatus.Requested
-    // }
-    // updateDeliveryChangePriceRequest(deliveryOrder);
+        deliveryOrder.changePriceRequest.status = ChangePriceStatus.Accepted;
+        deliveryOrder.deliveryCost = deliveryOrder.changePriceRequest.newPrice;
+        updateDeliveryChangePriceRequest(deliveryOrder);
+
+        switch (changePriceResponseDetails.orderType) {
+            case OrderType.Restaurant:
+                updateRestaurantOrderDeliveryCost(changePriceResponseDetails.orderId, deliveryOrder.deliveryCost);
+                break;
+            case OrderType.Laundry:
+                updateLaundryOrderDeliveryCost(changePriceResponseDetails.orderId, deliveryOrder);
+                break;
+            default:
+                break;
+        }
+    } else {
+        deliveryOrder.changePriceRequest.status = ChangePriceStatus.Rejected;
+        updateDeliveryChangePriceRequest(deliveryOrder);
+    }
+    let deliveryDriver: DeliveryDriver = await getDeliveryDriver(deliveryOrder.deliveryDriverId!);
+    
 }
 
 async function notifyCustomer(deliveryOrder: DeliveryOrder) {
