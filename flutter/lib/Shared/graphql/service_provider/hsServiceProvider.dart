@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -45,6 +46,31 @@ Future<ServiceLink?> get_service_link_by_id(
   }
 
   return null;
+}
+
+Future<String?> get_service_link({required String uniqueId}) async {
+  final QueryResult<Query$getServiceProviderType> response = await _db
+      .graphQLClient
+      .query$getServiceProviderType(Options$Query$getServiceProviderType(
+          variables:
+              Variables$Query$getServiceProviderType(unique_id: uniqueId)));
+  if (response.parsedData == null) {
+    mezDbgPrint(
+        "🚨🚨🚨 hasura query service type faild \n  Data from response \n ${response.data} \n Exceptions from hasura \n ${response.exception}");
+    return null;
+  }
+  if (response.parsedData!.service_provider_details.length == 0) return null;
+  switch (response
+      .parsedData?.service_provider_details.first.service_provider_type) {
+    case "restaurant":
+      return getRestaurantRoute(
+          response.parsedData!.service_provider_details.first.id);
+    case "laundry":
+      return getSingleLaundryRoute(
+          response.parsedData!.service_provider_details.first.id);
+    default:
+      return null;
+  }
 }
 
 Future<MainService?> get_service_details_by_id(
