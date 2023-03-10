@@ -223,7 +223,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               borderRadius: BorderRadius.circular(5),
               onTap: () async {
                 final SavedLocation? _savedLocation = await MezRouter.toNamed(
-                  SharedRoutes.kPickLocationNew,
+                  SharedRoutes.kPickLocation,
                 ) as SavedLocation?;
                 if (_savedLocation != null) {
                   viewController.addFromLoc(location: _savedLocation.location);

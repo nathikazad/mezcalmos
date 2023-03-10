@@ -167,7 +167,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
       onClick: () async {
         await _setOrderEstTime(selectedDate.value!);
 
-        MezRouter.closeDialog();
+        await MezRouter.back();
 
         customSnackBar(
             title: 'Done',
@@ -185,7 +185,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        MezRouter.closeDialog();
+        MezRouter.back();
       },
       child: Ink(
         height: 50,

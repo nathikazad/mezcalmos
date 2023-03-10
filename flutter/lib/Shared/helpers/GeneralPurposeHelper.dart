@@ -293,7 +293,7 @@ Future<void> showConfirmationDialog(
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    MezRouter.closeDialog();
+                    MezRouter.back();
                   },
                   child: Container(
                     width: double.infinity,
@@ -405,7 +405,7 @@ Future<void> showStatusInfoDialog(
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => MezRouter.closeDialog()
+                    ? () => MezRouter.back()
                     : primaryCallBack,
                 child: Container(
                   height: 44,
@@ -583,13 +583,13 @@ Future<int?> showReviewDialog(
                   } else {
                     customSnackBar(title: 'Error', subTitle: 'error');
                   }
-                  MezRouter.closeDialog(backResult: reviewId);
+                  MezRouter.back(backResult: reviewId);
                 },
               ),
               SizedBox(height: 10),
               InkWell(
                 onTap: () {
-                  MezRouter.closeDialog();
+                  MezRouter.back();
                 },
                 child: Ink(
                   padding: const EdgeInsets.symmetric(vertical: 5),

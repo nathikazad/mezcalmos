@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -226,7 +226,7 @@ class DvOrderItems extends StatelessWidget {
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
                             onClick: () async {
-                              await MezRouter.closeDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),
@@ -241,7 +241,7 @@ class DvOrderItems extends StatelessWidget {
                               await viewController.saveCost(
                                   itemId: viewController.items.value![index].id,
                                   index: index);
-                              await MezRouter.closeDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),

@@ -177,7 +177,7 @@ class _LaundyOpSetCategoryComponentState
     //   if (oldCosts.lineItems.length > 1) {
     //     int? res = await widget.viewController.deleteCategory(item.id);
     //     if (res != null) {
-    //       MezRouter.closeDialog()
+    //       MezRouter.back()
 
     //     }
     //   } else {

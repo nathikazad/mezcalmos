@@ -99,7 +99,7 @@ Future<String?> savedLocationDailog({
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    MezRouter.closeDialog(backResult: txtController.text);
+                    MezRouter.back(backResult: txtController.text);
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.only(bottom: 4),
@@ -182,7 +182,7 @@ InkWell skipButton(
       ),
     ),
     onTap: () {
-      MezRouter.closeDialog(backResult: txtController.text);
+      MezRouter.back(backResult: txtController.text);
     },
   );
 }

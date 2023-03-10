@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -336,7 +336,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                                   bankName: widget.viewController.bankName.text,
                                   bankNumber: num.parse(
                                       widget.viewController.bankNumber.text))
-                              .then((value) => MezRouter.closeDialog());
+                              .then((value) => MezRouter.back());
                         },
                       )),
                     ],

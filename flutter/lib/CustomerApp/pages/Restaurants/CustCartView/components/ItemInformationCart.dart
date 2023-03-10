@@ -138,7 +138,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
 
               MezRouter.popEverythingTillBeforeHome();
             } else {
-              MezRouter.closeDialog();
+              MezRouter.back();
             }
           });
         },

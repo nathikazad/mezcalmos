@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDeta
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -370,7 +370,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
                             onClick: () async {
-                              await MezRouter.closeDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),
@@ -383,7 +383,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             label: "${_i18n()['save']}",
                             onClick: () async {
                               await viewController.editTax();
-                              await MezRouter.closeDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),

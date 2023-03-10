@@ -158,7 +158,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                                   .deleteChoice()
                                   .then((bool? hasBennDeleted) {
                                 if (hasBennDeleted == true) {
-                                  MezRouter.closeDialog(backResult: true);
+                                  MezRouter.back(backResult: true);
                                 }
                               });
                             },

@@ -1,18 +1,21 @@
+import 'dart:async';
+
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MRoute {
   String name;
-  dynamic args;
-  Map<String, dynamic>? params;
 
-  MRoute({required this.name, this.args, this.params});
+  Completer<void> completer;
+  Map<String, dynamic>? arguments;
+
+  MRoute({required this.name, this.arguments, required this.completer});
 }
 
 class MezRouter {
   static final List<MRoute> _navigationStack = <MRoute>[
-    MRoute(name: SharedRoutes.kWrapperRoute)
+    MRoute(name: SharedRoutes.kWrapperRoute, completer: Completer<void>())
   ];
   static Map<String, dynamic>? _arguments;
   static Map<String, dynamic>? get bodyArguments => _arguments;
@@ -56,45 +59,52 @@ class MezRouter {
     String routeName, {
     bool ignoreSamePath = true,
     Map<String, dynamic>? arguments,
-  }) {
+  }) async {
     mezDbgPrint("Trynig to go to ======>>>>>>>$routeName");
-    _addToStack(routeName, ignoreSamePath, arguments);
+    final Future<void>? result =
+        _addToStack(routeName, ignoreSamePath, arguments);
     _arguments = arguments;
-    return QR.toName(routeName, ignoreSamePath: ignoreSamePath);
+    await QR.toName(routeName, ignoreSamePath: ignoreSamePath);
+    return result ?? Future<void>.value();
   }
 
   static Future<void> toPath(
     String routeName, {
     bool ignoreSamePath = true,
     Map<String, dynamic>? arguments,
-  }) {
+  }) async {
     mezDbgPrint("Trynig to go to ======>>>>>>>$routeName");
-    _addToStack(routeName, ignoreSamePath, arguments);
+    final Future<void>? result =
+        _addToStack(routeName, ignoreSamePath, arguments);
     _arguments = arguments;
-    return QR.to(routeName, ignoreSamePath: ignoreSamePath);
+
+    await QR
+        .to(routeName, ignoreSamePath: ignoreSamePath)
+        .then((value) => mezDbgPrint("After QR ==== to is finished"));
+    mezDbgPrint("Completer result ======>${result == null}");
+    return result ?? Future<void>.value();
   }
 
-  static void _addToStack(
+  static Future<void>? _addToStack(
       String routeName, bool ignoreSamePath, Map<String, dynamic>? arguments) {
     mezDbgPrint("[_] $routeName");
-    if (!ignoreSamePath) {
-      _navigationStack
-          .add(MRoute(name: routeName, args: arguments, params: arguments));
-    } else if (_navigationStack.last.name != routeName) {
-      _navigationStack
-          .add(MRoute(name: routeName, args: arguments, params: arguments));
+    if (!ignoreSamePath || _navigationStack.last.name != routeName) {
+      _navigationStack.add(MRoute(
+          name: routeName, arguments: arguments, completer: Completer<void>()));
+      return _navigationStack.last.completer.future;
     }
+
     printRoutes();
+    return null;
   }
 
   static Future<void> back({backResult = null}) {
-    _navigationStack.removeLast();
+    if (QR.currentPath == _navigationStack.last.name || QR.currentRoute.name == _navigationStack.last.name) {
+      _navigationStack.last.completer.complete();
+      _navigationStack.removeLast();
+    }
     _backResult = backResult;
-    return QR.back();
-  }
-
-  static Future<void> closeDialog({backResult = null}) {
-    _backResult = backResult;
+    mezDbgPrint("Trynig to go back");
     return QR.back();
   }
 

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
@@ -63,12 +62,14 @@ class ServiceInfoEditViewController {
   }
 
   Future<void> fetchService() async {
-    service.value =
-        await get_service_info(serviceDetailsId: detailsId, serviceId: 1);
+    service.value = await get_service_info(
+        serviceDetailsId: detailsId, serviceId: serviceId, withCache: false);
   }
 
   void _setServiceInfo() {
     if (service.value != null) {
+      mezDbgPrint("Description id ========>>>${service.value?.descriptionId}");
+      mezDbgPrint("Description id ========>>>${service.value?.description}");
       serviceNameTxt.text = service.value?.name ?? '';
       phoneNumber.text = service.value?.phoneNumber ?? '';
 

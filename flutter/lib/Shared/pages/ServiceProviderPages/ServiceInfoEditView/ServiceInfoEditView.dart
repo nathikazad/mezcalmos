@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceImageEditComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -51,8 +51,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
         int.tryParse(MezRouter.urlArguments["serviceDetailsId"].toString());
     serviceId =
         int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
-    providerType = MezRouter.bodyArguments?["serviceProviderType"].toString()
-        as ServiceProviderType?;
+    providerType = MezRouter.bodyArguments?["serviceProviderType"];
 
     if (providerType != null && detailsId != null && serviceId != null) {
       viewController.init(

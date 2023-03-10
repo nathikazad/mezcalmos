@@ -66,7 +66,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                 children: [
                   Text(
                     '${_i18n()["deliveryTitle"]}',
-                    style: Get.theme.textTheme.bodyText1,
+                    style: Get.theme.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -74,7 +74,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                   if (widget.order.selfDeliveryDetails?.estDeliveryTime != null)
                     Text(
                       "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.selfDeliveryDetails!.estDeliveryTime!.toLocal())}",
-                      style: Get.theme.textTheme.bodyText2,
+                      style: Get.theme.textTheme.bodyMedium,
                     ),
                 ],
               ),
@@ -109,7 +109,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                       ),
                       Text(
                         "${_i18n()["deliveryTitle"]}",
-                        style: context.txt.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 25,
@@ -153,7 +153,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
               : Text(
                   '${_i18n()["set"]}',
                   style:
-                      context.txt.bodyText1?.copyWith(color: primaryBlueColor),
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
         ));
   }
@@ -187,7 +187,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                   )
                 : Text(
                     '${_i18n()["confirm"]}',
-                    style: context.txt.bodyText1?.copyWith(color: Colors.white),
+                    style: context.txt.bodyLarge?.copyWith(color: Colors.white),
                   ),
           ),
         ),
@@ -199,7 +199,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        MezRouter.closeDialog();
+        MezRouter.back();
       },
       child: Ink(
         height: 50,
@@ -212,7 +212,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()["cancel"]}",
-            style: context.txt.bodyText1?.copyWith(color: Colors.red),
+            style: context.txt.bodyLarge?.copyWith(color: Colors.red),
           ),
         ),
       ),
@@ -359,7 +359,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
       //   isClicked.value = false;
       // }).then((ServerResponse value) {
       //   if (value.success) {
-      //     MezRouter.closeDialog();
+      //     MezRouter.back();
 
       //   }
       // }).onError((Object? error, StackTrace stackTrace) {

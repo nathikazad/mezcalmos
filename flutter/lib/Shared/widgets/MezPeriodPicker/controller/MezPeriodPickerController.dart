@@ -291,7 +291,7 @@ class MezPeriodPickerController {
     _setPeriodOfTime();
 
     if (period.value != null) {
-      MezRouter.closeDialog(backResult: period.value);
+      MezRouter.back(backResult: period.value);
     }
   }
 }

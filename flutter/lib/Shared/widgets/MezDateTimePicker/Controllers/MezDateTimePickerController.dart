@@ -236,6 +236,6 @@ class MezDateTimePickerController {
       minutes.value!,
     );
 
-    MezRouter.closeDialog(backResult: date);
+    MezRouter.back(backResult: date);
   }
 }

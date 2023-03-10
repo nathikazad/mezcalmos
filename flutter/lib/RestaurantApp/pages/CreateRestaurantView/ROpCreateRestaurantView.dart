@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -85,7 +84,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   }
                   return null;
                 },
-                style: context.txt.bodyText1,
+                style: context.txt.bodyLarge,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant name",
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -102,7 +101,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   }
                   return null;
                 },
-                style: context.txt.bodyText1,
+                style: context.txt.bodyLarge,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant description",
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -140,11 +139,12 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
               borderRadius: BorderRadius.circular(10),
               onTap: () async {
                 // ignore: prefer_final_locals
-                MezLocation? currentLoc = await MezRouter.toNamed(
-                    SharedRoutes.kPickLocationWithoutAuth) as MezLocation?;
-                if (currentLoc != null) {
-                  viewController.restaurantLocation.value = currentLoc;
-                }
+                // TODO @m66are
+                // MezLocation? currentLoc = await MezRouter.toNamed(
+                //     SharedRoutes.kPickLocationWithoutAuth) as MezLocation?;
+                // if (currentLoc != null) {
+                //   viewController.restaurantLocation.value = currentLoc;
+                // }
               },
               child: Container(
                 padding: const EdgeInsets.all(12),
@@ -169,7 +169,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                         viewController.restaurantLocation.value?.address ??
                             "Pick location",
                         maxLines: 1,
-                        style: context.txt.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     Icon(
@@ -185,7 +185,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   margin: const EdgeInsets.only(top: 5, left: 22),
                   child: Text(
                     state.errorText ?? "",
-                    style: context.txt.subtitle1
+                    style: context.txt.titleMedium
                         ?.copyWith(color: Colors.red.shade800),
                   ))
           ],

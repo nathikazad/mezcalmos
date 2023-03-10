@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart'
 import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart'
     deferred as noInternetScreen;
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
-import 'package:mezcalmos/Shared/pages/PickLocationview.dart'
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart'
     deferred as pickLocationView;
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart'
     deferred as somethingWentWrong;
@@ -47,10 +47,8 @@ class SharedRoutes {
   static const String kUnauthorizedRoute = '/unauthorized';
   static const String kUserProfile = '/user_profile';
   static const String kUserNewProfile = '/profile';
-  static const String kPickToLocation = '/pick_to_location';
-  static const String kPickLocationWithoutAuth = "/pick_location/noAuth";
-  static const String kPickLocationEdit = "/pick_location/edit";
-  static const String kPickLocationNew = "/pick_location/new";
+
+  static const String kPickLocation = "/pick_location";
   static const String kNotificationsRoute = '/notifications';
   static const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
   static const String kNoInternetRoute = '/noInternet';
@@ -113,19 +111,19 @@ class SharedRoutes {
         middleware: <QMiddleware>[
           DefferedLoader(otpConfirmationScreen.loadLibrary)
         ]),
+    // QRoute(
+    //     path: kPickLocationEdit,
+    //     name: kPickLocationEdit,
+    //     builder: () => pickLocationView.PickLocationView(
+    //         pickLocationView.PickLocationMode.EditLocation),
+    //     middleware: <QMiddleware>[
+    //       DefferedLoader(pickLocationView.loadLibrary)
+    //     ]),
+
     QRoute(
-        path: kPickLocationEdit,
-        name: kPickLocationEdit,
-        builder: () => pickLocationView.PickLocationView(
-            pickLocationView.PickLocationMode.EditLocation),
-        middleware: <QMiddleware>[
-          DefferedLoader(pickLocationView.loadLibrary)
-        ]),
-    QRoute(
-        path: kPickLocationNew,
-        name: kPickLocationNew,
-        builder: () => pickLocationView.PickLocationView(
-            pickLocationView.PickLocationMode.AddNewLocation),
+        path: kPickLocation,
+        name: kPickLocation,
+        builder: () => pickLocationView.PickLocationView(),
         middleware: <QMiddleware>[
           DefferedLoader(pickLocationView.loadLibrary)
         ]),
@@ -155,14 +153,14 @@ class SharedRoutes {
       name: kNotificationsRoute,
       builder: () => ViewNotifications(),
     ),
-    QRoute(
-        path: kPickLocationWithoutAuth,
-        name: kPickLocationWithoutAuth,
-        builder: () => pickLocationView.PickLocationView(
-            pickLocationView.PickLocationMode.NonLoggedInPick),
-        middleware: <QMiddleware>[
-          DefferedLoader(pickLocationView.loadLibrary)
-        ]),
+    // QRoute(
+    //     path: kPickLocationWithoutAuth,
+    //     name: kPickLocationWithoutAuth,
+    //     builder: () => pickLocationView.PickLocationView(
+    //         pickLocationView.PickLocationMode.NonLoggedInPick),
+    //     middleware: <QMiddleware>[
+    //       DefferedLoader(pickLocationView.loadLibrary)
+    //     ]),
     QRoute(
         path: kUserWelcomeRoute,
         name: kUserWelcomeRoute,

@@ -178,7 +178,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        MezRouter.closeDialog();
+        MezRouter.back();
       },
       child: Ink(
         height: 50,

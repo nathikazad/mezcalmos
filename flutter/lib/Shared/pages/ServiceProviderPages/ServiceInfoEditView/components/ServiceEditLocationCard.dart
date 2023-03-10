@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 class ServiceEditLocationCard extends StatelessWidget {
   ServiceEditLocationCard({
@@ -23,13 +22,11 @@ class ServiceEditLocationCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
-            final MezLocation newLoc = await MezRouter.toNamed(
-                SharedRoutes.kPickLocationEdit,
-                arguments: {
-                  "defaultLocation": LatLng(
-                      editInfoController.service.value!.location.latitude,
-                      editInfoController.service.value!.location.longitude)
-                }) as MezLocation;
+            final MezLocation? newLoc = await PickLocationView.navigate(
+                initialLocation: LatLng(
+                    editInfoController.service.value!.location.latitude,
+                    editInfoController.service.value!.location.longitude));
+            mezDbgPrint("Getting after await ==============>$newLoc");
             editInfoController.setNewLocation(newLoc);
             editInfoController.newLocation.refresh();
           },

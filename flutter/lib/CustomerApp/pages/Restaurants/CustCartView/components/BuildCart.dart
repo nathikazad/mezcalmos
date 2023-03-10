@@ -59,7 +59,7 @@ class CartItemsHeader extends StatelessWidget {
 
                               await viewController.cartController.clearCart();
 
-                              await MezRouter.closeDialog();
+                              await MezRouter.back();
                             });
                           },
                           child: const Icon(

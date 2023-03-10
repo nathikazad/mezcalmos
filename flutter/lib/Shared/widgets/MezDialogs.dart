@@ -421,7 +421,7 @@ class MezUpdaterDialog {
                         child: Text(
                           _i18n()["mezUpdaterDialog"]["updateAvailable"],
                           textAlign: TextAlign.center,
-                          style: Theme.of(ctx).textTheme.bodyText1!.copyWith(
+                          style: Theme.of(ctx).textTheme.bodyLarge!.copyWith(
                                 color: Colors.black.withAlpha(200),
                                 decoration: TextDecoration.none,
                                 fontSize: 13.sp,
@@ -438,7 +438,7 @@ class MezUpdaterDialog {
                       _i18n()["mezUpdaterDialog"]["updatePlease"],
                       overflow: TextOverflow.visible,
                       textAlign: TextAlign.center,
-                      style: Theme.of(ctx).textTheme.bodyText1!.copyWith(
+                      style: Theme.of(ctx).textTheme.bodyLarge!.copyWith(
                             color: Colors.black.withAlpha(200),
                             decoration: TextDecoration.none,
                             fontSize: 12.sp,
@@ -480,7 +480,7 @@ class MezUpdaterDialog {
                     flex: 1,
                     child: Container(
                       child: GestureDetector(
-                        onTap: () => MezRouter.closeDialog(),
+                        onTap: () => MezRouter.back(),
                         child: Obx(
                           () => FittedBox(
                             fit: BoxFit.fitWidth,
@@ -488,7 +488,7 @@ class MezUpdaterDialog {
                               _i18n()["mezUpdaterDialog"]["doNotUpdate"],
                               textAlign: TextAlign.center,
                               style:
-                                  Theme.of(ctx).textTheme.bodyText1!.copyWith(
+                                  Theme.of(ctx).textTheme.bodyLarge!.copyWith(
                                         color: Colors.black.withAlpha(200),
                                         decoration: TextDecoration.none,
                                         fontSize: 12.sp,

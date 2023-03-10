@@ -158,13 +158,13 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       description:
           '${_i18n()["subtitle"]} ${widget.viewController.cart.value?.restaurant?.info.name ?? ""} ${_i18n()["overwriteText"]} ',
       secondaryCallBack: () async {
-        await MezRouter.closeDialog();
+        await MezRouter.back();
 
         await ViewCartScreen.navigate();
       },
       primaryCallBack: () async {
         await widget.viewController.handleAddItem();
-        await MezRouter.closeDialog();
+        await MezRouter.back();
 
         await ViewCartScreen.navigate();
       },
@@ -184,7 +184,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       secondaryClickTitle: _i18n()["leftBtn"],
       description: _i18n()["specialSubtitle"],
       secondaryCallBack: () async {
-        await MezRouter.closeDialog();
+        await MezRouter.back();
 
         await ViewCartScreen.navigate();
       },

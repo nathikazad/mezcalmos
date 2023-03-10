@@ -140,7 +140,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     ),
                     InkWell(
                       onTap: () async {
-                        MezRouter.closeDialog();
+                        MezRouter.back();
                         final bool? result =
                             await ROpCategoryView.navigateWithCategory(
                                 categoryId: widget.category.id!,

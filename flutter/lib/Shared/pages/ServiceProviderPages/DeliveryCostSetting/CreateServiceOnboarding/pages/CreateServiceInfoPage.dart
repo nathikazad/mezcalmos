@@ -141,7 +141,7 @@ class CreateServiceInfoPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 onTap: () async {
                   final MezLocation? newLoc =
-                      await MezRouter.toNamed(SharedRoutes.kPickLocationNew)
+                      await MezRouter.toNamed(SharedRoutes.kPickLocation)
                           as MezLocation?;
 
                   if (newLoc != null) {
