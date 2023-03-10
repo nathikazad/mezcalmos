@@ -74,6 +74,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     startAuthListener();
 
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
+    MezRouter.printRoutes();
   }
 
   @override

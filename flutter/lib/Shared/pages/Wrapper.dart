@@ -30,11 +30,14 @@ class _WrapperState extends State<Wrapper> {
   void initState() {
     // this will execute first and much faster since it's a microtask.
     Future<void>.microtask(() {
+      mezDbgPrint(authController.fireAuthUser);
       handleAuthStateChange(authController.fireAuthUser);
+
       authController.authStateStream.listen((fireAuth.User? user) {
         handleAuthStateChange(user);
       });
-    }).then((_) {
+    })
+        .then((_) {
       // only when we use location permissions
       if (_locationController.locationType != LocationPermissionType.None) {
         startListeningOnLocationPermission();
@@ -108,6 +111,9 @@ class _WrapperState extends State<Wrapper> {
         await MezRouter.popEverythingTillBeforeWrapper();
         await MezRouter.toNamed(SharedRoutes.kHomeRoute);
       } else {
+        mezDbgPrint(
+            "😌😌😌😌😌😌 user is not signed to use the app user should sign in 😌😌😌😌");
+
         await MezRouter.popEverythingTillBeforeWrapper();
         await MezRouter.toNamed(SharedRoutes.kSignInRouteRequired);
       }

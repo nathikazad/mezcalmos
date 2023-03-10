@@ -32,9 +32,9 @@ import 'package:qlevar_router/qlevar_router.dart';
 // GetX based Router (For navigating)
 class SharedRoutes {
   // Routes Keys.
-  static const String kWrapperRoute = '/wrapper';
+  static const String kWrapperRoute = '/';
   static const String kUserWelcomeRoute = '/welcome';
-  static const String kHomeRoute = '/';
+  static const String kHomeRoute = '/home';
   static const String kSplashRoute = '/splash';
   static const String kSignInRouteRequired = '/sign_in/required';
   static const String kSignInRouteOptional = '/sign_in/optional';

@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:sizer/sizer.dart';
@@ -24,6 +25,12 @@ class PickLocationView extends StatefulWidget {
   final PickLocationMode? pickLocationMode;
 
   const PickLocationView(this.pickLocationMode);
+  static Future<MezLocation> navigate({required int restaurantId}) {
+    return MezRouter.toPath(SharedRoutes.kPickToLocation)
+        .then<MezLocation>((_) {
+      return MezRouter.backResult;
+    });
+  }
 
   @override
   _PickLocationViewState createState() => _PickLocationViewState();

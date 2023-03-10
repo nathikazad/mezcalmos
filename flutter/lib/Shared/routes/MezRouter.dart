@@ -107,20 +107,38 @@ class MezRouter {
   }
 
   static Future<void> popTill(String routeName) async {
-    if (isRouteInStack(routeName))
+    if (isRouteInStack(routeName)) {
       while (!isCurrentRoute(routeName)) {
         await back();
+        mezDbgPrint("Popped ${_navigationStack.last.name} ");
+        _navigationStack.removeLast();
       }
-    await back();
+    }
   }
 
   static Future<void> popTillBefore(String routeName) async {
-    if (isRouteInStack(routeName))
+    mezDbgPrint("Start popping till before ====> $routeName");
+    printRoutes();
+    if (isRouteInStack(routeName)) {
+      mezDbgPrint("Start popping till before ====> $routeName");
       while (!isCurrentRoute(routeName)) {
         await back();
+        mezDbgPrint("Popped ${_navigationStack.last.name} ");
+        if (_navigationStack.isNotEmpty) {
+          _navigationStack.removeLast();
+        }
       }
-    await back();
+    }
+    // await back();
+    // if (_navigationStack.isNotEmpty) {
+    //   _navigationStack.removeLast();
+    // }
   }
+
+  // static Future<void> popEverythingUntil(String route) async {
+  //   await QR.navigator.popUntilOrPushName(route);
+  //   printRoutes();
+  // }
 
   // static Future<void> offAndToNamed(
   //   String page, {
