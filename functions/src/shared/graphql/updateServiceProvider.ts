@@ -1,6 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../utilities/hasura";
-import { ServiceProvider } from "../models/Services/Service";
+import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../utilities/links/deeplink";
+import { AppType } from "../models/Generic/Generic";
+import { ServiceProvider, ServiceProviderType } from "../models/Services/Service";
 
 export async function createServiceProviderStripe(serviceProvider: ServiceProvider) {
     let chain = getHasura();
@@ -109,6 +111,62 @@ export async function updateServiceProviderPayment(serviceProvider: ServiceProvi
             }
         }, {
             id: true
+        }]
+    });
+}
+
+export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProvider, newUniqueId: string) {
+    let chain = getHasura();
+
+    let response = await chain.mutation({
+        update_service_provider_details_by_pk: [{
+            pk_columns: {
+                id: serviceProvider.serviceProviderDetailsId
+            },
+            _set: {
+                unique_id: newUniqueId
+            }
+        }, {
+            service_link_id: true,
+        }]
+    });
+    if(response.update_service_provider_details_by_pk == null || response.update_service_provider_details_by_pk.service_link_id == null) {
+        throw new HttpsError(
+            "internal",
+            "mutation error"
+        );
+    }
+    let appType: AppType;
+    switch (serviceProvider.serviceProviderType) {
+        case ServiceProviderType.Restaurant:
+            appType = AppType.RestaurantApp
+            break;
+        case ServiceProviderType.Delivery:
+            appType = AppType.DeliveryAdmin
+            break;
+        case ServiceProviderType.Laundry:
+            appType = AppType.LaundryApp
+            break;
+        default:
+            throw new HttpsError("internal", "Invalid Service Provider Type");
+    }
+    let deepLinks: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(newUniqueId, appType);
+    
+    await chain.mutation({
+        update_service_provider_service_link_by_pk: [{
+            pk_columns: {
+                id: response.update_service_provider_details_by_pk.service_link_id
+            },
+            _set: {
+                customer_deep_link: deepLinks[DeepLinkType.Customer].url,
+                customer_qr_image_link: deepLinks[DeepLinkType.Customer].urlQrImage,
+                operator_deep_link: deepLinks[DeepLinkType.AddOperator].url,
+                operator_qr_image_link: deepLinks[DeepLinkType.AddOperator].urlQrImage,
+                driver_deep_link: deepLinks[DeepLinkType.AddDriver].url,
+                driver_qr_image_link: deepLinks[DeepLinkType.AddDriver].urlQrImage,
+            }
+        }, {
+            id: true,
         }]
     });
 }

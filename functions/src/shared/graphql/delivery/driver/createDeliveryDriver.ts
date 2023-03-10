@@ -3,9 +3,10 @@ import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";;
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
+import { ServiceProvider, ServiceProviderType } from "../../../models/Services/Service";
 import { AddDriverDetails } from "../../../../delivery/addDriver";
 
-export async function createDeliveryDriver(userId: number, addDriverDetails: AddDriverDetails, deliveryServiceProviderType: DeliveryServiceProviderType ): Promise<DeliveryDriver> {
+export async function createDeliveryDriver(userId: number, serviceProvider: ServiceProvider, addDriverDetails: AddDriverDetails): Promise<DeliveryDriver> {
     let chain = getHasura();
     let response = await chain.query({
         delivery_driver: [{
@@ -14,10 +15,10 @@ export async function createDeliveryDriver(userId: number, addDriverDetails: Add
                     _eq: userId,
                 },
                 delivery_company_type: {
-                    _eq: deliveryServiceProviderType
+                    _eq: serviceProvider.serviceProviderType
                 },
                 delivery_company_id: {
-                    _eq: addDriverDetails.deliveryCompanyId
+                    _eq: serviceProvider.id
                 }
             }
         }, {
@@ -46,8 +47,8 @@ export async function createDeliveryDriver(userId: number, addDriverDetails: Add
         insert_delivery_driver_one: [{
             object: {
                 user_id: userId,
-                delivery_company_type: deliveryServiceProviderType,
-                delivery_company_id: addDriverDetails.deliveryCompanyId,
+                delivery_company_type: serviceProvider.serviceProviderType,
+                delivery_company_id: serviceProvider.id,
                 status: AuthorizationStatus.AwaitingApproval,
             }
         }, {
@@ -79,11 +80,28 @@ export async function createDeliveryDriver(userId: number, addDriverDetails: Add
             }]
         });
     }
+    let deliveryCompanyType: DeliveryServiceProviderType;
+    switch (serviceProvider.serviceProviderType) {
+        case ServiceProviderType.Restaurant:
+            deliveryCompanyType = DeliveryServiceProviderType.Restaurant
+            break;
+        case ServiceProviderType.Laundry:
+            deliveryCompanyType = DeliveryServiceProviderType.Laundry
+            break;
+        case ServiceProviderType.Delivery:
+            deliveryCompanyType = DeliveryServiceProviderType.DeliveryCompany
+            break;
+        default:
+            throw new HttpsError(
+                "internal",
+                "invalid service provider type"
+            )
+    }
     return {
         id: mutationResponse.insert_delivery_driver_one?.id,
         userId,
-        deliveryCompanyType: deliveryServiceProviderType,
-        deliveryCompanyId: addDriverDetails.deliveryCompanyId,
+        deliveryCompanyType,
+        deliveryCompanyId: serviceProvider.id,
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: addDriverDetails.notificationInfo,
         user: {

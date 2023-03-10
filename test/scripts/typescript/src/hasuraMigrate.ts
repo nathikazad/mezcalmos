@@ -10,7 +10,7 @@ import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/
 import { insertCustomers } from "../../../../functions/src/shared/graphql/user/customer/insertCustomers"
 import { insertLaundryStores } from "../../../../functions/src/shared/graphql/laundry/insertLaundry"
 import { insertLaundryOrders } from "../../../../functions/src/shared/graphql/laundry/order/insertLaundryOrders"
-
+import { insertServiceLinks } from "../../../../functions/src/shared/graphql/insertServiceLinks"
 
 import { insertUsers } from "../../../../functions/src/shared/graphql/user/insertUsers"
 import { Language } from "../../../../functions/src/shared/models/Generic/Generic";
@@ -18,10 +18,26 @@ import { Language } from "../../../../functions/src/shared/models/Generic/Generi
 // process.env.FUNCTIONS_EMULATOR = "true";
 var serviceAccount = require("./../../../../../../../../service_account_production.json");
 
-const firebase = firebaseAdmin.initializeApp({
+const firebaseConfig = {
+  apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+  authDomain: "mezcalmos-31f1c.firebaseapp.com",
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-}, "production");
+  projectId: "mezcalmos-31f1c",
+  storageBucket: "mezcalmos-31f1c.appspot.com",
+  messagingSenderId: "804036698204",
+  appId: "1:804036698204:web:39b22436cbb4ef633f8699",
+  measurementId: "G-5R20EL7CL9",
+  credential: firebaseAdmin.credential.cert("/home/sanchit/Work/mezcalmos/service_account_production.json")
+};
+
+const firebase = firebaseAdmin.initializeApp(
+  firebaseConfig
+//   {
+//   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+//   credential: firebaseAdmin.credential.cert(serviceAccount),
+// }
+)
+// , "production");
 
 functions.config()
 
@@ -630,4 +646,5 @@ async function writeToDBCustomers() {
 // writeToDBCustomers()
 // writeToDBRestoOrders()
 // writeToDBLaundry()
-writeToDBLaundryOrders()
+// writeToDBLaundryOrders()
+insertServiceLinks()

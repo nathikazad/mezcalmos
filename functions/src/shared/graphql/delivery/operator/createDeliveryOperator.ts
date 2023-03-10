@@ -3,15 +3,16 @@ import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
 import { DeliveryOperator } from "../../../models/Generic/Delivery";
 import { AddOperatorDetails } from "../../../operator/addOperator";
+import { ServiceProvider } from "../../../models/Services/Service";
 
-export async function createDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails): Promise<DeliveryOperator> {
+export async function createDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails, deliveryCompany: ServiceProvider): Promise<DeliveryOperator> {
     let chain = getHasura();
 
     let mutationResponse = await chain.mutation({
         insert_delivery_operator_one: [{
             object: {
                 user_id: operatorUserId,
-                delivery_company_id: addOperatorDetails.serviceProviderId,
+                delivery_company_id: deliveryCompany.id,
                 operator_details: {
                     data: {
                         status: AuthorizationStatus.AwaitingApproval,
@@ -42,7 +43,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
         id: mutationResponse.insert_delivery_operator_one.id,
         userId: operatorUserId,
         operatorDetailsId: mutationResponse.insert_delivery_operator_one.details_id,
-        deliveryCompanyId: addOperatorDetails.serviceProviderId,
+        deliveryCompanyId: deliveryCompany.id,
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: addOperatorDetails.notificationInfo,
         owner: false,

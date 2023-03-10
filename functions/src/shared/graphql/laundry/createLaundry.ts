@@ -1,6 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { LaundryDetails } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
+import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
@@ -10,6 +11,9 @@ export async function createLaundryStore(
     laundryOperatorUserId: number
 ): Promise<ServiceProvider>  {
     let chain = getHasura();
+
+    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(laundryDetails.uniqueId, AppType.LaundryApp)
+
 
     let response = await chain.mutation({
         insert_laundry_store_one: [{
@@ -37,6 +41,7 @@ export async function createLaundryStore(
                         firebase_id: laundryDetails.firebaseId ?? undefined,
                         language: JSON.stringify(laundryDetails.language),
                         service_provider_type: ServiceProviderType.Laundry,
+                        unique_id: laundryDetails.uniqueId,
                         accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
                             [PaymentType.Cash]: true,
                             [PaymentType.Card]: false,
@@ -51,6 +56,16 @@ export async function createLaundryStore(
                                 address: laundryDetails.location.address
                             }
                         },
+                        service_link: {
+                            data: {
+                              customer_deep_link: linksResponse[DeepLinkType.Customer].url,
+                              customer_qr_image_link: linksResponse[DeepLinkType.Customer].urlQrImage,
+                              operator_deep_link: linksResponse[DeepLinkType.AddOperator].url,
+                              operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
+                              driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
+                              driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                            }
+                          }
                     }
                 },
                 operators: {
@@ -101,7 +116,8 @@ export async function createLaundryStore(
         deliveryPartnerId: laundryDetails.deliveryPartnerId,
         deliveryDetails: laundryDetails.deliveryDetails,
         language: laundryDetails.language,
-        firebaseId: laundryDetails.firebaseId
+        firebaseId: laundryDetails.firebaseId,
+        serviceProviderType: ServiceProviderType.Laundry
       }
     // if(laundryDetails.deliveryPartnerId) {
     //     await chain.mutation({
@@ -128,6 +144,6 @@ export async function createLaundryStore(
                 id: true
             }]
         });
-     }
+    }
     return laundryStore
 }

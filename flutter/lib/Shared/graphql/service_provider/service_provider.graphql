@@ -140,3 +140,10 @@ query getServicePaymentInfo($serviceDetailsId: Int!) {
     }
   }
 }
+
+query getServiceProviderType($unique_id:String!) {
+  service_provider_details(where: {unique_id: {_eq: $unique_id}}) {
+    id
+    service_provider_type
+  }
+}
