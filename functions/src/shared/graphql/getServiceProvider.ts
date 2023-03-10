@@ -473,6 +473,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     userId: o.user_id,
                     detailsId: o.operator_details.id,
                     online: o.operator_details.online,
+                    owner: o.operator_details.owner,
                     status: o.operator_details.status as AuthorizationStatus,
                     user: {
                         id: o.user_id,
