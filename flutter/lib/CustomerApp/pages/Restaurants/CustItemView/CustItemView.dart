@@ -87,9 +87,6 @@ class _CustItemViewState extends State<CustItemView> {
                                       option: viewController
                                           .getItem!.options[index],
                                     ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
                                   ],
                                 ),
                               ),
@@ -175,9 +172,9 @@ class _CustItemViewState extends State<CustItemView> {
               borderRadius: BorderRadius.circular(18),
               onTap: () {
                 MezRouter.toNamed<void>(
-                    getRestaurantRoute(
-                        viewController.restaurant.value!.restaurantId),
-                    );
+                  getRestaurantRoute(
+                      viewController.restaurant.value!.restaurantId),
+                );
               },
               child: Ink(
                 padding:
