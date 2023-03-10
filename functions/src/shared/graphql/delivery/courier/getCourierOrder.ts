@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryDirection, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
+import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 import { AppType, AuthorizationStatus, Language, Location } from "../../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../../models/Generic/Order";
 import { CourierItem, CourierOrder } from "../../../models/Services/Courier/Courier";
@@ -156,6 +156,81 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             } : undefined,
             }: undefined
         }
+    }
+
+    return courierOrder;
+}
+
+export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder): Promise<CourierOrder> {
+    let chain = getHasura();
+  
+    let response =  await chain.query({
+        delivery_courier_order: [{
+            where: {
+                delivery_order_id: {
+                    _eq: deliveryOrder.deliveryId
+                }
+            } 
+        }, {
+            id: true,
+            cancellation_time: true,
+            customer_id: true,
+            discount_value: true,
+            from_location_gps: true,
+            from_location_text: true,
+            payment_type: true,
+            order_time: true,
+            refund_amount: true,
+            stripe_fees: true,
+            tax: true,
+            to_location_address: true,
+            to_location_gps: true,
+            customer_app_type: true,
+            delivery_order_id: true,
+            stripe_info: [{}, true],
+            items: [{}, {
+                id: true,
+                name: true,
+                unavailable: true,
+            }]
+        }]
+    })
+    if(response.delivery_courier_order.length == 0) {
+      throw new HttpsError(
+        "internal",
+        "No order with that delivery id found"
+      );
+    }
+    
+    let toLocation: Location = {
+      lat: response.delivery_courier_order[0].to_location_gps.coordinates[1],
+      lng: response.delivery_courier_order[0].to_location_gps.coordinates[0],
+    }
+  
+    let items: CourierItem[] = response.delivery_courier_order[0].items.map((i) => {
+      return {
+        id: i.id,
+        name: i.name,
+        unavailable: true
+      }
+    })
+    let courierOrder: CourierOrder = {
+        id: response.delivery_courier_order[0].id,
+        orderTime: response.delivery_courier_order[0].order_time,
+        PaymentType: response.delivery_courier_order[0].payment_type as PaymentType,
+        discountValue: response.delivery_courier_order[0].discount_value,
+        fromLocationGps: (response.delivery_courier_order[0].from_location_gps) ? {
+            lat: response.delivery_courier_order[0].from_location_gps.coordinates[1],
+            lng: response.delivery_courier_order[0].from_location_gps.coordinates[0],
+        }: undefined,
+        fromLocationText: response.delivery_courier_order[0].from_location_text,
+        toLocation,
+        customerId: response.delivery_courier_order[0].customer_id,
+        stripeInfo: JSON.parse(response.delivery_courier_order[0].stripe_info),
+        stripeFees: response.delivery_courier_order[0].stripe_fees,
+        tax: response.delivery_courier_order[0].tax,
+        items,
+        deliveryOrder
     }
 
     return courierOrder;

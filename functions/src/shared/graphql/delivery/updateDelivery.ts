@@ -1,5 +1,6 @@
+import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { ChangePriceStatus, DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
@@ -54,4 +55,59 @@ export async function updateDeliveryPackageCost(deliveryOrder: DeliveryOrder) {
       package_cost: true
     }]
   });
+}
+
+export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOrder) {
+  let chain = getHasura();
+
+  if(deliveryOrder.changePriceRequest == null) {
+    throw new HttpsError(
+      "internal",
+      "Change Price Request not set"
+    );
+  }
+  switch (deliveryOrder.changePriceRequest.status) {
+    case ChangePriceStatus.Requested:
+      await chain.mutation({
+        update_delivery_order_by_pk: [{
+          pk_columns: {
+            id: deliveryOrder.deliveryId
+          },
+          _set: {
+            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
+          }
+        }, {
+          delivery_cost: true
+        }]
+      })
+      break;
+    case ChangePriceStatus.Accepted:
+      await chain.mutation({
+        update_delivery_order_by_pk: [{
+          pk_columns: {
+            id: deliveryOrder.deliveryId
+          },
+          _set: {
+            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
+          }
+        }, {
+          delivery_cost: true
+        }]
+      })
+      break;
+    default:
+      break;
+  }
+  await chain.mutation({
+    update_delivery_order_by_pk: [{
+      pk_columns: {
+        id: deliveryOrder.deliveryId
+      },
+      _set: {
+        change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
+      }
+    }, {
+      delivery_cost: true
+    }]
+  })
 }
