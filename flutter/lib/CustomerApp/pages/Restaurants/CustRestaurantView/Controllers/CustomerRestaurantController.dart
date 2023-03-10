@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -39,40 +40,39 @@ class CustomerRestaurantController {
   }
 
   Future<void> init(
-      {required Restaurant restaurant, required TickerProvider vsync}) async {
+      {required int restaurantId, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
-    this.restaurant.value = restaurant;
-    unawaited(get_service_reviews(serviceId: restaurant.restaurantId)
+    restaurant.value = await get_restaurant_by_id(id: restaurantId);
+    unawaited(get_service_reviews(serviceId: restaurantId)
         .then((List<Review>? value) {
       if (value != null) {
-        this.restaurant.value!.reviews = value;
+        restaurant.value!.reviews = value;
       }
     }));
-    unawaited(get_service_review_average(serviceId: restaurant.restaurantId)
+    unawaited(get_service_review_average(serviceId: restaurantId)
         .then((double? value) {
       if (value != null) {
-        this.restaurant.value!.rate = value;
+        restaurant.value!.rate = value;
       }
     }));
     await _getShippingPrice();
 
     final List<Category>? _cats =
-        await get_restaurant_categories_by_id(restaurant.info.hasuraId);
-    specials.value =
-        await get_restaurant_special_items(restaurant.info.hasuraId);
+        await get_restaurant_categories_by_id(restaurantId);
+    specials.value = await get_restaurant_special_items(restaurantId);
     final List<Item> noCat =
-        await get_restaurant_items_without_cat(restaurant.info.hasuraId);
+        await get_restaurant_items_without_cat(restaurantId);
     noCategory.value.items = noCat
         .where((Item element) =>
             element.available == true && element.itemType == ItemType.Daily)
         .toList();
 
     if (_cats != null) {
-      this.restaurant.value?.setCategories(_cats);
+      restaurant.value?.setCategories(_cats);
 
-      this.restaurant.refresh();
+      restaurant.refresh();
     }
-    _initControllers(vsync, restaurant);
+    _initControllers(vsync);
     assignKeys();
     _initialized.value = true;
   }
@@ -89,9 +89,9 @@ class CustomerRestaurantController {
     }
   }
 
-  void _initControllers(TickerProvider vsync, Restaurant restaurant) {
+  void _initControllers(TickerProvider vsync) {
     tabsController = TabController(
-        length: restaurant.getAvailableCategories.length, vsync: vsync);
+        length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
     specialstabsController =
         TabController(length: getGroupedSpecials().length, vsync: vsync);
   }

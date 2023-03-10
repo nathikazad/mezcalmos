@@ -177,9 +177,7 @@ class _CustItemViewState extends State<CustItemView> {
                 MezRouter.toNamed<void>(
                     getRestaurantRoute(
                         viewController.restaurant.value!.restaurantId),
-                    arguments: {
-                      "restaurant": viewController.restaurant.value!
-                    });
+                    );
               },
               child: Ink(
                 padding:

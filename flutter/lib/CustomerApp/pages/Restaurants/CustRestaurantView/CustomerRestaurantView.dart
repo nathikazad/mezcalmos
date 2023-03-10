@@ -32,13 +32,13 @@ class CustomerRestaurantView extends StatefulWidget {
 class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     with TickerProviderStateMixin {
   CustomerRestaurantController _viewController = CustomerRestaurantController();
-  late Restaurant restaurant;
 
   @override
   void initState() {
-    restaurant = Get.arguments["restaurant"] as Restaurant;
-    mezDbgPrint(restaurant.info.hasuraId.toString().toString());
-    _viewController.init(restaurant: restaurant, vsync: this);
+    final int restaurantId =
+        int.parse(Get.parameters["restaurantId"].toString());
+    // mezDbgPrint(restaurant.info.hasuraId.toString().toString());
+    _viewController.init(restaurantId: restaurantId, vsync: this);
     super.initState();
   }
 
@@ -54,15 +54,28 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return Scaffold(
       extendBodyBehindAppBar: true,
       floatingActionButton: FloatingCartComponent(),
-      bottomSheet: (restaurant.isOpen() == false)
-          ? _schedulingOrdersBottomWidget()
-          : null,
-      body: RectGetter(
-        key: _viewController.listViewKey,
-        child: NotificationListener<ScrollNotification>(
-          child: buildSliverScrollView(),
-          onNotification: _viewController.onScrollNotification,
-        ),
+      bottomSheet: Obx(
+        () => (_viewController.restaurant.value?.isOpen() == false)
+            ? _schedulingOrdersBottomWidget()
+            : SizedBox(),
+      ),
+      body: Obx(
+        () {
+          if (_viewController.restaurant.value != null) {
+            return RectGetter(
+              key: _viewController.listViewKey,
+              child: NotificationListener<ScrollNotification>(
+                child: buildSliverScrollView(),
+                onNotification: _viewController.onScrollNotification,
+              ),
+            );
+          } else {
+            return Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
@@ -78,7 +91,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               padding: const EdgeInsets.all(12),
               sliver: SliverToBoxAdapter(
                   child: RestaurantInfoTab(
-                restaurant: restaurant,
+                restaurant: _viewController.restaurant.value!,
                 controller: _viewController,
               )),
             );
@@ -175,7 +188,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           _buildResturantItems(
             items: category.items,
-            restaurantId: restaurant.info.hasuraId,
+            restaurantId: _viewController.restaurant.value!.info.hasuraId,
             isSpecial: false,
           ),
           SizedBox(
@@ -200,7 +213,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
-            restaurantId: restaurant.info.hasuraId,
+            restaurantId: _viewController.restaurant.value!.info.hasuraId,
             isSpecial: true,
           ),
         ],
@@ -213,7 +226,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       required int restaurantId,
       bool isSpecial = false}) {
     mezDbgPrint("[66] called :: _buildResturantItems");
-    if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
+    if (_viewController.restaurant.value!.restaurantsView ==
+            RestaurantsView.Rows ||
+        isSpecial) {
       return Container(
         margin: const EdgeInsets.only(top: 7),
         child: Column(
@@ -245,7 +260,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(items.length, (int index) {
           return RestaurantgridItemCard(
-              item: items[index], restaurant: restaurant);
+              item: items[index],
+              restaurant: _viewController.restaurant.value!);
         }),
       );
     }
