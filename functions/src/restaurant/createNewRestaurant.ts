@@ -22,7 +22,7 @@ export interface RestaurantDetails {
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
   language: Record<Language, boolean>,
-  uniqueId: string
+  uniqueId?: string
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {

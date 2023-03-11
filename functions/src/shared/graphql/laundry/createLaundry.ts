@@ -12,7 +12,9 @@ export async function createLaundryStore(
 ): Promise<ServiceProvider>  {
     let chain = getHasura();
 
-    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(laundryDetails.uniqueId, AppType.LaundryApp)
+    let uniqueId: string = laundryDetails.uniqueId ?? generateString();
+
+    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.LaundryApp)
 
 
     let response = await chain.mutation({
@@ -41,7 +43,7 @@ export async function createLaundryStore(
                         firebase_id: laundryDetails.firebaseId ?? undefined,
                         language: JSON.stringify(laundryDetails.language),
                         service_provider_type: ServiceProviderType.Laundry,
-                        unique_id: laundryDetails.uniqueId,
+                        unique_id: uniqueId,
                         accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
                             [PaymentType.Cash]: true,
                             [PaymentType.Card]: false,
@@ -117,8 +119,9 @@ export async function createLaundryStore(
         deliveryDetails: laundryDetails.deliveryDetails,
         language: laundryDetails.language,
         firebaseId: laundryDetails.firebaseId,
-        serviceProviderType: ServiceProviderType.Laundry
-      }
+        serviceProviderType: ServiceProviderType.Laundry,
+        uniqueId
+    }
     // if(laundryDetails.deliveryPartnerId) {
     //     await chain.mutation({
     //         insert_service_provider_delivery_partner_one: [{
@@ -146,4 +149,16 @@ export async function createLaundryStore(
         });
     }
     return laundryStore
+}
+
+function generateString(): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < 8) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+    }
+    return result;
 }

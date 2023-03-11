@@ -14,7 +14,9 @@ export async function createRestaurant(
 ): Promise<ServiceProvider> {
   let chain = getHasura();
 
-  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(restaurantDetails.uniqueId, AppType.RestaurantApp)
+  let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
+
+  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.RestaurantApp)
   
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
@@ -39,7 +41,7 @@ export async function createRestaurant(
             firebase_id: restaurantDetails.firebaseId ?? undefined,
             language: JSON.stringify(restaurantDetails.language),
             service_provider_type: ServiceProviderType.Restaurant,
-            unique_id: restaurantDetails.uniqueId,
+            unique_id: uniqueId,
             accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
               [PaymentType.Cash]: true,
               [PaymentType.Card]: false,
@@ -180,6 +182,19 @@ export async function createRestaurant(
     deliveryDetails: restaurantDetails.deliveryDetails,
     language: restaurantDetails.language,
     firebaseId: restaurantDetails.firebaseId,
-    serviceProviderType: ServiceProviderType.Restaurant
+    serviceProviderType: ServiceProviderType.Restaurant,
+    uniqueId
   };
+}
+
+function generateString(): string {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < 8) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
 }
