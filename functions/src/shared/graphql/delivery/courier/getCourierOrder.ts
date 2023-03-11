@@ -50,6 +50,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
                     trip_distance: true,
                     trip_duration: true,
                     trip_polyline: true,
+                    change_price_request: [{}, true],
                     delivery_driver: {
                         id: true,
                         delivery_company_type: true,
@@ -138,22 +139,25 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             tripDistance: response.delivery_courier_order_by_pk.delivery_order.trip_distance,
             tripDuration: response.delivery_courier_order_by_pk.delivery_order.trip_duration,
             tripPolyline: response.delivery_courier_order_by_pk.delivery_order.trip_polyline,
+            changePriceRequest: (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+                ? JSON.parse(response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+                : undefined,
             deliveryDriver: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver) ? {
-            id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
-            deliveryCompanyType: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
-            deliveryCompanyId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_id,
-            status: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.status as AuthorizationStatus,
-            userId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
-            user: {
-                id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
-                firebaseId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.firebase_id,
-                language: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.language_id as Language
-            },
-            notificationInfo: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info) ? {
-                appType: AppType.DeliveryApp,
-                token: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.token,
-                turnOffNotifications: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.turn_off_notifications,
-            } : undefined,
+                id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
+                deliveryCompanyType: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
+                deliveryCompanyId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_id,
+                status: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.status as AuthorizationStatus,
+                userId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
+                user: {
+                    id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
+                    firebaseId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.firebase_id,
+                    language: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.language_id as Language
+                },
+                notificationInfo: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info) ? {
+                    appType: AppType.DeliveryApp,
+                    token: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.token,
+                    turnOffNotifications: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.turn_off_notifications,
+                } : undefined,
             }: undefined
         }
     }

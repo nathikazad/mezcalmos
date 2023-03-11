@@ -104,7 +104,7 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
           },
           _set: {
             change_price_request: JSON.stringify(deliveryOrder.changePriceRequest),
-            delivery_driver_id: undefined,
+            delivery_driver_id: null!,
           }
         }, {
           delivery_cost: true

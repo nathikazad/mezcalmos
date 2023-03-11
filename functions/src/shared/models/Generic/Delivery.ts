@@ -156,6 +156,9 @@ export interface AuthorizeDriverNotification extends ForegroundNotification {
 export interface DriverApprovedNotification extends ForegroundNotification {
   approved: boolean;
 }
+export interface PriceChangeApprovalNotification extends ForegroundNotification {
+  accepted: boolean;
+}
 
 export interface DeliveryOperatorApprovedNotification
   extends ForegroundNotification {

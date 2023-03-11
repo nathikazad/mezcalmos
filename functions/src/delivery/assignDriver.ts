@@ -63,7 +63,6 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
 };
 
 function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder: DeliveryOrder) {
-  if (deliveryDriver.notificationInfo) {
 
     let notification: Notification = {
       foreground: <NewDeliveryOrderNotification>{
@@ -84,7 +83,6 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder:
       deliveryDriver.notificationInfo,
       ParticipantType.DeliveryDriver
     );
-  }
 }
 
 async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: number) {
