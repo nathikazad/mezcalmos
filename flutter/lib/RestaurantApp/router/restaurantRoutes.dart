@@ -1,4 +1,3 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/ROpCreateRestaurantView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
@@ -16,8 +15,8 @@ class RestaurantRouter {
   static const String restaurantCategoryRoute = '/categoryScreen/:restaurantId';
   static const String restaurantEditCategoryRoute =
       '/categoryScreen/:categoryId/:restaurantId';
-  static const String restaurantAddItemRoute = '/itemView/:restaurantId';
-  static const String restaurantEditItemView =
+
+  static const String restaurantItemRoute =
       '/itemView/:restaurantId/:itemId/:categoryId';
   static const String restaurantOrderRoute = '/restaurantOrders/:orderId';
   static const String currentOrdersRoute = '/orders';
@@ -25,7 +24,7 @@ class RestaurantRouter {
   static const String restaurantOptionRoute =
       "/optionView/:restaurantId/:itemId/:optionId";
   static const String restaurantChoiceRoute =
-      "/Choice/:restaurantId:/:optionId/:choiceId";
+      "/Choice/:restaurantId/:optionId/:choiceId";
 
   final List<QRoute> routes = <QRoute>[
     QRoute(
@@ -49,13 +48,8 @@ class RestaurantRouter {
       builder: () => ROpCategoryView(),
     ),
     QRoute(
-      path: restaurantAddItemRoute,
-      name: restaurantAddItemRoute,
-      builder: () => ROpItemView(),
-    ),
-    QRoute(
-      path: restaurantEditItemView,
-      name: restaurantEditItemView,
+      path: restaurantItemRoute,
+      name: restaurantItemRoute,
       builder: () => ROpItemView(),
     ),
     QRoute(

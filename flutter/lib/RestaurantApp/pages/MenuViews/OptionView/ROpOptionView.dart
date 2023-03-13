@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionChoiceCard.dart';
@@ -8,6 +7,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/R
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -24,18 +24,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpOptionView extends StatefulWidget {
   const ROpOptionView({Key? key}) : super(key: key);
 
-  static Future<void> navigate(
-      {required String restaurantId,
+  static Future<bool?> navigate(
+      {required int restaurantId,
       required int? optionId,
-      required String itemId}) {
-    String route = RestaurantRouter.restaurantChoiceRoute
-        .replaceAll(":restaurantId", restaurantId)
-        .replaceAll(":itemId", itemId);
+      required int itemId}) async {
+    String route = RestaurantRouter.restaurantOptionRoute
+        .replaceAll(":restaurantId", "$restaurantId")
+        .replaceAll(":itemId", "$itemId");
     if (optionId != null) {
       route = route.replaceFirst(":optionId", "$optionId");
     }
 
-    return MezRouter.toPath(route);
+    await MezRouter.toPath(route);
+    return MezRouter.backResult;
   }
 
   @override

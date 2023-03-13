@@ -4,10 +4,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -22,6 +20,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ROpItemViewController {
@@ -74,11 +73,11 @@ class ROpItemViewController {
   late int restaurantId;
 
   Future<void> init(
-      {String? itemId,
-      String? categoryId,
+      {int? itemId,
+      int? categoryId,
       bool? specials,
-      required String restaurantId}) async {
-    this.restaurantId = int.parse(restaurantId);
+      required int restaurantId}) async {
+    this.restaurantId = restaurantId;
     if (specials != null) {
       specialMode.value = specials;
     }
@@ -97,12 +96,10 @@ class ROpItemViewController {
     isInitalized.value = true;
   }
 
-  Future<void> _initEditMode(
-      {required String itemId, String? categoryId}) async {
+  Future<void> _initEditMode({required int itemId, int? categoryId}) async {
     editMode.value = true;
 
-    editableItem.value =
-        await get_one_item_by_id(int.parse(itemId), withCache: false);
+    editableItem.value = await get_one_item_by_id(itemId, withCache: false);
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
@@ -238,10 +235,10 @@ class ROpItemViewController {
     }
   }
 
-  Future<bool?> deleteItem({required String itemId, String? catgeoryId}) async {
-    final int? deletedItemId = await delete_item_by_id(int.parse(itemId));
+  Future<bool?> deleteItem({required int itemId, int? catgeoryId}) async {
+    final int? deletedItemId = await delete_item_by_id(itemId);
     if (deletedItemId != null) {
-      MezRouter.back();
+      await MezRouter.back();
       mezDbgPrint("Item $deletedItemId have deleted 😢😢😢");
       return true;
     }

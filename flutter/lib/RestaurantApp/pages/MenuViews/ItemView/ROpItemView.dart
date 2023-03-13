@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ItemCategorySelector.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -29,27 +29,30 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpItemView extends StatefulWidget {
   const ROpItemView({Key? key}) : super(key: key);
 
-  static Future<void> navigate(
+  static Future<bool?> navigate(
       {required int restaurantId,
-      required int itemId,
+      required int? itemId,
       int? categoryId,
-      required Map<String, dynamic> arguments}) {
-    String route = RestaurantRouter.restaurantEditItemView
+      required Map<String, dynamic> arguments}) async {
+    String route = RestaurantRouter.restaurantItemRoute
         .replaceAll(":restaurantId", restaurantId.toString());
     if (categoryId != null) {
       route = route.replaceFirst(":categoryId", "$categoryId");
     }
-    route = route.replaceFirst(":itemId", "$itemId");
-    return MezRouter.toPath(route);
+    if (itemId != null) {
+      route = route.replaceFirst(":itemId", "$itemId");
+    }
+    await MezRouter.toPath(route);
+    return MezRouter.backResult;
   }
 
-  static Future<void> navigateToAdd(
-      {required int restaurantId, required Map<String, dynamic> arguments}) {
-    return MezRouter.toPath(
-        RestaurantRouter.restaurantAddItemRoute
-            .replaceAll(":restaurantId", restaurantId.toString()),
-        arguments: arguments);
-  }
+  // static Future<void> navigateToAdd(
+  //     {required int restaurantId, required Map<String, dynamic> arguments}) {
+  //   return MezRouter.toPath(
+  //       RestaurantRouter.restaurantAddItemRoute
+  //           .replaceAll(":restaurantId", restaurantId.toString()),
+  //       arguments: arguments);
+  // }
 
   @override
   _ROpItemViewState createState() => _ROpItemViewState();
@@ -58,9 +61,9 @@ class ROpItemView extends StatefulWidget {
 class _ROpItemViewState extends State<ROpItemView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String? restuarantID;
-  String? itemId;
-  String? categoryId;
+  int? restuarantID;
+  int? itemId;
+  int? categoryId;
   bool? specials;
   ROpItemViewController viewController = ROpItemViewController();
   final GlobalKey<FormState> _prformKey = GlobalKey<FormState>();
@@ -68,14 +71,15 @@ class _ROpItemViewState extends State<ROpItemView>
 
   @override
   void initState() {
-    itemId = MezRouter.urlArguments["itemId"].toString();
-    categoryId = MezRouter.urlArguments["categoryId"].toString();
-    restuarantID = MezRouter.urlArguments["restaurantId"].toString();
+    itemId = int.tryParse(MezRouter.urlArguments["itemId"].toString());
+    categoryId = int.tryParse(MezRouter.urlArguments["categoryId"].toString());
+    restuarantID =
+        int.tryParse(MezRouter.urlArguments["restaurantId"].toString());
     mezDbgPrint("Restuarnt id in item view ============> $restuarantID");
     if (restuarantID != null) {
-      specials = MezRouter.bodyArguments?["specials"].toString() == 'true'
-          ? true
-          : false ?? false;
+      // specials = MezRouter.bodyArguments?["specials"].toString() == 'true'
+      //     ? true
+      //     : false ?? false;
 
       _tabController = TabController(length: 2, vsync: this);
       viewController.init(
@@ -342,7 +346,7 @@ class _ROpItemViewState extends State<ROpItemView>
                   children: [
                     ROpItemOptionCard(
                       viewController: viewController,
-                      itemId: viewController.editableItem.value!.id!.toString(),
+                      itemId: viewController.editableItem.value!.id!,
                       restaurantID: restuarantID!,
                       categoryID: categoryId,
                     ),
@@ -352,8 +356,7 @@ class _ROpItemViewState extends State<ROpItemView>
                         final bool? result = await ROpOptionView.navigate(
                             restaurantId: restuarantID!,
                             optionId: null,
-                            itemId: viewController.editableItem.value!.id!
-                                .toString()) as bool?;
+                            itemId: viewController.editableItem.value!.id!);
                         if (result == true) {
                           await viewController.fetchItem();
                         }

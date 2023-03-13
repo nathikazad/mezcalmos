@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
-import 'package:mezcalmos/RestaurantApp/router/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -19,9 +17,9 @@ class ROpItemOptionCard extends StatefulWidget {
       required this.viewController,
       required this.restaurantID})
       : super(key: key);
-  final String restaurantID;
-  final String? categoryID;
-  final String? itemId;
+  final int restaurantID;
+  final int? categoryID;
+  final int? itemId;
   final ROpItemViewController viewController;
 
   static final LanguageType userLanguage =
@@ -97,7 +95,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
             fit: FlexFit.tight,
             child: Text(
               option.name[userLanguage]!,
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             ),
           ),
           _editBtn(option: option)
@@ -109,10 +107,10 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        final bool? result = ROpOptionView.navigate(
+        final bool? result = await ROpOptionView.navigate(
             restaurantId: widget.restaurantID,
             optionId: option.id,
-            itemId: widget.itemId!) as bool?;
+            itemId: widget.itemId!);
         if (result == true) {
           await widget.viewController.fetchItem();
         }
@@ -143,7 +141,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
                 fit: FlexFit.tight,
                 child: Text(
                   option.choices[index].name[userLanguage]!,
-                  style: context.txt.bodyText1,
+                  style: context.txt.bodyLarge,
                 ),
               ),
               // Switch(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/components/ROpChoiceAv.dart';
@@ -7,6 +6,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/controllers/R
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -53,15 +53,15 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
 
   @override
   void initState() {
-    choiceId = MezRouter.urlArguments["choiceId"].toString() ?? '';
+    choiceId = MezRouter.urlArguments["choiceId"].toString();
     optionId = MezRouter.urlArguments["optionId"].toString();
     restaurantId = MezRouter.urlArguments["restaurantId"].toString();
     if (restaurantId != null && optionId != null) {
       tabController = TabController(length: 2, vsync: this);
       viewController.init(
-          choiceId: int.tryParse(choiceId!) ?? null,
-          optionId: optionId!,
-          restaurantId: restaurantId!);
+          choiceId: (choiceId != null) ? int.tryParse(choiceId!) : null,
+          optionId: int.parse(optionId!),
+          restaurantId: int.parse(restaurantId!));
     } else {
       MezRouter.back();
     }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
@@ -9,13 +8,13 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpSpecialsComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/RestaurantApp/router/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
@@ -160,10 +159,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
               if (viewController.reOrderMode.isFalse)
                 MezAddButton(
                   onClick: () async {
-                    final bool? newItemAdded = await ROpItemView.navigateToAdd(
-                            restaurantId: restaurantID!,
-                            arguments: <String, dynamic>{"specials": false})
-                        as bool?;
+                    final bool? newItemAdded = await ROpItemView.navigate(
+                        restaurantId: restaurantID!,
+                        itemId: null,
+                        arguments: <String, dynamic>{"specials": false});
                     if (newItemAdded == true) {
                       await viewController.fetchCategories();
                     }
@@ -178,7 +177,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 children: [
                   Text(
                     '${_i18n()["categories"]}',
-                    style: context.txt.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   (viewController.reOrderMode.isTrue)
                       ? SizedBox()
@@ -215,8 +214,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     : null,
                 labelColor: primaryBlueColor,
                 unselectedLabelColor: Colors.grey.shade800,
-                labelStyle: context.txt.bodyText1,
-                unselectedLabelStyle: context.txt.bodyText2,
+                labelStyle: context.txt.bodyLarge,
+                unselectedLabelStyle: context.txt.bodyMedium,
                 tabs: [
                   Tab(
                     text: '${_i18n()["myItems"]}',
@@ -255,7 +254,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
             ),
             Text(
               '${_i18n()["reorder"]}',
-              style: context.txt.bodyText1?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
             ),
           ],
         ),
@@ -337,7 +336,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
           primaryButtonText: '${_i18n()["prCancelBtn"]}',
           helperText: '${_i18n()["cancelHelperText"]}', onYesClick: () async {
         viewController.cancelReoderMode();
-        MezRouter.back();
+        await MezRouter.back();
       });
     } else {
       if (widget.canGoBack) {

@@ -20,7 +20,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpChoiceViewController {
   // vars //
   late int restaurantId;
-  String? optionId;
+  int? optionId;
 
   // form//
   bool firstTabValid = false;
@@ -40,10 +40,10 @@ class ROpChoiceViewController {
   // init //
   Future<void> init(
       {required int? choiceId,
-      required String optionId,
-      required String restaurantId}) async {
+      required int optionId,
+      required int restaurantId}) async {
     this.optionId = optionId;
-    this.restaurantId = int.parse(restaurantId);
+    this.restaurantId = restaurantId;
     await _assignLanguages();
 
     if (choiceId != null) {
@@ -131,7 +131,7 @@ class ROpChoiceViewController {
   Future<void> _addNewChoice() async {
     final int? newChoiceId = await add_choice(
         choice: _contructChoice(),
-        optionId: int.parse(optionId!),
+        optionId: optionId!,
         restaurantId: restaurantId);
     if (newChoiceId != null) {
       customSnackBar(
