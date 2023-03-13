@@ -3,7 +3,7 @@ import { getHasura } from "../../../../utilities/hasura";
 import { AppType, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
-import { Operator } from "../../../models/Services/Service";
+import { Operator, ServiceProviderType } from "../../../models/Services/Service";
 import { AuthorizationStatus } from "../../../models/Generic/Generic"
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {
@@ -341,6 +341,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       items,
       restaurant: (o.restaurant.details) ? {
         id: o.restaurant.id,
+        serviceProviderType: ServiceProviderType.Restaurant,
         serviceProviderDetailsId: o.restaurant.details_id,
         name: o.restaurant.details.name,
         image: o.restaurant.details.image,

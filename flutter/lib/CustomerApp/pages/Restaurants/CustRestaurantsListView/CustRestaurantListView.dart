@@ -148,7 +148,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             "${_i18n()["restaurants"]}",
-                            style: Get.textTheme.bodyText1?.copyWith(
+                            style: Get.textTheme.bodyLarge?.copyWith(
                               color: !viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
@@ -194,7 +194,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             '${_i18n()["meal"]}',
-                            style: Get.textTheme.bodyText1?.copyWith(
+                            style: Get.textTheme.bodyLarge?.copyWith(
                               color: viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
@@ -227,12 +227,10 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               customerLocation: viewController.customerLocation,
               onClick: () {
                 MezRouter.toNamed<void>(
-                    getRestaurantRoute(
-                      viewController.filteredRestaurants[index].info.hasuraId,
-                    ),
-                    arguments: {
-                      "restaurant": viewController.filteredRestaurants[index]
-                    });
+                  getRestaurantRoute(
+                    viewController.filteredRestaurants[index].info.hasuraId,
+                  ),
+                );
               },
             );
           }),

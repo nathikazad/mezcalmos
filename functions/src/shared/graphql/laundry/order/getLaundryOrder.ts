@@ -4,7 +4,7 @@ import { DeliveryDirection, DeliveryOrder } from "../../../models/Generic/Delive
 import { AppType, AuthorizationStatus, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { LaundryOrder, LaundryOrderStatus, OrderCategory } from "../../../models/Services/Laundry/LaundryOrder";
-import { Operator } from "../../../models/Services/Service";
+import { Operator, ServiceProviderType } from "../../../models/Services/Service";
 
 export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
     let chain = getHasura();
@@ -439,6 +439,7 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
       categories,
       laundryStore: (o.store.details) ? {
         id: o.store.id,
+        serviceProviderType: ServiceProviderType.Laundry,
         serviceProviderDetailsId: o.store.details_id,
         name: o.store.details.name,
         image: o.store.details.image,

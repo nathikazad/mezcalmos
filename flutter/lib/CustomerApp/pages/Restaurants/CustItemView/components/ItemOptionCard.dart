@@ -45,30 +45,32 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //  margin: const EdgeInsets.only(top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(widget.option.name[userLanguage].toString().inCaps,
-              style: Get.theme.textTheme.bodyLarge),
-          if (widget.option.optionType == OptionType.Custom)
-            Container(
-              child: Text(
-                "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                style: Get.textTheme.titleLarge
-                    ?.copyWith(fontStyle: FontStyle.italic),
-              ),
-            ),
-          Column(
-            children: List.generate(
-              widget.option.choices.length,
-              (int index) => optionChoiceCard(
-                choice: widget.option.choices[index],
-              ),
-            ),
-          ),
-        ],
-      ),
+      margin: const EdgeInsets.only(bottom: 15),
+      child: (widget.option.haveAtLeastOnChoiceAvailable)
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.option.name[userLanguage].toString().inCaps,
+                    style: Get.theme.textTheme.bodyLarge),
+                if (widget.option.optionType == OptionType.Custom)
+                  Container(
+                    child: Text(
+                      "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
+                      style: Get.textTheme.titleLarge
+                          ?.copyWith(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                Column(
+                  children: List.generate(
+                    widget.option.choices.length,
+                    (int index) => optionChoiceCard(
+                      choice: widget.option.choices[index],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : SizedBox(),
     );
   }
 

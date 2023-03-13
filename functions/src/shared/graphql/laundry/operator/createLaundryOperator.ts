@@ -1,10 +1,10 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
-import { Operator } from "../../../models/Services/Service";
+import { Operator, ServiceProvider } from "../../../models/Services/Service";
 import { AddOperatorDetails } from "../../../operator/addOperator";
 
-export async function createLaundryOperator(operatorUserId: number, addOpDetails: AddOperatorDetails): Promise<Operator> {
+export async function createLaundryOperator(operatorUserId: number, addOpDetails: AddOperatorDetails, laundryStore: ServiceProvider): Promise<Operator> {
 
     let chain = getHasura();
     let response = await chain.query({
@@ -16,7 +16,7 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
                     },
                 }, {
                     store_id: {
-                        _eq: addOpDetails.serviceProviderId
+                        _eq: laundryStore.id
                     }
                 }]
 
@@ -48,21 +48,21 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
         insert_laundry_operator_one: [{
             object: {
                 user_id: operatorUserId,
-                store_id: addOpDetails.serviceProviderId,
+                store_id: laundryStore.id,
                 operator_details: {
                     data: {
                         user_id: operatorUserId,
                         app_type_id: AppType.LaundryApp,
                         app_version: addOpDetails.appVersion,
-                        notification_info: (addOpDetails.notificationInfo) 
-                            ? {
+                        notification_info: (addOpDetails.notificationToken) 
+                        ? {
                             data: {
-                                token: addOpDetails.notificationInfo.token,
+                                token: addOpDetails.notificationToken,
                                 user_id: operatorUserId,
-                                turn_off_notifications: addOpDetails.notificationInfo.turnOffNotifications,
-                                app_type_id: addOpDetails.notificationInfo.appType
+                                turn_off_notifications: false,
+                                app_type_id: AppType.LaundryApp
                             }
-                            }: undefined,
+                        }: undefined,
                         status: AuthorizationStatus.AwaitingApproval,
                     }
                 },
@@ -82,9 +82,13 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
       id: mutationResponse.insert_laundry_operator_one.id,
       userId: operatorUserId,
       detailsId: mutationResponse.insert_laundry_operator_one.details_id,
-      serviceProviderId: addOpDetails.serviceProviderId,
+      serviceProviderId: laundryStore.id,
       status: AuthorizationStatus.AwaitingApproval,
       online: true,
-      notificationInfo: addOpDetails.notificationInfo,
+      notificationInfo: (addOpDetails.notificationToken) ? {
+        appType: AppType.LaundryApp,
+        token: addOpDetails.notificationToken,
+        turnOffNotifications:  false
+      }: undefined,
     }
   }

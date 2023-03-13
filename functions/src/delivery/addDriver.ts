@@ -2,17 +2,17 @@ import { createDeliveryDriver } from "../shared/graphql/delivery/driver/createDe
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { MezError, NotificationInfo } from "../shared/models/Generic/Generic";
+import { MezError } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
+import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
-import { Operator } from "../shared/models/Services/Service";
+import { Operator, ServiceProvider, ServiceProviderType } from "../shared/models/Services/Service";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
+import { getServiceProviderFromUniqueId } from "../shared/graphql/getServiceProvider";
 
 export interface AddDriverDetails {
-    deliveryCompanyId: number,
-    notificationInfo?: NotificationInfo,
-    deliveryServiceProviderType: DeliveryServiceProviderType
+    uniqueId: string,
+    notificationToken?: string,
 }
 export interface AddDriverResponse {
     success: boolean,
@@ -28,9 +28,10 @@ export async function addDriver(userId: number, addDriverDetails: AddDriverDetai
     //first mutation
     //second notify operators of the company
     try {
-        let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, addDriverDetails.deliveryServiceProviderType);
+        let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addDriverDetails.uniqueId)
+        let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, serviceProvider, addDriverDetails);
 
-        notify(deliveryDriver, addDriverDetails.deliveryServiceProviderType, addDriverDetails);
+        notify(deliveryDriver, serviceProvider);
 
         return {
             success: true
@@ -52,9 +53,10 @@ export async function addDriver(userId: number, addDriverDetails: AddDriverDetai
             throw e
         }
     }
+    
 }
 
-async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: DeliveryServiceProviderType, addDriverDetails: AddDriverDetails) {
+async function notify(deliveryDriver: DeliveryDriver, serviceProvider: ServiceProvider) {
     let notification: Notification = {
         foreground: <AuthorizeDriverNotification>{
             newDriverName: deliveryDriver.user?.name,
@@ -75,9 +77,9 @@ async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: Deliv
         },
         linkUrl: `/`
     };
-    switch (deliveryCompanyType) {
-        case DeliveryServiceProviderType.DeliveryCompany:
-            let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(addDriverDetails.deliveryCompanyId);
+    switch (serviceProvider.serviceProviderType) {
+        case ServiceProviderType.Delivery:
+            let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(serviceProvider.id);
             deliveryOperators.forEach((d) => {
                 if (d.user) {
                     pushNotification(
@@ -89,8 +91,8 @@ async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: Deliv
                 }
             });
             break;
-        case DeliveryServiceProviderType.Restaurant:
-            let restaurantOperators: Operator[] = await getRestaurantOperators(addDriverDetails.deliveryCompanyId);
+        case ServiceProviderType.Restaurant:
+            let restaurantOperators: Operator[] = await getRestaurantOperators(serviceProvider.id);
             restaurantOperators.forEach((o) => {
                 if (o.owner && o.user) {
                     pushNotification(
@@ -103,8 +105,8 @@ async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: Deliv
                 }
             });
             break;
-            case DeliveryServiceProviderType.Laundry:
-            let laundryOperators: Operator[] = await getLaundryOperators(addDriverDetails.deliveryCompanyId);
+            case ServiceProviderType.Laundry:
+            let laundryOperators: Operator[] = await getLaundryOperators(serviceProvider.id);
             laundryOperators.forEach((o) => {
                 if (o.owner && o.user) {
                     pushNotification(

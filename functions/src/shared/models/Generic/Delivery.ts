@@ -78,6 +78,9 @@ export interface DeliveryOperator {
     notificationInfo?: NotificationInfo,
     user?: UserInfo
 }
+// export interface DeliveryCompany extends ServiceProvider {
+//   deliveryoperators?: DeliveryOperator[];
+// }
 export interface DeliveryDetails {
     minimumCost?: number,
     costPerKm?: number,

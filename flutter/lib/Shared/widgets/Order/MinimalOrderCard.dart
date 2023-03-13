@@ -61,7 +61,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                           height: 8,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             if (widget.forCustomer &&
                                 widget.order.totalCost != null)
@@ -136,8 +136,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       ),
                       if (widget.order.image != null &&
                           widget.order.image!.isURL &&
-                          showImage &&
-                          !widget.forCustomer)
+                          showImage)
                         Stack(
                           alignment: Alignment.center,
                           clipBehavior: Clip.none,

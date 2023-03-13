@@ -16,6 +16,7 @@ class UnautthDriverViewController {
 
   // obs
   Rxn<AgentStatus> _status = Rxn();
+  AgentStatus? get status => _status.value;
 
   // stream sub
   StreamSubscription<AgentStatus>? statusStream;
