@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
+import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/DeepLinkHandler.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -44,8 +45,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   DateTime? appClosedTime;
 
-  final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
-
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
 
@@ -69,8 +68,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
-
-    Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
+    DeepLinkHandler.startDynamicLinkCheckRoutine(
+        CustomerDeepLinkHandler.handleDeepLink);
   }
 
   @override
