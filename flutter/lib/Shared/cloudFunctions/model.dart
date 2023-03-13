@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
 class SendOtpResponse {
   String? errorMessage;
   num? secondsLeft;
@@ -12,8 +14,8 @@ class SendOtpResponse {
   }
 
   factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) {
-    return SendOtpResponse(
-        json["errorMessage"], json["secondsLeft"], json["status"].to);
+    return SendOtpResponse(json["errorMessage"], json["secondsLeft"],
+        json["status"].toString().toServerResponseStatus());
   }
 }
 
@@ -152,23 +154,6 @@ class CallUserResponse {
   factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) {
     return CallUserResponse(json["id"], json["token"], json["name"],
         json["image"], json["expirationTime"], json["participantType"]);
-  }
-}
-
-class NotificationInfo {
-  String token;
-  bool turnOffNotifications;
-  AppType appType;
-  NotificationInfo(
-      {required this.token,
-      required this.turnOffNotifications,
-      required this.appType});
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "token": token,
-      "turnOffNotifications": turnOffNotifications,
-      "appType": appType,
-    };
   }
 }
 

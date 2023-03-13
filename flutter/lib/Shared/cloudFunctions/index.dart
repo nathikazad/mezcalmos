@@ -1,7 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
@@ -117,13 +116,13 @@ class CloudFunctions {
 
   static Future<void> serviceProvider_addOperator(
       {required String uniqueId,
-      NotificationInfo? notificationInfo,
+      String? notificationToken,
       String? appVersion}) async {
     return await callCloudFunction(
         functionName: "serviceProvider-addOperator",
         parameters: <String, dynamic>{
           "uniqueId": uniqueId,
-          "notificationInfo": notificationInfo?.toFirebaseFormattedJson(),
+          "notificationToken": notificationToken,
           "appVersion": appVersion,
         });
   }
@@ -132,7 +131,6 @@ class CloudFunctions {
       {required num newOperatorId,
       required bool approved,
       required ParticipantType participantType}) async {
-    mezDbgPrint("authorize op");
     return await callCloudFunction(
         functionName: "serviceProvider-authorizeOperator",
         parameters: <String, dynamic>{
@@ -143,12 +141,12 @@ class CloudFunctions {
   }
 
   static Future<void> serviceProvider_addDriver(
-      {required String uniqueId, NotificationInfo? notificationInfo}) async {
+      {required String uniqueId, String? notificationToken}) async {
     return await callCloudFunction(
         functionName: "serviceProvider-addDriver",
         parameters: <String, dynamic>{
           "uniqueId": uniqueId,
-          "notificationInfo": notificationInfo?.toFirebaseFormattedJson(),
+          "notificationToken": notificationToken,
         });
   }
 

@@ -17,9 +17,7 @@ class RestaurantDeepLinkHandler {
       String? token =
           await Get.find<BackgroundNotificationsController>().getToken();
       await CloudFunctions.serviceProvider_addOperator(
-        uniqueId: uniqueId,
-        // notificationInfo: notificationToken
-      );
+          uniqueId: uniqueId, notificationToken: token);
       // ignore: unawaited_futures
       MezRouter.toNamed(kOpUnauth);
     } catch (e, stk) {
