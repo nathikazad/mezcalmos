@@ -2,7 +2,7 @@
 
 // DO NOT TOUCH OR IMPORT ANYTHING IN THIS MAIN PLEASE.
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/env.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
@@ -51,5 +51,6 @@ class _StartingPointState extends StartingPointBaseState {
         : stripePubTestKey;
     Stripe.instance.applySettings();
     Get.put<Sagora>(Sagora(), permanent: true);
+    mezDbgPrint("AppStart Native initalized 😛😛😛😛😛");
   }
 }

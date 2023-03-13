@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedLocationComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedLocationIsEmpty.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/controllers/CustSavedLocationsViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -18,6 +19,9 @@ class SavedLocationView extends StatefulWidget {
   const SavedLocationView({
     Key? key,
   }) : super(key: key);
+  static Future<void> navigate() {
+    return MezRouter.toPath(CustomerRoutes.savedLocations);
+  }
 
   @override
   _SavedLocationViewState createState() => _SavedLocationViewState();

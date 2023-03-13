@@ -7,7 +7,6 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/controlle
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -15,8 +14,8 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -327,9 +326,7 @@ class _CustLaundryOrderRequestViewState
                   CustLaundryOrderView.navigate(orderId: res.toInt()));
             }
           } else {
-            Get.find<AuthController>().preserveNavigationStackAfterSignIn =
-                true;
-            await MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
+            await SignInView.navigateAtOrderTime();
           }
         },
       ),

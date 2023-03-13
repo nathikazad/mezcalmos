@@ -36,8 +36,7 @@ class _WrapperState extends State<Wrapper> {
       authController.authStateStream.listen((fireAuth.User? user) {
         handleAuthStateChange(user);
       });
-    })
-        .then((_) {
+    }).then((_) {
       // only when we use location permissions
       if (_locationController.locationType != LocationPermissionType.None) {
         startListeningOnLocationPermission();
@@ -115,7 +114,7 @@ class _WrapperState extends State<Wrapper> {
             "😌😌😌😌😌😌 user is not signed to use the app user should sign in 😌😌😌😌");
 
         await MezRouter.popEverythingTillBeforeWrapper();
-        await MezRouter.toNamed(SharedRoutes.kSignInRouteRequired);
+        await MezRouter.toNamed(SharedRoutes.kSignInRoute);
       }
     } else {
       mezDbgPrint("[777] user != null");
@@ -161,17 +160,14 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void checkIfSignInRouteOrRedirectToHome() {
-    if (authController.preserveNavigationStackAfterSignIn)
-      MezRouter.popTill(SharedRoutes.kSignInRouteOptional);
-
-    if (MezRouter.isCurrentRoute(SharedRoutes.kSignInRouteOptional)) {
-      MezRouter.back();
+    if (MezRouter.isRouteInStack(SharedRoutes.kSignInAtOrderTimeRoute)) {
+      mezDbgPrint("Trying to go back toooo");
+      MezRouter.popTillInclusive(SharedRoutes.kSignInAtOrderTimeRoute);
     } else {
       if (!Get.currentRoute.contains('/messages/'))
         MezRouter.popEverythingTillBeforeWrapper()
             .then((_) => MezRouter.toNamed(SharedRoutes.kHomeRoute));
     }
-    authController.preserveNavigationStackAfterSignIn = false;
   }
 
   @override

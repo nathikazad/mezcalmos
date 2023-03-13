@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/LaundryApp/authHooks.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
@@ -19,7 +20,7 @@ void main() {
     () => runApp(
       Sizer(
         builder: (_, __, ___) {
-          return StartingPointBase(
+          return StartingPointNative(
             appType: AppType.LaundryApp,
             signInCallback: signInCallback,
             appTheme: LaundryAppTheme.lightTheme,

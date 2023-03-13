@@ -36,8 +36,8 @@ class SharedRoutes {
   static const String kUserWelcomeRoute = '/welcome';
   static const String kHomeRoute = '/home';
   static const String kSplashRoute = '/splash';
-  static const String kSignInRouteRequired = '/sign_in/required';
-  static const String kSignInRouteOptional = '/sign_in/optional';
+  static const String kSignInRoute = '/sign_in';
+  static const String kSignInAtOrderTimeRoute = '/sign_in_order_time';
   static const String kMessagesRoute = '/messages/:chatId';
   static const String kLocationPermissionPage = '/location_permission';
   static const String kNoInternetConnectionPage = '/offline';
@@ -86,17 +86,16 @@ class SharedRoutes {
         builder: () => splashScreen.SplashScreen(),
         middleware: <QMiddleware>[DefferedLoader(splashScreen.loadLibrary)]),
     QRoute(
-        path: kSignInRouteRequired,
-        name: kSignInRouteRequired,
-        builder: () =>
-            signInScreen.SignIn(mode: signInScreen.SignInMode.RequiredSignIn),
+        path: kSignInRoute,
+        name: kSignInRoute,
+        builder: () => signInScreen.SignInView(),
         middleware: <QMiddleware>[DefferedLoader(signInScreen.loadLibrary)]),
     QRoute(
-        path: kSignInRouteOptional,
-        name: kSignInRouteOptional,
-        builder: () =>
-            signInScreen.SignIn(mode: signInScreen.SignInMode.OptionalSignIn),
+        path: kSignInAtOrderTimeRoute,
+        name: kSignInAtOrderTimeRoute,
+        builder: () => signInScreen.SignInView(),
         middleware: <QMiddleware>[DefferedLoader(signInScreen.loadLibrary)]),
+
     QRoute(
         path: kOtpRoute,
         name: kOtpRoute,

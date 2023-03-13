@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/RestaurantApp/authHooks.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
@@ -19,7 +20,7 @@ void main() {
     () => runApp(
       Sizer(
         builder: (_, __, ___) {
-          return StartingPointBase(
+          return StartingPointNative(
             appType: AppType.RestaurantApp,
             signInCallback: signInCallback,
             appTheme: RestaurantAppTheme.lightTheme,

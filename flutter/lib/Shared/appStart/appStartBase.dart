@@ -7,7 +7,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:device_preview/device_preview.dart';
@@ -15,7 +14,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -47,7 +45,7 @@ final ThemeData _defaultAppTheme = ThemeData(
 AppType _appType = AppType.CustomerApp;
 AppType get appType => _appType;
 
-class StartingPointBase extends StatefulWidget {
+abstract class StartingPointBase extends StatefulWidget {
   final ThemeData? appTheme;
   final Function signInCallback;
   final Function signOutCallback;

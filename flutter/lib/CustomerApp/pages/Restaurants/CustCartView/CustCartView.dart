@@ -189,11 +189,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             onClick: !viewController.canOrder
                 ? null
                 : () async {
-                    MezRouter.popEverythingTillBeforeWrapper()
-                        .then((_) => MezRouter.printRoutes());
-                    // if (viewController.canOrder) {
-                    //   await viewController.checkoutActionButton();
-                    // }
+                    if (viewController.canOrder) {
+                      await viewController.checkoutActionButton();
+                    }
                   },
           );
         } else

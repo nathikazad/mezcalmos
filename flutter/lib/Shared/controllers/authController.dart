@@ -44,8 +44,6 @@ class AuthController extends GetxController {
 
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
-  bool preserveNavigationStackAfterSignIn = false;
-
   @override
   void onInit() {
     super.onInit();

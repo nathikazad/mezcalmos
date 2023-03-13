@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/controllers/UserProfileViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -17,6 +18,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});
+  static Future<void> navigate() {
+    return MezRouter.toPath(SharedRoutes.kUserNewProfile);
+  }
 
   @override
   State<UserProfileView> createState() => _UserProfileViewState();

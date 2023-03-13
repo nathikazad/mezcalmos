@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -74,7 +75,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   () => Container(
                     margin: const EdgeInsets.all(5),
                     child: Text(_i18n()["OtpConfirmation"],
-                        overflow: TextOverflow.visible, style: txt.headline1),
+                        overflow: TextOverflow.visible,
+                        style: txt.displayLarge),
                   ),
                 ),
                 SizedBox(
@@ -87,7 +89,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   child: Obx(
                     () => Text(
                       _i18n()["twilioNote"],
-                      style: txt.bodyText2,
+                      style: txt.bodyMedium,
                     ),
                   ),
                 ),
@@ -110,13 +112,13 @@ class OtpConfirmationScreen extends GetView<AuthController> {
             Obx(
               () => RichText(
                 text: new TextSpan(
-                  style: txt.bodyText2,
+                  style: txt.bodyMedium,
                   children: <TextSpan>[
                     new TextSpan(
-                        text: _i18n()["enterOtpCode"], style: txt.bodyText2),
+                        text: _i18n()["enterOtpCode"], style: txt.bodyMedium),
                     new TextSpan(
                         text: "  ${Get.arguments ?? _phonePassed}",
-                        style: txt.bodyText1!.copyWith(
+                        style: txt.bodyLarge!.copyWith(
                             color: Theme.of(context).primaryColorLight))
                   ],
                 ),
@@ -175,7 +177,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   flex: 3,
                   child: Text(
                     "${_i18n()["otpDidnReceiveTxt"]}",
-                    style: txt.bodyText2,
+                    style: txt.bodyMedium,
                   ),
                 ),
                 SizedBox(
@@ -191,21 +193,21 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 // resend code !
                                 canConfirmOtp.value = false;
                                 _otpCodeTextController.clear();
-                                final ServerResponse response =
+                                SendOtpResponse response =
                                     await sendOTPForLogin(
                                         Get.arguments ?? _phonePassed);
-                                mezDbgPrint(response.data);
-                                if (!response.success) {
+                                mezDbgPrint(response);
+                                if (response.status != ResponseStatus.Success) {
                                   resendOtpTimerActivate(
-                                      response.data['secondsLeft']);
-                                  MezSnackbar(response.status.toShortString(),
-                                      response.errorMessage.toString(),
+                                      response.secondsLeft!.toDouble());
+                                  MezSnackbar(
+                                      "Error", response.errorMessage.toString(),
                                       position: SnackPosition.TOP);
                                 }
                               }
                             : null,
                         style: TextButton.styleFrom(
-                            textStyle: Theme.of(context).textTheme.bodyText2,
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
                             backgroundColor: _timeBetweenResending.value == 0
                                 ? Theme.of(context)
                                     .primaryColorLight

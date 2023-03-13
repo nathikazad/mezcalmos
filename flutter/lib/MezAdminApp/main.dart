@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/MezAdminApp/authHooks.dart';
-import 'package:mezcalmos/MezAdminApp/theme.dart';
 import 'package:mezcalmos/MezAdminApp/router/router.dart';
-import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
+import 'package:mezcalmos/MezAdminApp/theme.dart';
+import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -24,7 +23,7 @@ void main() {
     () => runApp(
       Sizer(
         builder: (_, __, ___) {
-          return StartingPointBase(
+          return StartingPointNative(
             appType: AppType.MezAdminApp,
             appTheme: MezAdminTheme.lightTheme,
             signInCallback: signInCallback,

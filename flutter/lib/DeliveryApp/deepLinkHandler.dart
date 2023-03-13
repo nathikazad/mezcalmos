@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -94,10 +92,10 @@ class DeliveryDeepLinkHandler {
     final HttpsCallable cloudFunction = FirebaseFunctions.instance
         .httpsCallable('restaurant2-addRestaurantDriver');
     try {
-      await CloudFunctions.serviceProvider_addDriver(
-          deliveryCompanyId: providerId,
-          deliveryServiceProviderType:
-              providerType.toDeliveryServiceProviderType());
+      // await CloudFunctions.serviceProvider_addDriver(
+      //     deliveryCompanyId: providerId,
+      //     deliveryServiceProviderType:
+      //         providerType.toDeliveryProviderType());
 
       return ServerResponse(ResponseStatus.Success);
     } catch (e, stk) {

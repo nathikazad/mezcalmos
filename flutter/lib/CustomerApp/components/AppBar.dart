@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -157,7 +158,7 @@ class CustomerAppBar extends GetWidget<AuthController>
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
+          SignInView.navigateAtOrderTime();
         },
         child: Ink(
           padding: const EdgeInsets.all(7),

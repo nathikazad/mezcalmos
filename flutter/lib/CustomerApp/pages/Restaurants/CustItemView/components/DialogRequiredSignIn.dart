@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
@@ -64,10 +63,9 @@ void dialogRequiredSignIn() {
                       // to remove the SignIn popUp first!
                       await MezRouter.back();
                       // then head to kSignInRoute.
-                      Get.find<AuthController>()
-                          .preserveNavigationStackAfterSignIn = true;
+
                       // ignore: unawaited_futures
-                      MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
+                      SignInView.navigateAtOrderTime();
                     },
                     label: "${_i18n()["signBtn"]}",
                     withGradient: true,

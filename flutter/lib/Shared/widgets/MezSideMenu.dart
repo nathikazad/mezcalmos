@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -10,8 +11,8 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
@@ -82,9 +83,9 @@ class MezSideMenu extends GetWidget<AuthController> {
           onClick: () {
             _drawerController.closeMenu();
             if (controller.isUserSignedIn) {
-              MezRouter.toNamed(SharedRoutes.kUserNewProfile);
+              UserProfileView.navigate();
             } else
-              MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
+              SignInView.navigateAtOrderTime();
           },
         ),
         if (_drawerController.pastOrdersRoute != null)
@@ -94,7 +95,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toNamed(_drawerController.pastOrdersRoute!);
+              CustomerOrdersListView.navigate();
             },
           ),
         SideMenuItem(

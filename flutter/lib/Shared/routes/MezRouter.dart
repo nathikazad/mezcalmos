@@ -99,7 +99,8 @@ class MezRouter {
   }
 
   static Future<void> back({backResult = null}) {
-    if (QR.currentPath == _navigationStack.last.name || QR.currentRoute.name == _navigationStack.last.name) {
+    if (QR.currentPath == _navigationStack.last.name ||
+        QR.currentRoute.name == _navigationStack.last.name) {
       _navigationStack.last.completer.complete();
       _navigationStack.removeLast();
     }
@@ -109,41 +110,44 @@ class MezRouter {
   }
 
   static Future<void> popEverythingTillBeforeHome() async {
-    return popTillBefore(SharedRoutes.kHomeRoute);
+    return popTillExclusive(SharedRoutes.kHomeRoute);
   }
 
   static Future<void> popEverythingTillBeforeWrapper() async {
-    return popTillBefore(SharedRoutes.kWrapperRoute);
+    return popTillExclusive(SharedRoutes.kWrapperRoute);
   }
 
-  static Future<void> popTill(String routeName) async {
-    if (isRouteInStack(routeName)) {
-      while (!isCurrentRoute(routeName)) {
+  static Future<void> popTillExclusive(String routeName) async {
+    if (_navigationStack.isNotEmpty && isRouteInStack(routeName)) {
+      while (!isCurrentRoute(routeName) &&
+          !isCurrentRoute(SharedRoutes.kWrapperRoute)) {
         await back();
         mezDbgPrint("Popped ${_navigationStack.last.name} ");
-        _navigationStack.removeLast();
       }
     }
   }
 
-  static Future<void> popTillBefore(String routeName) async {
-    mezDbgPrint("Start popping till before ====> $routeName");
-    printRoutes();
-    if (isRouteInStack(routeName)) {
-      mezDbgPrint("Start popping till before ====> $routeName");
-      while (!isCurrentRoute(routeName)) {
+  /// this will pop every route till the last route before the passed in route (if the passed in route exist in the satck)
+  static Future<void> popTillInclusive(String routeName) async {
+    if (_navigationStack.isNotEmpty) {
+      while (isRouteInStack(routeName) &&
+          !isCurrentRoute(SharedRoutes.kWrapperRoute)) {
         await back();
         mezDbgPrint("Popped ${_navigationStack.last.name} ");
-        if (_navigationStack.isNotEmpty) {
-          _navigationStack.removeLast();
-        }
       }
     }
-    // await back();
-    // if (_navigationStack.isNotEmpty) {
-    //   _navigationStack.removeLast();
-    // }
   }
+
+  // static Future<void> popTillBefore(String routeName) async {
+  //   if (_navigationStack.isNotEmpty && isRouteInStack(routeName)) {
+  //     mezDbgPrint("Start popping till before ====> $routeName");
+  //     while (!isCurrentRoute(routeName)) {
+  //       await back();
+  //       mezDbgPrint("Popped ${_navigationStack.last.name} ");
+  //       _navigationStack.removeLast();
+  //     }
+  //   }
+  // }
 
   // static Future<void> popEverythingUntil(String route) async {
   //   await QR.navigator.popUntilOrPushName(route);

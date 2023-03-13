@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/controllers/CustCardsListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
@@ -16,6 +17,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 //
 class CustCardsListView extends StatefulWidget {
   const CustCardsListView({Key? key}) : super(key: key);
+  static Future<void> navigate() {
+    return MezRouter.toPath(CustomerRoutes.savedCards);
+  }
 
   @override
   State<CustCardsListView> createState() => _CustCardsListViewState();

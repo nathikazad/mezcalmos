@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
-import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
+import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -24,8 +25,7 @@ List<QRoute> routes =
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
-      // Get.find<SideMenuDrawerController>().closeMenu();
-      MezRouter.toNamed(kSavedCards);
+      CustCardsListView.navigate();
     },
     icon: Icons.credit_card,
     title: "CustomerApp/main/savedCards",
@@ -33,8 +33,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   ),
   SideMenuItem(
     onClick: () {
-      // Get.find<SideMenuDrawerController>().closeMenu();
-      MezRouter.toNamed(kSavedLocations);
+      SavedLocationView.navigate();
     },
     icon: Icons.near_me_outlined,
     title: "CustomerApp/main/savedLocations",
@@ -51,7 +50,7 @@ void main() {
           Orientation orientation,
           DeviceType deviceType,
         ) {
-          return StartingPointBase(
+          return StartingPointNative(
             appType: AppType.CustomerApp,
             appTheme: CustomerAppTheme.lightTheme,
             signInCallback: signInCallback,

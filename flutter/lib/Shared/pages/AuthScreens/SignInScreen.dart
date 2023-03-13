@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
@@ -25,10 +24,29 @@ enum SignInMode {
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SignInScreen"];
 
-class SignIn extends GetWidget<AuthController> {
-  final SignInMode mode;
-  SignIn({required this.mode});
+class SignInView extends StatefulWidget {
+  static Future<void> navigateAtInit() {
+    return MezRouter.toPath(SharedRoutes.kSignInRoute,
+        arguments: {"mode": SignInMode.RequiredSignIn});
+  }
+
+  static Future<void> navigateAtOrderTime() {
+    return MezRouter.toPath(SharedRoutes.kSignInAtOrderTimeRoute,
+        arguments: {"mode": SignInMode.OptionalSignIn});
+  }
+
+  @override
+  State<SignInView> createState() => _SignInViewState();
+}
+
+class _SignInViewState extends State<SignInView> {
   final RxBool clickedLogin = false.obs;
+  late SignInMode mode;
+  @override
+  void initState() {
+    mode = MezRouter.bodyArguments?["mode"] ?? SignInMode.RequiredSignIn;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +95,7 @@ class SignIn extends GetWidget<AuthController> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .headline2
+                            .displayMedium
                             ?.copyWith(fontWeight: FontWeight.w600)),
                     Spacer(),
                     ...buildSignInButtons(MezEnv.appLaunchMode),
