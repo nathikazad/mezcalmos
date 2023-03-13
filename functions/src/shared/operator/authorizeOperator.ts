@@ -61,7 +61,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             break;
     }
     if(operatorDetailsId != 0) {
-        updateOperatorStatusToAuthorized(operatorDetailsId);
+        await updateOperatorStatusToAuthorized(operatorDetailsId);
     }
     
     
@@ -151,34 +151,28 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
     }
 
     async function authorizationCheck() {
-        if(await isMezAdmin(ownerUserId))
+        if((await isMezAdmin(ownerUserId)) == true)
             return;
-            
+        
+        let owner: boolean = true;
         switch (authorizeDetails.participantType) {
             case ParticipantType.RestaurantOperator:
                 let restaurantOwner: Operator = await getRestaurantOperatorByUserId(ownerUserId);
-                if (!restaurantOwner.owner) {
-                    throw new HttpsError("internal", "Only owner can add operators");
-                }
+                owner = restaurantOwner.owner ?? false;
                 break;
             case ParticipantType.DeliveryOperator:
                 let deliveryOwner: DeliveryOperator = await getDeliveryOperatorByUserId(ownerUserId);
-                if(!(deliveryOwner.owner)) {
-                    throw new HttpsError(
-                        "internal",
-                        "Only owner can add operators"
-                    );
-                }
+                owner = deliveryOwner.owner;
                 break;
             case ParticipantType.LaundryOperator:
                 let laundryOwner: Operator = await getLaundryOperatorByUserId(ownerUserId);
-    
-                if (!laundryOwner.owner) {
-                    throw new HttpsError("internal", "Only owner can add operators");
-                }
+                owner = laundryOwner.owner ?? false;
                 break;
             default:
                 break;
+        }
+        if (!owner) {
+            throw new HttpsError("internal", "Only owner can add operators");
         }
     }
 }
