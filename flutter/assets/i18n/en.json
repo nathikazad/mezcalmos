@@ -977,9 +977,9 @@
         "viewOrder": "View order details",
         "order": "Order",
         "writeMsgPlaceholder": "Write your message here ...",
-        "cancel" : "Cancel",
-        "callApp" : "Call through app",
-        "callPhone" : "Call with phone number"
+        "cancel": "Cancel",
+        "callApp": "Call through app",
+        "callPhone": "Call with phone number"
       },
       "ViewNotifications": {
         "title": "Notifications",
@@ -1092,8 +1092,12 @@
       },
       "ClosedServiceProviderWidget": {
         "title": "Service closed !",
-        "btnTitle" : "Open service",
+        "btnTitle": "Open service",
         "subtitle": "Your service is closed indefinitely, you will not receive any orders. would you like to open it?"
+      },
+      "ServiceWaitingForApproval": {
+        "title": "YOUR REQUEST IS BEING PROCESSED",
+        "subtitle": "You will be notified once your request is approved."
       },
       "FreeShippingComponent": {
         "free": "Free"
@@ -1723,10 +1727,10 @@
               "pickup": "Pickup",
               "pickupTimeError": "The Pickup time should be before the delivery time.",
               "wrongTime": "You picked a wrong time",
-              "noPickupTimeTitle" : "No pickup time",
-              "noPickupTimeBody" : "Please set pickup time first",
-              "noDeliveryTimeTitle" : "No dropoff time",
-              "noDeliveryTimeBody" : "Please set dropoff time first",
+              "noPickupTimeTitle": "No pickup time",
+              "noPickupTimeBody": "Please set pickup time first",
+              "noDeliveryTimeTitle": "No dropoff time",
+              "noDeliveryTimeBody": "Please set dropoff time first",
               "orderStatus": {
                 "waiting": "Waiting for package",
                 "scheduled": "Scheduled order",
@@ -1748,9 +1752,9 @@
                 "notReadyBody": "Order is not ready for delivery yet",
                 "startDelivery": "Start delivery",
                 "startPickUp": "Start pickup",
-                "atPickUp" : "At pickup",
-                "atDropOff" : "At dropoff",
-                "finishDelivery" : "Finish delivery"
+                "atPickUp": "At pickup",
+                "atDropOff": "At dropoff",
+                "finishDelivery": "Finish delivery"
               }
             }
           }
@@ -1796,6 +1800,9 @@
       }
     },
     "pages": {
+      "LaundryUnauthView": {
+        "title": "Please contact Alejandro at +52 1 954 118 4711 to add your laundry service"
+      },
       "LaundryTabsView": {
         "orders": "Orders",
         "profile": "Profile",
