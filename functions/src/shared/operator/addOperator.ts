@@ -9,7 +9,6 @@ import { getRestaurantOperators } from "../graphql/restaurant/operators/getResta
 import { getUser } from "../graphql/user/getUser";
 import { ParticipantType } from "../models/Generic/Chat";
 import { DeliveryOperator } from "../models/Generic/Delivery";
-import { NotificationInfo } from "../models/Generic/Generic";
 import { UserInfo } from "../models/Generic/User";
 import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../models/Notification";
 import { Operator, ServiceProvider, ServiceProviderType } from "../models/Services/Service";
@@ -17,7 +16,7 @@ import { Operator, ServiceProvider, ServiceProviderType } from "../models/Servic
 
 export interface AddOperatorDetails {
     uniqueId: string,
-    notificationInfo?: NotificationInfo,
+    notificationToken?: string,
     appVersion?: string
 }
 export async function addOperator(operatorUserId: number, addOpDetails: AddOperatorDetails) {

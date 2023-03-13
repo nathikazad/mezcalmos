@@ -67,12 +67,12 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
             "driver creation error"
         );
     }
-    if(!(response.notification_info.length) && addDriverDetails.notificationInfo) {
+    if(!(response.notification_info.length) && addDriverDetails.notificationToken) {
         await chain.mutation({
             insert_notification_info_one: [{
                 object: {
-                    app_type_id: addDriverDetails.notificationInfo.appType,
-                    token: addDriverDetails.notificationInfo.token,
+                    app_type_id: AppType.DeliveryApp,
+                    token: addDriverDetails.notificationToken,
                     user_id: userId
                 }
             }, {
@@ -103,7 +103,11 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         deliveryCompanyType,
         deliveryCompanyId: serviceProvider.id,
         status: AuthorizationStatus.AwaitingApproval,
-        notificationInfo: addDriverDetails.notificationInfo,
+        notificationInfo: (addDriverDetails.notificationToken) ? {
+            appType: AppType.DeliveryApp,
+            token: addDriverDetails.notificationToken,
+            turnOffNotifications: false
+        }: undefined,
         user: {
             firebaseId: mutationResponse.insert_delivery_driver_one!.user.firebase_id,
             id: userId,
