@@ -15,8 +15,8 @@ class SendOtpResponse {
 
   factory SendOtpResponse.fromFirebaseFormattedJson(json) {
     mezDbgPrint("JSON ==========>$json");
-    return SendOtpResponse(
-        json["errorMessage"], json["secondsLeft"], json["status"]);
+    return SendOtpResponse(json["errorMessage"], json["secondsLeft"],
+        json["status"].toString().toServerResponseStatus());
   }
 }
 
@@ -383,5 +383,13 @@ extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseServerStringToServerResponseStatus on String {
+  ServerResponseStatus toServerResponseStatus() {
+    return ServerResponseStatus.values.firstWhere(
+        (ServerResponseStatus element) =>
+            element.toFirebaseFormatString() == toLowerCase());
   }
 }
