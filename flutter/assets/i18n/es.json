@@ -845,7 +845,7 @@
       },
       "ServiceDriversListView": {
         "drivers": "Conductoras",
-        "addDriver": "Agregar controlador",
+        "addDriver": "Agregar conductor",
         "title": "Pídale a su operador que escanee este código QR en su teléfono",
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
@@ -1925,7 +1925,7 @@
           },
           "LaundryOpOrderDriverCard": {
             "driver": "Conductor",
-            "noDriver": "No hay controlador asignado todavía",
+            "noDriver": "No hay conductor asignado todavía",
             "dropOffTime": "Hora de entrega",
             "pickUpTime": "Hora de recogida"
           },
@@ -2087,7 +2087,7 @@
           },
           "ROpDriverCard": {
             "driver": "Conductor",
-            "noDriver": "No hay controlador asignado todavía",
+            "noDriver": "No hay conductor asignado todavía",
             "set": "Colocar",
             "selfDelivery": "Autoentrega",
             "forwarded": "Reenviado a Mezcalmos"
@@ -2206,25 +2206,25 @@
         },
         "pick": "Seleccionar conductor",
         "fwdMezcalmos": "Avanzar a MezCalmos",
-        "assigning": "Asignación del controlador ..."
+        "assigning": "Asignación del conductor ..."
       },
       "ROpDriversView": {
         "components": {
           "ROpListDriverCard": {
             "available": "Disponible",
             "unavailable": "Indisponible",
-            "rmBtn": "Sí, retire el controlador",
-            "rmTitle": "Eliminar el controlador",
-            "rmText": "¿Estás seguro de que quieres eliminar este controlador?"
+            "rmBtn": "Sí, retire el conductor",
+            "rmTitle": "Eliminar este usuario",
+            "rmText": "¿Estás seguro de que quieres eliminar este usuario?"
           }
         },
         "drivers": "Conductoras",
-        "falseTitle": "Active la entrega de autocontrol para entregar con sus propios controladores",
+        "falseTitle": "Active la entrega de autocontrol para entregar con sus propios conductores",
         "falseDesc": "Vaya a Perfil> En atajos, active la entrega de sí mismo",
-        "trueTitle": "Controle su entrega agregando sus propios controladores",
-        "trueDesc": "Autorice los controladores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",
+        "trueTitle": "Controle su entrega agregando sus propios conductores",
+        "trueDesc": "Autorice los conductores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",
         "assDrivers": "Conductores asociados",
-        "addDriver": "Agregar controlador",
+        "addDriver": "Agregar conductor",
         "newDv": "Nuevo conductor",
         "phoneOrEmail": "Número de teléfono o correo electrónico",
         "cancel": "Cancelar"

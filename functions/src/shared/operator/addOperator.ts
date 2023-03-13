@@ -15,8 +15,6 @@ import { Operator, ServiceProvider, ServiceProviderType } from "../models/Servic
 
 
 export interface AddOperatorDetails {
-    // serviceProviderId: number,
-    // participantType: ParticipantType
     uniqueId: string,
     notificationToken?: string,
     appVersion?: string

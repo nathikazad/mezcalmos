@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
 class SendOtpResponse {
   String? errorMessage;
   num? secondsLeft;
@@ -12,8 +14,8 @@ class SendOtpResponse {
   }
 
   factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) {
-    return SendOtpResponse(
-        json["errorMessage?"], json["secondsLeft?"], json["status"]);
+    return SendOtpResponse(json["errorMessage"], json["secondsLeft"],
+        json["status"].toString().toServerResponseStatus());
   }
 }
 
@@ -50,8 +52,8 @@ class PaymentIntentResponse {
   }
 
   factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) {
-    return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey?"],
-        json["customer?"], json["publishableKey"], json["stripeAccountId"]);
+    return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey"],
+        json["customer"], json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
@@ -129,14 +131,6 @@ extension ParseParticipantTypeToString on ParticipantType {
   }
 }
 
-extension ParseStringToParticipantType on String {
-  ParticipantType toHasuraParticipantType() {
-    return ParticipantType.values.firstWhere(
-        (ParticipantType participantType) =>
-            participantType.toFirebaseFormatString() == this);
-  }
-}
-
 class CallUserResponse {
   num id;
   String token;
@@ -158,30 +152,8 @@ class CallUserResponse {
   }
 
   factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) {
-    return CallUserResponse(
-        json["id"],
-        json["token"],
-        json["name"],
-        json["image"],
-        json["expirationTime"],
-        json["participantType"].toString().toHasuraParticipantType());
-  }
-}
-
-class NotificationInfo {
-  String token;
-  bool turnOffNotifications;
-  AppType appType;
-  NotificationInfo(
-      {required this.token,
-      required this.turnOffNotifications,
-      required this.appType});
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "token": token,
-      "turnOffNotifications": turnOffNotifications,
-      "appType": appType,
-    };
+    return CallUserResponse(json["id"], json["token"], json["name"],
+        json["image"], json["expirationTime"], json["participantType"]);
   }
 }
 
@@ -192,14 +164,6 @@ extension ParseDeliveryServiceProviderTypeToString
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToDeliveryServiceProviderType on String {
-  DeliveryServiceProviderType toDeliveryServiceProviderType() {
-    return DeliveryServiceProviderType.values.firstWhere(
-        (DeliveryServiceProviderType deliveryServiceProviderType) =>
-            deliveryServiceProviderType.toFirebaseFormatString() == this);
   }
 }
 
@@ -354,5 +318,13 @@ extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToServerResponseStatus on String {
+  ServerResponseStatus toServerResponseStatus() {
+    return ServerResponseStatus.values.firstWhere(
+        (ServerResponseStatus serverResponseStatus) =>
+            serverResponseStatus.toFirebaseFormatString() == this);
   }
 }
