@@ -142,11 +142,11 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                       height: 25.h,
                       width: 25.h,
                       child: viewController
-                                  .serviceLink.value?.operatorQrImageLink !=
+                                  .serviceLink.value?.driverQrImageLink !=
                               null
                           ? CachedNetworkImage(
                               imageUrl: viewController
-                                  .serviceLink.value!.operatorQrImageLink!,
+                                  .serviceLink.value!.driverQrImageLink!,
                             )
                           : CircularProgressIndicator(),
                     ),
@@ -162,7 +162,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                     onClick: () async {
                       await Clipboard.setData(ClipboardData(
                               text: viewController
-                                  .serviceLink.value!.operatorDeepLink
+                                  .serviceLink.value!.driverDeepLink
                                   .toString()))
                           .whenComplete(() {
                         MezRouter.back();

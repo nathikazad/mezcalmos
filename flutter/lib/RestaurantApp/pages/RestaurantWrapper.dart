@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/ROpDeeplinkHandler.dart';
+import 'package:mezcalmos/RestaurantApp/deepLinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';

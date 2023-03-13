@@ -2213,8 +2213,8 @@
             "available": "Available",
             "unavailable": "Unavailable",
             "rmBtn": "Yes, remove driver",
-            "rmTitle": "Remove driver",
-            "rmText": "Are you sure you want to remove this driver"
+            "rmTitle": "Remove user",
+            "rmText": "Are you sure you want to remove this user"
           }
         },
         "drivers": "Drivers",

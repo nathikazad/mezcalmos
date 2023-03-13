@@ -32,7 +32,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            MezRouter.toNamed(getSingleLaundryRoute(laundry.info.hasuraId));
+            MezRouter.toNamed(getLaundryRoute(laundry.info.hasuraId));
           },
           child: Container(
             child: _laundryInfoHeader(),
