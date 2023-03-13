@@ -843,7 +843,7 @@
       "ServiceDriversListView": {
         "drivers": "Drivers",
         "addDriver": "Add driver",
-        "title": "Ask your operator to scan this QR code on their phone",
+        "title": "Ask your driver to scan this QR code on their phone",
         "copyLink": "Copy link",
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",

@@ -846,7 +846,7 @@
       "ServiceDriversListView": {
         "drivers": "Conductoras",
         "addDriver": "Agregar conductor",
-        "title": "Pídale a su operador que escanee este código QR en su teléfono",
+        "title": "Pídale a su conductora que escanee este código QR en su teléfono",
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
