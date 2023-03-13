@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
+    ["ServiceWaitingForApproval"];
 
 /// UI widget used to inform restaurant operator
 ///
@@ -30,7 +34,7 @@ class ServiceWaitingForApproval extends StatelessWidget {
             margin: const EdgeInsets.only(top: 25),
             alignment: Alignment.center,
             child: Text(
-              "YOUR REQUEST IS BEING PROCESSED",
+              "${_i18n()['title']}",
               style: Get.textTheme.displaySmall,
               textAlign: TextAlign.center,
             ),
@@ -39,7 +43,7 @@ class ServiceWaitingForApproval extends StatelessWidget {
             alignment: Alignment.center,
             margin: const EdgeInsets.only(top: 15),
             child: Text(
-              "You will be notified once your request is approved.",
+              "${_i18n()['subtitle']}",
               textAlign: TextAlign.center,
             ),
           ),

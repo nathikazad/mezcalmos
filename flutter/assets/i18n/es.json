@@ -1103,6 +1103,10 @@
         "btnTitle" : "Servicio abierto",
         "subtitle": "Su servicio está cerrado indefinidamente, no recibirá ningún pedido.¿Te gustaría abrirlo?"
       },
+      "ServiceWaitingForApproval": {
+        "title": "SE ESTÁ PROCESANDO SU PETICIÓN",
+        "subtitle": "Se le notificará una vez que se apruebe su solicitud."
+      },
       "FreeShippingComponent": {
         "free": "Gratis"
       },
@@ -1790,6 +1794,9 @@
       }
     },
     "pages": {
+      "LaundryUnauthView": {
+        "title": "Comuníquese con Alejandro al +52 1 954 118 4711 para agregar su servicio de lavandería"
+      },
       "LaundryTabsView": {
         "orders": "Pedidos",
         "profile": "Perfil",
