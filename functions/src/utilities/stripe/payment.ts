@@ -97,10 +97,7 @@ export async function capturePayment(paymentDetails: PaymentDetails, amountToCap
 
   let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderDetailsId)
   if(!(paymentDetails.orderStripePaymentInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Order stripe payment info is undefined"
-    );
+    throw new MezError("orderStripeInfoNotDefined");
   }
   // switch (paymentDetails.orderType) {
   //   case OrderType.Restaurant:
@@ -116,10 +113,7 @@ export async function capturePayment(paymentDetails: PaymentDetails, amountToCap
   //     );
   // }
   if(!(serviceProvider.stripeInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Service provider does not have a stripe account"
-    );
+    throw new MezError("serviceProviderStripeAccountDoesNotExist");
   }
   
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };

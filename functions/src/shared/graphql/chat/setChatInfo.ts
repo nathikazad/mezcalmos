@@ -235,10 +235,7 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
   let chain = getHasura();
     
     if(toCustomerDelivery.chatWithServiceProviderId == undefined) {
-      throw new HttpsError(
-        "internal",
-        "No delivery chat with store id"
-      );
+      throw new MezError("noDeliveryChatWithStoreId");
     }
     let chatInfo: any = {
       DeliveryApp: {

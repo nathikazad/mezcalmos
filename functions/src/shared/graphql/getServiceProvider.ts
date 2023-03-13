@@ -2,7 +2,6 @@ import { getHasura } from "../../utilities/hasura";
 import { AuthorizationStatus, AppType, Language, MezError } from "../models/Generic/Generic";
 import { ServiceProvider, Operator, OpenStatus, ServiceProviderType } from "../models/Services/Service";
 
-
 export async function getServiceProviderDetails(serviceProviderDetailsId: number): Promise<ServiceProvider> {
     let chain = getHasura();
 
@@ -243,7 +242,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                 //     : undefined,
             }
         default:
-            throw new MezError("serviceProviderNotFound");
+            throw new MezError("serviceProviderDetailsNotFound");
             
     }
 }
@@ -379,10 +378,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
         }]
     });
     if(response.service_provider_details.length == 0) {
-        throw new HttpsError(
-            "internal",
-            "No service provider with that unique id found"
-        );
+        throw new MezError("serviceProviderDetailsNotFound");
     }
     switch (response.service_provider_details[0].service_provider_type) {
         case ServiceProviderType.Restaurant:
@@ -587,10 +583,6 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 //     : undefined,
             }
         default:
-            throw new HttpsError(
-                "internal",
-                "Invalid service provider type"
-            );
-            
+            throw new MezError("invalidServiceProviderType");
     }
 }

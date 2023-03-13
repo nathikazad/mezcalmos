@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Language } from "../../models/Generic/Generic";
+import { Language, MezError } from "../../models/Generic/Generic";
 import { OpenStatus, Operator, ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { AuthorizationStatus } from "../../models/Generic/Generic"
 
@@ -74,10 +73,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
         }]
     });
     if(response.laundry_store_by_pk == null || response.laundry_store_by_pk.details == null) {
-        throw new HttpsError(
-            "internal",
-            "No laundry store with that id found"
-        );
+        throw new MezError("laundryStoreNotfound");
     }
     let laundryOperators: Operator[] = response.laundry_store_by_pk.operators.map((o) => {
         return {

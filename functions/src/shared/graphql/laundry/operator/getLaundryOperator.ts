@@ -37,10 +37,7 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
       }]
     });
     if(response.laundry_operator == null) {
-      throw new HttpsError(
-        "internal",
-        "No laundry with that id found"
-      );
+      throw new MezError("laundryStoreNotfound");
     }
     
     return response.laundry_operator.map((r): Operator => {

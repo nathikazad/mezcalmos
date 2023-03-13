@@ -1,12 +1,9 @@
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
-import { MezError } from "../../models/Generic/Generic";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
-  if(deliveryOrder.deliveryId == null) {
-    throw new MezError("noDeliveryOrderId");
-  }
+
   await chain.mutation({
     update_delivery_order_by_pk: [{
       pk_columns: {
