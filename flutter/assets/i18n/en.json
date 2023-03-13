@@ -1723,6 +1723,10 @@
               "pickup": "Pickup",
               "pickupTimeError": "The Pickup time should be before the delivery time.",
               "wrongTime": "You picked a wrong time",
+              "noPickupTimeTitle" : "No pickup time",
+              "noPickupTimeBody" : "Please set pickup time first",
+              "noDeliveryTimeTitle" : "No dropoff time",
+              "noDeliveryTimeBody" : "Please set dropoff time first",
               "orderStatus": {
                 "waiting": "Waiting for package",
                 "scheduled": "Scheduled order",
@@ -1732,6 +1736,7 @@
                 "deliveryOtw": "Delivery on the way",
                 "pickupOtw": "Pickup on the way",
                 "delivered": "Order Delivered",
+                "received": "Order Received",
                 "canceled": "Order Cancelled"
               },
               "RestaurantControllButtons": {
@@ -1741,7 +1746,11 @@
                 "timeErrorBody": "Please set the estimated times first.",
                 "notReadyTitle": "Waiting for order",
                 "notReadyBody": "Order is not ready for delivery yet",
-                "startDelivery": "Start Delivery"
+                "startDelivery": "Start delivery",
+                "startPickUp": "Start pickup",
+                "atPickUp" : "At pickup",
+                "atDropOff" : "At dropoff",
+                "finishDelivery" : "Finish delivery"
               }
             }
           }

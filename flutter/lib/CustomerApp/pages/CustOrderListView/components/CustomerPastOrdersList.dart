@@ -58,7 +58,7 @@ class CustomerPastOrdersList extends StatelessWidget {
                     : (calculateDifference(element.orderTime) == -1)
                         ? _i18n()["shared"]["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
-                style: txt.bodyText1,
+                style: txt.bodyLarge,
               ),
             );
           },
@@ -68,7 +68,6 @@ class CustomerPastOrdersList extends StatelessWidget {
           itemBuilder: (BuildContext context, MinimalOrder element) {
             return MinimalOrderCard(
               order: element,
-              forCustomer: true,
               onTap: () {
                 if (element.orderType == OrderType.Laundry) {
                   MezRouter.toNamed(getLaundryOrderRoute(element.id));

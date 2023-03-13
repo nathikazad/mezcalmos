@@ -46,7 +46,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return MinimalOrderCard(
                     order: viewController.currentOrders[index],
-                    forCustomer: true,
+                 
                     onTap: () {
                       if (viewController.currentOrders[index].orderType ==
                           OrderType.Laundry) {

@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -60,7 +60,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                 Text(
                   "${_i18n()["from"]}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
 
                 Container(
@@ -71,7 +71,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 Text(
                   "${_i18n()["deliveredTo"]}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
                   height: 10,
@@ -89,22 +89,28 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   height: 10,
                 ),
                 _customerCard(),
-                Divider(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${_i18n()["deliveryCost"]}",
-                      style: Get.textTheme.bodyText1,
-                    ),
-                    Text(
-                      order.value!.deliveryCost.toPriceString(),
-                      style: Get.textTheme.bodyText1,
-                    ),
-                  ],
-                ),
+
+                OrderSummaryCard(
+                  shippingCost: order.value!.deliveryCost,
+                  orderCost: order.value!.packageCost,
+                  totalCost: order.value!.totalCost,
+                  refundAmmount:
+                      order.value!.stripeOrderPaymentInfo?.amountRefunded,
+                  stripeOrderPaymentInfo: order.value!.stripeOrderPaymentInfo,
+                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       "${_i18n()["deliveryCost"]}",
+                //       style: Get.textTheme.bodyText1,
+                //     ),
+                //     Text(
+                //       order.value!.deliveryCost.toPriceString(),
+                //       style: Get.textTheme.bodyText1,
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           );
@@ -128,13 +134,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Text(
             DateFormat("dd MMMM, hh:mm a")
                 .format(order.value!.orderTime.toLocal()),
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
           Text(
               order.value!.isCanceled()
                   ? "${_i18n()["cancelled"]}"
                   : "${_i18n()["approved"]}",
-              style: Get.textTheme.bodyText1?.copyWith(
+              style: Get.textTheme.bodyLarge?.copyWith(
                   color: order.value!.isCanceled()
                       ? Colors.red
                       : primaryBlueColor))
@@ -159,7 +165,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             Text(
               "${order.value!.customerInfo.name}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             Spacer(),
             Text("${_i18n()["customer"]}")
@@ -185,7 +191,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             Text(
               "${order.value!.serviceInfo.name}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             Spacer(),
             Text(_getOrderType())

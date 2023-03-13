@@ -270,6 +270,7 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
             orderType: orderData.order_type.toOrderType(),
             toAdress: orderData.dropoff_address,
             orderTime: DateTime.parse(orderData.order_time),
+            deliveryCost: orderData.delivery_cost,
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
             status:
@@ -305,6 +306,7 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
+          deliveryCost: orderData.delivery_cost,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
@@ -335,6 +337,7 @@ Future<List<MinimalOrder>?> get_past_driver_orders(
           id: orderData.id,
           orderType: orderData.order_type.toOrderType(),
           toAdress: orderData.dropoff_address,
+          deliveryCost: orderData.delivery_cost,
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,

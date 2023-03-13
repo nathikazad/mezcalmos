@@ -19,11 +19,10 @@ class MinimalOrderCard extends StatefulWidget {
     Key? key,
     required this.order,
     required this.onTap,
-    this.forCustomer = false,
   }) : super(key: key);
 
   final MinimalOrder order;
-  final bool forCustomer;
+
   final Function()? onTap;
   @override
   State<MinimalOrderCard> createState() => _MinimalOrderCardState();
@@ -60,58 +59,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            if (widget.forCustomer &&
-                                widget.order.totalCost != null)
-                              Row(
-                                children: <Widget>[
-                                  Icon(
-                                    widget.order.orderType == OrderType.Laundry
-                                        ? Icons.local_laundry_service_sharp
-                                        : Icons.flatware,
-                                    color: blackColor,
-                                    size: 27,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    widget.order.totalCost!.toPriceString(),
-                                    style: Get.textTheme.titleSmall?.copyWith(
-                                      color: blackColor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            if (widget.forCustomer &&
-                                widget.order.deliveryCost != null)
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Icon(
-                                    Icons.delivery_dining,
-                                    color: blackColor,
-                                    size: 27,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    widget.order.deliveryCost!.toPriceString(),
-                                    style: Get.textTheme.titleSmall?.copyWith(
-                                      color: blackColor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                          ],
-                        ),
-                        if (widget.order.toAdress != null &&
-                            widget.forCustomer == false)
+                        if (widget.order.toAdress != null)
                           Text(
                             widget.order.toAdress!.inCaps,
                             style: Get.textTheme.bodyMedium,
@@ -142,8 +90,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                           clipBehavior: Clip.none,
                           children: [
                             Container(
-                                margin: EdgeInsets.only(
-                                    right: widget.forCustomer ? 28 : 0),
+                                margin: EdgeInsets.only(right: 28),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white,
                                   radius: 26,
@@ -159,29 +106,28 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                                     },
                                   ),
                                 )),
-                            if (widget.forCustomer)
-                              Positioned(
-                                right: -8,
-                                child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: CircleAvatar(
-                                        radius: 23,
-                                        backgroundColor: primaryBlueColor,
-                                        child: Icon(
-                                          widget.order.orderType.toIcon(),
-                                          size: 30,
-                                          color: Colors.white,
-                                        )),
-                                  ),
+                            Positioned(
+                              right: -8,
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: CircleAvatar(
+                                      radius: 23,
+                                      backgroundColor: primaryBlueColor,
+                                      child: Icon(
+                                        widget.order.orderType.toIcon(),
+                                        size: 30,
+                                        color: Colors.white,
+                                      )),
                                 ),
                               ),
+                            ),
                           ],
                         ),
                     ],
@@ -191,28 +137,55 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               ),
               const Divider(),
               Row(
-                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   if (widget.order.totalCost != null)
-                    Image.asset(
-                      aMoney,
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.contain,
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          widget.order.orderType == OrderType.Laundry
+                              ? Icons.local_laundry_service_sharp
+                              : Icons.flatware,
+                          color: blackColor,
+                          size: 16.sp,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          widget.order.totalCost!.toPriceString(),
+                          style: Get.textTheme.titleSmall?.copyWith(
+                            color: blackColor,
+                          ),
+                        )
+                      ],
                     ),
-                  if (widget.order.totalCost != null)
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                  if (widget.order.totalCost != null)
-                    Text(
-                      widget.order.totalCost?.toPriceString() ?? "_",
-                      style: Get.textTheme.bodyLarge,
+                  if (widget.order.deliveryCost != null)
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Icon(
+                          Icons.delivery_dining,
+                          color: blackColor,
+                          size: 16.sp,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          widget.order.deliveryCost!.toPriceString(),
+                          style: Get.textTheme.titleSmall?.copyWith(
+                            color: blackColor,
+                          ),
+                        ),
+                      ],
                     ),
                   Spacer(),
                   getOrderWidget()
                 ],
-              )
+              ),
             ],
           ),
         ),

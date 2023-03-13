@@ -33,7 +33,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
-    Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
+    if (_deliveryAuthController.driverState?.isAuthorized == true) {
+      Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
+    }
 
     viewController.init();
 
