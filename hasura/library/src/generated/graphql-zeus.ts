@@ -4389,6 +4389,7 @@ change_price_request?: [{	/** JSON select path */
 	laundry_delivery_order?:ValueTypes["laundry_order"],
 	/** An object relationship */
 	laundry_pickup_order?:ValueTypes["laundry_order"],
+	lock_time?:true,
 	/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:true,
 	order_time?:true,
@@ -4570,6 +4571,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	laundry?:ValueTypes["laundry_store_bool_exp"],
 	laundry_delivery_order?:ValueTypes["laundry_order_bool_exp"],
 	laundry_pickup_order?:ValueTypes["laundry_order_bool_exp"],
+	lock_time?:ValueTypes["timestamp_comparison_exp"],
 	notification_token?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	order_type?:ValueTypes["String_comparison_exp"],
@@ -4666,6 +4668,7 @@ end). throws an error if top level container is not an array */
 	laundry?:ValueTypes["laundry_store_obj_rel_insert_input"],
 	laundry_delivery_order?:ValueTypes["laundry_order_obj_rel_insert_input"],
 	laundry_pickup_order?:ValueTypes["laundry_order_obj_rel_insert_input"],
+	lock_time?:ValueTypes["timestamp"],
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	package_cost?:ValueTypes["money"],
@@ -4714,6 +4717,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
+	lock_time?:true,
 	order_time?:true,
 	order_type?:true,
 	package_cost?:true,
@@ -4758,6 +4762,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	lock_time?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
@@ -4801,6 +4806,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
+	lock_time?:true,
 	order_time?:true,
 	order_type?:true,
 	package_cost?:true,
@@ -4845,6 +4851,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	lock_time?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
@@ -4922,6 +4929,7 @@ cancelledByServiceProvider */
 	laundry?:ValueTypes["laundry_store_order_by"],
 	laundry_delivery_order?:ValueTypes["laundry_order_order_by"],
 	laundry_pickup_order?:ValueTypes["laundry_order_order_by"],
+	lock_time?:ValueTypes["order_by"],
 	notification_token?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
@@ -5177,6 +5185,7 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	estimated_package_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
+	lock_time?:ValueTypes["timestamp"],
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	package_cost?:ValueTypes["money"],
@@ -5356,6 +5365,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	estimated_package_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
+	lock_time?:ValueTypes["timestamp"],
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	package_cost?:ValueTypes["money"],
@@ -18781,6 +18791,19 @@ valid_types_service_provider_type_stream?: [{	/** maximum number of rows returne
 	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type"]],
 		__typename?: true
 }>;
+	["timestamp"]:unknown;
+	/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+["timestamp_comparison_exp"]: {
+	_eq?:ValueTypes["timestamp"],
+	_gt?:ValueTypes["timestamp"],
+	_gte?:ValueTypes["timestamp"],
+	_in?:ValueTypes["timestamp"][],
+	_is_null?:boolean,
+	_lt?:ValueTypes["timestamp"],
+	_lte?:ValueTypes["timestamp"],
+	_neq?:ValueTypes["timestamp"],
+	_nin?:ValueTypes["timestamp"][]
+};
 	["timestamptz"]:unknown;
 	/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 ["timestamptz_comparison_exp"]: {
@@ -23954,6 +23977,7 @@ the end). throws an error if top level container is not an array */
 	laundry_delivery_order?:PartialObjects["laundry_order"],
 			/** An object relationship */
 	laundry_pickup_order?:PartialObjects["laundry_order"],
+			lock_time?:PartialObjects["timestamp"],
 			/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:string,
 			order_time?:PartialObjects["timestamptz"],
@@ -24134,6 +24158,7 @@ cancelledByServiceProvider */
 	laundry?:PartialObjects["laundry_store_bool_exp"],
 	laundry_delivery_order?:PartialObjects["laundry_order_bool_exp"],
 	laundry_pickup_order?:PartialObjects["laundry_order_bool_exp"],
+	lock_time?:PartialObjects["timestamp_comparison_exp"],
 	notification_token?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	order_type?:PartialObjects["String_comparison_exp"],
@@ -24230,6 +24255,7 @@ end). throws an error if top level container is not an array */
 	laundry?:PartialObjects["laundry_store_obj_rel_insert_input"],
 	laundry_delivery_order?:PartialObjects["laundry_order_obj_rel_insert_input"],
 	laundry_pickup_order?:PartialObjects["laundry_order_obj_rel_insert_input"],
+	lock_time?:PartialObjects["timestamp"],
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	package_cost?:PartialObjects["money"],
@@ -24279,6 +24305,7 @@ cancelledByServiceProvider */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
+			lock_time?:PartialObjects["timestamp"],
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			package_cost?:PartialObjects["money"],
@@ -24322,6 +24349,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	lock_time?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
@@ -24366,6 +24394,7 @@ cancelledByServiceProvider */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
+			lock_time?:PartialObjects["timestamp"],
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			package_cost?:PartialObjects["money"],
@@ -24409,6 +24438,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	lock_time?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
@@ -24486,6 +24516,7 @@ cancelledByServiceProvider */
 	laundry?:PartialObjects["laundry_store_order_by"],
 	laundry_delivery_order?:PartialObjects["laundry_order_order_by"],
 	laundry_pickup_order?:PartialObjects["laundry_order_order_by"],
+	lock_time?:PartialObjects["order_by"],
 	notification_token?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
@@ -24741,6 +24772,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	estimated_package_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
+	lock_time?:PartialObjects["timestamp"],
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	package_cost?:PartialObjects["money"],
@@ -24920,6 +24952,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	estimated_package_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
+	lock_time?:PartialObjects["timestamp"],
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	package_cost?:PartialObjects["money"],
@@ -36847,6 +36880,19 @@ All fields are combined with a logical 'AND'. */
 			/** fetch data from the table in a streaming manner: "valid_types.service_provider_type" */
 	valid_types_service_provider_type_stream?:PartialObjects["valid_types_service_provider_type"][]
 	},
+	["timestamp"]:any,
+	/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+["timestamp_comparison_exp"]: {
+	_eq?:PartialObjects["timestamp"],
+	_gt?:PartialObjects["timestamp"],
+	_gte?:PartialObjects["timestamp"],
+	_in?:PartialObjects["timestamp"][],
+	_is_null?:boolean,
+	_lt?:PartialObjects["timestamp"],
+	_lte?:PartialObjects["timestamp"],
+	_neq?:PartialObjects["timestamp"],
+	_nin?:PartialObjects["timestamp"][]
+},
 	["timestamptz"]:any,
 	/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 ["timestamptz_comparison_exp"]: {
@@ -42818,6 +42864,7 @@ export type delivery_order = {
 	laundry_delivery_order?:laundry_order,
 	/** An object relationship */
 	laundry_pickup_order?:laundry_order,
+	lock_time?:timestamp,
 	/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:string,
 	order_time:timestamptz,
@@ -43010,6 +43057,7 @@ export type delivery_order_bool_exp = {
 	laundry?:laundry_store_bool_exp,
 	laundry_delivery_order?:laundry_order_bool_exp,
 	laundry_pickup_order?:laundry_order_bool_exp,
+	lock_time?:timestamp_comparison_exp,
 	notification_token?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
 	order_type?:String_comparison_exp,
@@ -43114,6 +43162,7 @@ export type delivery_order_insert_input = {
 	laundry?:laundry_store_obj_rel_insert_input,
 	laundry_delivery_order?:laundry_order_obj_rel_insert_input,
 	laundry_pickup_order?:laundry_order_obj_rel_insert_input,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43164,6 +43213,7 @@ export type delivery_order_max_fields = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43208,6 +43258,7 @@ export type delivery_order_max_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
+	lock_time?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
 	package_cost?:order_by,
@@ -43253,6 +43304,7 @@ export type delivery_order_min_fields = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43297,6 +43349,7 @@ export type delivery_order_min_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
+	lock_time?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
 	package_cost?:order_by,
@@ -43378,6 +43431,7 @@ export type delivery_order_order_by = {
 	laundry?:laundry_store_order_by,
 	laundry_delivery_order?:laundry_order_order_by,
 	laundry_pickup_order?:laundry_order_order_by,
+	lock_time?:order_by,
 	notification_token?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
@@ -43659,6 +43713,7 @@ export enum delivery_order_select_column {
 	estimated_arrival_at_pickup_time = "estimated_arrival_at_pickup_time",
 	estimated_package_ready_time = "estimated_package_ready_time",
 	id = "id",
+	lock_time = "lock_time",
 	order_time = "order_time",
 	order_type = "order_type",
 	package_cost = "package_cost",
@@ -43713,6 +43768,7 @@ export type delivery_order_set_input = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43900,6 +43956,7 @@ export type delivery_order_stream_cursor_value_input = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43991,6 +44048,7 @@ export enum delivery_order_update_column {
 	estimated_arrival_at_pickup_time = "estimated_arrival_at_pickup_time",
 	estimated_package_ready_time = "estimated_package_ready_time",
 	id = "id",
+	lock_time = "lock_time",
 	order_time = "order_time",
 	order_type = "order_type",
 	package_cost = "package_cost",
@@ -57740,6 +57798,21 @@ export type subscription_root = {
 	valid_types_service_provider_type_stream:valid_types_service_provider_type[]
 }
 
+export type timestamp = any
+
+/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+export type timestamp_comparison_exp = {
+		_eq?:timestamp,
+	_gt?:timestamp,
+	_gte?:timestamp,
+	_in?:timestamp[],
+	_is_null?:boolean,
+	_lt?:timestamp,
+	_lte?:timestamp,
+	_neq?:timestamp,
+	_nin?:timestamp[]
+}
+
 export type timestamptz = any
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -69177,6 +69250,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"timestamp_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		notification_token:{
 			type:"String_comparison_exp",
 			array:false,
@@ -69614,6 +69693,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		order_time:{
 			type:"timestamptz",
 			array:false,
@@ -69844,6 +69929,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		order_time:{
 			type:"order_by",
 			array:false,
@@ -70039,6 +70130,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		lock_time:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -70364,6 +70461,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		laundry_pickup_order:{
 			type:"laundry_order_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		lock_time:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -70950,6 +71053,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		order_time:{
 			type:"timestamptz",
 			array:false,
@@ -71466,6 +71575,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		lock_time:{
+			type:"timestamp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -111419,6 +111534,63 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	timestamp: "String",
+	timestamp_comparison_exp:{
+		_eq:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gt:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gte:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_in:{
+			type:"timestamp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_is_null:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lt:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lte:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_neq:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_nin:{
+			type:"timestamp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	timestamptz: "String",
 	timestamptz_comparison_exp:{
 		_eq:{
@@ -114387,6 +114559,7 @@ export const ReturnTypes: Record<string,any> = {
 		laundry:"laundry_store",
 		laundry_delivery_order:"laundry_order",
 		laundry_pickup_order:"laundry_order",
+		lock_time:"timestamp",
 		notification_token:"String",
 		order_time:"timestamptz",
 		order_type:"String",
@@ -114462,6 +114635,7 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
+		lock_time:"timestamp",
 		order_time:"timestamptz",
 		order_type:"String",
 		package_cost:"money",
@@ -114497,6 +114671,7 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
+		lock_time:"timestamp",
 		order_time:"timestamptz",
 		order_type:"String",
 		package_cost:"money",

@@ -6529,6 +6529,7 @@ type delivery_order {
 
   """An object relationship"""
   laundry_pickup_order: laundry_order
+  lock_time: timestamp
 
   """
   A computed field, executes function "delivery_notification_token"
@@ -6749,6 +6750,7 @@ input delivery_order_bool_exp {
   laundry: laundry_store_bool_exp
   laundry_delivery_order: laundry_order_bool_exp
   laundry_pickup_order: laundry_order_bool_exp
+  lock_time: timestamp_comparison_exp
   notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
@@ -6880,6 +6882,7 @@ input delivery_order_insert_input {
   laundry: laundry_store_obj_rel_insert_input
   laundry_delivery_order: laundry_order_obj_rel_insert_input
   laundry_pickup_order: laundry_order_obj_rel_insert_input
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -6936,6 +6939,7 @@ type delivery_order_max_fields {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -6989,6 +6993,7 @@ input delivery_order_max_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  lock_time: order_by
   order_time: order_by
   order_type: order_by
   package_cost: order_by
@@ -7040,6 +7045,7 @@ type delivery_order_min_fields {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -7093,6 +7099,7 @@ input delivery_order_min_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  lock_time: order_by
   order_time: order_by
   order_type: order_by
   package_cost: order_by
@@ -7187,6 +7194,7 @@ input delivery_order_order_by {
   laundry: laundry_store_order_by
   laundry_delivery_order: laundry_order_order_by
   laundry_pickup_order: laundry_order_order_by
+  lock_time: order_by
   notification_token: order_by
   order_time: order_by
   order_type: order_by
@@ -7541,6 +7549,9 @@ enum delivery_order_select_column {
   id
 
   """column name"""
+  lock_time
+
+  """column name"""
   order_time
 
   """column name"""
@@ -7635,6 +7646,7 @@ input delivery_order_set_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -7850,6 +7862,7 @@ input delivery_order_stream_cursor_value_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -7999,6 +8012,9 @@ enum delivery_order_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  lock_time
 
   """column name"""
   order_time
@@ -33708,6 +33724,23 @@ type subscription_root {
     """filter the rows returned"""
     where: valid_types_service_provider_type_bool_exp
   ): [valid_types_service_provider_type!]!
+}
+
+scalar timestamp
+
+"""
+Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
 }
 
 scalar timestamptz
