@@ -24,7 +24,7 @@ export interface LaundryDetails {
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
   language: Record<Language, boolean>,
-  uniqueId: string
+  uniqueId?: string
 }
 
 export async function createLaundry(userId: number, laundryDetails: LaundryDetails) {

@@ -27,6 +27,7 @@ export interface ServiceProvider {
   deliveryDetails: DeliveryDetails;
   operators?: Operator[];
   serviceProviderType: ServiceProviderType;
+  uniqueId?: string;
 }
 
 export interface Operator {
