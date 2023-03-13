@@ -2,7 +2,6 @@ import { createDeliveryDriver } from "../shared/graphql/delivery/driver/createDe
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { NotificationInfo } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -12,7 +11,7 @@ import { getServiceProviderFromUniqueId } from "../shared/graphql/getServiceProv
 
 export interface AddDriverDetails {
     uniqueId: string,
-    notificationInfo?: NotificationInfo,
+    notificationToken?: string,
 }
 
 export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {

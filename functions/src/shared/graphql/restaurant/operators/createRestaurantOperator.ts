@@ -50,13 +50,13 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
             user_id: operatorUserId,
             app_type_id: AppType.RestaurantApp,
             app_version: addOpDetails.appVersion,
-            notification_info: (addOpDetails.notificationInfo) 
+            notification_info: (addOpDetails.notificationToken) 
               ? {
                 data: {
-                  token: addOpDetails.notificationInfo.token,
+                  token: addOpDetails.notificationToken,
                   user_id: operatorUserId,
-                  turn_off_notifications: addOpDetails.notificationInfo.turnOffNotifications,
-                  app_type_id: addOpDetails.notificationInfo.appType
+                  turn_off_notifications: false,
+                  app_type_id: AppType.RestaurantApp
                 }
               }: undefined,
             status: AuthorizationStatus.AwaitingApproval,
@@ -81,6 +81,10 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
     online: true,
     serviceProviderId: restaurant.id,
     status: AuthorizationStatus.AwaitingApproval,
-    notificationInfo: addOpDetails.notificationInfo,
+    notificationInfo: (addOpDetails.notificationToken) ? {
+      appType: AppType.RestaurantApp,
+      token: addOpDetails.notificationToken,
+      turnOffNotifications: false
+    }: undefined,
   }
 }

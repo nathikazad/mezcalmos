@@ -54,15 +54,15 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
                         user_id: operatorUserId,
                         app_type_id: AppType.LaundryApp,
                         app_version: addOpDetails.appVersion,
-                        notification_info: (addOpDetails.notificationInfo) 
-                            ? {
+                        notification_info: (addOpDetails.notificationToken) 
+                        ? {
                             data: {
-                                token: addOpDetails.notificationInfo.token,
+                                token: addOpDetails.notificationToken,
                                 user_id: operatorUserId,
-                                turn_off_notifications: addOpDetails.notificationInfo.turnOffNotifications,
-                                app_type_id: addOpDetails.notificationInfo.appType
+                                turn_off_notifications: false,
+                                app_type_id: AppType.LaundryApp
                             }
-                            }: undefined,
+                        }: undefined,
                         status: AuthorizationStatus.AwaitingApproval,
                     }
                 },
@@ -85,6 +85,10 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
       serviceProviderId: laundryStore.id,
       status: AuthorizationStatus.AwaitingApproval,
       online: true,
-      notificationInfo: addOpDetails.notificationInfo,
+      notificationInfo: (addOpDetails.notificationToken) ? {
+        appType: AppType.LaundryApp,
+        token: addOpDetails.notificationToken,
+        turnOffNotifications:  false
+      }: undefined,
     }
   }

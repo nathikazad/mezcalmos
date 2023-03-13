@@ -18,13 +18,15 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
                         status: AuthorizationStatus.AwaitingApproval,
                         app_type_id: AppType.DeliveryAdmin,
                         user_id: operatorUserId,
-                        notification_info: (addOperatorDetails.notificationInfo) ? {
-                            data: {
-                                app_type_id: AppType.DeliveryAdmin,
-                                token: addOperatorDetails.notificationInfo.token,
-                                user_id: operatorUserId
-                            }
-                        }: undefined
+                        notification_info: (addOperatorDetails.notificationToken) 
+                        ? {
+                          data: {
+                            token: addOperatorDetails.notificationToken,
+                            user_id: operatorUserId,
+                            turn_off_notifications: false,
+                            app_type_id: AppType.DeliveryAdmin
+                          }
+                        }: undefined,
                     }
                 }
             }
@@ -45,7 +47,11 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
         operatorDetailsId: mutationResponse.insert_delivery_operator_one.details_id,
         deliveryCompanyId: deliveryCompany.id,
         status: AuthorizationStatus.AwaitingApproval,
-        notificationInfo: addOperatorDetails.notificationInfo,
+        notificationInfo: (addOperatorDetails.notificationToken) ? {
+            appType: AppType.DeliveryAdmin,
+            token: addOperatorDetails.notificationToken,
+            turnOffNotifications:  false
+          }: undefined,
         owner: false,
         online: true,
     }
