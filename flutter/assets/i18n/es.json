@@ -199,7 +199,7 @@
               "pickLocationHintText":"Ingrese su nombre",
               "addLocationDialogButton": "Guardar",
               "editLocationDialogButton": "EDITAR",
-              "addLocationDialogSkip": "Cerca"
+              "addLocationDialogSkip": "Ahora no"
             }
           },
           "ViewCartScreen": {
