@@ -8,6 +8,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator, ServiceProvider, ServiceProviderType } from "../shared/models/Services/Service";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { getServiceProviderFromUniqueId } from "../shared/graphql/getServiceProvider";
+import { HttpsError } from "firebase-functions/v1/auth";
 
 export interface AddDriverDetails {
     uniqueId: string,
@@ -17,10 +18,18 @@ export interface AddDriverDetails {
 export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {
     //first mutation
     //second notify operators of the company
-    let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addDriverDetails.uniqueId)
-    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, serviceProvider, addDriverDetails);
-
-    notify(deliveryDriver, serviceProvider);
+    try {
+        let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addDriverDetails.uniqueId)
+        let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, serviceProvider, addDriverDetails);
+    
+        await notify(deliveryDriver, serviceProvider);
+    } catch(err) {
+        console.log("Error: ", err);
+        throw new HttpsError(
+            "internal",
+            "Error in add driver"
+        );
+    }
 }
 
 async function notify(deliveryDriver: DeliveryDriver, serviceProvider: ServiceProvider) {
