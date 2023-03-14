@@ -22,7 +22,7 @@ export async function addDriver(userId: number, addDriverDetails: AddDriverDetai
         let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addDriverDetails.uniqueId)
         let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, serviceProvider, addDriverDetails);
     
-        notify(deliveryDriver, serviceProvider);
+        await notify(deliveryDriver, serviceProvider);
     } catch(err) {
         console.log("Error: ", err);
         throw new HttpsError(
