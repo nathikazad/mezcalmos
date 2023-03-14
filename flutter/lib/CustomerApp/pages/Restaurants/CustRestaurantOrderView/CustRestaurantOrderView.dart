@@ -172,8 +172,16 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                   review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 note: viewController.order.value!.notes),
-                            OrderSummaryCard(
-                              order: viewController.order.value!,
+                                 OrderSummaryCard(
+                              margin: const EdgeInsets.only(top: 15),
+                              orderCost: viewController.order.value!.itemsCost,
+                              refundAmmount:
+                                  viewController.order.value!.refundAmount,
+                              shippingCost:
+                                  viewController.order.value!.shippingCost,
+                              stripeOrderPaymentInfo:
+                                  viewController.order.value!.stripePaymentInfo,
+                              totalCost: viewController.order.value!.totalCost,
                             ),
 
                             //===============================>button cancel===========================

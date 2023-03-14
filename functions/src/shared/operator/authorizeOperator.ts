@@ -7,6 +7,7 @@ import { getLaundryOperator, getLaundryOperatorByUserId } from "../graphql/laund
 import { updateOperatorStatusToAuthorized } from "../graphql/operator/updateOperatorStatus";
 import { deleteRestaurantOperator } from "../graphql/restaurant/operators/deleteOperator";
 import { getRestaurantOperator, getRestaurantOperatorByUserId } from "../graphql/restaurant/operators/getRestaurantOperators";
+import { isMezAdmin } from "../helper";
 import { ParticipantType } from "../models/Generic/Chat";
 import { DeliveryOperator, DeliveryOperatorApprovedNotification } from "../models/Generic/Delivery";
 import { Notification, NotificationAction, NotificationType } from "../models/Notification";
@@ -22,16 +23,13 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
 
     let operator: Operator;
     let operatorDetailsId: number = 0;
+
+    await authorizationCheck();
     
     switch (authorizeDetails.participantType) {
         case ParticipantType.RestaurantOperator:
             operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
 
-            let restaurantOwner: Operator = await getRestaurantOperatorByUserId(ownerUserId);
-
-            if (!restaurantOwner.owner) {
-                throw new HttpsError("internal", "Only owner can add operators");
-            }
             if (authorizeDetails.approved) {
                 operatorDetailsId = operator.detailsId;
             } else {
@@ -40,14 +38,8 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             notifyOperator(ParticipantType.RestaurantOperator);
             break;
         case ParticipantType.DeliveryOperator:
-            let deliveryOwner: DeliveryOperator = await getDeliveryOperatorByUserId(ownerUserId);
-            if(!(deliveryOwner.owner)) {
-                throw new HttpsError(
-                    "internal",
-                    "Only owner can add operators"
-                );
-            }
             let deliveryOperator: DeliveryOperator = await getDeliveryOperator(authorizeDetails.newOperatorId);
+
             if(authorizeDetails.approved) {
                 operatorDetailsId = deliveryOperator.operatorDetailsId;
             } else {
@@ -58,11 +50,6 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
         case ParticipantType.LaundryOperator:
             operator = await getLaundryOperator(authorizeDetails.newOperatorId);
 
-            let laundryOwner: Operator = await getLaundryOperatorByUserId(ownerUserId);
-
-            if (!laundryOwner.owner) {
-                throw new HttpsError("internal", "Only owner can add operators");
-            }
             if (authorizeDetails.approved) {
                 operatorDetailsId = operator.detailsId;
             } else {
@@ -74,10 +61,10 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             break;
     }
     if(operatorDetailsId != 0) {
-        updateOperatorStatusToAuthorized(operatorDetailsId);
+        await updateOperatorStatusToAuthorized(operatorDetailsId);
     }
     
-
+    
     function notifyOperator(participantType: ParticipantType) {
         let notification: Notification = {
             foreground: <OperatorApprovedNotification>{
@@ -162,4 +149,31 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             );
         }
     }
+
+    async function authorizationCheck() {
+        if((await isMezAdmin(ownerUserId)) == true)
+            return;
+        
+        let owner: boolean = true;
+        switch (authorizeDetails.participantType) {
+            case ParticipantType.RestaurantOperator:
+                let restaurantOwner: Operator = await getRestaurantOperatorByUserId(ownerUserId);
+                owner = restaurantOwner.owner ?? false;
+                break;
+            case ParticipantType.DeliveryOperator:
+                let deliveryOwner: DeliveryOperator = await getDeliveryOperatorByUserId(ownerUserId);
+                owner = deliveryOwner.owner;
+                break;
+            case ParticipantType.LaundryOperator:
+                let laundryOwner: Operator = await getLaundryOperatorByUserId(ownerUserId);
+                owner = laundryOwner.owner ?? false;
+                break;
+            default:
+                break;
+        }
+        if (!owner) {
+            throw new HttpsError("internal", "Only owner can add operators");
+        }
+    }
 }
+

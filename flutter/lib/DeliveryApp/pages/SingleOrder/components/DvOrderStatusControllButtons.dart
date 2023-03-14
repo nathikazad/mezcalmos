@@ -39,7 +39,19 @@ class _DvOrderStatusControllButtonsState
       // color: (order.inDeliveryPhase())
       //     ? Theme.of(context).primaryColorLight
       //     : Colors.grey,
-      child: (clicked) ? _loadingPlaceholder() : _getFooterComponent(),
+      child: (clicked)
+          ? _loadingPlaceholder()
+          : (!widget.viewController.order.isTimeSetted)
+              ? _waitingDisabledButton(
+                  header:
+                      "${_i18n()["RestaurantControllButtons"]["timeErrorTitle"]}",
+                  body:
+                      "${_i18n()["RestaurantControllButtons"]["timeErrorBody"]}",
+                  child: Icon(
+                    Icons.watch_later,
+                    color: Colors.red,
+                  ))
+              : _getFooterComponent(),
     );
   }
 
@@ -283,16 +295,16 @@ class _DvOrderStatusControllButtonsState
   String _getBtnTitle() {
     switch (widget.viewController.order.status) {
       case DeliveryOrderStatus.OrderReceived:
-        return "Start pickup";
+        return "${_i18n()["RestaurantControllButtons"]["startPickUp"]}";
       case DeliveryOrderStatus.OnTheWayToPickup:
-        return "At pickup";
+        return "${_i18n()["RestaurantControllButtons"]["atPickUp"]}";
 
       case DeliveryOrderStatus.AtPickup:
-        return "Start Delivery";
+        return "${_i18n()["RestaurantControllButtons"]["startDelivery"]}";
       case DeliveryOrderStatus.OnTheWayToDropoff:
-        return "At dropoff";
+        return "${_i18n()["RestaurantControllButtons"]["atDropOff"]}";
       case DeliveryOrderStatus.AtDropoff:
-        return "Finish delivery";
+        return "${_i18n()["RestaurantControllButtons"]["finishDelivery"]}";
 
       default:
         return "";

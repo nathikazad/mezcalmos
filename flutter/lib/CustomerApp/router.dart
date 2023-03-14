@@ -40,7 +40,7 @@ const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
 const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
-const String kSingleLaundryRoute = '/laundriesList/:laundryId';
+const String kLaundryRoute = '/laundriesList/:laundryId';
 const String kserviceReviewsList = "/reviews/:serviceId";
 
 String getRestaurantRoute(
@@ -56,8 +56,8 @@ String getReviewsListRoute(
   return kserviceReviewsList.replaceFirst(":serviceId", serviceId.toString());
 }
 
-String getSingleLaundryRoute(int laundryId) {
-  return kSingleLaundryRoute.replaceFirst(":laundryId", "$laundryId");
+String getLaundryRoute(int laundryId) {
+  return kLaundryRoute.replaceFirst(":laundryId", "$laundryId");
 }
 
 String getItemRoute(int restaurantId, int itemId) {
@@ -175,7 +175,7 @@ class XRouter {
           page: () => CustLaundryOrderRequestView(),
         ),
         GetPage(
-          name: kSingleLaundryRoute,
+          name: kLaundryRoute,
           page: () => SingleLaundryScreen(),
         ),
         GetPage(

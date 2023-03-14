@@ -843,7 +843,7 @@
       "ServiceDriversListView": {
         "drivers": "Drivers",
         "addDriver": "Add driver",
-        "title": "Ask your operator to scan this QR code on their phone",
+        "title": "Ask your driver to scan this QR code on their phone",
         "copyLink": "Copy link",
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
@@ -977,9 +977,9 @@
         "viewOrder": "View order details",
         "order": "Order",
         "writeMsgPlaceholder": "Write your message here ...",
-        "cancel" : "Cancel",
-        "callApp" : "Call through app",
-        "callPhone" : "Call with phone number"
+        "cancel": "Cancel",
+        "callApp": "Call through app",
+        "callPhone": "Call with phone number"
       },
       "ViewNotifications": {
         "title": "Notifications",
@@ -1092,8 +1092,12 @@
       },
       "ClosedServiceProviderWidget": {
         "title": "Service closed !",
-        "btnTitle" : "Open service",
+        "btnTitle": "Open service",
         "subtitle": "Your service is closed indefinitely, you will not receive any orders. would you like to open it?"
+      },
+      "ServiceWaitingForApproval": {
+        "title": "YOUR REQUEST IS BEING PROCESSED",
+        "subtitle": "You will be notified once your request is approved."
       },
       "FreeShippingComponent": {
         "free": "Free"
@@ -1598,6 +1602,11 @@
   },
   "DeliveryApp": {
     "pages": {
+      "UnAuthorizedDriverView" : {
+        "title" : "Invitation needed",
+        "subtitle" : "You need an invitation to use our delivery app"
+
+      },
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
         "approved": "Approved",
@@ -1723,6 +1732,10 @@
               "pickup": "Pickup",
               "pickupTimeError": "The Pickup time should be before the delivery time.",
               "wrongTime": "You picked a wrong time",
+              "noPickupTimeTitle": "No pickup time",
+              "noPickupTimeBody": "Please set pickup time first",
+              "noDeliveryTimeTitle": "No dropoff time",
+              "noDeliveryTimeBody": "Please set dropoff time first",
               "orderStatus": {
                 "waiting": "Waiting for package",
                 "scheduled": "Scheduled order",
@@ -1732,6 +1745,7 @@
                 "deliveryOtw": "Delivery on the way",
                 "pickupOtw": "Pickup on the way",
                 "delivered": "Order Delivered",
+                "received": "Order Received",
                 "canceled": "Order Cancelled"
               },
               "RestaurantControllButtons": {
@@ -1741,7 +1755,11 @@
                 "timeErrorBody": "Please set the estimated times first.",
                 "notReadyTitle": "Waiting for order",
                 "notReadyBody": "Order is not ready for delivery yet",
-                "startDelivery": "Start Delivery"
+                "startDelivery": "Start delivery",
+                "startPickUp": "Start pickup",
+                "atPickUp": "At pickup",
+                "atDropOff": "At dropoff",
+                "finishDelivery": "Finish delivery"
               }
             }
           }
@@ -1787,6 +1805,9 @@
       }
     },
     "pages": {
+      "LaundryUnauthView": {
+        "title": "Please contact Alejandro at +52 1 954 118 4711 to add your laundry service"
+      },
       "LaundryTabsView": {
         "orders": "Orders",
         "profile": "Profile",
@@ -2213,8 +2234,8 @@
             "available": "Available",
             "unavailable": "Unavailable",
             "rmBtn": "Yes, remove driver",
-            "rmTitle": "Remove driver",
-            "rmText": "Are you sure you want to remove this driver"
+            "rmTitle": "Remove user",
+            "rmText": "Are you sure you want to remove this user"
           }
         },
         "drivers": "Drivers",

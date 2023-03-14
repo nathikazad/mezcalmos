@@ -64,10 +64,10 @@ Future<String?> get_service_link({required String uniqueId}) async {
       .parsedData?.service_provider_details.first.service_provider_type) {
     case "restaurant":
       return getRestaurantRoute(
-          response.parsedData!.service_provider_details.first.id);
+          response.parsedData!.service_provider_details.first.restaurant!.id);
     case "laundry":
-      return getSingleLaundryRoute(
-          response.parsedData!.service_provider_details.first.id);
+      return getLaundryRoute(response
+          .parsedData!.service_provider_details.first.laundry_store!.id);
     default:
       return null;
   }

@@ -10,6 +10,7 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { AuthorizationStatus, MezError } from "../shared/models/Generic/Generic";
 import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { Operator } from "../shared/models/Services/Service";
+import { isMezAdmin } from "../shared/helper";
 
 export interface AuthorizeDetails {
   deliveryDriverId: number,
@@ -30,7 +31,7 @@ enum AuthorizeDriverError {
 
 export async function authorizeDriver(userId: number, authorizeDetails: AuthorizeDetails): Promise<AuthorizeDriverResponse> {
   try {
-    let deliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId)//, ParticipantType.DeliveryDriver);
+    let deliveryDriver: DeliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId)//, ParticipantType.DeliveryDriver);
 
     await checkAuthorization();
 
@@ -63,6 +64,9 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
   }
 
   async function checkAuthorization() {
+    if((await isMezAdmin(userId)) == true)
+      return;
+      
     switch (authorizeDetails.deliveryServiceProviderType) {
       case DeliveryServiceProviderType.Restaurant:
         let restaurantOperator: Operator = await getRestaurantOperatorByUserId(userId);

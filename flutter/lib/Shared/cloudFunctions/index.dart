@@ -116,16 +116,14 @@ class CloudFunctions {
   }
 
   static Future<void> serviceProvider_addOperator(
-      {required num serviceProviderId,
-      required ParticipantType participantType,
-      NotificationInfo? notificationInfo,
+      {required String uniqueId,
+      String? notificationToken,
       String? appVersion}  ) async {
     return await callCloudFunction(
       functionName: "serviceProvider-addOperator",
       parameters: <String, dynamic>{
-        "serviceProviderId": serviceProviderId,
-        "participantType":participantType.toFirebaseFormatString(),
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
+        "uniqueId": uniqueId,
+        "notificationToken": notificationToken,
         "appVersion": appVersion,
       });
   }
@@ -144,15 +142,13 @@ class CloudFunctions {
   }
 
   static Future<void> serviceProvider_addDriver(
-      {required num deliveryCompanyId,
-      NotificationInfo? notificationInfo,
-      required DeliveryServiceProviderType deliveryServiceProviderType}  ) async {
+      {required String uniqueId,
+      String? notificationToken}  ) async {
     return await callCloudFunction(
       functionName: "serviceProvider-addDriver",
       parameters: <String, dynamic>{
-        "deliveryCompanyId": deliveryCompanyId,
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-        "deliveryServiceProviderType":deliveryServiceProviderType.toFirebaseFormatString(),
+        "uniqueId": uniqueId,
+        "notificationToken": notificationToken,
       });
   }
 
@@ -178,7 +174,8 @@ class CloudFunctions {
       String? firebaseId,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
-      required Map<String,bool> language}  ) async {
+      required Map<String,bool> language,
+      String? uniqueId}  ) async {
     return await callCloudFunction(
       functionName: "restaurant2-createRestaurant",
       parameters: <String, dynamic>{
@@ -191,6 +188,7 @@ class CloudFunctions {
         "deliveryPartnerId": deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
         "language": language,
+        "uniqueId": uniqueId,
       });
   }
 
@@ -285,7 +283,8 @@ class CloudFunctions {
       String? firebaseId,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
-      required Map<String,bool> language}  ) async {
+      required Map<String,bool> language,
+      String? uniqueId}  ) async {
     return await callCloudFunction(
       functionName: "laundry2-createLaundry",
       parameters: <String, dynamic>{
@@ -298,6 +297,7 @@ class CloudFunctions {
         "deliveryPartnerId": deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
         "language": language,
+        "uniqueId": uniqueId,
       });
   }
 

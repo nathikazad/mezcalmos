@@ -45,7 +45,6 @@ export async function readyForDeliveryOrder(userId: number, changeStatusDetails:
   await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.ReadyForDelivery, userId)
 };
 
-
 async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, userId: number): Promise<ChangeLaundryStatusResponse> {
   try {
     await passChecksForLaundry(orderId, userId);
@@ -90,7 +89,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
         if(newStatus == LaundryOrderStatus.CancelledByAdmin) {
           toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
   
-          updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
+          updateDeliveryOrderStatus(toCustomerDeliveryOrder);
         } else {
           toCustomerDeliveryOrder.packageCost = order.itemsCost;
           updateDeliveryPackageCost(toCustomerDeliveryOrder)
@@ -163,10 +162,9 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     }
   }
 }
-
 // export async function setWeight(userId: number, data: any) {
 
-//   if (data.costsByType == null) {
+// //   if (data.costsByType == null) {
 //     return {
 //       status: ServerResponseStatus.Error,
 //       errorMessage: `Expected costsByType`,
@@ -177,55 +175,55 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
 //   await passChecksForLaundry(data.orderId, userId);
 
 
-//   let order: LaundryOrder = await getLaundryOrder(data.orderId)
+// //   let order: LaundryOrder = await getLaundryOrder(data.orderId)
 
-//   if (order.status != LaundryOrderStatus.AtLaundry) {
-//     return {
-//       ok: false,
-//       error: {
-//         status: ServerResponseStatus.Error,
-//         errorMessage: `Order weight can only be changed when status is at laundry`,
-//         errorCode: "orderNotAtLaundry"
-//       }
-//     }
-//   }
+// //   if (order.status != LaundryOrderStatus.AtLaundry) {
+// //     return {
+// //       ok: false,
+// //       error: {
+// //         status: ServerResponseStatus.Error,
+// //         errorMessage: `Order weight can only be changed when status is at laundry`,
+// //         errorCode: "orderNotAtLaundry"
+// //       }
+// //     }
+// //   }
 
-//   let orderId = data.orderId;
-//   // order.costsByType = data.costsByType;
-//   // order.cost = order.shippingCost + order.costsByType?.weighedCost
+// //   let orderId = data.orderId;
+// //   // order.costsByType = data.costsByType;
+// //   // order.cost = order.shippingCost + order.costsByType?.weighedCost
 
-//   // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
-//   // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
-//   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-//   // if (order.dropoffDriver)
-//   //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
+// //   // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+// //   // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
+// //   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+// //   // if (order.dropoffDriver)
+// //   //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
 
-//   return { status: ServerResponseStatus.Success }
-// };
+// //   return { status: ServerResponseStatus.Success }
+// // };
 
-// export async function setEstimatedLaundryReadyTime(userId: number, data: any) {
+// // export async function setEstimatedLaundryReadyTime(userId: number, data: any) {
 
-//   if (data.estimatedLaundryReadyTime == null) {
-//     return {
-//       status: ServerResponseStatus.Error,
-//       errorMessage: `Expected estimatedLaundryReadyTime`,
-//       errorCode: "orderIdNotGiven"
-//     }
-//   }
+// //   if (data.estimatedLaundryReadyTime == null) {
+// //     return {
+// //       status: ServerResponseStatus.Error,
+// //       errorMessage: `Expected estimatedLaundryReadyTime`,
+// //       errorCode: "orderIdNotGiven"
+// //     }
+// //   }
 
-//   await passChecksForLaundry(data.orderId, userId);
+// //   await passChecksForLaundry(data.orderId, userId);
 
 
-//   let order: LaundryOrder = await getLaundryOrder(data.orderId)
+// //   let order: LaundryOrder = await getLaundryOrder(data.orderId)
 
-//   let orderId = data.orderId;
-//   // order.estimatedLaundryReadyTime = data.estimatedLaundryReadyTime;
+// //   let orderId = data.orderId;
+// //   // order.estimatedLaundryReadyTime = data.estimatedLaundryReadyTime;
 
-//   // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
-//   // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
-//   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-//   // if (order.dropoffDriver)
-//   //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
+// //   // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+// //   // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
+// //   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+// //   // if (order.dropoffDriver)
+// //   //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
 
-//   return { status: ServerResponseStatus.Success }
-// };
+// //   return { status: ServerResponseStatus.Success }
+// // };

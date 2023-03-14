@@ -31,10 +31,6 @@
 			</array>
 		</dict>
 	</array>
-		<key>FirebaseDynamicLinksCustomDomains</key>
-	<array>
-		<string>https://mezc.co</string>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
