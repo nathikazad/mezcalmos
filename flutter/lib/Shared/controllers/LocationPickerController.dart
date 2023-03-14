@@ -128,11 +128,11 @@ class LocationPickerState extends State<LocationPicker> {
       child: Container(
         margin: EdgeInsets.only(bottom: 30),
         color: Colors.transparent,
-        height: 30,
-        width: 20,
+        height: 35,
+        width: 35,
         child: ClipRect(
           child: Image.asset(
-            aLocationPicker,
+            mezDestinationMarker,
             fit: BoxFit.cover,
           ),
         ),

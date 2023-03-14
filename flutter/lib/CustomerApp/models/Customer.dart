@@ -89,6 +89,24 @@ class SavedLocation {
     json["default"] = defaultLocation;
     return json;
   }
+
+  @override
+  bool operator ==(covariant SavedLocation other) {
+    if (identical(this, other)) return true;
+
+    return other.name == name &&
+        other.id == id &&
+        other.location == location &&
+        other.defaultLocation == defaultLocation;
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+        id.hashCode ^
+        location.hashCode ^
+        defaultLocation.hashCode;
+  }
 }
 
 typedef SavedLocations = List<SavedLocation>;
