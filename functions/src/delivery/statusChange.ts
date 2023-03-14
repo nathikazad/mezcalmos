@@ -71,10 +71,10 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
 
     switch (deliveryOrder.orderType) {
       case OrderType.Restaurant:
-        await changeRestaurantOrderStatus(changeDeliveryStatusDetails, customer, deliveryOrder)
+        await changeRestaurantOrderStatus(customer, deliveryOrder)
         break;
       case OrderType.Laundry:
-        await changeLaundryOrderStatus(changeDeliveryStatusDetails, customer, deliveryOrder)
+        await changeLaundryOrderStatus(customer, deliveryOrder)
         break;
       default:
         break;

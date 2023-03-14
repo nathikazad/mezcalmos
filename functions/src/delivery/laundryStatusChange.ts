@@ -8,7 +8,6 @@ import { Operator, ServiceProvider } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { PaymentDetails, capturePayment } from "../utilities/stripe/payment";
-import { ChangeDeliveryStatusDetails } from "./statusChange";
 import { getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/getLaundryOrder";
 import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
 import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
@@ -21,7 +20,6 @@ import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDel
 
 
 export async function changeLaundryOrderStatus(
-  changeDeliveryStatusDetails: ChangeDeliveryStatusDetails,
   customer: CustomerInfo,
   deliveryOrder: DeliveryOrder
 ) {

@@ -11,16 +11,14 @@ import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificationMessages";
-import { ChangeDeliveryStatusDetails } from "./statusChange";
 import { Operator } from "../shared/models/Services/Service";
 
 
 export async function changeRestaurantOrderStatus(
-  changeDeliveryStatusDetails: ChangeDeliveryStatusDetails,
   customer: CustomerInfo,
   deliveryOrder: DeliveryOrder
 ) {
-  let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(changeDeliveryStatusDetails.deliveryId);
+  let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(deliveryOrder.deliveryId);
   let restaurantOperators: Operator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
 
   if (deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
@@ -65,7 +63,7 @@ export async function changeRestaurantOrderStatus(
     })
   }
 
-  if (changeDeliveryStatusDetails.newStatus == DeliveryOrderStatus.Delivered) {
+  if (deliveryOrder.status == DeliveryOrderStatus.Delivered) {
     if (restaurantOrder.paymentType == PaymentType.Card) {
       let paymentDetails: PaymentDetails = {
         orderId: restaurantOrder.orderId!,
