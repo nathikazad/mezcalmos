@@ -162,7 +162,7 @@ Notification newMessageNotification(String key, value) {
               orderId: value["orderId"],
               recipientType: value["sender"]["particpantType"]
                   .toString()
-                  .toParticipantType()),
+                  .convertToParticipantType()),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

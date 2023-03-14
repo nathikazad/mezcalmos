@@ -146,7 +146,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                     orderData.delivery!.trip_distance!),
                 polyline: orderData.delivery!.trip_polyline!)
             : null,
-        paymentType: orderData.payment_type.toPaymentType(),
+        paymentType: orderData.payment_type.convertToPaymentType(),
         customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
         orderTime: DateTime.parse(orderData.order_time),
         cost: orderData.delivery_cost,
@@ -300,7 +300,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
             polyline: orderData.delivery!.trip_polyline!)
         : null,
     serviceProviderId: orderData.restaurant.id,
-    paymentType: orderData.payment_type.toPaymentType(),
+    paymentType: orderData.payment_type.convertToPaymentType(),
     orderTime: DateTime.parse(orderData.order_time),
     cost: orderData.delivery_cost,
     dropoffDriver: (orderData.delivery?.delivery_driver != null)

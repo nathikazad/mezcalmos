@@ -23,7 +23,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart' as ut;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -47,8 +47,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
   // late final String? orderId;
   late final int chatId;
   Sagora? sagora;
-  ParticipantType recipientType = ParticipantType.Customer;
-  // ParticipantType? senderType;
+  ut.ParticipantType recipientType = ut.ParticipantType.Customer;
+  // ut.ParticipantType? senderType;
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
@@ -67,8 +67,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     chatId = int.parse(Get.parameters['chatId']!);
     if (Get.parameters['recipientType'] != null) {
-      recipientType =
-          Get.parameters['recipientType']!.toString().toParticipantType();
+      recipientType = Get.parameters['recipientType']!
+          .toString()
+          .convertToParticipantType();
     }
     controller.clearMessageNotifications(chatId: chatId);
     // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
@@ -107,7 +108,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   void _fillCallBack() {
     chatLines.assignAll(controller.chat.value!.messages.map(
-      (Message message) {
+      (ut.Message message) {
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
@@ -119,10 +120,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
     scrollDown();
   }
 
-  String? getchatImg(Message message) {
-    final Participant? messageSender = controller.chat.value?.participant
+  String? getchatImg(ut.Message message) {
+    final ut.Participant? messageSender = controller.chat.value?.participant
         .firstWhereOrNull(
-            (Participant element) => element.id == message.userId);
+            (ut.Participant element) => element.id == message.userId);
     if (messageSender?.participantType == recipientType) {
       return controller.chat.value!.chatInfo.chatImg;
     } else
@@ -131,9 +132,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   /// Using this for now, to limit the calls only between deliveryDrivers<->Customers
   // bool isReciepientNotAdmin() {
-  //   final ParticipantType? _pType =
+  //   final ut.ParticipantType? _pType =
   //       controller.recipient(recipientType: recipientType)?.participantType;
-  //   return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
+  //   return [ut.ParticipantType.Customer, ut.ParticipantType.DeliveryDriver]
   //       .contains(_pType);
   // }
 
@@ -418,13 +419,13 @@ class _MessagingScreenState extends State<MessagingScreen> {
         mezDbgPrint(response.image);
         Get.toNamed<void>(kAgoraCallScreen, arguments: {
           "chatId": chatId,
-          "talkingTo": Participant(
+          "talkingTo": ut.Participant(
               id: response.id.toInt(),
               image: response.image!,
               name: response.name!,
               participantType: response.participantType
                   .toFirebaseFormatString()
-                  .toParticipantType()),
+                  .convertToParticipantType()),
         });
       }).onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint("Error ===> $error | $stackTrace");

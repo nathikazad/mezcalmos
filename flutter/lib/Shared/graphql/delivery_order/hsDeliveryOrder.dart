@@ -104,7 +104,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
             MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
         chatWithCustomerId: orderData.chat_with_customer_id,
         chatWithServiceProviderId: orderData.chat_with_service_provider_id,
-        paymentType: orderData.payment_type.toPaymentType());
+        paymentType: orderData.payment_type.convertToPaymentType());
   });
 }
 
@@ -189,7 +189,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
       dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: orderData.chat_with_customer_id,
       chatWithServiceProviderId: orderData.chat_with_service_provider_id,
-      paymentType: orderData.payment_type.toPaymentType());
+      paymentType: orderData.payment_type.convertToPaymentType());
 }
 
 UserInfo? _getDeliveryCompany<T>(orderData) {
@@ -567,7 +567,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
       dropoffLocation: MezLocation(
           orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: 0,
-      paymentType: orderData.payment_type.toPaymentType(),
+      paymentType: orderData.payment_type.convertToPaymentType(),
       chatWithServiceProviderId: null);
 }
 

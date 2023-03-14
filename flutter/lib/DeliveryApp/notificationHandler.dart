@@ -153,10 +153,10 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
       id: key,
       icon: mat.Icons.local_laundry_service,
-      secondaryIcon: (value['status'].toString().toLaundryOrderStatus ==
-                  RestaurantOrderStatus.CancelledByAdmin ||
-              value['status'].toString().toRestaurantOrderStatus() ==
-                  RestaurantOrderStatus.CancelledByAdmin)
+      secondaryIcon: (value['status'].toString().toLaundryOrderStatus() ==
+                  LaundryOrderStatus.CancelledByAdmin ||
+              value['status'].toString().toLaundryOrderStatus() ==
+                  LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
       linkUrl: getLaundryOrderRoute(value["orderId"]),
@@ -232,7 +232,7 @@ Notification newMessageNotification(String key, value) {
               orderId: value["orderId"],
               recipientType: value["sender"]["particpantType"]
                   .toString()
-                  .toParticipantType()),
+                  .convertToParticipantType()),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
