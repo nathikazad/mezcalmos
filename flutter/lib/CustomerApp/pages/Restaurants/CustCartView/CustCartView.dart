@@ -55,7 +55,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         title: "${_i18n()["myCart"]}",
       ),
       body: Obx(() {
-        if (viewController.cart.cartItems.length > 0) {
+        if (viewController.hasData.isFalse) {
+          return Container(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          );
+        } else if (viewController.cart.cartItems.length > 0) {
           return SingleChildScrollView(
             reverse: true,
             padding: const EdgeInsets.all(16),
@@ -135,8 +140,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           onValueChangeCallback: ({MezLocation? location}) {
             if (location != null && location.isValidLocation()) {
               viewController.switchLocation(location);
-
-              // ignore: unawaited_futures
 
               mezDbgPrint(
                   "Should update cart location 🥸🥸🥸 ===> ${viewController.cart.toLocation}");

@@ -3,15 +3,14 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as Location;
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -191,31 +190,59 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
     // we will router the user back to the Map
     if (newLocation?.id == -1) {
-      final SavedLocation? _savedLocation = await MezRouter.toNamed(
-          PickLocationRoutes.pickLocationRoute,
-          arguments: {"true": true}) as SavedLocation?;
+      final locModel.MezLocation? newLoc = await PickLocationView.navigate(
+        initialLocation: null,
+        onSaveLocation: ({locModel.MezLocation? location}) async {
+          SavedLocation? newSavedLoc;
+          mezDbgPrint(
+              " 😛😛😛😛 Call back called ===========>>>>>>>>>$location");
+          newSavedLoc =
+              await savedLocationDailog(context: context, loc: location!);
+          mezDbgPrint(
+              " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
+          if (newSavedLoc != null) {
+            // SavedLocation? newSavedLoc =
+            //     await Get.find<CustomerAuthController>().saveNewLocation(
+            //         SavedLocation(
+            //             name: newSavedLocName, id: null, location: location));
 
-      if (_savedLocation != null &&
-          (_savedLocation.location.isValidLocation())) {
-        // in case it's repeated with the same name or same address
-        listOfSavedLoacations.removeWhere(
-          (SavedLocation savedLoc) =>
-              savedLoc.name == _savedLocation.name ||
-              (savedLoc.location.address == _savedLocation.location.address),
-        );
-        setState(() {
-          listOfSavedLoacations.add(_savedLocation);
-          // dropDownListValue =
-          //     listOfSavedLoacations[listOfSavedLoacations.length - 1];
-        });
-        await _verifyDistanceAndSetLocation(_savedLocation);
-      } else {
-        MezSnackbar(
-          _i18n()['ops'],
-          _i18n()['wrongAddress'],
-          position: SnackPosition.TOP,
-        );
-      }
+            setState(() {
+              listOfSavedLoacations.add(newSavedLoc!);
+              dropDownListValue =
+                  listOfSavedLoacations[listOfSavedLoacations.length - 1];
+            });
+            mezDbgPrint(
+                " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
+            await _verifyDistanceAndSetLocation(newSavedLoc);
+          } else {
+            setState(() {
+              listOfSavedLoacations.add(SavedLocation(
+                  name: location.address, id: null, location: location));
+              dropDownListValue =
+                  listOfSavedLoacations[listOfSavedLoacations.length - 1];
+            });
+            await _verifyDistanceAndSetLocation(SavedLocation(
+                name: location.address, id: null, location: location));
+          }
+        },
+      );
+
+      // if (_savedLocation != null &&
+      //     (_savedLocation.location.isValidLocation())) {
+      //   // in case it's repeated with the same name or same address
+      //   listOfSavedLoacations.removeWhere(
+      //     (SavedLocation savedLoc) =>
+      //         savedLoc.name == _savedLocation.name ||
+      //         (savedLoc.location.address == _savedLocation.location.address),
+      //   );
+
+      // } else {
+      //   MezSnackbar(
+      //     _i18n()['ops'],
+      //     _i18n()['wrongAddress'],
+      //     position: SnackPosition.TOP,
+      //   );
+      // }
     } else {
       if (newLocation != null) {
         await _verifyDistanceAndSetLocation(newLocation);

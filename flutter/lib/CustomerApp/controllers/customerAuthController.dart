@@ -66,14 +66,14 @@ class CustomerAuthController extends GetxController {
         customer_id: authController.hasuraUserId!, withCache: false);
   }
 
-  void saveNewLocation(SavedLocation savedLocation) {
-    add_saved_location(
+  Future<SavedLocation?> saveNewLocation(SavedLocation savedLocation) async {
+    return await add_saved_location(
         saved_location: savedLocation,
         customer_id: authController.hasuraUserId!);
   }
 
-  void editLocation(SavedLocation savedLocation) {
-    update_saved_location(savedLocation: savedLocation);
+  Future<SavedLocation?> editLocation(SavedLocation savedLocation) async {
+    return await update_saved_location(savedLocation: savedLocation);
   }
 
   Future<void> setAsDefaultLocation(SavedLocation newDefaultLocation) async {

@@ -111,7 +111,7 @@ Future<SavedLocation?> get_saved_location({required int location_id}) async {
 }
 
 /// Update a Customer's specific SavedLocation using it's pk.
-Future<void> update_saved_location(
+Future<SavedLocation?> update_saved_location(
     {required SavedLocation savedLocation}) async {
   final QueryResult<Mutation$updateSavedLocation> res = await _hasuraDb
       .graphQLClient
@@ -124,6 +124,22 @@ Future<void> update_saved_location(
                 location_text: savedLocation.location.address,
               ),
               id: savedLocation.id!)));
+  if (res.parsedData?.update_customer_saved_location_by_pk == null) {
+    throwError(res.exception);
+  } else {
+    Mutation$updateSavedLocation$update_customer_saved_location_by_pk data =
+        res.parsedData!.update_customer_saved_location_by_pk!;
+    return SavedLocation(
+      name: data.name,
+      id: data.id,
+      defaultLocation: data.$default,
+      location: LocModel.MezLocation(
+        data.location_text,
+        data.location_gps.toLocationData(),
+      ),
+    );
+  }
+  return null;
 }
 
 /// delete a specific Customer's SavedLocation using the location's pk.
@@ -151,12 +167,12 @@ Future<ServerResponse> delete_saved_location(
 /// Add a new Customer's SavedLocation Entry.
 ///
 /// [customer_id] is the user's hasuraId
-Future<ServerResponse> add_saved_location(
+Future<SavedLocation?> add_saved_location(
     {required SavedLocation saved_location, required int customer_id}) async {
   final Geography? _location_gps = Geography(
       saved_location.location.latitude, saved_location.location.longitude);
   if (_location_gps != null) {
-    final QueryResult<Mutation$add_saved_location> _location_add =
+    final QueryResult<Mutation$add_saved_location> resp =
         await _hasuraDb.graphQLClient.mutate$add_saved_location(
       Options$Mutation$add_saved_location(
         variables: Variables$Mutation$add_saved_location(
@@ -171,19 +187,23 @@ Future<ServerResponse> add_saved_location(
       ),
     );
 
-    if (_location_add.hasException) {
-      return ServerResponse(
-        ResponseStatus.Error,
-        errorMessage:
-            "QueryResult has errors ${_location_add.exception?.toString()}",
+    if (resp.parsedData?.insert_customer_saved_location_one == null) {
+      throwError(resp.exception);
+    } else {
+      Mutation$add_saved_location$insert_customer_saved_location_one data =
+          resp.parsedData!.insert_customer_saved_location_one!;
+      return SavedLocation(
+        name: data.name,
+        id: data.id,
+        defaultLocation: data.$default,
+        location: LocModel.MezLocation(
+          data.location_text,
+          data.location_gps.toLocationData(),
+        ),
       );
     }
-    return ServerResponse(ResponseStatus.Success);
   }
-  return ServerResponse(
-    ResponseStatus.Error,
-    errorMessage: "Error : saved_location.location.position is null!",
-  );
+  return null;
 }
 
 Future<void> set_default_location(

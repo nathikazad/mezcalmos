@@ -4445,6 +4445,34 @@ const documentNodeMutationadd_saved_location = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location_text'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'default'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -4558,20 +4586,40 @@ extension ClientExtension$Mutation$add_saved_location on graphql.GraphQLClient {
 class Mutation$add_saved_location$insert_customer_saved_location_one {
   Mutation$add_saved_location$insert_customer_saved_location_one({
     required this.id,
+    required this.name,
+    required this.location_gps,
+    required this.location_text,
+    required this.$default,
     required this.$__typename,
   });
 
   factory Mutation$add_saved_location$insert_customer_saved_location_one.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$name = json['name'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
+    final l$$default = json['default'];
     final l$$__typename = json['__typename'];
     return Mutation$add_saved_location$insert_customer_saved_location_one(
       id: (l$id as int),
+      name: (l$name as String),
+      location_gps: geographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
+      $default: (l$$default as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
+
+  final String name;
+
+  final Geography location_gps;
+
+  final String location_text;
+
+  final bool $default;
 
   final String $__typename;
 
@@ -4579,6 +4627,14 @@ class Mutation$add_saved_location$insert_customer_saved_location_one {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$$default = $default;
+    _resultData['default'] = l$$default;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -4587,9 +4643,17 @@ class Mutation$add_saved_location$insert_customer_saved_location_one {
   @override
   int get hashCode {
     final l$id = id;
+    final l$name = name;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$$default = $default;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$name,
+      l$location_gps,
+      l$location_text,
+      l$$default,
       l$$__typename,
     ]);
   }
@@ -4607,6 +4671,26 @@ class Mutation$add_saved_location$insert_customer_saved_location_one {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$$default = $default;
+    final lOther$$default = other.$default;
+    if (l$$default != lOther$$default) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -4644,6 +4728,10 @@ abstract class CopyWith$Mutation$add_saved_location$insert_customer_saved_locati
 
   TRes call({
     int? id,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    bool? $default,
     String? $__typename,
   });
 }
@@ -4668,10 +4756,26 @@ class _CopyWithImpl$Mutation$add_saved_location$insert_customer_saved_location_o
 
   TRes call({
     Object? id = _undefined,
+    Object? name = _undefined,
+    Object? location_gps = _undefined,
+    Object? location_text = _undefined,
+    Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$add_saved_location$insert_customer_saved_location_one(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        location_gps: location_gps == _undefined || location_gps == null
+            ? _instance.location_gps
+            : (location_gps as Geography),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        $default: $default == _undefined || $default == null
+            ? _instance.$default
+            : ($default as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -4690,6 +4794,10 @@ class _CopyWithStubImpl$Mutation$add_saved_location$insert_customer_saved_locati
 
   call({
     int? id,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    bool? $default,
     String? $__typename,
   }) =>
       _res;

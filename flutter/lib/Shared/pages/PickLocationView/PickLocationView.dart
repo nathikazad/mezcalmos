@@ -21,10 +21,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class PickLocationView extends StatefulWidget {
   static Future<MezLocation?> navigate({
     LatLng? initialLocation,
-    Future<void> Function({MezLocation location, String name})? onSaveLocation,
+    Future<void> Function({MezLocation location})? onSaveLocation,
   }) async {
     await MezRouter.toPath(SharedRoutes.kPickLocation, arguments: {
       "initialLocation": initialLocation,
+      "onSaveLocation": onSaveLocation
     });
     mezDbgPrint("After await =====");
     return MezRouter.backResult;
@@ -41,6 +42,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   void initState() {
     viewController.init(
       defaultLocation: MezRouter.bodyArguments?["initialLocation"],
+      onSave: MezRouter.bodyArguments?["onSaveLocation"],
     );
   }
 

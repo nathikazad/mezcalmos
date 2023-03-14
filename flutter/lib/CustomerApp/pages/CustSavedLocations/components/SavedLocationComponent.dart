@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -87,14 +85,15 @@ class SavedLocationComponent extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    MezRouter.toNamed(
-                      PickLocationRoutes.pickLocationEditRoute,
-                      arguments: <String, String>{
-                        // TODO:544D-HASURA
-// added to.String()
-                        "id": savelocation.id!.toString()
-                      },
-                    );
+                    // TODO M66ARE NEW LOC
+//                     MezRouter.toNamed(
+//                       PickLocationRoutes.pickLocationEditRoute,
+//                       arguments: <String, String>{
+//                         // TODO:544D-HASURA
+// // added to.String()
+//                         "id": savelocation.id!.toString()
+//                       },
+//                     );
                   },
                   customBorder: CircleBorder(),
                   child: Ink(

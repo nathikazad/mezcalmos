@@ -4,7 +4,6 @@ import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -20,7 +19,6 @@ class XRouter {
             ]),
       ] +
       LaundryRoutes().routes +
-      PickLocationRoutes().routes +
       RestaurantRoutes().routes +
       CustomerRoutes().routes +
       CourierRoutes().routes;

@@ -58,6 +58,7 @@ class CustCartViewController {
   }
 
   RxBool isShippingSet = RxBool(false);
+  RxBool hasData = RxBool(false);
   num _orderDistanceInKm = 0;
 
   Cart get cart => cartController.cart.value ?? Cart();
@@ -68,6 +69,14 @@ class CustCartViewController {
 
   // init //
   Future<void> init() async {
+    if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
+      savedCardChoice =
+          customerAuthController.customer?.stripeInfo?.cards.first;
+
+    if (cart.cartPeriod != null) {
+      cart.deliveryTime = cart.cartPeriod?.start;
+    }
+    await customerAuthController.fetchSavedLocations();
     orderToLocation.value =
         customerAuthController.customer?.defaultLocation?.location;
     if (orderToLocation.value != null) {
@@ -76,13 +85,6 @@ class CustCartViewController {
       // ignore: unawaited_futures
     }
 
-    if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
-      savedCardChoice =
-          customerAuthController.customer?.stripeInfo?.cards.first;
-
-    if (cart.cartPeriod != null) {
-      cart.deliveryTime = cart.cartPeriod?.start;
-    }
     //
     await _setDefaultOptions();
     // await getCustomerCards();
@@ -91,7 +93,9 @@ class CustCartViewController {
     if (_cartRxn.value?.toLocation != null) {
       await updateShippingPrice();
     }
+
     WidgetsBinding.instance.addPostFrameCallback((_) => _cartRxn.refresh());
+    hasData.value = true;
   }
 
   Future<void> _setDefaultOptions() async {
