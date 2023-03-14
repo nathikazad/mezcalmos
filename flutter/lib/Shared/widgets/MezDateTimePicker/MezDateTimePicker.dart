@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
 
@@ -66,7 +65,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
               margin: const EdgeInsets.all(8),
               child: Text(
                 widget.title ?? '${_i18n()["title"]}',
-                style: context.txt.headline3,
+                style: context.txt.displaySmall,
               ),
             ),
             // Divider(),
@@ -76,7 +75,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             // date picker
             Text(
               '${_i18n()["sDate"]}',
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -89,7 +88,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             // date picker
             Text(
               '${_i18n()["sTime"]}',
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             ),
 
             const SizedBox(
@@ -133,7 +132,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                   backgroundColor: offRedColor,
                   textColor: Colors.red,
                   onClick: () async {
-                    MezRouter.back();
+                    Navigator.pop(context);
                   },
                 )),
                 const SizedBox(
@@ -144,7 +143,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                   label: widget.confirmBtnText ?? '${_i18n()["confirm"]}',
                   withGradient: true,
                   onClick: () async {
-                    _controller.confirmCallBack();
+                    _controller.confirmCallBack(context);
                   },
                 )),
               ],

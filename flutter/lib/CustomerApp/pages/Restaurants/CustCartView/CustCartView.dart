@@ -8,7 +8,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/OrderSummaryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -76,7 +75,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   fixed7days: !viewController.cart.isSpecial,
                   isServiceOpen: viewController.cart.restaurant!.isOpen(),
                   numberOfDays: viewController.cart.isSpecial ? 1 : 7,
-                  onValue: (DateTime? value) {},
+                  onValue: (DateTime? value) {
+                    viewController.setDeliveryTime(value!);
+                  },
                   periodOfTime: viewController.cart.cartPeriod,
                   schedule: viewController.cart.restaurant!.schedule,
                 ),
@@ -85,11 +86,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 SizedBox(
                   height: 15,
                 ),
-                Container(
-                  child: PaymentMethodPicker(
-                    viewCartController: viewController,
-                  ),
-                ),
+                // Container(
+                //   child: PaymentMethodPicker(
+                //     viewCartController: viewController,
+                //   ),
+                // ),
                 // SizedBox(
                 //   height: 9,
                 // ),

@@ -427,6 +427,11 @@ class CustCartViewController {
     _cartRxn.refresh();
     updateShippingPrice();
   }
+
+  void setDeliveryTime(DateTime dateTime) {
+    _cartRxn.value?.deliveryTime = dateTime;
+    _cartRxn.refresh();
+  }
 }
 
 // helpers //
