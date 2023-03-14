@@ -1602,6 +1602,11 @@
   },
   "DeliveryApp": {
     "pages": {
+      "UnAuthorizedDriverView" : {
+        "title" : "Invitation needed",
+        "subtitle" : "You need an invitation to use our delivery app"
+
+      },
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
         "approved": "Approved",

@@ -15,40 +15,40 @@ class ServiceWaitingForApproval extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            alignment: Alignment.center,
-            height: 35.h,
-            width: double.infinity,
-            child: Image.asset(
-              aRequestWaiting,
-              fit: BoxFit.contain,
-            ),
+    return Obx(() => Container(
+          alignment: Alignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 35.h,
+                width: double.infinity,
+                child: Image.asset(
+                  aRequestWaiting,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 25),
+                alignment: Alignment.center,
+                child: Text(
+                  "${_i18n()['title']}",
+                  style: Get.textTheme.displaySmall,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(top: 15),
+                child: Text(
+                  "${_i18n()['subtitle']}",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 25),
-            alignment: Alignment.center,
-            child: Text(
-              "${_i18n()['title']}",
-              style: Get.textTheme.displaySmall,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(top: 15),
-            child: Text(
-              "${_i18n()['subtitle']}",
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

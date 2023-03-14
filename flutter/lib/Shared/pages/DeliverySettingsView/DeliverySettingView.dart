@@ -51,9 +51,9 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
   }
 
   void _settingVariables() {
-    if (Get.parameters["serviceProviderId"] != null ||
-        Get.arguments?["serviceProviderType"] != null ||
-        Get.parameters["deliveryDetailsId"] != null ||
+    if (Get.parameters["serviceProviderId"] != null &&
+        Get.arguments?["serviceProviderType"] != null &&
+        Get.parameters["deliveryDetailsId"] != null &&
         Get.parameters["detailsId"] != null) {
       serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
       serviceDetailsId = int.tryParse(Get.parameters["detailsId"]!);
