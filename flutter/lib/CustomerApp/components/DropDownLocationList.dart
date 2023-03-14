@@ -201,11 +201,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           mezDbgPrint(
               " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
           if (newSavedLoc != null) {
-            // SavedLocation? newSavedLoc =
-            //     await Get.find<CustomerAuthController>().saveNewLocation(
-            //         SavedLocation(
-            //             name: newSavedLocName, id: null, location: location));
-
             setState(() {
               listOfSavedLoacations.add(newSavedLoc!);
               dropDownListValue =
@@ -226,23 +221,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           }
         },
       );
-
-      // if (_savedLocation != null &&
-      //     (_savedLocation.location.isValidLocation())) {
-      //   // in case it's repeated with the same name or same address
-      //   listOfSavedLoacations.removeWhere(
-      //     (SavedLocation savedLoc) =>
-      //         savedLoc.name == _savedLocation.name ||
-      //         (savedLoc.location.address == _savedLocation.location.address),
-      //   );
-
-      // } else {
-      //   MezSnackbar(
-      //     _i18n()['ops'],
-      //     _i18n()['wrongAddress'],
-      //     position: SnackPosition.TOP,
-      //   );
-      // }
     } else {
       if (newLocation != null) {
         await _verifyDistanceAndSetLocation(newLocation);
