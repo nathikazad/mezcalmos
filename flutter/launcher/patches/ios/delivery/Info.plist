@@ -67,6 +67,10 @@
 	<string>asasas</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
