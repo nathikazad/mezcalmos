@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/controllers/UnauthDriverViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["UnAuthorizedDriverView"];
 
 class UnAuthorizedDriverView extends StatefulWidget {
   const UnAuthorizedDriverView({super.key});
@@ -38,11 +42,13 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
         AppBarLeftButtonType.Menu,
         showNotifications: true,
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: (viewController.status == AgentStatus.AwaitingApproval)
-            ? ServiceWaitingForApproval()
-            : _invitNedded(),
+      body: Obx(
+        () => Container(
+          alignment: Alignment.center,
+          child: (viewController.status == AgentStatus.AwaitingApproval)
+              ? ServiceWaitingForApproval()
+              : _invitNedded(),
+        ),
       ),
     );
   }
@@ -69,7 +75,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
         ),
         Container(
           child: Text(
-            "Invitation needed",
+            "${_i18n()['title']}",
             style: Get.textTheme.displaySmall,
           ),
         ),
@@ -78,7 +84,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
         ),
         Container(
           child: Text(
-            "You need an invitation to use our delivery app",
+            "${_i18n()['subtitle']}",
             style: Get.textTheme.bodyMedium,
           ),
         )

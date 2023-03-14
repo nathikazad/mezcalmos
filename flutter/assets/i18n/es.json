@@ -1596,6 +1596,11 @@
   },
   "DeliveryApp": {
     "pages": {
+      "UnAuthorizedDriverView" : {
+        "title" : "Invitación necesaria",
+        "subtitle" : "Necesita una invitación para usar nuestra aplicación de entrega"
+
+      },
       "OrderDetailsScreen": {
         "cancelled": "Cancelada",
         "approved": "Aprobada",
