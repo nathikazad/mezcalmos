@@ -78,7 +78,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
       if(newStatus == LaundryOrderStatus.CancelledByAdmin) {
         toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
 
-        updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
+        updateDeliveryOrderStatus(toCustomerDeliveryOrder);
       } else {
         toCustomerDeliveryOrder.packageCost = order.itemsCost;
         updateDeliveryPackageCost(toCustomerDeliveryOrder)
