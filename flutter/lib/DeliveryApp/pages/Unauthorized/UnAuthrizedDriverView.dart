@@ -45,6 +45,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
       body: Obx(
         () => Container(
           alignment: Alignment.center,
+          margin: const EdgeInsets.all(8),
           child: (viewController.status == AgentStatus.AwaitingApproval)
               ? ServiceWaitingForApproval()
               : _invitNedded(),
