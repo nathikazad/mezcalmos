@@ -123,7 +123,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                                           onTap: () {
                                             DvOrderView.navigate(
                                                 orderId: viewController
-                                                    .currentOrders[index].id);
+                                                    .openOrders[index].id);
                                           },
                                         )).reversed.toList(),
                               ),

@@ -498,9 +498,9 @@ query get_inprocess_driver_orders($driverId: Int!) {
     }
   }
 }
-query get_open_driver_orders() {
+query get_open_driver_orders($in_process : Boolean!) {
   delivery_order(
-   where: {delivery_driver_id: {_is_null: true}}
+   where: {delivery_driver_id: {_is_null: true}, in_process: { _eq: $in_process }}
   ) {
     id
     order_time
@@ -533,9 +533,9 @@ query get_open_driver_orders() {
     }
   }
 }
-subscription listen_open_driver_orders() {
+subscription listen_open_driver_orders($in_process: Boolean!) {
   delivery_order(
-    where: {delivery_driver_id: {_is_null: true}}
+    where: {delivery_driver_id: {_is_null: true}, in_process: { _eq: $in_process }}
   ) {
     id
     order_time

@@ -74,7 +74,8 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
             id: deliveryOrder.deliveryId
           },
           _set: {
-            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
+            
+           change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
           }
         }, {
           delivery_cost: true
@@ -127,6 +128,7 @@ export async function setLockTime(deliveryOrderId: number) {
           }
         }, {
           _or: [{
+            
             lock_time: {
               _is_null: true
             }
@@ -170,7 +172,8 @@ export async function clearLock(deliveryOrderId: number) {
         lock_time: null!
       }
     }, { 
-      lock_time: true
+     lock_time: true
+    
     }]
   });
 }

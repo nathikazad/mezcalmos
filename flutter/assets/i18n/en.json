@@ -1691,6 +1691,11 @@
             "AnimatedOrderInfoCard": {
               "cash": "Cash",
               "details" : "Details",
+              "updateTitle" : "Update Price",
+              "updateReason" : "Reason for price change",
+              "updatePrice" : "New price",
+              "save" : "Request price change",
+              "cancel" : "cancel",
               "card": "Card"
             },
             "DriverBottomLaundryOrderCard": {
@@ -1730,6 +1735,9 @@
               }
             },
             "DriverBottomRestaurantOrderCard": {
+            
+              "acceptOrder" : "Accept order",
+
               "restaurantDelivery": "Restaurant Delivery",
               "laundryDelivery": "Laundry Delivery",
               "packageReady": "Package ready",

@@ -142,12 +142,13 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
 }
 
 Future<List<MinimalOrder>?> get_open_driver_orders(
-    {required int driverId}) async {
+    {required int driverId, bool inProcess = true}) async {
   final QueryResult<Query$get_open_driver_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_open_driver_orders(
     Options$Query$get_open_driver_orders(
-      fetchPolicy: FetchPolicy.networkOnly,
-    ),
+        fetchPolicy: FetchPolicy.networkOnly,
+        variables:
+            Variables$Query$get_open_driver_orders(in_process: inProcess)),
   );
   if (queryResult.parsedData?.delivery_order != null) {
     List<Query$get_open_driver_orders$delivery_order> ordersData =

@@ -41,26 +41,28 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
-  if (MezRouter.isCurrentRoute(notification.linkUrl))
-    await showStatusInfoDialog(Get.context!,
+  if (Get.context != null) {
+    if (MezRouter.isCurrentRoute(notification.linkUrl)) {
+      await showStatusInfoDialog(Get.context!,
+          status: notification.title,
+          description: notification.body,
+          primaryIcon: notification.icon,
+          bottomRightIcon: notification.secondaryIcon,
+          showSmallIcon: notification.secondaryIcon != null);
+    } else
+      await showStatusInfoDialog(
+        Get.context!,
         status: notification.title,
-        description: notification.body,
         primaryIcon: notification.icon,
+        description: notification.body,
+        showSmallIcon: notification.secondaryIcon != null,
         bottomRightIcon: notification.secondaryIcon,
-        showSmallIcon: notification.secondaryIcon != null);
-  else
-    await showStatusInfoDialog(
-      Get.context!,
-      status: notification.title,
-      primaryIcon: notification.icon,
-      description: notification.body,
-      showSmallIcon: notification.secondaryIcon != null,
-      bottomRightIcon: notification.secondaryIcon,
-      primaryCallBack: () {
-        MezRouter.back();
-      },
-      secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
-    );
+        primaryCallBack: () {
+          MezRouter.back();
+        },
+        secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
+      );
+  }
 }
 
 void notificationSnackBar(notifs.Notification notification) {

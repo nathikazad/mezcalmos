@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
@@ -37,10 +38,18 @@ class _DvOrderStatusControllButtonsState
 
     return Container(
       height: 70,
-      // color: (order.inDeliveryPhase())
-      //     ? Theme.of(context).primaryColorLight
-      //     : Colors.grey,
-      child: (clicked) ? _loadingPlaceholder() : _getFooterComponent(),
+      child: (!widget.viewController.order.isDriverAssigned)
+          ? MezButton(
+              label: "${_i18n()['acceptOrder']}",
+              backgroundColor: Colors.green.shade600,
+              borderRadius: 0,
+              onClick: () async {
+                await widget.viewController.acceptOpenOrder();
+              },
+            )
+          : (clicked)
+              ? _loadingPlaceholder()
+              : _getFooterComponent(),
     );
   }
 
@@ -252,35 +261,6 @@ class _DvOrderStatusControllButtonsState
     );
   }
 
-  Widget _confirmDeliveryButton() {
-    return InkWell(
-        onTap: () async {
-          setState(() {
-            clicked = true;
-          });
-          // await restaurantOrderController
-          //     .finishRestaurantDelivery(widget.order.orderId)
-          //     .then((ServerResponse value) => setState(() {
-          //           clicked = false;
-          //         }));
-          // MezRouter.back();
-        },
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(gradient: bluePurpleGradient),
-          alignment: Alignment.center,
-          child: Text(
-            '${_i18n()["RestaurantControllButtons"]["confirmDelivery"]}',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 21,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Montserrat',
-            ),
-          ),
-        ));
-  }
-
   String _getBtnTitle() {
     switch (widget.viewController.order.status) {
       case DeliveryOrderStatus.OrderReceived:
@@ -298,5 +278,89 @@ class _DvOrderStatusControllButtonsState
       default:
         return "";
     }
+  }
+
+  Future<dynamic> _showPriceSheet(BuildContext context) {
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        )),
+        context: context,
+        builder: (BuildContext ctx) {
+          var openOrderPriceText;
+          return Padding(
+            padding:
+                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+            child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "${_i18n()['addTax']}",
+                        style: context.txt.bodyLarge,
+                      ),
+                    ),
+                    Divider(
+                      height: 25,
+                    ),
+                    TextFormField(
+                      controller: widget.viewController.openOrderPriceText,
+                      style: context.txt.bodyLarge,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.attach_money_rounded),
+                      ),
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: MezButton(
+                            height: 45,
+                            label: "${_i18n()['cancel']}",
+                            backgroundColor: offRedColor,
+                            textColor: Colors.red,
+                            onClick: () async {
+                              // await MezRouter.back();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: MezButton(
+                            height: 45,
+                            label: "${_i18n()['save']}",
+                            onClick: () async {
+                              // await viewController.editTax();
+                              // await MezRouter.back();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                )),
+          );
+        });
   }
 }

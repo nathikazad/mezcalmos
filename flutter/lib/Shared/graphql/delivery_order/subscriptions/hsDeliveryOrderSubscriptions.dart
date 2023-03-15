@@ -148,11 +148,13 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
 }
 
 Stream<List<MinimalOrder>?> listen_on_open_driver_orders(
-    {required int driverId}) {
+    {required int driverId, bool inProcess = true}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_open_driver_orders(
     Options$Subscription$listen_open_driver_orders(
       fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_open_driver_orders(
+          in_process: inProcess),
     ),
   )
       .map<List<MinimalOrder>?>(

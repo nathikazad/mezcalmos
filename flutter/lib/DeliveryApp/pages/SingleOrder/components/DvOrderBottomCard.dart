@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
@@ -49,6 +46,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
       padding: EdgeInsets.all(8),
       child: Obx(
         () => AnimatedOrderInfoCard(
+          viewController: widget.viewcontroller,
           // customer
           customerImage: widget.viewcontroller.order.customerInfo.image,
           subtitle: (_showFoodReadyTime())

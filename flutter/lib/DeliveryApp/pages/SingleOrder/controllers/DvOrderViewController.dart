@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
@@ -28,6 +29,9 @@ class DvOrderViewcontroller {
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
+  TextEditingController openOrderPriceText = TextEditingController();
+  TextEditingController openOrderReasonText = TextEditingController();
+  GlobalKey<FormState> updatePriceFormKey = GlobalKey<FormState>();
 
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
@@ -254,6 +258,7 @@ class DvOrderViewcontroller {
 // dispose
   void dispose() {
     mezDbgPrint("Called dispose 😔😔😔😔");
+
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     _order.close();
   }
@@ -284,5 +289,25 @@ class DvOrderViewcontroller {
     } finally {
       isSettingPickUpTime.value = false;
     }
+  }
+
+  Future<void> acceptOpenOrder() async {
+    try {
+      await CloudFunctions.delivery2_assignDriver(
+          deliveryOrderId: order.id,
+          deliveryDriverId:
+              deliveryAuthAuthController.driver!.deliveryDriverId);
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
+
+  Future<void> requestPriceChange() async {
+    if (updatePriceFormKey.currentState?.validate() == true) {}
   }
 }

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -69,7 +65,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
               child: Text(
                 _i18n()["pastOrders"],
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
           Column(

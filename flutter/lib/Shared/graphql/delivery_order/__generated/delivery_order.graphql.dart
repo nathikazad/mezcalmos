@@ -22274,6 +22274,104 @@ class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaur
       _res;
 }
 
+class Variables$Query$get_open_driver_orders {
+  factory Variables$Query$get_open_driver_orders({required bool in_process}) =>
+      Variables$Query$get_open_driver_orders._({
+        r'in_process': in_process,
+      });
+
+  Variables$Query$get_open_driver_orders._(this._$data);
+
+  factory Variables$Query$get_open_driver_orders.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$in_process = data['in_process'];
+    result$data['in_process'] = (l$in_process as bool);
+    return Variables$Query$get_open_driver_orders._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool get in_process => (_$data['in_process'] as bool);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$in_process = in_process;
+    result$data['in_process'] = l$in_process;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_open_driver_orders<
+          Variables$Query$get_open_driver_orders>
+      get copyWith => CopyWith$Variables$Query$get_open_driver_orders(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_open_driver_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$in_process = in_process;
+    final lOther$in_process = other.in_process;
+    if (l$in_process != lOther$in_process) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$in_process = in_process;
+    return Object.hashAll([l$in_process]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_open_driver_orders<TRes> {
+  factory CopyWith$Variables$Query$get_open_driver_orders(
+    Variables$Query$get_open_driver_orders instance,
+    TRes Function(Variables$Query$get_open_driver_orders) then,
+  ) = _CopyWithImpl$Variables$Query$get_open_driver_orders;
+
+  factory CopyWith$Variables$Query$get_open_driver_orders.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_open_driver_orders;
+
+  TRes call({bool? in_process});
+}
+
+class _CopyWithImpl$Variables$Query$get_open_driver_orders<TRes>
+    implements CopyWith$Variables$Query$get_open_driver_orders<TRes> {
+  _CopyWithImpl$Variables$Query$get_open_driver_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_open_driver_orders _instance;
+
+  final TRes Function(Variables$Query$get_open_driver_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? in_process = _undefined}) =>
+      _then(Variables$Query$get_open_driver_orders._({
+        ..._instance._$data,
+        if (in_process != _undefined && in_process != null)
+          'in_process': (in_process as bool),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_open_driver_orders<TRes>
+    implements CopyWith$Variables$Query$get_open_driver_orders<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_open_driver_orders(this._res);
+
+  TRes _res;
+
+  call({bool? in_process}) => _res;
+}
+
 class Query$get_open_driver_orders {
   Query$get_open_driver_orders({
     required this.delivery_order,
@@ -22434,7 +22532,17 @@ const documentNodeQueryget_open_driver_orders = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'get_open_driver_orders'),
-    variableDefinitions: [],
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'in_process')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
@@ -22452,7 +22560,16 @@ const documentNodeQueryget_open_driver_orders = DocumentNode(definitions: [
                     value: BooleanValueNode(value: true),
                   )
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'in_process'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'in_process')),
+                  )
+                ]),
+              ),
             ]),
           )
         ],
@@ -22687,6 +22804,7 @@ class Options$Query$get_open_driver_orders
     extends graphql.QueryOptions<Query$get_open_driver_orders> {
   Options$Query$get_open_driver_orders({
     String? operationName,
+    required Variables$Query$get_open_driver_orders variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -22694,6 +22812,7 @@ class Options$Query$get_open_driver_orders
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -22710,6 +22829,7 @@ class WatchOptions$Query$get_open_driver_orders
     extends graphql.WatchQueryOptions<Query$get_open_driver_orders> {
   WatchOptions$Query$get_open_driver_orders({
     String? operationName,
+    required Variables$Query$get_open_driver_orders variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -22720,6 +22840,7 @@ class WatchOptions$Query$get_open_driver_orders
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -22737,10 +22858,12 @@ class WatchOptions$Query$get_open_driver_orders
 
 class FetchMoreOptions$Query$get_open_driver_orders
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$get_open_driver_orders(
-      {required graphql.UpdateQuery updateQuery})
-      : super(
+  FetchMoreOptions$Query$get_open_driver_orders({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_open_driver_orders variables,
+  }) : super(
           updateQuery: updateQuery,
+          variables: variables.toJson(),
           document: documentNodeQueryget_open_driver_orders,
         );
 }
@@ -22749,29 +22872,36 @@ extension ClientExtension$Query$get_open_driver_orders
     on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$get_open_driver_orders>>
       query$get_open_driver_orders(
-              [Options$Query$get_open_driver_orders? options]) async =>
-          await this.query(options ?? Options$Query$get_open_driver_orders());
-  graphql.ObservableQuery<
-      Query$get_open_driver_orders> watchQuery$get_open_driver_orders(
-          [WatchOptions$Query$get_open_driver_orders? options]) =>
-      this.watchQuery(options ?? WatchOptions$Query$get_open_driver_orders());
+              Options$Query$get_open_driver_orders options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_open_driver_orders>
+      watchQuery$get_open_driver_orders(
+              WatchOptions$Query$get_open_driver_orders options) =>
+          this.watchQuery(options);
   void writeQuery$get_open_driver_orders({
     required Query$get_open_driver_orders data,
+    required Variables$Query$get_open_driver_orders variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-            operation: graphql.Operation(
-                document: documentNodeQueryget_open_driver_orders)),
+          operation: graphql.Operation(
+              document: documentNodeQueryget_open_driver_orders),
+          variables: variables.toJson(),
+        ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$get_open_driver_orders? readQuery$get_open_driver_orders(
-      {bool optimistic = true}) {
+  Query$get_open_driver_orders? readQuery$get_open_driver_orders({
+    required Variables$Query$get_open_driver_orders variables,
+    bool optimistic = true,
+  }) {
     final result = this.readQuery(
       graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQueryget_open_driver_orders)),
+        operation: graphql.Operation(
+            document: documentNodeQueryget_open_driver_orders),
+        variables: variables.toJson(),
+      ),
       optimistic: optimistic,
     );
     return result == null
@@ -24040,6 +24170,106 @@ class _CopyWithStubImpl$Query$get_open_driver_orders$delivery_order$restaurant$d
       _res;
 }
 
+class Variables$Subscription$listen_open_driver_orders {
+  factory Variables$Subscription$listen_open_driver_orders(
+          {required bool in_process}) =>
+      Variables$Subscription$listen_open_driver_orders._({
+        r'in_process': in_process,
+      });
+
+  Variables$Subscription$listen_open_driver_orders._(this._$data);
+
+  factory Variables$Subscription$listen_open_driver_orders.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$in_process = data['in_process'];
+    result$data['in_process'] = (l$in_process as bool);
+    return Variables$Subscription$listen_open_driver_orders._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool get in_process => (_$data['in_process'] as bool);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$in_process = in_process;
+    result$data['in_process'] = l$in_process;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listen_open_driver_orders<
+          Variables$Subscription$listen_open_driver_orders>
+      get copyWith => CopyWith$Variables$Subscription$listen_open_driver_orders(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listen_open_driver_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$in_process = in_process;
+    final lOther$in_process = other.in_process;
+    if (l$in_process != lOther$in_process) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$in_process = in_process;
+    return Object.hashAll([l$in_process]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listen_open_driver_orders<TRes> {
+  factory CopyWith$Variables$Subscription$listen_open_driver_orders(
+    Variables$Subscription$listen_open_driver_orders instance,
+    TRes Function(Variables$Subscription$listen_open_driver_orders) then,
+  ) = _CopyWithImpl$Variables$Subscription$listen_open_driver_orders;
+
+  factory CopyWith$Variables$Subscription$listen_open_driver_orders.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listen_open_driver_orders;
+
+  TRes call({bool? in_process});
+}
+
+class _CopyWithImpl$Variables$Subscription$listen_open_driver_orders<TRes>
+    implements CopyWith$Variables$Subscription$listen_open_driver_orders<TRes> {
+  _CopyWithImpl$Variables$Subscription$listen_open_driver_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listen_open_driver_orders _instance;
+
+  final TRes Function(Variables$Subscription$listen_open_driver_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? in_process = _undefined}) =>
+      _then(Variables$Subscription$listen_open_driver_orders._({
+        ..._instance._$data,
+        if (in_process != _undefined && in_process != null)
+          'in_process': (in_process as bool),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listen_open_driver_orders<TRes>
+    implements CopyWith$Variables$Subscription$listen_open_driver_orders<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listen_open_driver_orders(this._res);
+
+  TRes _res;
+
+  call({bool? in_process}) => _res;
+}
+
 class Subscription$listen_open_driver_orders {
   Subscription$listen_open_driver_orders({
     required this.delivery_order,
@@ -24205,7 +24435,17 @@ const documentNodeSubscriptionlisten_open_driver_orders =
   OperationDefinitionNode(
     type: OperationType.subscription,
     name: NameNode(value: 'listen_open_driver_orders'),
-    variableDefinitions: [],
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'in_process')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
@@ -24223,7 +24463,16 @@ const documentNodeSubscriptionlisten_open_driver_orders =
                     value: BooleanValueNode(value: true),
                   )
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'in_process'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'in_process')),
+                  )
+                ]),
+              ),
             ]),
           )
         ],
@@ -24459,12 +24708,14 @@ class Options$Subscription$listen_open_driver_orders extends graphql
     .SubscriptionOptions<Subscription$listen_open_driver_orders> {
   Options$Subscription$listen_open_driver_orders({
     String? operationName,
+    required Variables$Subscription$listen_open_driver_orders variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -24480,6 +24731,7 @@ class WatchOptions$Subscription$listen_open_driver_orders
     extends graphql.WatchQueryOptions<Subscription$listen_open_driver_orders> {
   WatchOptions$Subscription$listen_open_driver_orders({
     String? operationName,
+    required Variables$Subscription$listen_open_driver_orders variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -24490,6 +24742,7 @@ class WatchOptions$Subscription$listen_open_driver_orders
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -24507,10 +24760,12 @@ class WatchOptions$Subscription$listen_open_driver_orders
 
 class FetchMoreOptions$Subscription$listen_open_driver_orders
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Subscription$listen_open_driver_orders(
-      {required graphql.UpdateQuery updateQuery})
-      : super(
+  FetchMoreOptions$Subscription$listen_open_driver_orders({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listen_open_driver_orders variables,
+  }) : super(
           updateQuery: updateQuery,
+          variables: variables.toJson(),
           document: documentNodeSubscriptionlisten_open_driver_orders,
         );
 }
@@ -24519,14 +24774,12 @@ extension ClientExtension$Subscription$listen_open_driver_orders
     on graphql.GraphQLClient {
   Stream<graphql.QueryResult<Subscription$listen_open_driver_orders>>
       subscribe$listen_open_driver_orders(
-              [Options$Subscription$listen_open_driver_orders? options]) =>
-          this.subscribe(
-              options ?? Options$Subscription$listen_open_driver_orders());
+              Options$Subscription$listen_open_driver_orders options) =>
+          this.subscribe(options);
   graphql.ObservableQuery<Subscription$listen_open_driver_orders>
       watchSubscription$listen_open_driver_orders(
-              [WatchOptions$Subscription$listen_open_driver_orders? options]) =>
-          this.watchQuery(
-              options ?? WatchOptions$Subscription$listen_open_driver_orders());
+              WatchOptions$Subscription$listen_open_driver_orders options) =>
+          this.watchQuery(options);
 }
 
 class Subscription$listen_open_driver_orders$delivery_order {
