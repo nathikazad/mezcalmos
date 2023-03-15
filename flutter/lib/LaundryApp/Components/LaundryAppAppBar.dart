@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
@@ -28,6 +29,6 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
         showLeftBtn: canGoBack,
         onClick: () => onClick?.call(),
         showNotifications: true,
-        ordersRoute: kPastOrdersListView);
+        ordersRoute: LaundryAppRoutes.kPastOrdersListViewRoute);
   }
 }

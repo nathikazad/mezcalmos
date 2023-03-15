@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
@@ -20,7 +19,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustRequestCourierViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -129,7 +128,9 @@ class CustRequestCourierViewController {
           tripDuration: routeInfo?.duration.seconds,
           tripPolyline: routeInfo?.polyline,
         );
-        popEverythingAndNavigateTo(getCourierOrderRoute(res.orderId.toInt()));
+        // ignore: unawaited_futures
+        MezRouter.popEverythingTillBeforeHome()
+            .then((_) => CustCourierOrderView.navigate(res.orderId.toInt()));
       } on FirebaseFunctionsException catch (e, stk) {
         showErrorSnackBar(errorText: e.message.toString());
         mezDbgPrint(e);

@@ -1,14 +1,15 @@
 import 'package:badges/badges.dart' as bage;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
@@ -29,6 +30,7 @@ class CustomerAppBar extends GetWidget<AuthController>
         super(key: key);
   @override
   final Size preferredSize;
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -38,7 +40,7 @@ class CustomerAppBar extends GetWidget<AuthController>
               fit: BoxFit.fitWidth,
               child: Text(
                 title!,
-                style: Get.textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
                 textAlign: TextAlign.center,
               ),
             )
@@ -132,7 +134,7 @@ class CustomerAppBar extends GetWidget<AuthController>
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          MezRouter.toNamed(kOrdersRoute);
+          MezRouter.toNamed(CustomerRoutes.customerOrdersRoute);
         },
         child: Ink(
           padding: const EdgeInsets.all(5),
@@ -156,7 +158,7 @@ class CustomerAppBar extends GetWidget<AuthController>
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          MezRouter.toNamed(kSignInRouteOptional);
+          SignInView.navigateAtOrderTime();
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -183,7 +185,7 @@ class CustomerAppBar extends GetWidget<AuthController>
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
-              MezRouter.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
             },
             child: bage.Badge(
               badgeColor: Colors.red,

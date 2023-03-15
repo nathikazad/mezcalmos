@@ -1,5 +1,6 @@
 // import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 // import 'package:get/get.dart';
 // import 'package:get_storage/get_storage.dart';
 // import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
@@ -105,7 +106,7 @@
 //                           icon: Icons.privacy_tip,
 //                           titleWidget: Text(
 //                             "${_i18n()["privacyPolicies"]}",
-//                             style: Get.textTheme.bodyText1,
+//                             style: context.txt.bodyText1,
 //                           )),
 //                       _navigationLink(
 //                           onClick: () async {
@@ -115,7 +116,7 @@
 //                           icon: Icons.logout,
 //                           titleWidget: Text(
 //                             "${_i18n()["logout"]}",
-//                             style: Get.textTheme.bodyText1,
+//                             style: context.txt.bodyText1,
 //                           )),
 //                     ],
 //                   ),
@@ -149,7 +150,7 @@
 //           children: [
 //             Text(
 //               "${_i18n()["language"]}",
-//               style: Get.textTheme.bodyText1,
+//               style: context.txt.bodyText1,
 //             ),
 //             SizedBox(
 //               height: 5,
@@ -193,7 +194,7 @@
 //             icon: Icons.person,
 //             titleWidget: Text(
 //               "${_i18n()["profile"]}",
-//               style: Get.textTheme.bodyText1,
+//               style: context.txt.bodyText1,
 //             )),
 //         _navigationLink(
 //             icon: Icons.settings,
@@ -204,7 +205,7 @@
 //             },
 //             titleWidget: Text(
 //               "${_i18n()["admin"]}",
-//               style: Get.textTheme.bodyText1,
+//               style: context.txt.bodyText1,
 //             )),
 //         _navigationLink(
 //             onClick: () {
@@ -213,7 +214,7 @@
 //             icon: Icons.notifications,
 //             titleWidget: Text(
 //               "${_i18n()["notifications"]}",
-//               style: Get.textTheme.bodyText1,
+//               style: context.txt.bodyText1,
 //             )),
 //         _navigationLink(
 //             onClick: () {
@@ -223,7 +224,7 @@
 //             icon: Icons.history,
 //             titleWidget: Text(
 //               "${_i18n()["pastOrders"]}",
-//               style: Get.textTheme.bodyText1,
+//               style: context.txt.bodyText1,
 //             )),
 //       ],
 //     );
@@ -250,7 +251,7 @@
 //               ),
 //               Text(
 //                 laundry.value!.info.name,
-//                 style: Get.textTheme.headline3
+//                 style: context.txt.headline3
 //                     ?.copyWith(fontWeight: FontWeight.w700, fontSize: 17.sp),
 //               ),
 //               SizedBox(

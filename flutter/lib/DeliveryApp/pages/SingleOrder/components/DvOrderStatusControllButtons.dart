@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -137,12 +138,12 @@ class _DvOrderStatusControllButtonsState
             children: [
               Text(
                 '${_i18n()["orderStatus"]["delivered"]}',
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Text(
                 DateFormat('dd MMM yy h:m')
                     .format(widget.viewController.order.orderTime.toLocal()),
-                style: Get.textTheme.titleMedium,
+                style: context.txt.titleMedium,
               )
             ],
           ))
@@ -202,11 +203,11 @@ class _DvOrderStatusControllButtonsState
             children: [
               Text(
                 header,
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Text(
                 body,
-                style: Get.textTheme.titleMedium,
+                style: context.txt.titleMedium,
               )
             ],
           ))
@@ -237,12 +238,12 @@ class _DvOrderStatusControllButtonsState
             children: [
               Text(
                 '${_i18n()["orderStatus"]["canceled"]}',
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Text(
                 DateFormat('dd MMM yy h:m')
                     .format(widget.viewController.order.orderTime.toLocal()),
-                style: Get.textTheme.titleMedium,
+                style: context.txt.titleMedium,
               )
             ],
           ))
@@ -262,7 +263,7 @@ class _DvOrderStatusControllButtonsState
           //     .then((ServerResponse value) => setState(() {
           //           clicked = false;
           //         }));
-          // MezRouter.back(closeOverlays: true);
+          // MezRouter.back();
         },
         child: Container(
           padding: const EdgeInsets.all(5),

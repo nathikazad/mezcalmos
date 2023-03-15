@@ -18,8 +18,7 @@ class CustSavedLocationViewController {
   String? subscriptionId;
 
   Future<void> inti() async {
-    savedLocs.value = await get_customer_locations(
-        customer_id: _authController.hasuraUserId!);
+    await fetchLocations();
 
     subscriptionId = _db.createSubscription(start: () {
       savedLocsStream = listen_on_customer_locations(
@@ -33,6 +32,11 @@ class CustSavedLocationViewController {
       savedLocsStream?.cancel();
       savedLocsStream = null;
     });
+  }
+
+  Future<void> fetchLocations() async {
+    savedLocs.value = await get_customer_locations(
+        customer_id: _authController.hasuraUserId!, withCache: false);
   }
 
   void dispose() {

@@ -5,14 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -21,22 +24,23 @@ import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
 
 class CustomerWrapper extends StatefulWidget {
   @override
   _CustomerWrapperState createState() => _CustomerWrapperState();
 }
 
-class _CustomerWrapperState extends State<CustomerWrapper>
-    with WidgetsBindingObserver {
-  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-      ['pages']['CustomerWrapper'];
+class _CustomerWrapperState extends State<CustomerWrapper> {
+  AuthController authController = Get.find<AuthController>();
+  CustomerAuthController? customerAuthController;
 
-  AuthController auth = Get.find<AuthController>();
   CustomerOrderController? _orderController;
 
   AppLifeCycleController appLifeCycleController =
@@ -60,17 +64,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void initState() {
     super.initState();
-    Get.put(TaxiController(), permanent: true);
 
-    Get.put(CustomerOrderController(), permanent: true);
-    _orderController = Get.find<CustomerOrderController>();
-    WidgetsBinding.instance.addObserver(this);
-    if (Get.find<AuthController>().fireAuthUser != null) {
+    if (authController.fireAuthUser != null) {
+      _orderController = Get.find<CustomerOrderController>();
+      customerAuthController = Get.find<CustomerAuthController>();
+
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
 
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
+    MezRouter.printRoutes();
   }
 
   @override
@@ -83,14 +87,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   }
 
   void appReturnFromBackground() {
-    final DateTime? lastBgNotAppOpen =
-        Get.find<BackgroundNotificationsController>()
-            .lastTimeBackgroundNotificationOpenedApp;
-    if (lastBgNotAppOpen != null &&
-        DateTime.now().difference(lastBgNotAppOpen) >
+    final DateTime? lastTimeAppReturnedFromBackground =
+        Get.find<AppLifeCycleController>().lastTimeAppReturnedFromBackground;
+    if (lastTimeAppReturnedFromBackground != null &&
+        DateTime.now().difference(lastTimeAppReturnedFromBackground) >
             Duration(seconds: 1)) if (appClosedTime != null &&
         DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
-        !isCurrentRoute(kLocationPermissionPage)) {
+        !MezRouter.isCurrentRoute(SharedRoutes.kLocationPermissionPage)) {
       _navigateToOrdersIfNecessary();
     }
   }
@@ -130,7 +133,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void startAuthListener() {
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
-    _authStateChnagesListener = auth.authStateStream.listen((User? fireUser) {
+    _authStateChnagesListener =
+        authController.authStateStream.listen((User? fireUser) {
       if (fireUser != null) {
         _doIfFireAuthUserIsNotNull();
       } else {
@@ -150,8 +154,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
-    if (isCurrentRoute(kHomeRoute)) {
-      await Future.microtask(() {
+    if (MezRouter.isCurrentRoute(SharedRoutes.kHomeRoute)) {
+      await Future.microtask(() async {
+        await customerAuthController?.awaitInitialization();
+        // ignore: unawaited_futures
         _navigateToOrdersIfNecessary();
       });
     }
@@ -210,9 +216,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Restaurant,
-                  serviceRoute: kRestaurantsRoute,
+                  serviceRoute: CustRestaurantListView.navigate,
                   singleOrderRoute: (int orderId) {
-                    MezRouter.toNamed<void>(getRestaurantOrderRoute(orderId));
+                    ViewRestaurantOrderScreen.navigate(orderId: orderId);
                   });
             },
           ),
@@ -225,9 +231,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
-                  serviceRoute: kLaundriesListRoute,
-                  singleOrderRoute: (int v) {
-                    MezRouter.toNamed<void>(getLaundryOrderRoute(v));
+                  serviceRoute: CustLaundriesListView.navigate,
+                  singleOrderRoute: (int orderId) {
+                    CustLaundryOrderView.navigate(orderId: orderId);
                   });
             },
           ),
@@ -237,7 +243,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           url: "assets/images/customer/courrierService.png",
           subtitle: "Obtain delivery of anything you desire to your location.",
           onTap: () {
-            MezRouter.toNamed(kCouriersRoute);
             //  MezRouter.toNamed(getCourierOrderRoute(2));
           },
         ),
@@ -247,17 +252,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   Future<void> getServiceRoute(
       {required OrderType orderType,
-      required String serviceRoute,
+      required Future<void> Function() serviceRoute,
       required void Function(int) singleOrderRoute}) async {
     if (Get.find<AuthController>().fireAuthUser != null &&
         _orderController != null) {
       if (_orderController!.firstOrderIdBasedOnType(orderType) != null) {
         singleOrderRoute(_orderController!.firstOrderIdBasedOnType(orderType)!);
       } else {
-        await MezRouter.toNamed<void>(serviceRoute);
+        await serviceRoute();
       }
     } else {
-      await MezRouter.toNamed<void>(serviceRoute);
+      await serviceRoute();
     }
   }
 
@@ -266,17 +271,25 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       await _orderController!.fetchCurrentOrders();
       if (_orderController!.hasOneOrder) {
         if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
-          popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
-        } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
-          popEverythingAndNavigateTo(
-              getTaxiOrderRoute(_orderController!.hasOneOrderId!));
+          // MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
+          //     .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
+          // ignore: unawaited_futures
+          MezRouter.popEverythingTillBeforeHome().then((_) =>
+              ViewRestaurantOrderScreen.navigate(
+                  orderId: _orderController!.hasOneOrderId!));
+          // } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
+          //   MezRouter.popEverythingAndNavigateTo(
+          //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));
         } else if (_orderController!.hasOneOrderType == OrderType.Laundry) {
-          popEverythingAndNavigateTo(
-              getLaundryOrderRoute(_orderController!.hasOneOrderId!));
+          // ignore: unawaited_futures
+          MezRouter.popEverythingTillBeforeHome().then((_) =>
+              CustLaundryOrderView.navigate(
+                  orderId: _orderController!.hasOneOrderId!));
         }
       } else if (_orderController!.hasManyOrders) {
-        popEverythingAndNavigateTo(kOrdersRoute);
+        // ignore: unawaited_futures
+        MezRouter.popEverythingTillBeforeHome()
+            .then((_) => CustomerOrdersListView.navigate());
       }
     }
   }

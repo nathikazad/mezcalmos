@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminDeliveryCompanyServiceCard.dart';
@@ -138,7 +139,7 @@ class _AdminServicesViewState extends State<AdminServicesView> {
       margin: const EdgeInsets.all(8),
       child: TextFormField(
         textAlignVertical: TextAlignVertical.center,
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
         onChanged: (String value) {
           // viewController.searchQuery.value = value;
           // viewController.filter();

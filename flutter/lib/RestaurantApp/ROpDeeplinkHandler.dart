@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -58,6 +58,8 @@ class ROpDeeplinkHandler {
     await addOperator(providerId);
     // await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
     //    if (res.success) {
+    // ignore: unawaited_futures
+    MezRouter.toNamed(RestaurantAppRoutes.opUnauthRoute);
     //  }
   }
 
@@ -103,7 +105,7 @@ class ROpDeeplinkHandler {
           participantType: ParticipantType.RestaurantOperator);
       // mezDbgPrint("Response : ${response.data}");
       // ignore: unawaited_futures
-      MezRouter.toNamed(kOpUnauth);
+      MezRouter.toNamed(RestaurantAppRoutes.opUnauthRoute);
       return ServerResponse(ResponseStatus.Success);
     } catch (e, stk) {
       mezDbgPrint("Errrooooooooor =======> $e,$stk");

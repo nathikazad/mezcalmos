@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:sizer/sizer.dart';
+
 class MessageButton extends StatelessWidget {
   const MessageButton({
     Key? key,

@@ -3,24 +3,15 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DeliveryAuthController extends GetxController {
   Rxn<DeliveryDriver> _driver = Rxn();
-  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-  BackgroundNotificationsController _notificationsController =
-      Get.find<BackgroundNotificationsController>();
 
   DeliveryDriverState? get driverState => _driver.value?.deliveryDriverState;
   DeliveryDriver? get driver => _driver.value;
@@ -40,9 +31,6 @@ class DeliveryAuthController extends GetxController {
         "DeliveryAuthController: calling handle state change first time");
     await setupDeliveryDriver();
 
-    if (driver != null && driver?.driverInfo.hasuraId != null) {
-      unawaited(_authController.saveNotificationToken());
-    }
     startLocationListener();
     super.onInit();
   }
@@ -109,31 +97,5 @@ class DeliveryAuthController extends GetxController {
     _locationListener?.cancel();
     _locationListener = null;
     super.onClose();
-  }
-
-  void turnOff() {
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(deliveryDriverIsOnlineField(_authController.fireAuthUser!.uid))
-        .set(false)
-        .catchError((err) {
-      mezDbgPrint("Error turning [ isLooking = false ] -> $err");
-      MezSnackbar("Error ~", "Failed turning it off!");
-    });
-  }
-
-  void turnOn() {
-    _databaseHelper.firebaseDatabase
-        .ref()
-        .child(deliveryDriverIsOnlineField(_authController.fireAuthUser!.uid))
-        .set(true)
-        .catchError((err) {
-      mezDbgPrint("Error turning [ isLooking = true ] -> $err");
-      MezSnackbar("Error ~", "Failed turning_listenForLocation it on!");
-    });
-  }
-
-  Future setDeliveryCosts({num? minCost, num? costPerKm}) async {
-    //
   }
 }

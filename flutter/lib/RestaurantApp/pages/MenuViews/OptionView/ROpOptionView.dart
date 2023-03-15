@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionChoiceCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -21,6 +23,21 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 
 class ROpOptionView extends StatefulWidget {
   const ROpOptionView({Key? key}) : super(key: key);
+
+  static Future<bool?> navigate(
+      {required int restaurantId,
+      required int? optionId,
+      required int itemId}) async {
+    String route = RestaurantRouter.restaurantOptionRoute
+        .replaceAll(":restaurantId", "$restaurantId")
+        .replaceAll(":itemId", "$itemId");
+    if (optionId != null) {
+      route = route.replaceFirst(":optionId", "$optionId");
+    }
+
+    await MezRouter.toPath(route);
+    return MezRouter.backResult;
+  }
 
   @override
   State<ROpOptionView> createState() => _ROpOptionViewState();
@@ -40,9 +57,9 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   @override
   void initState() {
-    restaurantId = Get.parameters["restaurantId"];
-    optionId = Get.parameters["optionId"];
-    itemId = Get.parameters["itemId"];
+    restaurantId = MezRouter.urlArguments["restaurantId"].toString();
+    optionId = MezRouter.urlArguments["optionId"].toString();
+    itemId = MezRouter.urlArguments["itemId"].toString();
 
     if (restaurantId != null && itemId != null) {
       _tabController = TabController(length: 2, vsync: this);
@@ -109,13 +126,13 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyText1),
+            Text('${_i18n()["optionName"]}', style: context.txt.bodyLarge),
             SizedBox(
               height: 8,
             ),
             TextFormField(
                 controller: _viewController.scOptionName,
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return '${_i18n()["required"]}';
@@ -131,7 +148,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                   ),
                   Text(
                     '${_i18n()["optionChoices"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 8,
@@ -173,13 +190,13 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyText1),
+            Text('${_i18n()["optionName"]}', style: context.txt.bodyLarge),
             SizedBox(
               height: 8,
             ),
             TextFormField(
                 controller: _viewController.prOptionName,
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return '${_i18n()["required"]}';
@@ -191,7 +208,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
             ),
             Text(
               '${_i18n()["optionType"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 8,
@@ -204,7 +221,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
             ),
             Text(
               '${_i18n()["optionChoices"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 8,
@@ -228,12 +245,11 @@ class _ROpOptionViewState extends State<ROpOptionView>
                       ),
                     ),
                     MezAddButton(onClick: () async {
-                      final bool? refetch =
-                          await MezRouter.toNamed(getROpChoiceRoute(
-                        choiceId: null,
-                        optionId: _viewController.editableOption.value!.id,
-                        restaurantId: restaurantId!,
-                      )) as bool?;
+                      final bool? refetch = await ROpChoiceView.navigate(
+                          choiceId: null,
+                          restaurantId: restaurantId!,
+                          optionId: _viewController
+                              .editableOption.value!.id) as bool?;
                       if (refetch == true) {
                         await _viewController.fetchOption();
                       }
@@ -271,7 +287,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                           .deleteOption()
                           .then((bool? hasBennDeleted) {
                         if (hasBennDeleted == true) {
-                          MezRouter.back(result: true);
+                          MezRouter.back(backResult: true);
                         }
                       });
                     },
@@ -286,7 +302,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   AppBar _appBar() {
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-      MezRouter.back(result: _viewController.needToFetch.value);
+      MezRouter.back(backResult: _viewController.needToFetch.value);
     },
         titleWidget: Obx(
           () => Text((_viewController.editMode.isTrue)
@@ -339,7 +355,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
   Future<void> _handleSecondTab() async {
     if (_viewController.firstTabValid == true &&
         _scFormKey.currentState?.validate() == true) {
-      //  MezRouter.back(result: viewController.saveOption());
+      //  MezRouter.back(backResult:
+      await _viewController.saveOption();
     } else if (_scFormKey.currentState?.validate() == true &&
         _prFormKey.currentState?.validate() != true) {
       _viewController.secondTabValid = true;
@@ -352,7 +369,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
         (_scFormKey.currentState?.validate() == true ||
             _viewController.secondTabValid)) {
       await _viewController.saveOption();
-      // MezRouter.back(result: viewController.saveOption());
+      // MezRouter.back(backResult:
+      await _viewController.saveOption();
     } else if (_prFormKey.currentState?.validate() == true &&
         _scFormKey.currentState?.validate() != true) {
       _viewController.firstTabValid = true;

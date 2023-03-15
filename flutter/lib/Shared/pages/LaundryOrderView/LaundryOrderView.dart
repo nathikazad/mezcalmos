@@ -1,19 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderTimes.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundrySetCategoryComponent.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -29,6 +29,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(LaundryAppRoutes.kOrderViewRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   State<LaundryOrderView> createState() => _LaundryOrderViewState();
 }
@@ -39,13 +44,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
   @override
   void initState() {
-    mezDbgPrint("Laundry order route 📥📥📥📥📥");
-    if (Get.parameters['orderId'] != null) {
-      orderId = int.parse(Get.parameters['orderId']!);
+    mezDbgPrint("Laundry order router 📥📥📥📥📥");
+    if (MezRouter.urlArguments['orderId'] != null) {
+      orderId = int.parse(MezRouter.urlArguments['orderId'].toString());
       viewController.init(orderId: orderId!);
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
   }
 
@@ -91,20 +96,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                     action: MessageButton(
                         chatId: viewController.order.chatId,
                         onTap: () {
-                          MezRouter.toNamed(
-                            getMessagesRoute(
-                              chatId: viewController.order.chatId,
-                              recipientType: ParticipantType.Customer,
-                              orderType: OrderType.Laundry,
-                              orderId: viewController.order.orderId,
-                            ),
-                          );
+                          BaseMessagingScreen.navigate(
+                              chatId: viewController.order.chatId);
                         }),
                     firstAvatarBgImage: CachedNetworkImageProvider(
                         viewController.order.customer.image),
                     content: Text(
                       viewController.order.customer.name,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   //  if (viewController.order.afterAtLaundry())
@@ -115,8 +114,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(top: 15),
-                    orderCost:
-                        viewController.order.costsByType?.weighedCost,
+                    orderCost: viewController.order.costsByType?.weighedCost,
                     refundAmmount: viewController.order.refundAmount,
                     shippingCost: viewController.order.shippingCost,
                     stripeOrderPaymentInfo:
@@ -170,7 +168,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                   )
                 : Text(
                     '${_i18n()["toBeCalculated"]}',
-                    style: Get.textTheme.bodyMedium
+                    style: context.txt.bodyMedium
                         ?.copyWith(fontStyle: FontStyle.italic),
                   ),
           ],

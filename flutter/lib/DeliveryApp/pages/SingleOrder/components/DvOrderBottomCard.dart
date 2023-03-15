@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -11,7 +13,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
@@ -62,12 +64,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               : _dropOffTimeSetter(),
 
           onCustomerMsgClick: () {
-            MezRouter.toNamed(
-              getMessagesRoute(
-                  orderType: widget.viewcontroller.order.orderType,
-                  chatId: widget.viewcontroller.order.chatWithCustomerId,
-                  orderId: widget.viewcontroller.order.id,
-                  recipientType: ParticipantType.Customer),
+            BaseMessagingScreen.navigate(
+              chatId: widget.viewcontroller.order.chatWithCustomerId,
             );
           },
           // landry
@@ -78,13 +76,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               : _pickUpTimeSetter(),
           onServiceMsgClick: () {
             if (widget.viewcontroller.order.chatWithServiceProviderId != null) {
-              MezRouter.toNamed(
-                getMessagesRoute(
-                    orderType: widget.viewcontroller.order.orderType,
-                    chatId:
-                        widget.viewcontroller.order.chatWithServiceProviderId!,
-                    orderId: widget.viewcontroller.order.id,
-                    recipientType: ParticipantType.DeliveryAdmin),
+              BaseMessagingScreen.navigate(
+                chatId: widget.viewcontroller.order.chatWithServiceProviderId!,
               );
             }
           },
@@ -258,7 +251,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
             ? CircularProgressIndicator()
             : Text(
                 "${_i18n()['setTime']}",
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: context.txt.bodyMedium?.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),
       ),
@@ -288,7 +281,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
             ? CircularProgressIndicator()
             : Text(
                 "${_i18n()['setTime']}",
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: context.txt.bodyMedium?.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),
       ),

@@ -3,13 +3,20 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/controllers/CustLaundriesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
 
 class CustLaundriesListView extends StatefulWidget {
   const CustLaundriesListView({Key? key}) : super(key: key);
+
+  static Future<void> navigate() {
+    return MezRouter.toNamed(LaundryRoutes.laundriesListRoute);
+  }
 
   @override
   State<CustLaundriesListView> createState() => _CustLaundriesListViewState();
@@ -18,6 +25,7 @@ class CustLaundriesListView extends StatefulWidget {
 class _CustLaundriesListViewState extends State<CustLaundriesListView> {
   CustLaundriesListViewController viewController =
       CustLaundriesListViewController();
+
   @override
   void initState() {
     viewController.init();
@@ -43,7 +51,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
             //   margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             //   child: Text(
             //     "${_i18n()["title"]}",
-            //     style: Get.textTheme.displaySmall?.copyWith(
+            //     style: context.txt.displaySmall?.copyWith(
             //       fontWeight: FontWeight.w700,
             //     ),
             //     textAlign: TextAlign.start,
@@ -87,7 +95,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
         child: Text(
           "${_i18n()["noLaundaryFound"]}",
           textAlign: TextAlign.center,
-          style: Get.textTheme.titleSmall,
+          style: context.txt.titleSmall,
         ),
       );
     }

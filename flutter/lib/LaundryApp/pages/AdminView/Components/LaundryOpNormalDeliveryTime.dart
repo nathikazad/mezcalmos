@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -28,7 +29,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
       children: [
         Text(
           "${_i18n()["normalDeliverytime"]}",
-          style: Get.textTheme.bodyLarge,
+          style: context.txt.bodyLarge,
         ),
         SizedBox(
           height: 10,
@@ -57,7 +58,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
                 ),
                 Text(
                   "$data ${_i18n()["days"]}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 InkWell(
                   customBorder: CircleBorder(),

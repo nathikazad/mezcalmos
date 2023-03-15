@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -304,9 +304,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     icon: Icons.arrow_forward,
                     label: "${_i18n()['details']}",
                     onClick: () async {
-                      unawaited(MezRouter.toNamed<void>(
-                        getOrderDetailsRoute(order.id),
-                      ));
+                      // ignore: unawaited_futures
+                      OrderDetailsScreen.navigate(orderId: order.id);
                     },
                   ),
                 ),

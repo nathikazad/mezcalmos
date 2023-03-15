@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class MezPeriodPickerController {
   // State variables //
@@ -291,7 +291,7 @@ class MezPeriodPickerController {
     _setPeriodOfTime();
 
     if (period.value != null) {
-      MezRouter.back(result: period.value);
+      MezRouter.back(backResult: period.value);
     }
   }
 }

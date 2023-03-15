@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
@@ -129,11 +128,11 @@ class LocationPickerState extends State<LocationPicker> {
       child: Container(
         margin: EdgeInsets.only(bottom: 30),
         color: Colors.transparent,
-        height: 30,
-        width: 20,
+        height: 35,
+        width: 35,
         child: ClipRect(
           child: Image.asset(
-            aLocationPicker,
+            mezDestinationMarker,
             fit: BoxFit.cover,
           ),
         ),
@@ -157,9 +156,8 @@ class LocationPickerState extends State<LocationPicker> {
         } else {
           return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
-            Get.find<AuthController>().preserveNavigationStackAfterSignIn =
-                true;
-            await MezRouter.toNamed<void>(kSignInRouteOptional);
+            //  await MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
+            await SignInView.navigateAtOrderTime();
 
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();

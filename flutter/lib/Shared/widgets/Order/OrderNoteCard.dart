@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["components"]["notesWidget"];
@@ -22,14 +23,14 @@ class OrderNoteCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 _i18n()['notes'],
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
                 textAlign: TextAlign.left,
               ),
               const SizedBox(height: 4),
               Container(
                 child: Text(
                   note!,
-                //  style: Get.textTheme.titleSmall,
+                  //  style: context.txt.titleSmall,
                 ),
               ),
               const SizedBox(height: 4),

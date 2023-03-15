@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/controllers/UnauthDriverViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -70,7 +71,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
         Container(
           child: Text(
             "Invitation needed",
-            style: Get.textTheme.displaySmall,
+            style: context.txt.displaySmall,
           ),
         ),
         SizedBox(
@@ -79,7 +80,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
         Container(
           child: Text(
             "You need an invitation to use our delivery app",
-            style: Get.textTheme.bodyMedium,
+            style: context.txt.bodyMedium,
           ),
         )
       ],

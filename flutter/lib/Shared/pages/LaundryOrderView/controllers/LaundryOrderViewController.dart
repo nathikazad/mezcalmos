@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -18,6 +17,8 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];
@@ -30,6 +31,7 @@ class LaundryOrderViewController {
   );
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   TextEditingController itemsWeightController = TextEditingController();
+
   // vars //
   Rxn<LaundryOrder> _order = Rxn();
   RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
@@ -41,9 +43,11 @@ class LaundryOrderViewController {
 
   // getters //
   bool get hasData => _order.value != null;
+
   bool get isEditingCategory => editableCategory.value != null;
 
   LaundryOrder get order => _order.value!;
+
   LaundryOrderStatus get orderStatus {
     return _order.value!.status;
   }
@@ -124,14 +128,11 @@ class LaundryOrderViewController {
           catId: editableCategory.value!.id);
       return res;
     } else {
-      Get.snackbar(
-        "${_i18n()["error"]}",
-        "${_i18n()["deleteLast"]}",
-        padding: EdgeInsets.all(16),
+      customSnackBar(
+        title: "${_i18n()["error"]}",
+        subTitle: "${_i18n()["deleteLast"]}",
         backgroundColor: Colors.grey.shade800,
-        colorText: Colors.white,
       );
-      //   }
       return null;
     }
   }
@@ -252,40 +253,37 @@ class LaundryOrderViewController {
     }
     if (res != null) {
       closeEditMode();
-      MezRouter.popDialog();
+      MezRouter.back();
     }
   }
 
 // Showing snackbar saying that the this category already selected
   void handlingCategroryAlreadySelected() {
-    Get.snackbar(
-      "${_i18n()["error"]}",
-      "${_i18n()["categoryExistError"]}",
-      padding: EdgeInsets.all(16),
+    customSnackBar(
+      title: "${_i18n()["error"]}",
+      subTitle: "${_i18n()["categoryExistError"]}",
       backgroundColor: Colors.grey.shade800,
-      colorText: Colors.white,
+      padding: EdgeInsets.all(16),
     );
   }
 
 // Showing snackbar saying that the order weight is not valid
   void handlingWeightNotValid() {
-    Get.snackbar(
-      "${_i18n()["error"]}",
-      "${_i18n()["itemsWeightError"]}",
-      padding: EdgeInsets.all(16),
+    customSnackBar(
+      title: "${_i18n()["error"]}",
+      subTitle: "${_i18n()["itemsWeightError"]}",
       backgroundColor: Colors.grey.shade800,
-      colorText: Colors.white,
+      padding: EdgeInsets.all(16),
     );
   }
 
 // showing snackbar saying that no category is selected
   void handlingNoCategoryError() {
-    Get.snackbar(
-      "${_i18n()["error"]}",
-      "${_i18n()["categoryError"]}",
-      padding: EdgeInsets.all(16),
+    customSnackBar(
+      title: "${_i18n()["error"]}",
+      subTitle: "${_i18n()["categoryError"]}",
       backgroundColor: Colors.grey.shade800,
-      colorText: Colors.white,
+      padding: EdgeInsets.all(16),
     );
   }
 

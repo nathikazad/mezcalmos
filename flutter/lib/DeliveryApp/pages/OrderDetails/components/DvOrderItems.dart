@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -29,7 +30,7 @@ class DvOrderItems extends StatelessWidget {
                 ),
                 Text(
                   "${_i18n()['orderItems']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 5,
@@ -44,7 +45,7 @@ class DvOrderItems extends StatelessWidget {
                                 expandableWidget: [
                                   Text(
                                     "${_i18n()['estCost']}",
-                                    style: Get.textTheme.bodyLarge,
+                                    style: context.txt.bodyLarge,
                                   ),
                                   SizedBox(
                                     height: 8,
@@ -61,7 +62,7 @@ class DvOrderItems extends StatelessWidget {
                                       children: [
                                         Text(
                                           "${_i18n()['note']}",
-                                          style: Get.textTheme.bodyLarge,
+                                          style: context.txt.bodyLarge,
                                         ),
                                         SizedBox(
                                           height: 8,
@@ -106,7 +107,7 @@ class DvOrderItems extends StatelessWidget {
         children: [
           Text(
             viewController.items.value![index].name,
-            style: Get.textTheme.bodyLarge?.copyWith(
+            style: context.txt.bodyLarge?.copyWith(
                 color: viewController.items.value![index].unavailable
                     ? Colors.grey
                     : null,
@@ -131,7 +132,7 @@ class DvOrderItems extends StatelessWidget {
                     children: [
                       Text(
                         "${viewController.items.value![index].actualCost!.toPriceString(rounded: false)}",
-                        style: Get.textTheme.bodyLarge?.copyWith(
+                        style: context.txt.bodyLarge?.copyWith(
                             color:
                                 viewController.items.value![index].unavailable
                                     ? Colors.grey
@@ -187,7 +188,7 @@ class DvOrderItems extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Text(
                         viewController.items.value![index].name,
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     Divider(
@@ -195,14 +196,14 @@ class DvOrderItems extends StatelessWidget {
                     ),
                     Text(
                       "${_i18n()['actualCost']}",
-                      style: Get.textTheme.bodyMedium,
+                      style: context.txt.bodyMedium,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     TextFormField(
                       controller: viewController.costText,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.attach_money_rounded),
@@ -225,7 +226,7 @@ class DvOrderItems extends StatelessWidget {
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
                             onClick: () async {
-                              MezRouter.popDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),
@@ -240,7 +241,7 @@ class DvOrderItems extends StatelessWidget {
                               await viewController.saveCost(
                                   itemId: viewController.items.value![index].id,
                                   index: index);
-                              MezRouter.popDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),

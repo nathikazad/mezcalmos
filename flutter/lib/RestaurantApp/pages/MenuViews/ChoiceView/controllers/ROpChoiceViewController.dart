@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpChoiceView"];
@@ -18,7 +20,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpChoiceViewController {
   // vars //
   late int restaurantId;
-  String? optionId;
+  int? optionId;
+
   // form//
   bool firstTabValid = false;
   bool secondTabValid = false;
@@ -37,10 +40,10 @@ class ROpChoiceViewController {
   // init //
   Future<void> init(
       {required int? choiceId,
-      required String optionId,
-      required String restaurantId}) async {
+      required int optionId,
+      required int restaurantId}) async {
     this.optionId = optionId;
-    this.restaurantId = int.parse(restaurantId);
+    this.restaurantId = restaurantId;
     await _assignLanguages();
 
     if (choiceId != null) {
@@ -112,10 +115,11 @@ class ROpChoiceViewController {
     final bool response = await update_choice_by_id(
         choiceId: choice.value!.id, choice: _contructChoice());
     if (response) {
-      Get.snackbar("${_i18n()['saved']}", "${_i18n()['savedText']}",
+      customSnackBar(
+          title: _i18n()['saved'],
+          subTitle: _i18n()['savedText'],
           backgroundColor: Colors.black,
-          colorText: Colors.white,
-          shouldIconPulse: false,
+          textColor: Colors.white,
           icon: Icon(
             Icons.check_circle,
             color: Colors.green,
@@ -127,17 +131,19 @@ class ROpChoiceViewController {
   Future<void> _addNewChoice() async {
     final int? newChoiceId = await add_choice(
         choice: _contructChoice(),
-        optionId: int.parse(optionId!),
+        optionId: optionId!,
         restaurantId: restaurantId);
     if (newChoiceId != null) {
-      Get.snackbar("${_i18n()['added']}", "${_i18n()['addedText']}",
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-          shouldIconPulse: false,
-          icon: Icon(
-            Icons.check_circle,
-            color: primaryBlueColor,
-          ));
+      customSnackBar(
+        title: _i18n()['added'],
+        subTitle: _i18n()['addedText'],
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        icon: Icon(
+          Icons.check_circle,
+          color: primaryBlueColor,
+        ),
+      );
       choice.value = await get_choice_by_id(newChoiceId);
       if (choice.value != null) {
         editMode.value = true;

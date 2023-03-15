@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:sizer/sizer.dart';
 
@@ -29,6 +31,7 @@ class DriverOrderCard extends StatelessWidget {
   final Order order;
   final bool isPastOrder;
   final bool showLeftIcon;
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -37,14 +40,15 @@ class DriverOrderCard extends StatelessWidget {
           onCardTap: () {
             // MezRouter.toNamed(getOrderDetailsRoute(order.orderId));
             if (order.orderType == OrderType.Restaurant) {
-              MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
+              DvOrderView.navigate(orderId: order.orderId);
             } else if (order.orderType == OrderType.Laundry) {
-              MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
+              MezRouter.toNamed(
+                  DeliveryAppRoutes.getLaundryOrderRoute(order.orderId));
             }
           },
           cardTitle: _getOrderTitle(),
           primaryBodyContent: Text(order.to.address),
-          cardStatus: _getOrderWidget(),
+          cardStatus: _getOrderWidget(context),
           cardTime: Text(order.orderTime.getOrderTime().inCaps),
           rightImage: _getOrderIcon()),
       order: order,
@@ -89,7 +93,7 @@ class DriverOrderCard extends StatelessWidget {
     }
   }
 
-  Widget _getOrderWidget() {
+  Widget _getOrderWidget(BuildContext context) {
     if (order.orderType == OrderType.Restaurant) {
       switch ((order as RestaurantOrder).status) {
         case RestaurantOrderStatus.CancelledByAdmin:
@@ -103,7 +107,7 @@ class DriverOrderCard extends StatelessWidget {
             child: Center(
               child: Text(
                 "${_i18n()["cancelled"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.red),
               ),
             ),
           );
@@ -117,7 +121,7 @@ class DriverOrderCard extends StatelessWidget {
             child: Center(
               child: Text(
                 "${_i18n()["delivered"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.green),
               ),
             ),
           );
@@ -131,7 +135,7 @@ class DriverOrderCard extends StatelessWidget {
             child: Center(
               child: Text(
                 "${_i18n()["inTransit"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
               ),
             ),
           );
@@ -145,7 +149,7 @@ class DriverOrderCard extends StatelessWidget {
             child: Center(
               child: Text(
                 "${_i18n()["ready"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.green),
               ),
             ),
           );
@@ -160,8 +164,8 @@ class DriverOrderCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   "${_i18n()["scheduled"]}",
-                  style: Get.textTheme.bodyText1
-                      ?.copyWith(color: primaryBlueColor),
+                  style:
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
               ),
             );
@@ -175,7 +179,7 @@ class DriverOrderCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   "${_i18n()["waiting"]}",
-                  style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+                  style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
                 ),
               ),
             );
@@ -190,7 +194,7 @@ class DriverOrderCard extends StatelessWidget {
             child: Center(
               child: Text(
                 "${_i18n()["waiting"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
               ),
             ),
           );
@@ -206,7 +210,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Text(
               "${_i18n()["ready"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.green),
             ),
           );
         case LaundryOrderStatus.OtwPickupFromCustomer:
@@ -221,7 +225,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Text(
               "${_i18n()["inTransit"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
             ),
           );
         case LaundryOrderStatus.CancelledByAdmin:
@@ -234,7 +238,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Text(
               "${_i18n()["cancelled"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.red),
             ),
           );
         case LaundryOrderStatus.AtLaundry:
@@ -247,7 +251,7 @@ class DriverOrderCard extends StatelessWidget {
               ),
               child: Text(
                 "${_i18n()["delivered"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.green),
               ),
             );
           } else {
@@ -259,7 +263,7 @@ class DriverOrderCard extends StatelessWidget {
               ),
               child: Text(
                 "${_i18n()["waiting"]}",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+                style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
               ),
             );
           }
@@ -273,7 +277,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Text(
               "${_i18n()["delivered"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.green),
             ),
           );
 
@@ -286,7 +290,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Text(
               "${_i18n()["waiting"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              style: context.txt.bodyLarge?.copyWith(color: Colors.amber),
             ),
           );
       }

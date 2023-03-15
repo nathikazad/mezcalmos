@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/deepLinkHandler.dart';
 import 'package:mezcalmos/DeliveryApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -55,9 +56,9 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
         _deliveryAuthController.driver!.deliveryDriverState.isAuthorized) {
       mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
 
-      MezRouter.toNamed(kCurrentOrdersListRoute);
+      MezRouter.toNamed(DeliveryAppRoutes.kCurrentOrdersListRoute);
     } else {
-      MezRouter.toNamed(kDriverUnAuth);
+      MezRouter.toNamed(DeliveryAppRoutes.kDriverUnAuthRoute);
       mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
     }
   }

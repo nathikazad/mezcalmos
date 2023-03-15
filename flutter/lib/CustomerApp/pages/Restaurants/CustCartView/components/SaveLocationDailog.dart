@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
         ["Restaurants"]["ViewCartScreen"]["components"]["SaveLocationDailog"];
 
-Future<String?> savedLocationDailog({
+Future<SavedLocation?> savedLocationDailog({
   required BuildContext context,
-  bool? comingFromCart = false,
-  String? nameVal,
-  PickLocationMode mode = PickLocationMode.AddNewLocation,
+  required MezLocation loc,
+  bool skippable = true,
+  SavedLocation? savedLoc,
 }) async {
   /// TextEditingController
   final TextEditingController txtController = TextEditingController();
 
   ///
-  if (nameVal != null && nameVal != "") {
-    txtController.text = nameVal;
+  if (savedLoc != null) {
+    txtController.text = savedLoc.name;
   }
-  return await showDialog(
+  return showDialog(
+    //  useRootNavigator: false,
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
@@ -51,11 +57,11 @@ Future<String?> savedLocationDailog({
                 // padding: const EdgeInsets.all(5),
                 alignment: Alignment.center,
                 child: Text(
-                  (comingFromCart != null && comingFromCart)
+                  (savedLoc == null)
                       ? '${_i18n()["addLocationDialogTitle"]}'
                       : '${_i18n()["editLocationDialogTitle"]}',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               const SizedBox(height: 10),
@@ -65,7 +71,7 @@ Future<String?> savedLocationDailog({
                 child: TextField(
                   style: Theme.of(context)
                       .textTheme
-                      .headline2!
+                      .displayMedium!
                       .copyWith(fontSize: 13),
                   controller: txtController,
                   decoration: InputDecoration(
@@ -73,7 +79,7 @@ Future<String?> savedLocationDailog({
                     // hintText: lang.strings["customer"]["savedLocations"]
                     //     ["addLocationDialog"]["textHint"],
                     hintText: '${_i18n()["pickLocationHintText"]}',
-                    hintStyle: Get.textTheme.headline6
+                    hintStyle: context.txt.titleLarge
                         ?.copyWith(color: pickLocationHintTextFieldColor),
                     filled: true,
                     fillColor: pickLocationTextFieldColor,
@@ -96,36 +102,40 @@ Future<String?> savedLocationDailog({
               Container(
                 height: 40,
                 width: double.infinity,
-                child: TextButton(
-                  onPressed: () {
-                    MezRouter.popDialog(result: txtController.text);
+                child: MezButton(
+                  onClick: () async {
+                    SavedLocation? res;
+                    if (savedLoc == null) {
+                      res = await Get.find<CustomerAuthController>()
+                          .saveNewLocation(SavedLocation(
+                              name: txtController.text,
+                              id: null,
+                              location: loc));
+                    } else {
+                      res = await Get.find<CustomerAuthController>()
+                          .editLocation(SavedLocation(
+                              name: txtController.text,
+                              id: savedLoc.id,
+                              location: loc));
+                    }
+                    mezDbgPrint("Calling back =============>$res");
+                    //await MezRouter.back(backResult: res);
+                    Navigator.pop(context, res);
                   },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.only(bottom: 4),
-                    backgroundColor: secondaryLightBlueColor,
-                    shape: const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4))),
-                  ),
-                  child: Text(
-                    nameVal != null
-                        ? _i18n()["editLocationDialogButton"]
-                        : _i18n()["addLocationDialogButton"],
-                    style: Get.textTheme.headline4?.copyWith(
-                      color: primaryBlueColor,
-                      fontSize: 11.sp,
-                    ),
-                  ),
+                  backgroundColor: secondaryLightBlueColor,
+                  textColor: primaryBlueColor,
+                  label: savedLoc != null
+                      ? _i18n()["editLocationDialogButton"]
+                      : _i18n()["addLocationDialogButton"],
                 ),
               ),
-              if (mode == PickLocationMode.AddNewLocation &&
-                  comingFromCart != null &&
-                  comingFromCart)
+              if (skippable)
                 SizedBox(
                   height: 30,
                   width: double.infinity,
                   child: TextButton(
                     onPressed: () {
-                      MezRouter.back();
+                      Navigator.pop(context);
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -136,7 +146,7 @@ Future<String?> savedLocationDailog({
                       alignment: Alignment.topCenter,
                       child: Text(
                         _i18n()["addLocationDialogSkip"],
-                        style: Get.textTheme.headline4?.copyWith(
+                        style: context.txt.headlineMedium?.copyWith(
                           color: offShadeGreyColor,
                           fontSize: 11.sp,
                         ),
@@ -181,7 +191,7 @@ InkWell skipButton(
       ),
     ),
     onTap: () {
-      MezRouter.back(result: txtController.text);
+      MezRouter.back(backResult: txtController.text);
     },
   );
 }

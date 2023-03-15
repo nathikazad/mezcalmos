@@ -5,16 +5,18 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -30,18 +32,26 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 class OrderDetailsScreen extends StatefulWidget {
   const OrderDetailsScreen({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(DeliveryAppRoutes.kOrderDetailsViewRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  late String orderId;
+  Rxn<DeliveryOrder> order = Rxn();
   DvOrderDetailsViewController viewController = DvOrderDetailsViewController();
+
   @override
   void initState() {
-    final String? orderId = Get.parameters['orderId'];
+    final String orderId = MezRouter.urlArguments['orderId'].toString();
     mezDbgPrint("Get.parameters ===> $orderId");
-    if (int.tryParse(orderId ?? "") != null) {
-      viewController.init(orderId: int.parse(orderId!));
+    if (int.tryParse(orderId) != null) {
+      viewController.init(orderId: int.parse(orderId));
     }
 
     super.initState();
@@ -67,7 +77,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 Text(
                   "${_i18n()['orderDetails']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 5,
@@ -84,7 +94,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             children: [
                               Text(
                                 "${_i18n()["schTime"]}",
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                               Container(
                                   padding: const EdgeInsets.only(top: 10),
@@ -102,7 +112,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             children: [
                               Text(
                                 "${_i18n()["from"]}",
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                               Container(
                                   padding: const EdgeInsets.only(top: 10),
@@ -116,7 +126,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           ),
                         Text(
                           "${_i18n()["deliveredTo"]}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 10,
@@ -128,7 +138,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                         Text(
                           "${_i18n()["paymentMethod"]}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 10,
@@ -144,7 +154,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 Text(
                   "${_i18n()['customer']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 5,
@@ -171,7 +181,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           fit: FlexFit.tight,
                           child: Text(
                             "${_i18n()['tax']}",
-                            style: Get.textTheme.bodyMedium,
+                            style: context.txt.bodyMedium,
                           ),
                         ),
                         MezIconButton(
@@ -211,7 +221,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     return MezCard(
       content: Text(
         "${_i18n()['bill']}",
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
       ),
       action: Container(
         child: (viewController.billLoading.isTrue)
@@ -247,13 +257,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Text(
             DateFormat("dd MMMM, hh:mm a")
                 .format(viewController.order.value!.orderTime.toLocal()),
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           Text(
               viewController.order.value!.isCanceled()
                   ? "${_i18n()["cancelled"]}"
                   : "${_i18n()["approved"]}",
-              style: Get.textTheme.bodyLarge?.copyWith(
+              style: context.txt.bodyLarge?.copyWith(
                   color: viewController.order.value!.isCanceled()
                       ? Colors.red
                       : primaryBlueColor))
@@ -278,19 +288,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             Text(
               "${viewController.order.value!.customerInfo.name}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             Spacer(),
             MessageButton(
                 chatId: viewController.order.value!.chatWithCustomerId,
                 onTap: () {
-                  MezRouter.toNamed(
-                    getMessagesRoute(
-                        orderType: viewController.order.value!.orderType,
-                        chatId: viewController.order.value!.chatWithCustomerId,
-                        orderId: viewController.order.value!.id,
-                        recipientType: ParticipantType.Customer),
-                  );
+                  BaseMessagingScreen.navigate(
+                      chatId: viewController.order.value!.chatWithCustomerId);
                 })
           ],
         ),
@@ -334,7 +339,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         "${_i18n()['addTax']}",
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     Divider(
@@ -342,7 +347,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     ),
                     TextFormField(
                       controller: viewController.taxText,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.attach_money_rounded),
@@ -365,7 +370,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
                             onClick: () async {
-                              MezRouter.popDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),
@@ -378,7 +383,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             label: "${_i18n()['save']}",
                             onClick: () async {
                               await viewController.editTax();
-                              MezRouter.popDialog();
+                              await MezRouter.back();
                             },
                           ),
                         ),

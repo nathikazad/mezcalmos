@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -19,7 +18,7 @@ class OrderInfosCard extends StatelessWidget {
         child: Material(
           elevation: 1.5,
           borderRadius: BorderRadius.circular(8),
-          child: Container( 
+          child: Container(
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -37,7 +36,6 @@ class OrderInfosCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Flexible(
                       flex: 7,
                       fit: FlexFit.tight,
@@ -68,7 +66,7 @@ class OrderInfosCard extends StatelessWidget {
                           ),
                           SizedBox(height: 5),
                           orderCardSubWidgets.primaryBodyContent,
-                        orderCardSubWidgets.secondaryBodyContent,
+                          orderCardSubWidgets.secondaryBodyContent,
                           SizedBox(height: 5),
                         ],
                       ),

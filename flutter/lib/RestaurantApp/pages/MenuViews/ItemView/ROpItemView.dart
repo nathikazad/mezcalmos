@@ -7,13 +7,15 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ROpI
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ROpSpecialItemTime.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -27,6 +29,31 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 class ROpItemView extends StatefulWidget {
   const ROpItemView({Key? key}) : super(key: key);
 
+  static Future<bool?> navigate(
+      {required int restaurantId,
+      required int? itemId,
+      int? categoryId,
+      required Map<String, dynamic> arguments}) async {
+    String route = RestaurantRouter.restaurantItemRoute
+        .replaceAll(":restaurantId", restaurantId.toString());
+    if (categoryId != null) {
+      route = route.replaceFirst(":categoryId", "$categoryId");
+    }
+    if (itemId != null) {
+      route = route.replaceFirst(":itemId", "$itemId");
+    }
+    await MezRouter.toPath(route);
+    return MezRouter.backResult;
+  }
+
+  // static Future<void> navigateToAdd(
+  //     {required int restaurantId, required Map<String, dynamic> arguments}) {
+  //   return MezRouter.toPath(
+  //       RestaurantRouter.restaurantAddItemRoute
+  //           .replaceAll(":restaurantId", restaurantId.toString()),
+  //       arguments: arguments);
+  // }
+
   @override
   _ROpItemViewState createState() => _ROpItemViewState();
 }
@@ -34,9 +61,9 @@ class ROpItemView extends StatefulWidget {
 class _ROpItemViewState extends State<ROpItemView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String? restuarantID;
-  String? itemId;
-  String? categoryId;
+  int? restuarantID;
+  int? itemId;
+  int? categoryId;
   bool? specials;
   ROpItemViewController viewController = ROpItemViewController();
   final GlobalKey<FormState> _prformKey = GlobalKey<FormState>();
@@ -44,12 +71,15 @@ class _ROpItemViewState extends State<ROpItemView>
 
   @override
   void initState() {
-    itemId = Get.parameters["itemId"];
-    categoryId = Get.parameters["categoryId"];
-    restuarantID = Get.parameters["restaurantId"];
+    itemId = int.tryParse(MezRouter.urlArguments["itemId"].toString());
+    categoryId = int.tryParse(MezRouter.urlArguments["categoryId"].toString());
+    restuarantID =
+        int.tryParse(MezRouter.urlArguments["restaurantId"].toString());
     mezDbgPrint("Restuarnt id in item view ============> $restuarantID");
     if (restuarantID != null) {
-      specials = Get.arguments?["specials"] ?? false;
+      // specials = MezRouter.bodyArguments?["specials"].toString() == 'true'
+      //     ? true
+      //     : false ?? false;
 
       _tabController = TabController(length: 2, vsync: this);
       viewController.init(
@@ -124,7 +154,7 @@ class _ROpItemViewState extends State<ROpItemView>
 
   AppBar _appBar() {
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-      MezRouter.back(result: viewController.needToRefetch.value);
+      MezRouter.back(backResult: viewController.needToRefetch.value);
     },
         title: '${_i18n()["item"]}',
         showNotifications: true,
@@ -153,13 +183,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemName"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.scItemNameController,
               validator: (String? value) {
@@ -179,13 +209,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemDesc"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
               minLines: 4,
               maxLines: 6,
               controller: viewController.scItemDescController,
@@ -218,13 +248,13 @@ class _ROpItemViewState extends State<ROpItemView>
               ROpSpecialItemTime(viewController: viewController),
             Text(
               '${_i18n()["itemName"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: viewController.prItemNameController,
               validator: (String? value) {
@@ -244,7 +274,7 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemPrice"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -261,7 +291,7 @@ class _ROpItemViewState extends State<ROpItemView>
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
               textAlignVertical: TextAlignVertical.center,
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
               decoration: InputDecoration(
                   prefixIconColor: primaryBlueColor,
                   prefixIcon: Icon(Icons.attach_money)),
@@ -271,13 +301,13 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemDesc"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
             ),
             TextFormField(
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
               maxLines: 6,
               minLines: 4,
               controller: viewController.prItemDescController,
@@ -291,7 +321,7 @@ class _ROpItemViewState extends State<ROpItemView>
                 children: [
                   Text(
                     '${_i18n()["category"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   const SizedBox(
                     height: 10,
@@ -304,7 +334,7 @@ class _ROpItemViewState extends State<ROpItemView>
             ),
             Text(
               '${_i18n()["itemOptions"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -316,19 +346,17 @@ class _ROpItemViewState extends State<ROpItemView>
                   children: [
                     ROpItemOptionCard(
                       viewController: viewController,
-                      itemId: viewController.editableItem.value!.id!.toString(),
+                      itemId: viewController.editableItem.value!.id!,
                       restaurantID: restuarantID!,
                       categoryID: categoryId,
                     ),
                     MezAddButton(
                       title: '${_i18n()["addOption"]}',
                       onClick: () async {
-                        final bool? result = await MezRouter.toNamed(
-                            getROpOptionRoute(
-                                restaurantId: restuarantID!,
-                                optionId: null,
-                                itemID: viewController.editableItem.value!.id!
-                                    .toString())) as bool?;
+                        final bool? result = await ROpOptionView.navigate(
+                            restaurantId: restuarantID!,
+                            optionId: null,
+                            itemId: viewController.editableItem.value!.id!);
                         if (result == true) {
                           await viewController.fetchItem();
                         }
@@ -368,7 +396,7 @@ class _ROpItemViewState extends State<ROpItemView>
                           .deleteItem(itemId: itemId!, catgeoryId: categoryId)
                           .then((bool? value) {
                         if (value == true) {
-                          MezRouter.back(result: true);
+                          MezRouter.back(backResult: true);
                         }
                       });
                     },

@@ -2,18 +2,19 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum SignInMode {
   OptionalSignIn,
@@ -23,15 +24,32 @@ enum SignInMode {
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SignInScreen"];
 
-class SignIn extends GetWidget<AuthController> {
-  final SignInMode mode;
-  SignIn({required this.mode});
+class SignInView extends StatefulWidget {
+  static Future<void> navigateAtInit() {
+    return MezRouter.toPath(SharedRoutes.kSignInRoute,
+        arguments: {"mode": SignInMode.RequiredSignIn});
+  }
+
+  static Future<void> navigateAtOrderTime() {
+    return MezRouter.toPath(SharedRoutes.kSignInAtOrderTimeRoute,
+        arguments: {"mode": SignInMode.OptionalSignIn});
+  }
+
+  @override
+  State<SignInView> createState() => _SignInViewState();
+}
+
+class _SignInViewState extends State<SignInView> {
   final RxBool clickedLogin = false.obs;
+  late SignInMode mode;
+  @override
+  void initState() {
+    mode = MezRouter.bodyArguments?["mode"] ?? SignInMode.RequiredSignIn;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final AppLaunchMode lmode = getAppLaunchMode();
-
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -77,10 +95,10 @@ class SignIn extends GetWidget<AuthController> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .headline2
+                            .displayMedium
                             ?.copyWith(fontWeight: FontWeight.w600)),
                     Spacer(),
-                    ...buildSignInButtons(lmode),
+                    ...buildSignInButtons(MezEnv.appLaunchMode),
                     Spacer(),
                   ],
                 ),
@@ -112,7 +130,8 @@ class SignIn extends GetWidget<AuthController> {
         SizedBox(
           height: 10,
         ),
-        if (lmode != AppLaunchMode.dev && Platform.isIOS) appleLoginBtn(),
+        if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
+          appleLoginBtn(),
       ];
     }
   }
@@ -152,7 +171,7 @@ class SignIn extends GetWidget<AuthController> {
     return Container(
       width: double.infinity,
       child: TextButton(
-          onPressed: () => MezRouter.toNamed(kOtpRoute),
+          onPressed: () => MezRouter.toNamed(SharedRoutes.kOtpRoute),
           style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
               fixedSize: Size(double.infinity, 50)),

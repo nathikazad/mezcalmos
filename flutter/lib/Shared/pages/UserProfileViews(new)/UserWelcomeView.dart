@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TextInputHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/controllers/UserProfileViewController.dart';
@@ -63,7 +64,7 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                 children: [
                   Text(
                     "${_i18n()["title"]}",
-                    style: Get.textTheme.headline3,
+                    style: context.txt.headline3,
                   ),
                   SizedBox(
                     height: 10,
@@ -82,7 +83,7 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                   ),
                   Text(
                     "${_i18n()["nameTitle"]}",
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyText1,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 8),
@@ -93,8 +94,8 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                       inputFormatters: <TextInputFormatter>[
                         UpperCaseTextFormatter()
                       ],
-                      style: Get.textTheme.bodyText2
-                          ?.copyWith(color: Colors.black),
+                      style:
+                          context.txt.bodyText2?.copyWith(color: Colors.black),
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:sizer/sizer.dart';
 
 /// UI widget used to inform restaurant operator
@@ -31,7 +31,7 @@ class ServiceWaitingForApproval extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               "YOUR REQUEST IS BEING PROCESSED",
-              style: Get.textTheme.displaySmall,
+              style: context.txt.displaySmall,
               textAlign: TextAlign.center,
             ),
           ),

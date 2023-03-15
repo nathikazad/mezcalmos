@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/AnimatedOrderInfoCard.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -11,7 +13,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
@@ -40,6 +42,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
 
   RxBool isSettingPickUpTime = false.obs;
   RxBool isSettingDropoffTime = false.obs;
+
   @override
   void initState() {
     super.initState();
@@ -62,13 +65,7 @@ class _ROpOrderFromToState extends State<ROpOrderFromTo> {
           enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
-            MezRouter.toNamed(
-              getMessagesRoute(
-                  orderType: OrderType.Restaurant,
-                  chatId: widget.order.orderId,
-                  orderId: widget.order.orderId,
-                  recipientType: ParticipantType.Customer),
-            );
+            BaseMessagingScreen.navigate(chatId: widget.order.orderId);
           },
           // landry
           serviceProviderImage: widget.order.restaurant.image,

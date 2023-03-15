@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+
+import 'pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 
 enum CustomerDeepLinkType {
   // ignore: constant_identifier_names
@@ -68,23 +69,19 @@ class DeepLinkHandler {
         mezDbgPrint("@deepLink@ ===> handling restaurant routing ! ");
         final Restaurant? _rest = await get_restaurant_by_id(id: providerId);
         if (_rest != null) {
-          Future<void>.delayed(
-            Duration.zero,
-            () => MezRouter.toNamed<void>(
-              getRestaurantRoute(providerId),
-              arguments: _rest,
-            ),
-          );
+          Future<void>.delayed(Duration.zero,
+              () => CustomerRestaurantView.navigate(restaurantId: providerId)
+
+              // MezRouter.toNamed(
+              // RestaurantRouters().getRestaurantRoute(providerId),
+              // arguments: {'id': providerId, "restaurant": _rest}),
+              );
         }
         break;
       case CustomerDeepLinkType.Laundry:
         mezDbgPrint("@deepLink@ ===> handling laundry routing ! ");
-        Future<void>.delayed(
-          Duration.zero,
-          () => MezRouter.toNamed<void>(
-            getLaundryOrderRoute(providerId),
-          ),
-        );
+        Future<void>.delayed(Duration.zero,
+            () => CustLaundryOrderView.navigate(orderId: providerId));
 
         break;
       default:

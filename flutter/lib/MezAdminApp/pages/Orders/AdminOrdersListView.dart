@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
-import 'package:mezcalmos/MezAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/MezAdminApp/router/router.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
@@ -12,13 +16,16 @@ import 'package:sizer/sizer.dart';
 
 class AdmiOrdersListView extends StatefulWidget {
   const AdmiOrdersListView({super.key, required this.adminTabsViewController});
+
   final AdminTabsViewController adminTabsViewController;
+
   @override
   State<AdmiOrdersListView> createState() => _AdmiOrdersListViewState();
 }
 
 class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
   AdmiOrdersListViewController viewController = AdmiOrdersListViewController();
+
   @override
   void initState() {
     viewController.init(
@@ -61,8 +68,10 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                       onTap: () {
                         mezDbgPrint(
                             "ID ====>${viewController.restaurantOrders.value![index].id}");
-                        MezRouter.toNamed(getRestaurantOrderRoute(
-                            viewController.restaurantOrders.value![index].id));
+                        RestaurantOrderView.navigate(
+                            orderId: viewController
+                                .restaurantOrders.value![index].id
+                                .toString());
                       })),
             )
           : Container(
@@ -81,8 +90,9 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   (int index) => MinimalOrderCard(
                       order: viewController.deliveryOrders.value![index],
                       onTap: () {
-                        MezRouter.toNamed(getDvCompanyOrderRoute(
-                            viewController.deliveryOrders.value![index].id));
+                        DvCompanyOrderView.navigate(
+                            orderId:
+                                viewController.deliveryOrders.value![index].id);
                       })),
             )
           : Container(
@@ -101,8 +111,9 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   (int index) => MinimalOrderCard(
                       order: viewController.laundryOrders.value![index],
                       onTap: () {
-                        MezRouter.toNamed(getLaundryOrderRoute(
-                            viewController.laundryOrders.value![index].id));
+                        LaundryOrderView.navigate(
+                            orderId:
+                                viewController.laundryOrders.value![index].id);
                       })),
             )
           : Container(

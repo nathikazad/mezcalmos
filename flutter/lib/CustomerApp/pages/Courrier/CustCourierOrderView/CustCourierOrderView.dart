@@ -2,14 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -21,6 +23,13 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 class CustCourierOrderView extends StatefulWidget {
+  static Future<void> navigate(
+    int orderId,
+  ) {
+    return MezRouter.toPath(CourierRoutes.kCourierOrderView
+        .replaceFirst(":orderId", orderId.toString()));
+  }
+
   const CustCourierOrderView({super.key});
 
   @override
@@ -30,13 +39,14 @@ class CustCourierOrderView extends StatefulWidget {
 class _CustCourierOrderViewState extends State<CustCourierOrderView> {
   CustCourierOrderViewController viewController =
       CustCourierOrderViewController();
+
   @override
   void initState() {
     if (int.tryParse(Get.parameters['orderId'] ?? "") != null) {
       viewController.init(orderId: int.parse(Get.parameters['orderId']!));
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
     super.initState();
   }
@@ -67,7 +77,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     leading: viewController.order.getOrderStatusWidget(),
                     content: Text(
                       viewController.order.orderStatusTitle().inCaps,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -144,11 +154,11 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 children: [
                   Text(
                     viewController.order.items[index].name,
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   Text(
                     "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)!.toPriceString()}",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ],
               ),
@@ -178,7 +188,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           children: [
             Text(
               "Delivery :",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 2,
@@ -202,7 +212,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           : CachedNetworkImageProvider(viewController.order.driverInfo!.image),
       content: Text(
         viewController.order.driverInfo?.name ?? "No driver assigned yet",
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
       ),
       action: Row(
         children: [
@@ -210,8 +220,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             MessageButton(
                 chatId: 55,
                 onTap: () {
-                  MezRouter.toNamed(getMessagesRoute(
-                      chatId: viewController.order.chatWithCustomerId));
+                  BaseMessagingScreen.navigate(
+                      chatId: viewController.order.chatWithCustomerId);
                 })
         ],
       ),

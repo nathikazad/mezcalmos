@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -73,7 +74,7 @@ class _RestaurantsListOfItemsComponentState
                     children: [
                       Text(
                         "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
-                        style: Get.textTheme.headline3?.copyWith(
+                        style: context.txt.headline3?.copyWith(
                           fontSize: 13.sp,
                         ),
                       ),
@@ -92,7 +93,7 @@ class _RestaurantsListOfItemsComponentState
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.item.cost.toPriceString(),
-                    style: Get.textTheme.headline3,
+                    style: context.txt.headline3,
                   ),
                 ),
                 SizedBox(

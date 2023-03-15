@@ -1,20 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
@@ -24,11 +26,6 @@ class MezSideMenu extends GetWidget<AuthController> {
       Get.find<SideMenuDrawerController>();
 
   final LanguageController languageController = Get.find<LanguageController>();
-
-  final String appName = getAppName();
-  static final AppLaunchMode lmd = getAppLaunchMode();
-
-  final String? version = GetStorage().read<String>(getxAppVersion);
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +57,11 @@ class MezSideMenu extends GetWidget<AuthController> {
                   ),
                 ),
               ),
-              if (version != null)
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    version! +
-                        (lmd != AppLaunchMode.prod
-                            ? " ${lmd.toShortString()}"
-                            : ""),
-                  ),
-                ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                    "${PlatformOSHelper.getAppVersion} ${MezEnv.appLaunchMode.toShortString()}"),
+              )
             ],
           ),
         ),
@@ -91,9 +83,9 @@ class MezSideMenu extends GetWidget<AuthController> {
           onClick: () {
             _drawerController.closeMenu();
             if (controller.isUserSignedIn) {
-              MezRouter.toNamed<void>(kUserNewProfile);
+              UserProfileView.navigate();
             } else
-              MezRouter.toNamed<void>(kSignInRouteOptional);
+              SignInView.navigateAtOrderTime();
           },
         ),
         if (_drawerController.pastOrdersRoute != null)
@@ -103,7 +95,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toNamed<void>(_drawerController.pastOrdersRoute!);
+              CustomerOrdersListView.navigate();
             },
           ),
         SideMenuItem(
@@ -124,7 +116,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             children: [
               Text(
                 "${_i18n()["language"]}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 5,
@@ -164,7 +156,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             icon: Icons.privacy_tip,
 
             title: _i18n()["legal"], // _i18n()["userInfo"],
-            onClick: () => launch(GetStorage().read(getxPrivacyPolicyLink)),
+            onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
           ),
         ),
         if (controller.isUserSignedIn)
@@ -310,7 +302,7 @@ class SideMenuItem extends StatelessWidget {
                       (isI18nPath)
                           ? Get.find<LanguageController>().getLMap(title!)
                           : title!,
-                      style: Get.textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     )
                   : titleWidget ?? Container(),
             )

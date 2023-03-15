@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/services/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/services/RestaurantOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/services/LaundryOrderHelper.dart';
+import 'package:mezcalmos/Shared/helpers/services/RestaurantOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/TaxiOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -17,7 +18,6 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class CustomerOrderCard extends StatelessWidget {
   const CustomerOrderCard({Key? key, required this.order}) : super(key: key);
@@ -31,7 +31,7 @@ class CustomerOrderCard extends StatelessWidget {
           onCardTap: handleRouting,
           primaryBodyContent: _getRightBody(),
           cardTitle: _getServiceProvider()?.name ?? "",
-          cardStatus: _getOrderStatus(),
+          cardStatus: _getOrderStatus(context),
           cardTime: Text(
             order.orderTime.getOrderTime().inCaps,
             maxLines: 1,
@@ -149,7 +149,7 @@ class CustomerOrderCard extends StatelessWidget {
                       child: ShippingCostComponent(
                         shippingCost: (order as LaundryOrder).shippingCost,
                         alignment: MainAxisAlignment.start,
-                         textStyle: TextStyle(color: blackColor),
+                        textStyle: TextStyle(color: blackColor),
                       ),
                     )
                   : Text((order as LaundryOrder).shippingCost.toPriceString())
@@ -253,22 +253,21 @@ class CustomerOrderCard extends StatelessWidget {
   void handleRouting() {
     switch (order.orderType) {
       case OrderType.Restaurant:
-        MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
-
+        ViewRestaurantOrderScreen.navigate(orderId: order.orderId);
         break;
       case OrderType.Laundry:
-        MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
+        CustLaundryOrderView.navigate(orderId: order.orderId);
 
         break;
-      case OrderType.Taxi:
-        MezRouter.toNamed(getTaxiOrderRoute(order.orderId));
+      // case OrderType.Taxi:
+      //   MezRouter.toNamed(getTaxiOrderRoute(order.orderId));
 
-        break;
+      //   break;
       default:
     }
   }
 
-  Widget _getOrderStatus() {
+  Widget _getOrderStatus(BuildContext context) {
     switch (order.orderType) {
       case OrderType.Restaurant:
         return Container(
@@ -280,7 +279,7 @@ class CustomerOrderCard extends StatelessWidget {
                   : secondaryLightBlueColor),
           child: Text(
             (order as RestaurantOrder).getOrderStatus(),
-            style: Get.textTheme.bodyText1?.copyWith(
+            style: context.txt.bodyLarge?.copyWith(
                 fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
@@ -296,7 +295,7 @@ class CustomerOrderCard extends StatelessWidget {
                   : secondaryLightBlueColor),
           child: Text(
             (order as LaundryOrder).orderStatusTitleForCustomer(),
-            style: Get.textTheme.bodyText1?.copyWith(
+            style: context.txt.bodyLarge?.copyWith(
                 fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
@@ -311,7 +310,7 @@ class CustomerOrderCard extends StatelessWidget {
                   : secondaryLightBlueColor),
           child: Text(
             (order as TaxiOrder).getTaxiOrderStatus(),
-            style: Get.textTheme.bodyText1?.copyWith(
+            style: context.txt.bodyLarge?.copyWith(
                 fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),

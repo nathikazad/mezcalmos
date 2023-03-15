@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -26,6 +24,7 @@ class RestaurantgridItemCard extends StatefulWidget {
 
 class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
   RxBool isImageExist = RxBool(false);
+
   @override
   void initState() {
     isImageExist.value =
@@ -38,15 +37,9 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
     if (widget.item.available) {
       return Card(
         child: InkWell(
-          onTap: () {
-            MezRouter.toNamed(
-              getItemRoute(widget.restaurant.info.hasuraId, widget.item.id!),
-              arguments: {
-                "mode": ViewItemScreenMode.AddItemMode,
-                "isSpecial": widget.isSpecial
-              },
-            );
-          },
+          onTap: () => CustItemView.navigateToRestaurantItem(
+              restaurantId: widget.restaurant.info.hasuraId,
+              itemId: widget.item.id!),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,7 +73,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
               ),
               Text(
                 "\$${widget.item.cost}",
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyText1,
                 textAlign: TextAlign.center,
               ),
               SizedBox(

@@ -2,10 +2,10 @@ import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 class FloatingCartComponent extends StatelessWidget {
   const FloatingCartComponent({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class FloatingCartComponent extends StatelessWidget {
                     0
             ? FloatingActionButton(
                 onPressed: () {
-                  MezRouter.toNamed(kCartRoute);
+                  ViewCartScreen.navigate();
                 },
                 child: badge.Badge(
                   badgeContent: Text(
@@ -33,7 +33,7 @@ class FloatingCartComponent extends StatelessWidget {
                         .cartItems
                         .length
                         .toStringAsFixed(0),
-                    style: Get.textTheme.bodyLarge
+                    style: context.txt.bodyLarge
                         ?.copyWith(color: primaryBlueColor),
                   ),
                   position: badge.BadgePosition.topEnd(top: -8, end: 0),

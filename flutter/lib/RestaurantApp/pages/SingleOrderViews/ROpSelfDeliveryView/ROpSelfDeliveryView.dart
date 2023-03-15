@@ -1,19 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/ROpControllButtons.dart';
 import 'package:mezcalmos/RestaurantApp/pages/SingleOrderViews/ROpSelfDeliveryView/components/ROpOrderFromTo.dart';
+import 'package:mezcalmos/RestaurantApp/router/deliveryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 //
 // dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -24,6 +27,11 @@ import 'package:url_launcher/url_launcher.dart';
 class ROpSelfDeliveryView extends StatefulWidget {
   const ROpSelfDeliveryView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required String orderId}) {
+    return MezRouter.toPath(
+        DeliveryRouter.selfDeliveryRoute.replaceAll(":orderId", orderId));
+  }
+
   @override
   _ROpSelfDeliveryViewState createState() => _ROpSelfDeliveryViewState();
 }
@@ -31,9 +39,11 @@ class ROpSelfDeliveryView extends StatefulWidget {
 class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
   MGoogleMapController mapController = MGoogleMapController();
   Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
+
   // ROpOrderController controller = Get.find<ROpOrderController>();
   StreamSubscription<Order?>? _orderListener;
   RestaurantOrderStatus? orderStatusSnapshot;
+
   // DeliveryAuthController deliveryAuthAuthController =
   //     Get.find<DeliveryAuthController>();
   @override
@@ -181,9 +191,9 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
                             "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
 
                         try {
-                          await launch(url);
+                          await launchUrlString(url);
                         } catch (e) {
-                          await launch(url);
+                          await launchUrlString(url);
                         }
                       },
                       child: Container(

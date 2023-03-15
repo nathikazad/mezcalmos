@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
@@ -76,8 +78,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
               (int index) => MinimalOrderCard(
                 order: pastOrders[index],
                 onTap: () {
-                  MezRouter.toNamed(
-                      getRestaurantOrderRoute(pastOrders[index].id));
+                  DvOrderView.navigate(orderId: pastOrders[index].id);
                 },
               ),
             ),

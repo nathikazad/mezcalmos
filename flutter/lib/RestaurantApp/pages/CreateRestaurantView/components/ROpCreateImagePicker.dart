@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -35,7 +36,7 @@ class ROpCreateRestaurantImage extends StatelessWidget {
                           ? Center(
                               child: Text(
                                 'Add image',
-                                style: Get.textTheme.bodyText1,
+                                style: context.txt.bodyText1,
                                 textAlign: TextAlign.center,
                               ),
                             )

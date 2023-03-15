@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
@@ -31,7 +32,7 @@ class ROpWaitingForApproval extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               "YOUR REQUEST IS BEING PROCESSED",
-              style: Get.textTheme.headline3,
+              style: context.txt.headline3,
               textAlign: TextAlign.center,
             ),
           ),

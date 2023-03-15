@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
-import 'package:mezcalmos/MezAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -19,8 +20,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
 class AdminRestaurantServiceCard extends StatelessWidget {
   const AdminRestaurantServiceCard(
       {super.key, required this.restaurant, required this.viewController});
+
   final Restaurant restaurant;
   final AdminServicesViewController viewController;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -56,7 +59,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                           fit: FlexFit.tight,
                           child: Text(
                             restaurant.info.name,
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                         ),
                         SizedBox(
@@ -85,31 +88,34 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                       children: [
                         _smallBtn(
                             icon: Icons.flatware,
+                            context: context,
                             label: "${_i18n()['menu']}",
                             ontap: () {
-                              MezRouter.toNamed(getRestaurantMenuRoute(
-                                  restaurantId: restaurant.info.hasuraId));
+                              ROpMenuView.navigate(
+                                  restaurantId: restaurant.info.hasuraId);
                             }),
                         _smallBtn(
                             icon: Icons.history,
+                            context: context,
                             label: "${_i18n()['orders']}",
                             ontap: () {
-                              getserviceOrdersRoute(
-                                  serviceName: restaurant.info.name,
+                              AdminServiceOrdersView.navigate(
                                   serviceProviderId: restaurant.info.hasuraId,
+                                  serviceName: restaurant.info.name,
                                   serviceProviderType:
                                       ServiceProviderType.Restaurant);
                             }),
                         _smallBtn(
                             icon: Icons.person,
+                            context: context,
                             label: "${_i18n()['profile']}",
                             ontap: () {
-                              navigateToServiceProfile(
-                                  deliveryDetailsId:
-                                      restaurant.deliveryDetailsId!,
-                                  serviceProviderId: restaurant.info.hasuraId,
-                                  serviceDetailsId:
-                                      restaurant.serviceDetailsId);
+                              ServiceProfileView.navigate(
+                                serviceProviderId: restaurant.info.hasuraId,
+                                serviceDetailsId: restaurant.serviceDetailsId,
+                                deliveryDetailsId:
+                                    restaurant.deliveryDetailsId!,
+                              );
                             }),
                       ],
                     ),
@@ -154,6 +160,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
   InkWell _smallBtn(
       {required IconData icon,
       required String label,
+      required BuildContext context,
       required Function()? ontap}) {
     return InkWell(
       borderRadius: BorderRadius.circular(5),
@@ -172,7 +179,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
             ),
             Text(
               label,
-              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
             )
           ],
         ),

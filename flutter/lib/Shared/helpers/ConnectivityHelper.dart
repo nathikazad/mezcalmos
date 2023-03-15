@@ -75,9 +75,15 @@ class ConnectivityHelper {
 
   Future<bool> _pingServer(String pingUrl) async {
     try {
-      final List<InternetAddress> result =
-          await InternetAddress.lookup(pingUrl);
-      return result.isNotEmpty;
+      // final Ping result = Ping(pingUrl, count: 5);
+      // return result.toString().isNotEmpty;
+      // final List<InternetAddress> result =
+      //     await InternetAddress.lookup(pingUrl);
+      // return result.isNotEmpty;
+      // @abhishek
+      // figure out a different way to ping maybe network_check package
+      // also check it works when user is not signed
+      return Future<bool>.delayed(Duration.zero, () => true);
     } on SocketException catch (_) {
       return false;
     }

@@ -6,12 +6,30 @@ import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class AgoraCall extends StatefulWidget {
+  static Future<void> navigate(
+      {required int chatId,
+      required int participantId,
+      required String participantImage,
+      required String participantName,
+      required String participantType}) {
+    return MezRouter.toPath(NativeOnlyRoutes.kAgoraCallScreenRoute,
+        arguments: <String, dynamic>{
+          'chatId': chatId,
+          'participantId': participantId,
+          'participantImage': participantImage,
+          'participantName': participantName,
+          'participantType': participantType,
+        });
+  }
+
   @override
   State<AgoraCall> createState() => _AgoraCallState();
 }
@@ -20,11 +38,19 @@ class _AgoraCallState extends State<AgoraCall> {
   final MessageController _msgController = MessageController();
   final SettingsController _settingsController = Get.find<SettingsController>();
   final Sagora _sagora = Get.find<Sagora>();
-  final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
-  final int chatId = Get.arguments?['chatId'];
+  final Participant talkingTo = Participant(
+      image: MezRouter.bodyArguments?['participantImage'],
+      name: MezRouter.bodyArguments?['participantImage'],
+      participantType: MezRouter.bodyArguments?['participantType'].toString()
+          as ParticipantType,
+      id: MezRouter.bodyArguments?['participantId']);
+
+  // final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
+  final int chatId = MezRouter.bodyArguments?['chatId'];
   StreamSubscription? callStatusStream;
 
   late CallStatus callStatus;
+
   // used for call timing
   Timer? callTimer;
   RxInt callSeconds = 0.obs;
@@ -107,11 +133,11 @@ class _AgoraCallState extends State<AgoraCall> {
 
         _sagora.endCall(
           chatId: chatId,
-          callee: talkingTo!,
+          callee: talkingTo,
         );
         _sagora.engine.leaveChannel();
         _sagora.callStatus.value = CallStatus.none;
-        // MezRouter.back<void>();
+        // MezRouter.back();
         MezSnackbar(
           "Oops",
           "You have reached max time for your call!",
@@ -151,10 +177,10 @@ class _AgoraCallState extends State<AgoraCall> {
                       decoration: BoxDecoration(
                         color: Colors.grey.shade400,
                         shape: BoxShape.circle,
-                        image: talkingTo?.image != null
+                        image: talkingTo.image != null
                             ? DecorationImage(
                                 fit: BoxFit.cover,
-                                image: Image.network(talkingTo!.image).image,
+                                image: Image.network(talkingTo.image).image,
                               )
                             : null,
                       ),
@@ -170,7 +196,7 @@ class _AgoraCallState extends State<AgoraCall> {
                     SizedBox(height: 20),
                     Text(
                       _getCallStatusText(),
-                      style: Get.textTheme.bodyText1?.copyWith(
+                      style: context.txt.bodyText1?.copyWith(
                         color: Colors.white,
                       ),
                     ),
@@ -187,7 +213,7 @@ class _AgoraCallState extends State<AgoraCall> {
                     ],
                     SizedBox(height: 10),
                     Text(
-                      talkingTo?.name ?? "_",
+                      talkingTo.name,
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Montserrat',
@@ -239,11 +265,11 @@ class _AgoraCallState extends State<AgoraCall> {
               onTap: () {
                 _sagora.endCall(
                   chatId: chatId,
-                  callee: talkingTo!,
+                  callee: talkingTo,
                 );
                 _sagora.engine.leaveChannel();
                 // get back will dispose the view and reset the call Action back to CallAction.None
-                MezRouter.back<void>();
+                MezRouter.back();
               },
               child: Container(
                 padding: EdgeInsets.all(12),
@@ -290,11 +316,11 @@ class _AgoraCallState extends State<AgoraCall> {
               onTap: () {
                 _sagora.endCall(
                   chatId: chatId,
-                  callee: talkingTo!,
+                  callee: talkingTo,
                 );
                 _sagora.engine.leaveChannel();
                 // get back will dispose the view and reset the call Action back to CallAction.None
-                MezRouter.back<void>();
+                MezRouter.back();
               },
               child: Container(
                 padding: EdgeInsets.all(12),
@@ -338,14 +364,14 @@ class _AgoraCallState extends State<AgoraCall> {
           Flexible(
             child: InkWell(
               onTap: () async {
-                await _sagora.callUser(chatId: chatId, callee: talkingTo!);
+                await _sagora.callUser(chatId: chatId, callee: talkingTo);
 
                 // Request Agora auth
                 // @Nathik this part does not work
                 final dynamic _agoraAuth = (await _sagora.getAgoraToken(
                   chatId,
                   Get.find<AuthController>().user!.hasuraId.toString(),
-                  talkingTo!.participantType == ParticipantType.Customer
+                  talkingTo.participantType == ParticipantType.Customer
                       ? ParticipantType.DeliveryDriver
                       : ParticipantType.Customer,
                 ))

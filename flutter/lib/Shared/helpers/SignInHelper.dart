@@ -7,12 +7,15 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -20,10 +23,12 @@ Future<void> signUp(String email, String password) async {
   try {
     await fireAuth.FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
-    MezRouter.back<Null>();
+    await MezRouter.back();
   } catch (e) {
-    Get.snackbar("Error creating your account!", e.toString(),
-        snackPosition: SnackPosition.BOTTOM);
+    customSnackBar(
+      title: 'Error creating your account!',
+      subTitle: e.toString(),
+    );
   }
 }
 
@@ -37,8 +42,10 @@ Future<void> signIn(String email, String password) async {
         .then(
       (fireAuth.UserCredential value) {},
       onError: ((Object e, StackTrace stackTrace) {
-        Get.snackbar("Failed to Sign you in!", e.toString(),
-            snackPosition: SnackPosition.BOTTOM);
+        customSnackBar(
+          title: 'Failed to Sign you in!',
+          subTitle: e.toString(),
+        );
       }),
     );
   } catch (e, s) {
@@ -55,24 +62,27 @@ Future<void> signOut() async {
     Get.appUpdate();
     mezDbgPrint("AuthController: Sign out finished");
   } catch (e) {
-    Get.snackbar("Failed to Sign you out!", e.toString(),
-        snackPosition: SnackPosition.BOTTOM);
+    customSnackBar(
+      title: 'Failed to Sign you out!',
+      subTitle: e.toString(),
+    );
     print(e);
   }
 }
 
-Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
-  final HttpsCallable sendOTPForLoginFunction =
-      FirebaseFunctions.instance.httpsCallable('otp2-sendOTPForLogin');
-  HttpsCallableResult? response;
+Future<SendOtpResponse> sendOTPForLogin(String phoneNumber) async {
   try {
+    SendOtpResponse res = await CloudFunctions.otp2_sendOTPForLogin(
+        language: sDefaultLanguage.toFirebaseFormatString(),
+        phoneNumber: phoneNumber);
+    return res;
     // _waitingResponse.value = true;
-    response = await sendOTPForLoginFunction.call(<String, dynamic>{
-      'phoneNumber': phoneNumber,
-      'messageType': 'SMS',
-      'language': sDefaultLanguage.toFirebaseFormatString(),
-      // 'language': _settings.appLanguage.userLanguageKey,
-    });
+    // response = await sendOTPForLoginFunction.call(<String, dynamic>{
+    //   'phoneNumber': phoneNumber,
+    //   'messageType': 'SMS',
+    //   'language': sDefaultLanguage.toFirebaseFormatString(),
+    //   // 'language': _settings.appLanguage.userLanguageKey,
+    // });
     // var c = json.decode(response.data);
     // mezDbgPrint("-----------------");
     // mezDbgPrint(c);
@@ -83,13 +93,16 @@ Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
     //     "Notice ~",
     //     responseStatusChecker(response.data,
     //         onSuccessMessage: "OTP message has been sent !"));
-  } catch (e) {
+  } on FirebaseFunctionsException catch (e) {
+    showErrorSnackBar(errorText: e.message.toString());
+  } catch (e, stk) {
     // mezcalmosSnackBar("Notice ~", "Failed to send OTP message :( ");
     // _waitingResponse.value = false;
     mezDbgPrint("Exception happend in sendOTPForLogin : $e"); // i
     mezDbgPrint(e);
+    mezDbgPrint(stk);
   }
-  return ServerResponse.fromJson(response?.data ?? {"status": "Error"});
+  return SendOtpResponse("errorMessage", 0, ServerResponseStatus.Error);
 }
 
 Future<ServerResponse?> signInUsingOTP(

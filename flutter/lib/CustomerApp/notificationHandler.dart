@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -9,10 +9,13 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+
+import 'pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
+
 Notification customerNotificationHandler(
   String key,
   value,
@@ -22,16 +25,16 @@ Notification customerNotificationHandler(
   switch (notificationType) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
-    case NotificationType.NewCounterOffer:
-      return newCounterOfferNotification(key, value);
+    // case NotificationType.NewCounterOffer:
+    //   return newCounterOfferNotification(key, value);
     case NotificationType.OrderStatusChange:
       final OrderType orderType = value['orderType'].toString().toOrderType();
       mezDbgPrint(value['orderType']);
       switch (orderType) {
         case OrderType.Restaurant:
           return restaurantOrderStatusChangeNotificationHandler(key, value);
-        case OrderType.Taxi:
-          return taxiOrderStatusChangeNotificationHandler(key, value);
+        // case OrderType.Taxi:
+        //   return taxiOrderStatusChangeNotificationHandler(key, value);
         case OrderType.Laundry:
           return laundryOrderStatusChangeNotificationHandler(key, value);
         default:
@@ -56,7 +59,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.local_laundry_service,
-    linkUrl: getLaundryOrderRoute(value['orderId']),
+    linkUrl: LaundryRoutes.getLaundryOrderWithId(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -69,28 +72,28 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   );
 }
 
-Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
-  final TaxiOrdersStatus newOrdersStatus =
-      value['status'].toString().toTaxiOrderStatus();
-  final Map<String, dynamic> dynamicFields =
-      getTaxiOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(dynamicFields);
-  value['icon'] = dynamicFields['icon'];
-  return Notification(
-    id: key,
-    icon: dynamicFields['icon'],
-    linkUrl: getTaxiOrderRoute(value['orderId']),
-    linkText: _i18n()['viewOrder'],
-    body: dynamicFields["body"],
-    imgUrl: dynamicFields["imgUrl"],
-    title: dynamicFields["title"],
-    timestamp: DateTime.parse(value['time']),
-    notificationType: NotificationType.OrderStatusChange,
-    notificationAction:
-        value["notificationAction"].toString().toNotificationAction(),
-    variableParams: value,
-  );
-}
+// Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
+//   final TaxiOrdersStatus newOrdersStatus =
+//       value['status'].toString().toTaxiOrderStatus();
+//   final Map<String, dynamic> dynamicFields =
+//       getTaxiOrderStatusFields(newOrdersStatus)!;
+//   mezDbgPrint(dynamicFields);
+//   value['icon'] = dynamicFields['icon'];
+//   return Notification(
+//     id: key,
+//     icon: dynamicFields['icon'],
+//     linkUrl: getTaxiOrderRoute(value['orderId']),
+//     linkText: _i18n()['viewOrder'],
+//     body: dynamicFields["body"],
+//     imgUrl: dynamicFields["imgUrl"],
+//     title: dynamicFields["title"],
+//     timestamp: DateTime.parse(value['time']),
+//     notificationType: NotificationType.OrderStatusChange,
+//     notificationAction:
+//         value["notificationAction"].toString().toNotificationAction(),
+//     variableParams: value,
+//   );
+// }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   final RestaurantOrderStatus newOrdersStatus =
@@ -306,13 +309,8 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??
-          getMessagesRoute(
+          SharedRoutes.getMessagesRoute(
             chatId: int.parse(value["chatId"]),
-            orderId:
-                value["orderId"] != null ? int.parse(value["orderId"]) : null,
-            recipientType: value["sender"]["particpantType"]
-                .toString()
-                .toParticipantType(),
           ),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
@@ -326,17 +324,17 @@ Notification newMessageNotification(String key, value) {
       variableParams: value);
 }
 
-Notification newCounterOfferNotification(String key, value) {
-  return Notification(
-      id: key,
-      linkUrl: getTaxiOrderRoute(value['orderId']),
-      body: "${_i18n()["counterOfferBody"]}${value['driver']['name']}",
-      imgUrl: value['driver']['image'],
-      title: "${_i18n()["counterOfferTitle"]}",
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewCounterOffer,
-      notificationAction:
-          value["notificationAction"]?.toString().toNotificationAction() ??
-              NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-      variableParams: value);
-}
+// Notification newCounterOfferNotification(String key, value) {
+//   return Notification(
+//       id: key,
+//       linkUrl: getTaxiOrderRoute(value['orderId']),
+//       body: "${_i18n()["counterOfferBody"]}${value['driver']['name']}",
+//       imgUrl: value['driver']['image'],
+//       title: "${_i18n()["counterOfferTitle"]}",
+//       timestamp: DateTime.parse(value['time']),
+//       notificationType: NotificationType.NewCounterOffer,
+//       notificationAction:
+//           value["notificationAction"]?.toString().toNotificationAction() ??
+//               NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+//       variableParams: value);
+// }

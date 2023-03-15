@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -61,7 +62,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           ),
           Text(
             '${_i18n()["dvTime"]}',
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           if (widget.periodOfTime != null)
             Container(
@@ -89,7 +90,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   Flexible(
                     child: Text(
                       '${_i18n()["restClosed"]}',
-                      style: Get.textTheme.bodyMedium,
+                      style: context.txt.bodyMedium,
                     ),
                   ),
                 ],
@@ -129,14 +130,14 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                   (widget.isServiceOpen == false)
                                       ? '${_i18n()["pickTime"]}'
                                       : '${_i18n()["now"]}',
-                                  style: Get.textTheme.bodyLarge?.copyWith(
+                                  style: context.txt.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   )),
                             )
                           : Flexible(
                               fit: FlexFit.tight,
                               child: Text(_formattedTime,
-                                  style: Get.textTheme.bodyLarge?.copyWith(
+                                  style: context.txt.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   )),
                             ),
@@ -241,7 +242,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           Flexible(
             child: Text(
               '${_i18n()["timeError"]}',
-              style: Get.textTheme.bodyLarge
+              style: context.txt.bodyLarge
                   ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),

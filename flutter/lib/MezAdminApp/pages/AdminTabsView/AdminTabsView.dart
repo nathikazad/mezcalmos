@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
@@ -67,8 +68,8 @@ class _AdminTabsViewState extends State<AdminTabsView>
   Widget _navBar() {
     return BottomNavigationBar(
         iconSize: 23,
-        selectedLabelStyle: Get.textTheme.bodyLarge,
-        unselectedLabelStyle: Get.textTheme.bodyMedium,
+        selectedLabelStyle: context.txt.bodyLarge,
+        unselectedLabelStyle: context.txt.bodyMedium,
         selectedItemColor: primaryBlueColor,
         currentIndex: viewController.bottomTabIndex.value,
         onTap: (int v) {
@@ -104,8 +105,8 @@ class _AdminTabsViewState extends State<AdminTabsView>
                 controller: viewController.appbarTabsController,
                 labelColor: primaryBlueColor,
                 unselectedLabelColor: Colors.grey.shade800,
-                labelStyle: Get.textTheme.bodyLarge,
-                unselectedLabelStyle: Get.textTheme.bodyMedium,
+                labelStyle: context.txt.bodyLarge,
+                unselectedLabelStyle: context.txt.bodyMedium,
                 onTap: (int value) {
                   viewController.selectedServiceProviderType.value =
                       viewController.serviceTypes[value];

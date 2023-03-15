@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -24,7 +25,7 @@ class OrderDeliveryLocation extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["title"]}',
-            style: titleTextStyle ?? Get.textTheme.titleLarge,
+            style: titleTextStyle ?? context.txt.titleLarge,
           ),
           const SizedBox(
             height: 4,
@@ -48,7 +49,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       address,
-                      style: Get.textTheme.bodyText1?.copyWith(
+                      style: context.txt.bodyText1?.copyWith(
                         fontSize: 12.sp,
                       ),
                       maxLines: 1,

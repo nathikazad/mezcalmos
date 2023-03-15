@@ -8,13 +8,15 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -29,6 +31,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 class CustLaundryOrderView extends StatefulWidget {
   const CustLaundryOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(LaundryRoutes.laundryOrdersRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   State<CustLaundryOrderView> createState() => _CustLaundryOrderViewState();
 }
@@ -36,24 +43,26 @@ class CustLaundryOrderView extends StatefulWidget {
 class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
   CustLaundryOrderViewController viewController =
       CustLaundryOrderViewController();
-  late int orderId;
+  late int? orderId;
   LaundryOrderPhase? _phaseSnapshot;
 
   // Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
   StreamSubscription<Order?>? _orderListener;
+
   //final OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
+
   @override
   void initState() {
     // Handle Order id from the rooting
-    if (Get.parameters['orderId'] != null) {
-      orderId = int.parse(Get.parameters['orderId']!);
-      viewController.init(orderId: orderId);
+    orderId = int.tryParse(MezRouter.urlArguments['orderId'].toString());
+    if (orderId != null) {
+      viewController.init(orderId: orderId!);
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
 
     super.initState();
@@ -130,7 +139,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               margin: const EdgeInsets.only(top: 15),
                               child: Text(
                                 '${_i18n()["deliveryDeatils"]}',
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                             ),
                             OrderDeliveryLocation(
@@ -187,11 +196,11 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       titleWidget: Obx(
         () => Text(
           '${viewController.order.value?.laundry?.name ?? ""}',
-          style: Get.textTheme.displaySmall,
+          style: context.txt.displaySmall,
         ),
       ),
       showNotifications: true,
-      ordersRoute: kOrdersRoute,
+      ordersRoute: CustomerRoutes.customerOrdersRoute,
     );
   }
 

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderBottomCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderStatusControllButtons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'package:url_launcher/url_launcher_string.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -20,17 +24,23 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 class DvOrderView extends StatefulWidget {
   const DvOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(DeliveryAppRoutes.kRestaurantOrderViewRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   _DvOrderViewState createState() => _DvOrderViewState();
 }
 
 class _DvOrderViewState extends State<DvOrderView> {
   DvOrderViewcontroller viewController = DvOrderViewcontroller();
+
 //  OrderController controller = Get.find<OrderController>();
 
   @override
   void initState() {
-    final String orderId = Get.parameters['orderId']!;
+    final String orderId = MezRouter.urlArguments['orderId'].toString();
 
     ///  controller.clearOrderNotifications(orderId);
     viewController.init(orderId: int.parse(orderId));
@@ -86,9 +96,9 @@ class _DvOrderViewState extends State<DvOrderView> {
                             "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
 
                         try {
-                          await launch(url);
+                          await launchUrlString(url);
                         } catch (e) {
-                          await launch(url);
+                          await launchUrlString(url);
                         }
                       },
                       child: Container(

@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -12,6 +13,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
@@ -126,14 +129,14 @@ class ROpOptionViewController {
             ? _constructCustomOption()
             : _contructOption());
     if (result) {
-      Get.snackbar('Saved', 'Option saved successfuly',
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-          shouldIconPulse: false,
-          icon: Icon(
-            Icons.check_circle,
-            color: Colors.green,
-          ));
+      customSnackBar(
+        title: 'Saved',
+        subTitle: 'Option saved successfuly',
+        icon: Icon(
+          Icons.check_circle,
+          color: Colors.green,
+        ),
+      );
       needToFetch.value = true;
     }
   }
@@ -144,14 +147,14 @@ class ROpOptionViewController {
     final int? newOptionID = await add_option(
         itemId: itemId!, restaurantId: restaurantId, option: _contructOption());
     if (newOptionID != null) {
-      Get.snackbar('Saved', 'Option saved successfuly',
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-          shouldIconPulse: false,
-          icon: Icon(
-            Icons.check_circle,
-            color: Colors.green,
-          ));
+      customSnackBar(
+        title: 'Saved',
+        subTitle: 'Option saved successfuly',
+        icon: Icon(
+          Icons.check_circle,
+          color: Colors.green,
+        ),
+      );
       editableOption.value = await get_option_by_id(newOptionID);
       if (editableOption.value != null) {
         editMode.value = true;

@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -32,10 +34,10 @@ class ROpSpecialItemCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
-          final bool? shouldRefresh = await MezRouter.toNamed(
-              getEditItemRoute(
-                  itemId: item.id!, restaurntID: viewController.restaurnatId),
-              arguments: {"specials": true}) as bool;
+          final bool? shouldRefresh = await ROpItemView.navigate(
+              itemId: item.id!,
+              restaurantId: viewController.restaurnatId,
+              arguments: <String, dynamic>{"specials": true}) as bool;
 
           if (shouldRefresh == true) {
             await viewController.fetchSpecials();
@@ -61,7 +63,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                   children: [
                     Text(
                       item.name[userLanguage] ?? "",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 5,
@@ -78,7 +80,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(item.cost.toPriceString(),
-                        style: Get.textTheme.bodyLarge),
+                        style: context.txt.bodyLarge),
                     SizedBox(
                       height: 5,
                     ),
@@ -91,7 +93,9 @@ class ROpSpecialItemCard extends StatelessWidget {
                           value: item.available,
                           onChanged: (bool v) {
                             viewController.switchItemAv(
-                                item: item, value: v,);
+                              item: item,
+                              value: v,
+                            );
                           },
                           activeColor: primaryBlueColor,
                           activeTrackColor: secondaryLightBlueColor,

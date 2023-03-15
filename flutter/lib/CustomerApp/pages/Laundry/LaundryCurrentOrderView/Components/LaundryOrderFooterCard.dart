@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() =>
@@ -43,10 +42,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                           await widget.viewController.cancelOrder();
 
                       if (resp) {
-                        MezRouter.untill(
-                          (Route<dynamic> route) =>
-                              route.settings.name == kHomeRoute,
-                        );
+                        MezRouter.popEverythingTillBeforeHome();
                         MezSnackbar(
                           _i18n()["titleSuccess"],
                           _i18n()["orderCancelSuccess"],

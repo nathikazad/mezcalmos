@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
-import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
@@ -18,6 +19,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
 class AdminDeliveryCompanyServiceCard extends StatelessWidget {
   const AdminDeliveryCompanyServiceCard(
       {super.key, required this.company, required this.viewController});
+
   final DeliveryCompany company;
   final AdminServicesViewController viewController;
 
@@ -47,7 +49,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                       fit: FlexFit.tight,
                       child: Text(
                         company.info.name,
-                        style: Get.textTheme.bodyLarge,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     SizedBox(
@@ -56,7 +58,6 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         value: company.state.status == ServiceStatus.Open,
                         onChanged: (bool v) {
-                          
                           viewController.switchServiceStatus(
                               serviceDetailsId: company.serviceDetailsId,
                               providerType: ServiceProviderType.DeliveryCompany,
@@ -84,26 +85,29 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                     //     ontap: () {}),
                     _smallBtn(
                         icon: Icons.price_check,
+                        context: context,
                         label: "${_i18n()['costs']}",
                         ontap: () {
-                          navigateToDeliveryCost(
+                          DeliveryCostSettingView.navigate(
                               deliveryDetailsId: company.deliveryDetailsId!);
                         }),
                     _smallBtn(
                         icon: Icons.history,
+                        context: context,
                         label: "${_i18n()['orders']}",
                         ontap: () {
-                          getserviceOrdersRoute(
-                              serviceName: company.info.name,
+                          AdminServiceOrdersView.navigate(
                               serviceProviderId: company.info.hasuraId,
+                              serviceName: company.info.name,
                               serviceProviderType:
                                   ServiceProviderType.DeliveryCompany);
                         }),
                     _smallBtn(
                         icon: Icons.person,
+                        context: context,
                         label: "${_i18n()['profile']}",
                         ontap: () {
-                          navigateToServiceProfile(
+                          ServiceProfileView.navigate(
                               deliveryDetailsId: company.deliveryDetailsId!,
                               serviceProviderId: company.info.hasuraId,
                               serviceDetailsId: company.serviceDetailsId);
@@ -149,6 +153,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
   InkWell _smallBtn(
       {required IconData icon,
       required String label,
+      required BuildContext context,
       required Function()? ontap}) {
     return InkWell(
       borderRadius: BorderRadius.circular(5),
@@ -168,7 +173,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
             ),
             Text(
               label,
-              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
             )
           ],
         ),

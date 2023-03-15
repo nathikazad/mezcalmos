@@ -3383,6 +3383,42 @@ type delivery_company {
   """An object relationship"""
   details: service_provider_details
   details_id: Int!
+
+  """An array relationship"""
+  drivers(
+    """distinct select on columns"""
+    distinct_on: [delivery_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_driver_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_driver_bool_exp
+  ): [delivery_driver!]!
+
+  """An aggregate relationship"""
+  drivers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_driver_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_driver_bool_exp
+  ): delivery_driver_aggregate!
   id: Int!
 
   """An array relationship"""
@@ -3468,6 +3504,8 @@ input delivery_company_bool_exp {
   delivery_operators_aggregate: delivery_operator_aggregate_bool_exp
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
+  drivers: delivery_driver_bool_exp
+  drivers_aggregate: delivery_driver_aggregate_bool_exp
   id: Int_comparison_exp
   reviews: review_bool_exp
   reviews_aggregate: review_aggregate_bool_exp
@@ -3512,6 +3550,7 @@ input delivery_company_insert_input {
   delivery_operators: delivery_operator_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
+  drivers: delivery_driver_arr_rel_insert_input
   id: Int
   reviews: review_arr_rel_insert_input
   service_provider_type: String
@@ -3570,6 +3609,7 @@ input delivery_company_order_by {
   delivery_operators_aggregate: delivery_operator_aggregate_order_by
   details: service_provider_details_order_by
   details_id: order_by
+  drivers_aggregate: delivery_driver_aggregate_order_by
   id: order_by
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
@@ -5539,6 +5579,33 @@ type delivery_driver_aggregate {
   nodes: [delivery_driver!]!
 }
 
+input delivery_driver_aggregate_bool_exp {
+  bool_and: delivery_driver_aggregate_bool_exp_bool_and
+  bool_or: delivery_driver_aggregate_bool_exp_bool_or
+  count: delivery_driver_aggregate_bool_exp_count
+}
+
+input delivery_driver_aggregate_bool_exp_bool_and {
+  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_driver_aggregate_bool_exp_bool_or {
+  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_driver_aggregate_bool_exp_count {
+  arguments: [delivery_driver_select_column!]
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "delivery.driver"
 """
@@ -5556,11 +5623,47 @@ type delivery_driver_aggregate_fields {
   variance: delivery_driver_variance_fields
 }
 
+"""
+order by aggregate values of table "delivery.driver"
+"""
+input delivery_driver_aggregate_order_by {
+  avg: delivery_driver_avg_order_by
+  count: order_by
+  max: delivery_driver_max_order_by
+  min: delivery_driver_min_order_by
+  stddev: delivery_driver_stddev_order_by
+  stddev_pop: delivery_driver_stddev_pop_order_by
+  stddev_samp: delivery_driver_stddev_samp_order_by
+  sum: delivery_driver_sum_order_by
+  var_pop: delivery_driver_var_pop_order_by
+  var_samp: delivery_driver_var_samp_order_by
+  variance: delivery_driver_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "delivery.driver"
+"""
+input delivery_driver_arr_rel_insert_input {
+  data: [delivery_driver_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: delivery_driver_on_conflict
+}
+
 """aggregate avg on columns"""
 type delivery_driver_avg_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
+}
+
+"""
+order by avg() on columns of table "delivery.driver"
+"""
+input delivery_driver_avg_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 """
@@ -5652,6 +5755,23 @@ type delivery_driver_max_fields {
   user_id: Int
 }
 
+"""
+order by max() on columns of table "delivery.driver"
+"""
+input delivery_driver_max_order_by {
+  app_type_id: order_by
+  app_version: order_by
+  delivery_company_id: order_by
+
+  """restaurant,laundry,delivery_company"""
+  delivery_company_type: order_by
+  id: order_by
+
+  """awaiting_approval, authorized, banned"""
+  status: order_by
+  user_id: order_by
+}
+
 """aggregate min on columns"""
 type delivery_driver_min_fields {
   app_type_id: String
@@ -5665,6 +5785,23 @@ type delivery_driver_min_fields {
   """awaiting_approval, authorized, banned"""
   status: String
   user_id: Int
+}
+
+"""
+order by min() on columns of table "delivery.driver"
+"""
+input delivery_driver_min_order_by {
+  app_type_id: order_by
+  app_version: order_by
+  delivery_company_id: order_by
+
+  """restaurant,laundry,delivery_company"""
+  delivery_company_type: order_by
+  id: order_by
+
+  """awaiting_approval, authorized, banned"""
+  status: order_by
+  user_id: order_by
 }
 
 """
@@ -5754,6 +5891,22 @@ enum delivery_driver_select_column {
 }
 
 """
+select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery.driver"
+"""
+enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  online
+}
+
+"""
+select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery.driver"
+"""
+enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  online
+}
+
+"""
 input type for updating data in table "delivery.driver"
 """
 input delivery_driver_set_input {
@@ -5779,6 +5932,15 @@ type delivery_driver_stddev_fields {
   user_id: Float
 }
 
+"""
+order by stddev() on columns of table "delivery.driver"
+"""
+input delivery_driver_stddev_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type delivery_driver_stddev_pop_fields {
   delivery_company_id: Float
@@ -5786,11 +5948,29 @@ type delivery_driver_stddev_pop_fields {
   user_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "delivery.driver"
+"""
+input delivery_driver_stddev_pop_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type delivery_driver_stddev_samp_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "delivery.driver"
+"""
+input delivery_driver_stddev_samp_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 """
@@ -5826,6 +6006,15 @@ type delivery_driver_sum_fields {
   delivery_company_id: Int
   id: Int
   user_id: Int
+}
+
+"""
+order by sum() on columns of table "delivery.driver"
+"""
+input delivery_driver_sum_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 """
@@ -5878,6 +6067,15 @@ type delivery_driver_var_pop_fields {
   user_id: Float
 }
 
+"""
+order by var_pop() on columns of table "delivery.driver"
+"""
+input delivery_driver_var_pop_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type delivery_driver_var_samp_fields {
   delivery_company_id: Float
@@ -5885,11 +6083,29 @@ type delivery_driver_var_samp_fields {
   user_id: Float
 }
 
+"""
+order by var_samp() on columns of table "delivery.driver"
+"""
+input delivery_driver_var_samp_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate variance on columns"""
 type delivery_driver_variance_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
+}
+
+"""
+order by variance() on columns of table "delivery.driver"
+"""
+input delivery_driver_variance_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 input delivery_get_delivery_companies_args {
@@ -27495,6 +27711,7 @@ type service_provider_details {
 
   """An object relationship"""
   stripe_info: service_provider_stripe_info
+  unique_id: String
 }
 
 """
@@ -27570,6 +27787,7 @@ input service_provider_details_bool_exp {
   service_provider_type: String_comparison_exp
   stripe_id: Int_comparison_exp
   stripe_info: service_provider_stripe_info_bool_exp
+  unique_id: String_comparison_exp
 }
 
 """
@@ -27676,6 +27894,7 @@ input service_provider_details_insert_input {
   service_provider_type: String
   stripe_id: Int
   stripe_info: service_provider_stripe_info_obj_rel_insert_input
+  unique_id: String
 }
 
 """aggregate max on columns"""
@@ -27692,6 +27911,7 @@ type service_provider_details_max_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """aggregate min on columns"""
@@ -27708,6 +27928,7 @@ type service_provider_details_min_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """
@@ -27765,6 +27986,7 @@ input service_provider_details_order_by {
   service_provider_type: order_by
   stripe_id: order_by
   stripe_info: service_provider_stripe_info_order_by
+  unique_id: order_by
 }
 
 """primary key columns input for table: service_provider.details"""
@@ -27832,6 +28054,9 @@ enum service_provider_details_select_column {
 
   """column name"""
   stripe_id
+
+  """column name"""
+  unique_id
 }
 
 """
@@ -27856,6 +28081,7 @@ input service_provider_details_set_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """aggregate stddev on columns"""
@@ -27916,6 +28142,7 @@ input service_provider_details_stream_cursor_value_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  unique_id: String
 }
 
 """aggregate sum on columns"""
@@ -27978,6 +28205,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   stripe_id
+
+  """column name"""
+  unique_id
 }
 
 input service_provider_details_updates {

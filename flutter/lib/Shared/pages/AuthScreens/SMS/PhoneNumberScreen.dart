@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
-const mypadding = EdgeInsets.only(left: 15, right: 15);
+const EdgeInsets mypadding = EdgeInsets.only(left: 15, right: 15);
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SMS"]["PhoneNumberScreen"];
@@ -26,6 +26,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
   TextEditingController _prefixTextFieldController = TextEditingController();
   TextEditingController _numberTextFieldController = TextEditingController();
+
   // final phoneNumberFocusNode = FocusNode();
 
   RxBool canSendOtp = false.obs;
@@ -52,14 +53,14 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
       appBar: AppBar(
         title: Text(
           'Sign in',
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
       ),
       bottomSheet: BottomSheet(
           enableDrag: false,
           backgroundColor: Colors.transparent,
           onClosing: () {},
-          builder: (context) {
+          builder: (BuildContext context) {
             return SubmitButton(context);
           }),
       // bottomSheet: Theme(
@@ -88,7 +89,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
                     ///****add ths to lan file */
                     _i18n()["otpCode"],
-                    style: Theme.of(context).textTheme.headline1),
+                    style: Theme.of(context).textTheme.displayLarge),
               ),
             ),
             SizedBox(
@@ -100,7 +101,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                 padding: EdgeInsets.only(left: 15, right: 15, top: 15),
                 child: Text(
                   _i18n()["twilioNote"],
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ),
@@ -122,7 +123,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
             Container(
               child: Text(_i18n()["enterPhoneNumber"],
                   // "Enter Phone To Recieve OPT Code",
-                  style: Theme.of(context).textTheme.bodyText1),
+                  style: Theme.of(context).textTheme.bodyLarge),
             ),
             SizedBox(
               height: 10,
@@ -149,11 +150,11 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                               autofocus: false,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline1!
+                                  .displayLarge!
                                   .copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500),
-                              onChanged: (s) {
+                              onChanged: (String s) {
                                 if (_prefixTextFieldController
                                             .value.text.length >
                                         0 &&
@@ -192,10 +193,10 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     child: TextFormField(
                       style: Theme.of(context)
                           .textTheme
-                          .headline1!
+                          .displayLarge!
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
                       autofocus: false,
-                      onChanged: (s) {
+                      onChanged: (String s) {
                         if (_prefixTextFieldController.text.length > 0 &&
                             _numberTextFieldController.text.length >= 8) {
                           canSendOtp.value = true;
@@ -233,15 +234,14 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     if (!phone.startsWith('+')) phone = "+" + phone;
                     mezDbgPrint(phone);
                     if (phone.isPhoneNumber) {
-                      ServerResponse response = await sendOTPForLogin(phone);
+                      SendOtpResponse response = await sendOTPForLogin(phone);
                       mezDbgPrint("++++++++++++ response >>> $response");
 
-                      if (response.success) {
+                      if (response.status == ServerResponseStatus.Success) {
                         MezSnackbar("Notice ~", "OTP Sent code to : $phone");
-                        MezRouter.toNamed(kOtpConfirmRoute, arguments: phone);
-                      } else {
-                        MezSnackbar(response.errorCode.toString(),
-                            response.errorMessage.toString());
+                        // @abhishek call the navigate function
+                        await MezRouter.toNamed(SharedRoutes.kOtpConfirmRoute,
+                            arguments: {"phone": phone});
                       }
                     } else
                       MezSnackbar("Error", "Invalid phone Number !");

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -33,7 +35,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
-    Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
+    Get.find<SideMenuDrawerController>().pastOrdersRoute =
+        DeliveryAppRoutes.kPastOrdersViewRoute;
 
     viewController.init();
 
@@ -53,7 +56,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
-            showNotifications: true, ordersRoute: kPastOrdersView),
+            showNotifications: true,
+            ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15),
@@ -119,10 +123,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                                               viewController.openOrders[index],
                                           showOrderType: true,
                                           onTap: () {
-                                            MezRouter.toNamed(
-                                                getRestaurantOrderRoute(
-                                                    viewController
-                                                        .openOrders[index].id));
+                                            DvOrderView.navigate(
+                                                orderId: viewController
+                                                    .currentOrders[index].id);
                                           },
                                         )).reversed.toList(),
                               ),
@@ -160,8 +163,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                     order: viewController.currentOrders[index],
                     showOrderType: true,
                     onTap: () {
-                      MezRouter.toNamed(getRestaurantOrderRoute(
-                          viewController.currentOrders[index].id));
+                      DvOrderView.navigate(
+                          orderId: viewController.currentOrders[index].id);
                     },
                   )).reversed.toList(),
         ),

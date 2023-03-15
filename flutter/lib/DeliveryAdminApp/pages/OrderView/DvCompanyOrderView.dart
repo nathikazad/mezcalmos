@@ -1,14 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/controllers/DvCompanyOrderViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -26,6 +29,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 class DvCompanyOrderView extends StatefulWidget {
   const DvCompanyOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(DeliveryAdminRoutes.kOrderViewRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   _DvCompanyOrderViewState createState() => _DvCompanyOrderViewState();
 }
@@ -35,7 +43,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
 
   @override
   void initState() {
-    final String orderId = Get.parameters['orderId']!;
+    final String orderId = MezRouter.urlArguments['orderId'].toString();
     mezDbgPrint("Calling init dispose 🥸");
     viewController.init(orderId: int.parse(orderId));
 
@@ -99,7 +107,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     "Customer Info",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 MezCard(
@@ -109,14 +117,14 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                         viewController.order.value!.customerInfo.image),
                     content: Text(
                       viewController.order.value!.customerInfo.name,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     )),
 
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     'Delivery Details',
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 OrderScheduledTimeCard(
@@ -150,8 +158,8 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 ),
                 Text(
                   "Getting you order info...",
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
+                  style:
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
               ],
             ),
@@ -169,7 +177,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
             "Estimated Times",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
         ),
         if (viewController.order.value!.estimatedPackageReadyTime != null)
@@ -186,7 +194,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Package ready :",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -209,7 +217,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Arrival at pickup :",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -232,7 +240,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Arrival at dropoff :",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -261,13 +269,13 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
       content: Text(
         viewController.order.value!.driverInfo?.name ??
             "No driver assigned yet",
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
       ),
       action: Row(
         children: [
           MezIconButton(
             onTap: () {
-              navigateToPickDriver(
+              PickDriverView.navigate(
                   deliveryOrderId: viewController.order.value!.id,
                   showForwardButton: false);
             },
@@ -280,9 +288,9 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             MessageButton(
                 chatId: 55,
                 onTap: () {
-                  MezRouter.toNamed(getMessagesRoute(
+                  BaseMessagingScreen.navigate(
                       chatId: viewController
-                          .order.value!.chatWithServiceProviderId!));
+                          .order.value!.chatWithServiceProviderId!);
                 })
         ],
       ),
@@ -304,7 +312,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           children: [
             Text(
               viewController.order.value!.serviceInfo.name,
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -320,7 +328,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 Flexible(
                   child: Text(
                     viewController.order.value!.serviceInfo.location.address,
-                    style: Get.textTheme.bodyMedium,
+                    style: context.txt.bodyMedium,
                     maxLines: 1,
                   ),
                 ),

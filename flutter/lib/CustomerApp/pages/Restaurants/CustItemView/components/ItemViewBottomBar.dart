@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -59,7 +60,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
             child: Center(
               child: Text(
                 "\$${widget.viewController.cartItem.value!.totalCost().toInt()} ",
-                style: Get.textTheme.displaySmall,
+                style: context.txt.displaySmall,
               ),
             ),
           ),
@@ -85,7 +86,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                     ? _i18n()['addToCart']
                     : _i18n()['modifyItem'],
                 textAlign: TextAlign.center,
-                style: Get.textTheme.headlineLarge
+                style: context.txt.headlineLarge
                     ?.copyWith(color: Colors.white, fontSize: 18),
               ),
             ),
@@ -106,7 +107,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       child: Center(
         child: Text(
           "${_i18n()["notAvailable"]}",
-          style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+          style: context.txt.bodyLarge?.copyWith(color: Colors.red),
         ),
       ),
     );
@@ -125,7 +126,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           try {
             await widget.viewController
                 .handleAddItem()
-                .whenComplete(() => MezRouter.toNamed(kCartRoute));
+                .whenComplete(() => ViewCartScreen.navigate());
           } catch (e, stk) {
             mezDbgPrint(e);
             mezDbgPrint(stk);
@@ -135,7 +136,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
         try {
           await widget.viewController
               .handleEditItem()
-              .whenComplete(() => MezRouter.toNamed(kCartRoute));
+              .whenComplete(() => ViewCartScreen.navigate());
         } catch (e, stk) {
           mezDbgPrint(e);
           mezDbgPrint(stk);
@@ -157,14 +158,15 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       description:
           '${_i18n()["subtitle"]} ${widget.viewController.cart.value?.restaurant?.info.name ?? ""} ${_i18n()["overwriteText"]} ',
       secondaryCallBack: () async {
-        MezRouter.popDialog<void>();
-        await MezRouter.toNamed<void>(kCartRoute);
+        await MezRouter.back();
+
+        await ViewCartScreen.navigate();
       },
       primaryCallBack: () async {
         await widget.viewController.handleAddItem();
-        MezRouter.popDialog<void>();
+        await MezRouter.back();
 
-        await MezRouter.offNamed<void>(kCartRoute);
+        await ViewCartScreen.navigate();
       },
     );
   }
@@ -182,14 +184,16 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       secondaryClickTitle: _i18n()["leftBtn"],
       description: _i18n()["specialSubtitle"],
       secondaryCallBack: () async {
-        MezRouter.popDialog<void>();
-        await MezRouter.toNamed<void>(kCartRoute);
+        await MezRouter.back();
+
+        await ViewCartScreen.navigate();
       },
       primaryCallBack: () async {
         mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
         await widget.viewController.cartController?.clearCart();
         await widget.viewController.handleAddItem();
-        await MezRouter.offNamed<void>(kCartRoute);
+        await MezRouter.back();
+        await ViewCartScreen.navigate();
       },
     );
   }

@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["notificationHandler"];
@@ -43,8 +43,8 @@ Notification deliveryDriverNotificationHandler(String key, value) {
       return Notification(
           id: key,
           icon: mat.Icons.delete_forever_rounded,
-          linkUrl:
-              kCurrentOrdersListRoute, // needs to be changed, need to add laundry
+          linkUrl: DeliveryAppRoutes
+              .kCurrentOrdersListRoute, // needs to be changed, need to add laundry
           body: 'You have been approved', // needs to be changed
           imgUrl:
               'assets/images/shared/notifications/delivered.png', // needs to be changed
@@ -73,11 +73,11 @@ Notification deliveryDriverNotificationHandler(String key, value) {
 String getLinkUrl(OrderType orderType, int orderId) {
   switch (orderType) {
     case OrderType.Laundry:
-      return getLaundryOrderRoute(orderId);
+      return DeliveryAppRoutes.getLaundryOrderRoute(orderId);
     case OrderType.Restaurant:
-      return getRestaurantOrderRoute(orderId);
+      return DeliveryAppRoutes.getRestaurantOrderRoute(orderId);
     default:
-      return kHomeRoute;
+      return SharedRoutes.kHomeRoute;
   }
 }
 
@@ -159,7 +159,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
                   RestaurantOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: getLaundryOrderRoute(value["orderId"]),
+      linkUrl: DeliveryAppRoutes.getLaundryOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -227,12 +227,7 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??
-          getMessagesRoute(
-              chatId: value["chatId"],
-              orderId: value["orderId"],
-              recipientType: value["sender"]["particpantType"]
-                  .toString()
-                  .toParticipantType()),
+          SharedRoutes.getMessagesRoute(chatId: value["chatId"]),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

@@ -1,14 +1,15 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:sizer/sizer.dart';
 
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
@@ -28,13 +29,12 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
         return _BackButtonAppBar(
-          click: autoBack ? (onClick ?? () => MezRouter.back<void>()) : onClick,
+          click: autoBack ? (onClick ?? () => MezRouter.back()) : onClick,
         );
       case AppBarLeftButtonType.Menu:
       default:
         return _MenuButtonAppBar();
     }
-    return null;
   }
 
   Widget _ordersAppBarIcon() {
@@ -84,7 +84,12 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       title: (title != null)
           ? Text(
               title,
-              style: Get.textTheme.headline3,
+              style: TextStyle(
+                fontFamily: "Montserrat",
+                fontWeight: FontWeight.w600,
+                fontSize: 16.sp,
+                color: Colors.black,
+              ),
               textAlign: TextAlign.center,
             )
           : (titleWidget != null)
@@ -193,7 +198,7 @@ Widget _notificationAppBarIcon() {
               child: InkWell(
                 customBorder: CircleBorder(),
                 onTap: () {
-                  MezRouter.toNamed(kNotificationsRoute);
+                  MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
                 },
                 child: badge.Badge(
                   badgeColor: Colors.red,

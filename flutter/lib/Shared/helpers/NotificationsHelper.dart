@@ -4,14 +4,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -42,7 +41,7 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
-  if (isCurrentRoute(notification.linkUrl))
+  if (MezRouter.isCurrentRoute(notification.linkUrl))
     await showStatusInfoDialog(Get.context!,
         status: notification.title,
         description: notification.body,
@@ -58,7 +57,7 @@ Future<void> decideWhichButtonDialogToUse(
       showSmallIcon: notification.secondaryIcon != null,
       bottomRightIcon: notification.secondaryIcon,
       primaryCallBack: () {
-        MezRouter.back(closeOverlays: true);
+        MezRouter.back();
       },
       secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
     );

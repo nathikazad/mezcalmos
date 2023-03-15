@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpPastOrdersViewController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -21,6 +23,7 @@ class ROpPastOrdersList extends StatefulWidget {
 
 class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
   DvOpPastOrdersController viewController = DvOpPastOrdersController();
+
   @override
   void initState() {
     viewController.init();
@@ -61,8 +64,8 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                     return MinimalOrderCard(
                       order: viewController.pastOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(getDvCompanyOrderRoute(
-                            viewController.pastOrders[index].id));
+                        DvCompanyOrderView.navigate(
+                            orderId: viewController.pastOrders[index].id);
                       },
                     );
                   },

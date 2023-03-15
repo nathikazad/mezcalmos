@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -82,12 +83,12 @@ class _LaundyOpSetCategoryComponentState
                       children: [
                         Text(
                           '${_i18n()["total"]}',
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         Text(
                           widget.viewController.order.costsByType!.weighedCost
                               .toPriceString(),
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                       ],
                     ),
@@ -120,8 +121,7 @@ class _LaundyOpSetCategoryComponentState
               ),
               Text(
                 "${_i18n()["setNewItemsWeight"]}",
-                style:
-                    Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+                style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
               ),
             ],
           ),
@@ -177,7 +177,8 @@ class _LaundyOpSetCategoryComponentState
     //   if (oldCosts.lineItems.length > 1) {
     //     int? res = await widget.viewController.deleteCategory(item.id);
     //     if (res != null) {
-    //       MezRouter.popDialog();
+    //       MezRouter.back()
+
     //     }
     //   } else {
     //     Get.snackbar(
@@ -202,7 +203,7 @@ class _LaundyOpSetCategoryComponentState
             child: Text(
               item.name[userLanguage] ?? "",
               maxLines: 1,
-              style: Get.textTheme.bodyMedium,
+              style: context.txt.bodyMedium,
             ),
           ),
           Text(

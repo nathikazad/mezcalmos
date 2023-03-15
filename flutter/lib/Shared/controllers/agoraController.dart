@@ -5,9 +5,9 @@ import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -17,11 +17,12 @@ import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/env_example.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_callkit_incoming/entities/entities.dart';
 
 enum CallStatus { none, calling, inCall, timedOut }
 
@@ -206,7 +207,7 @@ class Sagora extends GetxController {
           callStatus.value = CallStatus.none;
           await FlutterCallkitIncoming.endAllCalls();
           // change to decline to update view parts.
-          // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back<void>();
+          // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back();
           break;
         case Event.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
@@ -257,27 +258,29 @@ class Sagora extends GetxController {
                 id: int.parse(event.body['extra']['callerId']),
               ),
             };
-            if (Get.currentRoute == kAgoraCallScreen) {
-              Future<void>.microtask(
-                () => MezRouter.offAndToNamed<void>(kAgoraCallScreen,
-                    arguments: <String, dynamic>{
-                      "chatId": int.parse(event.body?['extra']?['chatId']),
-                      "talkingTo": Participant(
-                        image: event.body?['avatar'],
-                        name: event.body?['nameCaller'],
-                        participantType: event.body['extra']['callerType']
-                            .toString()
-                            .toParticipantType(),
-                        // wrong actual user id, it's more like an agora generated id
-                        id: event.body['extra']['callerId'],
-                      ),
-                    }),
-              );
+            if (Get.currentRoute == NativeOnlyRoutes.kAgoraCallScreenRoute) {
+              Future<void>.microtask(() => MezRouter.back().then(
+                    (_) => MezRouter.toNamed(
+                        NativeOnlyRoutes.kAgoraCallScreenRoute,
+                        arguments: <String, dynamic>{
+                          "chatId": int.parse(event.body?['extra']?['chatId']),
+                          "talkingTo": Participant(
+                            image: event.body?['avatar'],
+                            name: event.body?['nameCaller'],
+                            participantType: event.body['extra']['callerType']
+                                .toString()
+                                .toParticipantType(),
+                            // wrong actual user id, it's more like an agora generated id
+                            id: event.body['extra']['callerId'],
+                          ),
+                        }),
+                  ));
             } else {
               // Pushing to call screen + awaiting in case we wanna return with value.
               // ignore: unawaited_futures
-              Future.microtask(() =>
-                  MezRouter.toNamed<void>(kAgoraCallScreen, arguments: args));
+              Future.microtask(() => MezRouter.toNamed(
+                  NativeOnlyRoutes.kAgoraCallScreenRoute,
+                  arguments: args));
             }
           }
           break;
@@ -345,7 +348,7 @@ class Sagora extends GetxController {
                 chatId: chatId,
                 callerId: _authController.hasuraUserId!,
                 callerParticipantType:
-                    _settingsController.appType.toParticipantTypefromAppType(),
+                    MezEnv.appType.toParticipantTypefromAppType(),
                 calleeId: callee.id,
                 calleeParticipantType: callee.participantType,
                 callNotificationType: callNotificationType)

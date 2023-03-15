@@ -1,12 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 class OrderLaundryCard extends StatelessWidget {
@@ -37,7 +34,7 @@ class OrderLaundryCard extends StatelessWidget {
                   children: [
                     Text(
                       order.laundry?.name ?? "",
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                     ),
                     SizedBox(
                       height: 5,
@@ -62,14 +59,7 @@ class OrderLaundryCard extends StatelessWidget {
                 )),
             MessageButton(
               onTap: () {
-                MezRouter.toNamed(
-                  getMessagesRoute(
-                    chatId: order.chatId,
-                    recipientType: ParticipantType.Laundry,
-                    orderType: OrderType.Laundry,
-                    orderId: order.orderId,
-                  ),
-                );
+                BaseMessagingScreen.navigate(chatId: order.chatId);
               },
               chatId: order.chatId,
             ),
@@ -82,11 +72,7 @@ class OrderLaundryCard extends StatelessWidget {
   Widget _messageButton(BuildContext context) {
     return IconButton(
       onPressed: () {
-        MezRouter.toNamed<void>(getMessagesRoute(
-            orderId: order.orderId,
-            chatId: order.orderId,
-            orderType: OrderType.Laundry,
-            recipientType: ParticipantType.DeliveryAdmin));
+        BaseMessagingScreen.navigate(chatId: order.orderId);
       },
       icon: Stack(
         alignment: Alignment.center,

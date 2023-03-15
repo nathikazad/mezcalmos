@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -21,15 +19,9 @@ class SearchItemCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (item.restaurantId != null && item.id != null) {
-            MezRouter.toNamed(
-              getItemRoute(
-                item.restaurantId!,
-                item.id!,
-              ),
-              arguments: {
-                "mode": ViewItemScreenMode.AddItemMode,
-                "showViewRestaurant": true
-              },
+            CustItemView.navigateToRestaurantItem(
+              restaurantId: item.restaurantId!,
+              itemId: item.id!,
             );
           }
         },
@@ -48,14 +40,14 @@ class SearchItemCard extends StatelessWidget {
                     Text(
                       item.name[userLanguage]!,
                       maxLines: 2,
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
                       item.cost.toPriceString(),
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                     ),
                     Spacer(),
                     Divider(
