@@ -47,7 +47,7 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void checkConnectivity() {
-    ConnectivityHelper.instance.networkCheck();
+    ConnectivityHelper.instance.startCheckingInternet();
     ConnectivityHelper.internetStatusStream
         .listen((InternetStatus internetStatus) {
       // mezDbgPrint(internetStatus);

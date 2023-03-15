@@ -2,10 +2,13 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:http/http.dart' as http;
+import 'package:mezcalmos/env_example.dart';
 
 enum InternetStatus { Online, Slow, Offline }
 
@@ -17,26 +20,15 @@ class ConnectivityHelper {
 
   static ConnectivityHelper get instance => _instance;
 
-  final List<ConnectivityResult> _hasInternetOptions = [
-    ConnectivityResult.mobile,
-    ConnectivityResult.wifi,
-    ConnectivityResult.ethernet,
-  ];
-
   static late StreamController<InternetStatus> _internetStatusStreamController;
 
   static Stream<InternetStatus> get internetStatusStream =>
       _internetStatusStreamController.stream;
 
-  AppLaunchMode _appLaunchMode = AppLaunchMode.prod;
-
-  Future<void> networkCheck() async {
+  Future<void> startCheckingInternet() async {
     _internetStatusStreamController =
         StreamController<InternetStatus>.broadcast();
     mezDbgPrint("NETWORK CHECKER");
-    const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
-    _appLaunchMode = _tmpLmode.toLaunchMode();
     _internetStatusStreamController.add(await checkForInternet());
     Timer.periodic(const Duration(seconds: 10), (timer) async {
       try {
@@ -51,14 +43,14 @@ class ConnectivityHelper {
   }
 
   Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
-    List<Future<bool>> futures = <Future<bool>>[];
-    futures.add(_pingServer(sNetworkCheckUrl1));
-    futures.add(_pingServer(firebaseDbUrl));
-    futures.add(_pingServer(hasuraDbUrl));
-    if (_appLaunchMode == AppLaunchMode.prod)
-      futures.add(_pingServer(firebaseFunctionsProdUrl));
-    else if (_appLaunchMode == AppLaunchMode.stage)
-      futures.add(_pingServer(firebaseFunctionsStageUrl));
+    List<Future<bool>> futures = <Future<bool>>[
+      _pingServer(sNetworkCheckUrl1),
+      _pingServer(firebaseDbUrl),
+      _pingServer(hasuraDbUrl),
+      MezEnv.appLaunchMode == AppLaunchMode.prod
+          ? _pingServer(firebaseFunctionsProdUrl)
+          : _pingServer(firebaseFunctionsStageUrl)
+    ];
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
         .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
@@ -75,16 +67,10 @@ class ConnectivityHelper {
 
   Future<bool> _pingServer(String pingUrl) async {
     try {
-      // final Ping result = Ping(pingUrl, count: 5);
-      // return result.toString().isNotEmpty;
-      // final List<InternetAddress> result =
-      //     await InternetAddress.lookup(pingUrl);
-      // return result.isNotEmpty;
-      // @abhishek
-      // figure out a different way to ping maybe network_check package
-      // also check it works when user is not signed
+      await http.get(Uri.parse(pingUrl));
       return Future<bool>.delayed(Duration.zero, () => true);
-    } on SocketException catch (_) {
+    } catch (e) {
+      mezDbgPrint(e);
       return false;
     }
   }
