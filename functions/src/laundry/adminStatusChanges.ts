@@ -115,7 +115,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
       customer.language
     );
     if(fromCustomerDeliveryOrder && fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
-        // notification.linkUrl = `/orders/${fromCustomerDeliveryOrder.deliveryId}`;
+        notification.linkUrl = `/orders/${fromCustomerDeliveryOrder.deliveryId}`;
         pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
           notification, 
           fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,
@@ -124,7 +124,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
         );
     }
     if (toCustomerDeliveryOrder && toCustomerDeliveryOrder.deliveryDriver && toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
-      // notification.linkUrl = `/orders/${toCustomerDeliveryOrder.deliveryId}`;
+      notification.linkUrl = `/orders/${toCustomerDeliveryOrder.deliveryId}`;
       pushNotification(toCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
         notification, 
         toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
