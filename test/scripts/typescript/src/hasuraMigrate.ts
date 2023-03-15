@@ -46,11 +46,11 @@ console.log("Current working directory: ", process.cwd());
 
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/orders/past/laundry`).once('value')).val();
+  let db = (await firebase.database().ref(`/restaurants/info`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./data/db-snapshot-laundry-orders.json", data);
+  fs.writeFileSync("./data/db-snapshot.json", data);
   console.log("Finished");
 }
 async function writeToDB() {
@@ -176,7 +176,8 @@ async function writeToDB() {
       // languageId: restaurant.details.language.primary,
       approved: restaurant.state.authorizationStatus == "authorized",
       schedule: JSON.stringify(restaurant.details.schedule),
-      categories: (categoryArray.length) ? categoryArray : null
+      categories: (categoryArray.length) ? categoryArray : null,
+      uniqueId: restaurant.info.name.split(" ").join("").slice(0, 8).toLowerCase()
     }
     array.push(restaurantObject);
     // break;
@@ -639,7 +640,7 @@ async function writeToDBCustomers() {
 
 // insertDeliveryPartners()
   // saveFile()
-  // writeToDB()  
+  writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
 // writeToDBDeliDrivers()
@@ -647,4 +648,4 @@ async function writeToDBCustomers() {
 // writeToDBRestoOrders()
 // writeToDBLaundry()
 // writeToDBLaundryOrders()
-insertServiceLinks()
+// insertServiceLinks()

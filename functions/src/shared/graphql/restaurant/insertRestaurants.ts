@@ -3,6 +3,23 @@ import { ServiceProviderType } from "../../models/Services/Service";
 
 export async function insertRestaurants(data: any) {
     let chain = getHasura();
+
+    let queryResponse = await chain.query({
+        restaurant_restaurant: [{}, {
+            details: {
+                firebase_id: true,
+            }
+        }]
+    })
+    let insertedRestaurants: Record<string, boolean>;
+    queryResponse.restaurant_restaurant.forEach((r) => {
+        if(r.details?.firebase_id == null)
+            return;
+
+        insertedRestaurants[r.details?.firebase_id] = true;
+    })
+    data.filter((r: any) => insertedRestaurants[r.firebaseId] == undefined)
+
     const restaurants = data.map((r: any, index: number) => {
         let description = [];
         if(r.description.en) {
@@ -101,19 +118,19 @@ export async function insertRestaurants(data: any) {
                                 }
             
                                 return {
-                                    restaurant_id: index + 1,
+                                    restaurant_id: index + 63,
                                     item_options: {
                                         data: [{
                                             name: {
                                                 data: {
-                                                    service_provider_id: index + 1,
+                                                    service_provider_id: index + 63,
                                                     service_provider_type: "restaurant",
                                                     translations: {
                                                         data: optionName
                                                     }
                                                 }
                                             },
-                                            restaurant_id: index + 1,
+                                            restaurant_id: index + 63,
                                             option_type: o.optionType,
                                             minimum_choice: o.minimumChoice,
                                             maximum_choice: o.maximumChoice,
@@ -133,7 +150,7 @@ export async function insertRestaurants(data: any) {
                         return {
                             name: {
                                 data: {
-                                    service_provider_id: index + 1,
+                                    service_provider_id: index + 63,
                                     service_provider_type: "restaurant",
                                     translations: {
                                         data: itemName
@@ -142,7 +159,7 @@ export async function insertRestaurants(data: any) {
                             },
                             description: itemDescription ? {
                                 data: {
-                                    service_provider_id: index + 1,
+                                    service_provider_id: index + 63,
                                     service_provider_type: "restaurant",
                                     translations: {
                                         data: itemDescription
@@ -152,7 +169,7 @@ export async function insertRestaurants(data: any) {
                             position: i.position,
                             available: i.available,
                             cost: i.cost,
-                            restaurant_id: index + 1,
+                            restaurant_id: index + 63,
                             options: (options) ? {
                                 data: options
                             }: undefined
@@ -163,7 +180,7 @@ export async function insertRestaurants(data: any) {
                 return {
                     name: {
                         data: {
-                            service_provider_id: index + 1,
+                            service_provider_id: index + 63,
                             service_provider_type: "restaurant",
                             translations: {
                                 data: name
@@ -172,7 +189,7 @@ export async function insertRestaurants(data: any) {
                     },
                     description: categoryDescription ? {
                         data: {
-                            service_provider_id: index + 1,
+                            service_provider_id: index + 63,
                             service_provider_type: "restaurant",
                             translations: {
                                 data: categoryDescription
@@ -188,7 +205,7 @@ export async function insertRestaurants(data: any) {
         }
         
         return {
-            id: index + 1,
+            id: index + 63,
             details: {
                 data: {
                     firebase_id: r.firebaseId,
@@ -205,7 +222,7 @@ export async function insertRestaurants(data: any) {
                     },
                     description: {
                         data: {
-                            service_provider_id: index + 1,
+                            service_provider_id: index + 63,
                             service_provider_type: "restaurant",
                             translations: {
                                 data: description
@@ -216,7 +233,8 @@ export async function insertRestaurants(data: any) {
                     // language_id: r.languageId,
                     approved: r.approved,
                     schedule: r.schedule,
-                    service_provider_type: ServiceProviderType.Restaurant
+                    service_provider_type: ServiceProviderType.Restaurant,
+                    unique_id: r.uniqueId
                 }
             },
             delivery_details: {
@@ -381,19 +399,19 @@ export async function insertRestaurants(data: any) {
                                         })
                                     }
                                     return {
-                                        restaurant_id: index + 1,
+                                        restaurant_id: index + 63,
                                         option_choices: {
                                             data: [{
                                                 name: {
                                                     data: {
-                                                        service_provider_id: index + 1,
+                                                        service_provider_id: index + 63,
                                                         service_provider_type: "restaurant",
                                                         translations: {
                                                             data: choiceName
                                                         }
                                                     }
                                                 },
-                                                restaurant_id: index + 1,
+                                                restaurant_id: index + 63,
                                                 available: ch.available,
                                                 cost: ch.cost
                                             }]
@@ -404,19 +422,19 @@ export async function insertRestaurants(data: any) {
                                 })
                             }
                             return {
-                                restaurant_id: index + 1,
+                                restaurant_id: index + 63,
                                 item_options: {
                                     data: [{
                                         name: {
                                             data: {
-                                                service_provider_id: index + 1,
+                                                service_provider_id: index + 63,
                                                 service_provider_type: "restaurant",
                                                 translations: {
                                                     data: optionName
                                                 }
                                             }
                                         },
-                                        restaurant_id: index + 1,
+                                        restaurant_id: index + 63,
                                         option_type: o.optionType,
                                         minimum_choice: o.minimumChoice,
                                         maximum_choice: o.maximumChoice,
@@ -436,7 +454,7 @@ export async function insertRestaurants(data: any) {
                     return {
                         name: {
                             data: {
-                                service_provider_id: index + 1,
+                                service_provider_id: index + 63,
                                 service_provider_type: "restaurant",
                                 translations: {
                                     data: itemName
@@ -445,7 +463,7 @@ export async function insertRestaurants(data: any) {
                         },
                         description: itemDescription ? {
                             data: {
-                                service_provider_id: index + 1,
+                                service_provider_id: index + 63,
                                 service_provider_type: "restaurant",
                                 translations: {
                                     data: itemDescription
@@ -455,7 +473,7 @@ export async function insertRestaurants(data: any) {
                         position: i.position,
                         available: i.available,
                         cost: i.cost,
-                        restaurant_id: index + 1,
+                        restaurant_id: index + 63,
                         options: (options) ? {
                             data: options
                         }: undefined
@@ -466,7 +484,7 @@ export async function insertRestaurants(data: any) {
             return {
                 name: {
                     data: {
-                        service_provider_id: index + 1,
+                        service_provider_id: index + 63,
                         service_provider_type: "restaurant",
                         translations: {
                             data: name
@@ -475,7 +493,7 @@ export async function insertRestaurants(data: any) {
                 },
                 description: categoryDescription ? {
                     data: {
-                        service_provider_id: index + 1,
+                        service_provider_id: index + 63,
                         service_provider_type: "restaurant",
                         translations: {
                             data: categoryDescription
@@ -491,7 +509,7 @@ export async function insertRestaurants(data: any) {
     }
     
     return {
-        id: index + 1,
+        id: index + 63,
         firebase_id: r.firebaseId,
         name: r.name,
         image: r.image,
@@ -502,7 +520,7 @@ export async function insertRestaurants(data: any) {
         location_text: r.location.address,
         description: {
             data: {
-                service_provider_id: index + 1,
+                service_provider_id: index + 63,
                 service_provider_type: "restaurant",
                 translations: {
                     data: description
@@ -568,7 +586,7 @@ export async function insertRestaurants(data: any) {
                                         optionChoiceArray.push({
                                             option_id: response[parseInt(rIdx)].insert_restaurant_restaurant_one.categories[cIdx].items[iIdx].options[oIdx].option_id,
                                             choice_id: choices[choice.option_choices.data[0].name.data.translations.data[0].value].id,
-                                            restaurant_id: parseInt(rIdx) + 1
+                                            restaurant_id: parseInt(rIdx) + 63
                                         })
                                     }
                                 }
