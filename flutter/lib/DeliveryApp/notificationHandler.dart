@@ -73,9 +73,9 @@ Notification deliveryDriverNotificationHandler(String key, value) {
 String getLinkUrl(OrderType orderType, int orderId) {
   switch (orderType) {
     case OrderType.Laundry:
-      return getLaundryOrderRoute(orderId);
+      return getDriverOrderRoute(orderId);
     case OrderType.Restaurant:
-      return getRestaurantOrderRoute(orderId);
+      return getDriverOrderRoute(orderId);
     default:
       return kHomeRoute;
   }
@@ -159,7 +159,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
                   LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: getLaundryOrderRoute(value["orderId"]),
+      linkUrl: getDriverOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
