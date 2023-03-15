@@ -35,14 +35,13 @@ enum ChangeLaundryStatusError {
   OrderStripeInfoNotDefined = "orderStripeInfoNotDefined",
   ServiceProviderStripeAccountDoesNotExist = "serviceProviderStripeAccountDoesNotExist",
   UpdateOrderStripeError = "updateOrderStripeError",
-
 }
-export async function cancelOrder(userId: number, changeStatusDetails: ChangeStatusDetails) {
-  await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.CancelledByAdmin, userId)
+export async function cancelOrder(userId: number, changeStatusDetails: ChangeStatusDetails): Promise<ChangeLaundryStatusResponse> {
+  return await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.CancelledByAdmin, userId)
 };
 
-export async function readyForDeliveryOrder(userId: number, changeStatusDetails: ChangeStatusDetails) {
-  await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.ReadyForDelivery, userId)
+export async function readyForDeliveryOrder(userId: number, changeStatusDetails: ChangeStatusDetails): Promise<ChangeLaundryStatusResponse> {
+  return await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.ReadyForDelivery, userId)
 };
 
 async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, userId: number): Promise<ChangeLaundryStatusResponse> {

@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { Operator } from "../../../models/Services/Service";
@@ -144,10 +143,7 @@ export async function getLaundryOperator(operatorId: number): Promise<Operator> 
     }]
   });
   if(response.laundry_operator_by_pk == null) {
-    throw new HttpsError(
-      "internal",
-      "No laundry operator with that user id or store id found"
-    );
+    throw new MezError("operatorNotFound");
   }
   return {
     id: response.laundry_operator_by_pk.id,

@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
 import { Operator, ServiceProvider } from "../../../models/Services/Service";
-import { AddOperatorDetails } from "../../../operator/addOperator";
+import { AddOperatorDetails, AddOperatorError } from "../../../operator/addOperator";
 
 export async function createLaundryOperator(operatorUserId: number, addOpDetails: AddOperatorDetails, laundryStore: ServiceProvider): Promise<Operator> {
 
@@ -38,10 +37,7 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
         }]
     })
     if(response.laundry_operator.length) {
-        throw new HttpsError(
-            "internal",
-            "The operator is already working for this laundry store"
-        );
+        throw new MezError(AddOperatorError.UserAlreadyAnOperator);
     }
   
     let mutationResponse = await chain.mutation({
@@ -73,10 +69,7 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
         }]
     });
     if(mutationResponse.insert_laundry_operator_one == null) {
-      throw new HttpsError(
-        "internal",
-        "operator creation error"
-      );
+        throw new MezError(AddOperatorError.OperatorCreationError);
     }
     return {
       id: mutationResponse.insert_laundry_operator_one.id,

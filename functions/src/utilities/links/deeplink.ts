@@ -1,5 +1,5 @@
 import { FirebaseDynamicLinks, ShortLinkRequestBody, ShortLinkResponse } from "firebase-dynamic-links";
-import { AppType } from "../../shared/models/Generic/Generic";
+import { AppType, MezError } from "../../shared/models/Generic/Generic";
 import { generateQr } from "./qr";
 
 export interface IDeepLink {
@@ -145,14 +145,19 @@ export async function generateDeepLink(requestBody: ShortLinkRequestBody, unique
     console.log("response: ", response.shortLink)
   } catch(err: any) {
     console.log("create link Error: ", err)
-    throw Error('create link Error');
+    throw new MezError("deepLinkError");
   }
-
-  let qrUrl: string = await generateQr(`links/${uniqueId}/${fileName}`, response.shortLink)
-  return {
-    url: response.shortLink,
-    urlQrImage: qrUrl
+  try {
+    let qrUrl: string = await generateQr(`links/${uniqueId}/${fileName}`, response.shortLink)
+    return {
+      url: response.shortLink,
+      urlQrImage: qrUrl
+    }
+  } catch(err: any) {
+    console.log("QR image generation error: ", err)
+    throw new MezError("QRGenerationError");
   }
+  
   
   // result = {
   //   url: shortLinkResponse,

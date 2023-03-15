@@ -583,6 +583,6 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 //     : undefined,
             }
         default:
-            throw new MezError("invalidServiceProviderType");
+            throw new MezError("serviceProviderDetailsNotFound");
     }
 }

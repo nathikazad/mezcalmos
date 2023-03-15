@@ -19,9 +19,10 @@ export interface AddDriverResponse {
     error?: AddDriverError
     unhandledError?: string
 }
-enum AddDriverError {
+export enum AddDriverError {
     DriverAlreadyExists = "driverAlreadyExists",
-    DriverCreationError = "driverCreationError"
+    DriverCreationError = "driverCreationError",
+    InvalidServiceProviderType = "invalidServiceProviderType"
 }
 
 export async function addDriver(userId: number, addDriverDetails: AddDriverDetails): Promise<AddDriverResponse> {

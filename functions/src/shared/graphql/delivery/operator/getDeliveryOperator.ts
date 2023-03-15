@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, MezError, NotificationInfo } from "../../../models/Generic/Generic";
 import { DeliveryOperator } from "../../../models/Generic/Delivery";
@@ -89,10 +88,7 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
         }]
     })
     if (response.delivery_operator_by_pk == null) {
-        throw new HttpsError(
-            "internal",
-            "No delivery operator with that id found"
-        );
+        throw new MezError("operatorNotFound");
     }
 
     return {

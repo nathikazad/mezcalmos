@@ -9,35 +9,70 @@ import { getRestaurantOperators } from "../graphql/restaurant/operators/getResta
 import { getUser } from "../graphql/user/getUser";
 import { ParticipantType } from "../models/Generic/Chat";
 import { DeliveryOperator } from "../models/Generic/Delivery";
+import { MezError } from "../models/Generic/Generic";
 import { UserInfo } from "../models/Generic/User";
 import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../models/Notification";
 import { Operator, ServiceProvider, ServiceProviderType } from "../models/Services/Service";
-
 
 export interface AddOperatorDetails {
     uniqueId: string,
     notificationToken?: string,
     appVersion?: string
 }
-export async function addOperator(operatorUserId: number, addOpDetails: AddOperatorDetails) {
-    let operatorUserInfo: UserInfo = await getUser(operatorUserId);
-    let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addOpDetails.uniqueId)
+export interface AddOperatorResponse {
+    success: boolean,
+    error?: AddOperatorError
+    unhandledError?: string,
+}
+export enum AddOperatorError {
+    UserNotFound = "userNotFound",
+    ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+    UserAlreadyAnOperator = "userAlreadyAnOperator",
+    OperatorCreationError = "operatorCreationError",
+    RestaurantNotfound = "restaurantNotfound",
+    DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+    LaundryStoreNotfound = "laundryStoreNotfound"
+}
+export async function addOperator(operatorUserId: number, addOpDetails: AddOperatorDetails): Promise<AddOperatorResponse> {
+    try {
+        let operatorUserInfo: UserInfo = await getUser(operatorUserId);
+        let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addOpDetails.uniqueId)
 
-    switch (serviceProvider.serviceProviderType) {
-        case ServiceProviderType.Restaurant:
-            await createRestaurantOperator(operatorUserId, addOpDetails, serviceProvider);
-            break;
-        case ServiceProviderType.Delivery:
-            await createDeliveryOperator(operatorUserId, addOpDetails, serviceProvider)
-            break;
-        case ServiceProviderType.Laundry:
-            await createLaundryOperator(operatorUserId, addOpDetails, serviceProvider)
-            break;
-        default:
-            break;
+        switch (serviceProvider.serviceProviderType) {
+            case ServiceProviderType.Restaurant:
+                await createRestaurantOperator(operatorUserId, addOpDetails, serviceProvider);
+                break;
+            case ServiceProviderType.Delivery:
+                await createDeliveryOperator(operatorUserId, addOpDetails, serviceProvider)
+                break;
+            case ServiceProviderType.Laundry:
+                await createLaundryOperator(operatorUserId, addOpDetails, serviceProvider)
+                break;
+            default:
+                break;
+        }
+        
+        notify(operatorUserInfo, serviceProvider);
+        return {
+            success: true
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(AddOperatorError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
     }
-    
-    notify(operatorUserInfo, serviceProvider);
 }
 
 async function notify(operatorUserInfo: UserInfo, serviceProvider: ServiceProvider) {

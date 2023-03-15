@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../utilities/links/deeplink";
-import { AppType } from "../models/Generic/Generic";
+import { ChangeUniqueIdError } from "../changeUniqueId";
+import { AppType, MezError } from "../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../models/Services/Service";
 
 export async function createServiceProviderStripe(serviceProvider: ServiceProvider) {
@@ -131,10 +132,7 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
         }]
     });
     if(response.update_service_provider_details_by_pk == null || response.update_service_provider_details_by_pk.service_link_id == null) {
-        throw new HttpsError(
-            "internal",
-            "mutation error"
-        );
+        throw new MezError(ChangeUniqueIdError.MutationError);
     }
     let appType: AppType;
     switch (serviceProvider.serviceProviderType) {
@@ -148,7 +146,7 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
             appType = AppType.LaundryApp
             break;
         default:
-            throw new HttpsError("internal", "Invalid Service Provider Type");
+            throw new MezError(ChangeUniqueIdError.InvalidServiceProviderType);
     }
     let deepLinks: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(newUniqueId, appType);
     

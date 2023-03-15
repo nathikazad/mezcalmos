@@ -3,7 +3,7 @@ import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";;
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../../models/Services/Service";
-import { AddDriverDetails } from "../../../../delivery/addDriver";
+import { AddDriverDetails, AddDriverError } from "../../../../delivery/addDriver";
 
 export async function createDeliveryDriver(userId: number, serviceProvider: ServiceProvider, addDriverDetails: AddDriverDetails): Promise<DeliveryDriver> {
     let chain = getHasura();
@@ -37,7 +37,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         }]
     })
     if(response.delivery_driver.length) {
-        throw new MezError("driverAlreadyExists");
+        throw new MezError(AddDriverError.DriverAlreadyExists);
     }
     let mutationResponse = await chain.mutation({
         insert_delivery_driver_one: [{
@@ -58,7 +58,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         }]
     })
     if(mutationResponse.insert_delivery_driver_one == null) {
-        throw new MezError("driverCreationError");
+        throw new MezError(AddDriverError.DriverCreationError);
     }
     if(!(response.notification_info.length) && addDriverDetails.notificationToken) {
         await chain.mutation({
@@ -85,10 +85,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
             deliveryCompanyType = DeliveryServiceProviderType.DeliveryCompany
             break;
         default:
-            throw new HttpsError(
-                "internal",
-                "invalid service provider type"
-            )
+            throw new MezError(AddDriverError.InvalidServiceProviderType);
     }
     return {
         id: mutationResponse.insert_delivery_driver_one?.id,

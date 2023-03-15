@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { pushNotification } from "../../utilities/senders/notifyUser";
 import { deleteDeliveryOperator } from "../graphql/delivery/operator/deleteOperator";
 import { getDeliveryOperatorByUserId, getDeliveryOperator } from "../graphql/delivery/operator/getDeliveryOperator";
@@ -10,6 +9,7 @@ import { getRestaurantOperator, getRestaurantOperatorByUserId } from "../graphql
 import { isMezAdmin } from "../helper";
 import { ParticipantType } from "../models/Generic/Chat";
 import { DeliveryOperator, DeliveryOperatorApprovedNotification } from "../models/Generic/Delivery";
+import { MezError } from "../models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../models/Notification";
 import { Operator, OperatorApprovedNotification } from "../models/Services/Service";
 
@@ -18,54 +18,84 @@ export interface AuthorizeDetails {
     approved: boolean,
     participantType: ParticipantType
 }
+export interface AuthOperatorResponse {
+    success: boolean,
+    error?: AuthOperatorError
+    unhandledError?: string,
+}
+export enum AuthOperatorError {
+    OperatorNotFound = "operatorNotFound",
+    UnauthorizedAccess = "unauthorizedAccess",
+    IncorrectOperatorId = "incorrectOperatorId",
+    OperatorDetailsNotFound = "operatorDetailsNotFound",
+}
 
-export async function authorizeOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
+export async function authorizeOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails): Promise<AuthOperatorResponse> {
+    try {
+        let operator: Operator;
+        let operatorDetailsId: number = 0;
 
-    let operator: Operator;
-    let operatorDetailsId: number = 0;
+        await authorizationCheck();
+        
+        switch (authorizeDetails.participantType) {
+            case ParticipantType.RestaurantOperator:
+                operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
 
-    await authorizationCheck();
-    
-    switch (authorizeDetails.participantType) {
-        case ParticipantType.RestaurantOperator:
-            operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
+                if (authorizeDetails.approved) {
+                    operatorDetailsId = operator.detailsId;
+                } else {
+                    await deleteRestaurantOperator(operator);
+                }
+                notifyOperator(ParticipantType.RestaurantOperator, operator);
+                break;
+            case ParticipantType.DeliveryOperator:
+                let deliveryOperator: DeliveryOperator = await getDeliveryOperator(authorizeDetails.newOperatorId);
 
-            if (authorizeDetails.approved) {
-                operatorDetailsId = operator.detailsId;
+                if(authorizeDetails.approved) {
+                    operatorDetailsId = deliveryOperator.operatorDetailsId;
+                } else {
+                    await deleteDeliveryOperator(deliveryOperator);
+                }
+                notifyDeliveryOperator(deliveryOperator);
+                break;
+            case ParticipantType.LaundryOperator:
+                operator = await getLaundryOperator(authorizeDetails.newOperatorId);
+
+                if (authorizeDetails.approved) {
+                    operatorDetailsId = operator.detailsId;
+                } else {
+                    await deleteLaundryOperator(operator);
+                }
+                notifyOperator(ParticipantType.LaundryOperator, operator);
+                break;
+            default:
+                break;
+        }
+        if(operatorDetailsId != 0) {
+            await updateOperatorStatusToAuthorized(operatorDetailsId);
+        }
+        return {
+            success: true
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(AuthOperatorError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
             } else {
-                await deleteRestaurantOperator(operator);
+                return {
+                    success: false,
+                    unhandledError: e.message as any
+                }
             }
-            notifyOperator(ParticipantType.RestaurantOperator);
-            break;
-        case ParticipantType.DeliveryOperator:
-            let deliveryOperator: DeliveryOperator = await getDeliveryOperator(authorizeDetails.newOperatorId);
-
-            if(authorizeDetails.approved) {
-                operatorDetailsId = deliveryOperator.operatorDetailsId;
-            } else {
-                await deleteDeliveryOperator(deliveryOperator);
-            }
-            notifyDeliveryOperator(deliveryOperator);
-            break;
-        case ParticipantType.LaundryOperator:
-            operator = await getLaundryOperator(authorizeDetails.newOperatorId);
-
-            if (authorizeDetails.approved) {
-                operatorDetailsId = operator.detailsId;
-            } else {
-                await deleteLaundryOperator(operator);
-            }
-            notifyOperator(ParticipantType.LaundryOperator);
-            break;
-        default:
-            break;
+        } else {
+            throw e
+        }
     }
-    if(operatorDetailsId != 0) {
-        await updateOperatorStatusToAuthorized(operatorDetailsId);
-    }
     
-    
-    function notifyOperator(participantType: ParticipantType) {
+    function notifyOperator(participantType: ParticipantType, operator: Operator) {
         let notification: Notification = {
             foreground: <OperatorApprovedNotification>{
                 operatorId: authorizeDetails.newOperatorId,
@@ -172,7 +202,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
                 break;
         }
         if (!owner) {
-            throw new HttpsError("internal", "Only owner can add operators");
+            throw new MezError(AuthOperatorError.UnauthorizedAccess);
         }
     }
 }

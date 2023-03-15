@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
-import { LaundryDetails } from "../../../laundry/createNewLaundry";
+import { LaundryDetails, LaundryError } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
-import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
@@ -103,10 +102,7 @@ export async function createLaundryStore(
     console.log("response: ", response);
     
     if(response.insert_laundry_store_one == null) {
-      throw new HttpsError(
-        "internal",
-        "laundry creation error"
-      );
+        throw new MezError(LaundryError.LaundryCreationError);
     }
     let laundryStore: ServiceProvider = {
         id: response.insert_laundry_store_one.id,

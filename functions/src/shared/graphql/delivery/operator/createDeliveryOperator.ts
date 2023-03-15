@@ -1,7 +1,7 @@
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
 import { DeliveryOperator } from "../../../models/Generic/Delivery";
-import { AddOperatorDetails } from "../../../operator/addOperator";
+import { AddOperatorDetails, AddOperatorError } from "../../../operator/addOperator";
 import { ServiceProvider } from "../../../models/Services/Service";
 
 export async function createDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails, deliveryCompany: ServiceProvider): Promise<DeliveryOperator> {
@@ -35,7 +35,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
         }]
     });
     if(mutationResponse.insert_delivery_operator_one == null) {
-        throw new MezError("operatorCreationError");
+        throw new MezError(AddOperatorError.OperatorCreationError);
     }
     return {
         id: mutationResponse.insert_delivery_operator_one.id,

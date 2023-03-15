@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { ParticipantType } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
@@ -116,19 +115,13 @@ export async function setLaundryOrderChatInfo(
   fromCustomerDelivery: DeliveryOrder,
   customer: CustomerInfo
 ) {
-  if(laundryOrder.chatId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No chat id"
-    );
-  }
   
   let chain = getHasura();
   
   chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
-        id: laundryOrder.chatId,
+        id: laundryOrder.chatId!,
       },
       _set: {
         chat_info: JSON.stringify({
@@ -161,12 +154,6 @@ export async function setLaundryOrderChatInfo(
   });
   if(laundryOrder.deliveryType == DeliveryType.Delivery) {
     
-    if(fromCustomerDelivery.chatWithServiceProviderId == undefined) {
-      throw new HttpsError(
-        "internal",
-        "No delivery chat with store id"
-      );
-    }
     let chatInfo: any = {
       DeliveryApp: {
         chatTitle: customer.name ?? "Customer",
@@ -215,7 +202,7 @@ export async function setLaundryOrderChatInfo(
     chain.mutation({
       update_chat_by_pk: [{
         pk_columns: {
-          id: fromCustomerDelivery.chatWithServiceProviderId
+          id: fromCustomerDelivery.chatWithServiceProviderId!
         },
         _set: {
           chat_info: JSON.stringify(chatInfo)
