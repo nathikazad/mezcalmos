@@ -17,6 +17,7 @@ class OrderSummaryCard extends StatelessWidget {
     required this.orderCost,
     required this.totalCost,
     required this.refundAmmount,
+    this.divideDeliveryCost = false,
     this.showNullValues = true,
     required this.stripeOrderPaymentInfo,
   }) : super(key: key);
@@ -27,6 +28,7 @@ class OrderSummaryCard extends StatelessWidget {
   final num? refundAmmount;
   final Widget? newRow;
   final bool showNullValues;
+  final bool divideDeliveryCost;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
 
   final EdgeInsets? margin;
@@ -62,7 +64,10 @@ class OrderSummaryCard extends StatelessWidget {
                           '${_i18n()["orderCost"]}',
                           style: txt.bodyMedium,
                         ),
-                        Text(orderCost?.toPriceString() ?? "_",
+                        Text(
+                            (orderCost == 0)
+                                ? "-"
+                                : orderCost?.toPriceString() ?? "-",
                             style: txt.bodyMedium?.copyWith()),
                       ],
                     ),
@@ -95,6 +100,9 @@ class OrderSummaryCard extends StatelessWidget {
                         ),
                         ShippingCostComponent(
                           shippingCost: shippingCost!,
+                          formattedShippingCost: (divideDeliveryCost)
+                              ? "${(shippingCost! / 2).toPriceString()} x 2 "
+                              : null,
                         )
                       ],
                     ),
@@ -125,7 +133,10 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text('${_i18n()["totalCost"]}',
                             style: txt.headlineMedium),
-                        Text(totalCost?.toPriceString() ?? "_",
+                        Text(
+                            (orderCost == 0)
+                                ? "-"
+                                : totalCost?.toPriceString() ?? "-",
                             style: txt.headlineSmall),
                       ],
                     ),

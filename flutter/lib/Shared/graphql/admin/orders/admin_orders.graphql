@@ -59,7 +59,9 @@ subscription admin_listen_on_restaurant_orders($inProccess: Boolean!) {
     restaurant_id
     order_time
     status
-
+ delivery {
+      delivery_cost
+    }
     total_cost
     to_location_address
     customer {
@@ -76,6 +78,9 @@ query admin_get_restaurant_orders($inProccess: Boolean!) {
     restaurant_id
     order_time
     status
+    delivery{
+      delivery_cost
+    }
 
     total_cost
     to_location_address
@@ -93,6 +98,15 @@ subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
     store_id
     order_time
     status
+    from_customer_delivery {
+      
+      delivery_cost
+    
+    }to_customer_delivery {
+      
+      delivery_cost
+    
+    }
 
     total_cost
     customer_address
@@ -110,7 +124,15 @@ query admin_get_laundry_orders($inProccess: Boolean!,) {
     store_id
     order_time
     status
-
+  from_customer_delivery {
+      
+      delivery_cost
+    
+    }to_customer_delivery {
+      
+      delivery_cost
+    
+    }
     total_cost
     customer_address
     customer {

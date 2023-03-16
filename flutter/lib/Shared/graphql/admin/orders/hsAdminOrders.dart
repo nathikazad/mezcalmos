@@ -42,9 +42,10 @@ Future<List<MinimalOrder>?> get_admin_dv_orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
+          deliveryCost: orderData.delivery_cost,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.delivery_cost);
+          totalCost: orderData.package_cost);
     }).toList();
     return orders;
   } else {
@@ -82,10 +83,11 @@ Stream<List<MinimalOrder>?> listen_on_admin_dv_orders({
             toAdress: orderData.dropoff_address,
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
+            deliveryCost: orderData.delivery_cost,
             image: orderData.customer.user.image,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-            totalCost: orderData.delivery_cost);
+            totalCost: orderData.package_cost);
       }).toList();
       return orders;
     }
@@ -121,6 +123,7 @@ Future<List<MinimalOrder>?> get_admin_restaurant_orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
+          deliveryCost: orderData.delivery?.delivery_cost,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
@@ -159,6 +162,7 @@ Stream<List<MinimalOrder>?> listen_on_admin_restaurant_orders({
             serviceProviderType: ServiceProviderType.Restaurant,
             toAdress: orderData.to_location_address,
             orderTime: DateTime.parse(orderData.order_time),
+            deliveryCost: orderData.delivery?.delivery_cost,
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
             status: orderData.status
@@ -200,6 +204,8 @@ Future<List<MinimalOrder>?> get_admin_laundry_orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
+          deliveryCost: orderData.to_customer_delivery?.delivery_cost ??
+              orderData.from_customer_delivery?.delivery_cost,
           status:
               orderData.status.toLaundryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
@@ -233,12 +239,14 @@ Stream<List<MinimalOrder>?> listen_on_admin_laundry_orders({
               orderData) {
         return MinimalOrder(
             id: orderData.id,
-            orderType: OrderType.Restaurant,
+            orderType: OrderType.Laundry,
             serviceProviderId: orderData.store_id,
             serviceProviderType: ServiceProviderType.Restaurant,
             toAdress: orderData.customer_address,
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
+            deliveryCost: orderData.to_customer_delivery?.delivery_cost ??
+                orderData.from_customer_delivery?.delivery_cost,
             image: orderData.customer.user.image,
             status:
                 orderData.status.toLaundryOrderStatus().toMinimalOrderStatus(),

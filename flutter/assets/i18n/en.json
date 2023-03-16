@@ -2038,6 +2038,8 @@
       },
       "ROpOrderView": {
         "schTitle": "Scheduled for",
+        "review" : "Review",
+        "restaurant" : "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
         "components": {
@@ -2167,7 +2169,7 @@
           "ROpOrderCard": {
             "date": "Date",
             "totalCost": "Total cost",
-            "waiting": "Waiting",
+            "waiting": "In process",
             "delivered": "Delivered",
             "canceled": "Cancelled"
           }

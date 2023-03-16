@@ -2060,6 +2060,8 @@
         }
       },
       "ROpOrderView": {
+        "review" : "Revisar",
+        "restaurant" : "Restaurante",
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",
         "orderItems": "Encargar artículos",
@@ -2159,7 +2161,7 @@
           "ROpOrderCard": {
             "date": "Fecha :",
             "totalCost": "Coste total",
-            "waiting": "Esperando",
+            "waiting": "en proceso",
             "delivered": "Entregada",
             "canceled": "Cancelada"
           }

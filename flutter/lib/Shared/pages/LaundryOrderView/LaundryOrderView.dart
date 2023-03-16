@@ -115,6 +115,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(top: 15),
+                    divideDeliveryCost: true,
                     orderCost: viewController.order.costsByType?.weighedCost,
                     refundAmmount: viewController.order.refundAmount,
                     shippingCost: viewController.order.shippingCost,

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
@@ -27,6 +28,7 @@ class _RestaurantsListOfItemsComponentState
   RxBool isImageExist = RxBool(false);
   @override
   void initState() {
+    mezDbgPrint("ITEM IMAGE =======>${widget.item.image}");
     isImageExist.value =
         widget.item.image != null && widget.item.image?.isURL == true;
     super.initState();
@@ -73,7 +75,7 @@ class _RestaurantsListOfItemsComponentState
                     children: [
                       Text(
                         "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
-                        style: Get.textTheme.headline3?.copyWith(
+                        style: Get.textTheme.displaySmall?.copyWith(
                           fontSize: 13.sp,
                         ),
                       ),
@@ -92,7 +94,7 @@ class _RestaurantsListOfItemsComponentState
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.item.cost.toPriceString(),
-                    style: Get.textTheme.headline3,
+                    style: Get.textTheme.displaySmall,
                   ),
                 ),
                 SizedBox(
