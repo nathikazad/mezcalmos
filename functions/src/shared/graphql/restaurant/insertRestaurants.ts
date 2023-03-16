@@ -11,14 +11,15 @@ export async function insertRestaurants(data: any) {
             }
         }]
     })
-    let insertedRestaurants: Record<string, boolean>;
+    let insertedRestaurants: Record<string, boolean> = {};
     queryResponse.restaurant_restaurant.forEach((r) => {
         if(r.details?.firebase_id == null)
             return;
-
-        insertedRestaurants[r.details?.firebase_id] = true;
+        // console.log(typeof r.details.firebase_id)
+        insertedRestaurants[r.details.firebase_id] = true;
     })
-    data.filter((r: any) => insertedRestaurants[r.firebaseId] == undefined)
+    console.log(data.length)
+    data = data.filter((r: any) => insertedRestaurants[r.firebaseId] == undefined)
 
     const restaurants = data.map((r: any, index: number) => {
         let description = [];

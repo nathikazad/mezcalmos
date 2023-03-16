@@ -46,11 +46,11 @@ console.log("Current working directory: ", process.cwd());
 
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/restaurants/info`).once('value')).val();
+  let db = (await firebase.database().ref(`/orders/past/restaurant`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./data/db-snapshot.json", data);
+  fs.writeFileSync("./data/db-snapshot-restaurant-orders.json", data);
   console.log("Finished");
 }
 async function writeToDB() {
@@ -287,7 +287,7 @@ async function writeToDB() {
 async function writeToDBUsers() {
 
   
-  let users = JSON.parse(fs.readFileSync('./data/db-snapshot-users.json').toString());
+  let users = JSON.parse(fs.readFileSync('./data/db-snapshot-restaurant-operators.json').toString());
 
   let array = []
   for (let userId in users) {
@@ -418,7 +418,7 @@ async function writeToDBRestoOrders() {
   // for(let i=1400; i<3200; i+=200) {
   //   console.log(i)
     let array = []
-    for (let orderId of Object.keys(orders).slice(3200, 3338)) {
+    for (let orderId of Object.keys(orders)/*.slice(3200, 3338)*/) {
       let order = orders[orderId]
       if (!order)
         continue
@@ -640,7 +640,7 @@ async function writeToDBCustomers() {
 
 // insertDeliveryPartners()
   // saveFile()
-  writeToDB()  
+  // writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
 // writeToDBDeliDrivers()
@@ -648,4 +648,4 @@ async function writeToDBCustomers() {
 // writeToDBRestoOrders()
 // writeToDBLaundry()
 // writeToDBLaundryOrders()
-// insertServiceLinks()
+insertServiceLinks()
