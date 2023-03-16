@@ -1,7 +1,6 @@
 // ----------------- CONNECTIVITY STRINGS ----------------- //
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
 // import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -61,13 +60,13 @@ const String sPrivacyPolicyCustomerApp =
     "https://www.mezcalmos.com/privacy-policy.html";
 const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
-const String sNetworkCheckUrl1 = 'google.com';
-const String firebaseDbUrl = 'www.firebaseio.com';
+const String sNetworkCheckUrl1 = 'https://www.google.com';
+const String firebaseDbUrl = 'https://www.firebaseio.com';
 const String firebaseFunctionsProdUrl =
-    'www.us-central1-mezcalmos-31f1c.cloudfunctions.net';
+    'https://us-central1-mezcalmos-31f1c.cloudfunctions.net';
 const String firebaseFunctionsStageUrl =
-    'www.us-central1-mezcalmos-staging.cloudfunctions.net';
-const String hasuraDbUrl = 'www.hasura.app';
+    'https://us-central1-mezcalmos-staging.cloudfunctions.net';
+const String hasuraDbUrl = 'https://www.hasura.app';
 
 const LanguageType sDefaultLanguage = LanguageType.ES;
 const String sDefaultTheme = "light";

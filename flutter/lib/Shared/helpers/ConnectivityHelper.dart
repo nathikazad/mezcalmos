@@ -1,13 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:async';
-import 'dart:io';
-import 'dart:math';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:http/http.dart' as http;
 import 'package:mezcalmos/env_example.dart';
 
 enum InternetStatus { Online, Slow, Offline }
@@ -30,14 +29,14 @@ class ConnectivityHelper {
         StreamController<InternetStatus>.broadcast();
     mezDbgPrint("NETWORK CHECKER");
     _internetStatusStreamController.add(await checkForInternet());
-    Timer.periodic(const Duration(seconds: 10), (timer) async {
+    Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
       try {
         _internetStatusStreamController.add(await checkForInternet());
       } catch (e) {
         _internetStatusStreamController.add(InternetStatus.Offline);
       }
     });
-    Connectivity().onConnectivityChanged.listen((c) async {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult c) async {
       _internetStatusStreamController.add(await checkForInternet());
     });
   }
@@ -55,13 +54,13 @@ class ConnectivityHelper {
     final List<bool> results = await Future.wait(futures)
         .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
     // mezDbgPrint('ping() executed in ${stopwatch.elapsed.inMilliseconds}');
-    if (results.contains(true)) {
+    if (results.contains(false)) {
+      return InternetStatus.Offline;
+    } else {
       if (stopwatch.elapsed.inMilliseconds < 3000)
         return InternetStatus.Online;
       else
         return InternetStatus.Slow;
-    } else {
-      return InternetStatus.Offline;
     }
   }
 
