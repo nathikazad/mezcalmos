@@ -307,7 +307,24 @@ class DvOrderViewcontroller {
     }
   }
 
-  Future<void> requestPriceChange() async {
-    if (updatePriceFormKey.currentState?.validate() == true) {}
+  Future<void> requestPriceChange(BuildContext context) async {
+    if (updatePriceFormKey.currentState?.validate() == true) {
+      try {
+        await CloudFunctions.delivery2_changeDeliveryPrice(
+            deliveryOrderId: order.id,
+            newPrice: double.parse(openOrderPriceText.text),
+            reason: openOrderReasonText.text);
+        Navigator.pop(context);
+        showSavedSnackBar(
+            title: "Sended", subtitle: "Price change request sended");
+      } on FirebaseFunctionsException catch (e, stk) {
+        showErrorSnackBar(errorText: e.message.toString());
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      } catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
+    }
   }
 }

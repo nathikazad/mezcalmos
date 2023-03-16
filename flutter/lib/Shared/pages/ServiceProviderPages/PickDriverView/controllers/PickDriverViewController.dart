@@ -3,17 +3,16 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class PickDriverViewController {
   final MGoogleMapController mapController = MGoogleMapController();
@@ -56,7 +55,7 @@ class PickDriverViewController {
         deliveryDriverId: driver.deliveryDriverId,
         changeDriver: order.value!.isDriverAssigned,
       );
-      MezRouter.back();
+      await MezRouter.back();
       screenLoading.value = false;
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());

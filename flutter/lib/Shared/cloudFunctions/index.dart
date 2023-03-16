@@ -436,4 +436,30 @@ class CloudFunctions {
       }));
   }
 
+  static Future<void> delivery2_changeDeliveryPrice(
+      {required num deliveryOrderId,
+      required num newPrice,
+      required String reason}  ) async {
+    return await callCloudFunction(
+      functionName: "delivery2-changeDeliveryPrice",
+      parameters: <String, dynamic>{
+        "deliveryOrderId": deliveryOrderId,
+        "newPrice": newPrice,
+        "reason": reason,
+      });
+  }
+
+  static Future<void> delivery2_changeDeliveryPriceResponse(
+      {required bool accepted,
+      required num orderId,
+      required OrderType orderType}  ) async {
+    return await callCloudFunction(
+      functionName: "delivery2-changeDeliveryPriceResponse",
+      parameters: <String, dynamic>{
+        "accepted": accepted,
+        "orderId": orderId,
+        "orderType":orderType.toFirebaseFormatString(),
+      });
+  }
+
 }

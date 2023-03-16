@@ -40,14 +40,14 @@ class SearchItemCard extends StatelessWidget {
                     Text(
                       item.name[userLanguage]!,
                       maxLines: 2,
-                      style: context.txt.bodyText1,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
                       item.cost.toPriceString(),
-                      style: context.txt.bodyText1,
+                      style: context.txt.bodyLarge,
                     ),
                     Spacer(),
                     Divider(

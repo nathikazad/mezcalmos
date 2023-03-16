@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemOptionCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemViewBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -83,7 +84,12 @@ class _CustItemViewState extends State<CustItemView> {
         body: (viewController.hasData)
             ? CustomScrollView(
                 slivers: [
-                  ItemSliverAppBar(item: viewController.getItem!),
+                  MezSliverAppBar(
+                    image: viewController.getItem?.image,
+                    ordersRoute: CustomerRoutes.customerOrdersRoute,
+                    title:
+                        viewController.getItem?.name[userLanguage] ?? "Error",
+                  ),
                   SliverToBoxAdapter(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
@@ -239,11 +240,11 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
           ),
         ),
         ServicesCard(
-          title: "Currier",
+          title: "Courier",
           url: "assets/images/customer/courrierService.png",
           subtitle: "Obtain delivery of anything you desire to your location.",
           onTap: () {
-            //  MezRouter.toNamed(getCourierOrderRoute(2));
+            CustCourierServicesListView.navigate();
           },
         ),
       ],

@@ -1,15 +1,17 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart'
     deferred as viewCourierOrder;
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/CustCourierServiceView.dart'
+    deferred as courierService;
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart'
     deferred as courierList;
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/CustRequestCourierView.dart'
     deferred as requestCourier;
+import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CourierRoutes {
   static const String kCouriersRoute = '/couriers';
+  static const String kCourierServiceRoute = '/courier/:companyId';
   static const String kCourierRequestRoute = '/requestCourier/:courierId';
   static const String kCourierOrderView = '/courierOrders/:orderId';
   final List<QRoute> routes = [
@@ -18,6 +20,11 @@ class CourierRoutes {
         name: kCouriersRoute,
         builder: () => courierList.CustCourierServicesListView(),
         middleware: <QMiddleware>[DefferedLoader(courierList.loadLibrary)]),
+    QRoute(
+        path: kCourierServiceRoute,
+        name: kCourierServiceRoute,
+        builder: () => courierService.CustCourierServiceView(),
+        middleware: <QMiddleware>[DefferedLoader(courierService.loadLibrary)]),
     QRoute(
         path: kCourierRequestRoute,
         name: kCourierRequestRoute,

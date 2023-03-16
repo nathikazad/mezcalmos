@@ -18,6 +18,7 @@ class MezButton extends StatefulWidget {
     this.borderRadius = 8,
     this.textStyle,
     this.height = 55,
+    this.border,
     this.width,
     this.icon,
     required this.label,
@@ -34,6 +35,7 @@ class MezButton extends StatefulWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
   final IconData? icon;
+  final BoxBorder? border;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -72,6 +74,7 @@ class _MezButtonState extends State<MezButton> {
               width: widget.width ?? double.infinity,
               height: widget.height,
               decoration: BoxDecoration(
+                  border: widget.border,
                   color: (widget.enabled && widget.onClick != null)
                       ? (widget.backgroundColor != null)
                           ? widget.backgroundColor
@@ -92,6 +95,15 @@ class _MezButtonState extends State<MezButton> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          if (widget.icon != null)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 5),
+                              child: Icon(
+                                widget.icon,
+                                color: widget.textColor ?? Colors.white,
+                                size: 15.sp,
+                              ),
+                            ),
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 2),
@@ -104,15 +116,6 @@ class _MezButtonState extends State<MezButton> {
                               ),
                             ),
                           ),
-                          if (widget.icon != null)
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Icon(
-                                widget.icon,
-                                color: widget.textColor ?? Colors.white,
-                                size: 15.sp,
-                              ),
-                            ),
                         ],
                       ),
               ),

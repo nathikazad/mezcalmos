@@ -2,13 +2,11 @@ import 'package:badges/badges.dart' as badge;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -16,9 +14,18 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
-class ItemSliverAppBar extends StatelessWidget {
-  const ItemSliverAppBar({Key? key, required this.item}) : super(key: key);
-  final Item item;
+class MezSliverAppBar extends StatelessWidget {
+  const MezSliverAppBar({
+    Key? key,
+    required this.title,
+    required this.image,
+    this.ordersRoute,
+  }) : super(key: key);
+
+  final String title;
+  final String? image;
+  final String? ordersRoute;
+
   static final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
@@ -27,7 +34,7 @@ class ItemSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
-      expandedHeight: (item.image != null) ? 220 : 0,
+      expandedHeight: (image != null) ? 220 : 0,
       automaticallyImplyLeading: false,
       titleSpacing: 12,
       leadingWidth: 35,
@@ -44,7 +51,7 @@ class ItemSliverAppBar extends StatelessWidget {
           width: 55.w,
           padding: const EdgeInsets.only(bottom: 4),
           child: Text(
-            " ${item.name[userLanguage]!} ".inCaps,
+            title.inCaps,
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -54,9 +61,9 @@ class ItemSliverAppBar extends StatelessWidget {
                 .copyWith(fontSize: 13.sp, color: Colors.white),
           ),
         ),
-        background: (item.image != null)
+        background: (image != null)
             ? CachedNetworkImage(
-                imageUrl: item.image!,
+                imageUrl: image!,
                 fit: BoxFit.cover,
                 imageBuilder:
                     (BuildContext context, ImageProvider<Object> image) =>
@@ -128,27 +135,31 @@ class ItemSliverAppBar extends StatelessWidget {
   }
 
   Widget _ordersAppBarIcon() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: () {
-          MezRouter.toNamed(CustomerRoutes.customerOrdersRoute);
-        },
-        child: Ink(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
-          ),
-          child: Icon(
-            Icons.watch_later,
-            size: 20,
-            color: primaryBlueColor,
+    if (ordersRoute != null) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 3, right: 12),
+        child: InkWell(
+          customBorder: CircleBorder(),
+          onTap: () {
+            MezRouter.toNamed(ordersRoute!);
+          },
+          child: Ink(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            child: Icon(
+              Icons.watch_later,
+              size: 20,
+              color: primaryBlueColor,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return SizedBox();
+    }
   }
 
   Widget _noUserButton() {

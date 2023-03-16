@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/CustCourierServiceView.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
@@ -123,7 +123,7 @@ class _CustCourierServicesListViewState
     return MezCard(
         onClick: () {
           mezDbgPrint("Clicked");
-          CustRequestCourierView.navigate(company.info.hasuraId);
+          CustCourierServiceView.navigate(companyId: company.info.hasuraId);
         },
         firstAvatarBgImage: CachedNetworkImageProvider(company.info.image),
         content: Column(
