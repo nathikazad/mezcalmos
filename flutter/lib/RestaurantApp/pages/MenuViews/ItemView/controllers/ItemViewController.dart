@@ -22,6 +22,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/env_example.dart';
 
 class ROpItemViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -163,10 +164,8 @@ class ROpItemViewController {
       //   newImageUrl.value = value;
       // });
     }
-    const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
-    final AppLaunchMode mode = _tmpLmode.toLaunchMode();
-    if (mode == AppLaunchMode.dev || mode == AppLaunchMode.stage) {
+    if (MezEnv.appLaunchMode == AppLaunchMode.dev ||
+        MezEnv.appLaunchMode == AppLaunchMode.stage) {
       mezDbgPrint("Settign default image");
       newImageUrl.value =
           "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
