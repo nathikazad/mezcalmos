@@ -7,7 +7,7 @@ import { CustomerInfo } from '../../shared/models/Generic/User';
 import { HttpsError } from 'firebase-functions/v1/auth';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
 import { Operator, ServiceProvider } from '../../shared/models/Services/Service';
-import { AuthorizationStatus } from "../../shared/models/Generic/Generic"
+import { AuthorizationStatus, MezError } from "../../shared/models/Generic/Generic"
 import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvider';
 import { createServiceProviderStripe, updateServiceProviderPayment, updateServiceProviderStripe } from '../../shared/graphql/updateServiceProvider';
 
@@ -196,10 +196,7 @@ export async function verifyCustomerIdForServiceAccount(
   stripeOptions: any
 ): Promise<CustomerInfo> {
   if(!(customerInfo.stripeInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Customer does not have stripe account"
-    );
+    throw new MezError("noCustomerStripeInfo");
   }
   if(customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderDetailsId] == null) {
     const customer: Stripe.Customer = await stripe.customers.create({
