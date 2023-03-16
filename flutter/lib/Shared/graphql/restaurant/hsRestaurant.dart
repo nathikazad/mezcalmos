@@ -189,7 +189,9 @@ Future<Restaurant?> get_restaurant_by_id(
             locationId: data.details!.location_id,
             hasuraId: data.id,
             image: data.details!.image,
-            description: (data.details!.description?.translations != null)
+            description: (data.details!.description?.translations != null &&
+                    (data.details!.description?.translations.isNotEmpty ??
+                        false))
                 ? {
                     data.details!.description!.translations.first.language_id
                             .toLanguageType():
