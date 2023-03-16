@@ -1,5 +1,5 @@
 import { getHasura } from "../../../../utilities/hasura";
-import * as fs from 'fs';
+// import * as fs from 'fs';
 import { DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 
 interface Restaurant {
@@ -11,21 +11,21 @@ interface Restaurant {
 export async function insertRestaurantOrders(data: any, response: any) {
     let chain = getHasura();
 
-    let queryResponse = await chain.query({
-        restaurant_order: [{}, {
-            firebase_id: true
-        }]
-    })
-    let insertedOrders: Record<string, boolean> = {};
-    queryResponse.restaurant_order.forEach((r) => {
-        if(r.firebase_id == null)
-            return;
-        // console.log(typeof r.details.firebase_id)
-        insertedOrders[r.firebase_id] = true;
-    })
-    console.log(data.length)
-    data = data.filter((r: any) => insertedOrders[r.firebaseId] == undefined)
-    console.log(data.length)
+    // let queryResponse = await chain.query({
+    //     restaurant_order: [{}, {
+    //         firebase_id: true
+    //     }]
+    // })
+    // let insertedOrders: Record<string, boolean> = {};
+    // queryResponse.restaurant_order.forEach((r) => {
+    //     if(r.firebase_id == null)
+    //         return;
+    //     // console.log(typeof r.details.firebase_id)
+    //     insertedOrders[r.firebase_id] = true;
+    // })
+    // console.log(data.length)
+    // data = data.filter((r: any) => insertedOrders[r.firebaseId] == undefined)
+    // console.log(data.length)
     // let restaurantFbIds: number[] = [];
     // data.forEach((o: any) => {
     //     restaurantFbIds.push(o.restaurantFirebaseId)
@@ -65,6 +65,8 @@ export async function insertRestaurantOrders(data: any, response: any) {
     for(let restaurant of response.restaurant_restaurant) {
         let items: Record<string, number> = {};
         for(let item of restaurant.items) {
+            if(!item.name.translations[0])
+                continue;
             items[item.name.translations[0].value] = item.id;
         }
         restaurantFbIdToObject[restaurant.details.firebase_id!] = {
@@ -119,6 +121,8 @@ export async function insertRestaurantOrders(data: any, response: any) {
                         id: true
                     }]
                 })
+                console.log("item inserted: ", i.itemName)
+
                 itemHsId = a.insert_restaurant_item_one?.id ?? itemHsId
             }
 
@@ -419,7 +423,7 @@ export async function insertRestaurantOrders(data: any, response: any) {
 
     await chain.mutation({
         insert_restaurant_order: [{
-            objects: orders.slice(0, 200)
+            objects: orders//.slice(0, 200)
             // [{
             //     customer_id: ,
             //     customer: {

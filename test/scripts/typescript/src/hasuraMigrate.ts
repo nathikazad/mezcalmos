@@ -3,7 +3,7 @@ import * as functions from "firebase-functions";
 
 import * as fs from 'fs';
 import { getHasura } from "../../../../functions/src/utilities/hasura";
-import { insertRestaurants } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
+import { insertRestaurants, insertRestaurantStripeInfo } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
 import { insertRestaurantOrders } from "../../../../functions/src/shared/graphql/restaurant/order/insertRestaurantOrders"
 import { insertRestaurantOperators } from "../../../../functions/src/shared/graphql/restaurant/operators/insertRestaurantOperators"
 import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/delivery/driver/insertDeliveryDrivers"
@@ -46,12 +46,28 @@ console.log("Current working directory: ", process.cwd());
 
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/orders/past/restaurant`).once('value')).val();
+  let db = (await firebase.database().ref(`/orders/past/laundry`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./data/db-snapshot-restaurant-orders.json", data);
+  fs.writeFileSync("./data/db-snapshot-laundry-orders.json", data);
   console.log("Finished");
+
+  // let chain = getHasura();
+  // let response = await chain.query({
+  //   service_provider_details: [{}, {
+  //     name: true,
+  //     id: true
+  //   }]
+  // })
+  // let detailsIds: Record<string, number> = {};
+  // response.service_provider_details.forEach((d) => {
+  //   // if(!d.unique_id || !d.service_link_id)
+  //   //   return;
+  //   detailsIds[d.name] = d.id;
+  // })
+  // fs.writeFileSync("./details-Ids.json", JSON.stringify(detailsIds));
+
 }
 async function writeToDB() {
 
@@ -60,7 +76,7 @@ async function writeToDB() {
 //   // await deleteOrders()
 //   // return
   let restaurants = JSON.parse(fs.readFileSync('./data/db-snapshot.json').toString());
-  
+  // let serviceLinkIds: Record<string, number> = JSON.parse(fs.readFileSync('./service-link-Ids.json').toString());
   // let drivers = data.taxiDrivers
   // let users = data.users
 
@@ -183,8 +199,8 @@ async function writeToDB() {
     // break;
   }
   // console.log( JSON.stringify(array[0].categories![0].items[0].options![0]))
-  insertRestaurants(array);
-
+  // insertRestaurants(array);
+  insertRestaurantStripeInfo(restaurants)
 
 
 //   let driversArray = []
@@ -415,10 +431,10 @@ async function writeToDBRestoOrders() {
         }
     }]
 });
-  // for(let i=1400; i<3200; i+=200) {
+  // for(let i=0; i<3600; i+=200) {
   //   console.log(i)
     let array = []
-    for (let orderId of Object.keys(orders)/*.slice(3200, 3338)*/) {
+    for (let orderId of Object.keys(orders).slice(3600, 3691)) {
       let order = orders[orderId]
       if (!order)
         continue
@@ -640,7 +656,7 @@ async function writeToDBCustomers() {
 
 // insertDeliveryPartners()
   // saveFile()
-  // writeToDB()  
+  writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
 // writeToDBDeliDrivers()
@@ -648,4 +664,4 @@ async function writeToDBCustomers() {
 // writeToDBRestoOrders()
 // writeToDBLaundry()
 // writeToDBLaundryOrders()
-insertServiceLinks()
+// insertServiceLinks()

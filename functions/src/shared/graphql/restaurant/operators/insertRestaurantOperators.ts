@@ -3,23 +3,23 @@ import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function insertRestaurantOperators(data: any) {
     let chain = getHasura();
-    let queryResponse = await chain.query({
-        restaurant_operator: [{}, {
-            user: {
-                firebase_id: true
-            }
-        }]
-    })
-    let insertedOps: Record<string, boolean> = {};
-    queryResponse.restaurant_operator.forEach((r) => {
-        // if(rdetails?.firebase_id == null)
-            // return;
-        // console.log(typeof r.details.firebase_id)
-        insertedOps[r.user.firebase_id] = true;
-    })
+    // let queryResponse = await chain.query({
+    //     restaurant_operator: [{}, {
+    //         user: {
+    //             firebase_id: true
+    //         }
+    //     }]
+    // })
+    // let insertedOps: Record<string, boolean> = {};
+    // queryResponse.restaurant_operator.forEach((r) => {
+    //     // if(rdetails?.firebase_id == null)
+    //         // return;
+    //     // console.log(typeof r.details.firebase_id)
+    //     insertedOps[r.user.firebase_id] = true;
+    // })
     console.log(data.length)
-    data = data.filter((r: any) => insertedOps[r.userFirebaseId] == undefined)
-    console.log(data)
+    // data = data.filter((r: any) => insertedOps[r.userFirebaseId] == undefined)
+    // console.log(data)
 
     let operators = data.map(async (o: any) => {
         let opResponse = await chain.query({
