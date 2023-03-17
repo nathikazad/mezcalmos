@@ -40,9 +40,9 @@ export async function changeDeliveryPrice(userId: number, changePriceDetails: Ch
         reason: changePriceDetails.reason,
         status: ChangePriceStatus.Requested
     }
-    updateDeliveryChangePriceRequest(deliveryOrder);
+    await updateDeliveryChangePriceRequest(deliveryOrder);
 
-    notifyPriceChangeRequest(deliveryOrder);
+    await notifyPriceChangeRequest(deliveryOrder);
 }
 
 interface ChangePriceResponseDetails {
