@@ -132,33 +132,33 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           // SizedBox(
                           //   width: 4.w,
                           // ),
-                          if (widget.restaurant.rate != null)
-                            Flexible(
-                              // flex: 4,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: widget.restaurant.paymentInfo
-                                                ?.acceptCard ==
-                                            true
-                                        ? 8
-                                        : 0,
-                                  ),
+                          Flexible(
+                            // flex: 4,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width:
+                                      widget.restaurant.paymentInfo!.acceptCard
+                                          ? 8
+                                          : 0,
+                                ),
+                                if (widget.restaurant.rate != null)
                                   Icon(
                                     Icons.star,
                                     //size: 18,
                                     color: primaryBlueColor,
                                   ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                if (widget.restaurant.rate != null)
                                   Text(
                                     widget.restaurant.rate!.toStringAsFixed(1),
                                     style: txt.bodySmall,
                                   )
-                                ],
-                              ),
+                              ],
                             ),
+                          ),
                         ],
                       )
                     ],

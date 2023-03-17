@@ -49,7 +49,6 @@ class MezServiceOpenHours extends StatelessWidget {
                 ),
                 Text(
                   getDayName(v.key).capitalizeDays,
-                  style: Get.textTheme.titleLarge,
                 ),
                 Spacer(),
                 Text(

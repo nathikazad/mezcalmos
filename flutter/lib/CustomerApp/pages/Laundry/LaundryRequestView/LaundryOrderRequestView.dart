@@ -83,7 +83,8 @@ class _CustLaundryOrderRequestViewState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 3),
+                                alignment: Alignment.topCenter,
+                                margin: const EdgeInsets.only(top: 1),
                                 child: Icon(
                                   Icons.place,
                                   size: 18,

@@ -357,7 +357,8 @@
                 "thursday": "Thursday",
                 "friday": "Friday",
                 "saturday": "Saturday",
-                "sunday": "Sunday"
+                "sunday": "Sunday",
+                "viewAll": "View All"
               }
             },
             "workinHoursCart": {
@@ -587,6 +588,9 @@
           "startingFrom": "Starting from ",
           "minimumCost": "Minimum",
           "daysReturn": "days return",
+          "day": "day",
+          "days": "days",
+          "return": "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1452,13 +1456,13 @@
               "customer": "Customer"
             },
             "LaundryOrderStatusCard": {
-              "orderReceived": "Order Received",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
-              "pickedUp": "Order Picked up",
+              "pickedUp": "Order picked up",
               "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "LaundryOrderSummary": {
               "orderSummary": "Summary",
@@ -1602,10 +1606,9 @@
   },
   "DeliveryApp": {
     "pages": {
-      "UnAuthorizedDriverView" : {
-        "title" : "Invitation needed",
-        "subtitle" : "You need an invitation to use our delivery app"
-
+      "UnAuthorizedDriverView": {
+        "title": "Invitation needed",
+        "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
@@ -1917,14 +1920,14 @@
         "Components": {
           "LaundryOpOrderStatusCard": {
             "status": {
-              "canceled": "Order Cancelled",
-              "orderReceived": "Order Received",
+              "canceled": "Order cancelled",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
               "pickedUp": "Order Picked up",
-              "atLaundry": "At Laundry",
+              "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "estTimes": {
               "laundryArriving": "Laundry arriving",

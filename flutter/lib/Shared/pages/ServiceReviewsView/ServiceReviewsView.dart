@@ -103,7 +103,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
           RatingBarIndicator(
             rating: viewController.rating.toDouble(),
             itemBuilder: (BuildContext context, int index) => Icon(
-              Icons.star_rate_rounded,
+              Icons.star_rate,
               color: primaryBlueColor,
             ),
             itemCount: 5,
