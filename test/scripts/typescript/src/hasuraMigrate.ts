@@ -79,6 +79,7 @@ async function writeToDB() {
   // let serviceLinkIds: Record<string, number> = JSON.parse(fs.readFileSync('./service-link-Ids.json').toString());
   // let drivers = data.taxiDrivers
   // let users = data.users
+  let chain = getHasura();
 
   let array = []
   for(let restaurantFirebaseId in restaurants) {
@@ -159,9 +160,32 @@ async function writeToDB() {
                 optionArray.push(optionObject);
               }
             }
-
+            if(!item.image)
+              continue;
+            await chain.mutation({
+              update_restaurant_item: [{
+                where: {
+                  name: {
+                    translations: {
+                      // language_id: {
+                      //   _eq: "en"
+                      // },
+                      value: {
+                        _eq: item.name.en
+                      }
+                    }
+                  }
+                },
+                _set: {
+                  image: item.image
+                }
+              }, {
+                affected_rows: true
+              }]
+            })
             let itemObject = {
               name: item.name,
+              image: item.image,
               description: item.description,
               position: item.position,
               available: item.available,
@@ -172,6 +196,8 @@ async function writeToDB() {
             // break;
           }
         }
+        console.log(itemArray.length)
+
         let categoryObject = {
           name: category.name,
           description: category.dialog,
@@ -200,7 +226,7 @@ async function writeToDB() {
   }
   // console.log( JSON.stringify(array[0].categories![0].items[0].options![0]))
   // insertRestaurants(array);
-  insertRestaurantStripeInfo(restaurants)
+  // insertRestaurantStripeInfo(restaurants)
 
 
 //   let driversArray = []
