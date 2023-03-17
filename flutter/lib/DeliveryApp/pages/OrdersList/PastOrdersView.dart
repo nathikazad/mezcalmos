@@ -75,8 +75,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
               (int index) => MinimalOrderCard(
                 order: pastOrders[index],
                 onTap: () {
-                  MezRouter.toNamed(
-                      getRestaurantOrderRoute(pastOrders[index].id));
+                  MezRouter.toNamed(getDriverOrderRoute(pastOrders[index].id));
                 },
               ),
             ),

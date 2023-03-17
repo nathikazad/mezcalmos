@@ -222,8 +222,18 @@ def printDartFormatEnum(key, values):
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
-}'''
+}
+extension ParseStringTo#### on String {
+  #### to####() {
+    return ####.values.firstWhere(
+        (#### ****) =>
+            ****.toFirebaseFormatString() == this);
+  }
+}
+'''
+  name = key[0].lower() + key[1:]
   converter = converter.replace("####",key)
+  converter = converter.replace("****",name)
   return str+converter+"\n\n"
 
 def printDartFormatFunction(key, value):
@@ -358,15 +368,15 @@ def getModels():
         toWriteModel += "factory "+key+".fromFirebaseFormattedJson(dynamic json) { "
         toWriteModel += "\n   return "+key+"("
         for v in models[key]["values"]:
-          toWriteModel += '''json["'''+v+'''"], '''
+          toWriteModel += '''json["'''+v.replace("?","")+'''"], '''
+          # print(models[key]["values"][v])
+          if models[key]["values"][v] in models:
+            if models[models[key]["values"][v]]["type"] == "enum":
+              toWriteModel = toWriteModel[:-2]
+              toWriteModel += ".toString().to" + models[key]["values"][v] + "(), "
         toWriteModel = toWriteModel[:-2]
         toWriteModel += ''');
   }'''
-      ## @sanchit todo
-      ## add Factory
-  #       factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) {
-  #   return CheckoutResponse(json["orderId"], json["nullableField"]);
-  # }
       toWriteModel +=  "\n}\n\n"
     if models[key]["type"] == "enum":
       toWriteModel +=  printDartFormatEnum(key, models[key]["values"])

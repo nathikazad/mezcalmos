@@ -73,9 +73,9 @@ Notification deliveryDriverNotificationHandler(String key, value) {
 String getLinkUrl(OrderType orderType, int orderId) {
   switch (orderType) {
     case OrderType.Laundry:
-      return getLaundryOrderRoute(orderId);
+      return getDriverOrderRoute(orderId);
     case OrderType.Restaurant:
-      return getRestaurantOrderRoute(orderId);
+      return getDriverOrderRoute(orderId);
     default:
       return kHomeRoute;
   }
@@ -153,13 +153,13 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
       id: key,
       icon: mat.Icons.local_laundry_service,
-      secondaryIcon: (value['status'].toString().toLaundryOrderStatus ==
-                  RestaurantOrderStatus.CancelledByAdmin ||
-              value['status'].toString().toRestaurantOrderStatus() ==
-                  RestaurantOrderStatus.CancelledByAdmin)
+      secondaryIcon: (value['status'].toString().toLaundryOrderStatus() ==
+                  LaundryOrderStatus.CancelledByAdmin ||
+              value['status'].toString().toLaundryOrderStatus() ==
+                  LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: getLaundryOrderRoute(value["orderId"]),
+      linkUrl: getDriverOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -232,7 +232,7 @@ Notification newMessageNotification(String key, value) {
               orderId: value["orderId"],
               recipientType: value["sender"]["particpantType"]
                   .toString()
-                  .toParticipantType()),
+                  .convertToParticipantType()),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

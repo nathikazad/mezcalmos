@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -17,11 +18,10 @@ import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:uuid/uuid.dart';
-import 'package:flutter_callkit_incoming/entities/entities.dart';
 
 enum CallStatus { none, calling, inCall, timedOut }
 
@@ -199,7 +199,7 @@ class Sagora extends GetxController {
               name: event.body['nameCaller'],
               participantType: event.body['extra']['callerType']
                   .toString()
-                  .toParticipantType(),
+                  .convertToParticipantType(),
               id: event.body['extra']['callerId'],
             ),
           );
@@ -218,7 +218,7 @@ class Sagora extends GetxController {
                 name: event.body['nameCaller'],
                 participantType: event.body['extra']['callerType']
                     .toString()
-                    .toParticipantType(),
+                    .convertToParticipantType(),
                 id: int.parse(event.body['extra']['callerId']),
               ),
             );
@@ -252,7 +252,7 @@ class Sagora extends GetxController {
                 name: event.body?['nameCaller'],
                 participantType: event.body['extra']['callerType']
                     .toString()
-                    .toParticipantType(),
+                    .convertToParticipantType(),
                 // wrong actual user id, it's more like an agora generated id
                 id: int.parse(event.body['extra']['callerId']),
               ),
@@ -267,7 +267,7 @@ class Sagora extends GetxController {
                         name: event.body?['nameCaller'],
                         participantType: event.body['extra']['callerType']
                             .toString()
-                            .toParticipantType(),
+                            .convertToParticipantType(),
                         // wrong actual user id, it's more like an agora generated id
                         id: event.body['extra']['callerId'],
                       ),
@@ -344,8 +344,8 @@ class Sagora extends GetxController {
         .set(CallNotificationForQueue(
                 chatId: chatId,
                 callerId: _authController.hasuraUserId!,
-                callerParticipantType:
-                    _settingsController.appType.toParticipantTypefromAppType(),
+                callerParticipantType: _settingsController.appType
+                    .convertParticipantTypefromAppType(),
                 calleeId: callee.id,
                 calleeParticipantType: callee.participantType,
                 callNotificationType: callNotificationType)

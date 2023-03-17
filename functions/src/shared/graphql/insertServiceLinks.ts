@@ -43,6 +43,7 @@ export async function insertServiceLinks() {
         }
         console.log("id: ", d.id)
         if(d.unique_id == null) {
+            continue;
             console.log("Error: unique id not found")
             break;
         }

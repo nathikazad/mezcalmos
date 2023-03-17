@@ -1,7 +1,6 @@
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
-import { orderUrl } from "../utilities/senders/appRoutes";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType, DeliveryOperator } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
@@ -73,7 +72,7 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder:
         // deliveryDriverType: assignDriverDetails.deliveryDriverType
       },
       background: deliveryNewOrderMessage,
-      linkUrl: orderUrl(deliveryOrder.orderType, deliveryOrder.deliveryId)
+      linkUrl: `/orders/${deliveryOrder.deliveryId}`
     };
 
     pushNotification(

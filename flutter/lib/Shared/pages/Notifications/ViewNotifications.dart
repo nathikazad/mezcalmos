@@ -86,7 +86,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         ),
         Text(
           "${_i18n()["noNotifTitle"]}",
-          style: Get.textTheme.bodyText1,
+          style: Get.textTheme.bodyLarge,
         ),
         SizedBox(
           height: 2.h,
@@ -95,7 +95,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           margin: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             "${_i18n()["noNotifBody"]}",
-            style: Get.textTheme.bodyText2,
+            style: Get.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),
@@ -133,9 +133,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     ? _i18n()["today"]
                     : (element.timestamp.isYesterday)
                         ? _i18n()['yesterday']
-                        : DateFormat('dd MMM')
-                            .format(element.timestamp),
-                style: Get.textTheme.bodyText1,
+                        : DateFormat('dd MMM').format(element.timestamp),
+                style: Get.textTheme.bodyLarge,
               ),
               indexNotification == 1 ? _deleteButton() : SizedBox()
             ],
@@ -156,7 +155,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          MezRouter.offNamed(notification.linkUrl);
+          mezDbgPrint(notification.linkUrl);
+          MezRouter.toNamed("/laundryOrders/3658");
+          //    MezRouter.toNamed(notification.linkUrl);
         },
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
@@ -171,14 +172,14 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                   children: [
                     Text(
                       notification.title,
-                      style: Get.textTheme.bodyText1!,
+                      style: Get.textTheme.bodyLarge!,
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text(
                       notification.body,
-                      style: Get.textTheme.subtitle1?.copyWith(
+                      style: Get.textTheme.titleMedium?.copyWith(
                         fontSize: 12.sp,
                       ),
                     ),
