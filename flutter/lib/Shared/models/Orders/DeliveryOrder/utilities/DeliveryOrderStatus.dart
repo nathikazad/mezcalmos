@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 enum DeliveryOrderStatus {
   OrderReceived,
   OnTheWayToPickup,
@@ -7,7 +9,8 @@ enum DeliveryOrderStatus {
   Delivered,
   CancelledByCustomer,
   CancelledByDeliverer,
-  CancelledByServiceProvider
+  CancelledByServiceProvider,
+  CancelledByAdmin
 }
 
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {

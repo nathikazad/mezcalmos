@@ -138,7 +138,7 @@
             "search": "Búsqueda",
             "showOnlyOpen": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
-            "noOpenRestaurant": "No hay restaurantes abiertos funds",
+            "noOpenRestaurant": "No hay restaurantes abiertos",
             "meal": "Comida",
             "noItemTitle": "No se han encontrado resultados",
             "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
@@ -910,7 +910,7 @@
           }
         },
         "SignInScreen": {
-          "title": "Conéctese usando Facebook o usando SMS! ",
+          "title": "Inicie sesión con su proveedor preferido!",
           "loginWithApple": "INICIAR CON APPLE",
           "loginWithSms": "INICIAR CON SMS",
           "fbBtn": "INICIAR CON FACEBOOK"
