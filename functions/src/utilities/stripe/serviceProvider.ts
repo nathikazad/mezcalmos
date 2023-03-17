@@ -12,10 +12,10 @@ import { createServiceProviderStripe, updateServiceProviderPayment, updateServic
 
 let keys: Keys = getKeys();
 
-export interface SetupDetails {
+export interface SetupStripeDetails {
   serviceProviderDetailsId: number,
 }
-export interface SetupResponse {
+export interface SetupStripeResponse {
   success: boolean,
   error?: SetupStripeError
   unhandledError?: string,
@@ -30,7 +30,7 @@ export enum SetupStripeError {
   OperatorNotAuthorized = "operatorNotAuthorized",
   StripeUpdateError = "stripeUpdateError",
 }
-export async function setupServiceProvider(userId: number, setupDetails: SetupDetails): Promise<SetupResponse> {
+export async function setupServiceProvider(userId: number, setupDetails: SetupStripeDetails): Promise<SetupStripeResponse> {
   try {
     let serviceProvider: ServiceProvider = await getServiceProviderDetails(setupDetails.serviceProviderDetailsId)
     if(serviceProvider.operators!.filter((o) => o.userId == userId).length == 0) {
@@ -115,10 +115,10 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
   }
 }
 
-export interface UpdateDetails {
+export interface UpdateStripeDetails {
   serviceProviderDetailsId: number,
 }
-export interface UpdateResponse {
+export interface UpdateStripeResponse {
   success: boolean,
   error?: UpdateStripeError
   unhandledError?: string,
@@ -129,7 +129,7 @@ export enum UpdateStripeError {
   OperatorNotAuthorized = "operatorNotAuthorized",
   NoStripeAccount = "noStripeAccount"
 }
-export async function updateServiceProvider(userId: number, updateDetails: UpdateDetails): Promise<UpdateResponse> {
+export async function updateServiceProvider(userId: number, updateDetails: UpdateStripeDetails): Promise<UpdateStripeResponse> {
   try {
     let serviceProvider: ServiceProvider = await getServiceProviderDetails(updateDetails.serviceProviderDetailsId);
 
