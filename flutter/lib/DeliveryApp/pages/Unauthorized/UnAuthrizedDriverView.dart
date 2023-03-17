@@ -45,6 +45,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
       body: Obx(
         () => Container(
           alignment: Alignment.center,
+          margin: const EdgeInsets.all(8),
           child: (viewController.status == AgentStatus.AwaitingApproval)
               ? ServiceWaitingForApproval()
               : _invitNedded(),
@@ -74,18 +75,22 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
           height: 15,
         ),
         Container(
+          alignment: Alignment.center,
           child: Text(
             "${_i18n()['title']}",
             style: Get.textTheme.displaySmall,
+            textAlign: TextAlign.center,
           ),
         ),
         SizedBox(
           height: 15,
         ),
         Container(
+          alignment: Alignment.center,
           child: Text(
             "${_i18n()['subtitle']}",
             style: Get.textTheme.bodyMedium,
+            textAlign: TextAlign.center,
           ),
         )
       ],

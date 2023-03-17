@@ -8,17 +8,13 @@ import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.d
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 const String kCurrentOrdersListRoute = '/orders';
-const String kLaundryOrderView = '/laundryOrders/:orderId';
-const String kRestaurantOrderView = '/restaurantOrders/:orderId';
+const String kDriverOrderView = '/orders/:orderId';
 const String kOrderDetailsView = "/orderDetails/:orderId";
 const String kPastOrdersView = "/pastOrders";
 const String kDriverUnAuth = "/driverUnauth";
-String getLaundryOrderRoute(int orderId) {
-  return kLaundryOrderView.replaceFirst(":orderId", orderId.toString());
-}
 
-String getRestaurantOrderRoute(int orderId) {
-  return kRestaurantOrderView.replaceFirst(":orderId", orderId.toString());
+String getDriverOrderRoute(int orderId) {
+  return kDriverOrderView.replaceFirst(":orderId", orderId.toString());
 }
 
 String getOrderDetailsRoute(int orderId) {
@@ -33,7 +29,7 @@ class XRouter {
             page: () => CurrentOrdersListScreen()),
         GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
         //  GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
-        GetPage(name: kRestaurantOrderView, page: () => DvOrderView()),
+        GetPage(name: kDriverOrderView, page: () => DvOrderView()),
         GetPage(name: kOrderDetailsView, page: () => OrderDetailsScreen()),
         GetPage(name: kPastOrdersView, page: () => DriverPastOrdersView()),
         GetPage(name: kDriverUnAuth, page: () => UnAuthorizedDriverView()),

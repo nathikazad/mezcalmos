@@ -23,6 +23,12 @@ object_relationships:
         table:
           name: restaurant
           schema: restaurant
+computed_fields:
+  - name: base_location
+    definition:
+      function:
+        name: baselocation
+        schema: delivery
 select_permissions:
   - role: anonymous
     permission:

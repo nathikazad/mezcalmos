@@ -1,7 +1,5 @@
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
-import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { expectedPreviousStatus, passChecksForLaundry } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -29,7 +27,6 @@ export async function cancelOrder(userId: number, changeStatusDetails: ChangeSta
 export async function readyForDeliveryOrder(userId: number, changeStatusDetails: ChangeStatusDetails) {
   await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.ReadyForDelivery, userId)
 };
-
 
 async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, userId: number) {
 
@@ -65,76 +62,69 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
 
   order.status = newStatus
   updateLaundryOrderStatus(order);
-
-  let notification: Notification = {
-    foreground: <LaundryOrderStatusChangeNotification>{
-      status: newStatus,
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.OrderStatusChange,
-      orderType: OrderType.Laundry,
-      notificationAction: newStatus != LaundryOrderStatus.CancelledByAdmin
-        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-      orderId: orderId
-    },
-    background: LaundryOrderStatusChangeMessages[newStatus],
-    linkUrl: orderUrl(OrderType.Laundry, orderId)
-  }
-  
-  pushNotification(
-    customer.firebaseId, 
-    notification, 
-    customer.notificationInfo,
-    ParticipantType.Customer, 
-    customer.language
-  )
-  
+    
   if(order.deliveryType == DeliveryType.Delivery) {
-    if(order.fromCustomerDeliveryId == null || order.toCustomerDeliveryId == null) {
-      throw new HttpsError(
-        "internal",
-        "No delivery id"
-      );
-    }
-    let response = await Promise.all([
-      getDeliveryOrder(order.fromCustomerDeliveryId), 
-      getDeliveryOrder(order.toCustomerDeliveryId)
-    ])
-    let fromCustomerDeliveryOrder: DeliveryOrder = response[0] ;
-    let toCustomerDeliveryOrder: DeliveryOrder = response[1];
 
-    switch (newStatus) {
-      case LaundryOrderStatus.CancelledByAdmin:
-        fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
-        toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+    let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId!);
 
-        updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
-        updateDeliveryOrderStatus(toCustomerDeliveryOrder);
-        break;
-      case LaundryOrderStatus.ReadyForDelivery:
-        toCustomerDeliveryOrder.packageCost = order.itemsCost;
-        updateDeliveryPackageCost(toCustomerDeliveryOrder)
-      default:
-        break;
-    }
-    if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
+    if(newStatus == LaundryOrderStatus.CancelledByAdmin) {
       fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
-      toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
 
       updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
-      updateDeliveryOrderStatus(toCustomerDeliveryOrder);
     }
     
-    if (fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
-      notification.linkUrl = orderUrl(OrderType.Laundry, order.orderId);
-      pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
-        notification, 
-        fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,
-        ParticipantType.DeliveryDriver,
-        fromCustomerDeliveryOrder.deliveryDriver.user?.language,
-      );
+    if(order.toCustomerDeliveryId) {
+      let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
+      if(newStatus == LaundryOrderStatus.CancelledByAdmin) {
+        toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+
+        updateDeliveryOrderStatus(toCustomerDeliveryOrder);
+      } else {
+        toCustomerDeliveryOrder.packageCost = order.itemsCost;
+        updateDeliveryPackageCost(toCustomerDeliveryOrder)
+      }
+      notify(customer, fromCustomerDeliveryOrder, toCustomerDeliveryOrder);
+    } else 
+      notify(customer, fromCustomerDeliveryOrder)
+  } else
+    notify(customer);
+  return {
+    success: true
+  }
+
+  function notify(customer: CustomerInfo, fromCustomerDeliveryOrder?: DeliveryOrder, toCustomerDeliveryOrder?: DeliveryOrder) {
+    let notification: Notification = {
+      foreground: <LaundryOrderStatusChangeNotification>{
+        status: newStatus,
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.OrderStatusChange,
+        orderType: OrderType.Laundry,
+        notificationAction: newStatus != LaundryOrderStatus.CancelledByAdmin
+          ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+        orderId: orderId
+      },
+      background: LaundryOrderStatusChangeMessages[newStatus],
+      linkUrl: orderUrl(OrderType.Laundry, orderId)
+    };
+
+    pushNotification(
+      customer.firebaseId,
+      notification,
+      customer.notificationInfo,
+      ParticipantType.Customer,
+      customer.language
+    );
+    if(fromCustomerDeliveryOrder && fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
+        notification.linkUrl = `/orders/${fromCustomerDeliveryOrder.deliveryId}`;
+        pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
+          notification, 
+          fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+          ParticipantType.DeliveryDriver,
+          fromCustomerDeliveryOrder.deliveryDriver.user?.language,
+        );
     }
-    if (toCustomerDeliveryOrder.deliveryDriver && toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
-      notification.linkUrl = orderUrl(OrderType.Laundry, order.orderId!);
+    if (toCustomerDeliveryOrder && toCustomerDeliveryOrder.deliveryDriver && toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
+      notification.linkUrl = `/orders/${toCustomerDeliveryOrder.deliveryId}`;
       pushNotification(toCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
         notification, 
         toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
@@ -144,69 +134,68 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     }
   }
 }
+// export async function setWeight(userId: number, data: any) {
 
-export async function setWeight(userId: number, data: any) {
+//   if (data.costsByType == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Expected costsByType`,
+//       errorCode: "orderIdNotGiven"
+//     }
+//   }
 
-  if (data.costsByType == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected costsByType`,
-      errorCode: "orderIdNotGiven"
-    }
-  }
-
-  await passChecksForLaundry(data.orderId, userId);
-
-
-  let order: LaundryOrder = await getLaundryOrder(data.orderId)
-
-  if (order.status != LaundryOrderStatus.AtLaundry) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order weight can only be changed when status is at laundry`,
-        errorCode: "orderNotAtLaundry"
-      }
-    }
-  }
-
-  let orderId = data.orderId;
-  // order.costsByType = data.costsByType;
-  // order.cost = order.shippingCost + order.costsByType?.weighedCost
-
-  // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
-  // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
-  rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-  // if (order.dropoffDriver)
-  //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
-
-  return { status: ServerResponseStatus.Success }
-};
-
-export async function setEstimatedLaundryReadyTime(userId: number, data: any) {
-
-  if (data.estimatedLaundryReadyTime == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected estimatedLaundryReadyTime`,
-      errorCode: "orderIdNotGiven"
-    }
-  }
-
-  await passChecksForLaundry(data.orderId, userId);
+//   await passChecksForLaundry(data.orderId, userId);
 
 
-  let order: LaundryOrder = await getLaundryOrder(data.orderId)
+//   let order: LaundryOrder = await getLaundryOrder(data.orderId)
 
-  let orderId = data.orderId;
-  // order.estimatedLaundryReadyTime = data.estimatedLaundryReadyTime;
+//   if (order.status != LaundryOrderStatus.AtLaundry) {
+//     return {
+//       ok: false,
+//       error: {
+//         status: ServerResponseStatus.Error,
+//         errorMessage: `Order weight can only be changed when status is at laundry`,
+//         errorCode: "orderNotAtLaundry"
+//       }
+//     }
+//   }
 
-  // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
-  // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
-  rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-  // if (order.dropoffDriver)
-  //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
+//   let orderId = data.orderId;
+//   // order.costsByType = data.costsByType;
+//   // order.cost = order.shippingCost + order.costsByType?.weighedCost
 
-  return { status: ServerResponseStatus.Success }
-};
+//   // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+//   // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
+//   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+//   // if (order.dropoffDriver)
+//   //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
+
+//   return { status: ServerResponseStatus.Success }
+// };
+
+// export async function setEstimatedLaundryReadyTime(userId: number, data: any) {
+
+//   if (data.estimatedLaundryReadyTime == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Expected estimatedLaundryReadyTime`,
+//       errorCode: "orderIdNotGiven"
+//     }
+//   }
+
+//   await passChecksForLaundry(data.orderId, userId);
+
+
+//   let order: LaundryOrder = await getLaundryOrder(data.orderId)
+
+//   let orderId = data.orderId;
+//   // order.estimatedLaundryReadyTime = data.estimatedLaundryReadyTime;
+
+//   // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+//   // await laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
+//   rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+//   // if (order.dropoffDriver)
+//   //   deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId, orderId).update(order);
+
+//   return { status: ServerResponseStatus.Success }
+// };

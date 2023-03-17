@@ -123,7 +123,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 (int index) => MinimalOrderCard(
                       order: viewController.currentOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(getRestaurantOrderRoute(
+                        MezRouter.toNamed(getDriverOrderRoute(
                             viewController.currentOrders[index].id));
                       },
                     )).reversed.toList(),

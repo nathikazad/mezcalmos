@@ -108,7 +108,9 @@ class CustomerCartController extends GetxController {
   }
 
   Future<bool> updateCartItem(CartItem cartItem) async {
-    await update_cart_item(cartItem: cartItem, id: cartItem.idInCart!);
+    if (cartItem.idInCart != null) {
+      await update_cart_item(cartItem: cartItem, id: cartItem.idInCart!);
+    }
     return true;
   }
 

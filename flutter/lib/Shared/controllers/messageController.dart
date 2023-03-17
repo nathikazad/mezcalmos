@@ -104,7 +104,7 @@ class MessageController extends GetxController {
           chatId: chatId.toString(),
           messageId: messageNode.key!,
           participantType:
-              _settingsController.appType.toParticipantTypefromAppType(),
+              _settingsController.appType.convertParticipantTypefromAppType(),
         ).toFirebaseFormatJson());
   }
 

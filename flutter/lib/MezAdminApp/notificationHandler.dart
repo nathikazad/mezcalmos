@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -162,7 +162,7 @@ Notification newMessageNotification(String key, value) {
               orderId: value["orderId"],
               recipientType: value["sender"]["particpantType"]
                   .toString()
-                  .toParticipantType()),
+                  .convertToParticipantType()),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
