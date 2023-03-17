@@ -1,6 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../utilities/links/deeplink";
+import { ServiceProviderStripeInfo } from "../../utilities/stripe/model";
+import { SetupStripeError, UpdateStripeError } from "../../utilities/stripe/serviceProvider";
 import { ChangeUniqueIdError } from "../changeUniqueId";
 import { AppType, MezError } from "../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../models/Services/Service";
@@ -8,24 +9,17 @@ import { ServiceProvider, ServiceProviderType } from "../models/Services/Service
 export async function createServiceProviderStripe(serviceProvider: ServiceProvider) {
     let chain = getHasura();
 
-    if(serviceProvider.stripeInfo == null) {
-        throw new HttpsError(
-            "internal",
-            "service provider stripe info not provided"
-        );
-    }
-
     let stripeResponse = await chain.mutation({
         insert_service_provider_stripe_info_one: [{
             object: {
-                charge_fees_on_customer: serviceProvider.stripeInfo.chargeFeesOnCustomer ?? undefined,
-                charges_enabled: serviceProvider.stripeInfo.chargesEnabled,
-                details_submitted: serviceProvider.stripeInfo.detailsSubmitted,
-                email: serviceProvider.stripeInfo.email ?? undefined,
-                payouts_enabled: serviceProvider.stripeInfo.payoutsEnabled,
-                requirements: JSON.stringify(serviceProvider.stripeInfo.requirements),
-                stripe_id: serviceProvider.stripeInfo.id,
-                status: serviceProvider.stripeInfo.status,
+                charge_fees_on_customer: serviceProvider.stripeInfo!.chargeFeesOnCustomer ?? undefined,
+                charges_enabled: serviceProvider.stripeInfo!.chargesEnabled,
+                details_submitted: serviceProvider.stripeInfo!.detailsSubmitted,
+                email: serviceProvider.stripeInfo!.email ?? undefined,
+                payouts_enabled: serviceProvider.stripeInfo!.payoutsEnabled,
+                requirements: JSON.stringify(serviceProvider.stripeInfo!.requirements),
+                stripe_id: serviceProvider.stripeInfo!.id,
+                status: serviceProvider.stripeInfo!.status,
             },
             // on_conflict: {
             //     constraint: service_provider_stripe_info_constraint.stripe_info_stripe_id_key,
@@ -36,10 +30,7 @@ export async function createServiceProviderStripe(serviceProvider: ServiceProvid
         }]
     })
     if(!(stripeResponse.insert_service_provider_stripe_info_one)) {
-        throw new HttpsError(
-          "internal",
-          "service provider stripe update error"
-        );
+        throw new MezError(SetupStripeError.StripeUpdateError);
     }
     // let mutationResponse = 
     chain.mutation({
@@ -56,56 +47,40 @@ export async function createServiceProviderStripe(serviceProvider: ServiceProvid
     });
 }
 
-export async function updateServiceProviderStripe(serviceProvider: ServiceProvider) {
+export async function updateServiceProviderStripe(stripeInfo: ServiceProviderStripeInfo) {
     let chain = getHasura();
 
-    if(serviceProvider.stripeInfo == null) {
-        throw new HttpsError(
-            "internal",
-            "service provider stripe info not provided"
-        );
-    }
     let response = await chain.mutation({
         update_service_provider_stripe_info: [{
             where: {
                 stripe_id: {
-                    _eq: serviceProvider.stripeInfo.id
+                    _eq: stripeInfo.id
                 }
             },
             _set: {
-                charge_fees_on_customer: serviceProvider.stripeInfo.chargeFeesOnCustomer ?? undefined,
-                charges_enabled: serviceProvider.stripeInfo.chargesEnabled,
-                details_submitted: serviceProvider.stripeInfo.detailsSubmitted,
-                email: serviceProvider.stripeInfo.email ?? undefined,
-                payouts_enabled: serviceProvider.stripeInfo.payoutsEnabled,
-                requirements: JSON.stringify(serviceProvider.stripeInfo.requirements),
-                stripe_id: serviceProvider.stripeInfo.id,
-                status: serviceProvider.stripeInfo.status,
+                charge_fees_on_customer: stripeInfo.chargeFeesOnCustomer ?? undefined,
+                charges_enabled: stripeInfo.chargesEnabled,
+                details_submitted: stripeInfo.detailsSubmitted,
+                email: stripeInfo.email ?? undefined,
+                payouts_enabled: stripeInfo.payoutsEnabled,
+                requirements: JSON.stringify(stripeInfo.requirements),
+                status: stripeInfo.status,
             }
         }, {
             affected_rows: true
         }]
     });
     if(response.update_service_provider_stripe_info == null) {
-        throw new HttpsError(
-          "internal",
-          "service provider stripe not setup"
-        );
+        throw new MezError(UpdateStripeError.NoStripeAccount);
     }
 }
 export async function updateServiceProviderPayment(serviceProvider: ServiceProvider) {
     let chain = getHasura();
 
-    if(serviceProvider.acceptedPayments == null) {
-        throw new HttpsError(
-            "internal",
-            "service provider payment methods not provided"
-        );
-    }
     chain.mutation({
         update_service_provider_details_by_pk: [{
             pk_columns: {
-                id: serviceProvider.serviceProviderDetailsId!
+                id: serviceProvider.serviceProviderDetailsId
             },
             _set: {
                 accepted_payments: JSON.stringify(serviceProvider.acceptedPayments)
