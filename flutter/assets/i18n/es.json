@@ -742,6 +742,25 @@
       }
     },
     "pages": {
+      "ServiceProfileView" : {
+        "profile" : "Perfil",
+        "info" : "Información",
+        "operators" : "Operadoras",
+        "drivers" : "Conductoras",
+        "schedule" :"Cronograma",
+        "payments" :"Pagos",
+        "delivery" :"Entrega",
+        "reviews" : "Reseñas",
+        "share" : "Compartir",
+        "privacyPolicies": "Políticas de privacidad",
+        "logout" : "Cerrar sesión",
+        "openService" : "Servicio abierto",
+        "closeService" : "Servicio cerrado",
+        "serviceClosed" : "El servicio está cerrado indefinidamente",
+        "restaurantReview" : "Su restaurante está bajo revisión, se le notificará, su aprobación."
+       
+
+      },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage":{
@@ -803,7 +822,8 @@
             "title": "Compañero de entrega a su lado",
             "notFoundTitle": "No se encontraron socios de entrega",
             "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
-            "joined": "Unida"
+            "joined": "Unida",
+            "errorText" :  "Seleccione una empresa o cambie al tiempo de entrega de sí mismo"
           }
         }
       },
@@ -2022,7 +2042,7 @@
         "good": "Buena",
         "average": "Promedio",
         "bad": "Mala",
-        "default": "Ver todo",
+        "default": "Latest",
         "highestrate": "Tasa más alta",
         "lowestrate": "La tasa más baja",
         "noRevTitle": "Todavía no hay críticas",
@@ -2061,6 +2081,7 @@
       },
       "ROpOrderView": {
         "review" : "Revisar",
+        "deliveryDet" :"Detalles de la entrega",
         "restaurant" : "Restaurante",
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",

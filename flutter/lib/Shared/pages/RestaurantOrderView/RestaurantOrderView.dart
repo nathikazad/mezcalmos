@@ -16,7 +16,6 @@ import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderCu
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderEstTime.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderHandleButton.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderItems.dart';
-import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderStatusCard.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
@@ -26,7 +25,9 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
@@ -129,39 +130,35 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                     ),
 
                   _orderItemsList(),
-                  RestaurantOrderDeliveryTimeCard(
-                      order: viewController.order.value!),
                   Container(
-                      margin: const EdgeInsets.only(bottom: 25),
-                      child: OrderDeliveryLocation(
-                          address: viewController.order.value!.to.address)),
-                  Container(
-                      margin: const EdgeInsets.only(bottom: 25),
-                      child: OrderPaymentMethod(
-                        stripeOrderPaymentInfo:
-                            viewController.order.value!.stripePaymentInfo,
-                        paymentType: viewController.order.value!.paymentType,
-                      )),
-                  if (viewController.order.value!.review != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "${_i18n()['review']}",
-                          style: Get.textTheme.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ReviewCard(review: viewController.order.value!.review!),
-                      ],
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '${_i18n()["deliveryDet"]}',
+                      textAlign: TextAlign.center,
+                      style: Get.textTheme.bodyLarge,
                     ),
-                  ROpOrderNote(orderNote: viewController.order.value!.notes),
+                  ),
+                  OrderScheduledTimeCard(
+                      time: viewController.order.value!.scheduledTime,
+                      margin: const EdgeInsets.only(top: 8)),
+                  RestaurantOrderDeliveryTimeCard(
+                    order: viewController.order.value!,
+                    margin: const EdgeInsets.only(top: 8),
+                  ),
+                  OrderDeliveryLocation(
+                    address: viewController.order.value!.to.address,
+                    margin: const EdgeInsets.only(top: 8),
+                  ),
+                  OrderPaymentMethod(
+                    stripeOrderPaymentInfo:
+                        viewController.order.value!.stripePaymentInfo,
+                    paymentType: viewController.order.value!.paymentType,
+                  ),
+                  if (viewController.order.value!.review != null)
+                    ReviewCard(review: viewController.order.value!.review!),
+                  OrderNoteCard(note: viewController.order.value!.notes),
                   OrderSummaryCard(
-                    margin: const EdgeInsets.only(top: 15),
+                    margin: const EdgeInsets.only(bottom: 25),
                     orderCost: viewController.order.value!.itemsCost,
                     refundAmmount: viewController.order.value!.refundAmount,
                     shippingCost: viewController.order.value!.shippingCost,
@@ -174,7 +171,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   // ),
                   if (viewController.order.value!.inProcess())
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextButton(
                           style: TextButton.styleFrom(
                               foregroundColor: Colors.red,

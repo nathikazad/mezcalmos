@@ -105,6 +105,9 @@ class _ROpItemCardState extends State<ROpItemCard> {
                 ),
                 Divider(
                   height: 4,
+                  thickness: 0.2,
+                  endIndent: 8,
+                  indent: 8,
                 ),
                 Row(
                   children: [

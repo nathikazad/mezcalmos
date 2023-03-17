@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
-import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/controllers/ROpUnauthorizedOpViewController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 
 class ROpUnauthorizedOpView extends StatefulWidget {
   const ROpUnauthorizedOpView({super.key});
@@ -34,7 +34,7 @@ class _ROpUnauthorizedOpViewState extends State<ROpUnauthorizedOpView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
-        showNotifications: true,
+        showNotifications: false,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: ROpDrawer(),

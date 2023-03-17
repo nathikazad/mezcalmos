@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceScheduleView/controllers/ServiceScheduleViewController.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -22,13 +23,6 @@ class ServiceScheduleWidgets {
   // List of weekdays  cards
   Widget editWorkingHoursComponent() {
     final List<Widget> widgets = [
-      Container(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ),
       SizedBox(
         height: 10,
       )
@@ -40,11 +34,18 @@ class ServiceScheduleWidgets {
       viewController.newSchedule.value!.openHours
           .forEach((Weekday key, OpenHours value) {
         if (key.index == i) {
-          widgets.add(
+          widgets.addAll([
             singleWorkDayCard(
               weekday: key,
             ),
-          );
+            if (i != (viewController.newSchedule.value!.openHours.length - 1))
+              Divider(
+                thickness: 0.3,
+                height: 5,
+                indent: 10,
+                endIndent: 10,
+              )
+          ]);
         }
       });
     }
@@ -56,79 +57,77 @@ class ServiceScheduleWidgets {
 // SINGLE WORK DAY CARD
   Widget singleWorkDayCard({required Weekday weekday}) {
     return Obx(
-      () => Card(
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                // margin: const EdgeInsets.symmetric(horizontal: 5),
-                width: 15.w,
-                child: Text(
-                  "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                  style: Get.textTheme.bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w700),
-                ),
+      () => Container(
+        padding: const EdgeInsets.all(5),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              // margin: const EdgeInsets.symmetric(horizontal: 5),
+              width: 15.w,
+              child: Text(
+                "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
+                style: Get.textTheme.bodyLarge
+                    ?.copyWith(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Flexible(
-                  flex: 6,
-                  fit: FlexFit.loose,
-                  child: viewController
-                          .newSchedule.value!.openHours[weekday]!.isOpen
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                              Text(
-                                convertToAmPm(
-                                    viewController.newSchedule.value!
-                                        .openHours[weekday]!.from[0],
-                                    viewController.newSchedule.value!
-                                        .openHours[weekday]!.from[1]),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                " - ${convertToAmPm(viewController.newSchedule.value!.openHours[weekday]!.to[0], viewController.newSchedule.value!.openHours[weekday]!.to[1])}",
-                                textAlign: TextAlign.center,
-                              ),
-                            ])
-                      : Container(
-                          height: 40,
-                        )),
-              Flexible(
-                flex: 3,
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: (viewController
-                            .newSchedule.value!.openHours[weekday]!.isOpen)
-                        ? Color(0xFFE9F4E9)
-                        : Color(0xFFFCE7EB),
-                  ),
-                  //  padding: const EdgeInsets.symmetric(horizontal: 8),
-
-                  child: Center(
-                      child: Text(
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Flexible(
+                flex: 6,
+                fit: FlexFit.loose,
+                child:
                     viewController.newSchedule.value!.openHours[weekday]!.isOpen
-                        ? "${_i18n()["workingHoursCard"]["open"]}"
-                        : "${_i18n()["workingHoursCard"]["closed"]}",
-                    style: Get.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: viewController
-                                .newSchedule.value!.openHours[weekday]!.isOpen
-                            ? Color(0xFF219125)
-                            : Color(0xFFE21132)),
-                  )),
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                                Text(
+                                  convertToAmPm(
+                                      viewController.newSchedule.value!
+                                          .openHours[weekday]!.from[0],
+                                      viewController.newSchedule.value!
+                                          .openHours[weekday]!.from[1]),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  " - ${convertToAmPm(viewController.newSchedule.value!.openHours[weekday]!.to[0], viewController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                  textAlign: TextAlign.center,
+                                ),
+                              ])
+                        : Container(
+                            height: 40,
+                          )),
+            Flexible(
+              flex: 3,
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: (viewController
+                          .newSchedule.value!.openHours[weekday]!.isOpen)
+                      ? Color(0xFFE9F4E9)
+                      : Color(0xFFFCE7EB),
                 ),
+                //  padding: const EdgeInsets.symmetric(horizontal: 8),
+
+                child: Center(
+                    child: Text(
+                  viewController.newSchedule.value!.openHours[weekday]!.isOpen
+                      ? "${_i18n()["workingHoursCard"]["open"]}"
+                      : "${_i18n()["workingHoursCard"]["closed"]}",
+                  style: Get.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: viewController
+                              .newSchedule.value!.openHours[weekday]!.isOpen
+                          ? Color(0xFF219125)
+                          : Color(0xFFE21132)),
+                )),
               ),
-              _editBtn(weekday)
-            ],
-          ),
+            ),
+            _editBtn(weekday)
+          ],
         ),
       ),
     );
@@ -137,35 +136,26 @@ class ServiceScheduleWidgets {
   Widget _editBtn(Weekday weekday) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: InkWell(
-          customBorder: CircleBorder(),
-          onTap: () {
-            showModalBottomSheet(
-                context: context,
-                isDismissible: false,
-                isScrollControlled: true,
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                )),
-                builder: (BuildContext context) {
-                  return editWorkingDayComponent(
-                    weekday: weekday,
-                  );
-                });
-          },
-          child: Ink(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                color: Colors.grey.shade200, shape: BoxShape.circle),
-            child: Icon(
-              Icons.edit_outlined,
-              color: Color(0xFF5B5A5A),
-              size: 20,
-            ),
-          )),
+      child: MezIconButton(
+        onTap: () {
+          showModalBottomSheet(
+              context: context,
+              isDismissible: false,
+              isScrollControlled: true,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              )),
+              builder: (BuildContext context) {
+                return editWorkingDayComponent(
+                  weekday: weekday,
+                );
+              });
+        },
+        icon: Icons.edit_outlined,
+      ),
     );
   }
 

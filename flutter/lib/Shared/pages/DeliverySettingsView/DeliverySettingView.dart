@@ -39,7 +39,7 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
 
   @override
   void initState() {
-    mezDbgPrint("Delivery cost init :==========>");
+  
     _settingVariables();
     viewController.init(
         createServiceViewController: widget.createServiceViewController,
