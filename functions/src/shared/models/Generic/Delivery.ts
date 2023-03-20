@@ -153,6 +153,11 @@ export interface DeliveryOperatorApprovedNotification
   DeliveryCompanyName: string;
   DeliveryCompanyId: number;
 }
+export interface DeliveryOperatorRemovedNotification extends ForegroundNotification {
+  operatorId: number;
+  DeliveryCompanyId: number;
+}
+
 
 export interface DeliveryAdmin {
   authorized: boolean;

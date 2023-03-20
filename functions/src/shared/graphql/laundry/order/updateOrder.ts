@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../../utilities/stripe/model";
-import { LaundryOrder } from "../../../models/Services/Laundry/LaundryOrder";
+import { LaundryOrder, LaundryOrderStatus } from "../../../models/Services/Laundry/LaundryOrder";
 
 export async function updateLaundryOrderStatus(order: LaundryOrder) {
 
@@ -14,7 +14,11 @@ export async function updateLaundryOrderStatus(order: LaundryOrder) {
             }, 
             _set: {
                 status: order.status,
-                refund_amount: order.refundAmount
+                refund_amount: order.refundAmount,
+                cancellation_time: (order.status == LaundryOrderStatus.CancelledByCustomer 
+                    || order.status == LaundryOrderStatus.CancelledByAdmin) 
+                    ? new Date() 
+                    : undefined
             }
         }, { 
             status: true

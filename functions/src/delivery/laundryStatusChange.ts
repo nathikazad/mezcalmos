@@ -38,6 +38,7 @@ export async function changeLaundryOrderStatus(
       "laundry order and delivery order do not match"
     );
   }
+  let statusUpdated = true;
   switch (deliveryOrder.direction) {
     case DeliveryDirection.FromCustomer:
       switch (deliveryOrder.status) {
@@ -58,6 +59,7 @@ export async function changeLaundryOrderStatus(
             notifyDeliveryOperators(laundryOrder, laundryStore);
           break;
         default:
+          statusUpdated = false;
           break;
       }
       break;
@@ -73,6 +75,7 @@ export async function changeLaundryOrderStatus(
           laundryOrder.status = LaundryOrderStatus.Delivered;
           break;
         default:
+          statusUpdated = false;
           break;
       }
       break;
@@ -80,8 +83,8 @@ export async function changeLaundryOrderStatus(
       break;
   }
   updateLaundryOrderStatus(laundryOrder);
-
-  notify(laundryOrder, deliveryOrder, laundryOperators, customer);
+  if(statusUpdated)
+    notify(laundryOrder, laundryOperators, customer);
 
   if (laundryOrder.status == LaundryOrderStatus.Delivered) {
     if (laundryOrder.paymentType == PaymentType.Card) {
@@ -95,7 +98,7 @@ export async function changeLaundryOrderStatus(
   }
 }
 
-function notify(laundryOrder: LaundryOrder, deliveryOrder: DeliveryOrder, laundryOperators: Operator[], customer: CustomerInfo) {
+function notify(laundryOrder: LaundryOrder, laundryOperators: Operator[], customer: CustomerInfo) {
   
   let notification: Notification = {
     foreground: <LaundryOrderStatusChangeNotification>{

@@ -114,7 +114,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
       ParticipantType.Customer,
       customer.language
     );
-    if(fromCustomerDeliveryOrder && fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
+    if(newStatus == LaundryOrderStatus.CancelledByAdmin && fromCustomerDeliveryOrder && fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
         notification.linkUrl = `/orders/${fromCustomerDeliveryOrder.deliveryId}`;
         pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
           notification, 

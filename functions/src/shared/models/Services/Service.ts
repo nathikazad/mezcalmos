@@ -94,3 +94,9 @@ export interface OperatorApprovedNotification extends ForegroundNotification {
   serviceProviderId: number,
   participantType: ParticipantType,
 }
+
+export interface OperatorRemovedNotification extends ForegroundNotification {
+  operatorId: number,
+  serviceProviderId: number,
+  participantType: ParticipantType,
+}

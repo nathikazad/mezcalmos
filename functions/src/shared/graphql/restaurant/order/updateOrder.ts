@@ -1,16 +1,11 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../../utilities/stripe/model";
-import { RestaurantOrder } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
 export async function updateRestaurantOrderStatus(order: RestaurantOrder) {
   let chain = getHasura();
-  if(order.orderId == null) {
-    throw new HttpsError(
-      "internal",
-      "order id not provided"
-    );
-  }
+
   console.log("updateRestaurantOrderStatus")
   console.log(order.refundAmount)
   await chain.mutation({
@@ -20,7 +15,11 @@ export async function updateRestaurantOrderStatus(order: RestaurantOrder) {
       }, 
       _set: {
         status: order.status,
-        refund_amount: order.refundAmount
+        refund_amount: order.refundAmount,
+        cancellation_time: (order.status == RestaurantOrderStatus.CancelledByCustomer 
+          || order.status == RestaurantOrderStatus.CancelledByAdmin) 
+          ? new Date() 
+          : undefined
       }
     }, { 
       status: true
