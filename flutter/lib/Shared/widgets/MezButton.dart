@@ -87,8 +87,8 @@ class _MezButtonState extends State<MezButton> {
                 child: (isLoading.value)
                     ? Transform.scale(
                         scale: 0.6,
-                        child: const CircularProgressIndicator(
-                          color: Colors.white,
+                        child: CircularProgressIndicator(
+                          color: widget.textColor ?? Colors.white,
                         ),
                       )
                     : Row(

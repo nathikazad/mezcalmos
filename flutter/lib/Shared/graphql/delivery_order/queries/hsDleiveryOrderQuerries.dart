@@ -405,7 +405,7 @@ ServiceInfo? _getServiceInfo(
   final OrderType orderType = orderData.order_type.toString().toOrderType();
   mezDbgPrint("ORDER TYPE ======>${orderType.toString()}");
   mezDbgPrint(
-      "ORDER RESTAURANT ======>${orderData.restaurant_order!.restaurant.toString()}");
+      "ORDER RESTAURANT ======>${orderData.restaurant_order?.restaurant.toString()}");
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(

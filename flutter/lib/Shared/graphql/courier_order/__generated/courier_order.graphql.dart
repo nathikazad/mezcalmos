@@ -6727,6 +6727,13 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'change_price_request'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'schedule_time'),
                 alias: null,
                 arguments: [],
@@ -7935,6 +7942,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
 
 class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order {
   Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
+    this.change_price_request,
     this.schedule_time,
     required this.customer,
     required this.chat_with_customer_id,
@@ -7965,6 +7973,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order.fromJson(
       Map<String, dynamic> json) {
+    final l$change_price_request = json['change_price_request'];
     final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
@@ -7995,6 +8004,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+      change_price_request: l$change_price_request == null
+          ? null
+          : mapFromJson(l$change_price_request),
       schedule_time: (l$schedule_time as String?),
       customer:
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
@@ -8033,6 +8045,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final dynamic? change_price_request;
 
   final String? schedule_time;
 
@@ -8091,6 +8105,10 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$change_price_request = change_price_request;
+    _resultData['change_price_request'] = l$change_price_request == null
+        ? null
+        : mapToJson(l$change_price_request);
     final l$schedule_time = schedule_time;
     _resultData['schedule_time'] = l$schedule_time;
     final l$customer = customer;
@@ -8154,6 +8172,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   @override
   int get hashCode {
+    final l$change_price_request = change_price_request;
     final l$schedule_time = schedule_time;
     final l$customer = customer;
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -8182,6 +8201,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$change_price_request,
       l$schedule_time,
       l$customer,
       l$chat_with_customer_id,
@@ -8219,6 +8239,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     if (!(other
             is Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$change_price_request = change_price_request;
+    final lOther$change_price_request = other.change_price_request;
+    if (l$change_price_request != lOther$change_price_request) {
       return false;
     }
     final l$schedule_time = schedule_time;
@@ -8389,6 +8414,7 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
       _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order;
 
   TRes call({
+    dynamic? change_price_request,
     String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
@@ -8447,6 +8473,7 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   static const _undefined = {};
 
   TRes call({
+    Object? change_price_request = _undefined,
     Object? schedule_time = _undefined,
     Object? customer = _undefined,
     Object? chat_with_customer_id = _undefined,
@@ -8476,6 +8503,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   }) =>
       _then(
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+        change_price_request: change_price_request == _undefined
+            ? _instance.change_price_request
+            : (change_price_request as dynamic?),
         schedule_time: schedule_time == _undefined
             ? _instance.schedule_time
             : (schedule_time as String?),
@@ -8602,6 +8632,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
   TRes _res;
 
   call({
+    dynamic? change_price_request,
     String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,

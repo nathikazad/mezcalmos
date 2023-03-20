@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/controllers/CustCourierViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -41,6 +44,14 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomSheet: MezButton(
+        label: "Order now",
+        height: 80,
+        onClick: () async {
+          unawaited(CustRequestCourierView.navigate(companyId!));
+        },
+        borderRadius: 0,
+      ),
       body: Obx(() {
         if (_viewController.hasData) {
           // view

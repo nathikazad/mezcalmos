@@ -103,41 +103,46 @@ class CustRequestCourierViewController {
       }
     } else {
       // call cloud func
-      try {
-        cModel.CreateCourierResponse res =
-            await CloudFunctions.delivery2_createCourierOrder(
-          toLocation: cModel.Location(
-              lat: toLoc.value!.position.latitude!,
-              lng: toLoc.value!.position.latitude!,
-              address: toLoc.value!.address),
-          items: items
-              .asMap()
-              .entries
-              .map(
-                (MapEntry<int, CourierItem> e) => cModel.CourierItem(
-                  name: itemsNames[e.key].text,
-                  estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
-                  notes: itemsNotes[e.key].text,
-                ),
-              )
-              .toList(),
-          deliveryCompanyId: company.value!.info.hasuraId,
-          deliveryCost: shippingCost.value,
-          customerAppType: cModel.CustomerAppType.Native,
-          tripDistance: routeInfo?.distance.distanceInMeters,
-          tripDuration: routeInfo?.duration.seconds,
-          tripPolyline: routeInfo?.polyline,
-        );
-        // ignore: unawaited_futures
-        MezRouter.popEverythingTillBeforeHome()
-            .then((_) => CustCourierOrderView.navigate(res.orderId.toInt()));
-      } on FirebaseFunctionsException catch (e, stk) {
-        showErrorSnackBar(errorText: e.message.toString());
-        mezDbgPrint(e);
-        mezDbgPrint(stk);
-      }
+      await _makeOrder();
     }
     return null;
+  }
+
+  Future<void> _makeOrder() async {
+    mezDbgPrint("Making a courier order ========");
+    try {
+      cModel.CreateCourierResponse res =
+          await CloudFunctions.delivery2_createCourierOrder(
+        toLocation: cModel.Location(
+            lat: toLoc.value!.position.latitude!,
+            lng: toLoc.value!.position.latitude!,
+            address: toLoc.value!.address),
+        items: items
+            .asMap()
+            .entries
+            .map(
+              (MapEntry<int, CourierItem> e) => cModel.CourierItem(
+                name: itemsNames[e.key].text,
+                estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
+                notes: itemsNotes[e.key].text,
+              ),
+            )
+            .toList(),
+        deliveryCompanyId: company.value!.info.hasuraId,
+        deliveryCost: shippingCost.value,
+        customerAppType: cModel.CustomerAppType.Native,
+        tripDistance: routeInfo?.distance.distanceInMeters,
+        tripDuration: routeInfo?.duration.seconds,
+        tripPolyline: routeInfo?.polyline,
+      );
+      // ignore: unawaited_futures
+      MezRouter.popEverythingTillBeforeHome().then(
+          (_) => CustCourierOrderView.navigate(orderId: res.orderId.toInt()));
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   void addFromLoc({required MezLocation location}) {

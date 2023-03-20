@@ -166,6 +166,11 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
       }
       return CourierOrder(
         orderType: OrderType.Courier,
+        changePriceRequest:
+            (orderData.delivery_order.change_price_request != null)
+                ? ChangePriceRequest.fromMap(
+                    orderData.delivery_order.change_price_request)
+                : null,
         scheduleTime: (orderData.delivery_order.schedule_time != null)
             ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
             : null,

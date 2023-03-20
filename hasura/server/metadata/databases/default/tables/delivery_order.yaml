@@ -101,6 +101,7 @@ select_permissions:
         - actual_delivered_time
         - actual_package_ready_time
         - cancellation_time
+        - change_price_request
         - chat_with_customer_id
         - chat_with_service_provider_id
         - current_gps
@@ -109,6 +110,7 @@ select_permissions:
         - delivery_cost
         - delivery_driver_id
         - direction
+        - distance_from_base
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
         - dropoff_address
