@@ -522,6 +522,7 @@ class Config:
                 self.conf['gen::permissions'] = Config.validate_manifest_permissions(_shared_permissions)
 
     def __patch_version__(self, v):
+        v=v.replace('"', '').replace('\'', '')
         '''v=Version , Patch the version!'''
         PRINTLN("------------------- [ VERSION PATCHING ] -------------------")
         __v = v.split('+')
