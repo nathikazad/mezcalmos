@@ -4,7 +4,9 @@ import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsV
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
 import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -23,17 +25,34 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
   void initState() {
     viewController.init(
         adminTabsViewController: widget.adminTabsViewController);
+    viewController.scrollController.onBottomReach(() {
+      //   mezDbgPrint("Bottom reached 🥹");
+      viewController.fetchServicePastOrders();
+    }, sensitivity: 500, throttleDuration: Duration(seconds: 1));
+
     super.initState();
   }
 
   @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: viewController.scrollController,
-      physics: AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(15),
-      children: [
-        Obx(() => Column(
+    return Obx(
+      () => Column(
+        children: [
+          if (viewController.isFetching.isTrue)
+            LinearProgressIndicator(
+              color: primaryBlueColor,
+            ),
+          Expanded(
+            child: ListView(
+              controller: viewController.scrollController,
+              physics: AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(15),
               children: [
                 if (viewController.currentService ==
                     ServiceProviderType.Restaurant)
@@ -46,18 +65,14 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   _buildLaundryOrders(),
                 _buildPastOrders(),
               ],
-            )),
-      ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildPastOrders() {
-    viewController.scrollController.addListener(() {
-      if (viewController.scrollController.position.maxScrollExtent ==
-          viewController.scrollController.position.pixels) {
-        viewController.fetchServicePastOrders();
-      }
-    });
     return ListView.builder(
         itemCount: viewController.pastOrders.length,
         physics: NeverScrollableScrollPhysics(),

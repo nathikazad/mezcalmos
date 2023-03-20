@@ -34,7 +34,6 @@ extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
 
 extension ParseStringToRestaurantOrderStatus on String {
   RestaurantOrderStatus toRestaurantOrderStatus() {
-    mezDbgPrint(this);
     return RestaurantOrderStatus.values.firstWhere(
       (RestaurantOrderStatus e) {
         return e.toFirebaseFormatString() == this;

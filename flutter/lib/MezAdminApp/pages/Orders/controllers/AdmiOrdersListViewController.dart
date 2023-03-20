@@ -24,6 +24,7 @@ class AdmiOrdersListViewController {
   int dvLimit = 10;
   Rxn<List<MinimalOrder>> deliveryOrders = Rxn();
   Rxn<List<MinimalOrder>> laundryOrders = Rxn();
+  RxBool isFetching = RxBool(false);
   // streams
   StreamSubscription<List<MinimalOrder>?>? rOrdersStream;
   StreamSubscription<List<MinimalOrder>?>? dvOrdersStream;
@@ -98,7 +99,8 @@ class AdmiOrdersListViewController {
   }
 
   Future<void> fetchServicePastOrders() async {
-    mezDbgPrint("Fetching service orders");
+    isFetching.value = true;
+    mezDbgPrint("Fetching service orders 🥹");
     switch (currentService) {
       case ServiceProviderType.Restaurant:
         restLimit += 10;
@@ -120,5 +122,10 @@ class AdmiOrdersListViewController {
         break;
       default:
     }
+    isFetching.value = false;
+  }
+
+  void dispose() {
+    scrollController.dispose();
   }
 }

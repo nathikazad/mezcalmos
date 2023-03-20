@@ -120,7 +120,7 @@ Future<List<MinimalOrder>?> get_admin_restaurant_orders(
           deliveryCost: orderData.delivery?.delivery_cost,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.total_cost!);
+          totalCost: orderData.total_cost ?? 0);
     }).toList();
     return orders;
   } else {
