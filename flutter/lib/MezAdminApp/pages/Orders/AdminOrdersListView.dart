@@ -79,7 +79,24 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) => Container(
               child: MinimalOrderCard(
-                  order: viewController.pastOrders[index], onTap: () {}),
+                  order: viewController.pastOrders[index],
+                  onTap: () {
+                    switch (viewController.currentService) {
+                      case ServiceProviderType.Restaurant:
+                        MezRouter.toNamed(getRestaurantOrderRoute(
+                            viewController.pastOrders[index].id));
+                        break;
+                      case ServiceProviderType.Laundry:
+                        MezRouter.toNamed(getLaundryOrderRoute(
+                            viewController.pastOrders[index].id));
+                        break;
+                      case ServiceProviderType.DeliveryCompany:
+                        MezRouter.toNamed(getDvCompanyOrderRoute(
+                            viewController.pastOrders[index].id));
+                        break;
+                      default:
+                    }
+                  }),
             ));
   }
 
