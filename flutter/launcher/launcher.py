@@ -560,8 +560,8 @@ class Config:
 
         
         _res  = _res[0]
-        print(f"[+] pubspec.yaml :\n\t|_ old_version = {_pubspec[_res].strip()}\n\t|_ new_applied_version = {v}")
-        _pubspec[_res] = f"version: {v}\n"
+        print(f"[+] pubspec.yaml :\n\t|_ old_version = {_pubspec[_res].strip()}\n\t|_ new_applied_version = {v.strip()}")
+        _pubspec[_res] = f"version: {v.strip()}\n"
         open(pubspec , 'w+').write(''.join(_pubspec))
         PRINTLN("[+] Checked and Patched pubspec.yaml successfully !")
 
