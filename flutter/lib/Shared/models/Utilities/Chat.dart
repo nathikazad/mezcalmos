@@ -78,8 +78,10 @@ extension AppTypeToCFParticipantType on AppType {
         return cf.ParticipantType.Taxi;
       case AppType.DeliveryApp:
         return cf.ParticipantType.DeliveryDriver;
-      // case AppType.DeliveryAdminApp:
-      //   return cf.ParticipantType.DeliveryAdmin;
+      case AppType.DeliveryAdminApp:
+        return cf.ParticipantType.DeliveryOperator;
+      case AppType.MezAdminApp:
+        return cf.ParticipantType.MezAdmin;
       case AppType.LaundryApp:
         return cf.ParticipantType.LaundryOperator;
       case AppType.RestaurantApp:
