@@ -906,7 +906,7 @@
           }
         },
         "SignInScreen": {
-          "title": "Connect using Facebook or using SMS ! ",
+          "title": "Sign in using your preferred provider!",
           "loginWithApple": "SIGN IN WITH APPLE",
           "loginWithSms": "LOGIN WITH SMS",
           "fbBtn": "LOGIN WITH FACEBOOK"

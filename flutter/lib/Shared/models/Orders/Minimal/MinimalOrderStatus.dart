@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -20,6 +21,7 @@ extension ParseDeliveryOrderStatusToMinimalOrderStatus on DeliveryOrderStatus {
     switch (this) {
       case DeliveryOrderStatus.CancelledByCustomer:
       case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByAdmin:
       case DeliveryOrderStatus.CancelledByServiceProvider:
         return MinimalOrderStatus.Cancelled;
       case DeliveryOrderStatus.Delivered:
