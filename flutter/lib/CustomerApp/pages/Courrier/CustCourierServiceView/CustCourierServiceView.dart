@@ -41,6 +41,11 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: BottomSheet(
+          onClosing: () {},
+          builder: (_) => MezButton(
+                label: 'Order now',
+              )),
       body: Obx(() {
         if (_viewController.hasData) {
           // view
@@ -52,32 +57,62 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                 ordersRoute: CustomerRoutes.customerOrdersRoute,
               ),
               SliverToBoxAdapter(
-                child: Row(
+                child: Column(
                   children: [
-                    Flexible(
-                      child: MezButton(
-                        label: "Chat with us",
-                        height: 50,
-                        backgroundColor: Colors.white,
-                        textColor: primaryBlueColor,
-                        onClick: () async {},
-                        icon: Icons.message,
-                        borderRadius: 20,
-                        border: Border.all(width: 1, color: primaryBlueColor),
-                      ),
+                    SizedBox(
+                      height: 15,
                     ),
-                    Flexible(
-                      child: MezButton(
-                        label: "Contact us",
-                        height: 50,
-                        onClick: () async {},
-                        backgroundColor: Colors.white,
-                        textColor: primaryBlueColor,
-                        icon: Icons.phone,
-                        borderRadius: 20,
-                        border: Border.all(width: 1, color: primaryBlueColor),
-                      ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Flexible(
+                          child: MezButton(
+                            label: "Chat with us",
+                            height: 30,
+                            backgroundColor: Colors.white,
+                            textColor: primaryBlueColor,
+                            onClick: () async {},
+                            icon: Icons.message,
+                            borderRadius: 20,
+                            border:
+                                Border.all(width: 1, color: primaryBlueColor),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Flexible(
+                          child: MezButton(
+                            label: "Contact us",
+                            height: 30,
+                            onClick: () async {},
+                            backgroundColor: Colors.white,
+                            textColor: primaryBlueColor,
+                            icon: Icons.phone,
+                            borderRadius: 20,
+                            border:
+                                Border.all(width: 1, color: primaryBlueColor),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                      ],
                     ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Row(
+                      children: [
+                        RawChip(label: Text('Minimum cost \$50')),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        RawChip(label: Text('\$10/km'))
+                      ],
+                    )
                   ],
                 ),
               )
