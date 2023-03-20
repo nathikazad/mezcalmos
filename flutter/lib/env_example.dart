@@ -25,4 +25,7 @@ class MezEnv {
   static const String _versionNumber = "0.0.0";
 
   static String get versionNumber => _versionNumber;
+
+  static String stageTestUserName = "trist@trist.com";
+  static String stageTestPassword = "password";
 }

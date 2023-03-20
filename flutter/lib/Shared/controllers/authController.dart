@@ -11,11 +11,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/env_example.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -50,6 +53,10 @@ class AuthController extends GetxController {
     // _authStateStream.addStream(_auth.authStateChanges());
 
     mezDbgPrint('Auth controller init!');
+    if (_auth.currentUser == null &&
+        MezEnv.appLaunchMode == AppLaunchMode.stage) {
+      signIn(MezEnv.stageTestUserName, MezEnv.stageTestPassword);
+    }
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       if (user?.toString() == _previousUserValue) {
         mezDbgPrint(
