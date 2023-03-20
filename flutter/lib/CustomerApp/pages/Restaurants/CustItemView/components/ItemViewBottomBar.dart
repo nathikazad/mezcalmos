@@ -64,27 +64,26 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
             ),
           ),
           const Spacer(),
-          Flexible(
-            flex: 6,
-            fit: FlexFit.tight,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              onPressed: () async {
-                await _handleAddButton();
-              },
+          TextButton(
+            style: TextButton.styleFrom(
+              //fixedSize: Size(50, 100),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            onPressed: () async {
+              await _handleAddButton();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
                 widget.viewController.currentMode ==
                         ViewItemScreenMode.AddItemMode
                     ? _i18n()['addToCart']
                     : _i18n()['modifyItem'],
-                textAlign: TextAlign.center,
                 style: Get.textTheme.headlineLarge
                     ?.copyWith(color: Colors.white, fontSize: 18),
               ),

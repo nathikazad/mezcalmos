@@ -488,7 +488,7 @@
             "CustomerLaundryOrderEst": {
               "pickup": "Pickup time:",
               "delivery": "Delivery time:",
-              "laundryReady": "Laundry ready time:",
+              "laundryReady": "Laundry ready time",
               "estTimes": "Estimated times"
             },
             "LaundryOrderDriverCard": {

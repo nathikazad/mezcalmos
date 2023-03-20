@@ -79,9 +79,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                   ),
                   if (!controller.showInfo.value)
                     Container(
-                      alignment: Alignment.bottomCenter,
-                      margin:
-                          const EdgeInsets.only(left: 5, right: 5, bottom: 0),
+                      margin: const EdgeInsets.only(left: 5, right: 5, top: 2),
                       child: InkWell(
                           onTap: controller.onInfoTap,
                           child: Icon(
