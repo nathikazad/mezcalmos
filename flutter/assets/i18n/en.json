@@ -1660,7 +1660,10 @@
             }
           }
         },
-        "title": "Restaurant Delivery"
+        "title": "Delivery",
+        "restaurant" : "Restaurant",
+        "laundry" : "Laundry",
+        "courier" : "Courier"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {

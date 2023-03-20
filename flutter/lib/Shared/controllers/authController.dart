@@ -7,19 +7,19 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -213,6 +213,41 @@ class AuthController extends GetxController {
     final List<String> splitted = imageFile.path.split('.');
     final String imgPath =
         "users/$hasuraUserId/avatar/$hasuraUserId.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .putFile(compressedFile);
+    } on firebase_core.FirebaseException catch (e) {
+      mezDbgPrint(e.message.toString());
+    } finally {
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .getDownloadURL();
+    }
+
+    return _uploadedImgUrl;
+  }
+
+  Future<String> uploadImgToFbStorage({
+    required File imageFile,
+    required String path,
+    bool isCompressed = false,
+  }) async {
+    File compressedFile = imageFile;
+    if (isCompressed == false) {
+      // this holds userImgBytes of the original
+      final Uint8List originalBytes = await imageFile.readAsBytes();
+      // this is the bytes of our compressed image .
+      final Uint8List _compressedVersion =
+          await compressImageBytes(originalBytes);
+      // Get the actual File compressed
+      compressedFile = await writeFileFromBytesAndReturnIt(
+          filePath: imageFile.path, imgBytes: _compressedVersion);
+    }
+    String _uploadedImgUrl;
+    final List<String> splitted = imageFile.path.split('.');
+    final String imgPath = path +
+        "/$hasuraUserId.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance
           .ref(imgPath)

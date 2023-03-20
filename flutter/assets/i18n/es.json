@@ -1758,7 +1758,7 @@
         }
       },
       "RestaurantOrderView": {
-        "title": "Entregada del restaurante",
+       
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -1777,7 +1777,11 @@
               "confirmDelivery": "Confirmar el envío"
             }
           }
-        }
+        },
+        "title": "Entrega",
+        "restaurant" : "Restaurante",
+        "laundry" : "Lavadero",
+        "courier" : "Mensajera"
       }
     },
     "notificationHandler": {
