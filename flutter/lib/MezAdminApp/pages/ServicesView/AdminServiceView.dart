@@ -61,7 +61,7 @@ class _AdminServicesViewState extends State<AdminServicesView> {
   }
 
   Widget _buildRestaurants() {
-    {
+    
       viewController.scrollController.addListener(() {
         if (viewController.scrollController.position.maxScrollExtent ==
             viewController.scrollController.position.pixels) {
@@ -98,7 +98,7 @@ class _AdminServicesViewState extends State<AdminServicesView> {
       //       )
       //   ],
       // );
-    }
+    
   }
 
   Widget _getServiceCard(int index) {

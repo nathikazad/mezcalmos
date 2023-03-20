@@ -28,26 +28,44 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
+      controller: viewController.scrollController,
+      physics: AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(15),
-      child: Column(
-        children: [
-          Obx(() => Column(
-                children: [
-                  if (viewController.currentService ==
-                      ServiceProviderType.Restaurant)
-                    _buildRestuarntOrders(),
-                  if (viewController.currentService ==
-                      ServiceProviderType.DeliveryCompany)
-                    _buildDeliveryOrders(),
-                  if (viewController.currentService ==
-                      ServiceProviderType.Laundry)
-                    _buildLaundryOrders(),
-                ],
-              )),
-        ],
-      ),
+      children: [
+        Obx(() => Column(
+              children: [
+                if (viewController.currentService ==
+                    ServiceProviderType.Restaurant)
+                  _buildRestuarntOrders(),
+                if (viewController.currentService ==
+                    ServiceProviderType.DeliveryCompany)
+                  _buildDeliveryOrders(),
+                if (viewController.currentService ==
+                    ServiceProviderType.Laundry)
+                  _buildLaundryOrders(),
+                _buildPastOrders(),
+              ],
+            )),
+      ],
     );
+  }
+
+  Widget _buildPastOrders() {
+    viewController.scrollController.addListener(() {
+      if (viewController.scrollController.position.maxScrollExtent ==
+          viewController.scrollController.position.pixels) {
+        viewController.fetchServicePastOrders();
+      }
+    });
+    return ListView.builder(
+        itemCount: viewController.pastOrders.length,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) => Container(
+              child: MinimalOrderCard(
+                  order: viewController.pastOrders[index], onTap: () {}),
+            ));
   }
 
   Widget _buildRestuarntOrders() {
@@ -65,10 +83,13 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                             viewController.restaurantOrders.value![index].id));
                       })),
             )
-          : Container(
-              margin: EdgeInsets.only(top: 10.h),
-              alignment: Alignment.center,
-              child: Center(child: NoOrdersComponent())),
+          : (viewController.restaurantPastOrders.value == null ||
+                  viewController.restaurantPastOrders.value?.isEmpty == true)
+              ? Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  alignment: Alignment.center,
+                  child: Center(child: NoOrdersComponent()))
+              : SizedBox(),
     );
   }
 
@@ -85,10 +106,13 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                             viewController.deliveryOrders.value![index].id));
                       })),
             )
-          : Container(
-              margin: EdgeInsets.only(top: 10.h),
-              alignment: Alignment.center,
-              child: Center(child: NoOrdersComponent())),
+          : (viewController.dvPastOrders.value == null ||
+                  viewController.dvPastOrders.value?.isEmpty == true)
+              ? Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  alignment: Alignment.center,
+                  child: Center(child: NoOrdersComponent()))
+              : SizedBox(),
     );
   }
 
@@ -105,10 +129,13 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                             viewController.laundryOrders.value![index].id));
                       })),
             )
-          : Container(
-              margin: EdgeInsets.only(top: 10.h),
-              alignment: Alignment.center,
-              child: Center(child: NoOrdersComponent())),
+          : (viewController.laundryPastOrders.value == null ||
+                  viewController.laundryPastOrders.value?.isEmpty == true)
+              ? Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  alignment: Alignment.center,
+                  child: Center(child: NoOrdersComponent()))
+              : Container(),
     );
   }
 }

@@ -1220,9 +1220,13 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_dv_orders$delivery_order$cu
 }
 
 class Variables$Query$admin_get_dv_orders {
-  factory Variables$Query$admin_get_dv_orders({required bool inProccess}) =>
+  factory Variables$Query$admin_get_dv_orders({
+    required bool inProccess,
+    int? limit,
+  }) =>
       Variables$Query$admin_get_dv_orders._({
         r'inProccess': inProccess,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$admin_get_dv_orders._(this._$data);
@@ -1232,16 +1236,25 @@ class Variables$Query$admin_get_dv_orders {
     final result$data = <String, dynamic>{};
     final l$inProccess = data['inProccess'];
     result$data['inProccess'] = (l$inProccess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$admin_get_dv_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   bool get inProccess => (_$data['inProccess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$inProccess = inProccess;
     result$data['inProccess'] = l$inProccess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -1265,13 +1278,25 @@ class Variables$Query$admin_get_dv_orders {
     if (l$inProccess != lOther$inProccess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$inProccess = inProccess;
-    return Object.hashAll([l$inProccess]);
+    final l$limit = limit;
+    return Object.hashAll([
+      l$inProccess,
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -1284,7 +1309,10 @@ abstract class CopyWith$Variables$Query$admin_get_dv_orders<TRes> {
   factory CopyWith$Variables$Query$admin_get_dv_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_dv_orders;
 
-  TRes call({bool? inProccess});
+  TRes call({
+    bool? inProccess,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_dv_orders<TRes>
@@ -1300,11 +1328,15 @@ class _CopyWithImpl$Variables$Query$admin_get_dv_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? inProccess = _undefined}) =>
+  TRes call({
+    Object? inProccess = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_dv_orders._({
         ..._instance._$data,
         if (inProccess != _undefined && inProccess != null)
           'inProccess': (inProccess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -1314,7 +1346,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_dv_orders<TRes>
 
   TRes _res;
 
-  call({bool? inProccess}) => _res;
+  call({
+    bool? inProccess,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_dv_orders {
@@ -1486,7 +1522,16 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -1494,6 +1539,10 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
         name: NameNode(value: 'delivery_order'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -1519,7 +1568,7 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
                 ]),
               ),
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -3740,10 +3789,13 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_restaurant_orders$restauran
 }
 
 class Variables$Query$admin_get_restaurant_orders {
-  factory Variables$Query$admin_get_restaurant_orders(
-          {required bool inProccess}) =>
+  factory Variables$Query$admin_get_restaurant_orders({
+    required bool inProccess,
+    int? limit,
+  }) =>
       Variables$Query$admin_get_restaurant_orders._({
         r'inProccess': inProccess,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$admin_get_restaurant_orders._(this._$data);
@@ -3753,16 +3805,25 @@ class Variables$Query$admin_get_restaurant_orders {
     final result$data = <String, dynamic>{};
     final l$inProccess = data['inProccess'];
     result$data['inProccess'] = (l$inProccess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$admin_get_restaurant_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   bool get inProccess => (_$data['inProccess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$inProccess = inProccess;
     result$data['inProccess'] = l$inProccess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -3786,13 +3847,25 @@ class Variables$Query$admin_get_restaurant_orders {
     if (l$inProccess != lOther$inProccess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$inProccess = inProccess;
-    return Object.hashAll([l$inProccess]);
+    final l$limit = limit;
+    return Object.hashAll([
+      l$inProccess,
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -3805,7 +3878,10 @@ abstract class CopyWith$Variables$Query$admin_get_restaurant_orders<TRes> {
   factory CopyWith$Variables$Query$admin_get_restaurant_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_restaurant_orders;
 
-  TRes call({bool? inProccess});
+  TRes call({
+    bool? inProccess,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_restaurant_orders<TRes>
@@ -3821,11 +3897,15 @@ class _CopyWithImpl$Variables$Query$admin_get_restaurant_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? inProccess = _undefined}) =>
+  TRes call({
+    Object? inProccess = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_restaurant_orders._({
         ..._instance._$data,
         if (inProccess != _undefined && inProccess != null)
           'inProccess': (inProccess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -3835,7 +3915,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_restaurant_orders<TRes>
 
   TRes _res;
 
-  call({bool? inProccess}) => _res;
+  call({
+    bool? inProccess,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_restaurant_orders {
@@ -4011,7 +4095,16 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -4019,6 +4112,10 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
         name: NameNode(value: 'restaurant_order'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -4032,7 +4129,7 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -6544,10 +6641,13 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_orde
 }
 
 class Variables$Query$admin_get_laundry_orders {
-  factory Variables$Query$admin_get_laundry_orders(
-          {required bool inProccess}) =>
+  factory Variables$Query$admin_get_laundry_orders({
+    required bool inProccess,
+    int? limit,
+  }) =>
       Variables$Query$admin_get_laundry_orders._({
         r'inProccess': inProccess,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$admin_get_laundry_orders._(this._$data);
@@ -6557,16 +6657,25 @@ class Variables$Query$admin_get_laundry_orders {
     final result$data = <String, dynamic>{};
     final l$inProccess = data['inProccess'];
     result$data['inProccess'] = (l$inProccess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$admin_get_laundry_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   bool get inProccess => (_$data['inProccess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$inProccess = inProccess;
     result$data['inProccess'] = l$inProccess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -6590,13 +6699,25 @@ class Variables$Query$admin_get_laundry_orders {
     if (l$inProccess != lOther$inProccess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$inProccess = inProccess;
-    return Object.hashAll([l$inProccess]);
+    final l$limit = limit;
+    return Object.hashAll([
+      l$inProccess,
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -6609,7 +6730,10 @@ abstract class CopyWith$Variables$Query$admin_get_laundry_orders<TRes> {
   factory CopyWith$Variables$Query$admin_get_laundry_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_laundry_orders;
 
-  TRes call({bool? inProccess});
+  TRes call({
+    bool? inProccess,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_laundry_orders<TRes>
@@ -6625,11 +6749,15 @@ class _CopyWithImpl$Variables$Query$admin_get_laundry_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? inProccess = _undefined}) =>
+  TRes call({
+    Object? inProccess = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_laundry_orders._({
         ..._instance._$data,
         if (inProccess != _undefined && inProccess != null)
           'inProccess': (inProccess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -6639,7 +6767,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_laundry_orders<TRes>
 
   TRes _res;
 
-  call({bool? inProccess}) => _res;
+  call({
+    bool? inProccess,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_laundry_orders {
@@ -6811,7 +6943,16 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -6819,6 +6960,10 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
         name: NameNode(value: 'laundry_order'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -6832,7 +6977,7 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
