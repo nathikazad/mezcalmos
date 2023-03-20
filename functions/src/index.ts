@@ -22,6 +22,8 @@ import { cancelLaundryFromCustomer } from "./laundry/cancelLaundryFromCustomer";
 import { changeDeliveryStatus } from "./delivery/statusChange";
 import { addOperator } from "./shared/operator/addOperator";
 import { authorizeOperator } from "./shared/operator/authorizeOperator";
+import { removeDriver } from "./delivery/removeDriver";
+import { removeOperator } from "./shared/operator/removeOperator";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -60,6 +62,9 @@ export const serviceProvider = {
   authorizeOperator: authenticatedCall((userId, data) => authorizeOperator(userId, data)),
   addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
   authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
+  removeDriver: authenticatedCall((userId, data) => removeDriver(userId, data)),
+  removeOperator: authenticatedCall((userId, data) => removeOperator(userId, data)),
+
 }
 
 export const restaurant2 = {
