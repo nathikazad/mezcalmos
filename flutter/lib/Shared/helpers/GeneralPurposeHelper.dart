@@ -373,7 +373,7 @@ Future<void> showStatusInfoDialog(
                     width: 66,
                     child: getRightNotifIcon(primaryImageUrl, primaryIcon),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(103, 121, 254, 1),
+                      color: secondaryLightBlueColor,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -427,7 +427,7 @@ Future<void> showStatusInfoDialog(
                 child: Container(
                   height: 44,
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(225, 228, 255, 1),
+                    color: primaryBlueColor,
                     borderRadius: BorderRadius.circular(9),
                   ),
                   child: Center(
@@ -435,7 +435,7 @@ Future<void> showStatusInfoDialog(
                       primaryClickTitle ?? "${_i18n()["ok"]}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color.fromRGBO(103, 121, 254, 1),
+                        color: Colors.white,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700,
                         fontSize: 16.34,
@@ -688,13 +688,13 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
   } else if (icon != null) {
     return Icon(
       icon,
-      color: Colors.white,
+      color: primaryBlueColor,
       size: 33,
     );
   } else {
     return Icon(
       Icons.flatware,
-      color: Colors.white,
+      color: primaryBlueColor,
       size: 33,
     );
   }

@@ -175,7 +175,9 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                           width: 2,
                         ),
                         Text(
-                          widget.order.deliveryCost!.toPriceString(),
+                          (widget.order.orderType == OrderType.Laundry)
+                              ? "${widget.order.deliveryCost!.toPriceString()} x2"
+                              : widget.order.deliveryCost!.toPriceString(),
                           style: Get.textTheme.titleSmall?.copyWith(
                             color: blackColor,
                           ),

@@ -46,11 +46,10 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
             )
           : Container(
               padding: const EdgeInsets.symmetric(vertical: 7),
-              child: (widget.item.chosenChoices.isEmpty &&
-                      widget.item.notes == null)
-                  ? _itemHeader(userLanguage, txt)
-                  : _itemExpandableComponent(context, userLanguage, txt),
-            ),
+              child: (widget.item.chosenChoices.isNotEmpty ||
+                      widget.item.notes?.isNotEmpty == true)
+                  ? _itemExpandableComponent(context, userLanguage, txt)
+                  : _itemHeader(userLanguage, txt)),
     );
   }
 
@@ -101,7 +100,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   Container(
                     child: Text(
                       '${_i18n()["note"]} :',
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                   ),
                   SizedBox(
@@ -110,7 +109,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   Container(
                     child: Text(
                       widget.item.notes!,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                 ],
@@ -167,7 +166,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                       Text(
                         widget.item.name[userLanguage]! +
                             " x${widget.item.quantity}",
-                        style: txt.bodyText1?.copyWith(
+                        style: txt.bodyLarge?.copyWith(
                             color: widget.item.unavailable
                                 ? Colors.black.withOpacity(0.5)
                                 : Colors.black,
@@ -181,7 +180,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                         height: 5,
                       ),
                       Text('\$' + widget.item.totalCost.toInt().toString(),
-                          style: txt.bodyText1?.copyWith(
+                          style: txt.bodyLarge?.copyWith(
                               color: widget.item.unavailable
                                   ? Colors.black.withOpacity(0.5)
                                   : Colors.black,
@@ -262,7 +261,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   (widget.item.unavailable)
                       ? "${_i18n()["itemUnav"]}".capitalizeFirstofEach
                       : '${_i18n()["markitemUnav"]}',
-                  style: Get.textTheme.headline6?.copyWith(
+                  style: Get.textTheme.titleLarge?.copyWith(
                       color:
                           widget.item.unavailable ? Colors.red : Colors.white),
                 ),
@@ -311,7 +310,7 @@ Widget _itemChoiche(
       ),
       Text(
         optionName[userLanguage] ?? "Error",
-        style: Get.textTheme.bodyText1,
+        style: Get.textTheme.bodyLarge,
       ),
       SizedBox(
         height: 5,
@@ -327,14 +326,14 @@ Widget _itemChoiche(
                       Flexible(
                         child: Text(
                           choices[index].name[userLanguage] ?? "Error",
-                          style: Get.theme.textTheme.bodyText2,
+                          style: Get.theme.textTheme.bodyMedium,
                           maxLines: 2,
                         ),
                       ),
                       if (choices[index].cost > 0)
                         Text(
                           "\$${choices[index].cost}",
-                          style: Get.theme.textTheme.bodyText2!
+                          style: Get.theme.textTheme.bodyMedium!
                               .copyWith(color: Get.theme.primaryColorLight),
                         ),
                     ],

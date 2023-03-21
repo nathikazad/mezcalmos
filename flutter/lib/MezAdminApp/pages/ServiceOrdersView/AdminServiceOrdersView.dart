@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminServiceOrdersViewController.dart';
+import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -90,7 +91,27 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                       viewController.currentOrders.value!.length,
                       (int index) => MinimalOrderCard(
                           order: viewController.currentOrders.value![index],
-                          onTap: () {})),
+                          onTap: () {
+                            switch (viewController.providerType) {
+                              case ServiceProviderType.DeliveryCompany:
+                                MezRouter.toNamed(getDvCompanyOrderRoute(
+                                    viewController
+                                        .currentOrders.value![index].id));
+                                break;
+                              case ServiceProviderType.Laundry:
+                                MezRouter.toNamed(getLaundryOrderRoute(
+                                    viewController
+                                        .currentOrders.value![index].id));
+                                break;
+                              case ServiceProviderType.Restaurant:
+                                MezRouter.toNamed(getRestaurantOrderRoute(
+                                    viewController
+                                        .currentOrders.value![index].id));
+
+                                break;
+                              default:
+                            }
+                          })),
                 ),
                 SizedBox(
                   height: 25,
@@ -113,7 +134,27 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                           viewController.pastOrders.value!.length,
                           (int index) => MinimalOrderCard(
                               order: viewController.pastOrders.value![index],
-                              onTap: () {})),
+                              onTap: () {
+                                switch (viewController.providerType) {
+                                  case ServiceProviderType.DeliveryCompany:
+                                    MezRouter.toNamed(getDvCompanyOrderRoute(
+                                        viewController
+                                            .currentOrders.value![index].id));
+                                    break;
+                                  case ServiceProviderType.Laundry:
+                                    MezRouter.toNamed(getLaundryOrderRoute(
+                                        viewController
+                                            .currentOrders.value![index].id));
+                                    break;
+                                  case ServiceProviderType.Restaurant:
+                                    MezRouter.toNamed(getRestaurantOrderRoute(
+                                        viewController
+                                            .currentOrders.value![index].id));
+
+                                    break;
+                                  default:
+                                }
+                              })),
                     ),
                     if (viewController.pastOrders.value!.length ==
                         viewController.pastOrders.value)

@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderStatus
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -55,7 +56,8 @@ class _DvOrderViewState extends State<DvOrderView> {
         AppBarLeftButtonType.Back,
         autoBack: true,
         showNotifications: true,
-        title: '${_i18n()["title"]}',
+        title:
+            '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"]}',
       ),
       bottomNavigationBar: Obx(
         () => (viewController.hasData)

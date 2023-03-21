@@ -25,7 +25,7 @@ class MezIconButton extends StatelessWidget {
       onTap: onTap,
       customBorder: CircleBorder(),
       child: Ink(
-        padding: padding ?? const EdgeInsets.all(5),
+        padding: padding ?? const EdgeInsets.all(3),
         decoration: BoxDecoration(
             color: backgroundColor ?? secondaryLightBlueColor,
             shape: BoxShape.circle),
@@ -33,7 +33,7 @@ class MezIconButton extends StatelessWidget {
             Icon(
               icon,
               color: iconColor ?? primaryBlueColor,
-              size: iconSize,
+              size: iconSize ?? 20,
             ),
       ),
     );

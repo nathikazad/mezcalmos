@@ -92,7 +92,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       SizedBox(
                         height: 25,
                       ),
-                      Text("${_i18n()['name']}"),
+                      Text("${_i18n()['name']}",
+                      style: Get.textTheme.bodyLarge,),
                       SizedBox(
                         height: 5,
                       ),
@@ -100,7 +101,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       SizedBox(
                         height: 15,
                       ),
-                      Text("${_i18n()['phoneNumber']}"),
+                      Text("${_i18n()['phoneNumber']}", style: Get.textTheme.bodyLarge,),
                       SizedBox(
                         height: 5,
                       ),
@@ -121,7 +122,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                          '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}'),
+                          '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}', style: Get.textTheme.bodyLarge,),
                       SizedBox(
                         height: 5,
                       ),
@@ -130,7 +131,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                          '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}'),
+                          '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}', style: Get.textTheme.bodyLarge,),
                       SizedBox(
                         height: 5,
                       ),
@@ -138,7 +139,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       SizedBox(
                         height: 15,
                       ),
-                      Text("${_i18n()['location']}"),
+                      Text("${_i18n()['location']}", style: Get.textTheme.bodyLarge,),
                       SizedBox(
                         height: 5,
                       ),

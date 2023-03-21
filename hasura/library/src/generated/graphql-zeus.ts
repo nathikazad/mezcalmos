@@ -4398,6 +4398,8 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	actual_delivered_time?:true,
 	actual_package_ready_time?:true,
 	cancellation_time?:true,
+change_price_request?: [{	/** JSON select path */
+	path?:string},true],
 	/** An object relationship */
 	chat_with_customer?:ValueTypes["chat"],
 	chat_with_customer_id?:true,
@@ -4440,6 +4442,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	laundry_delivery_order?:ValueTypes["laundry_order"],
 	/** An object relationship */
 	laundry_pickup_order?:ValueTypes["laundry_order"],
+	lock_time?:true,
 	/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:true,
 	order_time?:true,
@@ -4529,6 +4532,11 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	var_samp?:ValueTypes["delivery_order_var_samp_order_by"],
 	variance?:ValueTypes["delivery_order_variance_order_by"]
 };
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["delivery_order_append_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:ValueTypes["jsonb"]
+};
 	/** input type for inserting array relation for remote table "delivery.order" */
 ["delivery_order_arr_rel_insert_input"]: {
 	data:ValueTypes["delivery_order_insert_input"][],
@@ -4586,6 +4594,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	actual_delivered_time?:ValueTypes["timestamptz_comparison_exp"],
 	actual_package_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	cancellation_time?:ValueTypes["timestamptz_comparison_exp"],
+	change_price_request?:ValueTypes["jsonb_comparison_exp"],
 	chat_with_customer?:ValueTypes["chat_bool_exp"],
 	chat_with_customer_id?:ValueTypes["Int_comparison_exp"],
 	chat_with_service_provider?:ValueTypes["chat_bool_exp"],
@@ -4615,6 +4624,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	laundry?:ValueTypes["laundry_store_bool_exp"],
 	laundry_delivery_order?:ValueTypes["laundry_order_bool_exp"],
 	laundry_pickup_order?:ValueTypes["laundry_order_bool_exp"],
+	lock_time?:ValueTypes["timestamp_comparison_exp"],
 	notification_token?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	order_type?:ValueTypes["String_comparison_exp"],
@@ -4637,6 +4647,22 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 };
 	/** unique or primary key constraints on table "delivery.order" */
 ["delivery_order_constraint"]:delivery_order_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["delivery_order_delete_at_path_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["delivery_order_delete_elem_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["delivery_order_delete_key_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:string
+};
 	/** input type for incrementing numeric columns in table "delivery.order" */
 ["delivery_order_inc_input"]: {
 	chat_with_customer_id?:number,
@@ -4664,6 +4690,8 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	actual_delivered_time?:ValueTypes["timestamptz"],
 	actual_package_ready_time?:ValueTypes["timestamptz"],
 	cancellation_time?:ValueTypes["timestamptz"],
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:ValueTypes["jsonb"],
 	chat_with_customer?:ValueTypes["chat_obj_rel_insert_input"],
 	chat_with_customer_id?:number,
 	chat_with_service_provider?:ValueTypes["chat_obj_rel_insert_input"],
@@ -4693,6 +4721,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	laundry?:ValueTypes["laundry_store_obj_rel_insert_input"],
 	laundry_delivery_order?:ValueTypes["laundry_order_obj_rel_insert_input"],
 	laundry_pickup_order?:ValueTypes["laundry_order_obj_rel_insert_input"],
+	lock_time?:ValueTypes["timestamp"],
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	package_cost?:ValueTypes["money"],
@@ -4741,6 +4770,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
+	lock_time?:true,
 	order_time?:true,
 	order_type?:true,
 	package_cost?:true,
@@ -4785,6 +4815,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	lock_time?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
@@ -4828,6 +4859,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:true,
 	estimated_package_ready_time?:true,
 	id?:true,
+	lock_time?:true,
 	order_time?:true,
 	order_type?:true,
 	package_cost?:true,
@@ -4872,6 +4904,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["order_by"],
 	estimated_package_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	lock_time?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
@@ -4919,6 +4952,7 @@ cancelledByServiceProvider */
 	actual_delivered_time?:ValueTypes["order_by"],
 	actual_package_ready_time?:ValueTypes["order_by"],
 	cancellation_time?:ValueTypes["order_by"],
+	change_price_request?:ValueTypes["order_by"],
 	chat_with_customer?:ValueTypes["chat_order_by"],
 	chat_with_customer_id?:ValueTypes["order_by"],
 	chat_with_service_provider?:ValueTypes["chat_order_by"],
@@ -4948,6 +4982,7 @@ cancelledByServiceProvider */
 	laundry?:ValueTypes["laundry_store_order_by"],
 	laundry_delivery_order?:ValueTypes["laundry_order_order_by"],
 	laundry_pickup_order?:ValueTypes["laundry_order_order_by"],
+	lock_time?:ValueTypes["order_by"],
 	notification_token?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
@@ -4971,6 +5006,11 @@ cancelledByServiceProvider */
 	/** primary key columns input for table: delivery.order */
 ["delivery_order_pk_columns_input"]: {
 	id:number
+};
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["delivery_order_prepend_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:ValueTypes["jsonb"]
 };
 	/** columns and relationships of "delivery.order_public" */
 ["delivery_order_public"]: AliasType<{
@@ -5179,6 +5219,8 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	actual_delivered_time?:ValueTypes["timestamptz"],
 	actual_package_ready_time?:ValueTypes["timestamptz"],
 	cancellation_time?:ValueTypes["timestamptz"],
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:ValueTypes["jsonb"],
 	chat_with_customer_id?:number,
 	chat_with_service_provider_id?:number,
 	current_gps?:ValueTypes["geography"],
@@ -5197,6 +5239,7 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	estimated_package_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
+	lock_time?:ValueTypes["timestamp"],
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	package_cost?:ValueTypes["money"],
@@ -5356,6 +5399,8 @@ cancelledByServiceProvider */
 	actual_delivered_time?:ValueTypes["timestamptz"],
 	actual_package_ready_time?:ValueTypes["timestamptz"],
 	cancellation_time?:ValueTypes["timestamptz"],
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:ValueTypes["jsonb"],
 	chat_with_customer_id?:number,
 	chat_with_service_provider_id?:number,
 	current_gps?:ValueTypes["geography"],
@@ -5374,6 +5419,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:ValueTypes["timestamptz"],
 	estimated_package_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
+	lock_time?:ValueTypes["timestamp"],
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	package_cost?:ValueTypes["money"],
@@ -5440,8 +5486,19 @@ cancelledByServiceProvider */
 	/** update columns of table "delivery.order" */
 ["delivery_order_update_column"]:delivery_order_update_column;
 	["delivery_order_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["delivery_order_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["delivery_order_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["delivery_order_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["delivery_order_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["delivery_order_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["delivery_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_order_set_input"],
 	/** filter the rows which have to be updated */
@@ -9008,12 +9065,24 @@ update_delivery_operator_by_pk?: [{	/** increments the numeric columns with give
 	_set?:ValueTypes["delivery_operator_set_input"],	pk_columns:ValueTypes["delivery_operator_pk_columns_input"]},ValueTypes["delivery_operator"]],
 update_delivery_operator_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["delivery_operator_updates"][]},ValueTypes["delivery_operator_mutation_response"]],
-update_delivery_order?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["delivery_order_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_delivery_order?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["delivery_order_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["delivery_order_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["delivery_order_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["delivery_order_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["delivery_order_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["delivery_order_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_order_set_input"],	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_order_bool_exp"]},ValueTypes["delivery_order_mutation_response"]],
-update_delivery_order_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["delivery_order_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_delivery_order_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["delivery_order_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["delivery_order_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["delivery_order_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["delivery_order_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["delivery_order_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["delivery_order_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_order_set_input"],	pk_columns:ValueTypes["delivery_order_pk_columns_input"]},ValueTypes["delivery_order"]],
 update_delivery_order_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["delivery_order_updates"][]},ValueTypes["delivery_order_mutation_response"]],
@@ -18771,6 +18840,19 @@ valid_types_service_provider_type_stream?: [{	/** maximum number of rows returne
 	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type"]],
 		__typename?: true
 }>;
+	["timestamp"]:unknown;
+	/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+["timestamp_comparison_exp"]: {
+	_eq?:ValueTypes["timestamp"],
+	_gt?:ValueTypes["timestamp"],
+	_gte?:ValueTypes["timestamp"],
+	_in?:ValueTypes["timestamp"][],
+	_is_null?:boolean,
+	_lt?:ValueTypes["timestamp"],
+	_lte?:ValueTypes["timestamp"],
+	_neq?:ValueTypes["timestamp"],
+	_nin?:ValueTypes["timestamp"][]
+};
 	["timestamptz"]:unknown;
 	/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 ["timestamptz_comparison_exp"]: {
@@ -23957,6 +24039,8 @@ the end). throws an error if top level container is not an array */
 			actual_delivered_time?:PartialObjects["timestamptz"],
 			actual_package_ready_time?:PartialObjects["timestamptz"],
 			cancellation_time?:PartialObjects["timestamptz"],
+			/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:PartialObjects["jsonb"],
 			/** An object relationship */
 	chat_with_customer?:PartialObjects["chat"],
 			chat_with_customer_id?:number,
@@ -23999,6 +24083,7 @@ the end). throws an error if top level container is not an array */
 	laundry_delivery_order?:PartialObjects["laundry_order"],
 			/** An object relationship */
 	laundry_pickup_order?:PartialObjects["laundry_order"],
+			lock_time?:PartialObjects["timestamp"],
 			/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:string,
 			order_time?:PartialObjects["timestamptz"],
@@ -24087,6 +24172,11 @@ cancelledByServiceProvider */
 	var_samp?:PartialObjects["delivery_order_var_samp_order_by"],
 	variance?:PartialObjects["delivery_order_variance_order_by"]
 },
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["delivery_order_append_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:PartialObjects["jsonb"]
+},
 	/** input type for inserting array relation for remote table "delivery.order" */
 ["delivery_order_arr_rel_insert_input"]: {
 	data:PartialObjects["delivery_order_insert_input"][],
@@ -24144,6 +24234,7 @@ cancelledByServiceProvider */
 	actual_delivered_time?:PartialObjects["timestamptz_comparison_exp"],
 	actual_package_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	cancellation_time?:PartialObjects["timestamptz_comparison_exp"],
+	change_price_request?:PartialObjects["jsonb_comparison_exp"],
 	chat_with_customer?:PartialObjects["chat_bool_exp"],
 	chat_with_customer_id?:PartialObjects["Int_comparison_exp"],
 	chat_with_service_provider?:PartialObjects["chat_bool_exp"],
@@ -24173,6 +24264,7 @@ cancelledByServiceProvider */
 	laundry?:PartialObjects["laundry_store_bool_exp"],
 	laundry_delivery_order?:PartialObjects["laundry_order_bool_exp"],
 	laundry_pickup_order?:PartialObjects["laundry_order_bool_exp"],
+	lock_time?:PartialObjects["timestamp_comparison_exp"],
 	notification_token?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	order_type?:PartialObjects["String_comparison_exp"],
@@ -24195,6 +24287,22 @@ cancelledByServiceProvider */
 },
 	/** unique or primary key constraints on table "delivery.order" */
 ["delivery_order_constraint"]:delivery_order_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["delivery_order_delete_at_path_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["delivery_order_delete_elem_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["delivery_order_delete_key_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:string
+},
 	/** input type for incrementing numeric columns in table "delivery.order" */
 ["delivery_order_inc_input"]: {
 	chat_with_customer_id?:number,
@@ -24222,6 +24330,8 @@ cancelledByServiceProvider */
 	actual_delivered_time?:PartialObjects["timestamptz"],
 	actual_package_ready_time?:PartialObjects["timestamptz"],
 	cancellation_time?:PartialObjects["timestamptz"],
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:PartialObjects["jsonb"],
 	chat_with_customer?:PartialObjects["chat_obj_rel_insert_input"],
 	chat_with_customer_id?:number,
 	chat_with_service_provider?:PartialObjects["chat_obj_rel_insert_input"],
@@ -24251,6 +24361,7 @@ cancelledByServiceProvider */
 	laundry?:PartialObjects["laundry_store_obj_rel_insert_input"],
 	laundry_delivery_order?:PartialObjects["laundry_order_obj_rel_insert_input"],
 	laundry_pickup_order?:PartialObjects["laundry_order_obj_rel_insert_input"],
+	lock_time?:PartialObjects["timestamp"],
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	package_cost?:PartialObjects["money"],
@@ -24300,6 +24411,7 @@ cancelledByServiceProvider */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
+			lock_time?:PartialObjects["timestamp"],
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			package_cost?:PartialObjects["money"],
@@ -24343,6 +24455,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	lock_time?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
@@ -24387,6 +24500,7 @@ cancelledByServiceProvider */
 			estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 			estimated_package_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
+			lock_time?:PartialObjects["timestamp"],
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			package_cost?:PartialObjects["money"],
@@ -24430,6 +24544,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["order_by"],
 	estimated_package_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	lock_time?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
@@ -24477,6 +24592,7 @@ cancelledByServiceProvider */
 	actual_delivered_time?:PartialObjects["order_by"],
 	actual_package_ready_time?:PartialObjects["order_by"],
 	cancellation_time?:PartialObjects["order_by"],
+	change_price_request?:PartialObjects["order_by"],
 	chat_with_customer?:PartialObjects["chat_order_by"],
 	chat_with_customer_id?:PartialObjects["order_by"],
 	chat_with_service_provider?:PartialObjects["chat_order_by"],
@@ -24506,6 +24622,7 @@ cancelledByServiceProvider */
 	laundry?:PartialObjects["laundry_store_order_by"],
 	laundry_delivery_order?:PartialObjects["laundry_order_order_by"],
 	laundry_pickup_order?:PartialObjects["laundry_order_order_by"],
+	lock_time?:PartialObjects["order_by"],
 	notification_token?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
@@ -24529,6 +24646,11 @@ cancelledByServiceProvider */
 	/** primary key columns input for table: delivery.order */
 ["delivery_order_pk_columns_input"]: {
 	id:number
+},
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["delivery_order_prepend_input"]: {
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:PartialObjects["jsonb"]
 },
 	/** columns and relationships of "delivery.order_public" */
 ["delivery_order_public"]: {
@@ -24737,6 +24859,8 @@ cancelledByServiceProvider */
 	actual_delivered_time?:PartialObjects["timestamptz"],
 	actual_package_ready_time?:PartialObjects["timestamptz"],
 	cancellation_time?:PartialObjects["timestamptz"],
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:PartialObjects["jsonb"],
 	chat_with_customer_id?:number,
 	chat_with_service_provider_id?:number,
 	current_gps?:PartialObjects["geography"],
@@ -24755,6 +24879,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	estimated_package_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
+	lock_time?:PartialObjects["timestamp"],
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	package_cost?:PartialObjects["money"],
@@ -24914,6 +25039,8 @@ cancelledByServiceProvider */
 	actual_delivered_time?:PartialObjects["timestamptz"],
 	actual_package_ready_time?:PartialObjects["timestamptz"],
 	cancellation_time?:PartialObjects["timestamptz"],
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:PartialObjects["jsonb"],
 	chat_with_customer_id?:number,
 	chat_with_service_provider_id?:number,
 	current_gps?:PartialObjects["geography"],
@@ -24932,6 +25059,7 @@ cancelledByServiceProvider */
 	estimated_arrival_at_pickup_time?:PartialObjects["timestamptz"],
 	estimated_package_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
+	lock_time?:PartialObjects["timestamp"],
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	package_cost?:PartialObjects["money"],
@@ -24998,8 +25126,19 @@ cancelledByServiceProvider */
 	/** update columns of table "delivery.order" */
 ["delivery_order_update_column"]:delivery_order_update_column,
 	["delivery_order_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["delivery_order_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["delivery_order_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["delivery_order_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["delivery_order_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:PartialObjects["delivery_order_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["delivery_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_order_set_input"],
 	/** filter the rows which have to be updated */
@@ -36831,6 +36970,19 @@ All fields are combined with a logical 'AND'. */
 			/** fetch data from the table in a streaming manner: "valid_types.service_provider_type" */
 	valid_types_service_provider_type_stream?:PartialObjects["valid_types_service_provider_type"][]
 	},
+	["timestamp"]:any,
+	/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+["timestamp_comparison_exp"]: {
+	_eq?:PartialObjects["timestamp"],
+	_gt?:PartialObjects["timestamp"],
+	_gte?:PartialObjects["timestamp"],
+	_in?:PartialObjects["timestamp"][],
+	_is_null?:boolean,
+	_lt?:PartialObjects["timestamp"],
+	_lte?:PartialObjects["timestamp"],
+	_neq?:PartialObjects["timestamp"],
+	_nin?:PartialObjects["timestamp"][]
+},
 	["timestamptz"]:any,
 	/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 ["timestamptz_comparison_exp"]: {
@@ -42822,6 +42974,8 @@ export type delivery_order = {
 	actual_delivered_time?:timestamptz,
 	actual_package_ready_time?:timestamptz,
 	cancellation_time?:timestamptz,
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:jsonb,
 	/** An object relationship */
 	chat_with_customer:chat,
 	chat_with_customer_id:number,
@@ -42864,6 +43018,7 @@ export type delivery_order = {
 	laundry_delivery_order?:laundry_order,
 	/** An object relationship */
 	laundry_pickup_order?:laundry_order,
+	lock_time?:timestamp,
 	/** A computed field, executes function "delivery_notification_token" */
 	notification_token?:string,
 	order_time:timestamptz,
@@ -42960,6 +43115,12 @@ export type delivery_order_aggregate_order_by = {
 	variance?:delivery_order_variance_order_by
 }
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type delivery_order_append_input = {
+		/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:jsonb
+}
+
 /** input type for inserting array relation for remote table "delivery.order" */
 export type delivery_order_arr_rel_insert_input = {
 		data:delivery_order_insert_input[],
@@ -43020,6 +43181,7 @@ export type delivery_order_bool_exp = {
 	actual_delivered_time?:timestamptz_comparison_exp,
 	actual_package_ready_time?:timestamptz_comparison_exp,
 	cancellation_time?:timestamptz_comparison_exp,
+	change_price_request?:jsonb_comparison_exp,
 	chat_with_customer?:chat_bool_exp,
 	chat_with_customer_id?:Int_comparison_exp,
 	chat_with_service_provider?:chat_bool_exp,
@@ -43049,6 +43211,7 @@ export type delivery_order_bool_exp = {
 	laundry?:laundry_store_bool_exp,
 	laundry_delivery_order?:laundry_order_bool_exp,
 	laundry_pickup_order?:laundry_order_bool_exp,
+	lock_time?:timestamp_comparison_exp,
 	notification_token?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
 	order_type?:String_comparison_exp,
@@ -43073,6 +43236,25 @@ export type delivery_order_bool_exp = {
 /** unique or primary key constraints on table "delivery.order" */
 export enum delivery_order_constraint {
 	delivery_pkey = "delivery_pkey"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type delivery_order_delete_at_path_input = {
+		/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type delivery_order_delete_elem_input = {
+		/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type delivery_order_delete_key_input = {
+		/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:string
 }
 
 /** input type for incrementing numeric columns in table "delivery.order" */
@@ -43103,6 +43285,8 @@ export type delivery_order_insert_input = {
 	actual_delivered_time?:timestamptz,
 	actual_package_ready_time?:timestamptz,
 	cancellation_time?:timestamptz,
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:jsonb,
 	chat_with_customer?:chat_obj_rel_insert_input,
 	chat_with_customer_id?:number,
 	chat_with_service_provider?:chat_obj_rel_insert_input,
@@ -43132,6 +43316,7 @@ export type delivery_order_insert_input = {
 	laundry?:laundry_store_obj_rel_insert_input,
 	laundry_delivery_order?:laundry_order_obj_rel_insert_input,
 	laundry_pickup_order?:laundry_order_obj_rel_insert_input,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43182,6 +43367,7 @@ export type delivery_order_max_fields = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43226,6 +43412,7 @@ export type delivery_order_max_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
+	lock_time?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
 	package_cost?:order_by,
@@ -43271,6 +43458,7 @@ export type delivery_order_min_fields = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43315,6 +43503,7 @@ export type delivery_order_min_order_by = {
 	estimated_arrival_at_pickup_time?:order_by,
 	estimated_package_ready_time?:order_by,
 	id?:order_by,
+	lock_time?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
 	package_cost?:order_by,
@@ -43366,6 +43555,7 @@ export type delivery_order_order_by = {
 	actual_delivered_time?:order_by,
 	actual_package_ready_time?:order_by,
 	cancellation_time?:order_by,
+	change_price_request?:order_by,
 	chat_with_customer?:chat_order_by,
 	chat_with_customer_id?:order_by,
 	chat_with_service_provider?:chat_order_by,
@@ -43395,6 +43585,7 @@ export type delivery_order_order_by = {
 	laundry?:laundry_store_order_by,
 	laundry_delivery_order?:laundry_order_order_by,
 	laundry_pickup_order?:laundry_order_order_by,
+	lock_time?:order_by,
 	notification_token?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
@@ -43419,6 +43610,12 @@ export type delivery_order_order_by = {
 /** primary key columns input for table: delivery.order */
 export type delivery_order_pk_columns_input = {
 		id:number
+}
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type delivery_order_prepend_input = {
+		/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:jsonb
 }
 
 /** columns and relationships of "delivery.order_public" */
@@ -43653,6 +43850,7 @@ export enum delivery_order_select_column {
 	actual_delivered_time = "actual_delivered_time",
 	actual_package_ready_time = "actual_package_ready_time",
 	cancellation_time = "cancellation_time",
+	change_price_request = "change_price_request",
 	chat_with_customer_id = "chat_with_customer_id",
 	chat_with_service_provider_id = "chat_with_service_provider_id",
 	current_gps = "current_gps",
@@ -43670,6 +43868,7 @@ export enum delivery_order_select_column {
 	estimated_arrival_at_pickup_time = "estimated_arrival_at_pickup_time",
 	estimated_package_ready_time = "estimated_package_ready_time",
 	id = "id",
+	lock_time = "lock_time",
 	order_time = "order_time",
 	order_type = "order_type",
 	package_cost = "package_cost",
@@ -43704,6 +43903,8 @@ export type delivery_order_set_input = {
 	actual_delivered_time?:timestamptz,
 	actual_package_ready_time?:timestamptz,
 	cancellation_time?:timestamptz,
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:jsonb,
 	chat_with_customer_id?:number,
 	chat_with_service_provider_id?:number,
 	current_gps?:geography,
@@ -43722,6 +43923,7 @@ export type delivery_order_set_input = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43889,6 +44091,8 @@ export type delivery_order_stream_cursor_value_input = {
 	actual_delivered_time?:timestamptz,
 	actual_package_ready_time?:timestamptz,
 	cancellation_time?:timestamptz,
+	/** { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string} */
+	change_price_request?:jsonb,
 	chat_with_customer_id?:number,
 	chat_with_service_provider_id?:number,
 	current_gps?:geography,
@@ -43907,6 +44111,7 @@ export type delivery_order_stream_cursor_value_input = {
 	estimated_arrival_at_pickup_time?:timestamptz,
 	estimated_package_ready_time?:timestamptz,
 	id?:number,
+	lock_time?:timestamp,
 	order_time?:timestamptz,
 	order_type?:string,
 	package_cost?:money,
@@ -43980,6 +44185,7 @@ export enum delivery_order_update_column {
 	actual_delivered_time = "actual_delivered_time",
 	actual_package_ready_time = "actual_package_ready_time",
 	cancellation_time = "cancellation_time",
+	change_price_request = "change_price_request",
 	chat_with_customer_id = "chat_with_customer_id",
 	chat_with_service_provider_id = "chat_with_service_provider_id",
 	current_gps = "current_gps",
@@ -43997,6 +44203,7 @@ export enum delivery_order_update_column {
 	estimated_arrival_at_pickup_time = "estimated_arrival_at_pickup_time",
 	estimated_package_ready_time = "estimated_package_ready_time",
 	id = "id",
+	lock_time = "lock_time",
 	order_time = "order_time",
 	order_type = "order_type",
 	package_cost = "package_cost",
@@ -44015,8 +44222,19 @@ export enum delivery_order_update_column {
 }
 
 export type delivery_order_updates = {
-		/** increments the numeric columns with given value of the filtered values */
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:delivery_order_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:delivery_order_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:delivery_order_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:delivery_order_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
 	_inc?:delivery_order_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:delivery_order_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_order_set_input,
 	/** filter the rows which have to be updated */
@@ -57712,6 +57930,21 @@ export type subscription_root = {
 	valid_types_service_provider_type_stream:valid_types_service_provider_type[]
 }
 
+export type timestamp = any
+
+/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
+export type timestamp_comparison_exp = {
+		_eq?:timestamp,
+	_gt?:timestamp,
+	_gte?:timestamp,
+	_in?:timestamp[],
+	_is_null?:boolean,
+	_lt?:timestamp,
+	_lte?:timestamp,
+	_neq?:timestamp,
+	_nin?:timestamp[]
+}
+
 export type timestamptz = any
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -68727,6 +68960,16 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	delivery_order:{
+		change_price_request:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
 	delivery_order_aggregate_bool_exp:{
 		bool_and:{
 			type:"delivery_order_aggregate_bool_exp_bool_and",
@@ -68909,6 +69152,14 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	delivery_order_append_input:{
+		change_price_request:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	delivery_order_arr_rel_insert_input:{
 		data:{
 			type:"delivery_order_insert_input",
@@ -69060,6 +69311,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		cancellation_time:{
 			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		change_price_request:{
+			type:"jsonb_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -69238,6 +69495,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"timestamp_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		notification_token:{
 			type:"String_comparison_exp",
 			array:false,
@@ -69354,6 +69617,30 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_order_constraint: "enum",
+	delivery_order_delete_at_path_input:{
+		change_price_request:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	delivery_order_delete_elem_input:{
+		change_price_request:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_order_delete_key_input:{
+		change_price_request:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	delivery_order_inc_input:{
 		chat_with_customer_id:{
 			type:"Int",
@@ -69473,6 +69760,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		cancellation_time:{
 			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		change_price_request:{
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -69641,6 +69934,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		laundry_pickup_order:{
 			type:"laundry_order_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		lock_time:{
+			type:"timestamp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -69875,6 +70174,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		order_time:{
 			type:"order_by",
 			array:false,
@@ -70075,6 +70380,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		order_time:{
 			type:"order_by",
 			array:false,
@@ -70214,6 +70525,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		cancellation_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		change_price_request:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -70393,6 +70710,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		lock_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		notification_token:{
 			type:"order_by",
 			array:false,
@@ -70514,6 +70837,14 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:true
+		}
+	},
+	delivery_order_prepend_input:{
+		change_price_request:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_order_public_aggregate_fields:{
@@ -70859,6 +71190,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		change_price_request:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_with_customer_id:{
 			type:"Int",
 			array:false,
@@ -70957,6 +71294,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		lock_time:{
+			type:"timestamp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -71373,6 +71716,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		change_price_request:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		chat_with_customer_id:{
 			type:"Int",
 			array:false,
@@ -71471,6 +71820,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		lock_time:{
+			type:"timestamp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -71660,8 +72015,38 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_order_update_column: "enum",
 	delivery_order_updates:{
+		_append:{
+			type:"delivery_order_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"delivery_order_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"delivery_order_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"delivery_order_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		_inc:{
 			type:"delivery_order_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"delivery_order_prepend_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -81477,8 +81862,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_delivery_order:{
+			_append:{
+				type:"delivery_order_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"delivery_order_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"delivery_order_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"delivery_order_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"delivery_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"delivery_order_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -81497,8 +81912,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_delivery_order_by_pk:{
+			_append:{
+				type:"delivery_order_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"delivery_order_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"delivery_order_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"delivery_order_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"delivery_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"delivery_order_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -111232,6 +111677,63 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	timestamp: "String",
+	timestamp_comparison_exp:{
+		_eq:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gt:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gte:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_in:{
+			type:"timestamp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_is_null:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lt:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lte:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_neq:{
+			type:"timestamp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_nin:{
+			type:"timestamp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	timestamptz: "String",
 	timestamptz_comparison_exp:{
 		_eq:{
@@ -114171,6 +114673,7 @@ export const ReturnTypes: Record<string,any> = {
 		actual_delivered_time:"timestamptz",
 		actual_package_ready_time:"timestamptz",
 		cancellation_time:"timestamptz",
+		change_price_request:"jsonb",
 		chat_with_customer:"chat",
 		chat_with_customer_id:"Int",
 		chat_with_service_provider:"chat",
@@ -114200,6 +114703,7 @@ export const ReturnTypes: Record<string,any> = {
 		laundry:"laundry_store",
 		laundry_delivery_order:"laundry_order",
 		laundry_pickup_order:"laundry_order",
+		lock_time:"timestamp",
 		notification_token:"String",
 		order_time:"timestamptz",
 		order_type:"String",
@@ -114275,6 +114779,7 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
+		lock_time:"timestamp",
 		order_time:"timestamptz",
 		order_type:"String",
 		package_cost:"money",
@@ -114310,6 +114815,7 @@ export const ReturnTypes: Record<string,any> = {
 		estimated_arrival_at_pickup_time:"timestamptz",
 		estimated_package_ready_time:"timestamptz",
 		id:"Int",
+		lock_time:"timestamp",
 		order_time:"timestamptz",
 		order_type:"String",
 		package_cost:"money",

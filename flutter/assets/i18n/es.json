@@ -138,7 +138,7 @@
             "search": "Búsqueda",
             "showOnlyOpen": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
-            "noOpenRestaurant": "No hay restaurantes abiertos funds",
+            "noOpenRestaurant": "No hay restaurantes abiertos",
             "meal": "Comida",
             "noItemTitle": "No se han encontrado resultados",
             "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
@@ -199,7 +199,7 @@
               "pickLocationHintText":"Ingrese su nombre",
               "addLocationDialogButton": "Guardar",
               "editLocationDialogButton": "EDITAR",
-              "addLocationDialogSkip": "Cerca"
+              "addLocationDialogSkip": "Ahora no"
             }
           },
           "ViewCartScreen": {
@@ -742,6 +742,25 @@
       }
     },
     "pages": {
+      "ServiceProfileView" : {
+        "profile" : "Perfil",
+        "info" : "Información",
+        "operators" : "Operadoras",
+        "drivers" : "Conductoras",
+        "schedule" :"Cronograma",
+        "payments" :"Pagos",
+        "delivery" :"Entrega",
+        "reviews" : "Reseñas",
+        "share" : "Compartir",
+        "privacyPolicies": "Políticas de privacidad",
+        "logout" : "Cerrar sesión",
+        "openService" : "Servicio abierto",
+        "closeService" : "Servicio cerrado",
+        "serviceClosed" : "El servicio está cerrado indefinidamente",
+        "restaurantReview" : "Su restaurante está bajo revisión, se le notificará, su aprobación."
+       
+
+      },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage":{
@@ -803,7 +822,8 @@
             "title": "Compañero de entrega a su lado",
             "notFoundTitle": "No se encontraron socios de entrega",
             "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
-            "joined": "Unida"
+            "joined": "Unida",
+            "errorText" :  "Seleccione una empresa o cambie al tiempo de entrega de sí mismo"
           }
         }
       },
@@ -890,7 +910,7 @@
           }
         },
         "SignInScreen": {
-          "title": "Conéctese usando Facebook o usando SMS! ",
+          "title": "Inicie sesión con su proveedor preferido!",
           "loginWithApple": "INICIAR CON APPLE",
           "loginWithSms": "INICIAR CON SMS",
           "fbBtn": "INICIAR CON FACEBOOK"
@@ -1738,7 +1758,7 @@
         }
       },
       "RestaurantOrderView": {
-        "title": "Entregada del restaurante",
+       
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -1757,7 +1777,11 @@
               "confirmDelivery": "Confirmar el envío"
             }
           }
-        }
+        },
+        "title": "Entrega",
+        "restaurant" : "Restaurante",
+        "laundry" : "Lavadero",
+        "courier" : "Mensajera"
       }
     },
     "notificationHandler": {
@@ -2022,7 +2046,7 @@
         "good": "Buena",
         "average": "Promedio",
         "bad": "Mala",
-        "default": "Ver todo",
+        "default": "Latest",
         "highestrate": "Tasa más alta",
         "lowestrate": "La tasa más baja",
         "noRevTitle": "Todavía no hay críticas",
@@ -2060,6 +2084,9 @@
         }
       },
       "ROpOrderView": {
+        "review" : "Revisar",
+        "deliveryDet" :"Detalles de la entrega",
+        "restaurant" : "Restaurante",
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",
         "orderItems": "Encargar artículos",
@@ -2159,7 +2186,7 @@
           "ROpOrderCard": {
             "date": "Fecha :",
             "totalCost": "Coste total",
-            "waiting": "Esperando",
+            "waiting": "en proceso",
             "delivered": "Entregada",
             "canceled": "Cancelada"
           }

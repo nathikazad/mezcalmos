@@ -225,7 +225,7 @@ async function notifyDeliveryOperators(restaurantOrder: RestaurantOrder, deliver
         orderId: restaurantOrder.deliveryId
         },
         background: deliveryNewOrderMessage,
-        linkUrl: orderUrl(OrderType.Restaurant, restaurantOrder.orderId!)
+        linkUrl: `orders/${restaurantOrder.deliveryId}`
     }
 
     deliveryOperators.forEach((d) => {

@@ -46,7 +46,7 @@ extension ParseParticipantTypeToString on ParticipantType {
 }
 
 extension AppTypeToParticipantType on AppType {
-  ParticipantType toParticipantTypefromAppType() {
+  ParticipantType convertParticipantTypefromAppType() {
     switch (this) {
       case AppType.CustomerApp:
         return ParticipantType.Customer;
@@ -78,8 +78,10 @@ extension AppTypeToCFParticipantType on AppType {
         return cf.ParticipantType.Taxi;
       case AppType.DeliveryApp:
         return cf.ParticipantType.DeliveryDriver;
-      // case AppType.DeliveryAdminApp:
-      //   return cf.ParticipantType.DeliveryAdmin;
+      case AppType.DeliveryAdminApp:
+        return cf.ParticipantType.DeliveryOperator;
+      case AppType.MezAdminApp:
+        return cf.ParticipantType.MezAdmin;
       case AppType.LaundryApp:
         return cf.ParticipantType.LaundryOperator;
       case AppType.RestaurantApp:
@@ -92,7 +94,7 @@ extension AppTypeToCFParticipantType on AppType {
 }
 
 extension ParseStringToParticipantType on String {
-  ParticipantType toParticipantType() {
+  ParticipantType convertToParticipantType() {
     return ParticipantType.values.firstWhere(
         (ParticipantType participantType) =>
             participantType.toFirebaseFormattedString() == this);
@@ -233,7 +235,7 @@ class Chat {
     chatData['participants']
         ?.forEach((dynamic participantTypeAsString, dynamic map) {
       final ParticipantType participantType =
-          participantTypeAsString.toString().toParticipantType();
+          participantTypeAsString.toString().convertToParticipantType();
       chatData['participants'][participantTypeAsString]
           .forEach((dynamic participantId, dynamic participantData) {
         if (chat._participants[participantType] == null)

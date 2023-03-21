@@ -95,9 +95,12 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                           ),
                 userInfo: ServiceInfo(
                   hasuraId: cartData.restaurant!.id,
-                  description: (cartData
-                              .restaurant?.details!.description?.translations !=
-                          null)
+                  description: (cartData.restaurant?.details!.description
+                                  ?.translations !=
+                              null &&
+                          cartData.restaurant?.details!.description
+                                  ?.translations.isNotEmpty ==
+                              true)
                       ? {
                           cartData.restaurant!.details!.description!
                                   .translations.first.language_id
@@ -337,7 +340,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             image: _res.details!.image,
             firebaseId: _res.details!.firebase_id,
             name: _res.details!.name,
-            description: (_res.details?.description?.translations != null)
+            description: (_res.details?.description?.translations != null &&
+                    _res.details!.description!.translations.isNotEmpty)
                 ? {
                     _res.details!.description!.translations.first.language_id
                             .toLanguageType():

@@ -12,18 +12,15 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Future<List<MinimalOrder>?> get_admin_dv_orders({
-  required bool inProcess,
-  bool withCache = true,
-}) async {
+Future<List<MinimalOrder>?> get_admin_dv_orders(
+    {required bool inProcess, bool withCache = true, int? limit}) async {
   final QueryResult<Query$admin_get_dv_orders> queryResult = await _hasuraDb
       .graphQLClient
       .query$admin_get_dv_orders(Options$Query$admin_get_dv_orders(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables: Variables$Query$admin_get_dv_orders(
-            inProccess: inProcess,
-          )));
+              inProccess: inProcess, limit: limit)));
 
   if (queryResult.parsedData?.delivery_order != null) {
     final List<Query$admin_get_dv_orders$delivery_order> ordersData =
@@ -42,9 +39,10 @@ Future<List<MinimalOrder>?> get_admin_dv_orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
+          deliveryCost: orderData.delivery_cost,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.delivery_cost);
+          totalCost: orderData.package_cost);
     }).toList();
     return orders;
   } else {
@@ -82,10 +80,11 @@ Stream<List<MinimalOrder>?> listen_on_admin_dv_orders({
             toAdress: orderData.dropoff_address,
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
+            deliveryCost: orderData.delivery_cost,
             image: orderData.customer.user.image,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-            totalCost: orderData.delivery_cost);
+            totalCost: orderData.package_cost);
       }).toList();
       return orders;
     }
@@ -93,18 +92,15 @@ Stream<List<MinimalOrder>?> listen_on_admin_dv_orders({
   });
 }
 
-Future<List<MinimalOrder>?> get_admin_restaurant_orders({
-  required bool inProcess,
-  bool withCache = true,
-}) async {
+Future<List<MinimalOrder>?> get_admin_restaurant_orders(
+    {required bool inProcess, bool withCache = true, int? limit}) async {
   final QueryResult<Query$admin_get_restaurant_orders> queryResult =
       await _hasuraDb.graphQLClient.query$admin_get_restaurant_orders(
           Options$Query$admin_get_restaurant_orders(
               fetchPolicy:
                   withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
               variables: Variables$Query$admin_get_restaurant_orders(
-                inProccess: inProcess,
-              )));
+                  inProccess: inProcess, limit: limit)));
 
   if (queryResult.parsedData?.restaurant_order != null) {
     final List<Query$admin_get_restaurant_orders$restaurant_order> ordersData =
@@ -121,9 +117,10 @@ Future<List<MinimalOrder>?> get_admin_restaurant_orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
+          deliveryCost: orderData.delivery?.delivery_cost,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.total_cost!);
+          totalCost: orderData.total_cost ?? 0);
     }).toList();
     return orders;
   } else {
@@ -159,6 +156,7 @@ Stream<List<MinimalOrder>?> listen_on_admin_restaurant_orders({
             serviceProviderType: ServiceProviderType.Restaurant,
             toAdress: orderData.to_location_address,
             orderTime: DateTime.parse(orderData.order_time),
+            deliveryCost: orderData.delivery?.delivery_cost,
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
             status: orderData.status
@@ -172,18 +170,15 @@ Stream<List<MinimalOrder>?> listen_on_admin_restaurant_orders({
   });
 }
 
-Future<List<MinimalOrder>?> get_admin_laundry_orders({
-  required bool inProcess,
-  bool withCache = true,
-}) async {
+Future<List<MinimalOrder>?> get_admin_laundry_orders(
+    {required bool inProcess, bool withCache = true, int? limit}) async {
   final QueryResult<Query$admin_get_laundry_orders> queryResult =
       await _hasuraDb.graphQLClient.query$admin_get_laundry_orders(
           Options$Query$admin_get_laundry_orders(
               fetchPolicy:
                   withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
               variables: Variables$Query$admin_get_laundry_orders(
-                inProccess: inProcess,
-              )));
+                  inProccess: inProcess, limit: limit)));
 
   if (queryResult.parsedData?.laundry_order != null) {
     final List<Query$admin_get_laundry_orders$laundry_order> ordersData =
@@ -200,6 +195,8 @@ Future<List<MinimalOrder>?> get_admin_laundry_orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
+          deliveryCost: orderData.to_customer_delivery?.delivery_cost ??
+              orderData.from_customer_delivery?.delivery_cost,
           status:
               orderData.status.toLaundryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
@@ -233,12 +230,14 @@ Stream<List<MinimalOrder>?> listen_on_admin_laundry_orders({
               orderData) {
         return MinimalOrder(
             id: orderData.id,
-            orderType: OrderType.Restaurant,
+            orderType: OrderType.Laundry,
             serviceProviderId: orderData.store_id,
             serviceProviderType: ServiceProviderType.Restaurant,
             toAdress: orderData.customer_address,
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
+            deliveryCost: orderData.to_customer_delivery?.delivery_cost ??
+                orderData.from_customer_delivery?.delivery_cost,
             image: orderData.customer.user.image,
             status:
                 orderData.status.toLaundryOrderStatus().toMinimalOrderStatus(),

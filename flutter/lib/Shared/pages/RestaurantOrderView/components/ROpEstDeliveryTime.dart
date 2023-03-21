@@ -65,7 +65,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                 children: [
                   Text(
                     '${_i18n()["deliveryTitle"]}',
-                    style: Get.theme.textTheme.bodyText1,
+                    style: Get.theme.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -73,7 +73,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                   if (widget.order.selfDeliveryDetails?.estDeliveryTime != null)
                     Text(
                       "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.selfDeliveryDetails!.estDeliveryTime!.toLocal())}",
-                      style: Get.theme.textTheme.bodyText2,
+                      style: Get.theme.textTheme.bodyMedium,
                     ),
                 ],
               ),
@@ -108,7 +108,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                       ),
                       Text(
                         "${_i18n()["deliveryTitle"]}",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                       ),
                       SizedBox(
                         height: 25,
@@ -138,20 +138,21 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
         },
         customBorder: CircleBorder(),
         child: Ink(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: (widget.order.selfDeliveryDetails?.estDeliveryTime != null)
-                  ? Colors.grey.shade300
+                  ? secondaryLightBlueColor
                   : Colors.transparent),
           child: (widget.order.selfDeliveryDetails?.estDeliveryTime != null)
               ? Icon(
-                  Icons.edit_outlined,
-                  size: 18,
+                  Icons.edit,
+                  color: primaryBlueColor,
+                  size: 20,
                 )
               : Text(
                   '${_i18n()["set"]}',
-                  style: Get.textTheme.bodyText1
+                  style: Get.textTheme.bodyLarge
                       ?.copyWith(color: primaryBlueColor),
                 ),
         ));
@@ -187,7 +188,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                 : Text(
                     '${_i18n()["confirm"]}',
                     style:
-                        Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+                        Get.textTheme.bodyLarge?.copyWith(color: Colors.white),
                   ),
           ),
         ),
@@ -212,7 +213,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()["cancel"]}",
-            style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+            style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
           ),
         ),
       ),

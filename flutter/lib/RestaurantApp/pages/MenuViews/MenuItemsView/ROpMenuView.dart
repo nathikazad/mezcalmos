@@ -161,15 +161,15 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 children: [
                   Text(
                     '${_i18n()["categories"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   (viewController.reOrderMode.isTrue)
                       ? SizedBox()
                       : _reorderBtn()
                 ],
               ),
-              SizedBox(
-                height: 5,
+              Divider(
+                thickness: 0.3,
               ),
               _categoriesItemsList(),
               _noCategoryItemsList()
@@ -198,8 +198,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     : null,
                 labelColor: primaryBlueColor,
                 unselectedLabelColor: Colors.grey.shade800,
-                labelStyle: Get.textTheme.bodyText1,
-                unselectedLabelStyle: Get.textTheme.bodyText2,
+                labelStyle: Get.textTheme.bodyLarge,
+                unselectedLabelStyle: Get.textTheme.bodyMedium,
                 tabs: [
                   Tab(
                     text: '${_i18n()["myItems"]}',
@@ -238,7 +238,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
             ),
             Text(
               '${_i18n()["reorder"]}',
-              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
             ),
           ],
         ),
@@ -290,8 +290,19 @@ class _ROpMenuViewState extends State<ROpMenuView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Divider(),
-            Text('${_i18n()["noCategory"]}'),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              '${_i18n()["noCategory"]}',
+              style: Get.textTheme.bodyLarge,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Divider(
+              thickness: 0.3,
+            ),
             SizedBox(
               height: 5,
             ),

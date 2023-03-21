@@ -182,7 +182,7 @@ class _CustLaundryOrderRequestViewState
                                         (viewController.shippingCost.value !=
                                                 null)
                                             ? Text(
-                                                "${(viewController.shippingCost.value! * 2).toPriceString()}",
+                                                "${(viewController.shippingCost.value!).toPriceString()} x 2",
                                                 style: Get.textTheme.bodyText2,
                                               )
                                             : Text(

@@ -740,6 +740,24 @@
       }
     },
     "pages": {
+      "ServiceProfileView" : {
+        "profile" : "Profile",
+        "info" : "Information",
+        "operators" : "Operators",
+        "drivers" : "Drivers",
+        "schedule" :"Schedule",
+        "payments" :"Payments",
+        "delivery" :"Delivery",
+        "reviews" : "Reviews",
+        "share" : "Share",
+        "privacyPolicies": "Privacy Policies",
+        "logout" : "Logout",
+        "openService" : "Open service",
+        "closeService" : "Close service",
+        "serviceClosed" : "Service is closed indefinitely",
+        "restaurantReview" : "Your restaurant is under review, you’ll be notifiedonce it’s approved."
+
+      },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
@@ -800,7 +818,8 @@
             "title": "Delivery partner next to you",
             "notFoundTitle": "No delivery partners found",
             "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
-            "joined": "Joined"
+            "joined": "Joined",
+            "errorText" :  "Please select a company or switch to self delivery time"
           }
         }
       },
@@ -887,7 +906,7 @@
           }
         },
         "SignInScreen": {
-          "title": "Connect using Facebook or using SMS ! ",
+          "title": "Sign in using your preferred provider!",
           "loginWithApple": "SIGN IN WITH APPLE",
           "loginWithSms": "LOGIN WITH SMS",
           "fbBtn": "LOGIN WITH FACEBOOK"
@@ -915,7 +934,7 @@
           "no": "No",
           "yesterday": "Yesterday",
           "noNotifTitle": "No notifications yet !",
-          "noNotifBody": "You have currently no notifications. \nWe will notify you when something new arrives."
+          "noNotifBody": "You have currently no notifications. \n We will notify you when something new arrives."
         }
       },
       "UserWelcomeView": {
@@ -1641,7 +1660,10 @@
             }
           }
         },
-        "title": "Restaurant Delivery"
+        "title": "Delivery",
+        "restaurant" : "Restaurant",
+        "laundry" : "Laundry",
+        "courier" : "Courier"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
@@ -2030,7 +2052,7 @@
         "good": "Good",
         "average": "Average",
         "bad": "Bad",
-        "default": "View all",
+        "default": "Latest",
         "highestrate": "Highest rate",
         "lowestrate": "Lowest rate",
         "noRevTitle": "No reviews yet",
@@ -2038,6 +2060,9 @@
       },
       "ROpOrderView": {
         "schTitle": "Scheduled for",
+        "deliveryDet" :"Delivery details",
+        "review" : "Review",
+        "restaurant" : "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
         "components": {
@@ -2167,7 +2192,7 @@
           "ROpOrderCard": {
             "date": "Date",
             "totalCost": "Total cost",
-            "waiting": "Waiting",
+            "waiting": "In process",
             "delivered": "Delivered",
             "canceled": "Cancelled"
           }

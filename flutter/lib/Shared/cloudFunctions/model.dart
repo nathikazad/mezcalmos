@@ -611,7 +611,7 @@ enum ServerResponseStatus { Success, Error }
 extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
+    return str;
   }
 }
 extension ParseStringToServerResponseStatus on String {

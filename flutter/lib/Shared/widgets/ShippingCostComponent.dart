@@ -15,11 +15,11 @@ class ShippingCostComponent extends StatelessWidget {
       {Key? key,
       required this.shippingCost,
       this.textStyle,
-      this.defaultShippingCost = 50,
+      this.formattedShippingCost,
       this.alignment = MainAxisAlignment.end})
       : super(key: key);
   final num shippingCost;
-  final num defaultShippingCost;
+  final String? formattedShippingCost;
   final MainAxisAlignment alignment;
   final TextStyle? textStyle;
 
@@ -35,7 +35,7 @@ class ShippingCostComponent extends StatelessWidget {
               ),
             )
           : Text(
-              shippingCost.toPriceString(),
+              formattedShippingCost ?? shippingCost.toPriceString(),
               style: textStyle,
             ),
     );

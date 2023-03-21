@@ -6562,6 +6562,14 @@ type delivery_order {
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
 
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
   """An object relationship"""
   chat_with_customer: chat!
   chat_with_customer_id: Int!
@@ -6618,6 +6626,7 @@ type delivery_order {
 
   """An object relationship"""
   laundry_pickup_order: laundry_order
+  lock_time: timestamp
 
   """
   A computed field, executes function "delivery_notification_token"
@@ -6730,6 +6739,14 @@ input delivery_order_aggregate_order_by {
   variance: delivery_order_variance_order_by
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input delivery_order_append_input {
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: jsonb
+}
+
 """
 input type for inserting array relation for remote table "delivery.order"
 """
@@ -6800,6 +6817,7 @@ input delivery_order_bool_exp {
   actual_delivered_time: timestamptz_comparison_exp
   actual_package_ready_time: timestamptz_comparison_exp
   cancellation_time: timestamptz_comparison_exp
+  change_price_request: jsonb_comparison_exp
   chat_with_customer: chat_bool_exp
   chat_with_customer_id: Int_comparison_exp
   chat_with_service_provider: chat_bool_exp
@@ -6829,6 +6847,7 @@ input delivery_order_bool_exp {
   laundry: laundry_store_bool_exp
   laundry_delivery_order: laundry_order_bool_exp
   laundry_pickup_order: laundry_order_bool_exp
+  lock_time: timestamp_comparison_exp
   notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
@@ -6858,6 +6877,37 @@ enum delivery_order_constraint {
   unique or primary key constraint on columns "id"
   """
   delivery_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input delivery_order_delete_at_path_input {
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input delivery_order_delete_elem_input {
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input delivery_order_delete_key_input {
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: String
 }
 
 """
@@ -6894,6 +6944,11 @@ input delivery_order_insert_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
+
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: jsonb
   chat_with_customer: chat_obj_rel_insert_input
   chat_with_customer_id: Int
   chat_with_service_provider: chat_obj_rel_insert_input
@@ -6924,6 +6979,7 @@ input delivery_order_insert_input {
   laundry: laundry_store_obj_rel_insert_input
   laundry_delivery_order: laundry_order_obj_rel_insert_input
   laundry_pickup_order: laundry_order_obj_rel_insert_input
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -6980,6 +7036,7 @@ type delivery_order_max_fields {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -7033,6 +7090,7 @@ input delivery_order_max_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  lock_time: order_by
   order_time: order_by
   order_type: order_by
   package_cost: order_by
@@ -7084,6 +7142,7 @@ type delivery_order_min_fields {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -7137,6 +7196,7 @@ input delivery_order_min_order_by {
   estimated_arrival_at_pickup_time: order_by
   estimated_package_ready_time: order_by
   id: order_by
+  lock_time: order_by
   order_time: order_by
   order_type: order_by
   package_cost: order_by
@@ -7201,6 +7261,7 @@ input delivery_order_order_by {
   actual_delivered_time: order_by
   actual_package_ready_time: order_by
   cancellation_time: order_by
+  change_price_request: order_by
   chat_with_customer: chat_order_by
   chat_with_customer_id: order_by
   chat_with_service_provider: chat_order_by
@@ -7230,6 +7291,7 @@ input delivery_order_order_by {
   laundry: laundry_store_order_by
   laundry_delivery_order: laundry_order_order_by
   laundry_pickup_order: laundry_order_order_by
+  lock_time: order_by
   notification_token: order_by
   order_time: order_by
   order_type: order_by
@@ -7254,6 +7316,14 @@ input delivery_order_order_by {
 """primary key columns input for table: delivery.order"""
 input delivery_order_pk_columns_input {
   id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input delivery_order_prepend_input {
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: jsonb
 }
 
 """
@@ -7524,6 +7594,9 @@ enum delivery_order_select_column {
   cancellation_time
 
   """column name"""
+  change_price_request
+
+  """column name"""
   chat_with_customer_id
 
   """column name"""
@@ -7573,6 +7646,9 @@ enum delivery_order_select_column {
 
   """column name"""
   id
+
+  """column name"""
+  lock_time
 
   """column name"""
   order_time
@@ -7645,6 +7721,11 @@ input delivery_order_set_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
+
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: jsonb
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   current_gps: geography
@@ -7664,6 +7745,7 @@ input delivery_order_set_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -7855,6 +7937,11 @@ input delivery_order_stream_cursor_value_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
+
+  """
+  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  """
+  change_price_request: jsonb
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   current_gps: geography
@@ -7874,6 +7961,7 @@ input delivery_order_stream_cursor_value_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  lock_time: timestamp
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -7971,6 +8059,9 @@ enum delivery_order_update_column {
   cancellation_time
 
   """column name"""
+  change_price_request
+
+  """column name"""
   chat_with_customer_id
 
   """column name"""
@@ -8022,6 +8113,9 @@ enum delivery_order_update_column {
   id
 
   """column name"""
+  lock_time
+
+  """column name"""
   order_time
 
   """column name"""
@@ -8068,8 +8162,30 @@ enum delivery_order_update_column {
 }
 
 input delivery_order_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: delivery_order_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: delivery_order_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: delivery_order_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: delivery_order_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: delivery_order_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: delivery_order_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
@@ -14872,8 +14988,30 @@ type mutation_root {
   update data of the table: "delivery.order"
   """
   update_delivery_order(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: delivery_order_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: delivery_order_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: delivery_order_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: delivery_order_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: delivery_order_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: delivery_order_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: delivery_order_set_input
@@ -14886,8 +15024,30 @@ type mutation_root {
   update single row of the table: "delivery.order"
   """
   update_delivery_order_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: delivery_order_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: delivery_order_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: delivery_order_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: delivery_order_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: delivery_order_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: delivery_order_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: delivery_order_set_input
@@ -33707,6 +33867,23 @@ type subscription_root {
     """filter the rows returned"""
     where: valid_types_service_provider_type_bool_exp
   ): [valid_types_service_provider_type!]!
+}
+
+scalar timestamp
+
+"""
+Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
 }
 
 scalar timestamptz

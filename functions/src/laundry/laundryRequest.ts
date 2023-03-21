@@ -183,7 +183,7 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
                 orderId: laundryOrder.fromCustomerDeliveryId
             },
             background: deliveryNewOrderMessage,
-            linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
+            linkUrl: `/orders/${laundryOrder.fromCustomerDeliveryId}`
         }
         deliveryOperators.forEach((d) => {
             pushNotification(d.user?.firebaseId!, fromCustomerNotification, d.notificationInfo, ParticipantType.DeliveryOperator);

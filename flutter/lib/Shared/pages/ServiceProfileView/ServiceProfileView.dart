@@ -6,8 +6,8 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -15,6 +15,9 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
+    ["ServiceProfileView"];
 
 class ServiceProfileView extends StatefulWidget {
   final int? serviceDetailsId;
@@ -95,7 +98,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                             .service.serviceProviderType!);
                                   },
                                   icon: Icons.person,
-                                  label: "Info"),
+                                  label: "${_i18n()['info']}"),
                               _navigationLink(
                                   onClick: () async {
                                     if (_viewController.service.serviceLinkId !=
@@ -107,56 +110,10 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                               _viewController.serviceId,
                                           serviceProviderType: _viewController
                                               .service.serviceProviderType!);
-                                    } else {
-                                      showErrorSnackBar(
-                                          errorText:
-                                              "This service have no links please add them first");
                                     }
                                   },
                                   icon: Icons.support_agent,
-                                  label: "Operators"),
-                              _navigationLink(
-                                  onClick: () async {
-                                    if (_viewController.service.serviceLinkId !=
-                                        null) {
-                                      navigateToDrivers(
-                                          serviceLinkId: _viewController
-                                              .service.serviceLinkId!,
-                                          serviceProviderId:
-                                              _viewController.serviceId,
-                                          controllerType: _viewController
-                                              .service.serviceProviderType!);
-                                    } else {
-                                      showErrorSnackBar(
-                                          errorText:
-                                              "This service have no links please add them first");
-                                    }
-                                  },
-                                  icon: Icons.delivery_dining,
-                                  label: "Drivers"),
-                              _navigationLink(
-                                  onClick: () async {
-                                    await MezRouter.toNamed(
-                                        kserviceScheduleEdit);
-                                  },
-                                  icon: Icons.calendar_today,
-                                  label: "Schedule"),
-                              _navigationLink(
-                                  onClick: () async {
-                                    navigateToServicePayments(
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
-                                  },
-                                  icon: Icons.payment_rounded,
-                                  label: "Payments"),
-                              _navigationLink(
-                                  icon: Icons.star_rate_rounded,
-                                  onClick: () async {
-                                    await MezRouter.toNamed(kserviceReview);
-                                  },
-                                  label: "Reviews"),
+                                  label: "${_i18n()['operators']}"),
                               _navigationLink(
                                 onClick: () async {
                                   navigateToDeliverySettings(
@@ -168,12 +125,52 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                       serviceProviderType: _viewController
                                           .service.serviceProviderType!);
                                 },
-                                label: "Delivery",
+                                label: "${_i18n()['delivery']}",
                                 icon: Icons.delivery_dining,
                               ),
+                              if (_viewController.selfDelivery)
+                                _navigationLink(
+                                    onClick: () async {
+                                      if (_viewController
+                                              .service.serviceLinkId !=
+                                          null) {
+                                        navigateToDrivers(
+                                            serviceLinkId: _viewController
+                                                .service.serviceLinkId!,
+                                            serviceProviderId:
+                                                _viewController.serviceId,
+                                            controllerType: _viewController
+                                                .service.serviceProviderType!);
+                                      }
+                                    },
+                                    icon: Icons.people,
+                                    label: "${_i18n()['drivers']}"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    await MezRouter.toNamed(
+                                        kserviceScheduleEdit);
+                                  },
+                                  icon: Icons.calendar_month_rounded,
+                                  label: "${_i18n()['schedule']}"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    navigateToServicePayments(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
+                                  },
+                                  icon: Icons.credit_card,
+                                  label: "${_i18n()['payments']}"),
+                              _navigationLink(
+                                  icon: Icons.star_rate_rounded,
+                                  onClick: () async {
+                                    await MezRouter.toNamed(kserviceReview);
+                                  },
+                                  label: "${_i18n()['reviews']}"),
                               _navigationLink(
                                   icon: Icons.share,
-                                  label: "Share",
+                                  label: "${_i18n()['share']}",
                                   trailingWidget: MezIconButton(
                                     icon: Icons.copy,
                                     onTap: () {},
@@ -184,7 +181,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                         .read(getxPrivacyPolicyLink));
                                   },
                                   icon: Icons.privacy_tip,
-                                  label: "Privacy policies"),
+                                  label: "${_i18n()['privacyPolicies']}"),
                               _navigationLink(
                                   showDivider: false,
                                   onClick: () async {
@@ -194,7 +191,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   icon: Icons.logout,
                                   iconColor: Colors.red,
                                   labelWidget: Text(
-                                    'Logout',
+                                    "${_i18n()['logout']}",
                                     style: Get.textTheme.bodyLarge
                                         ?.copyWith(color: Colors.red),
                                   )),
@@ -207,8 +204,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                       ),
                       MezButton(
                         label: _viewController.service.state.isClosedIndef
-                            ? "Open service"
-                            : "Close Service",
+                            ? "${_i18n()['openService']}"
+                            : "${_i18n()['closeService']}",
                         icon: _viewController.service.state.isClosedIndef
                             ? Icons.lock_open
                             : Icons.lock,
@@ -273,7 +270,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
         () => MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: (asTab) ? null : MezRouter.back,
-          title: "Dashboard",
+          showNotifications: true,
+          title: "${_i18n()['profile']}",
           tabBar: (!_viewController.isApproved ||
                   _viewController.service.state.isClosedIndef)
               ? PreferredSize(
@@ -297,7 +295,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                               ),
                               Flexible(
                                 child: Text(
-                                  "Service is closed indefinitely",
+                                  "${_i18n()['serviceClosed']}",
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.bodyLarge
                                       ?.copyWith(color: Colors.redAccent),
@@ -311,7 +309,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                           padding: const EdgeInsets.all(12),
                           color: secondaryLightBlueColor,
                           child: Text(
-                            "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
+                            "${_i18n()['restaurantReview']}",
                             style: Get.textTheme.bodyLarge
                                 ?.copyWith(color: primaryBlueColor),
                           ),

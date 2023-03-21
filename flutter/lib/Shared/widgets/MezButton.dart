@@ -70,7 +70,9 @@ class _MezButtonState extends State<MezButton> {
             child: Ink(
               width: widget.width ?? double.infinity,
               height: widget.height,
+              
               decoration: BoxDecoration(
+                
                   color: (widget.enabled && widget.onClick != null)
                       ? (widget.backgroundColor != null)
                           ? widget.backgroundColor

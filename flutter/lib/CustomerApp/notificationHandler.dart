@@ -312,7 +312,7 @@ Notification newMessageNotification(String key, value) {
                 value["orderId"] != null ? int.parse(value["orderId"]) : null,
             recipientType: value["sender"]["particpantType"]
                 .toString()
-                .toParticipantType(),
+                .convertToParticipantType(),
           ),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],

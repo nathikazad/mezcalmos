@@ -128,7 +128,7 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
         updateDeliveryOrderStatus(deliveryOrder);
       }
       if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {
-        notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
+        notification.linkUrl = `orders/${deliveryOrder.deliveryId}`;
         pushNotification(deliveryOrder.deliveryDriver.user.firebaseId, 
           notification, 
           deliveryOrder.deliveryDriver.notificationInfo,
