@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -583,7 +584,7 @@ Future<int?> showReviewDialog(
                   } else {
                     customSnackBar(title: 'Error', subTitle: 'error');
                   }
-                  MezRouter.back(backResult: reviewId);
+                  await MezRouter.back(backResult: reviewId);
                 },
               ),
               SizedBox(height: 10),
@@ -691,6 +692,26 @@ void showSavedSnackBar({String? title, String? subtitle}) {
         Icons.check_circle,
         color: Colors.green,
       ));
+}
+
+void showSlowInternetSnackBar({required BuildContext context}) {
+  return internetErrorSnackbar(
+      title: "Internet Slow",
+      context: context,
+      duration: Duration(seconds: 1),
+      subTitle: "Your internet is currently slow",
+      backgroundColor: Colors.orange.shade100,
+      position: SnackPosition.TOP,
+      textColor: Colors.orange.shade600,
+      icon: Icon(
+        Icons.info,
+        color: Colors.orange.shade600,
+        size: 35,
+      ));
+}
+
+void closeAllSnackbars({String? title, String? subtitle}) {
+  ScaffoldMessenger.of(QR.context!).clearSnackBars();
 }
 
 void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {

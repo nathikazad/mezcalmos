@@ -68,16 +68,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
 
   return AppBar(
       elevation: 0,
-      bottom: PreferredSize(
-          child: Column(
-            children: [
-              if (tabBar != null) tabBar,
-              if (true)
-                _slowInternetBar(),
-            ],
-          ),
-          preferredSize:
-              Size(double.infinity, (tabBar != null) ? 45 + tabbarHeight : 45)),
+      bottom: tabBar,
       automaticallyImplyLeading: false,
       leading: (showLeftBtn) ? _getRightLeading() : null,
       actions: [
@@ -114,44 +105,6 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                       actionLength: 2,
                       showLogo: (Get.width > 320) ? true : false),
                 ));
-}
-
-Container _slowInternetBar() {
-  return Container(
-                height: 45,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                decoration: BoxDecoration(
-                  color: offRedColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.info,
-                      color: Colors.redAccent,
-                      size: 17.sp,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 3),
-                      child: Text(
-                        "You have slow internet",
-                        style: TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13.sp,
-                          color: Colors.redAccent,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              );
 }
 
 Widget _noUserButton() {

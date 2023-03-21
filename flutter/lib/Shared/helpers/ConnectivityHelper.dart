@@ -53,15 +53,16 @@ class ConnectivityHelper {
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
         .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
+    return InternetStatus.Slow;
     // mezDbgPrint('ping() executed in ${stopwatch.elapsed.inMilliseconds}');
-    if (results.contains(false)) {
-      return InternetStatus.Offline;
-    } else {
-      if (stopwatch.elapsed.inMilliseconds < 3000)
-        return InternetStatus.Online;
-      else
-        return InternetStatus.Slow;
-    }
+    // if (results.contains(false)) {
+    //   return InternetStatus.Offline;
+    // } else {
+    //   if (stopwatch.elapsed.inMilliseconds < 3000)
+    //     return InternetStatus.Online;
+    //   else
+    //     return InternetStatus.Slow;
+    // }
   }
 
   Future<bool> _pingServer(String pingUrl) async {
