@@ -74,6 +74,7 @@ class _MezButtonState extends State<MezButton> {
               width: widget.width ?? double.infinity,
               height: widget.height,
               decoration: BoxDecoration(
+                  gradient: widget.withGradient ? bluePurpleGradient : null,
                   border: widget.border,
                   color: (widget.enabled && widget.onClick != null)
                       ? (widget.backgroundColor != null)
