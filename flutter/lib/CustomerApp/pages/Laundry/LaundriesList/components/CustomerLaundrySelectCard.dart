@@ -163,8 +163,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             customerLocation, laundry.info.location.toLocationData()) /
         1000;
     final num deliveryCost =
-        ((customerDistance * laundry.deliveryCost.costPerKm) / 5).round() * 5;
-    return max(laundry.deliveryCost.minimumCost, (2 * deliveryCost));
+        ((customerDistance * laundry.deliveryCost!.costPerKm) / 5).round() * 5;
+    return max(laundry.deliveryCost!.minimumCost, (2 * deliveryCost));
   }
 
   String _getDollarsSign() {
