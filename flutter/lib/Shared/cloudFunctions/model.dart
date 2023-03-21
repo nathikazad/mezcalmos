@@ -1,30 +1,38 @@
 class SendOtpResponse {
-  String? errorMessage;
+  bool success;
+  SendOtpError? error;
+  String? unhandledError;
   num? secondsLeft;
-  ServerResponseStatus status;
-  SendOtpResponse(this.errorMessage, this.secondsLeft, this.status);
+  SendOtpResponse(this.success, this.error, this.unhandledError, this.secondsLeft);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "errorMessage": errorMessage,
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
       "secondsLeft": secondsLeft,
-      "status": status,
     };
   }
 factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return SendOtpResponse(json["errorMessage"], json["secondsLeft"], json["status"].toString().toServerResponseStatus());
+   return SendOtpResponse(json["success"], json["error"].toString().toSendOtpError(), json["unhandledError"], json["secondsLeft"]);
   }
 }
 
 class AuthResponse {
+  bool success;
+  AuthOtpError? error;
+  String? unhandledError;
   String? token;
-  AuthResponse(this.token);
+  AuthResponse(this.success, this.error, this.unhandledError, this.token);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
       "token": token,
     };
   }
 factory AuthResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AuthResponse(json["token"]);
+   return AuthResponse(json["success"], json["error"].toString().toAuthOtpError(), json["unhandledError"], json["token"]);
   }
 }
 
@@ -175,15 +183,21 @@ extension ParseStringToParticipantType on String {
 
 
 class CallUserResponse {
-  num id;
-  String token;
+  bool success;
+  CallUserError? error;
+  String? unhandledError;
+  num? id;
+  String? token;
   String? name;
   String? image;
-  String expirationTime;
-  ParticipantType participantType;
-  CallUserResponse(this.id, this.token, this.name, this.image, this.expirationTime, this.participantType);
+  String? expirationTime;
+  ParticipantType? participantType;
+  CallUserResponse(this.success, this.error, this.unhandledError, this.id, this.token, this.name, this.image, this.expirationTime, this.participantType);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
       "id": id,
       "token": token,
       "name": name,
@@ -193,7 +207,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
     };
   }
 factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CallUserResponse(json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"].toString().toParticipantType());
+   return CallUserResponse(json["success"], json["error"].toString().toCallUserError(), json["unhandledError"], json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"].toString().toParticipantType());
   }
 }
 
@@ -609,6 +623,38 @@ extension ParseStringToServerResponseStatus on String {
 }
 
 
+enum SendOtpError { UserNotFound, OTPAskedTooSoon, SMSSendError }
+extension ParseSendOtpErrorToString on SendOtpError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToSendOtpError on String {
+  SendOtpError toSendOtpError() {
+    return SendOtpError.values.firstWhere(
+        (SendOtpError sendOtpError) =>
+            sendOtpError.toFirebaseFormatString() == this);
+  }
+}
+
+
+enum AuthOtpError { InvalidOTPCode, ExceededNumberOfTries }
+extension ParseAuthOtpErrorToString on AuthOtpError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToAuthOtpError on String {
+  AuthOtpError toAuthOtpError() {
+    return AuthOtpError.values.firstWhere(
+        (AuthOtpError authOtpError) =>
+            authOtpError.toFirebaseFormatString() == this);
+  }
+}
+
+
 enum PaymentIntentError { ServiceProviderDetailsNotFound, CardNotAccepted, StripeNotWorking, CustomerNotFound, NoCustomerStripeInfo, CustomerUpdateError }
 extension ParsePaymentIntentErrorToString on PaymentIntentError {
   String toFirebaseFormatString() {
@@ -685,6 +731,22 @@ extension ParseStringToUpdateStripeError on String {
     return UpdateStripeError.values.firstWhere(
         (UpdateStripeError updateStripeError) =>
             updateStripeError.toFirebaseFormatString() == this);
+  }
+}
+
+
+enum CallUserError { ChatNotFound, RecipientNotAvailable, CallerNotInParticipants }
+extension ParseCallUserErrorToString on CallUserError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToCallUserError on String {
+  CallUserError toCallUserError() {
+    return CallUserError.values.firstWhere(
+        (CallUserError callUserError) =>
+            callUserError.toFirebaseFormatString() == this);
   }
 }
 
