@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -58,6 +59,7 @@ class _WrapperState extends State<Wrapper> {
         if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
           mezDbgPrint("No internet going so going to no internet page");
           unawaited(MezRouter.toNamed(SharedRoutes.kNoInternetRoute));
+         
         }
       } else {
         if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
@@ -68,10 +70,11 @@ class _WrapperState extends State<Wrapper> {
 
       if (internetStatus == InternetStatus.Slow) {
         mezDbgPrint("Slow Internet");
-
+ context.showSlowInternet();
         // @montasarre
         // show temporary slow internet bar
       } else {
+         context.hideSlowInternet();
         // unshow temporary slow internet bar
       }
     });

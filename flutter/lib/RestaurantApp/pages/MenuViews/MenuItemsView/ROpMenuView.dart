@@ -77,25 +77,21 @@ class _ROpMenuViewState extends State<ROpMenuView>
       },
       child: Obx(
         () => Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size(
-                double.infinity,
-                (viewController.reOrderMode.isFalse)
-                    ? kToolbarHeight * 2
-                    : kToolbarHeight),
-            child: MezcalmosAppBar(
-              !widget.canGoBack && viewController.reOrderMode.isFalse
-                  ? AppBarLeftButtonType.Menu
-                  : AppBarLeftButtonType.Back,
-              onClick: !widget.canGoBack && viewController.reOrderMode.isFalse
-                  ? null
-                  : handleBack,
-              // showLeftBtn: viewController.reOrderMode.isTrue ||
-              //     widget.canGoBack == false,
-              title: '${_i18n()["menu"]}',
-              showNotifications: true,
-              tabBar: (viewController.reOrderMode.isFalse) ? _tabBar() : null,
-            ),
+          appBar: MezcalmosAppBar(
+            tabbarHeight: (!viewController.reOrderMode.isFalse)
+                ? kToolbarHeight * 2
+                : kToolbarHeight,
+            !widget.canGoBack && viewController.reOrderMode.isFalse
+                ? AppBarLeftButtonType.Menu
+                : AppBarLeftButtonType.Back,
+            onClick: !widget.canGoBack && viewController.reOrderMode.isFalse
+                ? null
+                : handleBack,
+            // showLeftBtn: viewController.reOrderMode.isTrue ||
+            //     widget.canGoBack == false,
+            title: '${_i18n()["menu"]}',
+            showNotifications: true,
+            tabBar: (viewController.reOrderMode.isFalse) ? _tabBar() : null,
           ),
           key: Get.find<SideMenuDrawerController>().getNewKey(),
           drawer: ROpDrawer(),
