@@ -23,9 +23,9 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 class CustCourierOrderView extends StatefulWidget {
-  static Future<void> navigate(
-    int orderId,
-  ) {
+  static Future<void> navigate({
+    required int orderId,
+  }) {
     return MezRouter.toPath(CourierRoutes.kCourierOrderView
         .replaceFirst(":orderId", orderId.toString()));
   }
@@ -42,8 +42,10 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
 
   @override
   void initState() {
-    if (int.tryParse(Get.parameters['orderId'] ?? "") != null) {
-      viewController.init(orderId: int.parse(Get.parameters['orderId']!));
+    if (int.tryParse(MezRouter.urlArguments['orderId'].toString()) != null) {
+      viewController.init(
+          orderId: int.parse(MezRouter.urlArguments['orderId'].toString()),
+          context: context);
     } else {
       mezDbgPrint("Order id null from the parameters ######");
       MezRouter.back();
@@ -144,33 +146,37 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
     );
   }
 
-  Column _items() {
-    return Column(
-      children: List.generate(
-          viewController.order.items.length,
-          (int index) => MezExpandableCard(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    viewController.order.items[index].name,
-                    style: context.txt.bodyLarge,
-                  ),
-                  Text(
-                    "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)!.toPriceString()}",
-                    style: context.txt.bodyLarge,
-                  ),
-                ],
-              ),
-              imageUrl: viewController.order.items[index].image,
-              expandableWidget:
-                  (viewController.order.items[index].notes?.isNotEmpty == true)
-                      ? [
-                          Text(
-                            viewController.order.items[index].notes!,
-                          )
-                        ]
-                      : [])),
+  Widget _items() {
+    return Container(
+      margin: const EdgeInsets.only(top: 20),
+      child: Column(
+        children: List.generate(
+            viewController.order.items.length,
+            (int index) => MezExpandableCard(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      viewController.order.items[index].name,
+                      style: context.txt.bodyLarge,
+                    ),
+                    Text(
+                      "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)!.toPriceString()}",
+                      style: context.txt.bodyLarge,
+                    ),
+                  ],
+                ),
+                imageUrl: viewController.order.items[index].image,
+                expandableWidget:
+                    (viewController.order.items[index].notes?.isNotEmpty ==
+                            true)
+                        ? [
+                            Text(
+                              viewController.order.items[index].notes!,
+                            )
+                          ]
+                        : [])),
+      ),
     );
   }
 

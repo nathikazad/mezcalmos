@@ -10,7 +10,6 @@ import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -41,11 +40,9 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   int? courierId;
   @override
   void initState() {
-    courierId = int.tryParse(Get.parameters["courierId"] ?? "");
+    courierId = int.tryParse(MezRouter.urlArguments["courierId"].toString());
     if (courierId != null) {
       viewController.init(courierId: courierId!);
-    } else {
-      showErrorSnackBar();
     }
     super.initState();
   }

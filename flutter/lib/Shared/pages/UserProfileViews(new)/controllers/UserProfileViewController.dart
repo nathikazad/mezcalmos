@@ -32,6 +32,7 @@ class UserProfileViewController {
   bool get showImageSetter =>
       mode == UserProfileViewMode.Editing ||
       mode == UserProfileViewMode.FirstTime;
+      
   bool get isInfoSet {
     return (newImageFile.value != null || newImageUrl.value != null) &&
         name.value.isNotEmpty &&

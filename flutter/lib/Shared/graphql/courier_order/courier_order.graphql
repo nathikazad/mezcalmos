@@ -14,6 +14,7 @@ query get_courier_order_by_id($orderId: Int!) {
     
     to_location_address
     to_location_gps
+
   
     items {
       actual_cost
@@ -132,6 +133,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
     stripe_fees
     stripe_info
     
+    
     tax
     to_location_address
     to_location_gps
@@ -146,6 +148,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
       unavailable
     }
     delivery_order {
+      change_price_request
       schedule_time
         customer {
       user {
