@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
@@ -19,8 +20,9 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     VoidCallback? onClick,
     String? title,
     bool showLeftBtn = true,
+    bool showUserIcon = false,
     Widget? titleWidget,
-    bool showNotifications = false,
+    bool showNotifications = true,
     String? ordersRoute,
     bool showLoadingEffect = false,
     PreferredSizeWidget? tabBar,
@@ -69,6 +71,8 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       automaticallyImplyLeading: false,
       leading: (showLeftBtn) ? _getRightLeading() : null,
       actions: [
+        if (showUserIcon && !Get.find<AuthController>().isUserSignedIn)
+          _noUserButton(),
         if (showNotifications && Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
         if (ordersRoute != null && Get.find<AuthController>().isUserSignedIn)
@@ -100,6 +104,30 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                       actionLength: 2,
                       showLogo: (Get.width > 320) ? true : false),
                 ));
+}
+
+Widget _noUserButton() {
+  return Container(
+    // padding: const EdgeInsets.only(left: 3, right: 16),
+    child: InkWell(
+      customBorder: CircleBorder(),
+      onTap: () {
+        SignInView.navigateAtOrderTime();
+      },
+      child: Ink(
+        padding: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: secondaryLightBlueColor,
+        ),
+        child: Icon(
+          Icons.person,
+          size: 20,
+          color: primaryBlueColor,
+        ),
+      ),
+    ),
+  );
 }
 
 Widget _BackButtonAppBar({required VoidCallback? click}) {

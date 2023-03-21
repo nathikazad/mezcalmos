@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -15,6 +14,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesL
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -108,9 +108,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       child: Scaffold(
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
-        appBar: CustomerAppBar(
-          leftBtnType: AppBarLeftButtonType.Menu,
-        ),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
+            showUserIcon: true,
+            showNotifications: true,
+            ordersRoute: CustomerRoutes.customerOrdersRoute),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(10.0),
           child: Column(

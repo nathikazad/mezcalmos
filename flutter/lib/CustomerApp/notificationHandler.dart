@@ -7,11 +7,8 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-
-import 'pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -43,6 +40,17 @@ Notification customerNotificationHandler(
     case NotificationType.Call:
       //@saad needs to be implemented
       throw StateError("Callllll forgrouned notif!!");
+    case NotificationType.PriceChange:
+    //@saad needs to be implemented
+    // return Notification(
+    //     id: id,
+    //     timestamp: timestamp,
+    //     title: headline6,
+    //     body: body,
+    //     imgUrl: imgUrl,
+    //     linkUrl: linkUrl,
+    //     notificationType: notificationType,
+    //     notificationAction: notificationAction);
 
     default:
       throw StateError("Invalid Notification Type");

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/controllers/CustLaundriesListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
@@ -35,8 +35,9 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(
-        autoBack: true,
+      appBar: MezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: MezRouter.back,
         title: '${_i18n()["laundries"]}',
       ),
       body: SingleChildScrollView(
