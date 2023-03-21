@@ -37,8 +37,7 @@ class Restaurant extends Service {
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
   List<Operator> operators = [];
-  List<Review> reviews = <Review>[];
-  num? rate;
+
   bool selfDelivery;
   ServiceLink? serviceLink;
   List<Category> _categories = <Category>[];
@@ -46,7 +45,6 @@ class Restaurant extends Service {
   RestaurantsView restaurantsView;
   PaymentInfo? paymentInfo;
   Schedule? schedule;
-  DeliveryCost? deliveryCost;
   Restaurant({
     required ServiceInfo userInfo,
     this.restaurantsView = RestaurantsView.Rows,
@@ -55,8 +53,9 @@ class Restaurant extends Service {
     required ServiceState restaurantState,
     required Map<LanguageType, bool> languages,
     required super.serviceDetailsId,
-    this.deliveryCost,
-    this.rate,
+    super.deliveryCost,
+    super.reviews,
+    super.rate,
     this.serviceLink,
     this.deliveryDetailsId,
     this.selfDelivery = false,
@@ -271,10 +270,6 @@ class Restaurant extends Service {
     }
 
     return returnVal;
-  }
-
-  bool get showReviews {
-    return rate != null && reviews.isNotEmpty;
   }
 
   bool get hasSchedule {

@@ -85,6 +85,17 @@ query getDeliveryCompanies {
 query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
   delivery_get_delivery_companies(args: $args) {
     id
+     delivery_details {
+      cost_per_km
+      customer_pickup
+      delivery_available
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      radius
+      minimum_cost
+      self_delivery
+    }
     details {
       id
       approved

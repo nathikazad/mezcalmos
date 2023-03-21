@@ -3,16 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/controllers/CustCourierViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 
@@ -49,16 +47,13 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: BottomSheet(
-          enableDrag: false,
-          onClosing: () {},
-          builder: (_) => MezButton(
-                withGradient: true,
-                borderRadius: 0,
-                label: 'Order now',
-                onClick: () async {},
-              )),
+      bottomSheet: MezButton(
+        withGradient: true,
+        borderRadius: 0,
+        height: 75,
+        label: 'Order now',
+        onClick: () async {},
+      ),
       body: Obx(() {
         if (_viewController.hasData) {
           // view
@@ -75,39 +70,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: MezButton(
-                              label: "Chat with us",
-                              height: 32.5,
-                              backgroundColor: Colors.white,
-                              textColor: primaryBlueColor,
-                              onClick: () async {},
-                              icon: Icons.message,
-                              borderRadius: 20,
-                              border:
-                                  Border.all(width: 1, color: primaryBlueColor),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                            child: MezButton(
-                              label: "Contact us",
-                              height: 32.5,
-                              onClick: () async {},
-                              backgroundColor: Colors.white,
-                              textColor: primaryBlueColor,
-                              icon: Icons.phone,
-                              borderRadius: 20,
-                              border:
-                                  Border.all(width: 1, color: primaryBlueColor),
-                            ),
-                          ),
-                        ],
-                      ),
+                      __headerButtons(),
                       SizedBox(
                         height: 10,
                       ),
@@ -132,15 +95,22 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               ))
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Description',
-                        style: context.txt.bodyLarge,
-                      ),
-                      Text(
-                          'Founded on 2019, we are a delivery company and on a mission to ensure customer satisfaction.'),
+                      if (_viewController
+                              .company.info.description?[userLanguage] !=
+                          null)
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Description',
+                              style: context.txt.bodyLarge,
+                            ),
+                            Text(_viewController
+                                .company.info.description![userLanguage]!),
+                          ],
+                        ),
                       ServiceLocationCard(
                           location: _viewController.company.info.location),
                       /*OrderPaymentMethod(
@@ -149,78 +119,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                     paymentType: ,
                   ),*/
                       if (_viewController.company.showReviews)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Reviews', //'${_i18n()["reviews"]}',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: primaryBlueColor,
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                Text(
-                                  _viewController.company.rate!
-                                      .toStringAsFixed(1),
-                                  style: context.txt.bodyLarge
-                                      ?.copyWith(color: primaryBlueColor),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(bottom: 1),
-                                  child: Text(
-                                    "(${_viewController.company.reviews.length})",
-                                    style: context.txt.titleSmall?.copyWith(
-                                        color: offLightShadeGreyColor),
-                                  ),
-                                ),
-                                Spacer(),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Ink(
-                                    color: Colors.transparent,
-                                    padding: const EdgeInsets.all(10),
-                                    child: Text(
-                                      "View all",
-                                      style: context.txt.bodyLarge
-                                          ?.copyWith(color: primaryBlueColor),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            ListView.builder(
-                                padding: EdgeInsets.zero,
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount:
-                                    _viewController.company.reviews.length >= 3
-                                        ? 3
-                                        : _viewController
-                                            .company.reviews.length,
-                                itemBuilder: (BuildContext ctx, int index) {
-                                  return ReviewCard(
-                                    review:
-                                        _viewController.company.reviews[index],
-                                    showUserImage: false,
-                                  );
-                                }),
-                          ],
-                        )
+                        _reviewsList(context)
                     ],
                   ),
                 ),
@@ -234,6 +133,108 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
           );
         }
       }),
+    );
+  }
+
+  Widget _reviewsList(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            Text(
+              'Reviews', //'${_i18n()["reviews"]}',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Icon(
+              Icons.star,
+              color: primaryBlueColor,
+            ),
+            const SizedBox(
+              width: 2,
+            ),
+            Text(
+              _viewController.company.rate!.toStringAsFixed(1),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Container(
+              padding: const EdgeInsets.only(bottom: 1),
+              child: Text(
+                "(${_viewController.company.reviews.length})",
+                style: context.txt.titleSmall
+                    ?.copyWith(color: offLightShadeGreyColor),
+              ),
+            ),
+            Spacer(),
+            InkWell(
+              onTap: () {},
+              child: Ink(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  "View all",
+                  style:
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
+                ),
+              ),
+            )
+          ],
+        ),
+        ListView.builder(
+            padding: EdgeInsets.zero,
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: _viewController.company.reviews.length,
+            itemBuilder: (BuildContext ctx, int index) {
+              return ReviewCard(
+                review: _viewController.company.reviews[index],
+                showUserImage: false,
+              );
+            }),
+      ],
+    );
+  }
+
+  Widget __headerButtons() {
+    return Row(
+      children: [
+        Flexible(
+          child: MezButton(
+            label: "Chat with us",
+            height: 32.5,
+            backgroundColor: Colors.white,
+            textColor: primaryBlueColor,
+            onClick: () async {},
+            icon: Icons.message,
+            borderRadius: 20,
+            border: Border.all(width: 1, color: primaryBlueColor),
+          ),
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Flexible(
+          child: MezButton(
+            label: "Contact us",
+            height: 32.5,
+            onClick: () async {},
+            backgroundColor: Colors.white,
+            textColor: primaryBlueColor,
+            icon: Icons.phone,
+            borderRadius: 20,
+            border: Border.all(width: 1, color: primaryBlueColor),
+          ),
+        ),
+      ],
     );
   }
 }

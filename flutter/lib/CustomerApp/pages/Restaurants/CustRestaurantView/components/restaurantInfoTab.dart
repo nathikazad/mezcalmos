@@ -199,9 +199,7 @@ class RestaurantInfoTab extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: restaurant.reviews.length >= 3
-                      ? 3
-                      : restaurant.reviews.length,
+                  itemCount: restaurant.reviews.length,
                   itemBuilder: (BuildContext ctx, int index) {
                     return ReviewCard(
                       review: restaurant.reviews[index],

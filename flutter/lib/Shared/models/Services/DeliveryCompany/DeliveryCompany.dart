@@ -1,13 +1,10 @@
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
 class DeliveryCompany extends Service {
   int? deliveryDetailsId;
-  bool showReviews;
-  num? rate;
-  List<Review> reviews;
+
   DeliveryCompany(
       {this.deliveryDetailsId,
       required super.info,
@@ -15,9 +12,8 @@ class DeliveryCompany extends Service {
       required super.serviceDetailsId,
       required super.languages,
       required super.schedule,
-      required this.showReviews,
-      required this.reviews,
-      this.rate,
+      required super.deliveryCost,
+
       // required this.deliveryRaidus,
       required this.creationTime});
   // int deliveryRaidus;
@@ -29,15 +25,15 @@ class DeliveryCompany extends Service {
     Map<LanguageType, bool>? languages,
   }) {
     return DeliveryCompany(
-        info: userInfo ?? info,
-        schedule: schedule,
-        state: state ?? this.state,
-        serviceDetailsId: serviceDetailsId,
-        // deliveryRaidus: deliveryRaidus,
-        creationTime: creationTime,
-        languages: languages ?? this.languages,
-        showReviews: showReviews,
-        reviews: reviews);
+      info: userInfo ?? info,
+      schedule: schedule,
+      deliveryCost: deliveryCost,
+      state: state ?? this.state,
+      serviceDetailsId: serviceDetailsId,
+      // deliveryRaidus: deliveryRaidus,
+      creationTime: creationTime,
+      languages: languages ?? this.languages,
+    );
   }
 
   bool isOpen() {

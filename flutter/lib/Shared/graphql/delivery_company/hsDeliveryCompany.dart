@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -27,6 +28,15 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
   final Query$getDeliveryCompanyById$delivery_company_by_pk data =
       res.parsedData!.delivery_company_by_pk!;
   return DeliveryCompany(
+      deliveryCost: DeliveryCost(
+        id: data.delivery_details.id,
+        selfDelivery: data.delivery_details.self_delivery,
+        freeDeliveryMinimumCost:
+            data.delivery_details.free_delivery_minimum_cost,
+        costPerKm: data.delivery_details.cost_per_km,
+        minimumCost: data.delivery_details.minimum_cost,
+        freeDeliveryKmRange: data.delivery_details.free_delivery_km_range,
+      ),
       creationTime: DateTime.parse(data.details!.creation_time),
       schedule: Schedule.fromData(data.details!.schedule),
       deliveryDetailsId: data.delivery_details.id,
@@ -112,6 +122,15 @@ Future<List<DeliveryCompany>> get_nearby_companies(
   returnedList = dataList
       .map((Query$getNearByCompanies$delivery_get_delivery_companies data) {
     return DeliveryCompany(
+      deliveryCost: DeliveryCost(
+        id: data.delivery_details.id,
+        selfDelivery: data.delivery_details.self_delivery,
+        freeDeliveryMinimumCost:
+            data.delivery_details.free_delivery_minimum_cost,
+        costPerKm: data.delivery_details.cost_per_km,
+        minimumCost: data.delivery_details.minimum_cost,
+        freeDeliveryKmRange: data.delivery_details.free_delivery_km_range,
+      ),
       schedule: Schedule.fromData(data.details!.schedule),
       creationTime: DateTime.parse(data.details!.creation_time),
       info: ServiceInfo(
@@ -155,6 +174,15 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
       dataList.map((Query$getDeliveryCompanies$delivery_company data) {
     return DeliveryCompany(
       schedule: Schedule.fromData(data.details!.schedule),
+      deliveryCost: DeliveryCost(
+        id: data.delivery_details.id,
+        selfDelivery: data.delivery_details.self_delivery,
+        freeDeliveryMinimumCost:
+            data.delivery_details.free_delivery_minimum_cost,
+        costPerKm: data.delivery_details.cost_per_km,
+        minimumCost: data.delivery_details.minimum_cost,
+        freeDeliveryKmRange: data.delivery_details.free_delivery_km_range,
+      ),
       creationTime: DateTime.parse(data.details!.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
