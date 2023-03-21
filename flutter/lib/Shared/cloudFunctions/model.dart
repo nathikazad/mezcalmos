@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 class SendOtpResponse {
   String? errorMessage;
   num? secondsLeft;
@@ -12,6 +14,7 @@ class SendOtpResponse {
   }
 
   factory SendOtpResponse.fromFirebaseFormattedJson(json) {
+    mezDbgPrint("JSON ======>$json");
     return SendOtpResponse(json["errorMessage?"], json["secondsLeft?"],
         json["status"].toString().toServerResponseStatus());
   }
@@ -388,7 +391,7 @@ enum ServerResponseStatus { Success, Error }
 extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
+    return str;
   }
 }
 

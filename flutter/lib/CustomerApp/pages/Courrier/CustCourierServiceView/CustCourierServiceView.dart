@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/controllers/CustCourierViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -53,7 +54,10 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
         borderRadius: 0,
         height: 75,
         label: 'Order now',
-        onClick: () async {},
+        onClick: () async {
+          await CustRequestCourierView.navigate(
+              _viewController.company.info.hasuraId);
+        },
       ),
       body: Obx(() {
         if (_viewController.hasData) {
