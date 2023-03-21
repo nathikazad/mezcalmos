@@ -44,13 +44,15 @@ class AuthController extends GetxController {
 
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
+  bool userRedirectFinish = false;
   @override
   void onInit() {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    mezDbgPrint('Auth controller init!');
     _auth.authStateChanges().listen((fireAuth.User? user) async {
+      mezDbgPrint('Auth controller init! 👋👋👋👋👋');
+      userRedirectFinish = false;
       if (user?.toString() == _previousUserValue) {
         mezDbgPrint(
             'Authcontroller:: same sign in event fired again, skipping it');
