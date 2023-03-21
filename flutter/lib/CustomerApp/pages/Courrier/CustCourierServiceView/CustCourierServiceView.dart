@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -80,7 +81,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               label: Text(
-                                'Minimum cost \$50',
+                                'Minimum cost ${_viewController.company.deliveryCost?.minimumCost.toPriceString()}',
                                 style: TextStyle(fontSize: 15),
                               )),
                           SizedBox(
@@ -90,7 +91,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               label: Text(
-                                '\$10/km',
+                                '${_viewController.company.deliveryCost?.costPerKm.toPriceString()}/km',
                                 style: TextStyle(fontSize: 15),
                               ))
                         ],
