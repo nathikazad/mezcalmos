@@ -68,7 +68,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryId: deliveryId,
     serviceProviderId: response.delivery_order_by_pk.service_provider_id,
     orderType: response.delivery_order_by_pk.order_type as OrderType,
-    pickupLocation: (response.delivery_order_by_pk.pickup_gps) ? {
+    pickupLocation:  (response.delivery_order_by_pk.pickup_gps && response.delivery_order_by_pk.pickup_gps.coordinates && response.delivery_order_by_pk.pickup_address ) ? {
       lat: response.delivery_order_by_pk.pickup_gps.coordinates[1],
       lng: response.delivery_order_by_pk.pickup_gps.coordinates[0],
       address: response.delivery_order_by_pk.pickup_address,

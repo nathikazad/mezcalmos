@@ -1,3 +1,4 @@
+import { HttpsError } from "firebase-functions/v1/https";
 import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../../utilities/stripe/model";
 import { MezError } from "../../../models/Generic/Generic";

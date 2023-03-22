@@ -38,7 +38,7 @@ class CustRequestCourierViewController {
   RxList<int> imagesLoading = RxList.empty();
   TextEditingController fromLocText = TextEditingController();
   Rxn<MezLocation> fromLoc = Rxn();
-
+  RxMap<int, File> newImages = RxMap({});
   Rxn<MezLocation> toLoc = Rxn();
   Rxn<DateTime> deliveryTime = Rxn();
   Rxn<DeliveryCompany> company = Rxn();
@@ -231,6 +231,7 @@ class CustRequestCourierViewController {
   }
 
   void setToLocation(MezLocation location) {
+    File? data = newImages[1];
     toLoc.value = location;
     updateShippingPrice();
     mezDbgPrint("set to loc =========>${toLoc.value}");
