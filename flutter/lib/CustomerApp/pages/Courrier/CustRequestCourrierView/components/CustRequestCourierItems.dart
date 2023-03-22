@@ -114,6 +114,7 @@ class CustRequestCourierItems extends StatelessWidget {
                         image:
                             (viewController.imagesFiles[index].path.isNotEmpty)
                                 ? DecorationImage(
+                                    fit: BoxFit.cover,
                                     image: FileImage(
                                         viewController.imagesFiles[index]))
                                 : null,
