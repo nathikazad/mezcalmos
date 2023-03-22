@@ -298,6 +298,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
         title: MezEnv.appType.toShortString(),
         theme: appTheme,
         color: Colors.white,
+        
         routerDelegate: QRouterDelegate(
           routes,
           observers: [

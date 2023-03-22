@@ -694,14 +694,13 @@ void showSavedSnackBar({String? title, String? subtitle}) {
       ));
 }
 
-void showSlowInternetSnackBar({required BuildContext context}) {
-  return internetErrorSnackbar(
+void showSlowInternetSnackBar() {
+  return customSnackBar(
       title: "Internet Slow",
-      context: context,
       duration: Duration(seconds: 1),
       subTitle: "Your internet is currently slow",
       backgroundColor: Colors.orange.shade100,
-      position: SnackPosition.TOP,
+      position: Alignment.topCenter,
       textColor: Colors.orange.shade600,
       icon: Icon(
         Icons.info,

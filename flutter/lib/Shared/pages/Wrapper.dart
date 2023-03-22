@@ -69,11 +69,12 @@ class _WrapperState extends State<Wrapper> {
 
       if (internetStatus == InternetStatus.Slow) {
         mezDbgPrint("Slow Internet");
-        showSlowInternetSnackBar(context: context);
+        showSlowInternetSnackBar();
         // @montasarre
         // show temporary slow internet bar
       } else {
         closeAllSnackbars();
+        // showSlowInternetSnackBar();
         // unshow temporary slow internet bar
       }
     });
