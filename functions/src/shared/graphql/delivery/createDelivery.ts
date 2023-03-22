@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
-import { AppType } from "../../models/Generic/Generic";
+import { AppType, MezError } from "../../models/Generic/Generic";
 import { OrderType } from "../../models/Generic/Order";
 import { LaundryOrder } from "../../models/Services/Laundry/LaundryOrder";
 import { ServiceProvider } from "../../models/Services/Service";
@@ -78,10 +77,7 @@ export async function createLaundryToCustomerDeliveryOrder(
         }]
     });
     if(!(response.insert_delivery_order_one)) {
-        throw new HttpsError(
-            "internal",
-            "order creation error"
-        );
+        throw new MezError("orderCreationError");
     }
     await chain.mutation({
         update_laundry_order_by_pk: [{

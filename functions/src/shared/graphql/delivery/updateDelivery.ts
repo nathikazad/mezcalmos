@@ -1,6 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
+import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
 import { ChangePriceStatus, DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { MezError } from "../../models/Generic/Generic";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
@@ -152,10 +154,8 @@ export async function setLockTime(deliveryOrderId: number) {
   });
   console.log("affected rows: ", response.update_delivery_order?.affected_rows)
   if(response.update_delivery_order == null || response.update_delivery_order.affected_rows == 0) {
-    throw new HttpsError(
-      "internal",
-      "delivery driver already assigned"
-    );
+    
+    throw new MezError(AssignDriverError.DriverAlreadyAssigned);
   }
 
 }

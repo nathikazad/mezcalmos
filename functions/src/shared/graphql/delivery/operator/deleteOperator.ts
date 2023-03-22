@@ -1,6 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryOperator } from "../../../models/Generic/Delivery";
+import { MezError } from "../../../models/Generic/Generic";
 
 export async function deleteDeliveryOperator(deliveryOperator: DeliveryOperator) {
     let chain = getHasura();
@@ -18,9 +18,6 @@ export async function deleteDeliveryOperator(deliveryOperator: DeliveryOperator)
         }]
     });
     if(!(response.delete_delivery_operator_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "incorrect delivery operator id"
-        );
+        throw new MezError("incorrectOperatorId");
     }
 }

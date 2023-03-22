@@ -1,6 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { AuthorizationStatus } from "../../models/Generic/Generic";
+import { AuthorizationStatus, MezError } from "../../models/Generic/Generic";
+import { AuthOperatorError } from "../../operator/authorizeOperator";
 
 export async function updateOperatorStatusToAuthorized(operatorDetailsId: number) {
     let chain = getHasura();
@@ -18,9 +18,6 @@ export async function updateOperatorStatusToAuthorized(operatorDetailsId: number
         }],
     });
     if(!(mutationResponse.update_service_provider_operator_details_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "operator details not found"
-        );
+        throw new MezError(AuthOperatorError.OperatorDetailsNotFound); 
     }
 }

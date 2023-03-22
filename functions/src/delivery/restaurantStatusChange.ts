@@ -5,34 +5,21 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import {  DeliveryOrder, DeliveryOrderStatus,  } from "../shared/models/Generic/Delivery";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getRestaurantOrderFromDelivery } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificationMessages";
-import { ChangeDeliveryStatusDetails } from "./statusChange";
 import { Operator } from "../shared/models/Services/Service";
 
 
 export async function changeRestaurantOrderStatus(
-  changeDeliveryStatusDetails: ChangeDeliveryStatusDetails,
   customer: CustomerInfo,
   deliveryOrder: DeliveryOrder
 ) {
-
-  let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(changeDeliveryStatusDetails.deliveryId);
+  let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(deliveryOrder.deliveryId);
   let restaurantOperators: Operator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
-
-
-  if (restaurantOrder.deliveryId != changeDeliveryStatusDetails.deliveryId) {
-    throw new HttpsError(
-      "internal",
-      "restaurant order and delivery order do not match"
-    );
-  }
-
 
   if (deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
     restaurantOrder.status = RestaurantOrderStatus.OnTheWay;
@@ -76,14 +63,14 @@ export async function changeRestaurantOrderStatus(
     })
   }
 
-  if (changeDeliveryStatusDetails.newStatus == DeliveryOrderStatus.Delivered) {
+  if (deliveryOrder.status == DeliveryOrderStatus.Delivered) {
     if (restaurantOrder.paymentType == PaymentType.Card) {
       let paymentDetails: PaymentDetails = {
         orderId: restaurantOrder.orderId!,
         serviceProviderDetailsId: restaurantOrder.spDetailsId,
         orderStripePaymentInfo: restaurantOrder.stripeInfo!
       }
-      capturePayment(paymentDetails, restaurantOrder.totalCost)
+      await capturePayment(paymentDetails, restaurantOrder.totalCost)
     }
   }
 }

@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../../utilities/stripe/model";
 import { DeliveryDirection, DeliveryOrder } from "../../../models/Generic/Delivery";
+import { MezError } from "../../../models/Generic/Generic";
 import { LaundryOrder } from "../../../models/Services/Laundry/LaundryOrder";
 
 export async function updateLaundryOrderStatus(order: LaundryOrder) {
@@ -40,10 +41,7 @@ export async function updateLaundryOrderStripe(orderId: number, orderStripePayme
         }]
     });
     if(!(response.update_laundry_order_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "error in updating order"
-        );
+        throw new MezError("updateOrderStripeError");
     }
 }
 

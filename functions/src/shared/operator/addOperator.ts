@@ -1,6 +1,7 @@
 import { pushNotification } from "../../utilities/senders/notifyUser";
 import { createDeliveryOperator } from "../graphql/delivery/operator/createDeliveryOperator";
 import { getDeliveryOperators } from "../graphql/delivery/operator/getDeliveryOperator";
+import { getServiceProviderFromUniqueId } from "../graphql/getServiceProvider";
 import { createLaundryOperator } from "../graphql/laundry/operator/createLaundryOperator";
 import { getLaundryOperators } from "../graphql/laundry/operator/getLaundryOperator";
 import { createRestaurantOperator } from "../graphql/restaurant/operators/createRestaurantOperator";
@@ -8,45 +9,79 @@ import { getRestaurantOperators } from "../graphql/restaurant/operators/getResta
 import { getUser } from "../graphql/user/getUser";
 import { ParticipantType } from "../models/Generic/Chat";
 import { DeliveryOperator } from "../models/Generic/Delivery";
-import { NotificationInfo } from "../models/Generic/Generic";
+import { MezError } from "../models/Generic/Generic";
 import { UserInfo } from "../models/Generic/User";
 import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../models/Notification";
-import { Operator } from "../models/Services/Service";
-
+import { Operator, ServiceProvider, ServiceProviderType } from "../models/Services/Service";
 
 export interface AddOperatorDetails {
-    serviceProviderId: number,
-    participantType: ParticipantType
-    notificationInfo?: NotificationInfo,
+    uniqueId: string,
+    notificationToken?: string,
     appVersion?: string
 }
-export async function addOperator(operatorUserId: number, addOpDetails: AddOperatorDetails) {
-    let operatorUserInfo: UserInfo = await getUser(operatorUserId);
+export interface AddOperatorResponse {
+    success: boolean,
+    error?: AddOperatorError
+    unhandledError?: string,
+}
+export enum AddOperatorError {
+    UserNotFound = "userNotFound",
+    ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+    UserAlreadyAnOperator = "userAlreadyAnOperator",
+    OperatorCreationError = "operatorCreationError",
+    RestaurantNotfound = "restaurantNotfound",
+    DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+    LaundryStoreNotfound = "laundryStoreNotfound"
+}
+export async function addOperator(operatorUserId: number, addOpDetails: AddOperatorDetails): Promise<AddOperatorResponse> {
+    try {
+        let operatorUserInfo: UserInfo = await getUser(operatorUserId);
+        let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addOpDetails.uniqueId)
 
-    switch (addOpDetails.participantType) {
-        case ParticipantType.RestaurantOperator:
-            await createRestaurantOperator(operatorUserId, addOpDetails);
-            break;
-        case ParticipantType.DeliveryOperator:
-            await createDeliveryOperator(operatorUserId, addOpDetails)
-            break;
-        case ParticipantType.LaundryOperator:
-            await createLaundryOperator(operatorUserId, addOpDetails)
-            break;
-        default:
-            break;
+        switch (serviceProvider.serviceProviderType) {
+            case ServiceProviderType.Restaurant:
+                await createRestaurantOperator(operatorUserId, addOpDetails, serviceProvider);
+                break;
+            case ServiceProviderType.Delivery:
+                await createDeliveryOperator(operatorUserId, addOpDetails, serviceProvider)
+                break;
+            case ServiceProviderType.Laundry:
+                await createLaundryOperator(operatorUserId, addOpDetails, serviceProvider)
+                break;
+            default:
+                break;
+        }
+        
+        notify(operatorUserInfo, serviceProvider);
+        return {
+            success: true
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(AddOperatorError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
     }
-    
-    notify(operatorUserInfo, addOpDetails);
 }
 
-async function notify(operatorUserInfo: UserInfo, addOpDetails: AddOperatorDetails) {
+async function notify(operatorUserInfo: UserInfo, serviceProvider: ServiceProvider) {
 
     let notification: Notification = {
         foreground: <AuthorizeOperatorNotification>{
             newOperatorName: operatorUserInfo.name,
             newOperatorImage: operatorUserInfo.image,
-            serviceProviderId: addOpDetails.serviceProviderId,
+            serviceProviderId: serviceProvider.id,
             time: (new Date()).toISOString(),
             notificationType: NotificationType.AuthorizeOperator,
             notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
@@ -64,9 +99,9 @@ async function notify(operatorUserInfo: UserInfo, addOpDetails: AddOperatorDetai
         linkUrl: `/`
     };
     let operators: Operator[];
-    switch (addOpDetails.participantType) {
-        case ParticipantType.RestaurantOperator:
-            operators = await getRestaurantOperators(addOpDetails.serviceProviderId);
+    switch (serviceProvider.serviceProviderType) {
+        case ServiceProviderType.Restaurant:
+            operators = await getRestaurantOperators(serviceProvider.id);
             operators.forEach((o) => {
                 if (o.owner && o.user) {
                     pushNotification(
@@ -79,8 +114,8 @@ async function notify(operatorUserInfo: UserInfo, addOpDetails: AddOperatorDetai
                 }
             });
             break;
-        case ParticipantType.DeliveryOperator:
-            let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(addOpDetails.serviceProviderId);
+        case ServiceProviderType.Delivery:
+            let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(serviceProvider.id);
             deliveryOperators.forEach((o) => {
                 if (o.owner && o.user) {
                     pushNotification(
@@ -93,8 +128,8 @@ async function notify(operatorUserInfo: UserInfo, addOpDetails: AddOperatorDetai
                 }
             });
             break;
-        case ParticipantType.LaundryOperator:
-            operators = await getLaundryOperators(addOpDetails.serviceProviderId);
+        case ServiceProviderType.Laundry:
+            operators = await getLaundryOperators(serviceProvider.id);
             operators.forEach((o) => {
                 if (o.owner && o.user) {
                     pushNotification(

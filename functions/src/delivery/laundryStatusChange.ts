@@ -1,6 +1,5 @@
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
@@ -9,7 +8,6 @@ import { Operator, ServiceProvider } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { PaymentDetails, capturePayment } from "../utilities/stripe/payment";
-import { ChangeDeliveryStatusDetails } from "./statusChange";
 import { getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/getLaundryOrder";
 import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
 import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
@@ -22,7 +20,6 @@ import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDel
 
 
 export async function changeLaundryOrderStatus(
-  changeDeliveryStatusDetails: ChangeDeliveryStatusDetails,
   customer: CustomerInfo,
   deliveryOrder: DeliveryOrder
 ) {
@@ -30,14 +27,6 @@ export async function changeLaundryOrderStatus(
   let laundryOrder: LaundryOrder = await getLaundryOrderFromDelivery(deliveryOrder);
   let laundryOperators: Operator[] = await getLaundryOperators(laundryOrder.storeId);
 
-  if ((laundryOrder.fromCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId) 
-    && (laundryOrder.toCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId)
-  ) {
-    throw new HttpsError(
-      "internal",
-      "laundry order and delivery order do not match"
-    );
-  }
   switch (deliveryOrder.direction) {
     case DeliveryDirection.FromCustomer:
       switch (deliveryOrder.status) {

@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, Language } from "../../../models/Generic/Generic";
+import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { Operator } from "../../../models/Services/Service";
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
 
@@ -43,10 +42,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
     }]
   });
   if(response.restaurant_operator == null) {
-    throw new HttpsError(
-      "internal",
-      "No restaurant with that id found"
-    );
+    throw new MezError("restaurantNotfound");
   }
   
   return response.restaurant_operator.map((r): Operator => {
@@ -98,10 +94,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     }]
   });
   if(response.restaurant_operator_by_pk == null) {
-    throw new HttpsError(
-      "internal",
-      "No restaurant operator with that id found"
-    );
+    throw new MezError("operatorNotFound");
   }
   return {
     id: restaurantOperatorId,
@@ -154,10 +147,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
     }]
   });
   if(response.restaurant_operator == null) {
-    throw new HttpsError(
-      "internal",
-      "No restaurant operator with that user id or restaurant id found"
-    );
+    throw new MezError("operatorNotFound");
   }
   return {
     id: response.restaurant_operator[0].id,

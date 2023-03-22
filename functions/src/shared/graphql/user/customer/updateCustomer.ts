@@ -1,17 +1,13 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { customer_stripe_cards_constraint, customer_stripe_sp_id_constraint } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../../utilities/hasura";
+import { MezError } from "../../../models/Generic/Generic";
 import { CustomerInfo } from "../../../models/Generic/User";
 
 export async function updateCustomerStripe(customer: CustomerInfo) {
     let chain = getHasura();
     if(customer.stripeInfo == null) {
-        throw new HttpsError(
-            "internal",
-            "Customer stripe info is not provided"
-        );
+        throw new MezError("noCustomerStripeInfo");
     }
-
     let stripeCardsArray = [];
     for(let cardId in customer.stripeInfo.cards) {
         let card = customer.stripeInfo.cards[cardId];
@@ -67,9 +63,6 @@ export async function updateCustomerStripe(customer: CustomerInfo) {
         }],
     });
     if(!(response.update_customer_customer_by_pk)) {
-        throw new HttpsError(
-          "internal",
-          "customer update error"
-        );
+        throw new MezError("customerUpdateError");
     }
 }

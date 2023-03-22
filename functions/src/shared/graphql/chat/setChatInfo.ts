@@ -1,7 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { ParticipantType } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
+import { MezError } from "../../models/Generic/Generic";
 import { DeliveryType, OrderType } from "../../models/Generic/Order";
 import { CustomerInfo } from "../../models/Generic/User";
 import { CourierOrder } from "../../models/Services/Courier/Courier";
@@ -12,16 +12,10 @@ import { ServiceProvider } from "../../models/Services/Service";
 export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: ServiceProvider, delivery: DeliveryOrder, customer: CustomerInfo) {
 
   if(restaurantOrder.chatId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No chat id"
-    );
+    throw new MezError("noChatId");
   }
   if(delivery.chatWithServiceProviderId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No delivery chat with restaurant id"
-    );
+    throw new MezError("noRestaurantDeliveryChatId");
   }
   let chain = getHasura();
   
@@ -122,19 +116,13 @@ export async function setLaundryOrderChatInfo(
   fromCustomerDelivery: DeliveryOrder,
   customer: CustomerInfo
 ) {
-  if(laundryOrder.chatId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No chat id"
-    );
-  }
   
   let chain = getHasura();
   
   chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
-        id: laundryOrder.chatId,
+        id: laundryOrder.chatId!,
       },
       _set: {
         chat_info: JSON.stringify({
@@ -167,12 +155,6 @@ export async function setLaundryOrderChatInfo(
   });
   if(laundryOrder.deliveryType == DeliveryType.Delivery) {
     
-    if(fromCustomerDelivery.chatWithServiceProviderId == undefined) {
-      throw new HttpsError(
-        "internal",
-        "No delivery chat with store id"
-      );
-    }
     let chatInfo: any = {
       DeliveryApp: {
         chatTitle: customer.name ?? "Customer",
@@ -221,7 +203,7 @@ export async function setLaundryOrderChatInfo(
     chain.mutation({
       update_chat_by_pk: [{
         pk_columns: {
-          id: fromCustomerDelivery.chatWithServiceProviderId
+          id: fromCustomerDelivery.chatWithServiceProviderId!
         },
         _set: {
           chat_info: JSON.stringify(chatInfo)
@@ -241,10 +223,7 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
   let chain = getHasura();
     
     if(toCustomerDelivery.chatWithServiceProviderId == undefined) {
-      throw new HttpsError(
-        "internal",
-        "No delivery chat with store id"
-      );
+      throw new MezError("noDeliveryChatWithStoreId");
     }
     let chatInfo: any = {
       DeliveryApp: {
@@ -310,10 +289,7 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
   let chain = getHasura();
 
   if((orderType != OrderType.Courier) && delivery.chatWithServiceProviderId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No delivery chat with service provider id"
-    );
+    throw new MezError("serviceProviderDeliveryChatNotFound");
   }
   let response = await chain.query({
     chat_by_pk: [{

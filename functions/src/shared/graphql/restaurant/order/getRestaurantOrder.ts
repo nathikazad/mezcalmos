@@ -1,9 +1,8 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
+import { AppType, CustomerAppType, Language, Location, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
-import { Operator } from "../../../models/Services/Service";
+import { Operator, ServiceProviderType } from "../../../models/Services/Service";
 import { AuthorizationStatus } from "../../../models/Generic/Generic"
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {
@@ -63,10 +62,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     ]
   })
   if(response.restaurant_order_by_pk == null) {
-    throw new HttpsError(
-      "internal",
-      "No order with that id found"
-    );
+    throw new MezError("orderNotFound");
   }
   
   let toLocation: Location = {
@@ -170,10 +166,7 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
     ]
   })
   if(response.restaurant_order.length == 0) {
-    throw new HttpsError(
-      "internal",
-      "No order with that id found"
-    );
+    throw new MezError("orderNotFound");
   }
   
   let toLocation: Location = {
@@ -207,7 +200,7 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
     items,
     stripeInfo: JSON.parse(response.restaurant_order[0].stripe_info),
     totalCost: parseFloat(response.restaurant_order[0].total_cost.replace("$","")),
-    deliveryId: response.restaurant_order[0].delivery_id
+    deliveryId: deliveryOrderId
   }
   return restaurantOrder;
 }
@@ -341,6 +334,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       items,
       restaurant: (o.restaurant.details) ? {
         id: o.restaurant.id,
+        serviceProviderType: ServiceProviderType.Restaurant,
         serviceProviderDetailsId: o.restaurant.details_id,
         name: o.restaurant.details.name,
         image: o.restaurant.details.image,

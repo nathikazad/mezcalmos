@@ -1,10 +1,9 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder } from "../../../models/Generic/Delivery";
-import { AppType, AuthorizationStatus, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, CustomerAppType, Language, Location, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { LaundryOrder, LaundryOrderStatus, OrderCategory } from "../../../models/Services/Laundry/LaundryOrder";
-import { Operator } from "../../../models/Services/Service";
+import { Operator, ServiceProviderType } from "../../../models/Services/Service";
 
 export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
     let chain = getHasura();
@@ -68,10 +67,7 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
         ]
     })
     if(response.laundry_order_by_pk == null) {
-      throw new HttpsError(
-        "internal",
-        "No order with that id found"
-      );
+      throw new MezError("orderNotFound");
     }
     
     let customerLocation: Location = {
@@ -193,10 +189,7 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
     ]
   })
   if(response.laundry_order.length == 0) {
-    throw new HttpsError(
-      "internal",
-      "No order with that id found"
-    );
+    throw new MezError("orderNotFound");
   }
   
   let customerLocation: Location = {
@@ -439,6 +432,7 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
       categories,
       laundryStore: (o.store.details) ? {
         id: o.store.id,
+        serviceProviderType: ServiceProviderType.Laundry,
         serviceProviderDetailsId: o.store.details_id,
         name: o.store.details.name,
         image: o.store.details.image,

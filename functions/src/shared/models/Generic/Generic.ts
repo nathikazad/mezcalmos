@@ -13,6 +13,16 @@ export interface Review {
   toEntityType: string
 }
 
+export class MezError extends Error {
+  details: Record<string, any>;
+  constructor(message: string, details: Record<string, any> = {}){
+    super(message);
+    this.details = details;      
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
 export enum Language {
   EN = "en",
   ES = "es",

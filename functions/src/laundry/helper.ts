@@ -1,9 +1,9 @@
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Generic/Order";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getLaundryCheckDetails } from "../shared/graphql/laundry/laundryCheck";
 import { isMezAdmin } from "../shared/helper";
+import { MezError } from "../shared/models/Generic/Generic";
 
 export async function finishOrder(
   order: LaundryOrder,
@@ -66,24 +66,15 @@ export async function passChecksForLaundry(orderId: number, userId: number) {
   let order = response.laundry_order_by_pk;
 
   if (order == null) {
-    throw new HttpsError(
-      "internal",
-      "order does not exist"
-    );
+    throw new MezError("orderNotFound");
   }
 
   if((await isMezAdmin(userId)) == false) {
     if (response.laundry_operator.length == 0) {
-      throw new HttpsError(
-        "internal",
-        "Only authorized laundry operators or MezAdmin can run this operation"
-      );
+      throw new MezError("unauthorizedAccess");
     }
     if(response.laundry_operator[0].store_id != order.store_id) {
-      throw new HttpsError(
-        "internal",
-        "Only authorized laundry operators can run this operation"
-      );
+      throw new MezError("incorrectOrderId");
     }
   }
 }

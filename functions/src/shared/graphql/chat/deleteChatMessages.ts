@@ -1,15 +1,12 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryOrder } from "../../models/Generic/Delivery";
+import { MezError } from "../../models/Generic/Generic";
 
 export async function deleteDeliveryChatMessagesAndParticipant(deliveryOrder: DeliveryOrder/*, deliveryDriver: DeliveryDriver*/) {
   let chain = getHasura();
 
   if(deliveryOrder.chatWithServiceProviderId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No delivery chat with restaurant id"
-    );
+    throw new MezError("serviceProviderDeliveryChatNotFound");
   }
   await chain.mutation({
     update_chat_by_pk: [{
