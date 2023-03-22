@@ -5,10 +5,13 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -59,6 +62,12 @@ class CustRequestCourierViewController {
     unawaited(
         get_delivery_cost(deliveryDetailsId: company.value!.deliveryDetailsId!)
             .then((DeliveryCost? value) => deliveryCost = value));
+    toLoc.value = Get.find<CustomerAuthController>()
+        .customer
+        ?.savedLocations
+        .firstWhereOrNull(
+            (SavedLocation element) => element.defaultLocation == true)
+        ?.location;
 
     addNewEmptyItem();
   }
@@ -109,7 +118,8 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _makeOrder() async {
-    mezDbgPrint("Making a courier order ========");
+    mezDbgPrint("Making a courier order ========> ${toLoc.value}");
+    await _uploadItemsImages();
     try {
       cModel.CreateCourierResponse res =
           await CloudFunctions.delivery2_createCourierOrder(
@@ -143,6 +153,15 @@ class CustRequestCourierViewController {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     }
+  }
+
+  Future<void> _uploadItemsImages() async {
+    imagesFiles.forEach((File element) async {
+      String _imgUrl = await Get.find<AuthController>().uploadImgToFbStorage(
+          imageFile: element,
+          path: "/Courier/items/${DateTime.now().toIso8601String()}");
+      imagesUrls.add(_imgUrl);
+    });
   }
 
   void addFromLoc({required MezLocation location, String? address}) {
@@ -213,5 +232,6 @@ class CustRequestCourierViewController {
   void setToLocation(MezLocation location) {
     toLoc.value = location;
     updateShippingPrice();
+    mezDbgPrint("set to loc =========>${toLoc.value}");
   }
 }

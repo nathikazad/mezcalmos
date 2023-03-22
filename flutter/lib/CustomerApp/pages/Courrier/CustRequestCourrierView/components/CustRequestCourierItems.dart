@@ -162,12 +162,6 @@ class CustRequestCourierItems extends StatelessWidget {
             hint: "Estimated cost",
             context: context,
             suffix: Icons.attach_money,
-            validator: (String? p0) {
-              if (p0 == null || p0.isEmpty) {
-                return "Required";
-              }
-              return null;
-            },
             controller: viewController.itemsEstCosts[index]),
       ],
     );

@@ -51,10 +51,10 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   @override
   void initState() {
+    mezDbgPrint("PAssed in loc ======>${widget.passedInLocation}");
     super.initState();
     // default ID: _pick_ , stands for our  Pick From Map
     getSavedLocation();
-    // TODO:544D-HASURA - set _pick_ .
 
     pickLocationPlaceholder = SavedLocation(
       name: _i18n()["pickLocation"],
@@ -74,8 +74,12 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               (SavedLocation element) => element.defaultLocation) ??
           pickLocationPlaceholder;
     } else if (listOfSavedLoacations.isNotEmpty) {
+      SavedLocation? fromPAssedLoc = listOfSavedLoacations.firstWhereOrNull(
+          (SavedLocation element) =>
+              element.location.position.latitude ==
+              widget.passedInLocation!.position.latitude);
       setState(() {
-        dropDownListValue = listOfSavedLoacations.first;
+        dropDownListValue = fromPAssedLoc ?? listOfSavedLoacations.first;
       });
     }
 

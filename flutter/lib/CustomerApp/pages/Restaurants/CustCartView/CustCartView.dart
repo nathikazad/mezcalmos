@@ -76,7 +76,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   isServiceOpen: viewController.cart.restaurant!.isOpen(),
                   numberOfDays: viewController.cart.isSpecial ? 1 : 7,
                   onValue: (DateTime? value) {
-                    viewController.setDeliveryTime(value!);
+                    viewController.setDeliveryTime(value);
+                  },
+                  onClear: () {
+                    viewController.setDeliveryTime(null);
                   },
                   periodOfTime: viewController.cart.cartPeriod,
                   schedule: viewController.cart.restaurant!.schedule,

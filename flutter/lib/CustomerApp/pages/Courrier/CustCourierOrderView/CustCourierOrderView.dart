@@ -161,7 +161,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       style: context.txt.bodyLarge,
                     ),
                     Text(
-                      "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)!.toPriceString()}",
+                      "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)?.toPriceString() ?? "-"}",
                       style: context.txt.bodyLarge,
                     ),
                   ],

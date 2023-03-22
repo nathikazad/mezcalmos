@@ -95,7 +95,7 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         ShippingCostComponent(
-                          shippingCost: shippingCost!,
+                          shippingCost: shippingCost,
                         )
                       ],
                     ),

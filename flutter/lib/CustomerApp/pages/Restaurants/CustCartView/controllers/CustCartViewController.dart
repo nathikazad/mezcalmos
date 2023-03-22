@@ -428,7 +428,7 @@ class CustCartViewController {
     updateShippingPrice();
   }
 
-  void setDeliveryTime(DateTime dateTime) {
+  void setDeliveryTime(DateTime? dateTime) {
     _cartRxn.value?.deliveryTime = dateTime;
     _cartRxn.refresh();
   }

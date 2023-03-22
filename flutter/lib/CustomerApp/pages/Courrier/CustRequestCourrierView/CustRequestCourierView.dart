@@ -97,6 +97,9 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           onValue: (DateTime? value) {
                             viewController.deliveryTime.value = value;
                           },
+                          onClear: () {
+                            viewController.deliveryTime.value = null;
+                          },
                           periodOfTime: null,
                           schedule: viewController.company.value!.schedule,
                         ),
@@ -105,7 +108,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                             orderCost: null,
                             totalCost: null,
                             refundAmmount: null,
-                            showNullValues: false,
+                            showNullValues: true,
                             stripeOrderPaymentInfo: null)
                       ],
                     ),
@@ -163,7 +166,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                 }
               },
               bgColor: Colors.white,
-              checkDistance: true,
+              checkDistance: false,
               passedInLocation: viewController.toLoc.value,
               serviceProviderLocation: null,
             ),

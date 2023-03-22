@@ -20,7 +20,7 @@ class ShippingCostComponent extends StatelessWidget {
       this.defaultShippingCost = 50,
       this.alignment = MainAxisAlignment.end})
       : super(key: key);
-  final num shippingCost;
+  final num? shippingCost;
   final num defaultShippingCost;
   final MainAxisAlignment alignment;
   final bool showPerKm;
@@ -38,7 +38,10 @@ class ShippingCostComponent extends StatelessWidget {
               ),
             )
           : Text(
-              shippingCost.toPriceString() + "${(showPerKm) ? "/km" : ""}",
+              (shippingCost != null)
+                  ? shippingCost!.toPriceString() +
+                      "${(showPerKm) ? "/km" : ""}"
+                  : "-",
               style: textStyle,
             ),
     );
