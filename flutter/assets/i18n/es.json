@@ -854,7 +854,8 @@
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
-        "copiedText": "Enlace copiado con éxito"
+        "copiedText": "Enlace copiado con éxito",
+        "yourDriverList": "Su lista de conducir"
       },
       "ServiceInfoEditView": {
         "name": "Nombre",
