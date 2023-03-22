@@ -76,7 +76,7 @@ class CustRequestCourierViewController {
     items.add(CourierItem(name: "", estCost: 0));
     itemsNames.add(TextEditingController());
     imagesFiles.add(File(""));
-    imagesUrls.add("");
+    // imagesUrls.add("");
     itemsNotes.add(TextEditingController());
     itemsEstCosts.add(TextEditingController());
   }
@@ -85,6 +85,7 @@ class CustRequestCourierViewController {
     items.removeAt(index);
     imagesFiles.removeAt(index);
     imagesUrls.removeAt(index);
+    newImages.remove(index);
     itemsNames.removeAt(index);
     itemsEstCosts.removeAt(index);
     itemsNotes.removeAt(index);
@@ -119,8 +120,8 @@ class CustRequestCourierViewController {
 
   Future<void> _makeOrder() async {
     mezDbgPrint("Making a courier order ========> ${toLoc.value}");
-    await _uploadItemsImages();
     try {
+      await _uploadItemsImages();
       cModel.CreateCourierResponse res =
           await CloudFunctions.delivery2_createCourierOrder(
         toLocation: cModel.Location(
@@ -133,7 +134,7 @@ class CustRequestCourierViewController {
             .map(
               (MapEntry<int, CourierItem> e) => cModel.CourierItem(
                 name: itemsNames[e.key].text,
-                image: imagesUrls[e.key],
+                image: e.value.image,
                 estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
                 notes: itemsNotes[e.key].text,
               ),
@@ -157,11 +158,12 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _uploadItemsImages() async {
-    imagesFiles.forEach((File element) async {
-      String _imgUrl = await Get.find<AuthController>().uploadImgToFbStorage(
-          imageFile: element,
-          path: "/Courier/items/${DateTime.now().toIso8601String()}");
-      imagesUrls.add(_imgUrl);
+    await Future.forEach(newImages.keys, (int key) async {
+      await Get.find<AuthController>()
+          .uploadImgToFbStorage(
+              imageFile: newImages[key]!,
+              path: "/Courier/items/${DateTime.now().toIso8601String()}")
+          .then((String url) => items[key].image = url);
     });
   }
 
@@ -220,6 +222,7 @@ class CustRequestCourierViewController {
       try {
         if (_res != null) {
           imagesFiles[itemIndex] = File(_res.path);
+          newImages.addAll({itemIndex: File(_res.path)});
         }
         imagesLoading.remove(itemIndex);
       } catch (e) {
@@ -231,7 +234,6 @@ class CustRequestCourierViewController {
   }
 
   void setToLocation(MezLocation location) {
-    File? data = newImages[1];
     toLoc.value = location;
     updateShippingPrice();
     mezDbgPrint("set to loc =========>${toLoc.value}");
