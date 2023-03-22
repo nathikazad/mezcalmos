@@ -133,6 +133,7 @@ class CustRequestCourierViewController {
             .map(
               (MapEntry<int, CourierItem> e) => cModel.CourierItem(
                 name: itemsNames[e.key].text,
+                image: imagesUrls[e.key],
                 estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
                 notes: itemsNotes[e.key].text,
               ),
