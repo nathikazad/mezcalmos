@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
@@ -34,13 +33,12 @@ class CustRequestCourierViewController {
   RxList<TextEditingController> itemsNames = RxList.empty();
   RxList<TextEditingController> itemsNotes = RxList.empty();
   RxList<TextEditingController> itemsEstCosts = RxList.empty();
-  RxMap<int, File> newImages = RxMap();
   RxList<File> imagesFiles = RxList.empty();
   RxList<String> imagesUrls = RxList.empty();
   RxList<int> imagesLoading = RxList.empty();
   TextEditingController fromLocText = TextEditingController();
   Rxn<MezLocation> fromLoc = Rxn();
-
+  RxMap<int, File> newImages = RxMap({});
   Rxn<MezLocation> toLoc = Rxn();
   Rxn<DateTime> deliveryTime = Rxn();
   Rxn<DeliveryCompany> company = Rxn();
