@@ -194,12 +194,10 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         initialLocation: null,
         onSaveLocation: ({locModel.MezLocation? location}) async {
           SavedLocation? newSavedLoc;
-          mezDbgPrint(
-              " 😛😛😛😛 Call back called ===========>>>>>>>>>$location");
+
           newSavedLoc =
               await savedLocationDailog(context: context, loc: location!);
-          mezDbgPrint(
-              " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
+
           if (newSavedLoc != null) {
             setState(() {
               listOfSavedLoacations.add(newSavedLoc!);

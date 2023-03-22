@@ -145,9 +145,9 @@ class CustRequestCourierViewController {
     }
   }
 
-  void addFromLoc({required MezLocation location}) {
+  void addFromLoc({required MezLocation location, String? address}) {
     fromLoc.value = location;
-    fromLocText.text = fromLoc.value?.address.toString() ?? "";
+    fromLocText.text = address ?? fromLoc.value?.address.toString() ?? "";
     updateShippingPrice();
   }
 

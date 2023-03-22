@@ -132,6 +132,11 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                     ],
                   ),
                 ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 150,
+                ),
               )
             ],
           );
