@@ -25,15 +25,18 @@ class _WrapperState extends State<Wrapper> {
   AuthController authController = Get.find<AuthController>();
   final LocationController _locationController = Get.find<LocationController>();
   StreamSubscription<LocationPermissionsStatus>? locationStatusListener;
+  //String? _previousUserUid = "init";
 
   @override
   void initState() {
     // this will execute first and much faster since it's a microtask.
     Future<void>.microtask(() {
       mezDbgPrint(authController.fireAuthUser);
+      mezDbgPrint("NOOOOOT stream auth state ======== ");
       handleAuthStateChange(authController.fireAuthUser);
 
       authController.authStateStream.listen((fireAuth.User? user) {
+        mezDbgPrint("Frpm stream auth state ======== ");
         handleAuthStateChange(user);
       });
     }).then((_) {
@@ -104,9 +107,15 @@ class _WrapperState extends State<Wrapper> {
   Future<void> handleAuthStateChange(fireAuth.User? user) async {
     // We should Priotorize the AppNeedsUpdate router to force users to update
     // if (!MezRouter.isCurrentRoute(SharedRoutes.kAppNeedsUpdate)) {
+    mezDbgPrint(
+        "User redirect :=========>${authController.userRedirectFinish}");
+    if (authController.userRedirectFinish == true) {
+      return;
+    }
     if (user == null) {
       mezDbgPrint("[777] user == null");
       if (AppType.CustomerApp == MezEnv.appType) {
+        mezDbgPrint("current route ======>>>>${MezRouter.currentRoute().name}");
         mezDbgPrint("[777] app = customerApp .. routing to home!");
         await MezRouter.popEverythingTillBeforeWrapper();
         await MezRouter.toNamed(SharedRoutes.kHomeRoute);
@@ -122,6 +131,8 @@ class _WrapperState extends State<Wrapper> {
 
       redirectIfUserInfosNotSet();
     }
+    authController.userRedirectFinish = true;
+
     // }
   }
 

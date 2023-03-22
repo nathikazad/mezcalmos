@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/Cus
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -15,6 +16,9 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustCourierServiceView"];
 
 class CustCourierServiceView extends StatefulWidget {
   const CustCourierServiceView({super.key});
@@ -53,7 +57,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
         withGradient: true,
         borderRadius: 0,
         height: 75,
-        label: 'Order now',
+        label: '${_i18n()["orderNow"]}',
         onClick: () async {
           await CustRequestCourierView.navigate(
               _viewController.company.info.hasuraId);
@@ -85,7 +89,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               label: Text(
-                                'Minimum cost ${_viewController.company.deliveryCost?.minimumCost.toPriceString()}',
+                                '${_i18n()["minimumCost"]} ${_viewController.company.deliveryCost?.minimumCost.toPriceString()}',
                                 style: TextStyle(fontSize: 15),
                               )),
                           SizedBox(
@@ -109,7 +113,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               height: 10,
                             ),
                             Text(
-                              'Description',
+                              '${_i18n()['description']}',
                               style: context.txt.bodyLarge,
                             ),
                             Text(_viewController
@@ -151,7 +155,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
         Row(
           children: [
             Text(
-              'Reviews', //'${_i18n()["reviews"]}',
+              '${_i18n()["reviews"]}',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(
@@ -186,7 +190,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                 color: Colors.transparent,
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  "View all",
+                  '${_i18n()["viewAll"]}',
                   style:
                       context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
@@ -214,7 +218,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Chat with us",
+            label: '${_i18n()["chatWithUs"]}',
             height: 32.5,
             backgroundColor: Colors.white,
             textColor: primaryBlueColor,
@@ -229,7 +233,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Contact us",
+            label: '${_i18n()["contactUs"]}',
             height: 32.5,
             onClick: () async {},
             backgroundColor: Colors.white,

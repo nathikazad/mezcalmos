@@ -46,6 +46,17 @@
           "removeBtn": "Sí, eliminar la tarjeta"
         }
       },
+      "courrier": {
+        "CustCourierServiceView": {
+          "orderNow": "Ordenar ahora",
+          "chatWithUs": "habla con nosotros",
+          "contactUs": "Contáctenos",
+          "minimumCost": "Costo mínimo",
+          "description": "Descripción",
+          "reviews": "Reseñas",
+          "viewAll": "Ver todo"
+        }
+      },
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -196,7 +207,7 @@
             "SaveLocationDailog": {
               "addLocationDialogTitle": "Ingrese el nombre de la ubicación",
               "editLocationDialogTitle": "Ingrese el nombre de la ubicación",
-              "pickLocationHintText":"Ingrese su nombre",
+              "pickLocationHintText": "Ingrese su nombre",
               "addLocationDialogButton": "Guardar",
               "editLocationDialogButton": "EDITAR",
               "addLocationDialogSkip": "Cerca"
@@ -230,7 +241,7 @@
               "leftBtn": "Primero de pago",
               "rightBtn": "Sobrescribir",
               "subtitle": "Ya tienes algunos artículos en tu carrito de",
-              "overwriteText":"\n¿Quieres sobrescribir?",
+              "overwriteText": "\n¿Quieres sobrescribir?",
               "specialSubtitle": "Ya tiene algunos artículos especiales en su carrito con un tiempo de disponibilidad diferente, ¿desea verlos primero o sobrescribirlos?",
               "addToCart": "Añadir artículo",
               "modifyItem": "Modificar"
@@ -251,7 +262,7 @@
             "itemNotes": "Notas de artículos",
             "itemDescription": "Descripción del Artículo",
             "availability": "Disponibilidad",
-            "hintNote":"Escribe tus notas aquí"
+            "hintNote": "Escribe tus notas aquí"
           }
         },
         "ViewOrderScreen": {
@@ -335,7 +346,7 @@
         "ViewRestaurantScreen": {
           "CustomerRestaurantView": {
             "specials": "especiales",
-            "undefinedCategory":"Categoría indefinida",
+            "undefinedCategory": "Categoría indefinida",
             "scheduleTitle": "Solo disponible para los pedidos de programación"
           },
           "components": {
@@ -382,7 +393,7 @@
           "SavedLocationComponent": {
             "editLocation": "Editar ubicación",
             "deleteLocation": "Eliminar ubicación",
-            "defaultAddressText":"Defecto"
+            "defaultAddressText": "Defecto"
           },
           "SavedLocationIsEmpty": {
             "savedLocationsListEmpty": "Tu lista de ubicaciones guardadas está vacía",
@@ -392,7 +403,7 @@
         "SavedLocationView": {
           "title": "Mis ubicaciones",
           "addNewLoc": "Añadir nueva ubicación",
-          "location":"Ubicación"
+          "location": "Ubicación"
         }
       },
       "Taxi": {
@@ -567,12 +578,12 @@
             "orderStatus": "Estado de la orden",
             "laundry": "Lavandería",
             "estimatedDeliveryTime": "Tiempo de entrega estimado",
-            "deliveryDeatils":"Detalles de la entrega"
+            "deliveryDeatils": "Detalles de la entrega"
           }
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
-          "daysReturn" : "Días de regreso",
+          "daysReturn": "Días de regreso",
           "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
@@ -582,7 +593,7 @@
         "LaundriesListView": {
           "laundries": "Lavanderías",
           "title": "Encuentra tus lavanderías \nmás cercanas o tintorerías ",
-          "noLaundaryFound":"No se encontró lavandería",
+          "noLaundaryFound": "No se encontró lavandería",
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -597,8 +608,8 @@
         "LaundryRequestView": {
           "LaundryOrderRequestView": {
             "howItWorks": "Cómo funciona",
-            "categories" : "Categorías",
-            "summaryText":"Resumen",
+            "categories": "Categorías",
+            "summaryText": "Resumen",
             "deliveryLocation": "Lugar de entrega",
             "orderSummary": "Resumen de la orden",
             "orderCost": "Costo de la orden",
@@ -744,13 +755,13 @@
     "pages": {
       "CreateServiceView": {
         "pages": {
-          "createServiceStartPage":{
-            "openNewRestaurantText":"Cree un nuevo restaurante y reciba pedidos de sus clientes locales."
+          "createServiceStartPage": {
+            "openNewRestaurantText": "Cree un nuevo restaurante y reciba pedidos de sus clientes locales."
           },
           "CreateServiceInfoPage": {
             "name": "Nombre del restaurante",
             "hintNameText": "Introduzca su nombre",
-            "uploadImageText":"Sube tu imagen de perfil",
+            "uploadImageText": "Sube tu imagen de perfil",
             "nameError": "Proporcione un nombre",
             "descriptionError": "Proporcione una descripción",
             "location": "Ubicación",
@@ -759,12 +770,12 @@
             "imageError": "Se requiere una imagen",
             "description": "Descripción",
             "descriptionHintText": "Ingrese una descripción para su restaurante",
-            "phoneText":"Número de teléfono",
-            "phoneTextDescription":"Ingrese su número telefónico",
-            "phoneTextError":"Ingrese un número de teléfono válido"
+            "phoneText": "Número de teléfono",
+            "phoneTextDescription": "Ingrese su número telefónico",
+            "phoneTextError": "Ingrese un número de teléfono válido"
           }
         },
-        "createText":"Crear",
+        "createText": "Crear",
         "info": "Información",
         "schedule": "Calendario",
         "delivery": "Entrega",
@@ -789,8 +800,8 @@
         "save": "Guardar",
         "cost": "Costo",
         "radius": "Rango de entrega",
-       
-        "costPerKmFromBase" : "Costo por km de la base"
+
+        "costPerKmFromBase": "Costo por km de la base"
       },
       "DeliverySettingsView": {
         "DeliverySettingsView": {
@@ -854,9 +865,9 @@
       },
       "ServiceInfoEditView": {
         "name": "Nombre",
-        "phoneNumber" : "Número de teléfono",
+        "phoneNumber": "Número de teléfono",
         "location": "Localización",
-        "phoneErrorText" : "Por favor ingrese un número de teléfono válido",
+        "phoneErrorText": "Por favor ingrese un número de teléfono válido",
         "description": "Descripción",
         "info": "Información",
         "save": "Guardar",
@@ -916,7 +927,7 @@
           "alertClearNotificationTitle": "Borrar todas las notificaciones",
           "clear": "Borra",
           "no": "No",
-          "yesterday":"Ayer",
+          "yesterday": "Ayer",
           "noNotifTitle": "¡No hay notificaciones todavía!",
           "noNotifBody": "Actualmente no tienes notificaciones. \nTe notificaremos cuando se llega a algo nuevo."
         }
@@ -986,9 +997,9 @@
         "viewOrder": "Ver detalles de la orden",
         "order": "Orden",
         "writeMsgPlaceholder": "Escribe tu mensaje aqui ...",
-        "cancel" : "Cancelar",
-        "callApp" : "Llamar a través de la aplicación",
-        "callPhone" : "Llame con el número de teléfono"
+        "cancel": "Cancelar",
+        "callApp": "Llamar a través de la aplicación",
+        "callPhone": "Llame con el número de teléfono"
       },
       "ViewNotifications": {
         "title": "Notificaciones",
@@ -1077,7 +1088,7 @@
       },
       "OrderDeliveryLocation": {
         "title": "Lugar de entrega",
-        "deliveryDetails":"Delivery details"
+        "deliveryDetails": "Delivery details"
       },
       "OrderScheduledTimeCard": {
         "title": "Hora Programada"
@@ -1100,7 +1111,7 @@
       },
       "ClosedServiceProviderWidget": {
         "title": "¡Servicio cerrado!",
-        "btnTitle" : "Servicio abierto",
+        "btnTitle": "Servicio abierto",
         "subtitle": "Su servicio está cerrado indefinidamente, no recibirá ningún pedido.¿Te gustaría abrirlo?"
       },
       "FreeShippingComponent": {
@@ -1598,24 +1609,24 @@
         "scheduled": "Programada",
         "dvTime": "El tiempo de entrega",
         "paymentMethod": "Método de pago",
-        "schTime" : "Hora programada",
-        "actualCost" : "Costo real",
-        "orderDetails" : "Detalles del pedido",
-        "orderItems" : "Encargar artículos",
-        "addCost" : "Agregar costo",
-        "save" : "Ahorrar",
-        "note" : "Nota",
-        "tax" : "Impuesto",
-        "estCost" : "Costo estimado",
-        "addTax" : "Agregar costo fiscal",
-        "bill" : "Factura",
-        "upload" : "Subir",
-        "cancel" : "Cancelar",
-        "markAv" : "Marca como disponible",
-        "markUnav" : "Marca como no disponible",
+        "schTime": "Hora programada",
+        "actualCost": "Costo real",
+        "orderDetails": "Detalles del pedido",
+        "orderItems": "Encargar artículos",
+        "addCost": "Agregar costo",
+        "save": "Ahorrar",
+        "note": "Nota",
+        "tax": "Impuesto",
+        "estCost": "Costo estimado",
+        "addTax": "Agregar costo fiscal",
+        "bill": "Factura",
+        "upload": "Subir",
+        "cancel": "Cancelar",
+        "markAv": "Marca como disponible",
+        "markUnav": "Marca como no disponible",
         "cash": "Efectivo",
         "from": "De",
-        "card" : "Card",
+        "card": "Card",
         "deliveredTo": "Entregado a",
         "deliveryCost": "Coste de envío",
         "customer": "Cliente",
@@ -1665,13 +1676,13 @@
           "Components": {
             "AnimatedOrderInfoCard": {
               "cash": "Efectivo",
-              "details" : "Detalles",
+              "details": "Detalles",
               "card": "Tarjeta",
-              "updateTitle" : "Actualizar precio",
-              "updateReason" : "Razón del cambio de precios",
-              "updatePrice" : "Nuevo precio",
-              "save" : "Solicitar cambio de precio",
-              "cancel" : "Cancelar"
+              "updateTitle": "Actualizar precio",
+              "updateReason": "Razón del cambio de precios",
+              "updatePrice": "Nuevo precio",
+              "save": "Solicitar cambio de precio",
+              "cancel": "Cancelar"
             },
             "DriverBottomLaundryOrderCard": {
               "orderStatus": {
@@ -1710,14 +1721,14 @@
               }
             },
             "DriverBottomRestaurantOrderCard": {
-              "acceptOrder" : "Aceptar pedido",
+              "acceptOrder": "Aceptar pedido",
               "restaurantDelivery": "Entrega de restaurantes",
               "laundryDelivery": "Entrega de lavandería",
               "oops": "Ups",
               "packageReady": "Paquete listo",
               "dvTime": "El tiempo de entrega",
               "set": "Establecer",
-              "setTime" : "Elige hora",
+              "setTime": "Elige hora",
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
@@ -1733,7 +1744,7 @@
                 "scheduled": "Pedido programado",
                 "delivered": "Orden Entregado",
                 "canceled": "Orden Cancelada",
-                "received" :"orden recibida"
+                "received": "orden recibida"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirmar la recogida",
@@ -1909,7 +1920,7 @@
           },
           "MinimumCostCard": {
             "minCost": "Costo mínimo",
-            "save" : "Enregistrer costo mínimo"
+            "save": "Enregistrer costo mínimo"
           }
         }
       },
@@ -2312,7 +2323,7 @@
         },
         "ROpEditInfoView": {
           "saved": "Guardado",
-          "schedule" :"Horas Laborales",
+          "schedule": "Horas Laborales",
           "savedText": "Su información ha sido guardada",
           "openTitle": "Disponibilidad de restaurantes",
           "openSubtitle": "Esto cerrará su restaurante indefinidamente",
@@ -2389,6 +2400,6 @@
     "required": "Requerida",
     "error": "error",
     "noRoute": "No se encontró ruta.Ingrese un destino válido",
-    "minutes" :"minutos"
+    "minutes": "minutos"
   }
 }

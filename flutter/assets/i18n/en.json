@@ -46,6 +46,17 @@
           "removeBtn": "Yes, remove card"
         }
       },
+      "courrier": {
+        "CustCourierServiceView": {
+          "orderNow": "Order now",
+          "chatWithUs": "Chat with us",
+          "contactUs": "Contact us",
+          "minimumCost": "Minimum Cost",
+          "description": "Description",
+          "reviews": "Reviews",
+          "viewAll": "View All"
+        }
+      },
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -977,9 +988,9 @@
         "viewOrder": "View order details",
         "order": "Order",
         "writeMsgPlaceholder": "Write your message here ...",
-        "cancel" : "Cancel",
-        "callApp" : "Call through app",
-        "callPhone" : "Call with phone number"
+        "cancel": "Cancel",
+        "callApp": "Call through app",
+        "callPhone": "Call with phone number"
       },
       "ViewNotifications": {
         "title": "Notifications",
@@ -1092,7 +1103,7 @@
       },
       "ClosedServiceProviderWidget": {
         "title": "Service closed !",
-        "btnTitle" : "Open service",
+        "btnTitle": "Open service",
         "subtitle": "Your service is closed indefinitely, you will not receive any orders. would you like to open it?"
       },
       "FreeShippingComponent": {
@@ -1601,26 +1612,26 @@
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
         "approved": "Approved",
-        "schTime" : "Scheduled time",
-        "orderDetails" : "Order details",
-        "orderItems" : "Order Items",
-        "addCost" : "Add cost",
-        "save" : "Save",
-        "cancel" : "Cancel",
-        "markAv" : "Mark as available",
-        "markUnav" : "Mark as unavailable",
-        "actualCost" : "Actual cost",
-        "note" : "Note",
-        "estCost" : "Estimated cost",
-        "addTax" : "Add tax cost",
-        "bill" : "Bill",
-        "upload" : "Upload",
-        "tax" : "Tax",
+        "schTime": "Scheduled time",
+        "orderDetails": "Order details",
+        "orderItems": "Order Items",
+        "addCost": "Add cost",
+        "save": "Save",
+        "cancel": "Cancel",
+        "markAv": "Mark as available",
+        "markUnav": "Mark as unavailable",
+        "actualCost": "Actual cost",
+        "note": "Note",
+        "estCost": "Estimated cost",
+        "addTax": "Add tax cost",
+        "bill": "Bill",
+        "upload": "Upload",
+        "tax": "Tax",
         "scheduled": "Scheduled",
         "dvTime": "Delivery time",
         "paymentMethod": "Payment method",
         "cash": "Cash",
-        "card" : "Card",
+        "card": "Card",
         "from": "From",
         "deliveredTo": "Delivered to",
         "deliveryCost": "Delivery Cost",
@@ -1690,12 +1701,12 @@
           "Components": {
             "AnimatedOrderInfoCard": {
               "cash": "Cash",
-              "details" : "Details",
-              "updateTitle" : "Update Price",
-              "updateReason" : "Reason for price change",
-              "updatePrice" : "New price",
-              "save" : "Request price change",
-              "cancel" : "cancel",
+              "details": "Details",
+              "updateTitle": "Update Price",
+              "updateReason": "Reason for price change",
+              "updatePrice": "New price",
+              "save": "Request price change",
+              "cancel": "cancel",
               "card": "Card"
             },
             "DriverBottomLaundryOrderCard": {
@@ -1735,8 +1746,7 @@
               }
             },
             "DriverBottomRestaurantOrderCard": {
-            
-              "acceptOrder" : "Accept order",
+              "acceptOrder": "Accept order",
 
               "restaurantDelivery": "Restaurant Delivery",
               "laundryDelivery": "Laundry Delivery",
@@ -1744,7 +1754,7 @@
               "oops": "Oops",
               "set": "Set",
               "time": "Time",
-              "setTime" : "Set time",
+              "setTime": "Set time",
               "dvTime": "Delivery time",
               "dropoff": "Delivery",
               "pickup": "Pickup",
@@ -1760,7 +1770,7 @@
                 "pickupOtw": "Pickup on the way",
                 "delivered": "Order Delivered",
                 "canceled": "Order Cancelled",
-                "received" :"Order Received"
+                "received": "Order Received"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirm Order Pickup",
@@ -2398,6 +2408,6 @@
     "noRoute": "No route found. please enter a valid destination",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "minutes" :"minutes"
+    "minutes": "minutes"
   }
 }
