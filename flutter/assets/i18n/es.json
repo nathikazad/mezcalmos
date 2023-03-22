@@ -674,7 +674,9 @@
       "LaundryCancelledTitle": "Orden cancelada",
       "LaundryCancelledBody": "Su pedido ha sido cancelado",
       "counterOfferTitle": "Nueva contraoferta",
-      "counterOfferBody": "New oferta de "
+      "counterOfferBody": "New oferta de ",
+      "priceChange": "Cambio de precio",
+      "driverSentYouMessage": "El conductor le envió un nuevo mensaje"
     }
   },
   "Shared": {
