@@ -114,6 +114,7 @@ class CustRequestCourierItems extends StatelessWidget {
                         image:
                             (viewController.imagesFiles[index].path.isNotEmpty)
                                 ? DecorationImage(
+                                    fit: BoxFit.cover,
                                     image: FileImage(
                                         viewController.imagesFiles[index]))
                                 : null,
@@ -162,12 +163,6 @@ class CustRequestCourierItems extends StatelessWidget {
             hint: "Estimated cost",
             context: context,
             suffix: Icons.attach_money,
-            validator: (String? p0) {
-              if (p0 == null || p0.isEmpty) {
-                return "Required";
-              }
-              return null;
-            },
             controller: viewController.itemsEstCosts[index]),
       ],
     );
