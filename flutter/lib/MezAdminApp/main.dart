@@ -3,6 +3,7 @@ import 'package:mezcalmos/MezAdminApp/authHooks.dart';
 import 'package:mezcalmos/MezAdminApp/router/router.dart';
 import 'package:mezcalmos/MezAdminApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -24,7 +25,7 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointNative(
-            appType: AppType.MezAdminApp,
+            appType: AppType.MezAdmin,
             appTheme: MezAdminTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -71,11 +72,16 @@ class DriversViewController {
   Future<void> approveDriver(
       {required bool approved, required int driverId}) async {
     try {
-      await CloudFunctions.serviceProvider_authorizeDriver(
+      final AuthorizeDriverResponse res =
+          await CloudFunctions.serviceProvider_authorizeDriver(
         deliveryDriverId: driverId,
         approved: approved,
         deliveryServiceProviderType: partType,
       );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
       await fetchDrivers();
     } on FirebaseException catch (e, stk) {
       mezDbgPrint(e);

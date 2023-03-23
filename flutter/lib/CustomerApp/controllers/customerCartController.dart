@@ -18,7 +18,7 @@ class CustomerCartController extends GetxController {
 // instances //
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
   AuthController _auth = Get.find<AuthController>();
-  // 
+  //
   Rxn<Cart> cart = Rxn<Cart>();
   // streams //
   StreamSubscription<Cart?>? cartStream;
@@ -179,6 +179,10 @@ class CustomerCartController extends GetxController {
               scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
               stripePaymentId: stripePaymentId,
               stripeFees: cart.value?.stripeFees);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
       return res.orderId;
     } catch (e, stk) {
       mezDbgPrint("error function");

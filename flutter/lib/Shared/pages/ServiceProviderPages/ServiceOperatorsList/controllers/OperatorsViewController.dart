@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_operator/hsLaundryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
@@ -87,8 +88,15 @@ class OperatorsListViewController {
   Future<void> approveOperator(
       {required bool approved, required int opId}) async {
     try {
-      await CloudFunctions.serviceProvider_authorizeOperator(
-          newOperatorId: opId, approved: approved, participantType: partType);
+      final AuthOperatorResponse res =
+          await CloudFunctions.serviceProvider_authorizeOperator(
+              newOperatorId: opId,
+              approved: approved,
+              participantType: partType);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
       await fetchOperators();
     } on FirebaseException catch (e, stk) {
       mezDbgPrint(e);

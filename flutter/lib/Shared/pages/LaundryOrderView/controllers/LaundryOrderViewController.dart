@@ -175,9 +175,14 @@ class LaundryOrderViewController {
 
   Future<void> cancelOrder() async {
     try {
-      await CloudFunctions.laundry2_cancelFromAdmin(orderId: order.orderId);
+      ChangeLaundryStatusResponse res =
+          await CloudFunctions.laundry2_cancelFromAdmin(orderId: order.orderId);
       showSavedSnackBar(
           title: "Cancelled", subtitle: "Order cancelled successfuly");
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
     } on FirebaseFunctionsException catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -302,8 +307,13 @@ class LaundryOrderViewController {
 
   Future<void> sertOrderReady() async {
     try {
-      await CloudFunctions.laundry2_readyForDeliveryOrder(
-          orderId: _order.value!.orderId);
+      ChangeLaundryStatusResponse res =
+          await CloudFunctions.laundry2_readyForDeliveryOrder(
+              orderId: _order.value!.orderId);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(e);

@@ -213,9 +213,14 @@ class CustLaundryOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      await CloudFunctions.laundry2_cancelFromCustomer(
-          orderId: order.value!.orderId);
-      return true;
+      CancelLaundryResponse res =
+          await CloudFunctions.laundry2_cancelFromCustomer(
+              orderId: order.value!.orderId);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success;
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(stk);

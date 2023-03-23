@@ -42,7 +42,7 @@ class ROpDeeplinkHandler {
 
       if (providerId != null) {
         await _handleRoutingByType(
-          providerId: providerId,
+          uniqueId: uniqueId,
         );
       }
     }
@@ -50,12 +50,12 @@ class ROpDeeplinkHandler {
 
   /// This Do the routing magic depending on [providerType] given.
   Future<void> _handleRoutingByType({
-    required int providerId,
+    required String uniqueId,
   }) async {
     mezDbgPrint(
-        " 🔗🔗🔗🔗 @deepLink@ ===> handling operator   =====>>> provider id : $providerId");
+        " 🔗🔗🔗🔗 @deepLink@ ===> handling operator   =====>>> unique id : $uniqueId");
 
-    await addOperator(providerId);
+    await addOperator(uniqueId);
     // await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
     //    if (res.success) {
     // ignore: unawaited_futures
@@ -98,11 +98,11 @@ class ROpDeeplinkHandler {
     }
   }
 
-  Future<ServerResponse> addOperator(int providerId) async {
+  Future<ServerResponse> addOperator(String uniqueId) async {
     try {
       await CloudFunctions.serviceProvider_addOperator(
-          serviceProviderId: providerId,
-          participantType: ParticipantType.RestaurantOperator);
+        uniqueId: uniqueId,
+      );
       // mezDbgPrint("Response : ${response.data}");
       // ignore: unawaited_futures
       MezRouter.toNamed(RestaurantAppRoutes.opUnauthRoute);

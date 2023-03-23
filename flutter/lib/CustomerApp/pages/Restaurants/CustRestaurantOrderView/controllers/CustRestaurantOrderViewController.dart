@@ -90,9 +90,14 @@ class CustRestaurantOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      await CloudFunctions.restaurant2_cancelOrderFromCustomer(
-          orderId: order.value!.orderId);
-      return true;
+      final CancelRestaurantOrderResponse res =
+          await CloudFunctions.restaurant2_cancelOrderFromCustomer(
+              orderId: order.value!.orderId);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success;
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(stk);

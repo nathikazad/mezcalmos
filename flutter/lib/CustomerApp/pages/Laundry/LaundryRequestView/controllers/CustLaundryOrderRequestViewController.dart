@@ -166,6 +166,10 @@ class CustLaundryOrderRequestViewController {
         tripPolyline: laundryRequest.routeInformation!.polyline,
         deliveryType: cloudFunctionModels.DeliveryType.Delivery,
       );
+      if (response.success == false) {
+        mezDbgPrint(response.error);
+        showErrorSnackBar(errorText: response.error.toString());
+      }
       return response.orderId;
     } catch (e, stk) {
       mezDbgPrint("error function");

@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
@@ -18,7 +19,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -244,10 +244,15 @@ class DvOrderViewcontroller {
       cModel.DeliveryOrderStatus status) async {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
-      await CloudFunctions.delivery2_changeStatus(
+      ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery2_changeStatus(
         deliveryId: order.id,
         newStatus: status,
       );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
     } on FirebaseFunctionsException catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -293,10 +298,14 @@ class DvOrderViewcontroller {
 
   Future<void> acceptOpenOrder() async {
     try {
-      await CloudFunctions.delivery2_assignDriver(
+      AssignDriverResponse res = await CloudFunctions.delivery2_assignDriver(
           deliveryOrderId: order.id,
           deliveryDriverId:
               deliveryAuthAuthController.driver!.deliveryDriverId);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(e);
@@ -310,13 +319,19 @@ class DvOrderViewcontroller {
   Future<void> requestPriceChange(BuildContext context) async {
     if (updatePriceFormKey.currentState?.validate() == true) {
       try {
-        await CloudFunctions.delivery2_changeDeliveryPrice(
-            deliveryOrderId: order.id,
-            newPrice: double.parse(openOrderPriceText.text),
-            reason: openOrderReasonText.text);
+        ChangePriceReqResponse res =
+            await CloudFunctions.delivery2_changeDeliveryPrice(
+                deliveryOrderId: order.id,
+                newPrice: double.parse(openOrderPriceText.text),
+                reason: openOrderReasonText.text);
         Navigator.pop(context);
-        showSavedSnackBar(
-            title: "Sended", subtitle: "Price change request sended");
+        if (res.success == false) {
+          mezDbgPrint(res.error);
+          showErrorSnackBar(errorText: res.error.toString());
+        } else {
+          showSavedSnackBar(
+              title: "Sended", subtitle: "Price change request sended");
+        }
       } on FirebaseFunctionsException catch (e, stk) {
         showErrorSnackBar(errorText: e.message.toString());
         mezDbgPrint(e);

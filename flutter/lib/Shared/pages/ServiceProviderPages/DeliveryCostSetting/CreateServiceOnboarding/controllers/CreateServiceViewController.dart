@@ -8,6 +8,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -282,7 +283,8 @@ class CreateServiceViewController {
     mezDbgPrint(
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
-      await CloudFunctions.restaurant2_createRestaurant(
+      final RestaurantResponse res =
+          await CloudFunctions.restaurant2_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
         image: serviceInput.value.serviceInfo!.image,
         location: cModel.Location(
@@ -307,7 +309,11 @@ class CreateServiceViewController {
           "en": true,
         },
       );
-      return true;
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success;
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message?.toString() ?? "Unknown Error");
       throwError(e);

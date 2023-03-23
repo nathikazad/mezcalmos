@@ -4,6 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
@@ -50,11 +51,15 @@ class PickDriverViewController {
 
     try {
       mezDbgPrint("calling assign driver....");
-      await CloudFunctions.delivery2_assignDriver(
+      AssignDriverResponse res = await CloudFunctions.delivery2_assignDriver(
         deliveryOrderId: orderId,
         deliveryDriverId: driver.deliveryDriverId,
         changeDriver: order.value!.isDriverAssigned,
       );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
       await MezRouter.back();
       screenLoading.value = false;
     } on FirebaseFunctionsException catch (e, stk) {

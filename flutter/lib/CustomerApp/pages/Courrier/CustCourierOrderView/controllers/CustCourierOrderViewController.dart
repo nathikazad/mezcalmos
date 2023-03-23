@@ -164,10 +164,15 @@ class CustCourierOrderViewController {
 
   Future<void> _priceChangeResponse({required bool accepted}) async {
     try {
-      await CloudFunctions.delivery2_changeDeliveryPriceResponse(
-          accepted: accepted,
-          orderId: order.id,
-          orderType: cm.OrderType.Courier);
+      ChangePriceResResponse res =
+          await CloudFunctions.delivery2_changeDeliveryPriceResponse(
+              accepted: accepted,
+              orderId: order.id,
+              orderType: cm.OrderType.Courier);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
     } on FirebaseFunctionsException catch (e) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(e);
