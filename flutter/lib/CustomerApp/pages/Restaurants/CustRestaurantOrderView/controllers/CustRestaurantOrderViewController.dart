@@ -29,6 +29,8 @@ class CustRestaurantOrderViewController {
   String? subscriptionId;
 
   Future<void> init({required int orderId}) async {
+    mezDbgPrint(
+        '======================================================================> $orderId');
     try {
       order.value =
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);

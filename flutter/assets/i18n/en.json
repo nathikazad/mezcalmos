@@ -672,7 +672,9 @@
       "LaundryCancelledTitle": "Order cancelled",
       "LaundryCancelledBody": "Your order has been cancelled",
       "counterOfferTitle": "New counter offer",
-      "counterOfferBody": "New offer from "
+      "counterOfferBody": "New offer from ",
+      "priceChange": "Price change",
+      "driverSentYouMessage": "Driver sent you a new message"
     }
   },
   "Shared": {

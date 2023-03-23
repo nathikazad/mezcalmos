@@ -44,6 +44,19 @@ Notification customerNotificationHandler(
       //@saad needs to be implemented
       throw StateError("Callllll forgrouned notif!!");
 
+    case NotificationType.PriceChange:
+      return Notification(
+          id: key,
+          timestamp: value['time'],
+          title: '${_i18n()['priceChange']}',
+          body: '${_i18n()['driverSentYouMessage']}',
+          imgUrl: null,
+          icon: Material.Icons.price_change,
+          linkUrl: value['linkUrl'],
+          notificationType: notificationType,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
+
     default:
       throw StateError("Invalid Notification Type");
   }
