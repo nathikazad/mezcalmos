@@ -20,11 +20,13 @@ void customSnackBar(
     required String title,
     String? subTitle,
     Color textColor = Colors.white,
+    Function()? onTap,
     Widget? icon,
     Alignment position = Alignment.topCenter,
     duration = const Duration(seconds: 1),
     EdgeInsetsGeometry? padding}) {
   BotToast.showNotification(
+    onTap: onTap,
     align: position,
     duration: duration,
     contentPadding: padding,
