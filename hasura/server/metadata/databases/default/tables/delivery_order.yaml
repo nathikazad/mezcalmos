@@ -92,6 +92,11 @@ computed_fields:
       function:
         name: delivery_notification_token
         schema: public
+  - name: package_cost_comp
+    definition:
+      function:
+        name: packagecost
+        schema: delivery
 select_permissions:
   - role: customer
     permission:
