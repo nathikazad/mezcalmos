@@ -202,7 +202,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                       response.secondsLeft!.toDouble());
                                   MezSnackbar(
                                       "Error", response.errorMessage.toString(),
-                                      position: SnackPosition.TOP);
+                                      position: Alignment.topCenter);
                                 }
                               }
                             : null,

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
@@ -139,7 +140,7 @@ Future<ServerResponse?> signInUsingOTP(
           MezSnackbar(
             "Notice ~",
             "Your account has been deleted permanently!",
-            position: SnackPosition.TOP,
+            position: Alignment.topCenter,
           );
           return null;
         }
@@ -173,7 +174,7 @@ Future signInWithFacebook() async {
           MezSnackbar(
             "Notice ~",
             "Your account has been deleted permanently!",
-            position: SnackPosition.BOTTOM,
+            position: Alignment.topCenter,
           );
           throw Exception("Failed SignIn with Facebook !");
         }
@@ -222,7 +223,7 @@ Future signInWithApple() async {
         MezSnackbar(
           "Notice ~",
           "Your account has been deleted permanently!",
-          position: SnackPosition.TOP,
+          position: Alignment.topCenter,
         );
         return null;
       }

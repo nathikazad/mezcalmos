@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -66,20 +68,18 @@ Future<void> decideWhichButtonDialogToUse(
 }
 
 void notificationSnackBar(notifs.Notification notification) {
-  Get.rawSnackbar(
-    onTap: (_) async {
-      mezDbgPrint("ONTAP ====> $_");
-
-      await MezRouter.toNamed(notification.linkUrl);
+  customSnackBar(
+    onTap: () {
+      MezRouter.toNamed(notification.linkUrl);
     },
-    maxWidth: Get.width,
-    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+    title: notification.title,
+    subTitle: notification.body,
     duration: Duration(milliseconds: 5000),
     icon: (notification.notifWidget != null)
         ? notification.notifWidget
         : Container(
             height: 50,
-            width: 10,
+            width: 50,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -90,56 +90,18 @@ void notificationSnackBar(notifs.Notification notification) {
                 style: BorderStyle.solid,
               ),
             ),
-            child: notification.imgUrl!.startsWith("http")
+            child: notification.imgUrl?.startsWith("http") == true
                 ? Image.network(
                     notification.imgUrl!,
                     fit: BoxFit.cover,
                     height: 50,
                     width: 10,
                   )
-                : Image.asset(notification.imgUrl!),
+                : notification.imgUrl != null
+                    ? Image.asset(notification.imgUrl!)
+                    : (notification.icon != null)
+                        ? Icon(notification.icon, color: primaryBlueColor)
+                        : null,
           ),
-    backgroundColor: Colors.black,
-    borderWidth: 1,
-    borderColor: Colors.black,
-    borderRadius: 12,
-    messageText: Text(
-      notification.body,
-      style: TextStyle(
-        fontFamily: "Nunito",
-        fontWeight: FontWeight.w400,
-        fontSize: 15,
-        color: Colors.white,
-      ),
-    ),
-    titleText: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Flexible(
-          child: Text(
-            notification.title,
-            style: TextStyle(
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Text(
-          notification.formattedTime,
-          style: TextStyle(
-            fontFamily: "Nunito",
-            fontWeight: FontWeight.w400,
-            fontSize: 15,
-            color: Color(0xFFC4C4C4),
-          ),
-        ),
-      ],
-    ),
-    padding: EdgeInsets.all(25),
-    snackPosition: SnackPosition.TOP,
-    snackStyle: SnackStyle.FLOATING,
   );
 }

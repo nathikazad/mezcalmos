@@ -125,6 +125,28 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
               const SizedBox(height: 10),
               mezServiceTitle(txt.displayMedium!),
               mezListOfServices(),
+              ElevatedButton(
+                  onPressed: () {
+                    notificationSnackBar(MezNotification.Notification(
+                        id: 'dd',
+                        timestamp: DateTime.now(),
+                        title: 'Test notif',
+                        body: 'This is the body',
+                        imgUrl: null,
+                        icon: Icons.timer,
+                        linkUrl: 'linkUrl',
+                        notificationType:
+                            MezNotification.NotificationType.PriceChange,
+                        notificationAction:
+                            MezNotification.NotificationAction.ShowPopUp));
+
+                    /*
+                        ShowPopUp,
+                        ShowSnackBarAlways,
+                        ShowSnackbarOnlyIfNotOnPage
+                        */
+                  },
+                  child: Text('Show Snackbar'))
             ],
           ),
         ),
