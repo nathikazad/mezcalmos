@@ -165,11 +165,16 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 _billCard(context),
                 OrderSummaryCard(
-                  shippingCost: viewController.order.value!.deliveryCost,
-                  orderCost: viewController.order.value!.packageCost,
-                  totalCost: viewController.order.value!.totalCost,
-                  refundAmmount: viewController
-                      .order.value!.stripeOrderPaymentInfo?.amountRefunded,
+                  shippingCost: viewController.orderCosts.value?.deliveryCost ??
+                      viewController.order.value!.deliveryCost,
+                  orderCost: viewController.orderCosts.value?.orderItemsCost ??
+                      viewController.order.value!.packageCost,
+                  totalCost: viewController.orderCosts.value?.totalCost ??
+                      viewController.order.value!.totalCost,
+                  refundAmmount:
+                      viewController.orderCosts.value?.refundAmmount ??
+                          viewController.order.value!.stripeOrderPaymentInfo
+                              ?.amountRefunded,
                   stripeOrderPaymentInfo:
                       viewController.order.value!.stripeOrderPaymentInfo,
                   newRow: Container(
@@ -199,7 +204,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           Container(
                             margin: const EdgeInsets.only(left: 3),
                             child: Text(
-                                "${viewController.tax.value?.toPriceString() ?? "_"}"),
+                                "${viewController.orderCosts.value?.tax?.toPriceString() ?? "-"}"),
                           )
                       ],
                     ),

@@ -125,3 +125,20 @@ extension ParseStringToChangePriceRequestStatus on String {
         (ChangePriceRequestStatus e) => e.toFirebaseFormatString() == this);
   }
 }
+
+class OrderCosts {
+  num? deliveryCost;
+  num? refundAmmount;
+  num? stripeFess;
+  num? tax;
+  num? orderItemsCost;
+  num? totalCost;
+  OrderCosts({
+    required this.deliveryCost,
+    required this.refundAmmount,
+    required this.stripeFess,
+    required this.tax,
+    required this.orderItemsCost,
+    required this.totalCost,
+  });
+}
