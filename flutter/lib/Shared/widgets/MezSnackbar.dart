@@ -1,28 +1,19 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
-void MezSnackbar(String title, String msg,
-        {SnackPosition position = SnackPosition.BOTTOM,
-        duration = const Duration(seconds: 3)}) =>
-    ScaffoldMessenger.of(QR.context!).showSnackBar(SnackBar(
-        content: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [Text(title), Text(msg)],
-    )));
-// title, msg,
-//   duration: duration,
-//   messageText: Text(
-//     "$msg",
-//     style: context.txt.bodyText2?.copyWith(color: Colors.white),
-//     maxLines: 2,
-//   ),
-//   colorText: Colors.white,
-//   backgroundColor: Colors.black87,
-//   snackPosition: position,
-//   snackStyle: SnackStyle.FLOATING, content: null,);
+void MezSnackbar(String title, String? msg,
+    {Alignment position = Alignment.topCenter,
+    Color backgorundColor = Colors.black,
+    duration = const Duration(seconds: 3)}) {
+  BotToast.showSimpleNotification(
+    align: position,
+    duration: duration,
+    title: title,
+    subTitle: msg,
+    backgroundColor: backgorundColor,
+  );
+}
 
 void customSnackBar(
     {Color backgroundColor = Colors.black,
