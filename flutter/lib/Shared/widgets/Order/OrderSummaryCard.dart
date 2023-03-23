@@ -63,7 +63,10 @@ class OrderSummaryCard extends StatelessWidget {
                           '${_i18n()["orderCost"]}',
                           style: txt.bodyMedium,
                         ),
-                        Text(orderCost?.toPriceString() ?? "_",
+                        Text(
+                            (orderCost != 0)
+                                ? orderCost?.toPriceString() ?? "-"
+                                : "-",
                             style: txt.bodyMedium?.copyWith()),
                       ],
                     ),
@@ -95,7 +98,7 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         ShippingCostComponent(
-                          shippingCost: shippingCost!,
+                          shippingCost: shippingCost,
                         )
                       ],
                     ),
@@ -126,7 +129,10 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text('${_i18n()["totalCost"]}',
                             style: txt.headlineMedium),
-                        Text(totalCost?.toPriceString() ?? "_",
+                        Text(
+                            (orderCost != 0)
+                                ? totalCost?.toPriceString() ?? "-"
+                                : "-",
                             style: txt.headlineSmall),
                       ],
                     ),

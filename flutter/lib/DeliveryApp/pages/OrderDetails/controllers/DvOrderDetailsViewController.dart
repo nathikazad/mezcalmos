@@ -6,15 +6,20 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 
 class DvOrderDetailsViewController {
+  HasuraDb _hasuraDb = Get.find<HasuraDb>();
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+  StreamSubscription<OrderCosts?>? orderCostsStream;
+  String? subscriptionId;
 
   late int orderId;
   Rxn<DeliveryOrder> order = Rxn();
@@ -22,18 +27,33 @@ class DvOrderDetailsViewController {
   final Rxn<File> newBillFile = Rxn();
   final Rxn<String> newBillUrl = Rxn();
   final RxBool billLoading = RxBool(false);
+  Rxn<OrderCosts> orderCosts = Rxn();
   Rxn<List<CourierOrdeItem>> items = Rxn();
   TextEditingController costText = TextEditingController();
   TextEditingController taxText = TextEditingController();
 // getters //
+  bool get isCourier => order.value?.orderType == OrderType.Courier;
 
-  bool get taxSetted => tax.value != null;
+  bool get taxSetted => orderCosts.value?.tax != null;
   // methods //
   Future<void> init({required int orderId}) async {
     this.orderId = orderId;
     order.value = await get_driver_order_by_id(orderId: orderId);
     if (order.value != null && order.value!.orderType == OrderType.Courier) {
       unawaited(_fetchOrderItems(orderId));
+      subscriptionId = _hasuraDb.createSubscription(start: () {
+        orderCostsStream = listen_on_courier_order_costs(orderId: orderId)
+            .listen((OrderCosts? event) {
+          if (event != null) {
+            mezDbgPrint(
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====>${event.totalCost} ");
+            orderCosts.value = event;
+          }
+        });
+      }, cancel: () {
+        orderCostsStream?.cancel();
+        orderCostsStream = null;
+      });
     }
   }
 
@@ -95,5 +115,9 @@ class DvOrderDetailsViewController {
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
+  }
+
+  void dispose() {
+    if (subscriptionId != null) _hasuraDb.cancelSubscription(subscriptionId!);
   }
 }

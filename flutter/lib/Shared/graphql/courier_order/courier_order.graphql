@@ -14,7 +14,11 @@ query get_courier_order_by_id($orderId: Int!) {
     
     to_location_address
     to_location_gps
-
+ total_cost
+    actual_items_cost
+     refund_amount
+    stripe_fees
+    tax
   
     items {
       actual_cost
@@ -82,6 +86,32 @@ query get_courier_order_by_id($orderId: Int!) {
     }
   }
 }
+subscription listen_or_courier_order_prices($orderId: Int!) {
+   delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}){
+
+   total_cost
+    actual_items_cost
+     refund_amount
+    stripe_fees
+    tax
+    delivery_order{
+      delivery_cost
+    }
+   }
+}
+query get_courier_order_prices($orderId: Int!) {
+   delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}){
+
+   total_cost
+    actual_items_cost
+     refund_amount
+    stripe_fees
+    tax
+    delivery_order{
+      delivery_cost
+    }
+   }
+}
 query get_courier_order_items_by_id($orderId: Int!) {
   delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}) {
     items {
@@ -134,6 +164,10 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
     stripe_info
     
     
+    total_cost
+    actual_items_cost
+     refund_amount
+    stripe_fees
     tax
     to_location_address
     to_location_gps

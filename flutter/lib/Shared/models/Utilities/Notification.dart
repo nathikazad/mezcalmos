@@ -12,7 +12,8 @@ enum NotificationType {
   DriverApproved,
   OperatorApproved,
   NewDriver,
-  Call
+  Call,
+  PriceChange
 }
 
 extension ParseNotificationTypeToString on NotificationType {

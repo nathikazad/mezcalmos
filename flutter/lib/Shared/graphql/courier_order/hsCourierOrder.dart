@@ -220,7 +220,8 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                 ? DateTime.parse(
                     orderData.delivery_order.estimated_package_ready_time!)
                 : null,
-        packageCost: orderData.delivery_order.package_cost,
+        packageCost: orderData.actual_items_cost?.toDouble() ??
+            orderData.delivery_order.package_cost,
         pickupLocation: (orderData.delivery_order.pickup_address != null &&
                 orderData.delivery_order.pickup_gps != null)
             ? MezLocation(orderData.delivery_order.pickup_address!,
@@ -271,6 +272,30 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             name: orderData.delivery_order.delivery_company!.details!.name),
         driverLocation: null,
       );
+    }
+    return null;
+  });
+}
+
+Stream<OrderCosts?> listen_on_courier_order_costs({required orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_or_courier_order_prices(
+          Options$Subscription$listen_or_courier_order_prices(
+              variables: Variables$Subscription$listen_or_courier_order_prices(
+                  orderId: orderId)))
+      .map((QueryResult<Subscription$listen_or_courier_order_prices> event) {
+    mezDbgPrint("Event =======>$event");
+    if (event.parsedData?.delivery_courier_order != null &&
+        event.parsedData?.delivery_courier_order.isNotEmpty == true) {
+      Subscription$listen_or_courier_order_prices$delivery_courier_order data =
+          event.parsedData!.delivery_courier_order.first;
+      return OrderCosts(
+          deliveryCost: data.delivery_order.delivery_cost.toDouble(),
+          refundAmmount: data.refund_amount,
+          stripeFess: data.stripe_fees,
+          tax: data.tax,
+          orderItemsCost: data.actual_items_cost,
+          totalCost: data.total_cost);
     }
     return null;
   });

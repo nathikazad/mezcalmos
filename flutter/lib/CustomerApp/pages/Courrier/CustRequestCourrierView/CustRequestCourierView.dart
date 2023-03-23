@@ -6,13 +6,14 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -96,6 +97,9 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           onValue: (DateTime? value) {
                             viewController.deliveryTime.value = value;
                           },
+                          onClear: () {
+                            viewController.deliveryTime.value = null;
+                          },
                           periodOfTime: null,
                           schedule: viewController.company.value!.schedule,
                         ),
@@ -104,7 +108,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                             orderCost: null,
                             totalCost: null,
                             refundAmmount: null,
-                            showNullValues: false,
+                            showNullValues: true,
                             stripeOrderPaymentInfo: null)
                       ],
                     ),
@@ -162,7 +166,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                 }
               },
               bgColor: Colors.white,
-              checkDistance: true,
+              checkDistance: false,
               passedInLocation: viewController.toLoc.value,
               serviceProviderLocation: null,
             ),
@@ -219,12 +223,40 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(5),
               onTap: () async {
-                final SavedLocation? _savedLocation = await MezRouter.toNamed(
-                  SharedRoutes.kPickLocation,
-                ) as SavedLocation?;
-                if (_savedLocation != null) {
-                  viewController.addFromLoc(location: _savedLocation.location);
+                SavedLocation? newSavedLoc;
+                MezLocation? newLoc = await PickLocationView.navigate(
+                  initialLocation: null,
+                  onSaveLocation: ({MezLocation? location}) async {
+                    newSavedLoc = await savedLocationDailog(
+                        context: context, loc: location!);
+                  },
+                );
+                if (newSavedLoc != null) {
+                  viewController.addFromLoc(
+                      location: newSavedLoc!.location,
+                      address: newSavedLoc!.name);
+                } else if (newLoc != null) {
+                  viewController.addFromLoc(location: newLoc);
                 }
+
+                //         final locModel.MezLocation? newLoc = await PickLocationView.navigate(
+                // initialLocation: null,
+                // onSaveLocation: ({locModel.MezLocation? location}) async {
+                //   SavedLocation? newSavedLoc;
+
+                //   newSavedLoc =
+                //       await savedLocationDailog(context: context, loc: location!);
+
+                //   if (newSavedLoc != null) {
+                //     setState(() {
+                //       listOfSavedLoacations.add(newSavedLoc!);
+                //       dropDownListValue =
+                //           listOfSavedLoacations[listOfSavedLoacations.length - 1];
+                //     });
+                //     mezDbgPrint(
+                //         " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
+                //     await _verifyDistanceAndSetLocation(newSavedLoc);
+                //   }}
               },
             )
           ],

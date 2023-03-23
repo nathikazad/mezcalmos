@@ -5,10 +5,13 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -35,7 +38,7 @@ class CustRequestCourierViewController {
   RxList<int> imagesLoading = RxList.empty();
   TextEditingController fromLocText = TextEditingController();
   Rxn<MezLocation> fromLoc = Rxn();
-
+  RxMap<int, File> newImages = RxMap({});
   Rxn<MezLocation> toLoc = Rxn();
   Rxn<DateTime> deliveryTime = Rxn();
   Rxn<DeliveryCompany> company = Rxn();
@@ -59,6 +62,12 @@ class CustRequestCourierViewController {
     unawaited(
         get_delivery_cost(deliveryDetailsId: company.value!.deliveryDetailsId!)
             .then((DeliveryCost? value) => deliveryCost = value));
+    toLoc.value = Get.find<CustomerAuthController>()
+        .customer
+        ?.savedLocations
+        .firstWhereOrNull(
+            (SavedLocation element) => element.defaultLocation == true)
+        ?.location;
 
     addNewEmptyItem();
   }
@@ -67,7 +76,7 @@ class CustRequestCourierViewController {
     items.add(CourierItem(name: "", estCost: 0));
     itemsNames.add(TextEditingController());
     imagesFiles.add(File(""));
-    imagesUrls.add("");
+    // imagesUrls.add("");
     itemsNotes.add(TextEditingController());
     itemsEstCosts.add(TextEditingController());
   }
@@ -76,6 +85,7 @@ class CustRequestCourierViewController {
     items.removeAt(index);
     imagesFiles.removeAt(index);
     imagesUrls.removeAt(index);
+    newImages.remove(index);
     itemsNames.removeAt(index);
     itemsEstCosts.removeAt(index);
     itemsNotes.removeAt(index);
@@ -109,8 +119,9 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _makeOrder() async {
-    mezDbgPrint("Making a courier order ========");
+    mezDbgPrint("Making a courier order ========> ${toLoc.value}");
     try {
+      await _uploadItemsImages();
       cModel.CreateCourierResponse res =
           await CloudFunctions.delivery2_createCourierOrder(
         toLocation: cModel.Location(
@@ -123,6 +134,7 @@ class CustRequestCourierViewController {
             .map(
               (MapEntry<int, CourierItem> e) => cModel.CourierItem(
                 name: itemsNames[e.key].text,
+                image: e.value.image,
                 estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
                 notes: itemsNotes[e.key].text,
               ),
@@ -150,9 +162,19 @@ class CustRequestCourierViewController {
     }
   }
 
-  void addFromLoc({required MezLocation location}) {
+  Future<void> _uploadItemsImages() async {
+    await Future.forEach(newImages.keys, (int key) async {
+      await Get.find<AuthController>()
+          .uploadImgToFbStorage(
+              imageFile: newImages[key]!,
+              path: "/Courier/items/${DateTime.now().toIso8601String()}")
+          .then((String url) => items[key].image = url);
+    });
+  }
+
+  void addFromLoc({required MezLocation location, String? address}) {
     fromLoc.value = location;
-    fromLocText.text = fromLoc.value?.address.toString() ?? "";
+    fromLocText.text = address ?? fromLoc.value?.address.toString() ?? "";
     updateShippingPrice();
   }
 
@@ -205,6 +227,7 @@ class CustRequestCourierViewController {
       try {
         if (_res != null) {
           imagesFiles[itemIndex] = File(_res.path);
+          newImages.addAll({itemIndex: File(_res.path)});
         }
         imagesLoading.remove(itemIndex);
       } catch (e) {
@@ -218,5 +241,6 @@ class CustRequestCourierViewController {
   void setToLocation(MezLocation location) {
     toLoc.value = location;
     updateShippingPrice();
+    mezDbgPrint("set to loc =========>${toLoc.value}");
   }
 }
