@@ -41,6 +41,7 @@ export interface ReqLaundryResponse {
     orderId?: number
 }
 export enum ReqLaundryError {
+    UnhandledError = "unhandledError",
     LaundryStoreNotfound = "laundryStoreNotfound",
     CustomerNotFound = "customerNotFound",
     LaundryStoreNotApproved = "laundryStoreNotApproved",
@@ -105,6 +106,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
             } else {
                 return {
                     success: false,
+                    error: ReqLaundryError.UnhandledError,
                     unhandledError: e.message as any
                 }
             }

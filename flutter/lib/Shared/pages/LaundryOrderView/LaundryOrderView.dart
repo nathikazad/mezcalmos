@@ -118,8 +118,8 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                     refundAmmount: viewController.order.refundAmount,
                     shippingCost: viewController.order.shippingCost,
                     stripeOrderPaymentInfo:
-                        viewController.order!.stripePaymentInfo,
-                    totalCost: viewController.order!.totalCost,
+                        viewController.order.stripePaymentInfo,
+                    totalCost: viewController.order.totalCost,
                   ),
 
                   SizedBox(

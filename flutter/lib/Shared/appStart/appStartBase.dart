@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -42,7 +43,7 @@ final ThemeData _defaultAppTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );
 
-AppType _appType = AppType.CustomerApp;
+AppType _appType = AppType.Customer;
 AppType get appType => _appType;
 
 abstract class StartingPointBase extends StatefulWidget {

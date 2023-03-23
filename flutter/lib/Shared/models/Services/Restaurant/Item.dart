@@ -225,7 +225,7 @@ class Item {
       startsAt: startsAt ?? this.startsAt,
       endsAt: endsAt ?? this.endsAt,
       position: position ?? this.position,
-      itemType: itemType ?? itemType,
+      itemType: itemType,
     );
   }
 }

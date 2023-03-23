@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { AppType, AuthorizationStatus, Language, Location } from "../../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, Language, Location, MezError } from "../../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../../models/Generic/Order";
 import { CourierItem, CourierOrder } from "../../../models/Services/Courier/Courier";
 
@@ -76,10 +75,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
         ]
     })
     if(response.delivery_courier_order_by_pk == null) {
-      throw new HttpsError(
-        "internal",
-        "No order with that id found"
-      );
+        throw new MezError("orderNotFound");
     }
     
     let toLocation: Location = {
@@ -200,10 +196,7 @@ export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder):
         }]
     })
     if(response.delivery_courier_order.length == 0) {
-      throw new HttpsError(
-        "internal",
-        "No order with that delivery id found"
-      );
+        throw new MezError("orderNotFound");
     }
     
     let toLocation: Location = {

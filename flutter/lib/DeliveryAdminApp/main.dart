@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/DeliveryAdminApp/authHooks.dart';
 import 'package:mezcalmos/DeliveryAdminApp/theme.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -27,7 +24,7 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointNative(
-            appType: AppType.DeliveryAdminApp,
+            appType: AppType.DeliveryApp,
             appTheme: DeliveryDAdminTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,

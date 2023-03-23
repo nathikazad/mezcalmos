@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
 import { ChangePriceStatus, DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
@@ -62,13 +61,7 @@ export async function updateDeliveryPackageCost(deliveryOrder: DeliveryOrder) {
 export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
 
-  if(deliveryOrder.changePriceRequest == null) {
-    throw new HttpsError(
-      "internal",
-      "Change Price Request not set"
-    );
-  }
-  switch (deliveryOrder.changePriceRequest.status) {
+  switch (deliveryOrder.changePriceRequest!.status) {
     case ChangePriceStatus.Requested:
       await chain.mutation({
         update_delivery_order_by_pk: [{

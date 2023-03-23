@@ -1,3 +1,4 @@
+import { ChangePriceError } from "../../../../delivery/changeDeliveryPrice";
 import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../../utilities/stripe/model";
 import { MezError } from "../../../models/Generic/Generic";
@@ -60,9 +61,6 @@ export async function updateRestaurantOrderDeliveryCost(orderId: number, newDeli
     }]
   });
   if(!(response.update_restaurant_order_by_pk)) {
-    throw new HttpsError(
-      "internal",
-      "error in updating restaurant order"
-    );
+    throw new MezError(ChangePriceError.UpdateOrderError);
   }
 }

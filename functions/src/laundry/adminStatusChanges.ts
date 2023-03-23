@@ -25,6 +25,7 @@ export interface ChangeLaundryStatusResponse {
   unhandledError?: string,
 }
 enum ChangeLaundryStatusError {
+  UnhandledError = "unhandledError",
   OrderNotFound = "orderNotFound",
   UnauthorizedAccess = "unauthorizedAccess",
   IncorrectOrderId = "incorrectOrderId",
@@ -111,6 +112,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
       } else {
         return {
           success: false,
+          error: ChangeLaundryStatusError.UnhandledError,
           unhandledError: e.message as any
         }
       }

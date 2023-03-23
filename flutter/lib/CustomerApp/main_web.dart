@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartWeb.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
@@ -61,7 +61,7 @@ void main() {
           DeviceType deviceType,
         ) {
           return StartingPointWeb(
-            appType: AppType.CustomerApp,
+            appType: AppType.Customer,
             appTheme: CustomerAppTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,

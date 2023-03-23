@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart' as gqClient;
@@ -222,7 +223,7 @@ class HasuraDb {
   /// this return by default customer we are not handling all app types
   String _getRoleBasedOnApp() {
     switch (MezEnv.appType) {
-      case AppType.CustomerApp:
+      case AppType.Customer:
         return "customer";
       // case AppType.DeliveryAdminApp:
       //   return "mez_admin";
@@ -230,9 +231,9 @@ class HasuraDb {
         return "delivery_driver";
       case AppType.RestaurantApp:
         return "restaurant_operator";
-      case AppType.DeliveryAdminApp:
+      case AppType.DeliveryAdmin:
         return "delivery_operator";
-      case AppType.MezAdminApp:
+      case AppType.MezAdmin:
         return "mez_admin";
       case AppType.LaundryApp:
         return "laundry_operator";

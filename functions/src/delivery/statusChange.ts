@@ -51,6 +51,7 @@ export interface ChangeDeliveryStatusResponse {
 }
 
 enum ChangeDeliveryStatusError {
+  UnhandledError = "unhandledError",
   OrderNotFound = "orderNotFound",
   DriverNotAssigned = "driverNotAssigned",
   OrderNotInProcess = "orderNotInProcess",
@@ -107,6 +108,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
       } else {
         return {
           success: false,
+          error: ChangeDeliveryStatusError.UnhandledError,
           unhandledError: e.message as any
         }
       }

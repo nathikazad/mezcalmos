@@ -30,6 +30,7 @@ export interface AssignDriverResponse {
 }
 
 export enum AssignDriverError {
+  UnhandledError = "unhandledError",
   OrderNotFound = "orderNotFound",
   DriverNotFound = "driverNotFound",
   OperatorNotFound = "operatorNotFound",
@@ -84,6 +85,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
       } else {
         return {
           success: false,
+          error: AssignDriverError.UnhandledError,
           unhandledError: e.message as any
         }
       }

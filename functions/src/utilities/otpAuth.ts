@@ -15,6 +15,7 @@ interface SendOtpResponse {
   secondsLeft?: number,
 }
 enum SendOtpError {
+  UnhandledError = "unhandledError",
   UserNotFound = "userNotFound",
   OTPAskedTooSoon = "OTPAskedTooSoon",
   SMSSendError = "SMSSendError"
@@ -56,6 +57,7 @@ export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<Sen
         } else {
             return {
                 success: false,
+                error: SendOtpError.UnhandledError,
                 unhandledError: e.message as any
             }
         }
@@ -75,6 +77,7 @@ export interface AuthResponse {
   token?: string | undefined
 }
 enum AuthOtpError {
+  UnhandledError = "unhandledError",
   InvalidOTPCode = "invalidOTPCode",
   ExceededNumberOfTries = "exceededNumberOfTries",
 }
@@ -124,6 +127,7 @@ export async function getAuthUsingOTP(_:any, data: VerifyOtpInterface): Promise<
       } else {
         return {
           success: false,
+          error: AuthOtpError.UnhandledError,
           unhandledError: e.message as any
         }
       }

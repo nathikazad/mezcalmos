@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/src/core/query_result.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -83,7 +84,8 @@ Future<int?> add_choice(
   return null;
 }
 
-Future<bool> update_choice_by_id({required int choiceId,required  Choice choice}) async {
+Future<bool> update_choice_by_id(
+    {required int choiceId, required Choice choice}) async {
   final QueryResult<Mutation$updateChoiceById> response = await _db
       .graphQLClient
       .mutate$updateChoiceById(Options$Mutation$updateChoiceById(

@@ -28,6 +28,7 @@ export interface CancelLaundryResponse {
   unhandledError?: string,
 }
 enum CancelLaundryError {
+  UnhandledError = "unhandledError",
   OrderNotFound = "orderNotFound",
   LaundryStoreNotfound = "laundryStoreNotfound",
   IncorrectOrderId = "incorrectOrderId",
@@ -101,6 +102,7 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
       } else {
         return {
           success: false,
+          error: CancelLaundryError.UnhandledError,
           unhandledError: e.message as any
         }
       }

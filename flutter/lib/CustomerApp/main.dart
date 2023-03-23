@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocation
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
@@ -51,7 +51,7 @@ void main() {
           DeviceType deviceType,
         ) {
           return StartingPointNative(
-            appType: AppType.CustomerApp,
+            appType: AppType.Customer,
             appTheme: CustomerAppTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,

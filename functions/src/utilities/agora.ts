@@ -29,6 +29,7 @@ export interface CallUserResponse {
   participantType?: ParticipantType,
 }
 enum CallUserError {
+  UnhandledError = "unhandledError",
   ChatNotFound = "chatNotFound",
   RecipientNotAvailable = "recipientNotAvailable",
   CallerNotInParticipants = "callerNotInParticipants"
@@ -65,6 +66,7 @@ export async function callUser(callerUserId: number, callUserDetails: CallUserDe
       } else {
         return {
           success: false,
+          error: CallUserError.UnhandledError,
           unhandledError: e.message as any
         }
       }

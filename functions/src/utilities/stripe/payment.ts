@@ -31,6 +31,7 @@ export interface PaymentIntentResponse {
   stripeAccountId?: string
 }
 enum PaymentIntentError {
+  UnhandledError = "unhandledError",
   ServiceProviderDetailsNotFound = 'serviceProviderDetailsNotFound',
   CardNotAccepted = "cardNotAccepted",
   StripeNotWorking = "stripeNotWorking",
@@ -92,6 +93,7 @@ export async function getPaymentIntent(userId: number, paymentIntentDetails: Pay
       } else {
         return {
           success: false,
+          error: PaymentIntentError.UnhandledError,
           unhandledError: e.message as any
         }
       }

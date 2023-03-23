@@ -25,6 +25,7 @@ export interface SetupStripeResponse {
   url?: string
 }
 export enum SetupStripeError {
+  UnhandledError = "unhandledError",
   ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
   UnauthorizedAccess = "unauthorizedAccess",
   OperatorNotAuthorized = "operatorNotAuthorized",
@@ -106,6 +107,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupSt
       } else {
         return {
           success: false,
+          error: SetupStripeError.UnhandledError,
           unhandledError: e.message as any
         }
       }
@@ -124,6 +126,7 @@ export interface UpdateStripeResponse {
   unhandledError?: string,
 }
 export enum UpdateStripeError {
+  UnhandledError = "unhandledError",
   ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
   UnauthorizedAccess = "unauthorizedAccess",
   OperatorNotAuthorized = "operatorNotAuthorized",
@@ -181,6 +184,7 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
       } else {
         return {
           success: false,
+          error: UpdateStripeError.UnhandledError,
           unhandledError: e.message as any
         }
       }

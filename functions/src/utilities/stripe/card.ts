@@ -26,6 +26,7 @@ export interface AddCardResponse {
   cardId?: string
 }
 enum AddCardError {
+  UnhandledError = "unhandledError",
   CustomerNotFound = "customerNotFound",
   NoCustomerStripeInfo = "noCustomerStripeInfo",
   CustomerUpdateError = "customerUpdateError",
@@ -67,6 +68,7 @@ export async function addCard(userId: number, cardDetails: CardDetails): Promise
       } else {
         return {
           success: false,
+          error: AddCardError.UnhandledError,
           unhandledError: e.message as any
         }
       }
@@ -84,7 +86,7 @@ export interface ChargeCardDetails {
 }
 export interface ChargeCardResponse {
   success: boolean,
-  error?: AddCardError
+  error?: ChargeCardError
   unhandledError?: string,
   paymentIntent?: string | null,
   customer?: string,
@@ -92,6 +94,7 @@ export interface ChargeCardResponse {
   stripeAccountId?: string
 }
 enum ChargeCardError {
+  UnhandledError = "unhandledError",
   ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
   CardNotAccepted = "cardNotAccepted",
   StripeNotWorking = "stripeNotWorking",
@@ -163,6 +166,7 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
       } else {
         return {
           success: false,
+          error: ChargeCardError.UnhandledError,
           unhandledError: e.message as any
         }
       }
@@ -180,6 +184,7 @@ export interface RemoveCardResponse {
   unhandledError?: string,
 }
 enum RemoveCardError {
+  UnhandledError = "unhandledError",
   OrdersInProcess = "ordersInProcess",
   CustomerNotFound = "customerNotFound",
   NoCustomerStripeInfo = "noCustomerStripeInfo",
@@ -245,6 +250,7 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
       } else {
         return {
           success: false,
+          error: RemoveCardError.UnhandledError,
           unhandledError: e.message as any
         }
       }

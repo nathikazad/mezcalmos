@@ -25,6 +25,7 @@ export interface AddOperatorResponse {
     unhandledError?: string,
 }
 export enum AddOperatorError {
+    UnhandledError = "unhandledError",
     UserNotFound = "userNotFound",
     ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
     UserAlreadyAnOperator = "userAlreadyAnOperator",
@@ -66,6 +67,7 @@ export async function addOperator(operatorUserId: number, addOpDetails: AddOpera
             } else {
                 return {
                     success: false,
+                    error: AddOperatorError.UnhandledError,
                     unhandledError: e.message as any
                 }
             }

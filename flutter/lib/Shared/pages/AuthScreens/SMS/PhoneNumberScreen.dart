@@ -234,14 +234,16 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     if (!phone.startsWith('+')) phone = "+" + phone;
                     mezDbgPrint(phone);
                     if (phone.isPhoneNumber) {
-                      SendOtpResponse response = await sendOTPForLogin(phone);
+                      SendOtpResponse? response = await sendOTPForLogin(phone);
                       mezDbgPrint("++++++++++++ response >>> $response");
 
-                      if (response.status == ServerResponseStatus.Success) {
+                      if (response?.success == true) {
                         MezSnackbar("Notice ~", "OTP Sent code to : $phone");
                         // @abhishek call the navigate function
                         await MezRouter.toNamed(SharedRoutes.kOtpConfirmRoute,
                             arguments: {"phone": phone});
+                      } else {
+                        MezSnackbar("Error", response!.error.toString());
                       }
                     } else
                       MezSnackbar("Error", "Invalid phone Number !");

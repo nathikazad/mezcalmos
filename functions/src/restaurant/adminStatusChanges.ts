@@ -33,6 +33,7 @@ export interface ChangeRestaurantStatusResponse {
   unhandledError?: string,
 }
 export enum ChangeRestaurantStatusError {
+  UnhandledError = "unhandledError",
   OrderNotFound = "orderNotFound",
   UnauthorizedAccess = "unauthorizedAccess",
   IncorrectOrderId = "incorrectOrderId",
@@ -150,6 +151,7 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
       } else {
         return {
           success: false,
+          error: ChangeRestaurantStatusError.UnhandledError,
           unhandledError: e.message as any
         }
       }

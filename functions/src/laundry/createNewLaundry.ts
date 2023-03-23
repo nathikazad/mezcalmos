@@ -29,6 +29,7 @@ export interface LaundryResponse {
   unhandledError?: string,
 }
 export enum LaundryError {
+  UnhandledError = "unhandledError",
   DeliveryDetailsNotSet = "deliveryDetailsNotSet",
   NoDeliveryPartner = "noDeliveryPartner",
   UserNotFound = "userNotFound",
@@ -68,6 +69,7 @@ export async function createLaundry(userId: number, laundryDetails: LaundryDetai
       } else {
         return {
           success: false,
+          error: LaundryError.UnhandledError,
           unhandledError: e.message as any
         }
       }

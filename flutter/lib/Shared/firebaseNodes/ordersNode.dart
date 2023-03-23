@@ -1,4 +1,4 @@
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 String rootTaxiOpenOrdersNode() => "orders/open/taxi";
 

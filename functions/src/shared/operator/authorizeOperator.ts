@@ -24,6 +24,7 @@ export interface AuthOperatorResponse {
     unhandledError?: string,
 }
 export enum AuthOperatorError {
+    UnhandledError = "unhandledError",
     OperatorNotFound = "operatorNotFound",
     UnauthorizedAccess = "unauthorizedAccess",
     IncorrectOperatorId = "incorrectOperatorId",
@@ -87,6 +88,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             } else {
                 return {
                     success: false,
+                    error: AuthOperatorError.UnhandledError,
                     unhandledError: e.message as any
                 }
             }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -10,11 +11,9 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -100,8 +99,10 @@ Future<LaundryOrder?> get_laundry_order_by_id(
   Query$get_laundry_order_by_id$laundry_order_by_pk orderData =
       res.parsedData!.laundry_order_by_pk!;
   return LaundryOrder(
-        deliveryProviderType:  orderData.to_customer_delivery?.service_provider_type.toServiceProviderType() ?? orderData.from_customer_delivery!.service_provider_type.toServiceProviderType() ,
-
+      deliveryProviderType: orderData.to_customer_delivery?.service_provider_type
+              .toServiceProviderType() ??
+          orderData.from_customer_delivery!.service_provider_type
+              .toServiceProviderType(),
       estimatedDropoffAtCustomerTime: DateTime.tryParse(
           orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??
               ""),
@@ -112,22 +113,17 @@ Future<LaundryOrder?> get_laundry_order_by_id(
           orderData.from_customer_delivery?.estimated_arrival_at_pickup_time ??
               ""),
       estimatedPickupFromServiceProviderTime: DateTime.tryParse(
-          orderData.to_customer_delivery?.estimated_arrival_at_pickup_time ??
-              ""),
-      estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
-          ? DateTime.parse(orderData.estimated_ready_time!)
-          : null,
+          orderData.to_customer_delivery?.estimated_arrival_at_pickup_time ?? ""),
+      estimatedLaundryReadyTime: (orderData.estimated_ready_time != null) ? DateTime.parse(orderData.estimated_ready_time!) : null,
       orderId: orderData.id,
       notes: orderData.notes,
-      customerPickupDriverChatId:
-          orderData.from_customer_delivery?.chat_with_customer_id,
+      customerPickupDriverChatId: orderData.from_customer_delivery?.chat_with_customer_id,
       customerDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_customer_id,
       laundryDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_service_provider_id,
       laundryPickupDriverChatId: orderData.from_customer_delivery?.chat_with_service_provider_id,
       dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id, name: orderData.to_customer_delivery!.delivery_driver!.user.name, image: orderData.to_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
       pickupDriver: orderData.from_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.from_customer_delivery!.delivery_driver!.user.id, name: orderData.from_customer_delivery!.delivery_driver!.user.name, image: orderData.from_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
       toCustomerDeliveryId: orderData.to_customer_delivery_id,
-      
       fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
       costsByType: LaundryOrderCosts(lineItems: orderData.categories.map((Query$get_laundry_order_by_id$laundry_order_by_pk$categories cat) => LaundryOrderCostLineItem(cost: cat.category.cost_by_kilo, id: cat.category_id, name: toLanguageMap(translations: cat.category.name.translations), weight: cat.weight_in_kilo!)).toList()),
       cost: orderData.items_cost ?? 0,
@@ -162,8 +158,11 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =
           event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
-                deliveryProviderType:  orderData.to_customer_delivery?.service_provider_type.toServiceProviderType() ?? orderData.from_customer_delivery!.service_provider_type.toServiceProviderType() ,
-
+        deliveryProviderType: orderData
+                .to_customer_delivery?.service_provider_type
+                .toServiceProviderType() ??
+            orderData.from_customer_delivery!.service_provider_type
+                .toServiceProviderType(),
         notes: orderData.notes,
         estimatedDropoffAtCustomerTime: DateTime.tryParse(
             orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??

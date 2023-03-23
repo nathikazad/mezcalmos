@@ -29,6 +29,7 @@ export interface RestaurantResponse {
   unhandledError?: string,
 }
 export enum RestaurantError {
+  UnhandledError = "unhandledError",
   DeliveryDetailsNotSet = "deliveryDetailsNotSet",
   NoDeliveryPartner = "noDeliveryPartner",
   UserNotFound = "userNotFound",
@@ -91,6 +92,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
       } else {
         return {
           success: false,
+          error: RestaurantError.UnhandledError,
           unhandledError: e.message as any
         }
       }

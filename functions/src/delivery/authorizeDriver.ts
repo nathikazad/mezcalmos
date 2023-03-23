@@ -24,6 +24,7 @@ export interface AuthorizeDriverResponse {
 }
 
 enum AuthorizeDriverError {
+  UnhandledError = "unhandledError",
   DriverNotFound = "driverNotFound",
   OperatorNotFound = "operatorNotFound",
   UnauthorizedAccess = "unauthorizedAccess"
@@ -55,6 +56,7 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
       } else {
         return {
           success: false,
+          error: AuthorizeDriverError.UnhandledError,
           unhandledError: e.message as any
         }
       }

@@ -70,29 +70,12 @@ Future<void> signOut() async {
   }
 }
 
-Future<SendOtpResponse> sendOTPForLogin(String phoneNumber) async {
+Future<SendOtpResponse?> sendOTPForLogin(String phoneNumber) async {
   try {
     SendOtpResponse res = await CloudFunctions.otp2_sendOTPForLogin(
         language: sDefaultLanguage.toFirebaseFormatString(),
         phoneNumber: phoneNumber);
     return res;
-    // _waitingResponse.value = true;
-    // response = await sendOTPForLoginFunction.call(<String, dynamic>{
-    //   'phoneNumber': phoneNumber,
-    //   'messageType': 'SMS',
-    //   'language': sDefaultLanguage.toFirebaseFormatString(),
-    //   // 'language': _settings.appLanguage.userLanguageKey,
-    // });
-    // var c = json.decode(response.data);
-    // mezDbgPrint("-----------------");
-    // mezDbgPrint(c);
-    // mezDbgPrint(response);
-    // mezDbgPrint("-----------------");
-
-    // mezcalmosSnackBar(
-    //     "Notice ~",
-    //     responseStatusChecker(response.data,
-    //         onSuccessMessage: "OTP message has been sent !"));
   } on FirebaseFunctionsException catch (e) {
     showErrorSnackBar(errorText: e.message.toString());
   } catch (e, stk) {
@@ -102,38 +85,27 @@ Future<SendOtpResponse> sendOTPForLogin(String phoneNumber) async {
     mezDbgPrint(e);
     mezDbgPrint(stk);
   }
-  return SendOtpResponse("errorMessage", 0, ServerResponseStatus.Error);
 }
 
-Future<ServerResponse?> signInUsingOTP(
-    String phoneNumber, String otpCode) async {
+Future<AuthResponse?> signInUsingOTP(String phoneNumber, String otpCode) async {
   mezDbgPrint("$phoneNumber  < phone ------ otp > $otpCode");
-  final HttpsCallable getAuthUsingOTPFunction =
-      FirebaseFunctions.instance.httpsCallable('otp2-getAuthUsingOTP');
-  HttpsCallableResult? response;
-  ServerResponse? serverResponse;
+
+  // final HttpsCallable getAuthUsingOTPFunction =
+  //     FirebaseFunctions.instance.httpsCallable('otp2-getAuthUsingOTP');
+  // HttpsCallableResult? response;
+  // ServerResponse? serverResponse;
 
   try {
     // _waitingResponse.value = true;
-    response = await getAuthUsingOTPFunction.call(<String, dynamic>{
-      'phoneNumber': phoneNumber,
-      'OTPCode': otpCode,
-      'language': sDefaultLanguage.toFirebaseFormatString(),
+    AuthResponse response = await CloudFunctions.otp2_getAuthUsingOTP(
+      phoneNumber: phoneNumber,
+      OTPCode: otpCode,
       // 'language': _settings.appLanguage.userLanguageKey,
-    });
+    );
 
-    serverResponse = ServerResponse.fromJson(response.data ?? {});
-
-    mezDbgPrint('---------------------');
-    mezDbgPrint(serverResponse.status);
-    mezDbgPrint(serverResponse.data);
-    mezDbgPrint(serverResponse.errorMessage);
-    mezDbgPrint(serverResponse.errorCode);
-    mezDbgPrint('---------------------');
-
-    if (serverResponse.success) {
+    if (response.success) {
       await fireAuth.FirebaseAuth.instance
-          .signInWithCustomToken(response.data["token"])
+          .signInWithCustomToken(response.token!)
           .catchError((Object error, StackTrace sr) {
         if (error.toString().contains('user-disabled')) {
           MezSnackbar(
@@ -145,12 +117,11 @@ Future<ServerResponse?> signInUsingOTP(
         }
       });
     }
+    return response;
   } catch (e) {
     // MezSnackbar("Oops ..", _i18n()['failedOTPConfirmRequest']);
     print("Exception happend in GetAuthUsingOTP : $e");
   }
-
-  return serverResponse;
 }
 
 // flutter_facebook_auth Package causes a conflict with GetStorage !

@@ -1,4 +1,4 @@
-import { HttpsError } from "firebase-functions/v1/auth";
+import { ChangePriceError } from "../../../../delivery/changeDeliveryPrice";
 import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../../utilities/stripe/model";
 import { DeliveryDirection, DeliveryOrder } from "../../../models/Generic/Delivery";
@@ -77,9 +77,6 @@ export async function updateLaundryOrderDeliveryCost(orderId: number, deliveryOr
         });
     }
     if(!(response.update_laundry_order_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "error in updating laundry order"
-        );
+        throw new MezError(ChangePriceError.UpdateOrderError);
     }
 }

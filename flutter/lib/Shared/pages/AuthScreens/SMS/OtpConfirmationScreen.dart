@@ -193,15 +193,15 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 // resend code !
                                 canConfirmOtp.value = false;
                                 _otpCodeTextController.clear();
-                                SendOtpResponse response =
+                                SendOtpResponse? response =
                                     await sendOTPForLogin(
                                         Get.arguments ?? _phonePassed);
                                 mezDbgPrint(response);
-                                if (response.status != ResponseStatus.Success) {
+                                if (response?.success == false) {
                                   resendOtpTimerActivate(
-                                      response.secondsLeft!.toDouble());
+                                      response!.secondsLeft!.toDouble());
                                   MezSnackbar(
-                                      "Error", response.errorMessage.toString(),
+                                      "Error", response.error.toString(),
                                       position: SnackPosition.TOP);
                                 }
                               }
@@ -239,7 +239,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   clickedSignInOtp.value = true;
                   mezDbgPrint(
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
-                  final ServerResponse? _resp = await signInUsingOTP(
+                  final AuthResponse? _resp = await signInUsingOTP(
                       Get.arguments ?? _phonePassed, otpCode);
                   switch (_resp?.success) {
                     case null:
@@ -247,7 +247,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       break;
 
                     case false:
-                      MezSnackbar("Oops ..", _i18n()['wrongOTPCode']);
+                      MezSnackbar("Oops ..", _resp!.error.toString());
                       clickedSignInOtp.value = false;
                       break;
                   }

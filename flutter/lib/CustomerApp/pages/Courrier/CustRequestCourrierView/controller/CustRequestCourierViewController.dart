@@ -135,9 +135,14 @@ class CustRequestCourierViewController {
         tripDuration: routeInfo?.duration.seconds,
         tripPolyline: routeInfo?.polyline,
       );
+      if (res.success == true) {
+        MezRouter.popEverythingTillBeforeHome().then((_) =>
+            CustCourierOrderView.navigate(orderId: res.orderId!.toInt()));
+      } else {
+        showErrorSnackBar(errorText: res.error.toString());
+        mezDbgPrint(res.error);
+      }
       // ignore: unawaited_futures
-      MezRouter.popEverythingTillBeforeHome().then(
-          (_) => CustCourierOrderView.navigate(orderId: res.orderId.toInt()));
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(e);

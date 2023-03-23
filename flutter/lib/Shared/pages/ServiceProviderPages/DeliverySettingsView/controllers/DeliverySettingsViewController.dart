@@ -199,7 +199,7 @@ class DeliverySettingsViewController {
       freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
       costPerKm: double.parse(_costPerKm.text),
       radius: double.parse(radius.text) * 1000,
-      costPerKmFromBase: double.tryParse(costPerKmFromBase.text ?? ""),
+      costPerKmFromBase: double.tryParse(costPerKmFromBase.text),
     );
   }
 

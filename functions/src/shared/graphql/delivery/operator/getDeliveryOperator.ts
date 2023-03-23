@@ -33,9 +33,9 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             }
         }]
     })
-    if (response.delivery_operator == null) {
-        throw new MezError("deliveryCompanyOperatorsNotFound");
-    }
+    // if (response.delivery_operator == null) {
+    //     throw new MezError("deliveryCompanyOperatorsNotFound");
+    // }
     return response.delivery_operator.map((d) => {
         return {
             id: d.id,

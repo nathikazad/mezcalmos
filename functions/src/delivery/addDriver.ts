@@ -20,6 +20,7 @@ export interface AddDriverResponse {
     unhandledError?: string
 }
 export enum AddDriverError {
+    UnhandledError = "unhandledError",
     DriverAlreadyExists = "driverAlreadyExists",
     DriverCreationError = "driverCreationError",
     InvalidServiceProviderType = "invalidServiceProviderType"
@@ -47,6 +48,7 @@ export async function addDriver(userId: number, addDriverDetails: AddDriverDetai
             } else {
                 return {
                     success: false,
+                    error: AddDriverError.UnhandledError,
                     unhandledError: e.message as any
                 }
             }

@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus, Language, MezError } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
@@ -106,6 +105,11 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
 
   let chain = getHasura();
   let response = await chain.query({
+    delivery_company_by_pk: [{
+      id: deliveryCompanyId
+    }, {
+      id: true
+    }],
     delivery_driver: [{
       where: {
         _and: [{
@@ -139,11 +143,11 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
         },
       }]
     });
+    if(response.delivery_company_by_pk == null) {
+      throw new MezError("deliveryCompanyNotFound");
+    }
     if (response.delivery_driver.length == 0) {
-      throw new HttpsError(
-        "internal",
-        "No delivery company with that id found or the company has no drivers"
-      );
+      throw new MezError("deliveryCompanyHasNoDrivers");
     }
     return response.delivery_driver.map((d) => {
       return {

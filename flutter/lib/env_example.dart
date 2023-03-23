@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
@@ -14,7 +15,7 @@ class MezEnv {
 
   static bool get previewMode => _previewMode;
 
-  static AppType _appType = AppType.CustomerApp;
+  static AppType _appType = AppType.Customer;
 
   static void setAppType(AppType appType) {
     _appType = appType;

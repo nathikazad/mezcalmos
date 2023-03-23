@@ -27,6 +27,7 @@ export interface CancelRestaurantOrderResponse {
   unhandledError?: string,
 }
 enum CancelOrderError {
+  UnhandledError = "unhandledError",
   OrderNotFound = "orderNotFound",
   RestaurantNotfound = "restaurantNotfound",
   IncorrectOrderId = "incorrectOrderId",
@@ -141,6 +142,7 @@ export async function cancelOrderFromCustomer(userId: number, data: CancelOrderD
       } else {
         return {
           success: false,
+          error: CancelOrderError.UnhandledError,
           unhandledError: e.message as any
         }
       }

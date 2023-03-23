@@ -51,19 +51,22 @@ class MessagingScreenStateForApps extends BaseMessagingScreenState {
           await CloudFunctions.agora_callChatUser(
               chatId: chatId,
               callerParticipantType:
-                  MezEnv.appType.toCFParticipantTypefromAppType());
+                  MezEnv.appType.toParticipantTypefromAppType());
       // mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
 
       // Request Agora auth
 
       mezDbgPrint("4 - agora_callChatUser response $response");
-
+      if (response.success == false) {
+        // showErrorSnackBar(errorText: response.error.toString());
+        mezDbgPrint(response.error);
+      }
       await sagora!.handleIfInChannelAlready();
 
       // ignore: unawaited_futures
       sagora!
           .joinChannel(
-        token: response.token,
+        token: response.token!,
         channelId: chatId,
         uid: Get.find<AuthController>().hasuraUserId!,
       )
@@ -75,7 +78,7 @@ class MessagingScreenStateForApps extends BaseMessagingScreenState {
 
         AgoraCall.navigate(
             chatId: chatId,
-            participantId: response.id.toInt(),
+            participantId: response.id!.toInt(),
             participantImage: response.image!,
             participantName: response.name!,
             participantType: response.participantType.toString());

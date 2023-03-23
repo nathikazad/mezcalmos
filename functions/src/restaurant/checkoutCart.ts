@@ -46,6 +46,7 @@ export interface CheckoutResponse {
 }
 
 enum CheckoutResponseError {
+  UnhandledError = "unhandledError",
   RestaurantClosed = "restaurantClosed",
   CartEmpty = "cartEmpty",
   RestaurantNotApproved = "restaurantNotApproved",
@@ -109,6 +110,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
       } else {
         return {
           success: false,
+          error: CheckoutResponseError.UnhandledError,
           unhandledError: e.message as any
         }
       }

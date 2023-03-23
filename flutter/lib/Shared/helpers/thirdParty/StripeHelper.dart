@@ -138,6 +138,10 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
         await CloudFunctions.stripe2_getPaymentIntent(
             paymentAmount: paymentAmount,
             serviceProviderDetailsId: serviceProviderDetailsId);
+    if (res.success == false) {
+      showErrorSnackBar(errorText: res.error.toString());
+      mezDbgPrint(res.error);
+    }
     return res;
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message.toString());
@@ -154,6 +158,10 @@ Future<String?> addCard({required String paymentMethod}) async {
   try {
     cModel.AddCardResponse res =
         await CloudFunctions.stripe2_addCard(paymentMethod: paymentMethod);
+    if (res.success == false) {
+      showErrorSnackBar(errorText: res.error.toString());
+      mezDbgPrint(res.error);
+    }
     return res.cardId;
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message ?? "");
@@ -187,6 +195,10 @@ Future<String?> acceptPaymentWithSavedCard(
         serviceProviderDetailsId: serviceProviderDetailsId,
         cardId: card.cardId,
         paymentAmount: paymentAmount);
+    if (res.success == false) {
+      showErrorSnackBar(errorText: res.error.toString());
+      mezDbgPrint(res.error);
+    }
     return extractPaymentIdFromIntent(res.paymentIntent.toString());
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message.toString());
@@ -254,14 +266,16 @@ Future<bool> isGooglePaySupported() {
 }
 
 Future<void> acceptPaymentWithApplePay(
-    {required cModel.PaymentIntentResponse paymentIntentData,
+    {required String publishableKey,
+    required String paymentIntent,
+    required String stripeAccountId,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData.publishableKey;
+    Stripe.publishableKey = publishableKey;
     Stripe.merchantIdentifier = "merchant.mezcalmos";
-    final String clientSecret = paymentIntentData.paymentIntent!;
-    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
+    final String clientSecret = paymentIntent;
+    Stripe.stripeAccountId = stripeAccountId;
     await Stripe.instance.applySettings();
     // 1. Present Apple Pay sheet
     await Stripe.instance.presentApplePay(
@@ -285,14 +299,16 @@ Future<void> acceptPaymentWithApplePay(
 }
 
 Future<void> acceptPaymentWithGooglePay(
-    {required cModel.PaymentIntentResponse paymentIntentData,
+    {required String publishableKey,
+    required String paymentIntent,
+    required String stripeAccountId,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData.publishableKey;
+    Stripe.publishableKey = publishableKey;
     Stripe.merchantIdentifier = "BCR2DN4T4C3I3XDF";
-    final String clientSecret = paymentIntentData.paymentIntent!;
-    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
+    final String clientSecret = paymentIntent;
+    Stripe.stripeAccountId = stripeAccountId;
     await Stripe.instance.applySettings();
 
     await Stripe.instance.initGooglePay(GooglePayInitParams(
@@ -314,7 +330,7 @@ String extractPaymentIdFromIntent(String a) {
   return a.split('_').sublist(0, 2).join('_');
 }
 
-Future<cModel.SetupResponse> onboardServiceProvider(
+Future<cModel.SetupStripeResponse> onboardServiceProvider(
   int serviceProviderDetailsId,
   ServiceProviderType orderType,
 ) async {
@@ -328,13 +344,17 @@ Future<cModel.SetupResponse> onboardServiceProvider(
 Future<void> updateServiceProvider(
     int serviceProviderDetailsId,
     ServiceProviderType orderType,
-    Map<PaymentType, bool> acceptedPayments) async {
+    Map<cModel.PaymentType, bool> acceptedPayments) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  await CloudFunctions.stripe2_updateServiceProvider(
+  cModel.UpdateStripeResponse res =
+      await CloudFunctions.stripe2_updateServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
-
+  if (res.success == false) {
+    showErrorSnackBar(errorText: res.error.toString());
+    mezDbgPrint(res.error);
+  }
   // return serviceProviderFunctions(
   //     "updateServiceProvider", serviceProviderId, orderType, acceptedPayments);
 }
@@ -343,7 +363,7 @@ Future<ServerResponse> serviceProviderFunctions(
     String functionName,
     int serviceProviderId,
     ServiceProviderType orderType,
-    Map<PaymentType, bool> acceptedPayments) async {
+    Map<cModel.PaymentType, bool> acceptedPayments) async {
   final HttpsCallable cloudFunction =
       FirebaseFunctions.instance.httpsCallable('stripe-$functionName');
   try {

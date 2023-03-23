@@ -5,6 +5,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rive/rive.dart' as rive;
@@ -141,17 +142,6 @@ const String mexicoFlagAsset = "assets/images/shared/mexico.png";
 const String money_asset = "assets/images/shared/money.png";
 const String taxi_driver_marker_asset = "${_imgs_path}taxiDriverImg.png";
 
-enum AppType {
-  CustomerApp,
-  TaxiApp,
-  TaxiAdminApp,
-  DeliveryAdminApp,
-  DeliveryApp,
-  LaundryApp,
-  RestaurantApp,
-  MezAdminApp
-}
-
 extension ParseOrderTypeToString on AppType {
   String toShortString() {
     final String str = toString().split('.').last;
@@ -170,27 +160,25 @@ extension ParseOrderTypeToString on AppType {
 
   ParticipantType? toParticipantType() {
     switch (this) {
-      case AppType.CustomerApp:
+      case AppType.Customer:
         return ParticipantType.Customer;
-      case AppType.TaxiApp:
-        return ParticipantType.Taxi;
-      case AppType.TaxiAdminApp:
-        return ParticipantType.TaxiAdmin;
-      case AppType.DeliveryAdminApp:
-        return ParticipantType.DeliveryAdmin;
-      case AppType.MezAdminApp:
+      case AppType.DeliveryAdmin:
+        return ParticipantType.DeliveryOperator;
+      case AppType.MezAdmin:
         return ParticipantType.MezAdmin;
-      default:
-        return null;
+      case AppType.DeliveryApp:
+        return ParticipantType.DeliveryDriver;
+      case AppType.LaundryApp:
+        return ParticipantType.LaundryOperator;
+      case AppType.RestaurantApp:
+        return ParticipantType.RestaurantOperator;
     }
   }
 
   String getPrivacyLink() {
     switch (this) {
-      case AppType.CustomerApp:
+      case AppType.Customer:
         return sPrivacyPolicyCustomerApp;
-      case AppType.TaxiApp:
-        return sPrivacyPolicyTaxiApp;
       default:
         return sPrivacyPolicyCustomerApp;
     }

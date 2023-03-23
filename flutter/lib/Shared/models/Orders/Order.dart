@@ -10,6 +10,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+
 abstract class Order {
   int orderId;
   OrderType orderType;
@@ -91,13 +93,13 @@ abstract class Order {
 }
 
 // ignore: constant_identifier_names
-enum OrderType { Taxi, Restaurant, Laundry, Water, Courier }
+// enum OrderType { Taxi, Restaurant, Laundry, Water, Courier }
 
 extension ParseOrderTypeToString on OrderType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
+  // String toFirebaseFormatString() {
+  //   final String str = toString().split('.').last;
+  //   return str[0].toLowerCase() + str.substring(1);
+  // }
 
   mat.IconData toIcon() {
     switch (this) {
@@ -144,12 +146,12 @@ extension ParseOrderTypeToString on OrderType {
   }
 }
 
-extension ParseStringToOrderType on String {
-  OrderType toOrderType() {
-    return OrderType.values
-        .firstWhere((OrderType e) => e.toFirebaseFormatString() == this);
-  }
-}
+// extension ParseStringToOrderType on String {
+//   OrderType toOrderType() {
+//     return OrderType.values
+//         .firstWhere((OrderType e) => e.toFirebaseFormatString() == this);
+//   }
+// }
 
 abstract class DeliverableOrder extends Order {
   DeliveryDriverUserInfo? dropoffDriver;

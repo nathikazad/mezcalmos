@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
-import { CourierRequest } from "../../../../delivery/createCourierOrder";
+import { CourierRequest, CreateCourierError } from "../../../../delivery/createCourierOrder";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { AppType } from "../../../models/Generic/Generic";
+import { AppType, MezError } from "../../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { CourierOrder } from "../../../models/Services/Courier/Courier";
@@ -110,10 +109,7 @@ export async function createNewCourierOrder(
         }]
     });
     if(response.insert_delivery_courier_order_one == null) {
-        throw new HttpsError(
-            "internal",
-            "order creation error"
-        );
+        throw new MezError(CreateCourierError.OrderCreationError);
     }
 
     return {

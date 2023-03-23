@@ -24,6 +24,7 @@ import { addOperator } from "./shared/operator/addOperator";
 import { authorizeOperator } from "./shared/operator/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
 import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
+import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -91,6 +92,7 @@ export const delivery2 = {
   createCourierOrder: authenticatedCall((userId, data) => createCourierOrder(userId, data)),
   changeDeliveryPrice: authenticatedCall((userId, data) => changeDeliveryPrice(userId, data)),
   changeDeliveryPriceResponse: authenticatedCall((userId, data) => changeDeliveryPriceResponse(userId, data)),
+  cancelCourierFromCustomer: authenticatedCall((userId, data) => cancelCourierFromCustomer(userId, data)),
 
   // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
   // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),

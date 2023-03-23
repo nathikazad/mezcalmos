@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getCourierOrder, getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
@@ -13,6 +12,7 @@ import { updateRestaurantOrderDeliveryCost } from "../shared/graphql/restaurant/
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { ChangePriceStatus, DeliveryDriver, DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType, PriceChangeApprovalNotification } from "../shared/models/Generic/Delivery";
+import { MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
@@ -27,22 +27,62 @@ export interface ChangePriceDetails {
     newPrice: number,
     reason: string,
 }
+export interface ChangePriceReqResponse {
+    success: boolean,
+    error?: ChangePriceError
+    unhandledError?: string,
+}
+export enum ChangePriceError {
+    UnhandledError = "unhandledError",
+    OrderNotFound = " orderNotFound",
+    DriverIDOrderIDMismatch = "driverIDOrderIDMismatch",
+    StatusNotOrderReceived = "statusNotOrderReceived",
+    PriceChangeAlreadyRequested = "priceChangeAlreadyRequested",
+    ChangePriceRequestNotSet = "changePriceRequestNotSet",
+    CustomerNotFound = "customerNotFound",
+    RestaurantNotfound = "restaurantNotfound",
+    LaundryStoreNotfound = "laundryStoreNotfound",
+    IncorrectOrderId = "incorrectOrderId",
+    DriverNotFound = "driverNotFound",
+    UpdateOrderError = "updateOrderError",
+}
 
-export async function changeDeliveryPrice(userId: number, changePriceDetails: ChangePriceDetails) {
-    
-    let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changePriceDetails.deliveryOrderId);
+export async function changeDeliveryPrice(userId: number, changePriceDetails: ChangePriceDetails): Promise<ChangePriceReqResponse> {
+    try {
+        let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changePriceDetails.deliveryOrderId);
 
-    priceChangeRequestErrorCheck(deliveryOrder, userId);
+        priceChangeRequestErrorCheck(deliveryOrder, userId);
 
-    deliveryOrder.changePriceRequest = {
-        newPrice: changePriceDetails.newPrice,
-        oldPrice: deliveryOrder.deliveryCost,
-        reason: changePriceDetails.reason,
-        status: ChangePriceStatus.Requested
+        deliveryOrder.changePriceRequest = {
+            newPrice: changePriceDetails.newPrice,
+            oldPrice: deliveryOrder.deliveryCost,
+            reason: changePriceDetails.reason,
+            status: ChangePriceStatus.Requested
+        }
+        await updateDeliveryChangePriceRequest(deliveryOrder);
+
+        await notifyPriceChangeRequest(deliveryOrder);
+        return {
+            success: true,
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(ChangePriceError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: ChangePriceError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+        throw e
+        }
     }
-    await updateDeliveryChangePriceRequest(deliveryOrder);
-
-    await notifyPriceChangeRequest(deliveryOrder);
 }
 
 interface ChangePriceResponseDetails {
@@ -50,69 +90,88 @@ interface ChangePriceResponseDetails {
     orderId: number,
     orderType: OrderType,
 }
-
-export async function changeDeliveryPriceResponse(userId: number, changePriceResponseDetails: ChangePriceResponseDetails) {
+export interface ChangePriceResResponse {
+    success: boolean,
+    error?: ChangePriceError
+    unhandledError?: string,
+}
+export async function changeDeliveryPriceResponse(userId: number, changePriceResponseDetails: ChangePriceResponseDetails): Promise<ChangePriceResResponse> {
     //check order
     //accepted -> mutation to change delivery price of delivery and sp order
     //rejected -> remove driver
     //notify driver
-
-    let customerId: number;
-    let deliveryOrder: DeliveryOrder;
-    switch (changePriceResponseDetails.orderType) {
-        case OrderType.Restaurant:
-            let restaurantOrder: RestaurantOrder = await getRestaurantOrder(changePriceResponseDetails.orderId);
-            customerId = restaurantOrder.customerId;
-            deliveryOrder = await getDeliveryOrder(restaurantOrder.deliveryId!);
-            break;
-        case OrderType.Laundry:
-            let laundryOrder: LaundryOrder = await getLaundryOrder(changePriceResponseDetails.orderId);
-            customerId = laundryOrder.customerId;
-            if(laundryOrder.toCustomerDeliveryId)
-                deliveryOrder = await getDeliveryOrder(laundryOrder.toCustomerDeliveryId);
-            else
-                deliveryOrder = await getDeliveryOrder(laundryOrder.fromCustomerDeliveryId!);
-            break;
-        default:
-            let courierOrder: CourierOrder = await getCourierOrder(changePriceResponseDetails.orderId);
-            customerId = courierOrder.customerId;
-            deliveryOrder = courierOrder.deliveryOrder;
-            break;
-    }
-    if(userId != customerId) {
-        throw new HttpsError(
-            "internal",
-            `Order does not belong to this customer`,
-        );
-    }
-    if(deliveryOrder.changePriceRequest == null) {
-        throw new HttpsError(
-            "internal",
-            `change price request not set`,
-        );
-    }
-    if(changePriceResponseDetails.accepted) {
-
-        deliveryOrder.changePriceRequest.status = ChangePriceStatus.Accepted;
-        deliveryOrder.deliveryCost = deliveryOrder.changePriceRequest.newPrice;
-        updateDeliveryChangePriceRequest(deliveryOrder);
-
+    try {
+        let customerId: number;
+        let deliveryOrder: DeliveryOrder;
         switch (changePriceResponseDetails.orderType) {
             case OrderType.Restaurant:
-                updateRestaurantOrderDeliveryCost(changePriceResponseDetails.orderId, deliveryOrder.deliveryCost);
+                let restaurantOrder: RestaurantOrder = await getRestaurantOrder(changePriceResponseDetails.orderId);
+                customerId = restaurantOrder.customerId;
+                deliveryOrder = await getDeliveryOrder(restaurantOrder.deliveryId!);
                 break;
             case OrderType.Laundry:
-                updateLaundryOrderDeliveryCost(changePriceResponseDetails.orderId, deliveryOrder);
+                let laundryOrder: LaundryOrder = await getLaundryOrder(changePriceResponseDetails.orderId);
+                customerId = laundryOrder.customerId;
+                if(laundryOrder.toCustomerDeliveryId)
+                    deliveryOrder = await getDeliveryOrder(laundryOrder.toCustomerDeliveryId);
+                else
+                    deliveryOrder = await getDeliveryOrder(laundryOrder.fromCustomerDeliveryId!);
                 break;
             default:
+                let courierOrder: CourierOrder = await getCourierOrder(changePriceResponseDetails.orderId);
+                customerId = courierOrder.customerId;
+                deliveryOrder = courierOrder.deliveryOrder;
                 break;
         }
-    } else {
-        deliveryOrder.changePriceRequest.status = ChangePriceStatus.Rejected;
-        updateDeliveryChangePriceRequest(deliveryOrder);
-    }
+        if(userId != customerId) {
+            throw new MezError(ChangePriceError.IncorrectOrderId);
+        }
+        if(deliveryOrder.changePriceRequest == null) {
+            throw new MezError(ChangePriceError.ChangePriceRequestNotSet);
+        }
+        if(changePriceResponseDetails.accepted) {
 
-    notifyDriver(deliveryOrder.deliveryDriverId!, changePriceResponseDetails.accepted);
+            deliveryOrder.changePriceRequest.status = ChangePriceStatus.Accepted;
+            deliveryOrder.deliveryCost = deliveryOrder.changePriceRequest.newPrice;
+            updateDeliveryChangePriceRequest(deliveryOrder);
+
+            switch (changePriceResponseDetails.orderType) {
+                case OrderType.Restaurant:
+                    updateRestaurantOrderDeliveryCost(changePriceResponseDetails.orderId, deliveryOrder.deliveryCost);
+                    break;
+                case OrderType.Laundry:
+                    updateLaundryOrderDeliveryCost(changePriceResponseDetails.orderId, deliveryOrder);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            deliveryOrder.changePriceRequest.status = ChangePriceStatus.Rejected;
+            updateDeliveryChangePriceRequest(deliveryOrder);
+        }
+
+        notifyDriver(deliveryOrder.deliveryDriverId!, changePriceResponseDetails.accepted);
+        return {
+            success: true,
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(ChangePriceError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: ChangePriceError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+        throw e
+        }
+    }
 }
 
 async function notifyDriver(deliveryDriverId: number, accepted: boolean) {
@@ -268,21 +327,12 @@ async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
 
 function priceChangeRequestErrorCheck(deliveryOrder: DeliveryOrder, userId: number) {
     if (deliveryOrder.deliveryDriver == null || deliveryOrder.deliveryDriver.userId != userId) {
-        throw new HttpsError(
-            "internal",
-            `Driver ID order ID mismatch`
-        );
+        throw new MezError(ChangePriceError.DriverIDOrderIDMismatch);
     }
     if (deliveryOrder.status != DeliveryOrderStatus.OrderReceived) {
-        throw new HttpsError(
-            "internal",
-            `Status not order received`
-        );
+        throw new MezError(ChangePriceError.StatusNotOrderReceived);
     }
     if (deliveryOrder.changePriceRequest) {
-        throw new HttpsError(
-            "internal",
-            `price change already requested`
-        );
+        throw new MezError(ChangePriceError.PriceChangeAlreadyRequested);
     }
 }

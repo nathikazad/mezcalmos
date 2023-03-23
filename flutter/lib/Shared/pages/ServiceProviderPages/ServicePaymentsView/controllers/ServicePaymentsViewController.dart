@@ -1,8 +1,8 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/stripe_info/hsServiceStripeInfo.dart';
@@ -194,9 +194,13 @@ class ServicePaymentsViewController {
 
   Future<void> _setupService() async {
     try {
-      cModel.SetupResponse res =
+      SetupStripeResponse res =
           await onboardServiceProvider(_detailsId, serviceProviderType);
       mezDbgPrint("response ============> $res");
+      if (res.success == false) {
+        showErrorSnackBar(errorText: res.error.toString());
+        mezDbgPrint(res.error);
+      }
       stripeUrl = res.url;
       showStripe.value = true;
       initWebView();
