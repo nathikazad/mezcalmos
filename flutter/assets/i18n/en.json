@@ -1006,7 +1006,7 @@
         "alertClearNotificationTitle": "Clear All Notifications"
       },
       "LocationPermissionScreen": {
-        "permissionBtn": "GIVE PERMISSION",
+        "permissionBtn": "Continue",
         "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",
         "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
         "locationPermissionDeniedForever": "Location permissions are denied forever! Please change that.",
