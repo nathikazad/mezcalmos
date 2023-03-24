@@ -22,7 +22,7 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointNative(
-            appType: AppType.RestaurantApp,
+            appType: AppType.Restaurant,
             signInCallback: signInCallback,
             appTheme: RestaurantAppTheme.lightTheme,
             signOutCallback: signOutCallback,

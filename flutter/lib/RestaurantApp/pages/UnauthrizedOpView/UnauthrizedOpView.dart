@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/controllers/ROpUnauthorizedOpViewController.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 
 class ROpUnauthorizedOpView extends StatefulWidget {
   const ROpUnauthorizedOpView({super.key});
+
+  static Future<void> navigate() {
+    return MezRouter.toPath(RestaurantAppRoutes.opUnauthRoute);
+  }
 
   @override
   State<ROpUnauthorizedOpView> createState() => _ROpUnauthorizedOpViewState();

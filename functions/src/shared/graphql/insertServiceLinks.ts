@@ -29,10 +29,10 @@ export async function insertServiceLinks() {
         let appType: AppType
         switch (d.service_provider_type) {
             case ServiceProviderType.Restaurant:
-                appType = AppType.RestaurantApp
+                appType = AppType.Restaurant
                 break;
             case ServiceProviderType.Laundry:
-                appType = AppType.LaundryApp
+                appType = AppType.Laundry
                 break;
             // case ServiceProviderType.DeliveryCompany:
             //     appType = AppType.

@@ -1,8 +1,7 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as CloudFunctionsModels;
@@ -12,7 +11,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/env.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -51,7 +51,7 @@ class MessagingScreenStateForApps extends BaseMessagingScreenState {
           await CloudFunctions.agora_callChatUser(
               chatId: chatId,
               callerParticipantType:
-                  MezEnv.appType.toParticipantTypefromAppType());
+                  MezEnv.appType.convertParticipantTypefromAppType());
       // mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
 
       // Request Agora auth

@@ -92,7 +92,7 @@ export async function getDeliveryDriver(deliveryDriverId: number): Promise<Deliv
         phoneNumber: response.delivery_driver_by_pk.user.phone
       },
       notificationInfo: (response.delivery_driver_by_pk.notification_info) ? {
-        appType: AppType.DeliveryApp,
+        appType: AppType.Delivery,
         token: response.delivery_driver_by_pk.notification_info.token,
         turnOffNotifications: response.delivery_driver_by_pk.notification_info.turn_off_notifications
       } : undefined,
@@ -170,7 +170,7 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
           phoneNumber: d.user.phone
         },
         notificationInfo: (d.notification_info) ? {
-          appType: AppType.DeliveryApp,
+          appType: AppType.Delivery,
           token: d.notification_info.token,
           turnOffNotifications: d.notification_info.turn_off_notifications
         } : undefined,

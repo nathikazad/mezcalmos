@@ -166,11 +166,11 @@ extension ParseOrderTypeToString on AppType {
         return ParticipantType.DeliveryOperator;
       case AppType.MezAdmin:
         return ParticipantType.MezAdmin;
-      case AppType.DeliveryApp:
+      case AppType.Delivery:
         return ParticipantType.DeliveryDriver;
-      case AppType.LaundryApp:
+      case AppType.Laundry:
         return ParticipantType.LaundryOperator;
-      case AppType.RestaurantApp:
+      case AppType.Restaurant:
         return ParticipantType.RestaurantOperator;
     }
   }

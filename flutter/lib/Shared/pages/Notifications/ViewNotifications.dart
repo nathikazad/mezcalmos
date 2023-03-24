@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -200,19 +201,30 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     padding: const EdgeInsets.only(top: 5),
                     child: (notification.notifWidget != null)
                         ? notification.notifWidget
-                        : (notification.imgUrl!.isURL)
+                        : (notification.imgUrl?.isURL == true)
                             ? CircleAvatar(
                                 radius: 23,
                                 backgroundColor: Colors.transparent,
                                 backgroundImage: CachedNetworkImageProvider(
                                     notification.imgUrl!),
                               )
-                            : CircleAvatar(
-                                radius: 23,
-                                backgroundColor: Colors.transparent,
-                                backgroundImage:
-                                    AssetImage(notification.imgUrl!),
-                              ),
+                            : (notification.imgUrl != null)
+                                ? CircleAvatar(
+                                    radius: 23,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        AssetImage(notification.imgUrl!),
+                                  )
+                                : (notification.icon != null)
+                                    ? CircleAvatar(
+                                        radius: 23,
+                                        backgroundColor:
+                                            secondaryLightBlueColor,
+                                        child: Icon(
+                                          notification.icon,
+                                          color: primaryBlueColor,
+                                        ))
+                                    : SizedBox(),
                   )
                 ],
               ),

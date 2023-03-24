@@ -48,13 +48,13 @@ extension AppTypeToParticipantType on AppType {
     switch (this) {
       case AppType.Customer:
         return ParticipantType.Customer;
-      case AppType.DeliveryApp:
+      case AppType.Delivery:
         return ParticipantType.DeliveryDriver;
       case AppType.DeliveryAdmin:
         return ParticipantType.DeliveryOperator;
-      case AppType.LaundryApp:
+      case AppType.Laundry:
         return ParticipantType.LaundryOperator;
-      case AppType.RestaurantApp:
+      case AppType.Restaurant:
         return ParticipantType.RestaurantOperator;
       case AppType.MezAdmin:
         return ParticipantType.MezAdmin;

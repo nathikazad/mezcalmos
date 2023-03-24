@@ -13,7 +13,7 @@ export async function createLaundryStore(
 
     let uniqueId: string = laundryDetails.uniqueId ?? generateString();
 
-    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.LaundryApp)
+    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Laundry)
 
 
     let response = await chain.mutation({
@@ -77,7 +77,7 @@ export async function createLaundryStore(
                                 user_id: laundryOperatorUserId,
                                 status: AuthorizationStatus.Authorized,
                                 owner: true,
-                                app_type_id: AppType.LaundryApp,
+                                app_type_id: AppType.Laundry,
                                 // notification_info: (laundryDetails.laundryOperatorNotificationToken)? {
                                 //     data: {
                                 //       user_id: laundryOperatorUserId,
@@ -136,7 +136,7 @@ export async function createLaundryStore(
             insert_notification_info_one: [{
                 object: {
                     user_id: laundryOperatorUserId,
-                    app_type_id: AppType.LaundryApp,
+                    app_type_id: AppType.Laundry,
                     token: laundryDetails.laundryOperatorNotificationToken
                 }
             }, {

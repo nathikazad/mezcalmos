@@ -55,7 +55,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
       owner: r.operator_details.owner,
       online: r.operator_details.online,
       notificationInfo: (r.operator_details.notification_info) ? {
-        appType: AppType.RestaurantApp,
+        appType: AppType.Restaurant,
         token: r.operator_details.notification_info.token,
         turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
       }: undefined,
@@ -105,7 +105,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     owner: response.restaurant_operator_by_pk.operator_details.owner,
     online: response.restaurant_operator_by_pk.operator_details.online,
     notificationInfo: (response.restaurant_operator_by_pk.operator_details.notification_info) ? {
-      appType: AppType.RestaurantApp,
+      appType: AppType.Restaurant,
       token: response.restaurant_operator_by_pk.operator_details.notification_info.token,
       turnOffNotifications: response.restaurant_operator_by_pk.operator_details.notification_info.turn_off_notifications
     }: undefined,
@@ -158,7 +158,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
     owner: response.restaurant_operator[0].operator_details.owner,
     online: response.restaurant_operator[0].operator_details.online,
     notificationInfo: (response.restaurant_operator[0].operator_details.notification_info) ? {
-      appType: AppType.RestaurantApp,
+      appType: AppType.Restaurant,
       token: response.restaurant_operator[0].operator_details.notification_info.token,
       turnOffNotifications: response.restaurant_operator[0].operator_details.notification_info.turn_off_notifications
     }: undefined,

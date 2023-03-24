@@ -44,7 +44,7 @@ Notification customerNotificationHandler(
     case NotificationType.PriceChange:
       return Notification(
           id: key,
-          timestamp: value['time'],
+          timestamp: DateTime.parse(value['time']),
           title: '${_i18n()['priceChange']}',
           body: '${_i18n()['driverSentYouMessage']}',
           imgUrl: null,

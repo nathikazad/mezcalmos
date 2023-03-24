@@ -29,7 +29,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
                     _eq: userId
                 },
                 app_type_id: {
-                    _eq: AppType.DeliveryApp
+                    _eq: AppType.Delivery
                 }
             }
         }, {
@@ -64,7 +64,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         await chain.mutation({
             insert_notification_info_one: [{
                 object: {
-                    app_type_id: AppType.DeliveryApp,
+                    app_type_id: AppType.Delivery,
                     token: addDriverDetails.notificationToken,
                     user_id: userId
                 }
@@ -94,7 +94,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         deliveryCompanyId: serviceProvider.id,
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: (addDriverDetails.notificationToken) ? {
-            appType: AppType.DeliveryApp,
+            appType: AppType.Delivery,
             token: addDriverDetails.notificationToken,
             turnOffNotifications: false
         }: undefined,

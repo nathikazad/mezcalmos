@@ -15,7 +15,7 @@ export async function createRestaurant(
 
   let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
 
-  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.RestaurantApp)
+  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Restaurant)
   
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
@@ -80,7 +80,7 @@ export async function createRestaurant(
                 owner: true,
                 status: AuthorizationStatus.Authorized,
                 user_id: restaurantOperatorUserId,
-                app_type_id: AppType.RestaurantApp,
+                app_type_id: AppType.Restaurant,
               }
             },
           }]
@@ -104,7 +104,7 @@ export async function createRestaurant(
     chain.mutation({
       insert_notification_info_one: [{
         object: {
-          app_type_id: AppType.RestaurantApp,
+          app_type_id: AppType.Restaurant,
           token: restaurantDetails.restaurantOperatorNotificationToken,
           user_id: restaurantOperatorUserId
         },

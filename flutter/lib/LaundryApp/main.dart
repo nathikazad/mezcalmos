@@ -22,7 +22,7 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointNative(
-            appType: AppType.LaundryApp,
+            appType: AppType.Laundry,
             signInCallback: signInCallback,
             appTheme: LaundryAppTheme.lightTheme,
             signOutCallback: signOutCallback,

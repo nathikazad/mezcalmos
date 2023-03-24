@@ -116,7 +116,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     owner: r.operator_details.owner,
                     online: r.operator_details.online,
                     notificationInfo: (r.operator_details.notification_info) ? {
-                        appType: AppType.RestaurantApp,
+                        appType: AppType.Restaurant,
                         token: r.operator_details.notification_info.token,
                         turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
                     } : undefined,
@@ -392,7 +392,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     owner: r.operator_details.owner,
                     online: r.operator_details.online,
                     notificationInfo: (r.operator_details.notification_info) ? {
-                        appType: AppType.RestaurantApp,
+                        appType: AppType.Restaurant,
                         token: r.operator_details.notification_info.token,
                         turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
                     } : undefined,

@@ -295,7 +295,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         status: r.operator_details.status as AuthorizationStatus,
         owner: r.operator_details.owner,
         notificationInfo: (r.operator_details.notification_info) ? {
-          appType: AppType.RestaurantApp,
+          appType: AppType.Restaurant,
           token: r.operator_details.notification_info.token,
           turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
         } : undefined,

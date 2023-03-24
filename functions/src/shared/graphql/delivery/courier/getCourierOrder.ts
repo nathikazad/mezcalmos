@@ -150,7 +150,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
                     language: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.language_id as Language
                 },
                 notificationInfo: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info) ? {
-                    appType: AppType.DeliveryApp,
+                    appType: AppType.Delivery,
                     token: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.token,
                     turnOffNotifications: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.turn_off_notifications,
                 } : undefined,

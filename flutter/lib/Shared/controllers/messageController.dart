@@ -101,7 +101,7 @@ class MessageController extends GetxController {
           userId: Get.find<AuthController>().hasuraUserId!,
           chatId: chatId.toString(),
           messageId: messageNode.key!,
-          participantType: MezEnv.appType.toParticipantTypefromAppType(),
+          participantType: MezEnv.appType.convertParticipantTypefromAppType(),
         ).toFirebaseFormatJson());
   }
 

@@ -227,15 +227,15 @@ class HasuraDb {
         return "customer";
       // case AppType.DeliveryAdminApp:
       //   return "mez_admin";
-      case AppType.DeliveryApp:
+      case AppType.Delivery:
         return "delivery_driver";
-      case AppType.RestaurantApp:
+      case AppType.Restaurant:
         return "restaurant_operator";
       case AppType.DeliveryAdmin:
         return "delivery_operator";
       case AppType.MezAdmin:
         return "mez_admin";
-      case AppType.LaundryApp:
+      case AppType.Laundry:
         return "laundry_operator";
       default:
         return "customer";

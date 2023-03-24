@@ -687,7 +687,7 @@ factory CancelCourierResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin, LaundryApp }
+enum AppType { Customer, Restaurant, Delivery, DeliveryAdmin, MezAdmin, Laundry }
 extension ParseAppTypeToString on AppType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;

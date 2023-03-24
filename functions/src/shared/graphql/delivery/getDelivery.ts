@@ -107,7 +107,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         language: response.delivery_order_by_pk.delivery_driver.user.language_id as Language
       },
       notificationInfo: (response.delivery_order_by_pk.delivery_driver.notification_info) ? {
-        appType: AppType.DeliveryApp,
+        appType: AppType.Delivery,
         token: response.delivery_order_by_pk.delivery_driver.notification_info.token,
         turnOffNotifications: response.delivery_order_by_pk.delivery_driver.notification_info.turn_off_notifications,
       } : undefined,
@@ -189,7 +189,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
           language: d.delivery_driver.user.language_id as Language
         },
         notificationInfo: (d.delivery_driver.notification_info) ? {
-          appType: AppType.DeliveryApp,
+          appType: AppType.Delivery,
           token: d.delivery_driver.notification_info.token,
           turnOffNotifications: d.delivery_driver.notification_info.turn_off_notifications
         } : undefined,

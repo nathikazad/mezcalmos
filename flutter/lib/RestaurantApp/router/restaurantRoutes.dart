@@ -6,11 +6,13 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuVie
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
+import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRouter {
   static const String createRestaurantRoute = '/createRestaurant';
+  static const String unAuthorizedRoute = '/unauth';
   static const String menuViewRoute = '/menu/:restaurantId';
   static const String restaurantCategoryRoute = '/categoryScreen/:restaurantId';
   static const String restaurantEditCategoryRoute =
@@ -31,6 +33,11 @@ class RestaurantRouter {
       path: createRestaurantRoute,
       name: createRestaurantRoute,
       builder: () => ROpCreateRestuarantView(),
+    ),
+    QRoute(
+      path: unAuthorizedRoute,
+      name: unAuthorizedRoute,
+      builder: () => ROpUnauthorizedOpView(),
     ),
     QRoute(
       path: menuViewRoute,

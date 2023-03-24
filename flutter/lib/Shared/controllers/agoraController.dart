@@ -259,7 +259,8 @@ class Sagora extends GetxController {
                 id: int.parse(event.body['extra']['callerId']),
               ),
             };
-            if (MezRouter.currentRoute().name == NativeOnlyRoutes.kAgoraCallScreenRoute) {
+            if (MezRouter.currentRoute().name ==
+                NativeOnlyRoutes.kAgoraCallScreenRoute) {
               Future<void>.microtask(() => MezRouter.back().then(
                     (_) => MezRouter.toNamed(
                         NativeOnlyRoutes.kAgoraCallScreenRoute,
@@ -349,7 +350,7 @@ class Sagora extends GetxController {
                 chatId: chatId,
                 callerId: _authController.hasuraUserId!,
                 callerParticipantType:
-                    MezEnv.appType.toParticipantTypefromAppType(),
+                    MezEnv.appType.convertParticipantTypefromAppType(),
                 calleeId: callee.id,
                 calleeParticipantType: callee.participantType,
                 callNotificationType: callNotificationType)

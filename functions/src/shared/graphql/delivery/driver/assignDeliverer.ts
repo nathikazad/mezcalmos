@@ -26,13 +26,13 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
   }
   let chatParticipants = [{
     chat_id: response.update_delivery_order_by_pk.chat_with_customer_id,
-    app_type_id: AppType.DeliveryApp,
+    app_type_id: AppType.Delivery,
     participant_id: driverUserId
   }];
   if(response.update_delivery_order_by_pk.chat_with_service_provider_id) {
     chatParticipants.push({
       chat_id: response.update_delivery_order_by_pk.chat_with_service_provider_id,
-      app_type_id: AppType.DeliveryApp,
+      app_type_id: AppType.Delivery,
       participant_id: driverUserId
     })
   }

@@ -24,7 +24,7 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointNative(
-            appType: AppType.DeliveryApp,
+            appType: AppType.DeliveryAdmin,
             appTheme: DeliveryDAdminTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,

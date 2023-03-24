@@ -130,7 +130,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
       customerLocation: MezLocation.fromHasura(orderData.customer_location_gps!, orderData.customer_address!),
       laundryLocation: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address),
       orderTime: DateTime.parse(orderData.order_time),
-      paymentType: orderData.payment_type.convertToPaymentType(),
+      paymentType: orderData.payment_type.toPaymentType(),
       status: orderData.status.toLaundryOrderStatus(),
       customer: UserInfo(
         hasuraId: orderData.customer_id,
@@ -239,7 +239,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
             orderData.store.details!.location.gps,
             orderData.store.details!.location.address),
         orderTime: DateTime.parse(orderData.order_time),
-        paymentType: orderData.payment_type.convertToPaymentType(),
+        paymentType: orderData.payment_type.toPaymentType(),
         status: orderData.status.toLaundryOrderStatus(),
         customer: UserInfo(
           hasuraId: orderData.customer_id,

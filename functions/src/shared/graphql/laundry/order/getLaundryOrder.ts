@@ -393,7 +393,7 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
         owner: r.operator_details.owner,
         online: r.operator_details.online,
         notificationInfo: (r.operator_details.notification_info) ? {
-          appType: AppType.LaundryApp,
+          appType: AppType.Laundry,
           token: r.operator_details.notification_info.token,
           turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
         } : undefined,

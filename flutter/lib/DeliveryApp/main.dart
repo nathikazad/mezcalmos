@@ -23,7 +23,7 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointNative(
-            appType: AppType.DeliveryApp,
+            appType: AppType.Delivery,
             signInCallback: signInCallback,
             appTheme: DeliveryAppTheme.lightTheme,
             signOutCallback: signOutCallback,

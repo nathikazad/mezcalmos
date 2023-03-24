@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class LaundryUnauthViewController {
   // instances
@@ -56,7 +56,10 @@ class LaundryUnauthViewController {
     if (_status.value == AgentStatus.Authorized) {
       await laundryOpAuthController.setupLaundryOperator();
       // ignore: inference_failure_on_function_invocation, unawaited_futures
-      MezRouter.offAndToNamed(kLaundryTabsView);
+      // MezRouter.offAndToNamed(kLaundryTabsView);
+      // ignore: unawaited_futures
+      MezRouter.popEverythingTillBeforeHome().then(
+          (_) => MezRouter.toNamed(LaundryAppRoutes.kLaundryTabsViewRoute));
     }
   }
 

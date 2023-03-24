@@ -49,7 +49,7 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
         owner: r.operator_details.owner,
         online: r.operator_details.online,
         notificationInfo: (r.operator_details.notification_info) ? {
-          appType: AppType.LaundryApp,
+          appType: AppType.Laundry,
           token: r.operator_details.notification_info.token,
           turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
         }: undefined,
@@ -104,7 +104,7 @@ export async function getLaundryOperatorByUserId(laundryOperatorUserId: number):
     owner: response.laundry_operator[0].operator_details.owner,
     online: response.laundry_operator[0].operator_details.online,
     notificationInfo: (response.laundry_operator[0].operator_details.notification_info) ? {
-      appType: AppType.LaundryApp,
+      appType: AppType.Laundry,
       token: response.laundry_operator[0].operator_details.notification_info.token,
       turnOffNotifications: response.laundry_operator[0].operator_details.notification_info.turn_off_notifications
     }: undefined,
@@ -154,7 +154,7 @@ export async function getLaundryOperator(operatorId: number): Promise<Operator> 
     owner: response.laundry_operator_by_pk.operator_details.owner,
     online: response.laundry_operator_by_pk.operator_details.online,
     notificationInfo: (response.laundry_operator_by_pk.operator_details.notification_info) ? {
-      appType: AppType.LaundryApp,
+      appType: AppType.Laundry,
       token: response.laundry_operator_by_pk.operator_details.notification_info.token,
       turnOffNotifications: response.laundry_operator_by_pk.operator_details.notification_info.turn_off_notifications
     }: undefined,

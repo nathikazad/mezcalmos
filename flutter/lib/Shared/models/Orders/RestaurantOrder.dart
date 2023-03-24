@@ -115,7 +115,7 @@ class RestaurantOrder extends DeliverableOrder {
         status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
         serviceProviderId: data["serviceProviderId"],
-        paymentType: data["paymentType"].toString().convertToPaymentType(),
+        paymentType: data["paymentType"].toString().toPaymentType(),
         orderTime: DateTime.parse(data["orderTime"]),
         deliveryMode: data?["deliveryMode"]?.toString().toDeliveryMode() ??
             DeliveryMode.None,

@@ -17,11 +17,11 @@ class ShippingCostComponent extends StatelessWidget {
       required this.shippingCost,
       this.textStyle,
       this.showPerKm = false,
-      this.defaultShippingCost = 50,
+      this.formattedShippingCost,
       this.alignment = MainAxisAlignment.end})
       : super(key: key);
-  final num? shippingCost;
-  final num defaultShippingCost;
+  final num shippingCost;
+  final String? formattedShippingCost;
   final MainAxisAlignment alignment;
   final bool showPerKm;
   final TextStyle? textStyle;
@@ -38,10 +38,7 @@ class ShippingCostComponent extends StatelessWidget {
               ),
             )
           : Text(
-              (shippingCost != null)
-                  ? shippingCost!.toPriceString() +
-                      "${(showPerKm) ? "/km" : ""}"
-                  : "-",
+              formattedShippingCost ?? shippingCost.toPriceString(),
               style: textStyle,
             ),
     );

@@ -93,7 +93,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       owner: r.operator_details.owner,
       online: r.operator_details.online,
       notificationInfo: (r.operator_details.notification_info) ? {
-        appType: AppType.RestaurantApp,
+        appType: AppType.Restaurant,
         token: r.operator_details.notification_info.token,
         turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
       } : undefined,

@@ -17,7 +17,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   let restaurantOperatorsDetails = restaurant.operators!.map((v) => {
     return {
       participant_id: v.userId,
-      app_type_id: AppType.RestaurantApp
+      app_type_id: AppType.Restaurant
     };
   });
   let mezAdminDetails = mezAdmins!.map((v) => {

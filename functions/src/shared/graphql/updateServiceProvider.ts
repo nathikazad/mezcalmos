@@ -112,13 +112,13 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
     let appType: AppType;
     switch (serviceProvider.serviceProviderType) {
         case ServiceProviderType.Restaurant:
-            appType = AppType.RestaurantApp
+            appType = AppType.Restaurant
             break;
         case ServiceProviderType.Delivery:
             appType = AppType.DeliveryAdmin
             break;
         case ServiceProviderType.Laundry:
-            appType = AppType.LaundryApp
+            appType = AppType.Laundry
             break;
         default:
             throw new MezError(ChangeUniqueIdError.InvalidServiceProviderType);

@@ -18,7 +18,7 @@ export async function createLaundryOrder(
     let laundryOperatorsDetails = laundryStore.operators?.map((v) => {
         return {
             participant_id: v.userId,
-            app_type_id: AppType.LaundryApp
+            app_type_id: AppType.Laundry
         };
     }) ?? [];
 

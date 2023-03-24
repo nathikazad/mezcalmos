@@ -30,11 +30,11 @@ export enum Language {
 
 export enum AppType {
   Customer = "customer",
-  RestaurantApp = "restaurant",
-  DeliveryApp = "delivery",
+  Restaurant = "restaurant",
+  Delivery = "delivery",
   DeliveryAdmin = "deliveryAdmin",
   MezAdmin = "mezAdmin",
-  LaundryApp = "laundry",
+  Laundry = "laundry",
 }
 export enum CustomerAppType {
   Native = "native",
