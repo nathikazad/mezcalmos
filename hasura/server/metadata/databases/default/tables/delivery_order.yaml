@@ -97,6 +97,11 @@ computed_fields:
       function:
         name: packagecost
         schema: delivery
+  - name: total_cost
+    definition:
+      function:
+        name: deliverytotalcost
+        schema: delivery
 select_permissions:
   - role: customer
     permission:
