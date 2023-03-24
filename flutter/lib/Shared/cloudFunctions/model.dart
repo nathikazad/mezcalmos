@@ -15,13 +15,8 @@ class SendOtpResponse {
       "secondsLeft": secondsLeft,
     };
   }
-
-  factory SendOtpResponse.fromFirebaseFormattedJson(json) {
-    return SendOtpResponse(
-        json["success"],
-        json["error"].toString().toSendOtpError(),
-        json["unhandledError"],
-        json["secondsLeft"]);
+factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return SendOtpResponse(json["success"], json["error"]?.toString().toSendOtpError(), json["unhandledError"], json["secondsLeft"]);
   }
 }
 
@@ -39,13 +34,8 @@ class AuthResponse {
       "token": token,
     };
   }
-
-  factory AuthResponse.fromFirebaseFormattedJson(json) {
-    return AuthResponse(
-        json["success"],
-        json["error"].toString().toAuthOtpError(),
-        json["unhandledError"],
-        json["token"]);
+factory AuthResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return AuthResponse(json["success"], json["error"]?.toString().toAuthOtpError(), json["unhandledError"], json["token"]);
   }
 }
 
@@ -79,17 +69,8 @@ class PaymentIntentResponse {
       "stripeAccountId": stripeAccountId,
     };
   }
-
-  factory PaymentIntentResponse.fromFirebaseFormattedJson(json) {
-    return PaymentIntentResponse(
-        json["success"],
-        json["error"].toString().toPaymentIntentError(),
-        json["unhandledError"],
-        json["paymentIntent"],
-        json["ephemeralKey"],
-        json["customer"],
-        json["publishableKey"],
-        json["stripeAccountId"]);
+factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return PaymentIntentResponse(json["success"], json["error"]?.toString().toPaymentIntentError(), json["unhandledError"], json["paymentIntent"], json["ephemeralKey"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
@@ -107,13 +88,8 @@ class AddCardResponse {
       "cardId": cardId,
     };
   }
-
-  factory AddCardResponse.fromFirebaseFormattedJson(json) {
-    return AddCardResponse(
-        json["success"],
-        json["error"].toString().toAddCardError(),
-        json["unhandledError"],
-        json["cardId"]);
+factory AddCardResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return AddCardResponse(json["success"], json["error"]?.toString().toAddCardError(), json["unhandledError"], json["cardId"]);
   }
 }
 
@@ -144,16 +120,8 @@ class ChargeCardResponse {
       "stripeAccountId": stripeAccountId,
     };
   }
-
-  factory ChargeCardResponse.fromFirebaseFormattedJson(json) {
-    return ChargeCardResponse(
-        json["success"],
-        json["error"].toString().toChargeCardError(),
-        json["unhandledError"],
-        json["paymentIntent"],
-        json["customer"],
-        json["publishableKey"],
-        json["stripeAccountId"]);
+factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ChargeCardResponse(json["success"], json["error"]?.toString().toChargeCardError(), json["unhandledError"], json["paymentIntent"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
@@ -169,10 +137,8 @@ class RemoveCardResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory RemoveCardResponse.fromFirebaseFormattedJson(json) {
-    return RemoveCardResponse(json["success"],
-        json["error"].toString().toRemoveCardError(), json["unhandledError"]);
+factory RemoveCardResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return RemoveCardResponse(json["success"], json["error"]?.toString().toRemoveCardError(), json["unhandledError"]);
   }
 }
 
@@ -197,16 +163,8 @@ class SetupStripeResponse {
       "url": url,
     };
   }
-
-  factory SetupStripeResponse.fromFirebaseFormattedJson(json) {
-    return SetupStripeResponse(
-        json["success"],
-        json["error"].toString().toSetupStripeError(),
-        json["unhandledError"],
-        json["object"],
-        json["created"],
-        json["expires_at"],
-        json["url"]);
+factory SetupStripeResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return SetupStripeResponse(json["success"], json["error"]?.toString().toSetupStripeError(), json["unhandledError"], json["object"], json["created"], json["expires_at"], json["url"]);
   }
 }
 
@@ -222,10 +180,8 @@ class UpdateStripeResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory UpdateStripeResponse.fromFirebaseFormattedJson(json) {
-    return UpdateStripeResponse(json["success"],
-        json["error"].toString().toUpdateStripeError(), json["unhandledError"]);
+factory UpdateStripeResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return UpdateStripeResponse(json["success"], json["error"]?.toString().toUpdateStripeError(), json["unhandledError"]);
   }
 }
 
@@ -287,18 +243,8 @@ class CallUserResponse {
       "participantType": participantType,
     };
   }
-
-  factory CallUserResponse.fromFirebaseFormattedJson(json) {
-    return CallUserResponse(
-        json["success"],
-        json["error"].toString().toCallUserError(),
-        json["unhandledError"],
-        json["id"],
-        json["token"],
-        json["name"],
-        json["image"],
-        json["expirationTime"],
-        json["participantType"].toString().toParticipantType());
+factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CallUserResponse(json["success"], json["error"]?.toString().toCallUserError(), json["unhandledError"], json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"]?.toString().toParticipantType());
   }
 }
 
@@ -314,10 +260,8 @@ class AddOperatorResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory AddOperatorResponse.fromFirebaseFormattedJson(json) {
-    return AddOperatorResponse(json["success"],
-        json["error"].toString().toAddOperatorError(), json["unhandledError"]);
+factory AddOperatorResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return AddOperatorResponse(json["success"], json["error"]?.toString().toAddOperatorError(), json["unhandledError"]);
   }
 }
 
@@ -333,10 +277,8 @@ class AuthOperatorResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory AuthOperatorResponse.fromFirebaseFormattedJson(json) {
-    return AuthOperatorResponse(json["success"],
-        json["error"].toString().toAuthOperatorError(), json["unhandledError"]);
+factory AuthOperatorResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return AuthOperatorResponse(json["success"], json["error"]?.toString().toAuthOperatorError(), json["unhandledError"]);
   }
 }
 
@@ -352,10 +294,8 @@ class AddDriverResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory AddDriverResponse.fromFirebaseFormattedJson(json) {
-    return AddDriverResponse(json["success"],
-        json["error"].toString().toAddDriverError(), json["unhandledError"]);
+factory AddDriverResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return AddDriverResponse(json["success"], json["error"]?.toString().toAddDriverError(), json["unhandledError"]);
   }
 }
 
@@ -389,12 +329,8 @@ class AuthorizeDriverResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory AuthorizeDriverResponse.fromFirebaseFormattedJson(json) {
-    return AuthorizeDriverResponse(
-        json["success"],
-        json["error"].toString().toAuthorizeDriverError(),
-        json["unhandledError"]);
+factory AuthorizeDriverResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return AuthorizeDriverResponse(json["success"], json["error"]?.toString().toAuthorizeDriverError(), json["unhandledError"]);
   }
 }
 
@@ -456,10 +392,8 @@ class RestaurantResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory RestaurantResponse.fromFirebaseFormattedJson(json) {
-    return RestaurantResponse(json["success"],
-        json["error"].toString().toRestaurantError(), json["unhandledError"]);
+factory RestaurantResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return RestaurantResponse(json["success"], json["error"]?.toString().toRestaurantError(), json["unhandledError"]);
   }
 }
 
@@ -527,13 +461,8 @@ class CheckoutResponse {
       "orderId": orderId,
     };
   }
-
-  factory CheckoutResponse.fromFirebaseFormattedJson(json) {
-    return CheckoutResponse(
-        json["success"],
-        json["error"].toString().toCheckoutResponseError(),
-        json["unhandledError"],
-        json["orderId"]);
+factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CheckoutResponse(json["success"], json["error"]?.toString().toCheckoutResponseError(), json["unhandledError"], json["orderId"]);
   }
 }
 
@@ -549,12 +478,8 @@ class ChangeRestaurantStatusResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(json) {
-    return ChangeRestaurantStatusResponse(
-        json["success"],
-        json["error"].toString().toChangeRestaurantStatusError(),
-        json["unhandledError"]);
+factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ChangeRestaurantStatusResponse(json["success"], json["error"]?.toString().toChangeRestaurantStatusError(), json["unhandledError"]);
   }
 }
 
@@ -570,10 +495,8 @@ class CancelRestaurantOrderResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(json) {
-    return CancelRestaurantOrderResponse(json["success"],
-        json["error"].toString().toCancelOrderError(), json["unhandledError"]);
+factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CancelRestaurantOrderResponse(json["success"], json["error"]?.toString().toCancelOrderError(), json["unhandledError"]);
   }
 }
 
@@ -589,10 +512,8 @@ class LaundryResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory LaundryResponse.fromFirebaseFormattedJson(json) {
-    return LaundryResponse(json["success"],
-        json["error"].toString().toLaundryError(), json["unhandledError"]);
+factory LaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return LaundryResponse(json["success"], json["error"]?.toString().toLaundryError(), json["unhandledError"]);
   }
 }
 
@@ -611,13 +532,8 @@ class ReqLaundryResponse {
       "orderId": orderId,
     };
   }
-
-  factory ReqLaundryResponse.fromFirebaseFormattedJson(json) {
-    return ReqLaundryResponse(
-        json["success"],
-        json["error"].toString().toReqLaundryError(),
-        json["unhandledError"],
-        json["orderId"]);
+factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ReqLaundryResponse(json["success"], json["error"]?.toString().toReqLaundryError(), json["unhandledError"], json["orderId"]);
   }
 }
 
@@ -633,12 +549,8 @@ class ChangeLaundryStatusResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(json) {
-    return ChangeLaundryStatusResponse(
-        json["success"],
-        json["error"].toString().toChangeLaundryStatusError(),
-        json["unhandledError"]);
+factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ChangeLaundryStatusResponse(json["success"], json["error"]?.toString().toChangeLaundryStatusError(), json["unhandledError"]);
   }
 }
 
@@ -654,12 +566,8 @@ class CancelLaundryResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory CancelLaundryResponse.fromFirebaseFormattedJson(json) {
-    return CancelLaundryResponse(
-        json["success"],
-        json["error"].toString().toCancelLaundryError(),
-        json["unhandledError"]);
+factory CancelLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CancelLaundryResponse(json["success"], json["error"]?.toString().toCancelLaundryError(), json["unhandledError"]);
   }
 }
 
@@ -675,10 +583,8 @@ class AssignDriverResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory AssignDriverResponse.fromFirebaseFormattedJson(json) {
-    return AssignDriverResponse(json["success"],
-        json["error"].toString().toAssignDriverError(), json["unhandledError"]);
+factory AssignDriverResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return AssignDriverResponse(json["success"], json["error"]?.toString().toAssignDriverError(), json["unhandledError"]);
   }
 }
 
@@ -722,12 +628,8 @@ class ChangeDeliveryStatusResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(json) {
-    return ChangeDeliveryStatusResponse(
-        json["success"],
-        json["error"].toString().toChangeDeliveryStatusError(),
-        json["unhandledError"]);
+factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ChangeDeliveryStatusResponse(json["success"], json["error"]?.toString().toChangeDeliveryStatusError(), json["unhandledError"]);
   }
 }
 
@@ -778,13 +680,8 @@ class CreateCourierResponse {
       "orderId": orderId,
     };
   }
-
-  factory CreateCourierResponse.fromFirebaseFormattedJson(json) {
-    return CreateCourierResponse(
-        json["success"],
-        json["error"].toString().toCreateCourierError(),
-        json["unhandledError"],
-        json["orderId"]);
+factory CreateCourierResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CreateCourierResponse(json["success"], json["error"]?.toString().toCreateCourierError(), json["unhandledError"], json["orderId"]);
   }
 }
 
@@ -800,10 +697,8 @@ class ChangePriceReqResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory ChangePriceReqResponse.fromFirebaseFormattedJson(json) {
-    return ChangePriceReqResponse(json["success"],
-        json["error"].toString().toChangePriceError(), json["unhandledError"]);
+factory ChangePriceReqResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ChangePriceReqResponse(json["success"], json["error"]?.toString().toChangePriceError(), json["unhandledError"]);
   }
 }
 
@@ -835,10 +730,8 @@ class ChangePriceResResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory ChangePriceResResponse.fromFirebaseFormattedJson(json) {
-    return ChangePriceResResponse(json["success"],
-        json["error"].toString().toChangePriceError(), json["unhandledError"]);
+factory ChangePriceResResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ChangePriceResResponse(json["success"], json["error"]?.toString().toChangePriceError(), json["unhandledError"]);
   }
 }
 
@@ -854,12 +747,8 @@ class CancelCourierResponse {
       "unhandledError": unhandledError,
     };
   }
-
-  factory CancelCourierResponse.fromFirebaseFormattedJson(json) {
-    return CancelCourierResponse(
-        json["success"],
-        json["error"].toString().toCancelCourierError(),
-        json["unhandledError"]);
+factory CancelCourierResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CancelCourierResponse(json["success"], json["error"]?.toString().toCancelCourierError(), json["unhandledError"]);
   }
 }
 

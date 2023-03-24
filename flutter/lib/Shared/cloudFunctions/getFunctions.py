@@ -377,7 +377,7 @@ def getModels():
           if models[key]["values"][v] in models:
             if models[models[key]["values"][v]]["type"] == "enum":
               toWriteModel = toWriteModel[:-2]
-              toWriteModel += ".toString().to" + models[key]["values"][v] + "(), "
+              toWriteModel += "?.toString().to" + models[key]["values"][v] + "(), "
         toWriteModel = toWriteModel[:-2]
         toWriteModel += ''');
   }'''
