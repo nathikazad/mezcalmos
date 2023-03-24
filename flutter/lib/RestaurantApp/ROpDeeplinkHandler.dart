@@ -4,6 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -101,8 +102,9 @@ class ROpDeeplinkHandler {
   Future<ServerResponse> addOperator(String uniqueId) async {
     try {
       await CloudFunctions.serviceProvider_addOperator(
-        uniqueId: uniqueId,
-      );
+          uniqueId: uniqueId,
+          notificationToken:
+              await Get.find<BackgroundNotificationsController>().getToken());
       // mezDbgPrint("Response : ${response.data}");
       // ignore: unawaited_futures
       MezRouter.toNamed(RestaurantAppRoutes.opUnauthRoute);
