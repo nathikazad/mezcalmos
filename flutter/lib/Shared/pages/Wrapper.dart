@@ -1,20 +1,23 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/env.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['General'];
 
 class Wrapper extends StatefulWidget {
   @override
@@ -26,6 +29,7 @@ class _WrapperState extends State<Wrapper> {
   AuthController authController = Get.find<AuthController>();
   final LocationController _locationController = Get.find<LocationController>();
   StreamSubscription<LocationPermissionsStatus>? locationStatusListener;
+  Function? slowStatusDialog;
   //String? _previousUserUid = "init";
 
   @override
@@ -66,16 +70,12 @@ class _WrapperState extends State<Wrapper> {
           MezRouter.back();
         }
       }
-
       if (internetStatus == InternetStatus.Slow) {
-        mezDbgPrint("Slow Internet");
-        showSlowInternetSnackBar();
-        // @montasarre
-        // show temporary slow internet bar
+        slowStatusDialog = BotToast.showText(
+            text: _i18n()['slowInternet'], duration: Duration(days: 1));
       } else {
-        closeAllSnackbars();
-        // showSlowInternetSnackBar();
-        // unshow temporary slow internet bar
+        slowStatusDialog?.call();
+        slowStatusDialog = null;
       }
     });
   }

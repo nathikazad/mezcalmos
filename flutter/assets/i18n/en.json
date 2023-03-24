@@ -2408,6 +2408,7 @@
     "noRoute": "No route found. please enter a valid destination",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "minutes": "minutes"
+    "minutes": "minutes",
+    "slowInternet": "Slow internet"
   }
 }

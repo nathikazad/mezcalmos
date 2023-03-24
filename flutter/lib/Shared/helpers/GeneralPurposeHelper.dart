@@ -317,6 +317,66 @@ Future<void> showConfirmationDialog(
       });
 }
 
+Future<void> showNormalDialog(
+  BuildContext context, {
+  IconData? icon,
+  required String title,
+  String? subtitle,
+}) async {
+  final RxBool _clickedYes = false.obs;
+  return showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(16),
+          content: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 55,
+                  width: 55,
+                  child: Icon(
+                    icon,
+                    color: Colors.orange.shade300,
+                    size: 33,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(252, 89, 99, 0.12),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                ),
+                SizedBox(height: 2),
+                if (subtitle != null)
+                  Text(subtitle,
+                      textAlign: TextAlign.center,
+                      style: context.txt.headlineLarge
+                          ?.copyWith(color: Color(0xFF494949))),
+                SizedBox(height: 4),
+              ],
+            ),
+          ),
+        );
+      });
+}
+
 Future<void> showStatusInfoDialog(
   BuildContext context, {
   void Function()? secondaryCallBack,
