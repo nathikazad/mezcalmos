@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -21,12 +20,10 @@ class MinimalOrderCard extends StatefulWidget {
     Key? key,
     required this.order,
     required this.onTap,
-    this.forCustomer = false,
     this.showOrderType = false,
   }) : super(key: key);
 
   final MinimalOrder order;
-  final bool forCustomer;
   final bool showOrderType;
   final Function()? onTap;
   @override
@@ -64,58 +61,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            if (widget.forCustomer &&
-                                widget.order.totalCost != null)
-                              Row(
-                                children: <Widget>[
-                                  Icon(
-                                    widget.order.orderType == OrderType.Laundry
-                                        ? Icons.local_laundry_service_sharp
-                                        : Icons.flatware,
-                                    color: blackColor,
-                                    size: 27,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    widget.order.totalCost!.toPriceString(),
-                                    style: context.txt.titleSmall?.copyWith(
-                                      color: blackColor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            if (widget.forCustomer &&
-                                widget.order.deliveryCost != null)
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Icon(
-                                    Icons.delivery_dining,
-                                    color: blackColor,
-                                    size: 27,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    widget.order.deliveryCost!.toPriceString(),
-                                    style: context.txt.titleSmall?.copyWith(
-                                      color: blackColor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                          ],
-                        ),
-                        if (widget.order.toAdress != null &&
-                            widget.forCustomer == false)
+                        if (widget.order.toAdress != null)
                           Text(
                             widget.order.toAdress!.inCaps,
                             style: context.txt.bodyMedium,
@@ -140,8 +86,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       ),
                       if (widget.order.image != null &&
                           widget.order.image!.isURL &&
-                          showImage &&
-                          !widget.forCustomer)
+                          showImage)
                         Stack(
                           alignment: Alignment.center,
                           clipBehavior: Clip.none,
@@ -199,20 +144,45 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                 //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   if (widget.order.totalCost != null)
-                    Image.asset(
-                      aMoney,
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.contain,
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          widget.order.orderType.toIcon(),
+                          color: blackColor,
+                          size: 27,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          widget.order.totalCost!.toPriceString(),
+                          style: context.txt.titleSmall?.copyWith(
+                            color: blackColor,
+                          ),
+                        )
+                      ],
                     ),
-                  if (widget.order.totalCost != null)
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                  if (widget.order.totalCost != null)
-                    Text(
-                      widget.order.totalCost?.toPriceString() ?? "_",
-                      style: context.txt.bodyLarge,
+                  if (widget.order.deliveryCost != null)
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Icon(
+                          Icons.delivery_dining,
+                          color: blackColor,
+                          size: 27,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          widget.order.deliveryCost!.toPriceString(),
+                          style: context.txt.titleSmall?.copyWith(
+                            color: blackColor,
+                          ),
+                        )
+                      ],
                     ),
                   Spacer(),
                   getOrderWidget()

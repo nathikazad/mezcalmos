@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class DvOrderDetailsViewController {
   HasuraDb _hasuraDb = Get.find<HasuraDb>();

@@ -23,7 +23,7 @@ class LaundryOrderSummaryCard extends StatelessWidget {
           children: [
             Text(
               "${_i18n()["orderSummary"]}",
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
             Divider(
               height: 15,
@@ -33,13 +33,13 @@ class LaundryOrderSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   "${_i18n()["orderCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   (order.costsByType?.weighedCost != null)
                       ? '${order.cost - 50} \$'
                       : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -51,11 +51,11 @@ class LaundryOrderSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   "${_i18n()["deliveryCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   "50 \$",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -67,13 +67,13 @@ class LaundryOrderSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   "${_i18n()["totalCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   (order.costsByType?.weighedCost != null)
                       ? '${order.cost} \$'
                       : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -84,7 +84,7 @@ class LaundryOrderSummaryCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 "${_i18n()["deliveryLocation"]} :",
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             SizedBox(
@@ -117,7 +117,7 @@ class LaundryOrderSummaryCard extends StatelessWidget {
           children: [
             Text(
               _i18n()['laundryPricing'],
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
             Divider(
               height: 15,
@@ -127,13 +127,13 @@ class LaundryOrderSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   _i18n()['fixedRate'],
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   (order.cost != 0)
                       ? '\$' + order.cost.toStringAsFixed(0)
                       : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -145,13 +145,13 @@ class LaundryOrderSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   _i18n()['orderWeight'],
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   (order.costsByType?.weighedCost != null)
                       ? "${order.costsByType?.weighedCost} /kg"
                       : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -163,13 +163,13 @@ class LaundryOrderSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   "${_i18n()["totalCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   (order.cost != 0)
                       ? '\$' + order.cost.toStringAsFixed(0)
                       : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),

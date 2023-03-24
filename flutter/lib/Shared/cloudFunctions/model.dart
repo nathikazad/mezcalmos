@@ -1,10 +1,13 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 class SendOtpResponse {
   bool success;
   SendOtpError? error;
   String? unhandledError;
   num? secondsLeft;
-  SendOtpResponse(this.success, this.error, this.unhandledError, this.secondsLeft);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  SendOtpResponse(
+      this.success, this.error, this.unhandledError, this.secondsLeft);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -12,8 +15,13 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "secondsLeft": secondsLeft,
     };
   }
-factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return SendOtpResponse(json["success"], json["error"].toString().toSendOtpError(), json["unhandledError"], json["secondsLeft"]);
+
+  factory SendOtpResponse.fromFirebaseFormattedJson(json) {
+    return SendOtpResponse(
+        json["success"],
+        json["error"].toString().toSendOtpError(),
+        json["unhandledError"],
+        json["secondsLeft"]);
   }
 }
 
@@ -23,7 +31,7 @@ class AuthResponse {
   String? unhandledError;
   String? token;
   AuthResponse(this.success, this.error, this.unhandledError, this.token);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -31,8 +39,13 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "token": token,
     };
   }
-factory AuthResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AuthResponse(json["success"], json["error"].toString().toAuthOtpError(), json["unhandledError"], json["token"]);
+
+  factory AuthResponse.fromFirebaseFormattedJson(json) {
+    return AuthResponse(
+        json["success"],
+        json["error"].toString().toAuthOtpError(),
+        json["unhandledError"],
+        json["token"]);
   }
 }
 
@@ -45,8 +58,16 @@ class PaymentIntentResponse {
   String? customer;
   String? publishableKey;
   String? stripeAccountId;
-  PaymentIntentResponse(this.success, this.error, this.unhandledError, this.paymentIntent, this.ephemeralKey, this.customer, this.publishableKey, this.stripeAccountId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  PaymentIntentResponse(
+      this.success,
+      this.error,
+      this.unhandledError,
+      this.paymentIntent,
+      this.ephemeralKey,
+      this.customer,
+      this.publishableKey,
+      this.stripeAccountId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -58,8 +79,17 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "stripeAccountId": stripeAccountId,
     };
   }
-factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return PaymentIntentResponse(json["success"], json["error"].toString().toPaymentIntentError(), json["unhandledError"], json["paymentIntent"], json["ephemeralKey"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
+
+  factory PaymentIntentResponse.fromFirebaseFormattedJson(json) {
+    return PaymentIntentResponse(
+        json["success"],
+        json["error"].toString().toPaymentIntentError(),
+        json["unhandledError"],
+        json["paymentIntent"],
+        json["ephemeralKey"],
+        json["customer"],
+        json["publishableKey"],
+        json["stripeAccountId"]);
   }
 }
 
@@ -69,7 +99,7 @@ class AddCardResponse {
   String? unhandledError;
   String? cardId;
   AddCardResponse(this.success, this.error, this.unhandledError, this.cardId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -77,8 +107,13 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "cardId": cardId,
     };
   }
-factory AddCardResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AddCardResponse(json["success"], json["error"].toString().toAddCardError(), json["unhandledError"], json["cardId"]);
+
+  factory AddCardResponse.fromFirebaseFormattedJson(json) {
+    return AddCardResponse(
+        json["success"],
+        json["error"].toString().toAddCardError(),
+        json["unhandledError"],
+        json["cardId"]);
   }
 }
 
@@ -90,8 +125,15 @@ class ChargeCardResponse {
   String? customer;
   String? publishableKey;
   String? stripeAccountId;
-  ChargeCardResponse(this.success, this.error, this.unhandledError, this.paymentIntent, this.customer, this.publishableKey, this.stripeAccountId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  ChargeCardResponse(
+      this.success,
+      this.error,
+      this.unhandledError,
+      this.paymentIntent,
+      this.customer,
+      this.publishableKey,
+      this.stripeAccountId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -102,8 +144,16 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "stripeAccountId": stripeAccountId,
     };
   }
-factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ChargeCardResponse(json["success"], json["error"].toString().toChargeCardError(), json["unhandledError"], json["paymentIntent"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
+
+  factory ChargeCardResponse.fromFirebaseFormattedJson(json) {
+    return ChargeCardResponse(
+        json["success"],
+        json["error"].toString().toChargeCardError(),
+        json["unhandledError"],
+        json["paymentIntent"],
+        json["customer"],
+        json["publishableKey"],
+        json["stripeAccountId"]);
   }
 }
 
@@ -112,15 +162,17 @@ class RemoveCardResponse {
   RemoveCardError? error;
   String? unhandledError;
   RemoveCardResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory RemoveCardResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return RemoveCardResponse(json["success"], json["error"].toString().toRemoveCardError(), json["unhandledError"]);
+
+  factory RemoveCardResponse.fromFirebaseFormattedJson(json) {
+    return RemoveCardResponse(json["success"],
+        json["error"].toString().toRemoveCardError(), json["unhandledError"]);
   }
 }
 
@@ -132,8 +184,9 @@ class SetupStripeResponse {
   num? created;
   num? expires_at;
   String? url;
-  SetupStripeResponse(this.success, this.error, this.unhandledError, this.object, this.created, this.expires_at, this.url);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  SetupStripeResponse(this.success, this.error, this.unhandledError,
+      this.object, this.created, this.expires_at, this.url);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -144,8 +197,16 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "url": url,
     };
   }
-factory SetupStripeResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return SetupStripeResponse(json["success"], json["error"].toString().toSetupStripeError(), json["unhandledError"], json["object"], json["created"], json["expires_at"], json["url"]);
+
+  factory SetupStripeResponse.fromFirebaseFormattedJson(json) {
+    return SetupStripeResponse(
+        json["success"],
+        json["error"].toString().toSetupStripeError(),
+        json["unhandledError"],
+        json["object"],
+        json["created"],
+        json["expires_at"],
+        json["url"]);
   }
 }
 
@@ -154,25 +215,37 @@ class UpdateStripeResponse {
   UpdateStripeError? error;
   String? unhandledError;
   UpdateStripeResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory UpdateStripeResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return UpdateStripeResponse(json["success"], json["error"].toString().toUpdateStripeError(), json["unhandledError"]);
+
+  factory UpdateStripeResponse.fromFirebaseFormattedJson(json) {
+    return UpdateStripeResponse(json["success"],
+        json["error"].toString().toUpdateStripeError(), json["unhandledError"]);
   }
 }
 
-enum ParticipantType { Customer, Taxi, DeliveryOperator, DeliveryDriver, LaundryOperator, RestaurantOperator, MezAdmin }
+enum ParticipantType {
+  Customer,
+  Taxi,
+  DeliveryOperator,
+  DeliveryDriver,
+  LaundryOperator,
+  RestaurantOperator,
+  MezAdmin
+}
+
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToParticipantType on String {
   ParticipantType toParticipantType() {
     return ParticipantType.values.firstWhere(
@@ -180,7 +253,6 @@ extension ParseStringToParticipantType on String {
             participantType.toFirebaseFormatString() == this);
   }
 }
-
 
 class CallUserResponse {
   bool success;
@@ -192,8 +264,17 @@ class CallUserResponse {
   String? image;
   String? expirationTime;
   ParticipantType? participantType;
-  CallUserResponse(this.success, this.error, this.unhandledError, this.id, this.token, this.name, this.image, this.expirationTime, this.participantType);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  CallUserResponse(
+      this.success,
+      this.error,
+      this.unhandledError,
+      this.id,
+      this.token,
+      this.name,
+      this.image,
+      this.expirationTime,
+      this.participantType);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -206,8 +287,18 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "participantType": participantType,
     };
   }
-factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CallUserResponse(json["success"], json["error"].toString().toCallUserError(), json["unhandledError"], json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"].toString().toParticipantType());
+
+  factory CallUserResponse.fromFirebaseFormattedJson(json) {
+    return CallUserResponse(
+        json["success"],
+        json["error"].toString().toCallUserError(),
+        json["unhandledError"],
+        json["id"],
+        json["token"],
+        json["name"],
+        json["image"],
+        json["expirationTime"],
+        json["participantType"].toString().toParticipantType());
   }
 }
 
@@ -216,15 +307,17 @@ class AddOperatorResponse {
   AddOperatorError? error;
   String? unhandledError;
   AddOperatorResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory AddOperatorResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AddOperatorResponse(json["success"], json["error"].toString().toAddOperatorError(), json["unhandledError"]);
+
+  factory AddOperatorResponse.fromFirebaseFormattedJson(json) {
+    return AddOperatorResponse(json["success"],
+        json["error"].toString().toAddOperatorError(), json["unhandledError"]);
   }
 }
 
@@ -233,15 +326,17 @@ class AuthOperatorResponse {
   AuthOperatorError? error;
   String? unhandledError;
   AuthOperatorResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory AuthOperatorResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AuthOperatorResponse(json["success"], json["error"].toString().toAuthOperatorError(), json["unhandledError"]);
+
+  factory AuthOperatorResponse.fromFirebaseFormattedJson(json) {
+    return AuthOperatorResponse(json["success"],
+        json["error"].toString().toAuthOperatorError(), json["unhandledError"]);
   }
 }
 
@@ -250,25 +345,30 @@ class AddDriverResponse {
   AddDriverError? error;
   String? unhandledError;
   AddDriverResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory AddDriverResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AddDriverResponse(json["success"], json["error"].toString().toAddDriverError(), json["unhandledError"]);
+
+  factory AddDriverResponse.fromFirebaseFormattedJson(json) {
+    return AddDriverResponse(json["success"],
+        json["error"].toString().toAddDriverError(), json["unhandledError"]);
   }
 }
 
 enum DeliveryServiceProviderType { Restaurant, DeliveryCompany, Laundry }
-extension ParseDeliveryServiceProviderTypeToString on DeliveryServiceProviderType {
+
+extension ParseDeliveryServiceProviderTypeToString
+    on DeliveryServiceProviderType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToDeliveryServiceProviderType on String {
   DeliveryServiceProviderType toDeliveryServiceProviderType() {
     return DeliveryServiceProviderType.values.firstWhere(
@@ -277,21 +377,24 @@ extension ParseStringToDeliveryServiceProviderType on String {
   }
 }
 
-
 class AuthorizeDriverResponse {
   bool success;
   AuthorizeDriverError? error;
   String? unhandledError;
   AuthorizeDriverResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory AuthorizeDriverResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AuthorizeDriverResponse(json["success"], json["error"].toString().toAuthorizeDriverError(), json["unhandledError"]);
+
+  factory AuthorizeDriverResponse.fromFirebaseFormattedJson(json) {
+    return AuthorizeDriverResponse(
+        json["success"],
+        json["error"].toString().toAuthorizeDriverError(),
+        json["unhandledError"]);
   }
 }
 
@@ -299,16 +402,14 @@ class Location {
   num lat;
   num lng;
   String? address;
-  Location({
-    required this.lat, required this.lng, this.address});
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Location({required this.lat, required this.lng, this.address});
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "lat": lat,
       "lng": lng,
       "address": address,
     };
   }
-
 }
 
 class DeliveryDetails {
@@ -320,9 +421,16 @@ class DeliveryDetails {
   bool deliveryAvailable;
   bool customerPickup;
   bool selfDelivery;
-  DeliveryDetails({
-    this.minimumCost, this.costPerKm, this.radius, this.freeDeliveryMinimumCost, this.freeDeliveryKmRange, required this.deliveryAvailable, required this.customerPickup, required this.selfDelivery});
-Map<String, dynamic> toFirebaseFormattedJson() {
+  DeliveryDetails(
+      {this.minimumCost,
+      this.costPerKm,
+      this.radius,
+      this.freeDeliveryMinimumCost,
+      this.freeDeliveryKmRange,
+      required this.deliveryAvailable,
+      required this.customerPickup,
+      required this.selfDelivery});
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "minimumCost": minimumCost,
       "costPerKm": costPerKm,
@@ -334,7 +442,6 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "selfDelivery": selfDelivery,
     };
   }
-
 }
 
 class RestaurantResponse {
@@ -342,25 +449,29 @@ class RestaurantResponse {
   RestaurantError? error;
   String? unhandledError;
   RestaurantResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory RestaurantResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return RestaurantResponse(json["success"], json["error"].toString().toRestaurantError(), json["unhandledError"]);
+
+  factory RestaurantResponse.fromFirebaseFormattedJson(json) {
+    return RestaurantResponse(json["success"],
+        json["error"].toString().toRestaurantError(), json["unhandledError"]);
   }
 }
 
 enum CustomerAppType { Native, Web }
+
 extension ParseCustomerAppTypeToString on CustomerAppType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToCustomerAppType on String {
   CustomerAppType toCustomerAppType() {
     return CustomerAppType.values.firstWhere(
@@ -369,38 +480,38 @@ extension ParseStringToCustomerAppType on String {
   }
 }
 
-
 enum PaymentType { Cash, Card, BankTransfer }
+
 extension ParsePaymentTypeToString on PaymentType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToPaymentType on String {
   PaymentType toPaymentType() {
-    return PaymentType.values.firstWhere(
-        (PaymentType paymentType) =>
-            paymentType.toFirebaseFormatString() == this);
+    mezDbgPrint("👋THIS =====<$this");
+    return PaymentType.values.firstWhere((PaymentType paymentType) =>
+        paymentType.toFirebaseFormatString() == this);
   }
 }
 
-
 enum DeliveryType { Pickup, Delivery }
+
 extension ParseDeliveryTypeToString on DeliveryType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToDeliveryType on String {
   DeliveryType toDeliveryType() {
-    return DeliveryType.values.firstWhere(
-        (DeliveryType deliveryType) =>
-            deliveryType.toFirebaseFormatString() == this);
+    return DeliveryType.values.firstWhere((DeliveryType deliveryType) =>
+        deliveryType.toFirebaseFormatString() == this);
   }
 }
-
 
 class CheckoutResponse {
   bool success;
@@ -408,7 +519,7 @@ class CheckoutResponse {
   String? unhandledError;
   num? orderId;
   CheckoutResponse(this.success, this.error, this.unhandledError, this.orderId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -416,8 +527,13 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "orderId": orderId,
     };
   }
-factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CheckoutResponse(json["success"], json["error"].toString().toCheckoutResponseError(), json["unhandledError"], json["orderId"]);
+
+  factory CheckoutResponse.fromFirebaseFormattedJson(json) {
+    return CheckoutResponse(
+        json["success"],
+        json["error"].toString().toCheckoutResponseError(),
+        json["unhandledError"],
+        json["orderId"]);
   }
 }
 
@@ -426,15 +542,19 @@ class ChangeRestaurantStatusResponse {
   ChangeRestaurantStatusError? error;
   String? unhandledError;
   ChangeRestaurantStatusResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ChangeRestaurantStatusResponse(json["success"], json["error"].toString().toChangeRestaurantStatusError(), json["unhandledError"]);
+
+  factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(json) {
+    return ChangeRestaurantStatusResponse(
+        json["success"],
+        json["error"].toString().toChangeRestaurantStatusError(),
+        json["unhandledError"]);
   }
 }
 
@@ -443,15 +563,17 @@ class CancelRestaurantOrderResponse {
   CancelOrderError? error;
   String? unhandledError;
   CancelRestaurantOrderResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CancelRestaurantOrderResponse(json["success"], json["error"].toString().toCancelOrderError(), json["unhandledError"]);
+
+  factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(json) {
+    return CancelRestaurantOrderResponse(json["success"],
+        json["error"].toString().toCancelOrderError(), json["unhandledError"]);
   }
 }
 
@@ -460,15 +582,17 @@ class LaundryResponse {
   LaundryError? error;
   String? unhandledError;
   LaundryResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory LaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return LaundryResponse(json["success"], json["error"].toString().toLaundryError(), json["unhandledError"]);
+
+  factory LaundryResponse.fromFirebaseFormattedJson(json) {
+    return LaundryResponse(json["success"],
+        json["error"].toString().toLaundryError(), json["unhandledError"]);
   }
 }
 
@@ -477,8 +601,9 @@ class ReqLaundryResponse {
   ReqLaundryError? error;
   String? unhandledError;
   num? orderId;
-  ReqLaundryResponse(this.success, this.error, this.unhandledError, this.orderId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  ReqLaundryResponse(
+      this.success, this.error, this.unhandledError, this.orderId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -486,8 +611,13 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "orderId": orderId,
     };
   }
-factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ReqLaundryResponse(json["success"], json["error"].toString().toReqLaundryError(), json["unhandledError"], json["orderId"]);
+
+  factory ReqLaundryResponse.fromFirebaseFormattedJson(json) {
+    return ReqLaundryResponse(
+        json["success"],
+        json["error"].toString().toReqLaundryError(),
+        json["unhandledError"],
+        json["orderId"]);
   }
 }
 
@@ -496,15 +626,19 @@ class ChangeLaundryStatusResponse {
   ChangeLaundryStatusError? error;
   String? unhandledError;
   ChangeLaundryStatusResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ChangeLaundryStatusResponse(json["success"], json["error"].toString().toChangeLaundryStatusError(), json["unhandledError"]);
+
+  factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(json) {
+    return ChangeLaundryStatusResponse(
+        json["success"],
+        json["error"].toString().toChangeLaundryStatusError(),
+        json["unhandledError"]);
   }
 }
 
@@ -513,15 +647,19 @@ class CancelLaundryResponse {
   CancelLaundryError? error;
   String? unhandledError;
   CancelLaundryResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory CancelLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CancelLaundryResponse(json["success"], json["error"].toString().toCancelLaundryError(), json["unhandledError"]);
+
+  factory CancelLaundryResponse.fromFirebaseFormattedJson(json) {
+    return CancelLaundryResponse(
+        json["success"],
+        json["error"].toString().toCancelLaundryError(),
+        json["unhandledError"]);
   }
 }
 
@@ -530,25 +668,40 @@ class AssignDriverResponse {
   AssignDriverError? error;
   String? unhandledError;
   AssignDriverResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory AssignDriverResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return AssignDriverResponse(json["success"], json["error"].toString().toAssignDriverError(), json["unhandledError"]);
+
+  factory AssignDriverResponse.fromFirebaseFormattedJson(json) {
+    return AssignDriverResponse(json["success"],
+        json["error"].toString().toAssignDriverError(), json["unhandledError"]);
   }
 }
 
-enum DeliveryOrderStatus { OrderReceived, OnTheWayToPickup, AtPickup, OnTheWayToDropoff, AtDropoff, Delivered, CancelledByCustomer, CancelledByDeliverer, CancelledByServiceProvider, CancelledByAdmin }
+enum DeliveryOrderStatus {
+  OrderReceived,
+  OnTheWayToPickup,
+  AtPickup,
+  OnTheWayToDropoff,
+  AtDropoff,
+  Delivered,
+  CancelledByCustomer,
+  CancelledByDeliverer,
+  CancelledByServiceProvider,
+  CancelledByAdmin
+}
+
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToDeliveryOrderStatus on String {
   DeliveryOrderStatus toDeliveryOrderStatus() {
     return DeliveryOrderStatus.values.firstWhere(
@@ -557,21 +710,24 @@ extension ParseStringToDeliveryOrderStatus on String {
   }
 }
 
-
 class ChangeDeliveryStatusResponse {
   bool success;
   ChangeDeliveryStatusError? error;
   String? unhandledError;
   ChangeDeliveryStatusResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ChangeDeliveryStatusResponse(json["success"], json["error"].toString().toChangeDeliveryStatusError(), json["unhandledError"]);
+
+  factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(json) {
+    return ChangeDeliveryStatusResponse(
+        json["success"],
+        json["error"].toString().toChangeDeliveryStatusError(),
+        json["unhandledError"]);
   }
 }
 
@@ -584,9 +740,16 @@ class CourierItem {
   bool? unavailable;
   num? orderId;
   num? actualCost;
-  CourierItem({
-    this.id, required this.name, this.image, this.estimatedCost, this.notes, this.unavailable, this.orderId, this.actualCost});
-Map<String, dynamic> toFirebaseFormattedJson() {
+  CourierItem(
+      {this.id,
+      required this.name,
+      this.image,
+      this.estimatedCost,
+      this.notes,
+      this.unavailable,
+      this.orderId,
+      this.actualCost});
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
       "name": name,
@@ -598,7 +761,6 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "actualCost": actualCost,
     };
   }
-
 }
 
 class CreateCourierResponse {
@@ -606,8 +768,9 @@ class CreateCourierResponse {
   CreateCourierError? error;
   String? unhandledError;
   num? orderId;
-  CreateCourierResponse(this.success, this.error, this.unhandledError, this.orderId);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  CreateCourierResponse(
+      this.success, this.error, this.unhandledError, this.orderId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
@@ -615,8 +778,13 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "orderId": orderId,
     };
   }
-factory CreateCourierResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CreateCourierResponse(json["success"], json["error"].toString().toCreateCourierError(), json["unhandledError"], json["orderId"]);
+
+  factory CreateCourierResponse.fromFirebaseFormattedJson(json) {
+    return CreateCourierResponse(
+        json["success"],
+        json["error"].toString().toCreateCourierError(),
+        json["unhandledError"],
+        json["orderId"]);
   }
 }
 
@@ -625,48 +793,52 @@ class ChangePriceReqResponse {
   ChangePriceError? error;
   String? unhandledError;
   ChangePriceReqResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory ChangePriceReqResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ChangePriceReqResponse(json["success"], json["error"].toString().toChangePriceError(), json["unhandledError"]);
+
+  factory ChangePriceReqResponse.fromFirebaseFormattedJson(json) {
+    return ChangePriceReqResponse(json["success"],
+        json["error"].toString().toChangePriceError(), json["unhandledError"]);
   }
 }
 
 enum OrderType { Taxi, Restaurant, Laundry, Courier, Water }
+
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToOrderType on String {
   OrderType toOrderType() {
     return OrderType.values.firstWhere(
-        (OrderType orderType) =>
-            orderType.toFirebaseFormatString() == this);
+        (OrderType orderType) => orderType.toFirebaseFormatString() == this);
   }
 }
-
 
 class ChangePriceResResponse {
   bool success;
   ChangePriceError? error;
   String? unhandledError;
   ChangePriceResResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory ChangePriceResResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return ChangePriceResResponse(json["success"], json["error"].toString().toChangePriceError(), json["unhandledError"]);
+
+  factory ChangePriceResResponse.fromFirebaseFormattedJson(json) {
+    return ChangePriceResResponse(json["success"],
+        json["error"].toString().toChangePriceError(), json["unhandledError"]);
   }
 }
 
@@ -675,57 +847,70 @@ class CancelCourierResponse {
   CancelCourierError? error;
   String? unhandledError;
   CancelCourierResponse(this.success, this.error, this.unhandledError);
-Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "success": success,
       "error": error,
       "unhandledError": unhandledError,
     };
   }
-factory CancelCourierResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CancelCourierResponse(json["success"], json["error"].toString().toCancelCourierError(), json["unhandledError"]);
+
+  factory CancelCourierResponse.fromFirebaseFormattedJson(json) {
+    return CancelCourierResponse(
+        json["success"],
+        json["error"].toString().toCancelCourierError(),
+        json["unhandledError"]);
   }
 }
 
-enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin, LaundryApp }
+enum AppType {
+  Customer,
+  RestaurantApp,
+  DeliveryApp,
+  DeliveryAdmin,
+  MezAdmin,
+  LaundryApp
+}
+
 extension ParseAppTypeToString on AppType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAppType on String {
   AppType toAppType() {
     return AppType.values.firstWhere(
-        (AppType appType) =>
-            appType.toFirebaseFormatString() == this);
+        (AppType appType) => appType.toFirebaseFormatString() == this);
   }
 }
 
-
 enum Language { EN, ES }
+
 extension ParseLanguageToString on Language {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToLanguage on String {
   Language toLanguage() {
     return Language.values.firstWhere(
-        (Language language) =>
-            language.toFirebaseFormatString() == this);
+        (Language language) => language.toFirebaseFormatString() == this);
   }
 }
 
-
 enum ServerResponseStatus { Success, Error }
+
 extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToServerResponseStatus on String {
   ServerResponseStatus toServerResponseStatus() {
     return ServerResponseStatus.values.firstWhere(
@@ -734,46 +919,60 @@ extension ParseStringToServerResponseStatus on String {
   }
 }
 
+enum SendOtpError {
+  UnhandledError,
+  UserNotFound,
+  OTPAskedTooSoon,
+  SMSSendError
+}
 
-enum SendOtpError { UnhandledError, UserNotFound, OTPAskedTooSoon, SMSSendError }
 extension ParseSendOtpErrorToString on SendOtpError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToSendOtpError on String {
   SendOtpError toSendOtpError() {
-    return SendOtpError.values.firstWhere(
-        (SendOtpError sendOtpError) =>
-            sendOtpError.toFirebaseFormatString() == this);
+    return SendOtpError.values.firstWhere((SendOtpError sendOtpError) =>
+        sendOtpError.toFirebaseFormatString() == this);
   }
 }
-
 
 enum AuthOtpError { UnhandledError, InvalidOTPCode, ExceededNumberOfTries }
+
 extension ParseAuthOtpErrorToString on AuthOtpError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAuthOtpError on String {
   AuthOtpError toAuthOtpError() {
-    return AuthOtpError.values.firstWhere(
-        (AuthOtpError authOtpError) =>
-            authOtpError.toFirebaseFormatString() == this);
+    return AuthOtpError.values.firstWhere((AuthOtpError authOtpError) =>
+        authOtpError.toFirebaseFormatString() == this);
   }
 }
 
+enum PaymentIntentError {
+  UnhandledError,
+  ServiceProviderDetailsNotFound,
+  CardNotAccepted,
+  StripeNotWorking,
+  CustomerNotFound,
+  NoCustomerStripeInfo,
+  CustomerUpdateError
+}
 
-enum PaymentIntentError { UnhandledError, ServiceProviderDetailsNotFound, CardNotAccepted, StripeNotWorking, CustomerNotFound, NoCustomerStripeInfo, CustomerUpdateError }
 extension ParsePaymentIntentErrorToString on PaymentIntentError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToPaymentIntentError on String {
   PaymentIntentError toPaymentIntentError() {
     return PaymentIntentError.values.firstWhere(
@@ -782,30 +981,45 @@ extension ParseStringToPaymentIntentError on String {
   }
 }
 
+enum AddCardError {
+  UnhandledError,
+  CustomerNotFound,
+  NoCustomerStripeInfo,
+  CustomerUpdateError
+}
 
-enum AddCardError { UnhandledError, CustomerNotFound, NoCustomerStripeInfo, CustomerUpdateError }
 extension ParseAddCardErrorToString on AddCardError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAddCardError on String {
   AddCardError toAddCardError() {
-    return AddCardError.values.firstWhere(
-        (AddCardError addCardError) =>
-            addCardError.toFirebaseFormatString() == this);
+    return AddCardError.values.firstWhere((AddCardError addCardError) =>
+        addCardError.toFirebaseFormatString() == this);
   }
 }
 
+enum ChargeCardError {
+  UnhandledError,
+  ServiceProviderDetailsNotFound,
+  CardNotAccepted,
+  StripeNotWorking,
+  CustomerNotFound,
+  NoCustomerStripeInfo,
+  CustomerUpdateError,
+  CardNotFound
+}
 
-enum ChargeCardError { UnhandledError, ServiceProviderDetailsNotFound, CardNotAccepted, StripeNotWorking, CustomerNotFound, NoCustomerStripeInfo, CustomerUpdateError, CardNotFound }
 extension ParseChargeCardErrorToString on ChargeCardError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToChargeCardError on String {
   ChargeCardError toChargeCardError() {
     return ChargeCardError.values.firstWhere(
@@ -814,14 +1028,23 @@ extension ParseStringToChargeCardError on String {
   }
 }
 
+enum RemoveCardError {
+  UnhandledError,
+  OrdersInProcess,
+  CustomerNotFound,
+  NoCustomerStripeInfo,
+  CardNotFound,
+  ServiceProviderDetailsNotFound,
+  CustomerUpdateError
+}
 
-enum RemoveCardError { UnhandledError, OrdersInProcess, CustomerNotFound, NoCustomerStripeInfo, CardNotFound, ServiceProviderDetailsNotFound, CustomerUpdateError }
 extension ParseRemoveCardErrorToString on RemoveCardError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToRemoveCardError on String {
   RemoveCardError toRemoveCardError() {
     return RemoveCardError.values.firstWhere(
@@ -830,14 +1053,21 @@ extension ParseStringToRemoveCardError on String {
   }
 }
 
+enum SetupStripeError {
+  UnhandledError,
+  ServiceProviderDetailsNotFound,
+  UnauthorizedAccess,
+  OperatorNotAuthorized,
+  StripeUpdateError
+}
 
-enum SetupStripeError { UnhandledError, ServiceProviderDetailsNotFound, UnauthorizedAccess, OperatorNotAuthorized, StripeUpdateError }
 extension ParseSetupStripeErrorToString on SetupStripeError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToSetupStripeError on String {
   SetupStripeError toSetupStripeError() {
     return SetupStripeError.values.firstWhere(
@@ -846,14 +1076,21 @@ extension ParseStringToSetupStripeError on String {
   }
 }
 
+enum UpdateStripeError {
+  UnhandledError,
+  ServiceProviderDetailsNotFound,
+  UnauthorizedAccess,
+  OperatorNotAuthorized,
+  NoStripeAccount
+}
 
-enum UpdateStripeError { UnhandledError, ServiceProviderDetailsNotFound, UnauthorizedAccess, OperatorNotAuthorized, NoStripeAccount }
 extension ParseUpdateStripeErrorToString on UpdateStripeError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToUpdateStripeError on String {
   UpdateStripeError toUpdateStripeError() {
     return UpdateStripeError.values.firstWhere(
@@ -862,30 +1099,45 @@ extension ParseStringToUpdateStripeError on String {
   }
 }
 
+enum CallUserError {
+  UnhandledError,
+  ChatNotFound,
+  RecipientNotAvailable,
+  CallerNotInParticipants
+}
 
-enum CallUserError { UnhandledError, ChatNotFound, RecipientNotAvailable, CallerNotInParticipants }
 extension ParseCallUserErrorToString on CallUserError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToCallUserError on String {
   CallUserError toCallUserError() {
-    return CallUserError.values.firstWhere(
-        (CallUserError callUserError) =>
-            callUserError.toFirebaseFormatString() == this);
+    return CallUserError.values.firstWhere((CallUserError callUserError) =>
+        callUserError.toFirebaseFormatString() == this);
   }
 }
 
+enum AddOperatorError {
+  UnhandledError,
+  UserNotFound,
+  ServiceProviderDetailsNotFound,
+  UserAlreadyAnOperator,
+  OperatorCreationError,
+  RestaurantNotfound,
+  DeliveryCompanyOperatorsNotFound,
+  LaundryStoreNotfound
+}
 
-enum AddOperatorError { UnhandledError, UserNotFound, ServiceProviderDetailsNotFound, UserAlreadyAnOperator, OperatorCreationError, RestaurantNotfound, DeliveryCompanyOperatorsNotFound, LaundryStoreNotfound }
 extension ParseAddOperatorErrorToString on AddOperatorError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAddOperatorError on String {
   AddOperatorError toAddOperatorError() {
     return AddOperatorError.values.firstWhere(
@@ -894,14 +1146,21 @@ extension ParseStringToAddOperatorError on String {
   }
 }
 
+enum AuthOperatorError {
+  UnhandledError,
+  OperatorNotFound,
+  UnauthorizedAccess,
+  IncorrectOperatorId,
+  OperatorDetailsNotFound
+}
 
-enum AuthOperatorError { UnhandledError, OperatorNotFound, UnauthorizedAccess, IncorrectOperatorId, OperatorDetailsNotFound }
 extension ParseAuthOperatorErrorToString on AuthOperatorError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAuthOperatorError on String {
   AuthOperatorError toAuthOperatorError() {
     return AuthOperatorError.values.firstWhere(
@@ -910,30 +1169,41 @@ extension ParseStringToAuthOperatorError on String {
   }
 }
 
+enum AddDriverError {
+  UnhandledError,
+  DriverAlreadyExists,
+  DriverCreationError,
+  InvalidServiceProviderType
+}
 
-enum AddDriverError { UnhandledError, DriverAlreadyExists, DriverCreationError, InvalidServiceProviderType }
 extension ParseAddDriverErrorToString on AddDriverError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAddDriverError on String {
   AddDriverError toAddDriverError() {
-    return AddDriverError.values.firstWhere(
-        (AddDriverError addDriverError) =>
-            addDriverError.toFirebaseFormatString() == this);
+    return AddDriverError.values.firstWhere((AddDriverError addDriverError) =>
+        addDriverError.toFirebaseFormatString() == this);
   }
 }
 
+enum AuthorizeDriverError {
+  UnhandledError,
+  DriverNotFound,
+  OperatorNotFound,
+  UnauthorizedAccess
+}
 
-enum AuthorizeDriverError { UnhandledError, DriverNotFound, OperatorNotFound, UnauthorizedAccess }
 extension ParseAuthorizeDriverErrorToString on AuthorizeDriverError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAuthorizeDriverError on String {
   AuthorizeDriverError toAuthorizeDriverError() {
     return AuthorizeDriverError.values.firstWhere(
@@ -942,14 +1212,23 @@ extension ParseStringToAuthorizeDriverError on String {
   }
 }
 
+enum RestaurantError {
+  UnhandledError,
+  DeliveryDetailsNotSet,
+  NoDeliveryPartner,
+  UserNotFound,
+  DeepLinkError,
+  QRGenerationError,
+  RestaurantCreationError
+}
 
-enum RestaurantError { UnhandledError, DeliveryDetailsNotSet, NoDeliveryPartner, UserNotFound, DeepLinkError, QRGenerationError, RestaurantCreationError }
 extension ParseRestaurantErrorToString on RestaurantError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToRestaurantError on String {
   RestaurantError toRestaurantError() {
     return RestaurantError.values.firstWhere(
@@ -958,14 +1237,31 @@ extension ParseStringToRestaurantError on String {
   }
 }
 
+enum CheckoutResponseError {
+  UnhandledError,
+  RestaurantClosed,
+  CartEmpty,
+  RestaurantNotApproved,
+  NoDeliveryPartner,
+  NotAcceptingDeliveryOrders,
+  RestaurantNotFound,
+  CartNotFound,
+  CustomerNotFound,
+  RestaurantIdMismatch,
+  OrderCreationError,
+  DeliveryCompanyOperatorsNotFound,
+  ServiceProviderDetailsNotFound,
+  NoStripeAccountOfServiceProvider,
+  UpdateOrderStripeError
+}
 
-enum CheckoutResponseError { UnhandledError, RestaurantClosed, CartEmpty, RestaurantNotApproved, NoDeliveryPartner, NotAcceptingDeliveryOrders, RestaurantNotFound, CartNotFound, CustomerNotFound, RestaurantIdMismatch, OrderCreationError, DeliveryCompanyOperatorsNotFound, ServiceProviderDetailsNotFound, NoStripeAccountOfServiceProvider, UpdateOrderStripeError }
 extension ParseCheckoutResponseErrorToString on CheckoutResponseError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToCheckoutResponseError on String {
   CheckoutResponseError toCheckoutResponseError() {
     return CheckoutResponseError.values.firstWhere(
@@ -974,14 +1270,28 @@ extension ParseStringToCheckoutResponseError on String {
   }
 }
 
+enum ChangeRestaurantStatusError {
+  UnhandledError,
+  OrderNotFound,
+  UnauthorizedAccess,
+  IncorrectOrderId,
+  CustomerNotFound,
+  OrderNotInProcess,
+  InvalidStatus,
+  ServiceProviderDetailsNotFound,
+  OrderStripeInfoNotDefined,
+  ServiceProviderStripeAccountDoesNotExist,
+  UpdateOrderStripeError
+}
 
-enum ChangeRestaurantStatusError { UnhandledError, OrderNotFound, UnauthorizedAccess, IncorrectOrderId, CustomerNotFound, OrderNotInProcess, InvalidStatus, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError }
-extension ParseChangeRestaurantStatusErrorToString on ChangeRestaurantStatusError {
+extension ParseChangeRestaurantStatusErrorToString
+    on ChangeRestaurantStatusError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToChangeRestaurantStatusError on String {
   ChangeRestaurantStatusError toChangeRestaurantStatusError() {
     return ChangeRestaurantStatusError.values.firstWhere(
@@ -990,14 +1300,25 @@ extension ParseStringToChangeRestaurantStatusError on String {
   }
 }
 
+enum CancelOrderError {
+  UnhandledError,
+  OrderNotFound,
+  RestaurantNotfound,
+  IncorrectOrderId,
+  OrderNotInProcess,
+  ServiceProviderDetailsNotFound,
+  OrderStripeInfoNotDefined,
+  ServiceProviderStripeAccountDoesNotExist,
+  UpdateOrderStripeError
+}
 
-enum CancelOrderError { UnhandledError, OrderNotFound, RestaurantNotfound, IncorrectOrderId, OrderNotInProcess, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError }
 extension ParseCancelOrderErrorToString on CancelOrderError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToCancelOrderError on String {
   CancelOrderError toCancelOrderError() {
     return CancelOrderError.values.firstWhere(
@@ -1006,30 +1327,54 @@ extension ParseStringToCancelOrderError on String {
   }
 }
 
+enum LaundryError {
+  UnhandledError,
+  DeliveryDetailsNotSet,
+  NoDeliveryPartner,
+  UserNotFound,
+  DeepLinkError,
+  QRGenerationError,
+  LaundryCreationError
+}
 
-enum LaundryError { UnhandledError, DeliveryDetailsNotSet, NoDeliveryPartner, UserNotFound, DeepLinkError, QRGenerationError, LaundryCreationError }
 extension ParseLaundryErrorToString on LaundryError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToLaundryError on String {
   LaundryError toLaundryError() {
-    return LaundryError.values.firstWhere(
-        (LaundryError laundryError) =>
-            laundryError.toFirebaseFormatString() == this);
+    return LaundryError.values.firstWhere((LaundryError laundryError) =>
+        laundryError.toFirebaseFormatString() == this);
   }
 }
 
+enum ReqLaundryError {
+  UnhandledError,
+  LaundryStoreNotfound,
+  CustomerNotFound,
+  LaundryStoreNotApproved,
+  StoreClosed,
+  NoDeliveryPartner,
+  DeliveryNotAvailable,
+  OrderCreationError,
+  NoChatId,
+  DeliveryCompanyOperatorsNotFound,
+  ServiceProviderDetailsNotFound,
+  InvalidOrderType,
+  NoStripeAccountOfServiceProvider,
+  UpdateOrderStripeError
+}
 
-enum ReqLaundryError { UnhandledError, LaundryStoreNotfound, CustomerNotFound, LaundryStoreNotApproved, StoreClosed, NoDeliveryPartner, DeliveryNotAvailable, OrderCreationError, NoChatId, DeliveryCompanyOperatorsNotFound, ServiceProviderDetailsNotFound, InvalidOrderType, NoStripeAccountOfServiceProvider, UpdateOrderStripeError }
 extension ParseReqLaundryErrorToString on ReqLaundryError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToReqLaundryError on String {
   ReqLaundryError toReqLaundryError() {
     return ReqLaundryError.values.firstWhere(
@@ -1038,14 +1383,27 @@ extension ParseStringToReqLaundryError on String {
   }
 }
 
+enum ChangeLaundryStatusError {
+  UnhandledError,
+  OrderNotFound,
+  UnauthorizedAccess,
+  IncorrectOrderId,
+  CustomerNotFound,
+  OrderNotInProcess,
+  InvalidStatus,
+  ServiceProviderDetailsNotFound,
+  OrderStripeInfoNotDefined,
+  ServiceProviderStripeAccountDoesNotExist,
+  UpdateOrderStripeError
+}
 
-enum ChangeLaundryStatusError { UnhandledError, OrderNotFound, UnauthorizedAccess, IncorrectOrderId, CustomerNotFound, OrderNotInProcess, InvalidStatus, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError }
 extension ParseChangeLaundryStatusErrorToString on ChangeLaundryStatusError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToChangeLaundryStatusError on String {
   ChangeLaundryStatusError toChangeLaundryStatusError() {
     return ChangeLaundryStatusError.values.firstWhere(
@@ -1054,14 +1412,26 @@ extension ParseStringToChangeLaundryStatusError on String {
   }
 }
 
+enum CancelLaundryError {
+  UnhandledError,
+  OrderNotFound,
+  LaundryStoreNotfound,
+  IncorrectOrderId,
+  OrderNotInProcess,
+  ServiceProviderDetailsNotFound,
+  OrderStripeInfoNotDefined,
+  ServiceProviderStripeAccountDoesNotExist,
+  UpdateOrderStripeError,
+  DeliveryCompanyOperatorsNotFound
+}
 
-enum CancelLaundryError { UnhandledError, OrderNotFound, LaundryStoreNotfound, IncorrectOrderId, OrderNotInProcess, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError, DeliveryCompanyOperatorsNotFound }
 extension ParseCancelLaundryErrorToString on CancelLaundryError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToCancelLaundryError on String {
   CancelLaundryError toCancelLaundryError() {
     return CancelLaundryError.values.firstWhere(
@@ -1070,14 +1440,25 @@ extension ParseStringToCancelLaundryError on String {
   }
 }
 
+enum AssignDriverError {
+  UnhandledError,
+  OrderNotFound,
+  DriverNotFound,
+  OperatorNotFound,
+  InvalidOperator,
+  UnauthorizedDriver,
+  ServiceProviderDeliveryChatNotFound,
+  DriverAlreadyAssigned,
+  DeliveryOrderNotFound
+}
 
-enum AssignDriverError { UnhandledError, OrderNotFound, DriverNotFound, OperatorNotFound, InvalidOperator, UnauthorizedDriver, ServiceProviderDeliveryChatNotFound, DriverAlreadyAssigned, DeliveryOrderNotFound }
 extension ParseAssignDriverErrorToString on AssignDriverError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToAssignDriverError on String {
   AssignDriverError toAssignDriverError() {
     return AssignDriverError.values.firstWhere(
@@ -1086,14 +1467,33 @@ extension ParseStringToAssignDriverError on String {
   }
 }
 
+enum ChangeDeliveryStatusError {
+  UnhandledError,
+  OrderNotFound,
+  DriverNotAssigned,
+  OrderNotInProcess,
+  UnAuthorizedAccess,
+  OrderDriverMismatch,
+  CustomerNotFound,
+  InvalidStatus,
+  RestaurantNotfound,
+  ServiceProviderDetailsNotFound,
+  OrderStripeInfoNotDefined,
+  ServiceProviderStripeAccountDoesNotExist,
+  UpdateOrderStripeError,
+  LaundryStoreNotfound,
+  OrderCreationError,
+  NoDeliveryChatWithStoreId,
+  DeliveryCompanyOperatorsNotFound
+}
 
-enum ChangeDeliveryStatusError { UnhandledError, OrderNotFound, DriverNotAssigned, OrderNotInProcess, UnAuthorizedAccess, OrderDriverMismatch, CustomerNotFound, InvalidStatus, RestaurantNotfound, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError, LaundryStoreNotfound, OrderCreationError, NoDeliveryChatWithStoreId, DeliveryCompanyOperatorsNotFound }
 extension ParseChangeDeliveryStatusErrorToString on ChangeDeliveryStatusError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToChangeDeliveryStatusError on String {
   ChangeDeliveryStatusError toChangeDeliveryStatusError() {
     return ChangeDeliveryStatusError.values.firstWhere(
@@ -1102,14 +1502,21 @@ extension ParseStringToChangeDeliveryStatusError on String {
   }
 }
 
+enum CreateCourierError {
+  UnhandledError,
+  CustomerNotFound,
+  OrderCreationError,
+  DeliveryCompanyNotFound,
+  DeliveryCompanyHasNoDrivers
+}
 
-enum CreateCourierError { UnhandledError, CustomerNotFound, OrderCreationError, DeliveryCompanyNotFound, DeliveryCompanyHasNoDrivers }
 extension ParseCreateCourierErrorToString on CreateCourierError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToCreateCourierError on String {
   CreateCourierError toCreateCourierError() {
     return CreateCourierError.values.firstWhere(
@@ -1118,14 +1525,28 @@ extension ParseStringToCreateCourierError on String {
   }
 }
 
+enum ChangePriceError {
+  UnhandledError,
+  OrderNotFound,
+  DriverIDOrderIDMismatch,
+  StatusNotOrderReceived,
+  PriceChangeAlreadyRequested,
+  ChangePriceRequestNotSet,
+  CustomerNotFound,
+  RestaurantNotfound,
+  LaundryStoreNotfound,
+  IncorrectOrderId,
+  DriverNotFound,
+  UpdateOrderError
+}
 
-enum ChangePriceError { UnhandledError, OrderNotFound, DriverIDOrderIDMismatch, StatusNotOrderReceived, PriceChangeAlreadyRequested, ChangePriceRequestNotSet, CustomerNotFound, RestaurantNotfound, LaundryStoreNotfound, IncorrectOrderId, DriverNotFound, UpdateOrderError }
 extension ParseChangePriceErrorToString on ChangePriceError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToChangePriceError on String {
   ChangePriceError toChangePriceError() {
     return ChangePriceError.values.firstWhere(
@@ -1134,14 +1555,20 @@ extension ParseStringToChangePriceError on String {
   }
 }
 
+enum CancelCourierError {
+  UnhandledError,
+  OrderNotFound,
+  IncorrectOrderId,
+  OrderNotInProcess
+}
 
-enum CancelCourierError { UnhandledError, OrderNotFound, IncorrectOrderId, OrderNotInProcess }
 extension ParseCancelCourierErrorToString on CancelCourierError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
+
 extension ParseStringToCancelCourierError on String {
   CancelCourierError toCancelCourierError() {
     return CancelCourierError.values.firstWhere(
@@ -1149,5 +1576,3 @@ extension ParseStringToCancelCourierError on String {
             cancelCourierError.toFirebaseFormatString() == this);
   }
 }
-
-

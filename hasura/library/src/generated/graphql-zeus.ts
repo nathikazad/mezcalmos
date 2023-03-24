@@ -4448,6 +4448,8 @@ change_price_request?: [{	/** JSON select path */
 	order_time?:true,
 	order_type?:true,
 	package_cost?:true,
+	/** A computed field, executes function "delivery.packagecost" */
+	package_cost_comp?:true,
 	package_ready?:true,
 	payment_type?:true,
 	pickup_address?:true,
@@ -4629,6 +4631,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	order_type?:ValueTypes["String_comparison_exp"],
 	package_cost?:ValueTypes["money_comparison_exp"],
+	package_cost_comp?:ValueTypes["money_comparison_exp"],
 	package_ready?:ValueTypes["Boolean_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
 	pickup_address?:ValueTypes["String_comparison_exp"],
@@ -4987,6 +4990,7 @@ cancelledByServiceProvider */
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
 	package_cost?:ValueTypes["order_by"],
+	package_cost_comp?:ValueTypes["order_by"],
 	package_ready?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	pickup_address?:ValueTypes["order_by"],
@@ -24089,6 +24093,8 @@ the end). throws an error if top level container is not an array */
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			package_cost?:PartialObjects["money"],
+			/** A computed field, executes function "delivery.packagecost" */
+	package_cost_comp?:PartialObjects["money"],
 			package_ready?:boolean,
 			payment_type?:string,
 			pickup_address?:string,
@@ -24269,6 +24275,7 @@ cancelledByServiceProvider */
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	order_type?:PartialObjects["String_comparison_exp"],
 	package_cost?:PartialObjects["money_comparison_exp"],
+	package_cost_comp?:PartialObjects["money_comparison_exp"],
 	package_ready?:PartialObjects["Boolean_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
 	pickup_address?:PartialObjects["String_comparison_exp"],
@@ -24627,6 +24634,7 @@ cancelledByServiceProvider */
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
 	package_cost?:PartialObjects["order_by"],
+	package_cost_comp?:PartialObjects["order_by"],
 	package_ready?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	pickup_address?:PartialObjects["order_by"],
@@ -43024,6 +43032,8 @@ export type delivery_order = {
 	order_time:timestamptz,
 	order_type:string,
 	package_cost:money,
+	/** A computed field, executes function "delivery.packagecost" */
+	package_cost_comp?:money,
 	package_ready:boolean,
 	payment_type:string,
 	pickup_address?:string,
@@ -43216,6 +43226,7 @@ export type delivery_order_bool_exp = {
 	order_time?:timestamptz_comparison_exp,
 	order_type?:String_comparison_exp,
 	package_cost?:money_comparison_exp,
+	package_cost_comp?:money_comparison_exp,
 	package_ready?:Boolean_comparison_exp,
 	payment_type?:String_comparison_exp,
 	pickup_address?:String_comparison_exp,
@@ -43590,6 +43601,7 @@ export type delivery_order_order_by = {
 	order_time?:order_by,
 	order_type?:order_by,
 	package_cost?:order_by,
+	package_cost_comp?:order_by,
 	package_ready?:order_by,
 	payment_type?:order_by,
 	pickup_address?:order_by,
@@ -69525,6 +69537,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		package_cost_comp:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		package_ready:{
 			type:"Boolean_comparison_exp",
 			array:false,
@@ -70735,6 +70753,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		package_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		package_cost_comp:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -114708,6 +114732,7 @@ export const ReturnTypes: Record<string,any> = {
 		order_time:"timestamptz",
 		order_type:"String",
 		package_cost:"money",
+		package_cost_comp:"money",
 		package_ready:"Boolean",
 		payment_type:"String",
 		pickup_address:"String",

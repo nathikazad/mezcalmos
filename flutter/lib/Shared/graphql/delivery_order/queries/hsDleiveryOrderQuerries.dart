@@ -90,7 +90,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
       serviceProviderType:
           orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,
-      packageCost: orderData.package_cost,
+      packageCost: orderData.package_cost_comp ?? 0,
       driverLocation:
           (orderData.delivery_driver != null && orderData.delivery_driver?.current_location != null)
               ? LatLng(orderData.delivery_driver!.current_location!.latitude,
@@ -122,15 +122,16 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
     final List<MinimalOrder> orders = ordersData
         .map((Query$get_inprocess_driver_orders$delivery_order orderData) {
       return MinimalOrder(
-          id: orderData.id,
-          orderType: orderData.order_type.toOrderType(),
-          toAdress: orderData.dropoff_address,
-          orderTime: DateTime.parse(orderData.order_time),
-          title: orderData.customer.user.name!,
-          image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.package_cost);
+        id: orderData.id,
+        orderType: orderData.order_type.toOrderType(),
+        toAdress: orderData.dropoff_address,
+        orderTime: DateTime.parse(orderData.order_time),
+        title: orderData.customer.user.name!,
+        deliveryCost: orderData.delivery_cost,
+        image: orderData.customer.user.image,
+        status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+      );
     }).toList();
     return orders;
   } else {
@@ -155,15 +156,16 @@ Future<List<MinimalOrder>?> get_open_driver_orders(
     final List<MinimalOrder> orders =
         ordersData.map((Query$get_open_driver_orders$delivery_order orderData) {
       return MinimalOrder(
-          id: orderData.id,
-          orderType: orderData.order_type.toOrderType(),
-          toAdress: orderData.dropoff_address,
-          orderTime: DateTime.parse(orderData.order_time),
-          title: orderData.customer.user.name!,
-          image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.package_cost);
+        id: orderData.id,
+        orderType: orderData.order_type.toOrderType(),
+        toAdress: orderData.dropoff_address,
+        orderTime: DateTime.parse(orderData.order_time),
+        deliveryCost: orderData.delivery_cost,
+        title: orderData.customer.user.name!,
+        image: orderData.customer.user.image,
+        status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+      );
     }).toList();
     return orders;
   } else {
@@ -188,15 +190,16 @@ Future<List<MinimalOrder>?> get_past_driver_orders(
     final List<MinimalOrder> orders =
         ordersData.map((Query$get_past_driver_orders$delivery_order orderData) {
       return MinimalOrder(
-          id: orderData.id,
-          orderType: orderData.order_type.toOrderType(),
-          toAdress: orderData.dropoff_address,
-          orderTime: DateTime.parse(orderData.order_time),
-          title: orderData.customer.user.name!,
-          image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.package_cost);
+        id: orderData.id,
+        orderType: orderData.order_type.toOrderType(),
+        toAdress: orderData.dropoff_address,
+        orderTime: DateTime.parse(orderData.order_time),
+        title: orderData.customer.user.name!,
+        deliveryCost: orderData.delivery_cost,
+        image: orderData.customer.user.image,
+        status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+      );
     }).toList();
     return orders;
   } else {
@@ -222,15 +225,15 @@ Future<List<MinimalOrder>?> get_dvcompany_current_orders(
     final List<MinimalOrder> orders = ordersData.map(
         (Query$get_delivery_company_inprocess_orders$delivery_order orderData) {
       return MinimalOrder(
-          id: orderData.id,
-          toAdress: orderData.dropoff_address,
-          orderType: orderData.order_type.toOrderType(),
-          orderTime: DateTime.parse(orderData.order_time),
-          title: orderData.customer.user.name!,
-          image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.package_cost);
+        id: orderData.id,
+        toAdress: orderData.dropoff_address,
+        orderType: orderData.order_type.toOrderType(),
+        orderTime: DateTime.parse(orderData.order_time),
+        title: orderData.customer.user.name!,
+        image: orderData.customer.user.image,
+        status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+      );
     }).toList();
     return orders;
   } else {
@@ -256,15 +259,16 @@ Future<List<MinimalOrder>?> get_dvcompany_past_orders(
     final List<MinimalOrder> orders = ordersData
         .map((Query$get_delivery_company_past_orders$delivery_order orderData) {
       return MinimalOrder(
-          id: orderData.id,
-          orderType: orderData.order_type.toOrderType(),
-          toAdress: orderData.dropoff_address,
-          orderTime: DateTime.parse(orderData.order_time),
-          title: orderData.customer.user.name!,
-          image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.package_cost);
+        id: orderData.id,
+        orderType: orderData.order_type.toOrderType(),
+        toAdress: orderData.dropoff_address,
+        orderTime: DateTime.parse(orderData.order_time),
+        title: orderData.customer.user.name!,
+        image: orderData.customer.user.image,
+        deliveryCost: orderData.delivery_cost,
+        status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+      );
     }).toList();
     return orders;
   } else {
@@ -331,7 +335,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
       serviceProviderType:
           orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,
-      packageCost: orderData.package_cost,
+      packageCost: orderData.package_cost_comp ?? 0,
       driverLocation: (orderData.delivery_driver != null &&
               orderData.delivery_driver?.current_location != null)
           ? LatLng(orderData.delivery_driver!.current_location!.latitude,

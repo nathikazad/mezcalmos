@@ -12,11 +12,9 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryDriverType.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -98,7 +96,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
               ? DateTime.parse(
                   orderData.delivery_order.estimated_package_ready_time!)
               : null,
-      packageCost: orderData.delivery_order.package_cost,
+      packageCost: orderData.delivery_order.package_cost_comp ?? 0,
       pickupLocation: (orderData.delivery_order.pickup_address != null &&
               orderData.delivery_order.pickup_gps != null)
           ? MezLocation(orderData.delivery_order.pickup_address!,
@@ -220,8 +218,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                 ? DateTime.parse(
                     orderData.delivery_order.estimated_package_ready_time!)
                 : null,
-        packageCost: orderData.actual_items_cost?.toDouble() ??
-            orderData.delivery_order.package_cost,
+        packageCost: orderData.delivery_order.package_cost_comp ?? 0,
         pickupLocation: (orderData.delivery_order.pickup_address != null &&
                 orderData.delivery_order.pickup_gps != null)
             ? MezLocation(orderData.delivery_order.pickup_address!,

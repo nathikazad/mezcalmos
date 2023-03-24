@@ -756,7 +756,7 @@ const documentNodeQueryget_courier_order_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'package_cost'),
+                name: NameNode(value: 'package_cost_comp'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1779,7 +1779,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     this.trip_duration,
     this.trip_polyline,
     required this.package_ready,
-    required this.package_cost,
+    this.package_cost_comp,
     required this.direction,
     required this.service_provider_id,
     this.delivery_driver,
@@ -1812,7 +1812,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$trip_duration = json['trip_duration'];
     final l$trip_polyline = json['trip_polyline'];
     final l$package_ready = json['package_ready'];
-    final l$package_cost = json['package_cost'];
+    final l$package_cost_comp = json['package_cost_comp'];
     final l$direction = json['direction'];
     final l$service_provider_id = json['service_provider_id'];
     final l$delivery_driver = json['delivery_driver'];
@@ -1846,7 +1846,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       trip_duration: (l$trip_duration as int?),
       trip_polyline: (l$trip_polyline as String?),
       package_ready: (l$package_ready as bool),
-      package_cost: moneyFromJson(l$package_cost),
+      package_cost_comp: l$package_cost_comp == null
+          ? null
+          : moneyFromJson(l$package_cost_comp),
       direction: (l$direction as String),
       service_provider_id: (l$service_provider_id as int),
       delivery_driver: l$delivery_driver == null
@@ -1901,7 +1903,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   final bool package_ready;
 
-  final double package_cost;
+  final double? package_cost_comp;
 
   final String direction;
 
@@ -1962,8 +1964,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     _resultData['trip_polyline'] = l$trip_polyline;
     final l$package_ready = package_ready;
     _resultData['package_ready'] = l$package_ready;
-    final l$package_cost = package_cost;
-    _resultData['package_cost'] = moneyToJson(l$package_cost);
+    final l$package_cost_comp = package_cost_comp;
+    _resultData['package_cost_comp'] =
+        l$package_cost_comp == null ? null : moneyToJson(l$package_cost_comp);
     final l$direction = direction;
     _resultData['direction'] = l$direction;
     final l$service_provider_id = service_provider_id;
@@ -1999,7 +2002,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$trip_duration = trip_duration;
     final l$trip_polyline = trip_polyline;
     final l$package_ready = package_ready;
-    final l$package_cost = package_cost;
+    final l$package_cost_comp = package_cost_comp;
     final l$direction = direction;
     final l$service_provider_id = service_provider_id;
     final l$delivery_driver = delivery_driver;
@@ -2026,7 +2029,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       l$trip_duration,
       l$trip_polyline,
       l$package_ready,
-      l$package_cost,
+      l$package_cost_comp,
       l$direction,
       l$service_provider_id,
       l$delivery_driver,
@@ -2157,9 +2160,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     if (l$package_ready != lOther$package_ready) {
       return false;
     }
-    final l$package_cost = package_cost;
-    final lOther$package_cost = other.package_cost;
-    if (l$package_cost != lOther$package_cost) {
+    final l$package_cost_comp = package_cost_comp;
+    final lOther$package_cost_comp = other.package_cost_comp;
+    if (l$package_cost_comp != lOther$package_cost_comp) {
       return false;
     }
     final l$direction = direction;
@@ -2235,7 +2238,7 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
     int? trip_duration,
     String? trip_polyline,
     bool? package_ready,
-    double? package_cost,
+    double? package_cost_comp,
     String? direction,
     int? service_provider_id,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?
@@ -2291,7 +2294,7 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
     Object? trip_duration = _undefined,
     Object? trip_polyline = _undefined,
     Object? package_ready = _undefined,
-    Object? package_cost = _undefined,
+    Object? package_cost_comp = _undefined,
     Object? direction = _undefined,
     Object? service_provider_id = _undefined,
     Object? delivery_driver = _undefined,
@@ -2368,9 +2371,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
         package_ready: package_ready == _undefined || package_ready == null
             ? _instance.package_ready
             : (package_ready as bool),
-        package_cost: package_cost == _undefined || package_cost == null
-            ? _instance.package_cost
-            : (package_cost as double),
+        package_cost_comp: package_cost_comp == _undefined
+            ? _instance.package_cost_comp
+            : (package_cost_comp as double?),
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
@@ -2448,7 +2451,7 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
     int? trip_duration,
     String? trip_polyline,
     bool? package_ready,
-    double? package_cost,
+    double? package_cost_comp,
     String? direction,
     int? service_provider_id,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?
@@ -8878,7 +8881,7 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'package_cost'),
+                name: NameNode(value: 'package_cost_comp'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -9874,7 +9877,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     this.trip_duration,
     this.trip_polyline,
     required this.package_ready,
-    required this.package_cost,
+    this.package_cost_comp,
     required this.direction,
     required this.service_provider_id,
     this.delivery_driver,
@@ -9908,7 +9911,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$trip_duration = json['trip_duration'];
     final l$trip_polyline = json['trip_polyline'];
     final l$package_ready = json['package_ready'];
-    final l$package_cost = json['package_cost'];
+    final l$package_cost_comp = json['package_cost_comp'];
     final l$direction = json['direction'];
     final l$service_provider_id = json['service_provider_id'];
     final l$delivery_driver = json['delivery_driver'];
@@ -9945,7 +9948,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       trip_duration: (l$trip_duration as int?),
       trip_polyline: (l$trip_polyline as String?),
       package_ready: (l$package_ready as bool),
-      package_cost: moneyFromJson(l$package_cost),
+      package_cost_comp: l$package_cost_comp == null
+          ? null
+          : moneyFromJson(l$package_cost_comp),
       direction: (l$direction as String),
       service_provider_id: (l$service_provider_id as int),
       delivery_driver: l$delivery_driver == null
@@ -10002,7 +10007,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   final bool package_ready;
 
-  final double package_cost;
+  final double? package_cost_comp;
 
   final String direction;
 
@@ -10067,8 +10072,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     _resultData['trip_polyline'] = l$trip_polyline;
     final l$package_ready = package_ready;
     _resultData['package_ready'] = l$package_ready;
-    final l$package_cost = package_cost;
-    _resultData['package_cost'] = moneyToJson(l$package_cost);
+    final l$package_cost_comp = package_cost_comp;
+    _resultData['package_cost_comp'] =
+        l$package_cost_comp == null ? null : moneyToJson(l$package_cost_comp);
     final l$direction = direction;
     _resultData['direction'] = l$direction;
     final l$service_provider_id = service_provider_id;
@@ -10105,7 +10111,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$trip_duration = trip_duration;
     final l$trip_polyline = trip_polyline;
     final l$package_ready = package_ready;
-    final l$package_cost = package_cost;
+    final l$package_cost_comp = package_cost_comp;
     final l$direction = direction;
     final l$service_provider_id = service_provider_id;
     final l$delivery_driver = delivery_driver;
@@ -10133,7 +10139,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       l$trip_duration,
       l$trip_polyline,
       l$package_ready,
-      l$package_cost,
+      l$package_cost_comp,
       l$direction,
       l$service_provider_id,
       l$delivery_driver,
@@ -10269,9 +10275,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     if (l$package_ready != lOther$package_ready) {
       return false;
     }
-    final l$package_cost = package_cost;
-    final lOther$package_cost = other.package_cost;
-    if (l$package_cost != lOther$package_cost) {
+    final l$package_cost_comp = package_cost_comp;
+    final lOther$package_cost_comp = other.package_cost_comp;
+    if (l$package_cost_comp != lOther$package_cost_comp) {
       return false;
     }
     final l$direction = direction;
@@ -10348,7 +10354,7 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
     int? trip_duration,
     String? trip_polyline,
     bool? package_ready,
-    double? package_cost,
+    double? package_cost_comp,
     String? direction,
     int? service_provider_id,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?
@@ -10405,7 +10411,7 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
     Object? trip_duration = _undefined,
     Object? trip_polyline = _undefined,
     Object? package_ready = _undefined,
-    Object? package_cost = _undefined,
+    Object? package_cost_comp = _undefined,
     Object? direction = _undefined,
     Object? service_provider_id = _undefined,
     Object? delivery_driver = _undefined,
@@ -10485,9 +10491,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
         package_ready: package_ready == _undefined || package_ready == null
             ? _instance.package_ready
             : (package_ready as bool),
-        package_cost: package_cost == _undefined || package_cost == null
-            ? _instance.package_cost
-            : (package_cost as double),
+        package_cost_comp: package_cost_comp == _undefined
+            ? _instance.package_cost_comp
+            : (package_cost_comp as double?),
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
@@ -10566,7 +10572,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
     int? trip_duration,
     String? trip_polyline,
     bool? package_ready,
-    double? package_cost,
+    double? package_cost_comp,
     String? direction,
     int? service_provider_id,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?

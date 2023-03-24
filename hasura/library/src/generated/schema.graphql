@@ -6635,6 +6635,11 @@ type delivery_order {
   order_time: timestamptz!
   order_type: String!
   package_cost: money!
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   package_ready: Boolean!
   payment_type: String!
   pickup_address: String
@@ -6852,6 +6857,7 @@ input delivery_order_bool_exp {
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
   package_cost: money_comparison_exp
+  package_cost_comp: money_comparison_exp
   package_ready: Boolean_comparison_exp
   payment_type: String_comparison_exp
   pickup_address: String_comparison_exp
@@ -7296,6 +7302,7 @@ input delivery_order_order_by {
   order_time: order_by
   order_type: order_by
   package_cost: order_by
+  package_cost_comp: order_by
   package_ready: order_by
   payment_type: order_by
   pickup_address: order_by

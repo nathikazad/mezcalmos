@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesListView.dart';
@@ -244,7 +245,12 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
           url: "assets/images/customer/courrierService.png",
           subtitle: "Obtain delivery of anything you desire to your location.",
           onTap: () {
-            CustCourierServicesListView.navigate();
+            getServiceRoute(
+                orderType: OrderType.Courier,
+                serviceRoute: CustCourierServicesListView.navigate,
+                singleOrderRoute: (int orderId) {
+                  CustCourierOrderView.navigate(orderId: orderId);
+                });
           },
         ),
       ],
@@ -271,22 +277,40 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     if (_orderController != null) {
       await _orderController!.fetchCurrentOrders();
       if (_orderController!.hasOneOrder) {
-        if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
-          // MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
-          //     .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
-          // ignore: unawaited_futures
-          MezRouter.popEverythingTillBeforeHome().then((_) =>
-              ViewRestaurantOrderScreen.navigate(
-                  orderId: _orderController!.hasOneOrderId!));
-          // } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
-          //   MezRouter.popEverythingAndNavigateTo(
-          //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));
-        } else if (_orderController!.hasOneOrderType == OrderType.Laundry) {
-          // ignore: unawaited_futures
-          MezRouter.popEverythingTillBeforeHome().then((_) =>
-              CustLaundryOrderView.navigate(
-                  orderId: _orderController!.hasOneOrderId!));
+        switch (_orderController!.hasOneOrderType) {
+          case OrderType.Restaurant:
+            unawaited(MezRouter.popEverythingTillBeforeHome().then((_) =>
+                ViewRestaurantOrderScreen.navigate(
+                    orderId: _orderController!.hasOneOrderId!)));
+            break;
+          case OrderType.Laundry:
+            unawaited(MezRouter.popEverythingTillBeforeHome().then((_) =>
+                CustLaundryOrderView.navigate(
+                    orderId: _orderController!.hasOneOrderId!)));
+            break;
+          case OrderType.Courier:
+            unawaited(MezRouter.popEverythingTillBeforeHome().then((_) =>
+                CustCourierOrderView.navigate(
+                    orderId: _orderController!.hasOneOrderId!)));
+            break;
+          default:
         }
+        // if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
+        //   // MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
+        //   //     .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
+        //   // ignore: unawaited_futures
+        //   MezRouter.popEverythingTillBeforeHome().then((_) =>
+        //       ViewRestaurantOrderScreen.navigate(
+        //           orderId: _orderController!.hasOneOrderId!));
+        //   // } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
+        //   //   MezRouter.popEverythingAndNavigateTo(
+        //   //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));
+        // } else if (_orderController!.hasOneOrderType == OrderType.Laundry) {
+        //   // ignore: unawaited_futures
+        //   MezRouter.popEverythingTillBeforeHome().then((_) =>
+        //       CustLaundryOrderView.navigate(
+        //           orderId: _orderController!.hasOneOrderId!));
+        // }
       } else if (_orderController!.hasManyOrders) {
         // ignore: unawaited_futures
         MezRouter.popEverythingTillBeforeHome()

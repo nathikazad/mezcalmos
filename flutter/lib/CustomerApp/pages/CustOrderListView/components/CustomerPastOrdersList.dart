@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
@@ -58,7 +59,7 @@ class CustomerPastOrdersList extends StatelessWidget {
                     : (calculateDifference(element.orderTime) == -1)
                         ? _i18n()["shared"]["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
-                style: txt.bodyText1,
+                style: txt.bodyLarge,
               ),
             );
           },
@@ -68,13 +69,19 @@ class CustomerPastOrdersList extends StatelessWidget {
           itemBuilder: (BuildContext context, MinimalOrder order) {
             return MinimalOrderCard(
               order: order,
-              forCustomer: true,
               showOrderType: true,
               onTap: () {
-                if (order.orderType == OrderType.Laundry) {
-                  CustLaundryOrderView.navigate(orderId: order.id);
-                } else {
-                  ViewRestaurantOrderScreen.navigate(orderId: order.id);
+                switch (order.orderType) {
+                  case OrderType.Courier:
+                    CustCourierOrderView.navigate(orderId: order.id);
+                    break;
+                  case OrderType.Restaurant:
+                    ViewRestaurantOrderScreen.navigate(orderId: order.id);
+                    break;
+                  case OrderType.Laundry:
+                    CustLaundryOrderView.navigate(orderId: order.id);
+                    break;
+                  default:
                 }
               },
             );

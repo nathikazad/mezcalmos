@@ -70,7 +70,7 @@ query get_courier_order_by_id($orderId: Int!) {
       trip_duration
       trip_polyline
       package_ready
-      package_cost
+      package_cost_comp
       estimated_arrival_at_dropoff_time
       direction
       service_provider_id
@@ -223,7 +223,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
       trip_duration
       trip_polyline
       package_ready
-      package_cost
+      package_cost_comp
       estimated_arrival_at_dropoff_time
       direction
       service_provider_id

@@ -1,15 +1,13 @@
 import 'dart:async';
 
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class ROpDeeplinkHandler {
   StreamSubscription<PendingDynamicLinkData?>? _inDeepLinkListener;
@@ -42,7 +40,7 @@ class ROpDeeplinkHandler {
 
       if (providerId != null) {
         await _handleRoutingByType(
-          uniqueId: uniqueId,
+          uniqueId: providerId.toString(),
         );
       }
     }

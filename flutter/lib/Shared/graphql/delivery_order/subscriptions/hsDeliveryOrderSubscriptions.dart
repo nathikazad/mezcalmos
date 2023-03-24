@@ -98,7 +98,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
         estimatedPackageReadyTime: (orderData.estimated_package_ready_time != null)
             ? DateTime.parse(orderData.estimated_package_ready_time!)
             : null,
-        packageCost: orderData.package_cost,
+        packageCost: orderData.package_cost_comp ?? 0,
         pickupLocation:
             (orderData.pickup_address != null && orderData.pickup_gps != null)
                 ? MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
@@ -129,15 +129,17 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
           (Subscription$listen_on_inprocess_driver_orders$delivery_order
               orderData) {
         return MinimalOrder(
-            id: orderData.id,
-            orderType: orderData.order_type.toOrderType(),
-            toAdress: orderData.dropoff_address,
-            orderTime: DateTime.parse(orderData.order_time),
-            title: orderData.customer.user.name!,
-            image: orderData.customer.user.image,
-            status:
-                orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-            totalCost: orderData.package_cost);
+          id: orderData.id,
+          orderType: orderData.order_type.toOrderType(),
+          toAdress: orderData.dropoff_address,
+          orderTime: DateTime.parse(orderData.order_time),
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
+          deliveryCost: orderData.delivery_cost,
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          totalCost: orderData.package_cost_comp ?? 0,
+        );
       }).toList();
       return orders;
     }
@@ -169,9 +171,11 @@ Stream<List<MinimalOrder>?> listen_on_open_driver_orders(
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
+            deliveryCost: orderData.delivery_cost,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-            totalCost: orderData.package_cost);
+            totalCost:
+                orderData.package_cost_comp ?? 0 + orderData.delivery_cost);
       }).toList();
       return orders;
     }
@@ -206,9 +210,11 @@ Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
+            deliveryCost: orderData.delivery_cost,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-            totalCost: orderData.package_cost);
+            totalCost:
+                orderData.package_cost_comp ?? 0 + orderData.delivery_cost);
       }).toList();
       return orders;
     }

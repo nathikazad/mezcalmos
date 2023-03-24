@@ -127,7 +127,7 @@ query get_driver_order($orderId: Int!) {
       }
     }
     order_time
-    package_cost
+    package_cost_comp
     package_ready
     payment_type
     pickup_address
@@ -309,7 +309,7 @@ subscription listen_on_driver_order($orderId: Int!) {
       }
     }
     order_time
-    package_cost
+    package_cost_comp
     package_ready
     payment_type
     pickup_address
@@ -396,10 +396,11 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
     package_ready
     order_type
     dropoff_address
+    delivery_cost
     dropoff_gps
     customer {
       user {
@@ -436,7 +437,8 @@ query get_past_driver_orders($driverId: Int!) {
     order_time
     status
     order_type
-    package_cost
+    package_cost_comp
+    delivery_cost
 
     dropoff_address
     dropoff_gps
@@ -471,9 +473,10 @@ query get_inprocess_driver_orders($driverId: Int!) {
     order_time
     status
     order_type
-    package_cost
+    package_cost_comp
     package_ready
     dropoff_address
+    delivery_cost
     dropoff_gps
     customer {
       user {
@@ -506,9 +509,10 @@ query get_open_driver_orders($in_process : Boolean!) {
     order_time
     status
     order_type
-    package_cost
+    package_cost_comp
     package_ready
     dropoff_address
+    delivery_cost
     dropoff_gps
     customer {
       user {
@@ -541,9 +545,10 @@ subscription listen_open_driver_orders($in_process: Boolean!) {
     order_time
     status
     order_type
-    package_cost
+    package_cost_comp
     package_ready
     dropoff_address
+    delivery_cost
     dropoff_gps
     customer {
       user {
@@ -578,9 +583,10 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
     package_ready
     dropoff_address
+    delivery_cost
     order_type
     dropoff_gps
     customer {
@@ -616,8 +622,9 @@ query get_delivery_company_past_orders($companyId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
     dropoff_address
+    delivery_cost
     dropoff_gps
     
     order_type
@@ -654,9 +661,10 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
     order_type
     dropoff_address
+    delivery_cost
     package_ready
     dropoff_gps
     customer {
@@ -713,9 +721,10 @@ query get_pick_driver_order($orderId: Int!) {
 
     id
     order_time
-    package_cost
+    package_cost_comp
     payment_type
     pickup_address
+    delivery_cost
     pickup_gps
     service_provider_id
     delivery_driver {

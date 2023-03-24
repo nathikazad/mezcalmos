@@ -146,6 +146,7 @@ class CustRequestCourierViewController {
         tripDistance: routeInfo?.distance.distanceInMeters,
         tripDuration: routeInfo?.duration.seconds,
         tripPolyline: routeInfo?.polyline,
+        
       );
       if (res.success == true) {
         MezRouter.popEverythingTillBeforeHome().then((_) =>
