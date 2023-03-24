@@ -89,7 +89,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                         from: (viewController.order.inPickup)
                             ? viewController.order.customerLocation
                             : viewController.order.laundryLocation,
-                        to: viewController.order.to),
+                        to: viewController.order.dropOffLocation),
                   MezCard(
                     margin: const EdgeInsets.only(bottom: 20),
                     contentPadding: EdgeInsets.all(12),
@@ -115,12 +115,9 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(top: 15),
                     divideDeliveryCost: true,
-                    orderCost: viewController.order.costsByType?.weighedCost,
-                    refundAmmount: viewController.order.refundAmount,
-                    shippingCost: viewController.order.shippingCost,
+                    costs: viewController.order.costs,
                     stripeOrderPaymentInfo:
                         viewController.order.stripePaymentInfo,
-                    totalCost: viewController.order.totalCost,
                   ),
 
                   SizedBox(

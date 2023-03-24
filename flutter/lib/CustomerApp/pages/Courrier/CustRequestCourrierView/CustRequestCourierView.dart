@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -104,10 +105,12 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           schedule: viewController.company.value!.schedule,
                         ),
                         OrderSummaryCard(
-                            shippingCost: viewController.shippingCost.value,
-                            orderCost: null,
-                            totalCost: null,
-                            refundAmmount: null,
+                            costs: OrderCosts(
+                                deliveryCost: viewController.shippingCost.value,
+                                refundAmmount: null,
+                                tax: null,
+                                orderItemsCost: null,
+                                totalCost: null),
                             showNullValues: true,
                             stripeOrderPaymentInfo: null)
                       ],

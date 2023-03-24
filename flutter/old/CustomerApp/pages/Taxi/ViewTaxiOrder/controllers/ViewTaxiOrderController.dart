@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
+import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 
 class ViewTaxiOrderController {
   final AnimatedSliderController animatedSliderController;
@@ -161,7 +161,7 @@ class ViewTaxiOrderController {
     );
     // updating destination marker.
     mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value?.to.toLatLng(),
+      latLng: order.value?.dropOffLocation.toLatLng(),
     );
   }
 
@@ -177,7 +177,7 @@ class ViewTaxiOrderController {
         // update the to dest marker
         // mGoogleMapController.removeDestinationMarker();
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-          latLng: order.value?.to.toLatLng(),
+          latLng: order.value?.dropOffLocation.toLatLng(),
         );
         // taxi driver marker
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
@@ -213,7 +213,7 @@ class ViewTaxiOrderController {
         );
         // updating destination marker.
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-          latLng: order.value?.to.toLatLng(),
+          latLng: order.value?.dropOffLocation.toLatLng(),
         );
         break;
 
@@ -225,7 +225,7 @@ class ViewTaxiOrderController {
 
         // updating destination marker.
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-          latLng: order.value?.to.toLatLng(),
+          latLng: order.value?.dropOffLocation.toLatLng(),
         );
         // customer marker
         mGoogleMapController.addOrUpdateUserMarker(

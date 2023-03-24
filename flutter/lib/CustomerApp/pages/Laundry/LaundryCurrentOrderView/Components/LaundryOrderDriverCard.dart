@@ -88,8 +88,8 @@ class LaundryOrderDriverCard extends StatelessWidget {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.customerPickupDriverChatId != null) {
       return order.customerPickupDriverChatId;
-    } else if (order.customerDropOffDriverChatId != null) {
-      return order.customerDropOffDriverChatId;
+    } else if (order.customerDriverChatId != null) {
+      return order.customerDriverChatId;
     }
     return null;
   }
@@ -98,7 +98,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return order.pickupDriver;
     } else {
-      return order.dropoffDriver;
+      return order.driverInfo;
     }
   }
 }

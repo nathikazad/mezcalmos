@@ -29,7 +29,6 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
-import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -133,7 +132,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             RestaurantOrderDriverCard(
                               order: viewController.order.value!,
                             ),
-                            if (viewController.order.value!.inDeliveryPhase())
+                            if (viewController.order.value!.inDeliveryPhase() &&
+                                viewController.order.value!.deliveryOrderId !=
+                                    null)
                               OrderMapWidget(
                                   deliveryOrderId: viewController
                                       .order.value!.deliveryOrderId!,
@@ -143,7 +144,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                       .order.value!.routeInformation?.polyline,
                                   from: viewController
                                       .order.value!.restaurant.location,
-                                  to: viewController.order.value!.to),
+                                  to: viewController
+                                      .order.value!.dropOffLocation),
                             OrderRestaurantCard(
                                 order: viewController.order.value!),
                             OrderItemsCard(
@@ -157,14 +159,15 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               ),
                             ),
                             OrderScheduledTimeCard(
-                                time: viewController.order.value!.scheduledTime,
+                                time: viewController.order.value!.scheduleTime,
                                 margin: const EdgeInsets.only(top: 8)),
-                            RestaurantOrderDeliveryTimeCard(
-                              order: viewController.order.value!,
-                              margin: const EdgeInsets.only(top: 8),
-                            ),
+                            // RestaurantOrderDeliveryTimeCard(
+                            //   order: viewController.order.value!,
+                            //   margin: const EdgeInsets.only(top: 8),
+                            // ),
                             OrderDeliveryLocation(
-                              address: viewController.order.value!.to.address,
+                              address: viewController
+                                  .order.value!.dropOffLocation.address,
                               margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderPaymentMethod(
@@ -180,14 +183,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                 note: viewController.order.value!.notes),
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
-                              orderCost: viewController.order.value!.itemsCost,
-                              refundAmmount:
-                                  viewController.order.value!.refundAmount,
-                              shippingCost:
-                                  viewController.order.value!.shippingCost,
+                              costs: viewController.order.value!.costs,
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
-                              totalCost: viewController.order.value!.totalCost,
                             ),
 
                             //===============================>button cancel===========================

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as LocationLibrary;
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -260,7 +259,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                     await _showConfirmationDialog();
                   else if ((MapHelper.calculateDistance(
                         Get.find<TaxiAuthController>().currentLocation!,
-                        order!.to.position,
+                        order!.dropOffLocation.position,
                       ) >
                       0.5)) {
                     await _showConfirmationDialog();
@@ -430,7 +429,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           //       orderStreamEvent.driver!.location!);
 
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: orderStreamEvent.to.toLatLng(),
+            latLng: orderStreamEvent.dropOffLocation.toLatLng(),
           );
           break;
         case TaxiOrdersStatus.InTransit:
@@ -439,7 +438,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               .removeMarkerById(orderStreamEvent.customer.firebaseId);
           // add the destination marker
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: orderStreamEvent.to.toLatLng(),
+            latLng: orderStreamEvent.dropOffLocation.toLatLng(),
           );
           break;
         case TaxiOrdersStatus.DroppedOff:
@@ -454,7 +453,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           );
 
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: orderStreamEvent.to.toLatLng(),
+            latLng: orderStreamEvent.dropOffLocation.toLatLng(),
           );
 
           break;
@@ -689,7 +688,8 @@ Future<void> checkDistanceAndExecute({
   if (Get.find<TaxiAuthController>().currentLocation == null)
     await showNoConfirmationDialog(callback, icon, bodyText);
   else if ((MapHelper.calculateDistance(
-          Get.find<TaxiAuthController>().currentLocation!, order.to.position) >
+          Get.find<TaxiAuthController>().currentLocation!,
+          order.dropOffLocation.position) >
       0.5)) {
     await showNoConfirmationDialog(callback, icon, bodyText);
   } else {

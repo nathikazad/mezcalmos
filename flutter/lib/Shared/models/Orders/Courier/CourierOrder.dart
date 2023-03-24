@@ -10,33 +10,35 @@ class CourierOrder extends DeliveryOrder {
 
   CourierOrder(
       {required super.orderType,
-      required super.id,
-      required super.deliveryCompany,
-      required super.serviceInfo,
-      required super.customerInfo,
-      required super.driverLocation,
-      required super.estimatedArrivalAtDropoffTime,
-      required super.estimatedArrivalAtPickupTime,
-      required super.estimatedPackageReadyTime,
+      required super.paymentType,
+      required super.deliveryOrderId,
+      required super.orderTime,
+      required super.costs,
+      required super.packageReady,
       required super.serviceOrderId,
+      required super.driverInfo,
+      required super.status,
+      required this.items,
+      super.stripePaymentInfo,
+      this.changePriceRequest,
+      required super.scheduleTime,
+      required super.estimatedArrivalAtDropoff,
+      required super.estimatedArrivalAtPickup,
+      required super.estimatedPackageReadyTime,
+      required super.serviceProvider,
+      required super.deliveryProviderType,
+      required super.deliveryCompany,
       required super.deliveryDirection,
       required super.routeInformation,
-      required super.orderTime,
-      required super.status,
-      required super.serviceProviderType,
-      required super.deliveryCost,
-      required super.packageCost,
-      required super.pickupLocation,
-      required super.dropoffLocation,
-      required super.chatWithCustomerId,
-      required super.chatWithServiceProviderId,
-      required super.paymentType,
-      required super.scheduleTime,
-      required super.driverInfo,
-      required this.items,
-      this.changePriceRequest,
-      required super.stripeOrderPaymentInfo,
-      required super.packageReady});
+      required super.orderId,
+      required super.chatId,
+      required super.customer,
+      
+      required super.dropOffLocation,
+      required super.serviceProviderDriverChatId,
+      required super.customerDriverChatId,
+      required super.driverLocation,
+      required super.pickupLocation});
 }
 
 class ChangePriceRequest {
@@ -124,21 +126,4 @@ extension ParseStringToChangePriceRequestStatus on String {
     return ChangePriceRequestStatus.values.firstWhere(
         (ChangePriceRequestStatus e) => e.toFirebaseFormatString() == this);
   }
-}
-
-class OrderCosts {
-  num? deliveryCost;
-  num? refundAmmount;
-  num? stripeFess;
-  num? tax;
-  num? orderItemsCost;
-  num? totalCost;
-  OrderCosts({
-    required this.deliveryCost,
-    required this.refundAmmount,
-    required this.stripeFess,
-    required this.tax,
-    required this.orderItemsCost,
-    required this.totalCost,
-  });
 }

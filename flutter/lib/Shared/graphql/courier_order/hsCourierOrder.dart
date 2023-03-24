@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
@@ -39,13 +40,13 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
     }
     return CourierOrder(
       orderType: OrderType.Courier,
-      id: orderData.id,
+      orderId: orderData.id,
       scheduleTime: (orderData.delivery_order.schedule_time != null)
           ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
           : null,
       deliveryDirection:
           orderData.delivery_order.direction.toDeliveryDirection(),
-      customerInfo: UserInfo(
+      customer: UserInfo(
           hasuraId: orderData.delivery_order.customer.user.id,
           image: orderData.delivery_order.customer.user.image,
           name: orderData.delivery_order.customer.user.name),
@@ -62,10 +63,11 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
               polyline: orderData.delivery_order.trip_polyline!)
           : null,
       driverInfo: (orderData.delivery_order.delivery_driver != null)
-          ? UserInfo(
+          ? DeliveryDriverUserInfo(
               hasuraId: orderData.delivery_order.delivery_driver!.user.id,
               name: orderData.delivery_order.delivery_driver!.user.name,
-              image: orderData.delivery_order.delivery_driver!.user.image)
+              image: orderData.delivery_order.delivery_driver!.user.image,
+              language: null)
           : null,
       driverLocation: (orderData.delivery_order.delivery_driver != null &&
               orderData.delivery_order.delivery_driver?.current_location !=
@@ -78,15 +80,15 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
           : null,
       orderTime: DateTime.parse(orderData.order_time),
       status: orderData.delivery_order.status.toDeliveryOrderStatus(),
-      serviceProviderType: orderData.delivery_order.service_provider_type
+      deliveryProviderType: orderData.delivery_order.service_provider_type
           .toServiceProviderType(),
-      deliveryCost: orderData.delivery_order.delivery_cost,
-      estimatedArrivalAtDropoffTime:
+      // deliveryCost: orderData.delivery_order.delivery_cost,
+      estimatedArrivalAtDropoff:
           (orderData.delivery_order.estimated_arrival_at_dropoff_time != null)
               ? DateTime.parse(
                   orderData.delivery_order.estimated_arrival_at_dropoff_time!)
               : null,
-      estimatedArrivalAtPickupTime:
+      estimatedArrivalAtPickup:
           (orderData.delivery_order.estimated_arrival_at_pickup_time != null)
               ? DateTime.parse(
                   orderData.delivery_order.estimated_arrival_at_pickup_time!)
@@ -96,21 +98,21 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
               ? DateTime.parse(
                   orderData.delivery_order.estimated_package_ready_time!)
               : null,
-      packageCost: orderData.delivery_order.package_cost_comp ?? 0,
+      //  packageCost: orderData.delivery_order.package_cost_comp ?? 0,
       pickupLocation: (orderData.delivery_order.pickup_address != null &&
               orderData.delivery_order.pickup_gps != null)
           ? MezLocation(orderData.delivery_order.pickup_address!,
               orderData.delivery_order.pickup_gps!.toLocationData())
           : null,
-      dropoffLocation: MezLocation(orderData.delivery_order.dropoff_address,
+      dropOffLocation: MezLocation(orderData.delivery_order.dropoff_address,
           orderData.delivery_order.dropoff_gps.toLocationData()),
-      chatWithCustomerId: orderData.delivery_order.chat_with_customer_id,
-      chatWithServiceProviderId:
+      customerDriverChatId: orderData.delivery_order.chat_with_customer_id,
+      serviceProviderDriverChatId:
           orderData.delivery_order.chat_with_service_provider_id,
       paymentType: orderData.payment_type.toPaymentType(),
       packageReady: orderData.delivery_order.package_ready,
-      stripeOrderPaymentInfo: _paymentInfo,
-      serviceInfo: ServiceInfo(
+      stripePaymentInfo: _paymentInfo,
+      serviceProvider: ServiceInfo(
           location: MezLocation.fromHasura(
               orderData.delivery_order.delivery_company!.details!.location.gps,
               orderData
@@ -119,6 +121,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
           hasuraId: orderData.delivery_order.delivery_company!.id,
           image: orderData.delivery_order.delivery_company!.details!.image,
           name: orderData.delivery_order.delivery_company!.details!.name),
+
       items: orderData.items
           .map((Query$get_courier_order_by_id$delivery_courier_order_by_pk$items
                   item) =>
@@ -132,7 +135,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
                   notes: item.notes,
                   estCost: item.estimated_cost))
           .toList(),
-      serviceOrderId: null,
+      serviceOrderId: orderData.delivery_order.delivery_company?.id,
       deliveryCompany: ServiceInfo(
           location: MezLocation.fromHasura(
               orderData.delivery_order.delivery_company!.details!.location.gps,
@@ -142,6 +145,14 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
           hasuraId: orderData.delivery_order.delivery_company!.id,
           image: orderData.delivery_order.delivery_company!.details!.image,
           name: orderData.delivery_order.delivery_company!.details!.name),
+      deliveryOrderId: orderData.delivery_order.id,
+      chatId: orderData.delivery_order.chat_with_service_provider_id ?? 0,
+      costs: OrderCosts(
+          deliveryCost: orderData.delivery_order.delivery_cost,
+          refundAmmount: orderData.refund_amount,
+          tax: orderData.tax,
+          orderItemsCost: orderData.actual_items_cost,
+          totalCost: orderData.total_cost),
     );
   }
 
@@ -165,18 +176,13 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
       }
       return CourierOrder(
         orderType: OrderType.Courier,
-        changePriceRequest:
-            (orderData.delivery_order.change_price_request != null)
-                ? ChangePriceRequest.fromMap(
-                    orderData.delivery_order.change_price_request)
-                : null,
+        orderId: orderData.id,
         scheduleTime: (orderData.delivery_order.schedule_time != null)
             ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
             : null,
-        id: orderData.id,
         deliveryDirection:
             orderData.delivery_order.direction.toDeliveryDirection(),
-        customerInfo: UserInfo(
+        customer: UserInfo(
             hasuraId: orderData.delivery_order.customer.user.id,
             image: orderData.delivery_order.customer.user.image,
             name: orderData.delivery_order.customer.user.name),
@@ -193,22 +199,25 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                 polyline: orderData.delivery_order.trip_polyline!)
             : null,
         driverInfo: (orderData.delivery_order.delivery_driver != null)
-            ? UserInfo(
+            ? DeliveryDriverUserInfo(
                 hasuraId: orderData.delivery_order.delivery_driver!.user.id,
                 name: orderData.delivery_order.delivery_driver!.user.name,
-                image: orderData.delivery_order.delivery_driver!.user.image)
+                image: orderData.delivery_order.delivery_driver!.user.image,
+                language: null)
             : null,
+        driverLocation: null,
+
         orderTime: DateTime.parse(orderData.order_time),
         status: orderData.delivery_order.status.toDeliveryOrderStatus(),
-        serviceProviderType: orderData.delivery_order.service_provider_type
+        deliveryProviderType: orderData.delivery_order.service_provider_type
             .toServiceProviderType(),
-        deliveryCost: orderData.delivery_order.delivery_cost,
-        estimatedArrivalAtDropoffTime:
+        // deliveryCost: orderData.delivery_order.delivery_cost,
+        estimatedArrivalAtDropoff:
             (orderData.delivery_order.estimated_arrival_at_dropoff_time != null)
                 ? DateTime.parse(
                     orderData.delivery_order.estimated_arrival_at_dropoff_time!)
                 : null,
-        estimatedArrivalAtPickupTime:
+        estimatedArrivalAtPickup:
             (orderData.delivery_order.estimated_arrival_at_pickup_time != null)
                 ? DateTime.parse(
                     orderData.delivery_order.estimated_arrival_at_pickup_time!)
@@ -218,21 +227,21 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                 ? DateTime.parse(
                     orderData.delivery_order.estimated_package_ready_time!)
                 : null,
-        packageCost: orderData.delivery_order.package_cost_comp ?? 0,
+        //  packageCost: orderData.delivery_order.package_cost_comp ?? 0,
         pickupLocation: (orderData.delivery_order.pickup_address != null &&
                 orderData.delivery_order.pickup_gps != null)
             ? MezLocation(orderData.delivery_order.pickup_address!,
                 orderData.delivery_order.pickup_gps!.toLocationData())
             : null,
-        dropoffLocation: MezLocation(orderData.delivery_order.dropoff_address,
+        dropOffLocation: MezLocation(orderData.delivery_order.dropoff_address,
             orderData.delivery_order.dropoff_gps.toLocationData()),
-        chatWithCustomerId: orderData.delivery_order.chat_with_customer_id,
-        chatWithServiceProviderId:
+        customerDriverChatId: orderData.delivery_order.chat_with_customer_id,
+        serviceProviderDriverChatId:
             orderData.delivery_order.chat_with_service_provider_id,
         paymentType: orderData.payment_type.toPaymentType(),
         packageReady: orderData.delivery_order.package_ready,
-        stripeOrderPaymentInfo: _paymentInfo,
-        serviceInfo: ServiceInfo(
+        stripePaymentInfo: _paymentInfo,
+        serviceProvider: ServiceInfo(
             location: MezLocation.fromHasura(
                 orderData
                     .delivery_order.delivery_company!.details!.location.gps,
@@ -242,6 +251,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             hasuraId: orderData.delivery_order.delivery_company!.id,
             image: orderData.delivery_order.delivery_company!.details!.image,
             name: orderData.delivery_order.delivery_company!.details!.name),
+
         items: orderData.items
             .map(
                 (Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$items
@@ -256,7 +266,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                         notes: item.notes,
                         estCost: item.estimated_cost))
             .toList(),
-        serviceOrderId: null,
+        serviceOrderId: orderData.delivery_order.delivery_company?.id,
         deliveryCompany: ServiceInfo(
             location: MezLocation.fromHasura(
                 orderData
@@ -267,7 +277,14 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             hasuraId: orderData.delivery_order.delivery_company!.id,
             image: orderData.delivery_order.delivery_company!.details!.image,
             name: orderData.delivery_order.delivery_company!.details!.name),
-        driverLocation: null,
+        deliveryOrderId: orderData.delivery_order.id,
+        chatId: orderData.delivery_order.chat_with_service_provider_id ?? 0,
+        costs: OrderCosts(
+            deliveryCost: orderData.delivery_order.delivery_cost,
+            refundAmmount: orderData.refund_amount,
+            tax: orderData.tax,
+            orderItemsCost: orderData.actual_items_cost,
+            totalCost: orderData.total_cost),
       );
     }
     return null;
@@ -289,7 +306,6 @@ Stream<OrderCosts?> listen_on_courier_order_costs({required orderId}) {
       return OrderCosts(
           deliveryCost: data.delivery_order.delivery_cost.toDouble(),
           refundAmmount: data.refund_amount,
-          stripeFess: data.stripe_fees,
           tax: data.tax,
           orderItemsCost: data.actual_items_cost,
           totalCost: data.total_cost);

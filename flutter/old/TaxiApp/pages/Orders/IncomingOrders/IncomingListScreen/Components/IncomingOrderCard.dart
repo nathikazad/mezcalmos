@@ -202,7 +202,7 @@ class IncomingOrderCard extends StatelessWidget {
                       SizedBox(height: 5),
                       // thrd line - To
                       Text(
-                        'To: ${order.to.address}',
+                        'To: ${order.dropOffLocation.address}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

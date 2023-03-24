@@ -1,16 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
-    as MapHelper;
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
+    as MapHelper;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -23,7 +24,6 @@ import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CPositionedBottomBar"];
@@ -82,7 +82,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           '${order.customer.name} Ride ',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(
                                   fontWeight: FontWeight.bold, fontSize: 12.sp),
                         ),
@@ -90,7 +90,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           _i18n()["orderCancelled"],
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .copyWith(fontSize: 10.sp),
                         ),
                       ],
@@ -186,8 +186,9 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                     order.status == TaxiOrdersStatus.OnTheWay
                                         ? await mapLauncher(order.from.latitude,
                                             order.from.longitude)
-                                        : await mapLauncher(order.to.latitude,
-                                            order.to.longitude);
+                                        : await mapLauncher(
+                                            order.dropOffLocation.latitude,
+                                            order.dropOffLocation.longitude);
                                     waitingForMapToOpen.value = false;
                                   },
                             child: Container(
@@ -330,8 +331,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
 
       if (taxiAuthController.currentLocation == null)
         await _showConfirmDialog(finishRide, _i18n()["tooFarFromfinishRide"]);
-      else if ((MapHelper.calculateDistance(
-              taxiAuthController.currentLocation!, order.to.position) >
+      else if ((MapHelper.calculateDistance(taxiAuthController.currentLocation!,
+              order.dropOffLocation.position) >
           0.5)) {
         await _showConfirmDialog(finishRide, _i18n()["tooFarFromfinishRide"]);
       } else {

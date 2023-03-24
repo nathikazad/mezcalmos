@@ -52,7 +52,8 @@ class OrderLaundryCard extends StatelessWidget {
                         Flexible(
                             fit: FlexFit.tight,
                             flex: 8,
-                            child: Text(order.to.address, maxLines: 1)),
+                            child: Text(order.dropOffLocation.address,
+                                maxLines: 1)),
                       ],
                     )
                   ],

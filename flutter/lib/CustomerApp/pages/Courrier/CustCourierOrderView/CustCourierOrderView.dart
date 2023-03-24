@@ -65,7 +65,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
           titleWidget: Obx(() => viewController.hasData
-              ? Text(viewController.order.deliveryCompany.name)
+              ? Text(viewController.order.deliveryCompany?.name ?? "")
               : SizedBox())),
       body: Obx(
         () {
@@ -83,31 +83,31 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  if (viewController.order.estimatedArrivalAtDropoffTime !=
-                      null)
+                  if (viewController.order.estimatedArrivalAtDropoff != null)
                     _estTime(),
 
                   _driverCard(),
                   _items(),
 
-                  if (viewController.order.inDeliveryPhase)
+                  if (viewController.order.inDeliveryPhase &&
+                      viewController.order.deliveryOrderId != null)
                     OrderMapWidget(
-                        deliveryOrderId: viewController.order.id,
+                        deliveryOrderId: viewController.order.deliveryOrderId!,
                         updateDriver: viewController.order.inDeliveryPhase,
                         polyline:
                             viewController.order.routeInformation?.polyline,
                         from: viewController.order.pickupLocation,
-                        to: viewController.order.dropoffLocation),
+                        to: viewController.order.dropOffLocation),
                   // OrderScheduledTimeCard(
                   //     time: viewController.order.t,
                   //     margin: const EdgeInsets.only(top: 8)),
                   OrderPaymentMethod(
                     stripeOrderPaymentInfo:
-                        viewController.order.stripeOrderPaymentInfo,
+                        viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
                   ),
                   OrderDeliveryLocation(
-                    address: viewController.order.dropoffLocation.address,
+                    address: viewController.order.dropOffLocation.address,
                     margin: const EdgeInsets.only(top: 8),
                   ),
                   // OrderNoteCard(
@@ -115,12 +115,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   //     note: viewController.order),
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(top: 15),
-                    orderCost: viewController.order.packageCost,
-                    refundAmmount: null,
-                    shippingCost: viewController.order.deliveryCost,
+                    costs: viewController.order.costs,
                     stripeOrderPaymentInfo:
-                        viewController.order.stripeOrderPaymentInfo,
-                    totalCost: viewController.order.totalCost,
+                        viewController.order.stripePaymentInfo,
                   ),
                   SizedBox(
                     height: 25,
@@ -199,7 +196,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             SizedBox(
               height: 2,
             ),
-            Text(viewController.order.estimatedArrivalAtDropoffTime!
+            Text(viewController.order.estimatedArrivalAtDropoff!
                 .getEstimatedTime()),
           ],
         ));
@@ -222,12 +219,12 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
       ),
       action: Row(
         children: [
-          if (viewController.order.driverInfo != null)
+          if (viewController.order.customerDriverChatId != null)
             MessageButton(
                 chatId: 55,
                 onTap: () {
                   BaseMessagingScreen.navigate(
-                      chatId: viewController.order.chatWithCustomerId);
+                      chatId: viewController.order.customerDriverChatId!);
                 })
         ],
       ),

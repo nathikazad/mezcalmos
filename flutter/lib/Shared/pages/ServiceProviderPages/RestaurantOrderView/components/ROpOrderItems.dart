@@ -276,11 +276,11 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
   }
 
   num _maximumRefund() {
-    if (widget.order.refundAmount != null) {
-      return (widget.order.totalCostBeforeShipping! -
-          widget.order.refundAmount!);
+    if (widget.order.costs.refundAmmount != null) {
+      return (widget.order.costs.orderItemsCost! -
+          widget.order.costs.refundAmmount!);
     } else {
-      return widget.order.totalCost!;
+      return widget.order.costs.totalCost!;
     }
   }
 

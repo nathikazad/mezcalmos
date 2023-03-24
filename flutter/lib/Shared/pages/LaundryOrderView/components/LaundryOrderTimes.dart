@@ -97,8 +97,8 @@ class LaundryOrderTimes extends StatelessWidget {
       case LaundryOrderStatus.ReadyForDelivery:
 
       case LaundryOrderStatus.PickedUpFromLaundry:
-        if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+        if (order.estimatedArrivalAtDropoff != null) {
+          return "${order.estimatedArrivalAtDropoff!.getEstimatedTime()}";
         }
 
         break;
@@ -129,7 +129,7 @@ class LaundryOrderTimes extends StatelessWidget {
       case LaundryOrderStatus.ReadyForDelivery:
 
       case LaundryOrderStatus.PickedUpFromLaundry:
-        if (order.estimatedDropoffAtCustomerTime != null) {
+        if (order.estimatedArrivalAtDropoff != null) {
           return "${_i18n()["delivery"]}";
         }
 

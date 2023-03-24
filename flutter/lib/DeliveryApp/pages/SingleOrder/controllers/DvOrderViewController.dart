@@ -19,7 +19,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -55,10 +54,10 @@ class DvOrderViewcontroller {
   bool get hasData => _order.value != null;
   bool get inPickupPhase =>
       _order.value!.deliveryDirection == DeliveryDirection.FromCustomer;
-  bool get pickuSetted => _order.value?.estimatedArrivalAtPickupTime != null;
-  bool get dropoffSetted => _order.value?.estimatedArrivalAtDropoffTime != null;
-  DateTime? get pickupTime => _order.value?.estimatedArrivalAtPickupTime;
-  DateTime? get dropoffTime => _order.value?.estimatedArrivalAtDropoffTime;
+  bool get pickuSetted => _order.value?.estimatedArrivalAtPickup != null;
+  bool get dropoffSetted => _order.value?.estimatedArrivalAtDropoff != null;
+  DateTime? get pickupTime => _order.value?.estimatedArrivalAtPickup;
+  DateTime? get dropoffTime => _order.value?.estimatedArrivalAtDropoff;
 
   // streams //
   StreamSubscription<DeliveryOrder?>? orderStream;
@@ -99,7 +98,7 @@ class DvOrderViewcontroller {
 
   void initOrderMap() {
     mezDbgPrint(
-        "Locations 📍  \n DROPOFF : ${_order.value!.dropoffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation?.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
+        "Locations 📍  \n DROPOFF : ${_order.value!.dropOffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation?.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
     Future<void>.microtask(
       () => deliveryAuthAuthController.currentLocation != null
           ? mapController.setLocation(
@@ -117,7 +116,7 @@ class DvOrderViewcontroller {
     // Future.wait(<Future<void>>[
     // DESTINATION MARKER
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: _order.value?.dropoffLocation.toLatLng(),
+      latLng: _order.value?.dropOffLocation.toLatLng(),
     );
     // USER MARKER
     mapController.addOrUpdateUserMarker(
@@ -139,7 +138,7 @@ class DvOrderViewcontroller {
         });
       } else {
         mezDbgPrint("InitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiii");
-        initilizeMap(mapController, _order, _order.value!.serviceInfo);
+        initilizeMap(mapController, _order, _order.value!.serviceProvider);
       }
     });
   }
@@ -185,14 +184,14 @@ class DvOrderViewcontroller {
         if (_statusSnapshot != order.status) {
           // ignoring Restaurant's marker
           mapController.addOrUpdateUserMarker(
-            latLng: order.dropoffLocation.toLatLng(),
-            markerId: order.serviceInfo.hasuraId.toString(),
-            customImgHttpUrl: order.serviceInfo.image,
+            latLng: order.dropOffLocation.toLatLng(),
+            markerId: order.serviceProvider.hasuraId.toString(),
+            customImgHttpUrl: order.serviceProvider.image,
             fitWithinBounds: false,
           );
 
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.dropoffLocation.toLatLng(),
+            latLng: order.dropOffLocation.toLatLng(),
             fitWithinBounds: true,
           );
         }
@@ -246,7 +245,7 @@ class DvOrderViewcontroller {
     try {
       ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery2_changeStatus(
-        deliveryId: order.id,
+        deliveryId: order.orderId,
         newStatus: status,
       );
       if (res.success == false) {
@@ -272,7 +271,7 @@ class DvOrderViewcontroller {
     isSettingDropoffTime.value = true;
     mezDbgPrint("Setting dropOff time ======>>> ⏰⏰⏰⏰⏰⏰  ");
     try {
-      await dv_update_est_dropoff_time(orderId: order.id, time: newTime);
+      await dv_update_est_dropoff_time(orderId: order.orderId, time: newTime);
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);
@@ -286,7 +285,7 @@ class DvOrderViewcontroller {
     isSettingPickUpTime.value = true;
     mezDbgPrint("Setting pickup time ======>>> ⏰⏰⏰⏰⏰⏰  ");
     try {
-      await dv_update_est_pickup_time(orderId: order.id, time: newTime);
+      await dv_update_est_pickup_time(orderId: order.orderId, time: newTime);
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);
@@ -299,7 +298,7 @@ class DvOrderViewcontroller {
   Future<void> acceptOpenOrder() async {
     try {
       AssignDriverResponse res = await CloudFunctions.delivery2_assignDriver(
-          deliveryOrderId: order.id,
+          deliveryOrderId: order.orderId,
           deliveryDriverId:
               deliveryAuthAuthController.driver!.deliveryDriverId);
       if (res.success == false) {
@@ -321,7 +320,7 @@ class DvOrderViewcontroller {
       try {
         ChangePriceReqResponse res =
             await CloudFunctions.delivery2_changeDeliveryPrice(
-                deliveryOrderId: order.id,
+                deliveryOrderId: order.orderId,
                 newPrice: double.parse(openOrderPriceText.text),
                 reason: openOrderReasonText.text);
         Navigator.pop(context);

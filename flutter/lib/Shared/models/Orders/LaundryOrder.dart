@@ -59,7 +59,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   LaundryOrder(
       {required super.orderId,
-      required super.cost,
+      required super.costs,
       required this.laundryLocation,
       required this.customerLocation,
       required super.orderTime,
@@ -74,28 +74,25 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       this.costsByType,
       this.estimatedLaundryReadyTime,
       this.routeInformation,
-      super.dropoffDriver,
-      int? laundryDropOffDriverChatId,
-      super.customerDropOffDriverChatId,
+      super.driverInfo,
       super.pickupDriver,
-      int? laundryPickupDriverChatId,
       super.customerPickupDriverChatId,
       super.estimatedPickupFromCustomerTime,
       super.estimatedDropoffAtServiceProviderTime,
-      super.estimatedPickupFromServiceProviderTime,
-      super.estimatedDropoffAtCustomerTime,
       this.notes,
       super.orderType = OrderType.Laundry,
       required super.chatId,
       super.notifiedAdmin,
-      super.notifiedOperator})
-      : super(
-            to: customerLocation,
-            totalCost: cost + shippingCost,
-            serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
-            serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            serviceProviderId: laundry?.hasuraId,
-            serviceProvider: laundry);
+      super.notifiedOperator,
+      required super.deliveryDirection,
+      required super.deliveryCompany,
+      required super.serviceProviderPickupDriverChatId,
+      required super.dropOffLocation,
+      required super.deliveryOrderId,
+      required super.driverLocation,
+      required super.serviceProviderDriverChatId,
+      required super.customerDriverChatId,
+      required super.serviceProvider, required super.pickupLocation});
 
   // factory LaundryOrder.fromData(id, data) {
   //   final dynamic _estimatedPickupFromServiceProviderTime =
@@ -182,9 +179,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => <String, dynamic>{
         "customer": customer,
-        "estimatedPrice": cost,
         "status": status,
-        "to": to,
+        "to": dropOffLocation,
         "orderTime": orderTime,
         "paymentType": paymentType,
         "notes": notes,
@@ -210,8 +206,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         customerPickupDriverChatId != null) {
       return customerPickupDriverChatId;
-    } else if (customerDropOffDriverChatId != null) {
-      return customerDropOffDriverChatId;
+    } else if (customerDriverChatId != null) {
+      return customerDriverChatId;
     }
     return null;
   }
@@ -226,8 +222,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         serviceProviderPickupDriverChatId != null) {
       return serviceProviderPickupDriverChatId;
-    } else if (serviceProviderDropOffDriverChatId != null) {
-      return serviceProviderDropOffDriverChatId;
+    } else if (serviceProviderDriverChatId != null) {
+      return serviceProviderDriverChatId;
     }
     return null;
   }

@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -109,8 +108,8 @@ class _DvOrderStatusControllButtonsState
   }
 
   bool shouldDisableBottomButton() {
-    if (widget.viewController.order.estimatedArrivalAtDropoffTime != null &&
-        widget.viewController.order.estimatedArrivalAtPickupTime != null) {
+    if (widget.viewController.order.estimatedArrivalAtDropoff != null &&
+        widget.viewController.order.estimatedArrivalAtPickup != null) {
       return false;
     }
 

@@ -124,7 +124,8 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                       .order.value!.routeInformation?.polyline,
                                   from: viewController
                                       .order.value!.laundry!.location,
-                                  to: viewController.order.value!.to),
+                                  to: viewController
+                                      .order.value!.dropOffLocation),
 
                             if (viewController.order.value!.laundry != null)
                               OrderLaundryCard(
@@ -142,7 +143,8 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               ),
                             ),
                             OrderDeliveryLocation(
-                              address: viewController.order.value!.to.address,
+                              address: viewController
+                                  .order.value!.dropOffLocation.address,
                               margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderNoteCard(
@@ -151,15 +153,9 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
                               divideDeliveryCost: true,
-                              orderCost: viewController
-                                  .order.value!.costsByType?.weighedCost,
-                              refundAmmount:
-                                  viewController.order.value!.refundAmount,
-                              shippingCost:
-                                  viewController.order.value!.shippingCost,
+                              costs: viewController.order.value!.costs,
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
-                              totalCost: viewController.order.value!.totalCost,
                             ),
 
                             //Spacer(),

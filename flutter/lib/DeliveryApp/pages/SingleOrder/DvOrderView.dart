@@ -89,8 +89,8 @@ class _DvOrderViewState extends State<DvOrderView> {
                     child: InkWell(
                       onTap: () async {
                         final LatLng _destination = LatLng(
-                            viewController.order.dropoffLocation.latitude,
-                            viewController.order.dropoffLocation.longitude);
+                            viewController.order.dropOffLocation.latitude,
+                            viewController.order.dropOffLocation.longitude);
 
                         final String url =
                             "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";

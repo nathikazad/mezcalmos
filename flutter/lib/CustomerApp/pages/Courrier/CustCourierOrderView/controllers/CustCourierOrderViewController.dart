@@ -60,7 +60,7 @@ class CustCourierOrderViewController {
 
             _order.value = event;
             if (_order.value?.changePriceRequest != null &&
-                _order.value?.deliveryCost == 0) {
+                _order.value?.costs.deliveryCost == 0) {
               showPriceReqDialog();
             }
           }
@@ -167,7 +167,7 @@ class CustCourierOrderViewController {
       ChangePriceResResponse res =
           await CloudFunctions.delivery2_changeDeliveryPriceResponse(
               accepted: accepted,
-              orderId: order.id,
+              orderId: order.orderId,
               orderType: cm.OrderType.Courier);
       if (res.success == false) {
         mezDbgPrint(res.error);

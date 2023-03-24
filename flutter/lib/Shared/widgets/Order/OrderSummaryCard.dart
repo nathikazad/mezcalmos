@@ -4,6 +4,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -14,23 +16,19 @@ class OrderSummaryCard extends StatelessWidget {
     Key? key,
     this.margin,
     this.newRow,
-    required this.shippingCost,
-    required this.orderCost,
-    required this.totalCost,
-    required this.refundAmmount,
+    required this.costs,
     this.divideDeliveryCost = false,
+    this.setTaxCallBack,
     this.showNullValues = true,
     required this.stripeOrderPaymentInfo,
   }) : super(key: key);
   // final Order order;
-  final num? shippingCost;
-  final num? orderCost;
-  final num? totalCost;
-  final num? refundAmmount;
+  final OrderCosts costs;
   final Widget? newRow;
   final bool showNullValues;
   final bool divideDeliveryCost;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
+  final Function()? setTaxCallBack;
 
   final EdgeInsets? margin;
 
@@ -55,7 +53,7 @@ class OrderSummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                if (showNullValues || orderCost != null)
+                if (showNullValues || costs.orderItemsCost != null)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
@@ -66,9 +64,9 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         Text(
-                            (orderCost == 0)
+                            (costs.orderItemsCost == 0)
                                 ? "-"
-                                : orderCost?.toPriceString() ?? "-",
+                                : costs.orderItemsCost?.toPriceString() ?? "-",
                             style: txt.bodyMedium?.copyWith()),
                       ],
                     ),
@@ -89,7 +87,7 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                if (showNullValues || shippingCost != null)
+                if (showNullValues || costs.deliveryCost != null)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
@@ -100,15 +98,15 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         ShippingCostComponent(
-                          shippingCost: shippingCost!,
+                          shippingCost: costs.deliveryCost!,
                           formattedShippingCost: (divideDeliveryCost)
-                              ? "${(shippingCost! / 2).toPriceString()} x 2 "
+                              ? "${(costs.deliveryCost! / 2).toPriceString()} x 2 "
                               : null,
                         )
                       ],
                     ),
                   ),
-                if (refundAmmount != null && refundAmmount! > 0)
+                if (costs.refundAmmount != null && costs.refundAmmount! > 0)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
@@ -119,14 +117,40 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         Text(
-                          "-" + refundAmmount!.toPriceString(),
+                          "-" + costs.refundAmmount!.toPriceString(),
                           style: txt.bodyMedium,
                         ),
                       ],
                     ),
                   ),
-                newRow ?? SizedBox(),
-                if (showNullValues || totalCost != null)
+                if (showNullValues || costs.tax != null)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Text(
+                            "${_i18n()['tax']}",
+                            style: context.txt.bodyMedium,
+                          ),
+                        ),
+                        if (setTaxCallBack != null)
+                          MezIconButton(
+                            icon: costs.tax != null ? Icons.edit : Icons.add,
+                            iconSize: 17,
+                            padding: const EdgeInsets.all(3),
+                            onTap: setTaxCallBack,
+                          ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 3),
+                          child: Text("${costs.tax?.toPriceString() ?? "-"}"),
+                        )
+                      ],
+                    ),
+                  ),
+                if (showNullValues || costs.totalCost != null)
                   Container(
                     margin: EdgeInsets.only(top: 2),
                     child: Row(
@@ -135,8 +159,8 @@ class OrderSummaryCard extends StatelessWidget {
                         Text('${_i18n()["totalCost"]}',
                             style: txt.headlineMedium),
                         Text(
-                            (orderCost != 0)
-                                ? totalCost?.toPriceString() ?? "-"
+                            (costs.orderItemsCost != 0)
+                                ? costs.totalCost?.toPriceString() ?? "-"
                                 : "-",
                             style: txt.headlineSmall),
                       ],

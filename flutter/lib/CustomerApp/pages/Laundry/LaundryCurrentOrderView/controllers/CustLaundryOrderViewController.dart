@@ -56,9 +56,9 @@ class CustLaundryOrderViewController {
             .listen((LaundryOrder? event) {
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.location?.toJson()}");
             order.value = event;
-            order.value?.dropoffDriver = event.dropoffDriver;
+            order.value?.driverInfo = event.driverInfo;
             updateMapByPhase(order.value!.getCurrentPhase());
           }
         });
@@ -84,8 +84,8 @@ class CustLaundryOrderViewController {
       LocModel.MezLocation(
         "",
         LocModel.MezLocation.buildLocationData(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
+          order.value!.dropOffLocation.latitude,
+          order.value!.dropOffLocation.longitude,
         ),
       ),
     );
@@ -100,7 +100,7 @@ class CustLaundryOrderViewController {
 
     // customer's
     mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value?.to.toLatLng(),
+      latLng: order.value?.dropOffLocation.toLatLng(),
       fitWithinBounds: true,
     );
 
@@ -126,7 +126,7 @@ class CustLaundryOrderViewController {
             fitWithinBounds: true,
           );
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value?.to.toLatLng(),
+            latLng: order.value?.dropOffLocation.toLatLng(),
             fitWithinBounds: true,
           );
         }
@@ -158,20 +158,20 @@ class CustLaundryOrderViewController {
           );
           // we fit the destination into bounds
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value?.to.toLatLng(),
+            latLng: order.value?.dropOffLocation.toLatLng(),
             fitWithinBounds: true,
           );
         }
 
         // we keep updating the delivery's
-        if (order.value?.dropoffDriver != null) {
+        if (order.value?.driverInfo != null) {
           // mezDbgPrint(
           //     "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
 
           mGoogleMapController.addOrUpdateUserMarker(
-            latLng: order.value?.dropoffDriver?.location,
+            latLng: order.value?.driverInfo?.location,
             markerId: "dropoff_driver", //order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value?.dropoffDriver?.image,
+            customImgHttpUrl: order.value?.driverInfo?.image,
             fitWithinBounds: true,
           );
         }

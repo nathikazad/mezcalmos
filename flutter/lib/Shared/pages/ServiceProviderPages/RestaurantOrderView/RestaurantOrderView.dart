@@ -7,13 +7,11 @@ import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpEstDeliveryTime.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderCustomer.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderEstTime.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/components/ROpOrderHandleButton.dart';
@@ -34,7 +32,6 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
-import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -75,16 +72,14 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   Widget build(BuildContext context) {
     mezDbgPrint("widget.order.dropoffDriver =======");
 
-    mezDbgPrint(viewController.order.value?.dropoffDriver);
+    mezDbgPrint(viewController.order.value?.driverInfo);
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
           titleWidget: Obx(() =>
               Text("${viewController.order.value?.customer.name ?? ""}"))),
       floatingActionButton:
-          (MezEnv.appType == AppType.MezAdmin)
-              ? _copyBtn()
-              : null,
+          (MezEnv.appType == AppType.MezAdmin) ? _copyBtn() : null,
       body: Obx(() {
         if (viewController.order.value != null) {
           return SingleChildScrollView(
@@ -95,11 +90,11 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   ROpOrderStatusCard(order: viewController.order.value!),
 
                   ROpOrderHandleButton(viewController: viewController),
-                  if (viewController.order.value!.scheduledTime != null)
+                  if (viewController.order.value!.scheduleTime != null)
                     _getScheduleTime(),
                   RestaurantOrderEstTime(order: viewController.order.value!),
-                  if (viewController.order.value?.selfDelivery ?? false)
-                    ROpEstDeliveryTime(order: viewController.order.value!),
+                  // if (viewController.order.value?.selfDelivery ?? false)
+                  //   ROpEstDeliveryTime(order: viewController.order.value!),
                   ROpDriverCard(order: viewController.order.value!),
                   if (viewController.order.value!.inDeliveryPhase())
                     OrderMapWidget(
@@ -110,10 +105,9 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                         polyline: viewController
                             .order.value!.routeInformation?.polyline,
                         from: viewController.order.value!.restaurant.location,
-                        to: viewController.order.value!.to),
+                        to: viewController.order.value!.dropOffLocation),
                   ROpOrderCustomer(order: viewController.order.value!),
-                  if (MezEnv.appType ==
-                      AppType.MezAdmin)
+                  if (MezEnv.appType == AppType.MezAdmin)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -148,14 +142,15 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                     ),
                   ),
                   OrderScheduledTimeCard(
-                      time: viewController.order.value!.scheduledTime,
+                      time: viewController.order.value!.scheduleTime,
                       margin: const EdgeInsets.only(top: 8)),
-                  RestaurantOrderDeliveryTimeCard(
-                    order: viewController.order.value!,
-                    margin: const EdgeInsets.only(top: 8),
-                  ),
+                  // RestaurantOrderDeliveryTimeCard(
+                  //   order: viewController.order.value!,
+                  //   margin: const EdgeInsets.only(top: 8),
+                  // ),
                   OrderDeliveryLocation(
-                    address: viewController.order.value!.to.address,
+                    address:
+                        viewController.order.value!.dropOffLocation.address,
                     margin: const EdgeInsets.only(top: 8),
                   ),
                   OrderPaymentMethod(
@@ -168,12 +163,9 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   OrderNoteCard(note: viewController.order.value!.notes),
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(bottom: 25),
-                    orderCost: viewController.order.value!.itemsCost,
-                    refundAmmount: viewController.order.value!.refundAmount,
-                    shippingCost: viewController.order.value!.shippingCost,
+                    costs: viewController.order.value!.costs,
                     stripeOrderPaymentInfo:
                         viewController.order.value!.stripePaymentInfo,
-                    totalCost: viewController.order.value!.totalCost,
                   ),
                   // ROpRefundButton(
                   //   order: viewController.order.value!,
@@ -301,9 +293,9 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   SizedBox(
                     height: 5,
                   ),
-                  if (viewController.order.value?.scheduledTime != null)
+                  if (viewController.order.value?.scheduleTime != null)
                     Text(
-                      "${DateFormat("dd MMMM, hh:mm a ").format(viewController.order.value!.scheduledTime!.toLocal())}",
+                      "${DateFormat("dd MMMM, hh:mm a ").format(viewController.order.value!.scheduleTime!.toLocal())}",
                       style: Get.theme.textTheme.bodyMedium,
                     ),
                 ],
