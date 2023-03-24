@@ -59,64 +59,63 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return Scaffold(
       extendBodyBehindAppBar: true,
       floatingActionButton: FloatingCartComponent(),
-      bottomSheet: (_viewController.restaurant.value?.isOpen() == false)
-          ? _schedulingOrdersBottomWidget()
-          : null,
-      body: RectGetter(
-        key: _viewController.listViewKey,
-        child: NotificationListener<ScrollNotification>(
-          child: buildSliverScrollView(),
-          onNotification: _viewController.onScrollNotification,
-        ),
+      bottomSheet: Obx(
+        () => (_viewController.restaurant.value?.isOpen() == false)
+            ? _schedulingOrdersBottomWidget()
+            : SizedBox(),
+      ),
+      body: Obx(
+        () {
+          if (_viewController.restaurant.value != null) {
+            return RectGetter(
+              key: _viewController.listViewKey,
+              child: NotificationListener<ScrollNotification>(
+                child: buildSliverScrollView(),
+                onNotification: _viewController.onScrollNotification,
+              ),
+            );
+          } else {
+            return Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
 
   Widget buildSliverScrollView() {
-    return Obx(() {
-      if (_viewController.isInitialzed) {
-        return CustomScrollView(
-          controller: _viewController.scrollController,
-          slivers: [
-            RestaurantSliverAppBar(controller: _viewController),
-            // Obx(() {
-            if (_viewController.showInfo.value)
-              SliverPadding(
-                padding: const EdgeInsets.all(12),
-                sliver: SliverToBoxAdapter(
-                    child: RestaurantInfoTab(
-                  restaurant: _viewController.restaurant.value!,
-                  controller: _viewController,
-                )),
-              )
-            else
-              _buildItemsList()
-            // else {
-            // // return
-            // SliverFillRemaining(
-            //     child: Container(
-            //   alignment: Alignment.center,
-            //   child: Text(
-            //     "Some magic is happening ...",
-            //     style: context.txt.bodyLarge?.copyWith(
-            //         color: primaryBlueColor, fontStyle: FontStyle.italic),
-            //   ),
-            // ))
-            //   }
-            // })
-          ],
-        );
-      } else {
-        return Container(
-          alignment: Alignment.center,
-          child: Text(
-            "Some magic is happening ...",
-            style: context.txt.bodyLarge?.copyWith(
-                color: primaryBlueColor, fontStyle: FontStyle.italic),
-          ),
-        );
-      }
-    });
+    return CustomScrollView(
+      controller: _viewController.scrollController,
+      slivers: [
+        RestaurantSliverAppBar(controller: _viewController),
+        Obx(() {
+          if (_viewController.showInfo.value)
+            return SliverPadding(
+              padding: const EdgeInsets.all(12),
+              sliver: SliverToBoxAdapter(
+                  child: RestaurantInfoTab(
+                restaurant: _viewController.restaurant.value!,
+                controller: _viewController,
+              )),
+            );
+          else if (_viewController.isInitialzed) {
+            return _buildItemsList();
+          } else {
+            return SliverFillRemaining(
+                child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                "Some magic is happening ...",
+                style: Get.textTheme.bodyLarge?.copyWith(
+                    color: primaryBlueColor, fontStyle: FontStyle.italic),
+              ),
+            ));
+          }
+        })
+      ],
+    );
   }
 
   Widget _buildItemsList() {
@@ -259,9 +258,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(items.length, (int index) {
           return RestaurantgridItemCard(
-            item: items[index],
-            restaurant: _viewController.restaurant.value!,
-          );
+              item: items[index],
+              restaurant: _viewController.restaurant.value!);
         }),
       );
     }

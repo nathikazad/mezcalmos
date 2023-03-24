@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
@@ -25,7 +24,7 @@ class DvOrderView extends StatefulWidget {
   const DvOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-    return MezRouter.toPath(DeliveryAppRoutes.kRestaurantOrderViewRoute
+    return MezRouter.toPath(DeliveryAppRoutes.kDvOrderView
         .replaceAll(":orderId", orderId.toString()));
   }
 
@@ -65,7 +64,8 @@ class _DvOrderViewState extends State<DvOrderView> {
         AppBarLeftButtonType.Back,
         autoBack: true,
         showNotifications: true,
-        title: '${_i18n()["title"]}',
+        title:
+            '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"]}',
       ),
       bottomNavigationBar: Obx(
         () => (viewController.hasData)

@@ -24,7 +24,7 @@ class ROpOrderCustomer extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["customer"]}',
-            style: context.txt.bodyText1,
+            style: context.txt.bodyLarge,
           ),
           SizedBox(
             height: 10,
@@ -47,19 +47,9 @@ class ROpOrderCustomer extends StatelessWidget {
                   ),
                   Flexible(
                     fit: FlexFit.tight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          order.customer.name,
-                          style: Get.theme.textTheme.bodyText1,
-                        ),
-                        Text(
-                          order.to.address,
-                          style: Get.theme.textTheme.bodyText2,
-                          maxLines: 1,
-                        ),
-                      ],
+                    child: Text(
+                      order.customer.name,
+                      style: Get.theme.textTheme.bodyLarge,
                     ),
                   ),
                   MessageButton(

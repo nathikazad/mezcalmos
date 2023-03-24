@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_partner/hsDeliveryPartner.dart';
@@ -14,6 +15,9 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']["pages"]
+    ["DeliverySettingsView"]["components"]["DeliverySettingsCompaniesList"];
 
 class DeliverySettingsViewController {
   CreateServiceViewController? createServiceViewController;
@@ -166,7 +170,7 @@ class DeliverySettingsViewController {
           mezDbgPrint(stk);
         }
       } else {
-        showErrorSnackBar(errorText: "Please select a company");
+        showErrorSnackBar(errorText: "${_i18n()['errorText']}");
       }
     }
   }

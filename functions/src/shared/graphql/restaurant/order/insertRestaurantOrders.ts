@@ -1,5 +1,5 @@
 import { getHasura } from "../../../../utilities/hasura";
-import * as fs from 'fs';
+// import * as fs from 'fs';
 import { DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 
 interface Restaurant {
@@ -10,6 +10,22 @@ interface Restaurant {
 }
 export async function insertRestaurantOrders(data: any, response: any) {
     let chain = getHasura();
+
+    // let queryResponse = await chain.query({
+    //     restaurant_order: [{}, {
+    //         firebase_id: true
+    //     }]
+    // })
+    // let insertedOrders: Record<string, boolean> = {};
+    // queryResponse.restaurant_order.forEach((r) => {
+    //     if(r.firebase_id == null)
+    //         return;
+    //     // console.log(typeof r.details.firebase_id)
+    //     insertedOrders[r.firebase_id] = true;
+    // })
+    // console.log(data.length)
+    // data = data.filter((r: any) => insertedOrders[r.firebaseId] == undefined)
+    // console.log(data.length)
     // let restaurantFbIds: number[] = [];
     // data.forEach((o: any) => {
     //     restaurantFbIds.push(o.restaurantFirebaseId)
@@ -49,6 +65,8 @@ export async function insertRestaurantOrders(data: any, response: any) {
     for(let restaurant of response.restaurant_restaurant) {
         let items: Record<string, number> = {};
         for(let item of restaurant.items) {
+            if(!item.name.translations[0])
+                continue;
             items[item.name.translations[0].value] = item.id;
         }
         restaurantFbIdToObject[restaurant.details.firebase_id!] = {
@@ -76,11 +94,40 @@ export async function insertRestaurantOrders(data: any, response: any) {
 
         let orderItems: any[] = [];
         for(let i of o.items) {
-            if(restaurantFbIdToObject[o.restaurantFirebaseId].items[i.itemName] == null)
-                continue;
+            let itemHsId = restaurantFbIdToObject[o.restaurantFirebaseId].items[i.itemName]
+            if(restaurantFbIdToObject[o.restaurantFirebaseId].items[i.itemName] == null) {
+                if(i.inJSON.name == undefined || i.inJSON.name.en == undefined || i.inJSON.name.es == undefined)
+                    continue;
+                let a = await chain.mutation({
+                    insert_restaurant_item_one: [{
+                        object: {
+                            name: {
+                                data: {
+                                    service_provider_id: restaurantFbIdToObject[o.restaurantFirebaseId].hsId,
+                                    service_provider_type: "restaurant",
+                                    translations: {
+                                        data: [{
+                                            language_id: "en",
+                                            value: i.inJSON.name.en
+                                        }, {
+                                            language_id: "es",
+                                            value: i.inJSON.name.es
+                                        }]
+                                    }
+                                }
+                            }
+                        }
+                    }, {
+                        id: true
+                    }]
+                })
+                console.log("item inserted: ", i.itemName)
+
+                itemHsId = a.insert_restaurant_item_one?.id ?? itemHsId
+            }
 
             orderItems.push({
-                restaurant_item_id: restaurantFbIdToObject[o.restaurantFirebaseId].items[i.itemName],
+                restaurant_item_id: itemHsId,
                 in_json: i.inJSON,
                 notes: i.notes,
                 unavailable: i.unavailable,
@@ -93,60 +140,69 @@ export async function insertRestaurantOrders(data: any, response: any) {
                 continue;
             
             customerFbIdToHsId[o.customerFirebaseId] = userFbIdToHsId[o.customerFirebaseId]
-            // console.log(customerFbIdToHsId[o.customerFirebaseId])
-            orders.push({
-                customer: {
-                    data: {
-                        user_id: customerFbIdToHsId[o.customerFirebaseId]
+            await chain.mutation({
+                insert_customer_customer_one: [{
+                    object: {
+                        user_id: customerFbIdToHsId[o.customerFirebaseId],
                     }
-                },
-                restaurant_id: restaurantFbIdToObject[o.restaurantFirebaseId].hsId,
-                payment_type: o.paymentType,
-                to_location_gps: o.toLocationGps,
-                to_location_address: o.toLocationAddress,
-                estimated_food_ready_time: o.estimatedFoodReadyTime,
-                stripe_payment_id: o.stripePaymentId,
-                status: o.status,
-                order_time: o.orderTime,
-                firebase_id: o.firebaseId,
-                notes: o.notes,
-                delivery_cost: o.deliveryCost,
-                refund_amount:o.refundAmount,
-                items: {
-                    data: orderItems
-                },
-                delivery: {
-                    data: {
-                        pickup_gps: JSON.stringify(restaurantFbIdToObject[o.restaurantFirebaseId].gps),
-                        pickup_address: restaurantFbIdToObject[o.restaurantFirebaseId].address,
-                        dropoff_address: o.toLocationAddress ?? "",
-                        dropoff_gps: o.toLocationGps ?? JSON.stringify({
-                            "type": "point",
-                            "coordinates": [0, 0]
-                        }),
-                        chat_with_customer_id: 1,
-                        payment_type: o.paymentType,
-                        status: o.status,
-                        customer_id: customerFbIdToHsId[o.customerFirebaseId],
-                        service_provider_id: 1,
-                        service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
-                        delivery_cost: o.deliveryCost,
-                        package_cost: o.itemsCost,
-                    }
-                },
-                review: (o.review) ? {
-                    data: {
-                        rating: o.review.rating,
-                        note: o.review.comment,
-                        from_entity_type: "customer",
-                        from_entity_id: customerFbIdToHsId[o.customerFirebaseId],
-                        to_entity_type: "restaurant",
-                        to_entity_id: response.restaurant_restaurant[0].id,
-                        created_at: o.review.createdAt
-                    }
-                }: undefined
+                }, {
+                    user_id: true
+                }]
             })
-        } else {
+            // console.log(customerFbIdToHsId[o.customerFirebaseId])
+            // orders.push({
+            //     customer: {
+            //         data: {
+            //             user_id: customerFbIdToHsId[o.customerFirebaseId]
+            //         }
+            //     },
+            //     restaurant_id: restaurantFbIdToObject[o.restaurantFirebaseId].hsId,
+            //     payment_type: o.paymentType,
+            //     to_location_gps: o.toLocationGps,
+            //     to_location_address: o.toLocationAddress,
+            //     estimated_food_ready_time: o.estimatedFoodReadyTime,
+            //     stripe_payment_id: o.stripePaymentId,
+            //     status: o.status,
+            //     order_time: o.orderTime,
+            //     firebase_id: o.firebaseId,
+            //     notes: o.notes,
+            //     delivery_cost: o.deliveryCost,
+            //     refund_amount:o.refundAmount,
+            //     items: {
+            //         data: orderItems
+            //     },
+            //     delivery: {
+            //         data: {
+            //             pickup_gps: JSON.stringify(restaurantFbIdToObject[o.restaurantFirebaseId].gps),
+            //             pickup_address: restaurantFbIdToObject[o.restaurantFirebaseId].address,
+            //             dropoff_address: o.toLocationAddress ?? "",
+            //             dropoff_gps: o.toLocationGps ?? JSON.stringify({
+            //                 "type": "point",
+            //                 "coordinates": [0, 0]
+            //             }),
+            //             chat_with_customer_id: 1,
+            //             payment_type: o.paymentType,
+            //             status: o.status,
+            //             customer_id: customerFbIdToHsId[o.customerFirebaseId],
+            //             service_provider_id: 1,
+            //             service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
+            //             delivery_cost: o.deliveryCost,
+            //             package_cost: o.itemsCost,
+            //         }
+            //     },
+            //     review: (o.review) ? {
+            //         data: {
+            //             rating: o.review.rating,
+            //             note: o.review.comment,
+            //             from_entity_type: "customer",
+            //             from_entity_id: customerFbIdToHsId[o.customerFirebaseId],
+            //             to_entity_type: "restaurant",
+            //             to_entity_id: response.restaurant_restaurant[0].id,
+            //             created_at: o.review.createdAt
+            //         }
+            //     }: undefined
+            // })
+        } //else {
             orders.push({
                 customer_id: customerFbIdToHsId[o.customerFirebaseId],
                 restaurant_id: restaurantFbIdToObject[o.restaurantFirebaseId].hsId,
@@ -195,7 +251,7 @@ export async function insertRestaurantOrders(data: any, response: any) {
                     }
                 }: undefined
             })
-        }
+        //}
 
     }
     // await chain.mutation({
@@ -361,12 +417,13 @@ export async function insertRestaurantOrders(data: any, response: any) {
     // orders = await Promise.all(orders)
     // orders = orders.filter((o: any) => o.restaurant_id)
     console.log(orders.length);
-    fs.writeFileSync("./restaurant-orders.json", JSON.stringify(orders));
+    // fs.writeFileSync("./restaurant-orders.json", JSON.stringify(orders));
 
     // let response1 = 
+
     await chain.mutation({
         insert_restaurant_order: [{
-            objects: orders
+            objects: orders//.slice(0, 200)
             // [{
             //     customer_id: ,
             //     customer: {
@@ -441,6 +498,15 @@ export async function insertRestaurantOrders(data: any, response: any) {
             //         }]
             //     }
             // }]
+        }, {
+            returning: {
+                id: true,
+            }
+        }]
+    })
+    await chain.mutation({
+        insert_restaurant_order: [{
+            objects: orders.slice(200)
         }, {
             returning: {
                 id: true,

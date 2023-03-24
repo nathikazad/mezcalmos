@@ -142,16 +142,17 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
         },
         customBorder: CircleBorder(),
         child: Ink(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: (widget.order.estimatedFoodReadyTime != null)
-                  ? Colors.grey.shade300
+                  ? secondaryLightBlueColor
                   : Colors.transparent),
           child: (widget.order.estimatedFoodReadyTime != null)
               ? Icon(
-                  Icons.edit_outlined,
-                  size: 18,
+                  Icons.edit,
+                  size: 20,
+                  color: primaryBlueColor,
                 )
               : Text(
                   '${_i18n()["set"]}',

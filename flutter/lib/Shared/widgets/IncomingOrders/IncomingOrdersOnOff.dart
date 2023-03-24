@@ -24,14 +24,11 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w700,
-              fontSize: 13.sp,
-            ),
-          ),
+          Text(title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(fontSize: 15.sp)),
           SizedBox(
             width: 10,
           ),

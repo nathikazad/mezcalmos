@@ -5,7 +5,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/ROpDeeplinkHandler.dart';
+import 'package:mezcalmos/RestaurantApp/restaurantDeepLinkHandler.dart';
+import 'package:mezcalmos/Shared/DeepLinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
@@ -33,7 +34,7 @@ class RestaurantWrapper extends StatefulWidget {
 
 class _RestaurantWrapperState extends State<RestaurantWrapper> {
   Operator? restaurantOperator;
-  final ROpDeeplinkHandler rOpDeeplinkHandler = ROpDeeplinkHandler();
+
   RestaurantOpAuthController restaurantOpAuthController =
       Get.find<RestaurantOpAuthController>();
   StreamSubscription<MezNotification.Notification>?
@@ -44,7 +45,8 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
     mezDbgPrint("RestaurantWrapper::init state");
 
     Future.microtask(() async {
-      await rOpDeeplinkHandler.startDynamicLinkCheckRoutine();
+      await DeepLinkHandler.startDynamicLinkCheckRoutine(
+          RestaurantDeepLinkHandler.handleDeeplink);
       restaurantOpAuthController
           .setupRestaurantOperator()
           .then((_) => handleState());

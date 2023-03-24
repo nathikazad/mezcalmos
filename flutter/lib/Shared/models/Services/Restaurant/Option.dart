@@ -62,6 +62,10 @@ class Option {
     choices.sort((Choice a, Choice b) => a.position.compareTo(b.position));
   }
 
+  bool get haveAtLeastOnChoiceAvailable =>
+      choices.firstWhereOrNull((Choice element) => element.available == true) !=
+      null;
+
   void changeOptionType(
     OptionType optionType, {
     num? minimumChoice,

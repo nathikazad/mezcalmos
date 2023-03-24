@@ -20,11 +20,10 @@ class MinimalOrderCard extends StatefulWidget {
     Key? key,
     required this.order,
     required this.onTap,
-    this.showOrderType = false,
   }) : super(key: key);
 
   final MinimalOrder order;
-  final bool showOrderType;
+
   final Function()? onTap;
   @override
   State<MinimalOrderCard> createState() => _MinimalOrderCardState();
@@ -92,8 +91,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                           clipBehavior: Clip.none,
                           children: [
                             Container(
-                                margin: EdgeInsets.only(
-                                    right: widget.showOrderType ? 28 : 0),
+                                margin: EdgeInsets.only(right: 28),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white,
                                   radius: 26,
@@ -109,29 +107,28 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                                     },
                                   ),
                                 )),
-                            if (widget.showOrderType)
-                              Positioned(
-                                right: -8,
-                                child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: CircleAvatar(
-                                        radius: 23,
-                                        backgroundColor: primaryBlueColor,
-                                        child: Icon(
-                                          widget.order.orderType.toIcon(),
-                                          size: 30,
-                                          color: Colors.white,
-                                        )),
-                                  ),
+                            Positioned(
+                              right: -8,
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: CircleAvatar(
+                                      radius: 23,
+                                      backgroundColor: primaryBlueColor,
+                                      child: Icon(
+                                        widget.order.orderType.toIcon(),
+                                        size: 30,
+                                        color: Colors.white,
+                                      )),
                                 ),
                               ),
+                            ),
                           ],
                         ),
                     ],
@@ -141,7 +138,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               ),
               const Divider(),
               Row(
-                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   if (widget.order.totalCost != null)
                     Row(
@@ -187,7 +184,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                   Spacer(),
                   getOrderWidget()
                 ],
-              )
+              ),
             ],
           ),
         ),

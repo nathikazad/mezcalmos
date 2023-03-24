@@ -34,7 +34,6 @@ extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
 
 extension ParseStringToRestaurantOrderStatus on String {
   RestaurantOrderStatus toRestaurantOrderStatus() {
-    mezDbgPrint(this);
     return RestaurantOrderStatus.values.firstWhere(
       (RestaurantOrderStatus e) {
         return e.toFirebaseFormatString() == this;
@@ -116,7 +115,7 @@ class RestaurantOrder extends DeliverableOrder {
         status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
         serviceProviderId: data["serviceProviderId"],
-        paymentType: data["paymentType"].toString().toPaymentType(),
+        paymentType: data["paymentType"].toString().convertToPaymentType(),
         orderTime: DateTime.parse(data["orderTime"]),
         deliveryMode: data?["deliveryMode"]?.toString().toDeliveryMode() ??
             DeliveryMode.None,

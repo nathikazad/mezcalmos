@@ -47,11 +47,10 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
             )
           : Container(
               padding: const EdgeInsets.symmetric(vertical: 7),
-              child: (widget.item.chosenChoices.isEmpty &&
-                      widget.item.notes == null)
-                  ? _itemHeader(userLanguage, txt)
-                  : _itemExpandableComponent(context, userLanguage, txt),
-            ),
+              child: (widget.item.chosenChoices.isNotEmpty ||
+                      widget.item.notes?.isNotEmpty == true)
+                  ? _itemExpandableComponent(context, userLanguage, txt)
+                  : _itemHeader(userLanguage, txt)),
     );
   }
 

@@ -201,7 +201,7 @@ class Sagora extends GetxController {
               name: event.body['nameCaller'],
               participantType: event.body['extra']['callerType']
                   .toString()
-                  .toParticipantType(),
+                  .convertToParticipantType(),
               id: event.body['extra']['callerId'],
             ),
           );
@@ -220,7 +220,7 @@ class Sagora extends GetxController {
                 name: event.body['nameCaller'],
                 participantType: event.body['extra']['callerType']
                     .toString()
-                    .toParticipantType(),
+                    .convertToParticipantType(),
                 id: int.parse(event.body['extra']['callerId']),
               ),
             );
@@ -254,12 +254,12 @@ class Sagora extends GetxController {
                 name: event.body?['nameCaller'],
                 participantType: event.body['extra']['callerType']
                     .toString()
-                    .toParticipantType(),
+                    .convertToParticipantType(),
                 // wrong actual user id, it's more like an agora generated id
                 id: int.parse(event.body['extra']['callerId']),
               ),
             };
-            if (Get.currentRoute == NativeOnlyRoutes.kAgoraCallScreenRoute) {
+            if (MezRouter.currentRoute().name == NativeOnlyRoutes.kAgoraCallScreenRoute) {
               Future<void>.microtask(() => MezRouter.back().then(
                     (_) => MezRouter.toNamed(
                         NativeOnlyRoutes.kAgoraCallScreenRoute,

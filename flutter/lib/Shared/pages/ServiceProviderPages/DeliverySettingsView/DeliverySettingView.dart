@@ -57,7 +57,7 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
 
   @override
   void initState() {
-    mezDbgPrint("Delivery cost init :==========>");
+  
     _settingVariables();
     viewController.init(
         createServiceViewController: widget.createServiceViewController,
@@ -69,16 +69,13 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
   }
 
   void _settingVariables() {
-    if (MezRouter.urlArguments["serviceProviderId"] != null &&
-        MezRouter.bodyArguments?["serviceProviderType"] != null &&
-        MezRouter.urlArguments["deliveryDetailsId"] != null &&
-        MezRouter.urlArguments["detailsId"] != null) {
-      serviceProviderId =
-          int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
-      serviceDetailsId =
-          int.tryParse(MezRouter.urlArguments["detailsId"].toString());
-      deliveryDetailsId =
-          int.tryParse(MezRouter.urlArguments["deliveryDetailsId"].toString());
+    if (Get.parameters["serviceProviderId"] != null &&
+        Get.arguments?["serviceProviderType"] != null &&
+        Get.parameters["deliveryDetailsId"] != null &&
+        Get.parameters["detailsId"] != null) {
+      serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
+      serviceDetailsId = int.tryParse(Get.parameters["detailsId"]!);
+      deliveryDetailsId = int.tryParse(Get.parameters["deliveryDetailsId"]!);
 
       serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
           .toString() as ServiceProviderType;

@@ -19,7 +19,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
-import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
@@ -151,6 +150,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                 note: viewController.order.value!.notes),
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
+                              divideDeliveryCost: true,
                               orderCost: viewController
                                   .order.value!.costsByType?.weighedCost,
                               refundAmmount:
@@ -203,16 +203,4 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       ordersRoute: CustomerRoutes.customerOrdersRoute,
     );
   }
-
-  List<Widget> get _mapWidget => <Widget>[
-        Container(
-          height: 350,
-          child: MGoogleMap(
-            padding: EdgeInsets.zero,
-            mGoogleMapController: mapController,
-            recenterBtnBottomPadding: 20,
-            // rerenderDuration: Duration(seconds: 10),
-          ),
-        ),
-      ];
 }

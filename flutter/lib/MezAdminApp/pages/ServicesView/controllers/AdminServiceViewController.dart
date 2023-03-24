@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/hsAdminServiceProviders.dart';
@@ -7,16 +8,19 @@ import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class AdminServicesViewController {
   late AdminTabsViewController adminTabsViewController;
+  ScrollController scrollController = ScrollController();
   // obs //
   Rxn<List<Restaurant>> _restaurants = Rxn();
   Rxn<List<Laundry>> _laundries = Rxn();
   Rxn<List<DeliveryCompany>> _dvCompanies = Rxn();
-  RxInt restLimit = RxInt(5);
+  RxBool isFetching = RxBool(false);
+  RxInt restLimit = RxInt(10);
   RxInt dvLimit = RxInt(5);
   RxInt laundryLimit = RxInt(5);
 // getters //
@@ -44,13 +48,15 @@ class AdminServicesViewController {
   Future<void> fetchLaundries() async {
     _laundries.value?.clear();
     _laundries.value =
-        await admin_get_laundries(withCache: false, limit: dvLimit.value);
+        await admin_get_laundries(withCache: false, limit: laundryLimit.value);
   }
 
   Future<void> fetchRestaurants() async {
+    isFetching.value = true;
     _restaurants.value?.clear();
     _restaurants.value =
         await admin_get_restaurants(withCache: false, limit: restLimit.value);
+    isFetching.value = false;
   }
 
   Future<void> switchServiceStatus(
@@ -61,27 +67,42 @@ class AdminServicesViewController {
         status: value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily,
         detailsId: serviceDetailsId,
         approved: null);
-    _fetchCurrent();
+    fetchCurrent();
   }
 
-  void _fetchCurrent() {
+  void fetchCurrent({int? increaseLimit}) {
     switch (currentService) {
       case ServiceProviderType.Laundry:
+        laundryLimit.value += increaseLimit ?? 0;
         unawaited(fetchLaundries());
         break;
       case ServiceProviderType.Restaurant:
+        restLimit.value += increaseLimit ?? 0;
         unawaited(fetchRestaurants());
         break;
       case ServiceProviderType.DeliveryCompany:
+        dvLimit.value += increaseLimit ?? 0;
         unawaited(fetchCompanies());
         break;
       default:
     }
   }
 
+  List<Service>? get getCurrentService {
+    switch (currentService) {
+      case ServiceProviderType.Laundry:
+        return _laundries.value;
+      case ServiceProviderType.Restaurant:
+        return _restaurants.value;
+      case ServiceProviderType.DeliveryCompany:
+        return _dvCompanies.value;
+    }
+    return null;
+  }
+
   Future<void> approveService({required int detailsId}) async {
     await update_service_state(
         status: null, detailsId: detailsId, approved: true);
-    _fetchCurrent();
+    fetchCurrent();
   }
 }

@@ -75,18 +75,21 @@ abstract class StartingPointBase extends StatefulWidget {
 }
 
 class StartingPointBaseState extends State<StartingPointBase> {
-  StartingPointBaseState();
-
   /// _initialized
   bool _initialized = false;
 
   /// _error
   bool _error = false;
-
+  late AppLaunchMode _launchMode;
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
+    const String _tmpLmode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
+    _launchMode = _tmpLmode.toLaunchMode();
+
+    /// initializeSetup
     initializeSetup();
   }
 
@@ -131,7 +134,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
       );
     } else {
       mezDbgPrint(
-        "====> MezEnv.previewMode ===> $MezEnv.previewMode",
+        "====> MezEnv.previewMode ===> ${MezEnv.previewMode}",
       );
       return Sizer.Sizer(
         builder: (

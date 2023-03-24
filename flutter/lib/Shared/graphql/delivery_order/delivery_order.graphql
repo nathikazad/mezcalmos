@@ -399,6 +399,7 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     package_cost_comp
     package_ready
     order_type
+    delivery_cost
     dropoff_address
     delivery_cost
     dropoff_gps
@@ -475,6 +476,7 @@ query get_inprocess_driver_orders($driverId: Int!) {
     order_type
     package_cost_comp
     package_ready
+    delivery_cost
     dropoff_address
     delivery_cost
     dropoff_gps
@@ -626,7 +628,7 @@ query get_delivery_company_past_orders($companyId: Int!) {
     dropoff_address
     delivery_cost
     dropoff_gps
-    
+    delivery_cost
     order_type
     customer {
       user {

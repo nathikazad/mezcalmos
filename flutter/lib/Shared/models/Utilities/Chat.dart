@@ -44,7 +44,7 @@ extension HasuraAppTypeIdParser on String {
 // }
 
 extension AppTypeToParticipantType on AppType {
-  ParticipantType toParticipantTypefromAppType() {
+  ParticipantType convertParticipantTypefromAppType() {
     switch (this) {
       case AppType.Customer:
         return ParticipantType.Customer;
@@ -70,16 +70,17 @@ extension AppTypeToParticipantType on AppType {
 //     switch (this) {
 //       case AppType.Customer:
 //         return ParticipantType.Customer;
-//       case AppType.TaxiApp:
-//         return cf.ParticipantType.Taxi;
+
 //       case AppType.DeliveryApp:
-//         return cf.ParticipantType.DeliveryDriver;
-//       // case AppType.DeliveryAdminApp:
-//       //   return cf.ParticipantType.DeliveryAdmin;
+//         return ParticipantType.DeliveryDriver;
+//       case AppType.DeliveryAdmin:
+//         return ParticipantType.DeliveryOperator;
+//       case AppType.MezAdmin:
+//         return ParticipantType.MezAdmin;
 //       case AppType.LaundryApp:
-//         return cf.ParticipantType.LaundryOperator;
+//         return ParticipantType.LaundryOperator;
 //       case AppType.RestaurantApp:
-//         return cf.ParticipantType.RestaurantOperator;
+//         return ParticipantType.RestaurantOperator;
 //       default:
 //         throw Exception(
 //             "App type $this cannot be converted to participantType");
@@ -87,13 +88,13 @@ extension AppTypeToParticipantType on AppType {
 //   }
 // }
 
-// extension ParseStringToParticipantType on String {
-//   ParticipantType toParticipantType() {
-//     return ParticipantType.values.firstWhere(
-//         (ParticipantType participantType) =>
-//             participantType.toFirebaseFormattedString() == this);
-//   }
-// }
+extension ParseStringToParticipantType on String {
+  ParticipantType convertToParticipantType() {
+    return ParticipantType.values.firstWhere(
+        (ParticipantType participantType) =>
+            participantType.toFirebaseFormatString() == this);
+  }
+}
 
 class Participant {
   String image;
@@ -229,7 +230,7 @@ class Chat {
     chatData['participants']
         ?.forEach((dynamic participantTypeAsString, dynamic map) {
       final ParticipantType participantType =
-          participantTypeAsString.toString().toParticipantType();
+          participantTypeAsString.toString().convertToParticipantType();
       chatData['participants'][participantTypeAsString]
           .forEach((dynamic participantId, dynamic participantData) {
         if (chat._participants[participantType] == null)

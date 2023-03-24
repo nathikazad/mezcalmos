@@ -94,10 +94,10 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 ),
                 _estTimes(),
                 if (viewController.canSetDriver) _driverCard(),
-                if (viewController.order.value!.inDeliveryPhase)
+                if (viewController.order.value!.orderWithDriver)
                   OrderMapWidget(
                       deliveryOrderId: viewController.order.value!.id,
-                      updateDriver: viewController.order.value!.inDeliveryPhase,
+                      updateDriver: viewController.order.value!.orderWithDriver,
                       polyline: viewController
                           .order.value!.routeInformation?.polyline,
                       from: viewController.order.value!.pickupLocation,

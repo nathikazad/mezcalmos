@@ -319,9 +319,8 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??
-          SharedRoutes.getMessagesRoute(
-            chatId: int.parse(value["chatId"]),
-          ),
+          SharedRoutes.getMessagesRoute(chatId: int.parse(value["chatId"])),
+
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

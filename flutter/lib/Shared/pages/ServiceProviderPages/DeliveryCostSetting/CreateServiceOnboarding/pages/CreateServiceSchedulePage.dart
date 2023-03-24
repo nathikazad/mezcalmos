@@ -31,7 +31,7 @@ class _CreateServiceSchedulePageState extends State<CreateServiceSchedulePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          Card(
             child: viewWidgets.editWorkingHoursComponent(),
           ),
           SizedBox(

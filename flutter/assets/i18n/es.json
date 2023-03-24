@@ -149,7 +149,7 @@
             "search": "Búsqueda",
             "showOnlyOpen": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
-            "noOpenRestaurant": "No hay restaurantes abiertos funds",
+            "noOpenRestaurant": "No hay restaurantes abiertos",
             "meal": "Comida",
             "noItemTitle": "No se han encontrado resultados",
             "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
@@ -210,7 +210,7 @@
               "pickLocationHintText": "Ingrese su nombre",
               "addLocationDialogButton": "Guardar",
               "editLocationDialogButton": "EDITAR",
-              "addLocationDialogSkip": "Cerca"
+              "addLocationDialogSkip": "Ahora no"
             }
           },
           "ViewCartScreen": {
@@ -755,6 +755,25 @@
       }
     },
     "pages": {
+      "ServiceProfileView" : {
+        "profile" : "Perfil",
+        "info" : "Información",
+        "operators" : "Operadoras",
+        "drivers" : "Conductoras",
+        "schedule" :"Cronograma",
+        "payments" :"Pagos",
+        "delivery" :"Entrega",
+        "reviews" : "Reseñas",
+        "share" : "Compartir",
+        "privacyPolicies": "Políticas de privacidad",
+        "logout" : "Cerrar sesión",
+        "openService" : "Servicio abierto",
+        "closeService" : "Servicio cerrado",
+        "serviceClosed" : "El servicio está cerrado indefinidamente",
+        "restaurantReview" : "Su restaurante está bajo revisión, se le notificará, su aprobación."
+       
+
+      },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
@@ -816,7 +835,8 @@
             "title": "Compañero de entrega a su lado",
             "notFoundTitle": "No se encontraron socios de entrega",
             "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
-            "joined": "Unida"
+            "joined": "Unida",
+            "errorText" :  "Seleccione una empresa o cambie al tiempo de entrega de sí mismo"
           }
         }
       },
@@ -858,8 +878,8 @@
       },
       "ServiceDriversListView": {
         "drivers": "Conductoras",
-        "addDriver": "Agregar controlador",
-        "title": "Pídale a su operador que escanee este código QR en su teléfono",
+        "addDriver": "Agregar conductor",
+        "title": "Pídale a su conductora que escanee este código QR en su teléfono",
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
@@ -903,7 +923,7 @@
           }
         },
         "SignInScreen": {
-          "title": "Conéctese usando Facebook o usando SMS! ",
+          "title": "Inicie sesión con su proveedor preferido!",
           "loginWithApple": "INICIAR CON APPLE",
           "loginWithSms": "INICIAR CON SMS",
           "fbBtn": "INICIAR CON FACEBOOK"
@@ -1115,6 +1135,10 @@
         "title": "¡Servicio cerrado!",
         "btnTitle": "Servicio abierto",
         "subtitle": "Su servicio está cerrado indefinidamente, no recibirá ningún pedido.¿Te gustaría abrirlo?"
+      },
+      "ServiceWaitingForApproval": {
+        "title": "SE ESTÁ PROCESANDO SU PETICIÓN",
+        "subtitle": "Se le notificará una vez que se apruebe su solicitud."
       },
       "FreeShippingComponent": {
         "free": "Gratis"
@@ -1605,6 +1629,11 @@
   },
   "DeliveryApp": {
     "pages": {
+      "UnAuthorizedDriverView" : {
+        "title" : "Invitación necesaria",
+        "subtitle" : "Necesita una invitación para usar nuestra aplicación de entrega"
+
+      },
       "OrderDetailsScreen": {
         "cancelled": "Cancelada",
         "approved": "Aprobada",
@@ -1746,7 +1775,7 @@
                 "scheduled": "Pedido programado",
                 "delivered": "Orden Entregado",
                 "canceled": "Orden Cancelada",
-                "received": "orden recibida"
+                "received": "Orden recibida"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirmar la recogida",
@@ -1755,14 +1784,19 @@
                 "timeErrorBody": "Establezca primero los tiempos estimados",
                 "notReadyTitle": "Esperando el pedido",
                 "notReadyBody": "El pedido aún no está listo para la entrega",
-                "startDelivery": "Iniciar entrega"
+                "startDelivery": "Iniciar entrega",
+                "startPickUp": "Iniciar recogida",
+                "atPickUp" : "En la recogida",
+                "atDropOff" : "En la caída",
+                "received": "Orden recibida",
+                "finishDelivery" : "Entrega de finalización"
               }
             }
           }
         }
       },
       "RestaurantOrderView": {
-        "title": "Entregada del restaurante",
+       
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -1781,7 +1815,11 @@
               "confirmDelivery": "Confirmar el envío"
             }
           }
-        }
+        },
+        "title": "Entrega",
+        "restaurant" : "Restaurante",
+        "laundry" : "Lavadero",
+        "courier" : "Mensajera"
       }
     },
     "notificationHandler": {
@@ -1823,6 +1861,9 @@
       }
     },
     "pages": {
+      "LaundryUnauthView": {
+        "title": "Comuníquese con Alejandro al +52 1 954 118 4711 para agregar su servicio de lavandería"
+      },
       "LaundryTabsView": {
         "orders": "Pedidos",
         "profile": "Perfil",
@@ -1958,7 +1999,7 @@
           },
           "LaundryOpOrderDriverCard": {
             "driver": "Conductor",
-            "noDriver": "No hay controlador asignado todavía",
+            "noDriver": "No hay conductor asignado todavía",
             "dropOffTime": "Hora de entrega",
             "pickUpTime": "Hora de recogida"
           },
@@ -2043,7 +2084,7 @@
         "good": "Buena",
         "average": "Promedio",
         "bad": "Mala",
-        "default": "Ver todo",
+        "default": "Latest",
         "highestrate": "Tasa más alta",
         "lowestrate": "La tasa más baja",
         "noRevTitle": "Todavía no hay críticas",
@@ -2081,6 +2122,9 @@
         }
       },
       "ROpOrderView": {
+        "review" : "Revisar",
+        "deliveryDet" :"Detalles de la entrega",
+        "restaurant" : "Restaurante",
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",
         "orderItems": "Encargar artículos",
@@ -2120,7 +2164,7 @@
           },
           "ROpDriverCard": {
             "driver": "Conductor",
-            "noDriver": "No hay controlador asignado todavía",
+            "noDriver": "No hay conductor asignado todavía",
             "set": "Colocar",
             "selfDelivery": "Autoentrega",
             "forwarded": "Reenviado a Mezcalmos"
@@ -2180,7 +2224,7 @@
           "ROpOrderCard": {
             "date": "Fecha :",
             "totalCost": "Coste total",
-            "waiting": "Esperando",
+            "waiting": "en proceso",
             "delivered": "Entregada",
             "canceled": "Cancelada"
           }
@@ -2239,25 +2283,25 @@
         },
         "pick": "Seleccionar conductor",
         "fwdMezcalmos": "Avanzar a MezCalmos",
-        "assigning": "Asignación del controlador ..."
+        "assigning": "Asignación del conductor ..."
       },
       "ROpDriversView": {
         "components": {
           "ROpListDriverCard": {
             "available": "Disponible",
             "unavailable": "Indisponible",
-            "rmBtn": "Sí, retire el controlador",
-            "rmTitle": "Eliminar el controlador",
-            "rmText": "¿Estás seguro de que quieres eliminar este controlador?"
+            "rmBtn": "Sí, retire el conductor",
+            "rmTitle": "Eliminar este usuario",
+            "rmText": "¿Estás seguro de que quieres eliminar este usuario?"
           }
         },
         "drivers": "Conductoras",
-        "falseTitle": "Active la entrega de autocontrol para entregar con sus propios controladores",
+        "falseTitle": "Active la entrega de autocontrol para entregar con sus propios conductores",
         "falseDesc": "Vaya a Perfil> En atajos, active la entrega de sí mismo",
-        "trueTitle": "Controle su entrega agregando sus propios controladores",
-        "trueDesc": "Autorice los controladores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",
+        "trueTitle": "Controle su entrega agregando sus propios conductores",
+        "trueDesc": "Autorice los conductores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",
         "assDrivers": "Conductores asociados",
-        "addDriver": "Agregar controlador",
+        "addDriver": "Agregar conductor",
         "newDv": "Nuevo conductor",
         "phoneOrEmail": "Número de teléfono o correo electrónico",
         "cancel": "Cancelar"

@@ -11,7 +11,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Generic/Delivery";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -85,9 +85,9 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
     order.status = LaundryOrderStatus.CancelledByCustomer;
     updateLaundryOrderStatus(order);
 
-    let notification: Notification = notify(cancelOrderDetails, mezAdmins, laundryOperators);
+    notify(cancelOrderDetails, mezAdmins, laundryOperators);
 
-    updateDeliveryStatus(order, notification);
+    updateDeliveryStatus(order);
 
     return {
       success: true
@@ -111,7 +111,7 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
     }
   }
 
-  async function updateDeliveryStatus(order: LaundryOrder, notification: Notification) {
+  async function updateDeliveryStatus(order: LaundryOrder) {
     if (order.deliveryType == DeliveryType.Delivery && order.fromCustomerDeliveryId) {
 
       let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId);
@@ -126,6 +126,17 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
       //   break;
       // }
       //notify driver
+      let notification: Notification = {
+        foreground: <DeliveryOrderStatusChangeNotification>{
+          status: DeliveryOrderStatus.CancelledByCustomer,
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.OrderStatusChange,
+          notificationAction: NotificationAction.ShowPopUp,
+          orderId: order.fromCustomerDeliveryId
+        },
+        background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
+        linkUrl: `/orders/${order.fromCustomerDeliveryId}`
+      };
       deliveryOperators.forEach((d) => {
         pushNotification(d.user?.firebaseId!,
           notification,
@@ -143,6 +154,17 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
         );
 
       if(order.toCustomerDeliveryId) {
+        notification = {
+          foreground: <DeliveryOrderStatusChangeNotification>{
+            status: DeliveryOrderStatus.CancelledByCustomer,
+            time: (new Date()).toISOString(),
+            notificationType: NotificationType.OrderStatusChange,
+            notificationAction: NotificationAction.ShowPopUp,
+            orderId: order.toCustomerDeliveryId
+          },
+          background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
+          linkUrl: `/orders/${order.toCustomerDeliveryId}`
+        };
         let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
 
         toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
@@ -179,5 +201,4 @@ function notify(cancelOrderDetails: CancelOrderDetails, mezAdmins: MezAdmin[], l
   laundryOperators.forEach((r) => {
     pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.LaundryOperator);
   });
-  return notification;
 }

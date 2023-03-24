@@ -4,7 +4,6 @@ import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.d
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.dart';
-
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -12,7 +11,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class DeliveryAppRoutes {
   static const String kCurrentOrdersListRoute = '/orders';
   static const String kLaundryOrderViewRoute = '/laundryOrders/:orderId';
-  static const String kRestaurantOrderViewRoute = '/restaurantOrders/:orderId';
+  static const String kDvOrderView = '/orders/:orderId';
   static const String kOrderDetailsViewRoute = "/orderDetails/:orderId";
   static const String kPastOrdersViewRoute = "/pastOrders";
   static const String kDriverUnAuthRoute = "/driverUnauth";
@@ -23,8 +22,7 @@ class DeliveryAppRoutes {
   }
 
   static String getRestaurantOrderRoute(int orderId) {
-    return kRestaurantOrderViewRoute.replaceFirst(
-        ":orderId", orderId.toString());
+    return kDvOrderView.replaceFirst(":orderId", orderId.toString());
   }
 
   static final List<QRoute> mainRoutes = <QRoute>[
@@ -39,8 +37,8 @@ class DeliveryAppRoutes {
           builder: () => DeliveryWrapper(),
         ),
         QRoute(
-          path: kRestaurantOrderViewRoute,
-          name: kRestaurantOrderViewRoute,
+          path: kDvOrderView,
+          name: kDvOrderView,
           builder: () => DvOrderView(),
         ),
         QRoute(

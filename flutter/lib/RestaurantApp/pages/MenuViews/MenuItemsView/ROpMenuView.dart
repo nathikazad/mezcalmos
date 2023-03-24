@@ -184,8 +184,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                       : _reorderBtn()
                 ],
               ),
-              SizedBox(
-                height: 5,
+              Divider(
+                thickness: 0.3,
               ),
               _categoriesItemsList(),
               _noCategoryItemsList()
@@ -306,8 +306,19 @@ class _ROpMenuViewState extends State<ROpMenuView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Divider(),
-            Text('${_i18n()["noCategory"]}'),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              '${_i18n()["noCategory"]}',
+              style: Get.textTheme.bodyLarge,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Divider(
+              thickness: 0.3,
+            ),
             SizedBox(
               height: 5,
             ),

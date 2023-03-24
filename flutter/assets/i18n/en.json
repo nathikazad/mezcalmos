@@ -753,6 +753,24 @@
       }
     },
     "pages": {
+      "ServiceProfileView" : {
+        "profile" : "Profile",
+        "info" : "Information",
+        "operators" : "Operators",
+        "drivers" : "Drivers",
+        "schedule" :"Schedule",
+        "payments" :"Payments",
+        "delivery" :"Delivery",
+        "reviews" : "Reviews",
+        "share" : "Share",
+        "privacyPolicies": "Privacy Policies",
+        "logout" : "Logout",
+        "openService" : "Open service",
+        "closeService" : "Close service",
+        "serviceClosed" : "Service is closed indefinitely",
+        "restaurantReview" : "Your restaurant is under review, you’ll be notifiedonce it’s approved."
+
+      },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
@@ -813,7 +831,8 @@
             "title": "Delivery partner next to you",
             "notFoundTitle": "No delivery partners found",
             "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
-            "joined": "Joined"
+            "joined": "Joined",
+            "errorText" :  "Please select a company or switch to self delivery time"
           }
         }
       },
@@ -856,7 +875,7 @@
       "ServiceDriversListView": {
         "drivers": "Drivers",
         "addDriver": "Add driver",
-        "title": "Ask your operator to scan this QR code on their phone",
+        "title": "Ask your driver to scan this QR code on their phone",
         "copyLink": "Copy link",
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
@@ -900,7 +919,7 @@
           }
         },
         "SignInScreen": {
-          "title": "Connect using Facebook or using SMS ! ",
+          "title": "Sign in using your preferred provider!",
           "loginWithApple": "SIGN IN WITH APPLE",
           "loginWithSms": "LOGIN WITH SMS",
           "fbBtn": "LOGIN WITH FACEBOOK"
@@ -928,7 +947,7 @@
           "no": "No",
           "yesterday": "Yesterday",
           "noNotifTitle": "No notifications yet !",
-          "noNotifBody": "You have currently no notifications. \nWe will notify you when something new arrives."
+          "noNotifBody": "You have currently no notifications. \n We will notify you when something new arrives."
         }
       },
       "UserWelcomeView": {
@@ -1107,6 +1126,10 @@
         "title": "Service closed !",
         "btnTitle": "Open service",
         "subtitle": "Your service is closed indefinitely, you will not receive any orders. would you like to open it?"
+      },
+      "ServiceWaitingForApproval": {
+        "title": "YOUR REQUEST IS BEING PROCESSED",
+        "subtitle": "You will be notified once your request is approved."
       },
       "FreeShippingComponent": {
         "free": "Free"
@@ -1611,6 +1634,11 @@
   },
   "DeliveryApp": {
     "pages": {
+      "UnAuthorizedDriverView" : {
+        "title" : "Invitation needed",
+        "subtitle" : "You need an invitation to use our delivery app"
+
+      },
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
         "approved": "Approved",
@@ -1661,7 +1689,10 @@
             }
           }
         },
-        "title": "Restaurant Delivery"
+        "title": "Delivery",
+        "restaurant" : "Restaurant",
+        "laundry" : "Laundry",
+        "courier" : "Courier"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
@@ -1762,6 +1793,10 @@
               "pickup": "Pickup",
               "pickupTimeError": "The Pickup time should be before the delivery time.",
               "wrongTime": "You picked a wrong time",
+              "noPickupTimeTitle": "No pickup time",
+              "noPickupTimeBody": "Please set pickup time first",
+              "noDeliveryTimeTitle": "No dropoff time",
+              "noDeliveryTimeBody": "Please set dropoff time first",
               "orderStatus": {
                 "waiting": "Waiting for package",
                 "scheduled": "Scheduled order",
@@ -1771,8 +1806,8 @@
                 "deliveryOtw": "Delivery on the way",
                 "pickupOtw": "Pickup on the way",
                 "delivered": "Order Delivered",
-                "canceled": "Order Cancelled",
-                "received": "Order Received"
+                "received": "Order Received",
+                "canceled": "Order Cancelled"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirm Order Pickup",
@@ -1781,7 +1816,11 @@
                 "timeErrorBody": "Please set the estimated times first.",
                 "notReadyTitle": "Waiting for order",
                 "notReadyBody": "Order is not ready for delivery yet",
-                "startDelivery": "Start Delivery"
+                "startDelivery": "Start delivery",
+                "startPickUp": "Start pickup",
+                "atPickUp": "At pickup",
+                "atDropOff": "At dropoff",
+                "finishDelivery": "Finish delivery"
               }
             }
           }
@@ -1827,6 +1866,9 @@
       }
     },
     "pages": {
+      "LaundryUnauthView": {
+        "title": "Please contact Alejandro at +52 1 954 118 4711 to add your laundry service"
+      },
       "LaundryTabsView": {
         "orders": "Orders",
         "profile": "Profile",
@@ -2049,7 +2091,7 @@
         "good": "Good",
         "average": "Average",
         "bad": "Bad",
-        "default": "View all",
+        "default": "Latest",
         "highestrate": "Highest rate",
         "lowestrate": "Lowest rate",
         "noRevTitle": "No reviews yet",
@@ -2057,6 +2099,9 @@
       },
       "ROpOrderView": {
         "schTitle": "Scheduled for",
+        "deliveryDet" :"Delivery details",
+        "review" : "Review",
+        "restaurant" : "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
         "components": {
@@ -2186,7 +2231,7 @@
           "ROpOrderCard": {
             "date": "Date",
             "totalCost": "Total cost",
-            "waiting": "Waiting",
+            "waiting": "In process",
             "delivered": "Delivered",
             "canceled": "Cancelled"
           }
@@ -2253,8 +2298,8 @@
             "available": "Available",
             "unavailable": "Unavailable",
             "rmBtn": "Yes, remove driver",
-            "rmTitle": "Remove driver",
-            "rmText": "Are you sure you want to remove this driver"
+            "rmTitle": "Remove user",
+            "rmText": "Are you sure you want to remove this user"
           }
         },
         "drivers": "Drivers",

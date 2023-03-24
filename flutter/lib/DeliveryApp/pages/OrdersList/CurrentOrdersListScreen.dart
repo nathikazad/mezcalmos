@@ -33,8 +33,10 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
-    Get.find<SideMenuDrawerController>().pastOrdersRoute =
-        DeliveryAppRoutes.kPastOrdersViewRoute;
+    if (_deliveryAuthController.driverState?.isAuthorized == true) {
+      Get.find<SideMenuDrawerController>().pastOrdersRoute =
+          DeliveryAppRoutes.kPastOrdersViewRoute;
+    }
 
     viewController.init();
 
@@ -119,7 +121,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                                     (int index) => MinimalOrderCard(
                                           order:
                                               viewController.openOrders[index],
-                                          showOrderType: true,
                                           onTap: () {
                                             DvOrderView.navigate(
                                                 orderId: viewController
@@ -159,7 +160,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               viewController.currentOrders.length,
               (int index) => MinimalOrderCard(
                     order: viewController.currentOrders[index],
-                    showOrderType: true,
                     onTap: () {
                       DvOrderView.navigate(
                           orderId: viewController.currentOrders[index].id);

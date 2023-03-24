@@ -69,7 +69,6 @@ class CustomerPastOrdersList extends StatelessWidget {
           itemBuilder: (BuildContext context, MinimalOrder order) {
             return MinimalOrderCard(
               order: order,
-              showOrderType: true,
               onTap: () {
                 switch (order.orderType) {
                   case OrderType.Courier:

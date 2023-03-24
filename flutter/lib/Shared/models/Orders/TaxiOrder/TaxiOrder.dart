@@ -158,7 +158,7 @@ class TaxiOrder extends Order {
         from: MezLocation.fromFirebaseData(data['from']),
         to: MezLocation.fromFirebaseData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
-        paymentType: data["paymentType"].toString().toPaymentType(),
+        paymentType: data["paymentType"].toString().convertToPaymentType(),
         routeInformation: RouteInformation(
             polyline: data['routeInformation']['polyline'],
             distance:

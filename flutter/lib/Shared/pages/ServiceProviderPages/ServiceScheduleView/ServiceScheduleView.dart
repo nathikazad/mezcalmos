@@ -43,6 +43,7 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           title: '${_i18n()["schedule"]}',
           onClick: MezRouter.back,
@@ -71,9 +72,6 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 15,
-                ),
                 Container(
                   child: _viewWidgets.editWorkingHoursComponent(),
                 ),

@@ -139,16 +139,17 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
         },
         customBorder: CircleBorder(),
         child: Ink(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: (widget.order.selfDeliveryDetails?.estDeliveryTime != null)
-                  ? Colors.grey.shade300
+                  ? secondaryLightBlueColor
                   : Colors.transparent),
           child: (widget.order.selfDeliveryDetails?.estDeliveryTime != null)
               ? Icon(
-                  Icons.edit_outlined,
-                  size: 18,
+                  Icons.edit,
+                  color: primaryBlueColor,
+                  size: 20,
                 )
               : Text(
                   '${_i18n()["set"]}',

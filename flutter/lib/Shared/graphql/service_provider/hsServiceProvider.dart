@@ -48,6 +48,32 @@ Future<ServiceLink?> get_service_link_by_id(
   return null;
 }
 
+Future<String?> get_service_link({required String uniqueId}) async {
+  final QueryResult<Query$getServiceProviderType> response = await _db
+      .graphQLClient
+      .query$getServiceProviderType(Options$Query$getServiceProviderType(
+          variables:
+              Variables$Query$getServiceProviderType(unique_id: uniqueId)));
+  if (response.parsedData == null) {
+    mezDbgPrint(
+        "🚨🚨🚨 hasura query service type faild \n  Data from response \n ${response.data} \n Exceptions from hasura \n ${response.exception}");
+    return null;
+  }
+  if (response.parsedData!.service_provider_details.length == 0) return null;
+  switch (response
+      .parsedData?.service_provider_details.first.service_provider_type) {
+    case "restaurant":
+    // todo handle properly the routing
+    // return getRestaurantRoute(
+    //     response.parsedData!.service_provider_details.first.restaurant!.id);
+    case "laundry":
+    // return getLaundryRoute(response
+    //     .parsedData!.service_provider_details.first.laundry_store!.id);
+    default:
+      return null;
+  }
+}
+
 Future<MainService?> get_service_details_by_id(
     {required int serviceDetailsId,
     required int serviceId,

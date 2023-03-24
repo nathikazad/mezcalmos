@@ -145,7 +145,7 @@ class CreateServiceViewController {
   }
 
   String getSaveButtonTitle() {
-    if (currentPage.value == 2) {
+    if (currentPage.value == 3) {
       return "${_i18n()['save']}";
     } else
       return "${_i18n()['next']}";

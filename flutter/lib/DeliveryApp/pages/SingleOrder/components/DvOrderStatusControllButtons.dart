@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -265,16 +264,16 @@ class _DvOrderStatusControllButtonsState
   String _getBtnTitle() {
     switch (widget.viewController.order.status) {
       case DeliveryOrderStatus.OrderReceived:
-        return "Start pickup";
+        return "${_i18n()["RestaurantControllButtons"]["startPickUp"]}";
       case DeliveryOrderStatus.OnTheWayToPickup:
-        return "At pickup";
+        return "${_i18n()["RestaurantControllButtons"]["atPickUp"]}";
 
       case DeliveryOrderStatus.AtPickup:
-        return "Start Delivery";
+        return "${_i18n()["RestaurantControllButtons"]["startDelivery"]}";
       case DeliveryOrderStatus.OnTheWayToDropoff:
-        return "At dropoff";
+        return "${_i18n()["RestaurantControllButtons"]["atDropOff"]}";
       case DeliveryOrderStatus.AtDropoff:
-        return "Finish delivery";
+        return "${_i18n()["RestaurantControllButtons"]["finishDelivery"]}";
 
       default:
         return "";

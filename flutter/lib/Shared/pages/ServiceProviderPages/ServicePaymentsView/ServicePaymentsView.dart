@@ -74,6 +74,7 @@ class _ServicePaymentsViewState extends State<ServicePaymentsView> {
         );
       } else
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
               onClick: MezRouter.back, title: "${_i18n()['payments']}"),
           body: SingleChildScrollView(

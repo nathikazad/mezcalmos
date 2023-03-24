@@ -25,7 +25,7 @@ Notification restaurantNotificationHandler(String key, value) {
           // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.NewMessage,
+          notificationType: NotificationType.NewOrder,
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
@@ -43,7 +43,7 @@ Notification restaurantNotificationHandler(String key, value) {
           title:
               (value["approved"] == true) ? "Congrats !!" : "Unfortunately !",
           timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.NewMessage,
+          notificationType: NotificationType.OperatorApproved,
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);

@@ -33,13 +33,14 @@ class _AdminServicesViewState extends State<AdminServicesView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: viewController.scrollController,
       child: Column(
         children: [
           Obx(() => Column(
                 children: [
                   _searchInput(),
                   viewController.hasData
-                      ? _buildServices()
+                      ? _buildRestaurants()
                       : Container(
                           alignment: Alignment.center,
                           child: Center(child: CircularProgressIndicator())),
@@ -60,29 +61,67 @@ class _AdminServicesViewState extends State<AdminServicesView> {
     );
   }
 
-  Column _buildRestaurants() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-            children: List.generate(
-                viewController.restaurants!.length,
-                (int index) => AdminRestaurantServiceCard(
-                    viewController: viewController,
-                    restaurant: viewController.restaurants![index]))),
-        if (viewController.restaurants!.length ==
-            viewController.restLimit.value)
-          MezButton(
-            label: "View more",
-            backgroundColor: secondaryLightBlueColor,
-            textColor: primaryBlueColor,
-            onClick: () async {
-              viewController.restLimit.value += 5;
-              await viewController.fetchRestaurants();
-            },
-          )
-      ],
-    );
+  Widget _buildRestaurants() {
+    
+      viewController.scrollController.addListener(() {
+        if (viewController.scrollController.position.maxScrollExtent ==
+            viewController.scrollController.position.pixels) {
+          viewController.fetchCurrent(increaseLimit: 10);
+        }
+      });
+      return ListView.builder(
+          itemCount: viewController.getCurrentService!.length,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) => Container(
+                child: _getServiceCard(index),
+              ));
+
+      // return Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     Column(
+      //         children: List.generate(
+      //             viewController.restaurants!.length,
+      //             (int index) => AdminRestaurantServiceCard(
+      //                 viewController: viewController,
+      //                 restaurant: viewController.restaurants![index]))),
+      //     if (viewController.restaurants!.length ==
+      //         viewController.restLimit.value)
+      //       MezButton(
+      //         label: "View more",
+      //         backgroundColor: secondaryLightBlueColor,
+      //         textColor: primaryBlueColor,
+      //         onClick: () async {
+      //           viewController.restLimit.value += 5;
+      //           await viewController.fetchRestaurants();
+      //         },
+      //       )
+      //   ],
+      // );
+    
+  }
+
+  Widget _getServiceCard(int index) {
+    switch (viewController.currentService) {
+      case ServiceProviderType.Restaurant:
+        return AdminRestaurantServiceCard(
+            viewController: viewController,
+            restaurant: viewController.restaurants![index]);
+        {}
+      case ServiceProviderType.Laundry:
+        return AdminLaundryServiceCard(
+            viewController: viewController,
+            laundry: viewController.laundries![index]);
+        {}
+      case ServiceProviderType.DeliveryCompany:
+        return AdminDeliveryCompanyServiceCard(
+            viewController: viewController,
+            company: viewController.companies![index]);
+
+      default:
+        return SizedBox();
+    }
   }
 
   Column _buildLaundries() {

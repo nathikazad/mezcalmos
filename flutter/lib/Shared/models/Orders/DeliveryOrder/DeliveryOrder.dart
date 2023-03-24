@@ -131,6 +131,17 @@ class DeliveryOrder {
   }
 
   bool get isDriverAssigned => driverInfo != null;
+  bool get isTimeSetted =>
+      estimatedArrivalAtPickupTime != null &&
+      estimatedArrivalAtDropoffTime != null;
+  bool get inPickUpPhase =>
+      status == DeliveryOrderStatus.OrderReceived ||
+      status == DeliveryOrderStatus.OnTheWayToPickup ||
+      status == DeliveryOrderStatus.AtPickup;
+  bool get inDeliveryPhase =>
+      status == DeliveryOrderStatus.OnTheWayToDropoff ||
+      status == DeliveryOrderStatus.AtDropoff;
+
   @override
   String toString() {
     return 'DeliveryOrder(id: $id, serviceInfo: $serviceInfo, customerInfo: $customerInfo, deliveryDirection: $deliveryDirection, routeInformation: $routeInformation, orderTime: $orderTime, deliveryCost: $deliveryCost, packageCost: $packageCost, pickupLocation: $pickupLocation, dropoffLocation: $dropoffLocation, chatWithCustomerId: $chatWithCustomerId, chatWithServiceProviderId: $chatWithServiceProviderId, paymentType: $paymentType, estimatedArrivalAtDropoffTime: $estimatedArrivalAtDropoffTime, estimatedArrivalAtPickupTime: $estimatedArrivalAtPickupTime, estimatedPackageReadyTime: $estimatedPackageReadyTime, )';
@@ -203,7 +214,7 @@ class DeliveryOrder {
       ].contains(status);
   num get totalCost => packageCost + deliveryCost;
 
-  bool get inDeliveryPhase {
+  bool get orderWithDriver {
     return status == DeliveryOrderStatus.OnTheWayToDropoff ||
         status == DeliveryOrderStatus.OnTheWayToPickup ||
         status == DeliveryOrderStatus.AtDropoff ||

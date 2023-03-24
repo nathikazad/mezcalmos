@@ -68,6 +68,10 @@
 	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
     <string>voip</string>
@@ -86,7 +90,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
+		<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://mezc.co</string>
+	</array>
 
  	<key>CFBundlePrimaryIcon</key>
 	<dict>

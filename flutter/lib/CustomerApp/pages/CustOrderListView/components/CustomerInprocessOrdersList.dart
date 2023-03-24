@@ -47,7 +47,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return MinimalOrderCard(
                     order: viewController.currentOrders[index],
-                    showOrderType: true,
+                 
                     onTap: () {
                       // todo switch case
                       switch (viewController.currentOrders[index].orderType) {

@@ -60,12 +60,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
     }
 
     chatId = int.parse(MezRouter.urlArguments['chatId'].toString());
-    if (MezRouter.urlArguments['recipientType'] != null) {
+  
+     if (MezRouter.urlArguments['recipientType'] != null) {
       recipientType = MezRouter.urlArguments['recipientType']!
           .toString()
-          .toParticipantType();
-    }
-    controller.clearMessageNotifications(chatId: chatId);
+          .toParticipantType(); }
+    controller.clearMessageNotifications(chatId: chatId); 
     // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     setState(() {
@@ -74,6 +74,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
     super.initState();
   }
+  
 
   @override
   void dispose() {
@@ -171,20 +172,20 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                   );
           },
         ),
-        actions: <Widget>[
-          _callButton(context),
+        // actions: <Widget>[
+        //   _callButton(context),
 
-          // )
-        ],
+        //   // )
+        // ],
       ),
       body: isChatLoaded
           ? Container(
               child: Stack(
-                children: <Widget>[
+                children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                    children: [
                       Padding(
                         padding: EdgeInsets.only(top: 10.1),
                         child: Center(
@@ -227,7 +228,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                           () => ListView(
                             shrinkWrap: true,
                             controller: _listViewScrollController,
-                            children: List<Widget>.from(chatLines),
+                            children: List.from(chatLines),
                           ),
                         ),
                       ),

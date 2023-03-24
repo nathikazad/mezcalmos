@@ -6,9 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
@@ -29,8 +27,10 @@ Notification deliveryDriverNotificationHandler(String key, value) {
               (value['orderType'].toString().toOrderType() == OrderType.Laundry)
                   ? mat.Icons.local_laundry_service
                   : mat.Icons.flatware,
-          linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
-              value['orderId']), // needs to be changed, need to add laundry
+          linkUrl: DeliveryAppRoutes.kDvOrderView
+              .replaceFirst(":orderId", value["orderId"]),
+
+          // needs to be changed, need to add laundry
           body: '${_i18n()['driverNotifBody']}', // needs to be changed
           imgUrl:
               'assets/images/shared/notifications/onTheWay.png', // needs to be changed
@@ -71,17 +71,6 @@ Notification deliveryDriverNotificationHandler(String key, value) {
   }
 }
 
-String getLinkUrl(OrderType orderType, int orderId) {
-  switch (orderType) {
-    case OrderType.Laundry:
-      return DeliveryAppRoutes.getLaundryOrderRoute(orderId);
-    case OrderType.Restaurant:
-      return DeliveryAppRoutes.getRestaurantOrderRoute(orderId);
-    default:
-      return SharedRoutes.kHomeRoute;
-  }
-}
-
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
@@ -97,8 +86,8 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
                   RestaurantOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: getLinkUrl(
-          value['orderType'].toString().toOrderType(), value["orderId"]),
+      linkUrl: DeliveryAppRoutes.kDvOrderView
+          .replaceFirst(":orderId", value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -154,13 +143,13 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
       id: key,
       icon: mat.Icons.local_laundry_service,
-      secondaryIcon: (value['status'].toString().toLaundryOrderStatus ==
-                  RestaurantOrderStatus.CancelledByAdmin ||
-              value['status'].toString().toRestaurantOrderStatus() ==
-                  RestaurantOrderStatus.CancelledByAdmin)
+      secondaryIcon: (value['status'].toString().toLaundryOrderStatus() ==
+                  LaundryOrderStatus.CancelledByAdmin ||
+              value['status'].toString().toLaundryOrderStatus() ==
+                  LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: DeliveryAppRoutes.getLaundryOrderRoute(value["orderId"]),
+      linkUrl: DeliveryAppRoutes.getRestaurantOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

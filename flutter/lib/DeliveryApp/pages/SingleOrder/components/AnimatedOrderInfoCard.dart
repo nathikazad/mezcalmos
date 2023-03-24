@@ -11,6 +11,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -365,7 +368,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         SizedBox(width: 3),
         Text(
-          DateFormat('EE, hh:mm a').format(order.orderTime.toLocal()),
+          // 'Today, 10:53 AM',
+          order.orderTime.toLocal().getOrderTime(withDayName: true),
           overflow: TextOverflow.visible,
           style: TextStyle(
             fontFamily: 'Nunito',

@@ -23,7 +23,8 @@ class UnautthDriverViewController {
   Future<void> init() async {
     await dvAuthController.setupDeliveryDriver();
     _status.value = dvAuthController.driver?.deliveryDriverState.status;
-    if (_status.value! == AgentStatus.AwaitingApproval) {
+    if (_status.value != null &&
+        _status.value! == AgentStatus.AwaitingApproval) {
       _startListeningOnSatus();
     }
   }

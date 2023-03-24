@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -169,6 +170,11 @@ class ROpItemViewController {
       mezDbgPrint("Settign default image");
       newImageUrl.value =
           "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
+    }
+    if (newImageFile.value != null) {
+      newImageUrl.value = await Get.find<AuthController>().uploadImgToFbStorage(
+          imageFile: newImageFile.value!,
+          path: "/restaurants/$restaurantId/items/images");
     }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(

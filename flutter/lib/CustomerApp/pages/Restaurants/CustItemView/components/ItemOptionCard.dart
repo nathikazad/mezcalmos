@@ -35,7 +35,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   void initState() {
     optionId = widget.option.id.toString();
-    if (!widget.editMode) {
+    if (!widget.editMode && widget.option.getChoices.isNotEmpty) {
       assignDefaultChoice();
       assignMinimumChoices();
     }

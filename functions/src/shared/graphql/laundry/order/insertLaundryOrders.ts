@@ -6,6 +6,22 @@ export async function insertLaundryOrders(data: any, response: any) {
 
     let chain = getHasura();
 
+    let queryResponse = await chain.query({
+        laundry_order: [{}, {
+            firebase_id: true
+        }]
+    })
+    let insertedOrders: Record<string, boolean> = {};
+    queryResponse.laundry_order.forEach((r) => {
+        if(r.firebase_id == null)
+            return;
+        // console.log(typeof r.details.firebase_id)
+        insertedOrders[r.firebase_id] = true;
+    })
+    console.log(data.length)
+    data = data.filter((r: any) => insertedOrders[r.firebaseId] == undefined)
+    console.log(data.length)
+
     let laundryFbIdToObject: Record<string, any> = {
         "fYlin8EkPo5v6VnmG1e4QuiJ2ti6": {
             hsId: 7,

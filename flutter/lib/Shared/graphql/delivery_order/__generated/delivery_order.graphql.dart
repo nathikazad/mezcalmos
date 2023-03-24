@@ -16910,6 +16910,13 @@ const documentNodeSubscriptionlisten_on_inprocess_driver_orders =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'dropoff_address'),
             alias: null,
             arguments: [],
@@ -17188,6 +17195,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     this.package_cost_comp,
     required this.package_ready,
     required this.order_type,
+    required this.delivery_cost,
     required this.dropoff_address,
     required this.delivery_cost,
     required this.dropoff_gps,
@@ -17204,6 +17212,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     final l$package_cost_comp = json['package_cost_comp'];
     final l$package_ready = json['package_ready'];
     final l$order_type = json['order_type'];
+    final l$delivery_cost = json['delivery_cost'];
     final l$dropoff_address = json['dropoff_address'];
     final l$delivery_cost = json['delivery_cost'];
     final l$dropoff_gps = json['dropoff_gps'];
@@ -17219,6 +17228,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
           : moneyFromJson(l$package_cost_comp),
       package_ready: (l$package_ready as bool),
       order_type: (l$order_type as String),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       dropoff_address: (l$dropoff_address as String),
       delivery_cost: moneyFromJson(l$delivery_cost),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
@@ -17244,6 +17254,8 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
   final bool package_ready;
 
   final String order_type;
+
+  final double delivery_cost;
 
   final String dropoff_address;
 
@@ -17274,6 +17286,8 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     _resultData['package_ready'] = l$package_ready;
     final l$order_type = order_type;
     _resultData['order_type'] = l$order_type;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$delivery_cost = delivery_cost;
@@ -17297,6 +17311,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     final l$package_cost_comp = package_cost_comp;
     final l$package_ready = package_ready;
     final l$order_type = order_type;
+    final l$delivery_cost = delivery_cost;
     final l$dropoff_address = dropoff_address;
     final l$delivery_cost = delivery_cost;
     final l$dropoff_gps = dropoff_gps;
@@ -17310,6 +17325,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
       l$package_cost_comp,
       l$package_ready,
       l$order_type,
+      l$delivery_cost,
       l$dropoff_address,
       l$delivery_cost,
       l$dropoff_gps,
@@ -17357,6 +17373,11 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     final l$order_type = order_type;
     final lOther$order_type = other.order_type;
     if (l$order_type != lOther$order_type) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
       return false;
     }
     final l$dropoff_address = dropoff_address;
@@ -17423,6 +17444,7 @@ abstract class CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_
     double? package_cost_comp,
     bool? package_ready,
     String? order_type,
+    double? delivery_cost,
     String? dropoff_address,
     double? delivery_cost,
     Geography? dropoff_gps,
@@ -17462,6 +17484,7 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
     Object? package_cost_comp = _undefined,
     Object? package_ready = _undefined,
     Object? order_type = _undefined,
+    Object? delivery_cost = _undefined,
     Object? dropoff_address = _undefined,
     Object? delivery_cost = _undefined,
     Object? dropoff_gps = _undefined,
@@ -17486,6 +17509,9 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
         dropoff_address:
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
@@ -17543,6 +17569,7 @@ class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_
     double? package_cost_comp,
     bool? package_ready,
     String? order_type,
+    double? delivery_cost,
     String? dropoff_address,
     double? delivery_cost,
     Geography? dropoff_gps,
@@ -18867,6 +18894,13 @@ const documentNodeQueryget_past_driver_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'dropoff_address'),
             alias: null,
             arguments: [],
@@ -19165,7 +19199,11 @@ class Query$get_past_driver_orders$delivery_order {
     required this.order_time,
     required this.status,
     required this.order_type,
+<<<<<<< HEAD
     this.package_cost_comp,
+=======
+    required this.package_cost,
+>>>>>>> master
     required this.delivery_cost,
     required this.dropoff_address,
     required this.dropoff_gps,
@@ -19180,7 +19218,11 @@ class Query$get_past_driver_orders$delivery_order {
     final l$order_time = json['order_time'];
     final l$status = json['status'];
     final l$order_type = json['order_type'];
+<<<<<<< HEAD
     final l$package_cost_comp = json['package_cost_comp'];
+=======
+    final l$package_cost = json['package_cost'];
+>>>>>>> master
     final l$delivery_cost = json['delivery_cost'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
@@ -19192,9 +19234,13 @@ class Query$get_past_driver_orders$delivery_order {
       order_time: (l$order_time as String),
       status: (l$status as String),
       order_type: (l$order_type as String),
+<<<<<<< HEAD
       package_cost_comp: l$package_cost_comp == null
           ? null
           : moneyFromJson(l$package_cost_comp),
+=======
+      package_cost: moneyFromJson(l$package_cost),
+>>>>>>> master
       delivery_cost: moneyFromJson(l$delivery_cost),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
@@ -19220,6 +19266,8 @@ class Query$get_past_driver_orders$delivery_order {
 
   final double delivery_cost;
 
+  final double delivery_cost;
+
   final String dropoff_address;
 
   final Geography dropoff_gps;
@@ -19240,9 +19288,14 @@ class Query$get_past_driver_orders$delivery_order {
     _resultData['status'] = l$status;
     final l$order_type = order_type;
     _resultData['order_type'] = l$order_type;
+<<<<<<< HEAD
     final l$package_cost_comp = package_cost_comp;
     _resultData['package_cost_comp'] =
         l$package_cost_comp == null ? null : moneyToJson(l$package_cost_comp);
+=======
+    final l$package_cost = package_cost;
+    _resultData['package_cost'] = moneyToJson(l$package_cost);
+>>>>>>> master
     final l$delivery_cost = delivery_cost;
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$dropoff_address = dropoff_address;
@@ -19264,7 +19317,11 @@ class Query$get_past_driver_orders$delivery_order {
     final l$order_time = order_time;
     final l$status = status;
     final l$order_type = order_type;
+<<<<<<< HEAD
     final l$package_cost_comp = package_cost_comp;
+=======
+    final l$package_cost = package_cost;
+>>>>>>> master
     final l$delivery_cost = delivery_cost;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
@@ -19276,7 +19333,11 @@ class Query$get_past_driver_orders$delivery_order {
       l$order_time,
       l$status,
       l$order_type,
+<<<<<<< HEAD
       l$package_cost_comp,
+=======
+      l$package_cost,
+>>>>>>> master
       l$delivery_cost,
       l$dropoff_address,
       l$dropoff_gps,
@@ -19318,6 +19379,11 @@ class Query$get_past_driver_orders$delivery_order {
     final l$package_cost_comp = package_cost_comp;
     final lOther$package_cost_comp = other.package_cost_comp;
     if (l$package_cost_comp != lOther$package_cost_comp) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
       return false;
     }
     final l$delivery_cost = delivery_cost;
@@ -19378,7 +19444,11 @@ abstract class CopyWith$Query$get_past_driver_orders$delivery_order<TRes> {
     String? order_time,
     String? status,
     String? order_type,
+<<<<<<< HEAD
     double? package_cost_comp,
+=======
+    double? package_cost,
+>>>>>>> master
     double? delivery_cost,
     String? dropoff_address,
     Geography? dropoff_gps,
@@ -19410,7 +19480,11 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order<TRes>
     Object? order_time = _undefined,
     Object? status = _undefined,
     Object? order_type = _undefined,
+<<<<<<< HEAD
     Object? package_cost_comp = _undefined,
+=======
+    Object? package_cost = _undefined,
+>>>>>>> master
     Object? delivery_cost = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
@@ -19429,9 +19503,15 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order<TRes>
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
+<<<<<<< HEAD
         package_cost_comp: package_cost_comp == _undefined
             ? _instance.package_cost_comp
             : (package_cost_comp as double?),
+=======
+        package_cost: package_cost == _undefined || package_cost == null
+            ? _instance.package_cost
+            : (package_cost as double),
+>>>>>>> master
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -19483,7 +19563,11 @@ class _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order<TRes>
     String? order_time,
     String? status,
     String? order_type,
+<<<<<<< HEAD
     double? package_cost_comp,
+=======
+    double? package_cost,
+>>>>>>> master
     double? delivery_cost,
     String? dropoff_address,
     Geography? dropoff_gps,
@@ -20768,6 +20852,13 @@ const documentNodeQueryget_inprocess_driver_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'dropoff_address'),
             alias: null,
             arguments: [],
@@ -21075,6 +21166,7 @@ class Query$get_inprocess_driver_orders$delivery_order {
     required this.order_type,
     this.package_cost_comp,
     required this.package_ready,
+    required this.delivery_cost,
     required this.dropoff_address,
     required this.delivery_cost,
     required this.dropoff_gps,
@@ -21091,6 +21183,7 @@ class Query$get_inprocess_driver_orders$delivery_order {
     final l$order_type = json['order_type'];
     final l$package_cost_comp = json['package_cost_comp'];
     final l$package_ready = json['package_ready'];
+    final l$delivery_cost = json['delivery_cost'];
     final l$dropoff_address = json['dropoff_address'];
     final l$delivery_cost = json['delivery_cost'];
     final l$dropoff_gps = json['dropoff_gps'];
@@ -21106,6 +21199,7 @@ class Query$get_inprocess_driver_orders$delivery_order {
           ? null
           : moneyFromJson(l$package_cost_comp),
       package_ready: (l$package_ready as bool),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       dropoff_address: (l$dropoff_address as String),
       delivery_cost: moneyFromJson(l$delivery_cost),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
@@ -21131,6 +21225,8 @@ class Query$get_inprocess_driver_orders$delivery_order {
   final double? package_cost_comp;
 
   final bool package_ready;
+
+  final double delivery_cost;
 
   final String dropoff_address;
 
@@ -21159,6 +21255,8 @@ class Query$get_inprocess_driver_orders$delivery_order {
         l$package_cost_comp == null ? null : moneyToJson(l$package_cost_comp);
     final l$package_ready = package_ready;
     _resultData['package_ready'] = l$package_ready;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$delivery_cost = delivery_cost;
@@ -21182,6 +21280,7 @@ class Query$get_inprocess_driver_orders$delivery_order {
     final l$order_type = order_type;
     final l$package_cost_comp = package_cost_comp;
     final l$package_ready = package_ready;
+    final l$delivery_cost = delivery_cost;
     final l$dropoff_address = dropoff_address;
     final l$delivery_cost = delivery_cost;
     final l$dropoff_gps = dropoff_gps;
@@ -21195,6 +21294,7 @@ class Query$get_inprocess_driver_orders$delivery_order {
       l$order_type,
       l$package_cost_comp,
       l$package_ready,
+      l$delivery_cost,
       l$dropoff_address,
       l$delivery_cost,
       l$dropoff_gps,
@@ -21241,6 +21341,11 @@ class Query$get_inprocess_driver_orders$delivery_order {
     final l$package_ready = package_ready;
     final lOther$package_ready = other.package_ready;
     if (l$package_ready != lOther$package_ready) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
       return false;
     }
     final l$dropoff_address = dropoff_address;
@@ -21304,6 +21409,7 @@ abstract class CopyWith$Query$get_inprocess_driver_orders$delivery_order<TRes> {
     String? order_type,
     double? package_cost_comp,
     bool? package_ready,
+    double? delivery_cost,
     String? dropoff_address,
     double? delivery_cost,
     Geography? dropoff_gps,
@@ -21337,6 +21443,7 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order<TRes>
     Object? order_type = _undefined,
     Object? package_cost_comp = _undefined,
     Object? package_ready = _undefined,
+    Object? delivery_cost = _undefined,
     Object? dropoff_address = _undefined,
     Object? delivery_cost = _undefined,
     Object? dropoff_gps = _undefined,
@@ -21361,6 +21468,9 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order<TRes>
         package_ready: package_ready == _undefined || package_ready == null
             ? _instance.package_ready
             : (package_ready as bool),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
         dropoff_address:
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
@@ -21414,6 +21524,7 @@ class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order<TRes>
     String? order_type,
     double? package_cost_comp,
     bool? package_ready,
+    double? delivery_cost,
     String? dropoff_address,
     double? delivery_cost,
     Geography? dropoff_gps,
@@ -28607,6 +28718,13 @@ const documentNodeQueryget_delivery_company_past_orders =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'order_type'),
             alias: null,
             arguments: [],
@@ -28903,6 +29021,7 @@ class Query$get_delivery_company_past_orders$delivery_order {
     required this.dropoff_address,
     required this.delivery_cost,
     required this.dropoff_gps,
+    required this.delivery_cost,
     required this.order_type,
     required this.customer,
     this.restaurant,
@@ -28918,6 +29037,7 @@ class Query$get_delivery_company_past_orders$delivery_order {
     final l$dropoff_address = json['dropoff_address'];
     final l$delivery_cost = json['delivery_cost'];
     final l$dropoff_gps = json['dropoff_gps'];
+    final l$delivery_cost = json['delivery_cost'];
     final l$order_type = json['order_type'];
     final l$customer = json['customer'];
     final l$restaurant = json['restaurant'];
@@ -28932,6 +29052,7 @@ class Query$get_delivery_company_past_orders$delivery_order {
       dropoff_address: (l$dropoff_address as String),
       delivery_cost: moneyFromJson(l$delivery_cost),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       order_type: (l$order_type as String),
       customer: Query$get_delivery_company_past_orders$delivery_order$customer
           .fromJson((l$customer as Map<String, dynamic>)),
@@ -28956,6 +29077,8 @@ class Query$get_delivery_company_past_orders$delivery_order {
   final double delivery_cost;
 
   final Geography dropoff_gps;
+
+  final double delivery_cost;
 
   final String order_type;
 
@@ -28983,6 +29106,8 @@ class Query$get_delivery_company_past_orders$delivery_order {
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$dropoff_gps = dropoff_gps;
     _resultData['dropoff_gps'] = geographyToJson(l$dropoff_gps);
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$order_type = order_type;
     _resultData['order_type'] = l$order_type;
     final l$customer = customer;
@@ -29003,6 +29128,7 @@ class Query$get_delivery_company_past_orders$delivery_order {
     final l$dropoff_address = dropoff_address;
     final l$delivery_cost = delivery_cost;
     final l$dropoff_gps = dropoff_gps;
+    final l$delivery_cost = delivery_cost;
     final l$order_type = order_type;
     final l$customer = customer;
     final l$restaurant = restaurant;
@@ -29015,6 +29141,7 @@ class Query$get_delivery_company_past_orders$delivery_order {
       l$dropoff_address,
       l$delivery_cost,
       l$dropoff_gps,
+      l$delivery_cost,
       l$order_type,
       l$customer,
       l$restaurant,
@@ -29064,6 +29191,11 @@ class Query$get_delivery_company_past_orders$delivery_order {
     final l$dropoff_gps = dropoff_gps;
     final lOther$dropoff_gps = other.dropoff_gps;
     if (l$dropoff_gps != lOther$dropoff_gps) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
       return false;
     }
     final l$order_type = order_type;
@@ -29120,6 +29252,7 @@ abstract class CopyWith$Query$get_delivery_company_past_orders$delivery_order<
     String? dropoff_address,
     double? delivery_cost,
     Geography? dropoff_gps,
+    double? delivery_cost,
     String? order_type,
     Query$get_delivery_company_past_orders$delivery_order$customer? customer,
     Query$get_delivery_company_past_orders$delivery_order$restaurant?
@@ -29155,6 +29288,7 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order<TRes>
     Object? dropoff_address = _undefined,
     Object? delivery_cost = _undefined,
     Object? dropoff_gps = _undefined,
+    Object? delivery_cost = _undefined,
     Object? order_type = _undefined,
     Object? customer = _undefined,
     Object? restaurant = _undefined,
@@ -29181,6 +29315,9 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order<TRes>
         dropoff_gps: dropoff_gps == _undefined || dropoff_gps == null
             ? _instance.dropoff_gps
             : (dropoff_gps as Geography),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
@@ -29231,6 +29368,7 @@ class _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order<
     String? dropoff_address,
     double? delivery_cost,
     Geography? dropoff_gps,
+    double? delivery_cost,
     String? order_type,
     Query$get_delivery_company_past_orders$delivery_order$customer? customer,
     Query$get_delivery_company_past_orders$delivery_order$restaurant?

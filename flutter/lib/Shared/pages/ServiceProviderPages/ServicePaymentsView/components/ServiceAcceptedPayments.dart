@@ -59,7 +59,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                 ),
                 Flexible(
                   child: Checkbox(
-                      shape: CircleBorder(),
+                      //  shape: CircleBorder(),
                       activeColor: primaryBlueColor,
                       value: widget.viewController.paymentInfo
                               ?.acceptedPayments[PaymentType.Cash] ==
@@ -72,7 +72,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           Divider(
             endIndent: 10,
             indent: 5,
-            height: 7,
+            height: 15,
             thickness: 0.3,
           ),
           // Container(
@@ -164,7 +164,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                   ),
                 ),
                 Checkbox(
-                    shape: CircleBorder(),
+                    //   shape: CircleBorder(),
                     activeColor: primaryBlueColor,
                     value: widget.viewController.cardChecked,
                     onChanged: (bool? v) {
@@ -220,25 +220,42 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //       widget.viewController.handleCardCheckBoxClick(v!);
           //     }),
           if (widget.viewController.cardChecked)
-            Container(
-              margin: const EdgeInsets.all(5),
-              child: Row(
-                children: [
-                  Flexible(
-                      fit: FlexFit.tight,
-                      child: Text("${_i18n()["chargeCustomer"]}")),
-                  Obx(
-                    () => Switch(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: primaryBlueColor,
-                      value: widget.viewController.getChargeFessOnCustomer(),
-                      onChanged: (bool v) {
-                        widget.viewController.switchChargeFees(v);
-                      },
-                    ),
-                  )
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Divider(
+                  endIndent: 10,
+                  indent: 5,
+                  height: 15,
+                  thickness: 0.3,
+                ),
+                Text(
+                  "Card fees",
+                  style: Get.textTheme.bodyLarge,
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  child: Row(
+                    children: [
+                      Flexible(
+                          fit: FlexFit.tight,
+                          child: Text("${_i18n()["chargeCustomer"]}")),
+                      Obx(
+                        () => Switch(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          activeColor: primaryBlueColor,
+                          value:
+                              widget.viewController.getChargeFessOnCustomer(),
+                          onChanged: (bool v) {
+                            widget.viewController.switchChargeFees(v);
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             )
         ],
       ),

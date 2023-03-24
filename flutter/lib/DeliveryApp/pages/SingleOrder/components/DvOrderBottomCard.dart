@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -129,9 +128,9 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
       // case DeliveryOrderStatus.PackageReady:
       //   return '${_i18n()["orderStatus"]["justReady"]}';
       case DeliveryOrderStatus.AtPickup:
-        return 'At pickup';
+        return "${_i18n()["RestaurantControllButtons"]["atPickUp"]}";
       case DeliveryOrderStatus.AtDropoff:
-        return 'At dropoff';
+        return "${_i18n()["RestaurantControllButtons"]["atDropOff"]}";
       case DeliveryOrderStatus.OnTheWayToDropoff:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
       case DeliveryOrderStatus.OnTheWayToPickup:
@@ -154,27 +153,26 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     return (widget.viewcontroller.pickuSetted)
         ? Row(
             children: [
-              Text(DateFormat('hh:mm a')
-                  .format(widget.viewcontroller.pickupTime!.toLocal())),
+              Text(widget.viewcontroller.pickupTime!.toLocal().getOrderTime()),
               const SizedBox(
                 width: 5,
               ),
-              MezIconButton(
-                onTap: () async {
-                  mezDbgPrint("Clicked ");
-                  DateTime? newTime = await _pickDateAndTime(
-                      context: context,
-                      firstDate: widget
-                          .viewcontroller.order.estimatedPackageReadyTime);
-                  if (newTime != null) {
-                    await widget.viewcontroller
-                        .setPickupTime(newTime.toLocal());
-                  }
-                },
-                icon: Icons.edit_rounded,
-                iconSize: 20,
-                padding: const EdgeInsets.all(3),
-              )
+              if (widget.viewcontroller.order.inProcess())
+                MezIconButton(
+                  onTap: () async {
+                    DateTime? newTime = await _pickDateAndTime(
+                        context: context,
+                        firstDate: widget
+                            .viewcontroller.order.estimatedPackageReadyTime);
+                    if (newTime != null) {
+                      await widget.viewcontroller
+                          .setPickupTime(newTime.toLocal());
+                    }
+                  },
+                  icon: Icons.edit_rounded,
+                  padding: EdgeInsets.all(3),
+                  iconSize: 20,
+                )
             ],
           )
         : _pickupTimeSetButton();
@@ -184,34 +182,33 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     return (widget.viewcontroller.dropoffSetted)
         ? Row(
             children: [
-              Text(DateFormat('hh:mm a')
-                  .format(widget.viewcontroller.dropoffTime!.toLocal())),
+              Text(widget.viewcontroller.dropoffTime!.toLocal().getOrderTime()),
               const SizedBox(
                 width: 5,
               ),
-              MezIconButton(
-                onTap: () async {
-                  mezDbgPrint("Clicked ");
-                  mezDbgPrint(widget.viewcontroller.inPickupPhase);
-                  if (widget.viewcontroller.pickuSetted) {
-                    DateTime? newTime = await _pickDateAndTime(
-                        context: context,
-                        firstDate: widget
-                            .viewcontroller.order.estimatedArrivalAtPickupTime);
-                    if (newTime != null) {
-                      await widget.viewcontroller
-                          .setDropoffTime(newTime.toLocal());
+              if (widget.viewcontroller.order.inProcess())
+                MezIconButton(
+                  onTap: () async {
+                    mezDbgPrint(widget.viewcontroller.inPickupPhase);
+                    if (widget.viewcontroller.pickuSetted) {
+                      DateTime? newTime = await _pickDateAndTime(
+                          context: context,
+                          firstDate: widget.viewcontroller.order
+                              .estimatedArrivalAtPickupTime);
+                      if (newTime != null) {
+                        await widget.viewcontroller
+                            .setDropoffTime(newTime.toLocal());
+                      }
+                    } else {
+                      showErrorSnackBar(
+                          errorTitle: "${_i18n()['noPickupTimeTitle']}",
+                          errorText: "${_i18n()['noPickupTimeBody']}");
                     }
-                  } else {
-                    showErrorSnackBar(
-                        errorTitle: "No pick up time",
-                        errorText: "Please set pick up time first");
-                  }
-                },
-                icon: Icons.edit_rounded,
-                iconSize: 20,
-                padding: const EdgeInsets.all(3),
-              )
+                  },
+                  icon: Icons.edit_rounded,
+                  padding: EdgeInsets.all(3),
+                  iconSize: 20,
+                )
             ],
           )
         : _dropOffTimeSetButton();
@@ -220,7 +217,6 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
   InkWell _dropOffTimeSetButton() {
     return InkWell(
       onTap: () async {
-        mezDbgPrint("Clicked");
         mezDbgPrint(widget.viewcontroller.pickuSetted);
         if (widget.viewcontroller.pickuSetted) {
           DateTime? newTime = await _pickDateAndTime(
@@ -231,11 +227,9 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
             await widget.viewcontroller.setDropoffTime(newTime);
           }
         } else {
-          mezDbgPrint("Pick up not setted");
-
           showErrorSnackBar(
-              errorTitle: "No pick up time",
-              errorText: "Please set pick up time first");
+              errorTitle: "${_i18n()['noDeliveryTimeTitle']}",
+              errorText: "${_i18n()['noDeliveryTimeBody']}");
         }
       },
       borderRadius: BorderRadius.circular(5),

@@ -44,7 +44,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: "Reviews", onClick: MezRouter.back),
+          title: "${_i18n()['reviews']}", onClick: MezRouter.back),
       body: Obx(() {
         if (viewController.hasReviews && viewController.hasRating) {
           return SingleChildScrollView(
