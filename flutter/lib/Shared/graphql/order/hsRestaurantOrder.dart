@@ -189,7 +189,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             orderItemsCost: orderData.items_cost,
             totalCost: orderData.total_cost),
         deliveryCompany: null, driverLocation: null,
-        deliveryDirection: DeliveryDirection.ToCustomer,
+        deliveryDirection: DeliveryDirection.ToCustomer, pickupLocation: null,
       );
 
       res.items = items;
@@ -269,6 +269,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
   }
   final RestaurantOrder res = RestaurantOrder(
+    pickupLocation: null,
     deliveryProviderType:
         orderData.delivery!.service_provider_type.toServiceProviderType(),
     serviceProviderDriverChatId:

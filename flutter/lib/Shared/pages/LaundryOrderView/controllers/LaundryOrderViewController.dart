@@ -63,7 +63,7 @@ class LaundryOrderViewController {
           await get_laundry_order_by_id(orderId: orderId, withCache: false);
       if (_order.value != null) {
         laundryCategories.value = await get_laundry_categories(
-            storeId: _order.value!.laundry!.hasuraId);
+            storeId: _order.value!.serviceProvider.hasuraId);
       }
 
       if (_order.value!.routeInformation != null) {
@@ -258,7 +258,7 @@ class LaundryOrderViewController {
     }
     if (res != null) {
       closeEditMode();
-      MezRouter.back();
+      await MezRouter.back();
     }
   }
 

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -12,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CustLaundryOrderViewController {
@@ -59,7 +57,6 @@ class CustLaundryOrderViewController {
                 "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.location?.toJson()}");
             order.value = event;
             order.value?.driverInfo = event.driverInfo;
-            updateMapByPhase(order.value!.getCurrentPhase());
           }
         });
       }, cancel: () {
@@ -69,117 +66,6 @@ class CustLaundryOrderViewController {
     }
     // first time init map
     //mGoogleMapController.animateMarkersPolyLinesBounds(true);
-    if (order.value != null) {
-      _initMap();
-    }
-  }
-
-  void _initMap() {
-    mGoogleMapController.periodicRerendering.value = true;
-    mGoogleMapController.minMaxZoomPrefs =
-        MinMaxZoomPreference.unbounded; // LEZEM
-    mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
-
-    mGoogleMapController.setLocation(
-      LocModel.MezLocation(
-        "",
-        LocModel.MezLocation.buildLocationData(
-          order.value!.dropOffLocation.latitude,
-          order.value!.dropOffLocation.longitude,
-        ),
-      ),
-    );
-
-    // restaurant ad customer's location are fixed (fit in bound at start)
-    mGoogleMapController.addOrUpdateUserMarker(
-      latLng: order.value?.laundry?.location.toLatLng(),
-      markerId: order.value?.laundry?.firebaseId,
-      customImgHttpUrl: order.value?.laundry?.image,
-      fitWithinBounds: true,
-    );
-
-    // customer's
-    mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value?.dropOffLocation.toLatLng(),
-      fitWithinBounds: true,
-    );
-
-    if (order.value!.routeInformation != null)
-      mGoogleMapController.decodeAndAddPolyline(
-          encodedPolylineString: order.value!.routeInformation!.polyline);
-
-    mGoogleMapController.animateAndUpdateBounds(
-      shouldFitPolylineInBound: order.value!.routeInformation != null,
-    );
-  }
-
-  void updateMapByPhase(LaundryOrderPhase phase) {
-    switch (phase) {
-      case LaundryOrderPhase.Pickup:
-        if (_phaseSnapshot != phase) {
-          _phaseSnapshot = phase;
-          // we ignore the marker within bounds
-          mGoogleMapController.addOrUpdateUserMarker(
-            latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.firebaseId,
-            customImgHttpUrl: order.value?.laundry?.image,
-            fitWithinBounds: true,
-          );
-          mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value?.dropOffLocation.toLatLng(),
-            fitWithinBounds: true,
-          );
-        }
-        // only if pickUpDriver not null
-        if (order.value?.pickupDriver != null &&
-            order.value!.inDeliveryPhase()) {
-          mGoogleMapController.addOrUpdateUserMarker(
-            latLng: order.value?.pickupDriver?.location,
-            markerId: "pickup_driver", //order.value!.pickupDriver!.id,
-            customImgHttpUrl: order.value?.pickupDriver?.image,
-            fitWithinBounds: true,
-          );
-        }
-
-        break;
-
-      case LaundryOrderPhase.Dropoff:
-        if (_phaseSnapshot != phase) {
-          _phaseSnapshot = phase;
-          // needed when the view is not disposed, we have to remove it..
-          mGoogleMapController.removeMarkerById("pickup_driver");
-          // mezDbgPrint("Phaaaaazeeee::_phaseSnapshot ==> $_phaseSnapshot");
-          // we ignore the restaurant's marker within bounds
-          mGoogleMapController.addOrUpdateUserMarker(
-            latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.firebaseId,
-            customImgHttpUrl: order.value?.laundry?.image,
-            fitWithinBounds: true,
-          );
-          // we fit the destination into bounds
-          mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value?.dropOffLocation.toLatLng(),
-            fitWithinBounds: true,
-          );
-        }
-
-        // we keep updating the delivery's
-        if (order.value?.driverInfo != null) {
-          // mezDbgPrint(
-          //     "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
-
-          mGoogleMapController.addOrUpdateUserMarker(
-            latLng: order.value?.driverInfo?.location,
-            markerId: "dropoff_driver", //order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value?.driverInfo?.image,
-            fitWithinBounds: true,
-          );
-        }
-        mGoogleMapController.animateAndUpdateBounds();
-        break;
-      default:
-    }
-    mGoogleMapController.animateAndUpdateBounds();
   }
 
 // Order status change methods

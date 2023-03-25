@@ -2,10 +2,8 @@
 // ignore_for_file: constant_identifier_names, always_specify_types
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -45,15 +43,12 @@ extension ParseStringToOrderStatus on String {
 }
 
 class LaundryOrder extends TwoWayDeliverableOrder {
-  String? notes;
-  ServiceInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
   MezLocation customerLocation;
   MezLocation laundryLocation;
   LaundryOrderCosts? costsByType;
-  DateTime? estimatedLaundryReadyTime;
-  RouteInformation? routeInformation;
+
   int fromCustomerDeliveryId;
   int? toCustomerDeliveryId;
 
@@ -67,19 +62,23 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.status,
       required super.customer,
       required super.deliveryProviderType,
-      required this.laundry,
       required this.fromCustomerDeliveryId,
       required this.toCustomerDeliveryId,
       required this.shippingCost,
       this.costsByType,
-      this.estimatedLaundryReadyTime,
-      this.routeInformation,
+      super.stripePaymentInfo,
+      super.scheduleTime,
+      super.serviceProviderId,
+      super.routeInformation,
       super.driverInfo,
       super.pickupDriver,
       super.customerPickupDriverChatId,
       super.estimatedPickupFromCustomerTime,
+      super.estimatedArrivalAtDropoff,
+      super.estimatedArrivalAtPickup,
+      super.estimatedPackageReadyTime,
       super.estimatedDropoffAtServiceProviderTime,
-      this.notes,
+      super.notes,
       super.orderType = OrderType.Laundry,
       required super.chatId,
       super.notifiedAdmin,
@@ -92,7 +91,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required super.driverLocation,
       required super.serviceProviderDriverChatId,
       required super.customerDriverChatId,
-      required super.serviceProvider, required super.pickupLocation});
+      required super.serviceProvider,
+      required super.pickupLocation});
 
   // factory LaundryOrder.fromData(id, data) {
   //   final dynamic _estimatedPickupFromServiceProviderTime =

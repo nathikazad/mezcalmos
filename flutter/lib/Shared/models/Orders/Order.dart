@@ -22,6 +22,7 @@ abstract class Order {
   UserInfo customer;
   UserInfo serviceProvider;
   MezLocation dropOffLocation;
+  String? notes;
 
   RouteInformation? routeInformation;
   StripeOrderPaymentInfo? stripePaymentInfo;
@@ -34,6 +35,7 @@ abstract class Order {
     required this.chatId,
     required this.orderId,
     required this.orderType,
+    this.notes,
     this.serviceProviderId,
     required this.paymentType,
     required this.orderTime,
@@ -175,6 +177,7 @@ abstract class DeliverableOrder extends Order {
     required this.deliveryOrderId,
     required this.driverLocation,
     required this.deliveryDirection,
+    super.notes,
     required this.deliveryCompany,
     super.serviceProviderId,
     required super.paymentType,
@@ -214,9 +217,12 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required super.paymentType,
       required super.orderTime,
       required super.deliveryProviderType,
+      required this.customerPickupDriverChatId,
+      
       required super.costs,
       required super.deliveryDirection,
       required super.deliveryOrderId,
+      super.notes,
       required super.driverLocation,
       required super.serviceProvider,
       required super.customer,
@@ -231,7 +237,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required super.customerDriverChatId,
       this.pickupDriver,
       required this.serviceProviderPickupDriverChatId,
-      required this.customerPickupDriverChatId,
+     
       super.estimatedArrivalAtPickup,
       super.estimatedArrivalAtDropoff,
       this.estimatedPickupFromCustomerTime,

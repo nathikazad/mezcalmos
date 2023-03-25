@@ -125,7 +125,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   if (viewController.order.inProcess())
                     MezButton(
                       label: "Cancel order",
-                      onClick: () async {},
+                      onClick: () async {
+                        await viewController.cancelOrder();
+                      },
                       backgroundColor: offRedColor,
                       textColor: Colors.redAccent,
                     )

@@ -98,7 +98,7 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         ShippingCostComponent(
-                          shippingCost: costs.deliveryCost!,
+                          shippingCost: costs.deliveryCost,
                           formattedShippingCost: (divideDeliveryCost)
                               ? "${(costs.deliveryCost! / 2).toPriceString()} x 2 "
                               : null,
@@ -123,7 +123,7 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                if (showNullValues || costs.tax != null)
+                if (costs.tax != null && costs.tax != 0)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(

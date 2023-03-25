@@ -192,6 +192,8 @@ select_permissions:
       computed_fields:
         - in_process
         - notification_token
+        - package_cost_comp
+        - total_cost
       filter:
         _or:
           - delivery_driver:
@@ -245,6 +247,8 @@ select_permissions:
         - trip_polyline
       computed_fields:
         - in_process
+        - package_cost_comp
+        - total_cost
       filter:
         delivery_company:
           delivery_operators:

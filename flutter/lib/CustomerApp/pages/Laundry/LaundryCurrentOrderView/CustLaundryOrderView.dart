@@ -123,11 +123,11 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                   polyline: viewController
                                       .order.value!.routeInformation?.polyline,
                                   from: viewController
-                                      .order.value!.laundry!.location,
+                                      .order.value!.pickupLocation,
                                   to: viewController
                                       .order.value!.dropOffLocation),
 
-                            if (viewController.order.value!.laundry != null)
+                            if (viewController.order.value!.serviceProvider != null)
                               OrderLaundryCard(
                                   order: viewController.order.value!),
 
@@ -191,7 +191,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       autoBack: true,
       titleWidget: Obx(
         () => Text(
-          '${viewController.order.value?.laundry?.name ?? ""}',
+          '${viewController.order.value?.serviceProvider.name ?? ""}',
           style: context.txt.displaySmall,
         ),
       ),

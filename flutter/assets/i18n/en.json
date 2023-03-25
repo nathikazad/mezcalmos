@@ -1089,6 +1089,7 @@
         "totalCost": "Total cost",
         "deliveryLocation": "Delivery location",
         "refundAmount": "Refund amount",
+        "tax" : "Tax",
         "toBeCalc": "To be calculated"
       },
       "OrderPaymentMethod": {

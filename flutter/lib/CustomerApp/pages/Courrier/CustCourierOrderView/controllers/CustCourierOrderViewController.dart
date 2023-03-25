@@ -212,20 +212,19 @@ class CustCourierOrderViewController {
   }
 
   Future<bool> cancelOrder() async {
-    // try {
-    //   await CloudFunctions.del(
-    //       orderId: order.value!.orderId);
-    //   return true;
-    // } on FirebaseFunctionsException catch (e, stk) {
-    //   showErrorSnackBar(errorText: e.message.toString());
-    //   mezDbgPrint(stk);
-    //   mezDbgPrint(e);
-    //   return false;
-    // } catch (e) {
-    //   mezDbgPrint(e);
-    //   return false;
-    // }
-    return true;
+    try {
+      await CloudFunctions.delivery2_cancelCourierFromCustomer(
+          orderId: order.orderId);
+      return true;
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(stk);
+      mezDbgPrint(e);
+      return false;
+    } catch (e) {
+      mezDbgPrint(e);
+      return false;
+    }
   }
 
   void dispose() {

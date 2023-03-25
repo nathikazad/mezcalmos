@@ -3257,6 +3257,8 @@ the end). throws an error if top level container is not an array */
 }>;
 	/** columns and relationships of "delivery.details" */
 ["delivery_details"]: AliasType<{
+	/** A computed field, executes function "delivery.baselocation" */
+	base_location?:true,
 	cost_per_km?:true,
 	cost_per_km_from_base?:true,
 	customer_pickup?:true,
@@ -3339,6 +3341,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	_and?:ValueTypes["delivery_details_bool_exp"][],
 	_not?:ValueTypes["delivery_details_bool_exp"],
 	_or?:ValueTypes["delivery_details_bool_exp"][],
+	base_location?:ValueTypes["geography_comparison_exp"],
 	cost_per_km?:ValueTypes["money_comparison_exp"],
 	cost_per_km_from_base?:ValueTypes["money_comparison_exp"],
 	customer_pickup?:ValueTypes["Boolean_comparison_exp"],
@@ -3451,6 +3454,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 };
 	/** Ordering options when selecting data from "delivery.details". */
 ["delivery_details_order_by"]: {
+	base_location?:ValueTypes["order_by"],
 	cost_per_km?:ValueTypes["order_by"],
 	cost_per_km_from_base?:ValueTypes["order_by"],
 	customer_pickup?:ValueTypes["order_by"],
@@ -4469,6 +4473,8 @@ change_price_request?: [{	/** JSON select path */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:true,
+	/** A computed field, executes function "delivery.deliverytotalcost" */
+	total_cost?:true,
 	/** in meters */
 	trip_distance?:true,
 	/** in seconds */
@@ -4644,6 +4650,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	service_provider_review_by_driver_id?:ValueTypes["Int_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
+	total_cost?:ValueTypes["money_comparison_exp"],
 	trip_distance?:ValueTypes["Int_comparison_exp"],
 	trip_duration?:ValueTypes["Int_comparison_exp"],
 	trip_polyline?:ValueTypes["String_comparison_exp"]
@@ -5003,6 +5010,7 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
+	total_cost?:ValueTypes["order_by"],
 	trip_distance?:ValueTypes["order_by"],
 	trip_duration?:ValueTypes["order_by"],
 	trip_polyline?:ValueTypes["order_by"]
@@ -22910,6 +22918,8 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "delivery.details" */
 ["delivery_details"]: {
 		__typename?: "delivery_details";
+			/** A computed field, executes function "delivery.baselocation" */
+	base_location?:PartialObjects["geography"],
 			cost_per_km?:PartialObjects["money"],
 			cost_per_km_from_base?:PartialObjects["money"],
 			customer_pickup?:boolean,
@@ -22991,6 +23001,7 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["delivery_details_bool_exp"][],
 	_not?:PartialObjects["delivery_details_bool_exp"],
 	_or?:PartialObjects["delivery_details_bool_exp"][],
+	base_location?:PartialObjects["geography_comparison_exp"],
 	cost_per_km?:PartialObjects["money_comparison_exp"],
 	cost_per_km_from_base?:PartialObjects["money_comparison_exp"],
 	customer_pickup?:PartialObjects["Boolean_comparison_exp"],
@@ -23103,6 +23114,7 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "delivery.details". */
 ["delivery_details_order_by"]: {
+	base_location?:PartialObjects["order_by"],
 	cost_per_km?:PartialObjects["order_by"],
 	cost_per_km_from_base?:PartialObjects["order_by"],
 	customer_pickup?:PartialObjects["order_by"],
@@ -24114,6 +24126,8 @@ the end). throws an error if top level container is not an array */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
+			/** A computed field, executes function "delivery.deliverytotalcost" */
+	total_cost?:PartialObjects["money"],
 			/** in meters */
 	trip_distance?:number,
 			/** in seconds */
@@ -24288,6 +24302,7 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:PartialObjects["Int_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
+	total_cost?:PartialObjects["money_comparison_exp"],
 	trip_distance?:PartialObjects["Int_comparison_exp"],
 	trip_duration?:PartialObjects["Int_comparison_exp"],
 	trip_polyline?:PartialObjects["String_comparison_exp"]
@@ -24647,6 +24662,7 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
+	total_cost?:PartialObjects["order_by"],
 	trip_distance?:PartialObjects["order_by"],
 	trip_duration?:PartialObjects["order_by"],
 	trip_polyline?:PartialObjects["order_by"]
@@ -41656,6 +41672,8 @@ export type delivery_courier_order_variance_fields = {
 /** columns and relationships of "delivery.details" */
 export type delivery_details = {
 	__typename?: "delivery_details",
+	/** A computed field, executes function "delivery.baselocation" */
+	base_location?:geography,
 	cost_per_km:money,
 	cost_per_km_from_base:money,
 	customer_pickup:boolean,
@@ -41743,6 +41761,7 @@ export type delivery_details_bool_exp = {
 		_and?:delivery_details_bool_exp[],
 	_not?:delivery_details_bool_exp,
 	_or?:delivery_details_bool_exp[],
+	base_location?:geography_comparison_exp,
 	cost_per_km?:money_comparison_exp,
 	cost_per_km_from_base?:money_comparison_exp,
 	customer_pickup?:Boolean_comparison_exp,
@@ -41868,7 +41887,8 @@ export type delivery_details_on_conflict = {
 
 /** Ordering options when selecting data from "delivery.details". */
 export type delivery_details_order_by = {
-		cost_per_km?:order_by,
+		base_location?:order_by,
+	cost_per_km?:order_by,
 	cost_per_km_from_base?:order_by,
 	customer_pickup?:order_by,
 	delivery_available?:order_by,
@@ -43053,6 +43073,8 @@ export type delivery_order = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status:string,
+	/** A computed field, executes function "delivery.deliverytotalcost" */
+	total_cost?:money,
 	/** in meters */
 	trip_distance?:number,
 	/** in seconds */
@@ -43239,6 +43261,7 @@ export type delivery_order_bool_exp = {
 	service_provider_review_by_driver_id?:Int_comparison_exp,
 	service_provider_type?:String_comparison_exp,
 	status?:String_comparison_exp,
+	total_cost?:money_comparison_exp,
 	trip_distance?:Int_comparison_exp,
 	trip_duration?:Int_comparison_exp,
 	trip_polyline?:String_comparison_exp
@@ -43614,6 +43637,7 @@ export type delivery_order_order_by = {
 	service_provider_review_by_driver_id?:order_by,
 	service_provider_type?:order_by,
 	status?:order_by,
+	total_cost?:order_by,
 	trip_distance?:order_by,
 	trip_duration?:order_by,
 	trip_polyline?:order_by
@@ -66360,6 +66384,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		base_location:{
+			type:"geography_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cost_per_km:{
 			type:"money_comparison_exp",
 			array:false,
@@ -66687,6 +66717,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_details_order_by:{
+		base_location:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		cost_per_km:{
 			type:"order_by",
 			array:false,
@@ -69615,6 +69651,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		total_cost:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		trip_distance:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -70831,6 +70873,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -114379,6 +114427,7 @@ export const ReturnTypes: Record<string,any> = {
 		tax:"Float"
 	},
 	delivery_details:{
+		base_location:"geography",
 		cost_per_km:"money",
 		cost_per_km_from_base:"money",
 		customer_pickup:"Boolean",
@@ -114745,6 +114794,7 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_review_by_driver_id:"Int",
 		service_provider_type:"String",
 		status:"String",
+		total_cost:"money",
 		trip_distance:"Int",
 		trip_duration:"Int",
 		trip_polyline:"String"

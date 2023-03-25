@@ -96,8 +96,8 @@ class CustomerLaundryOrderEst extends StatelessWidget {
         break;
 
       case LaundryOrderStatus.AtLaundry:
-        if (order.estimatedLaundryReadyTime != null) {
-          return "${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
+        if (order.estimatedPackageReadyTime != null) {
+          return "${order.estimatedPackageReadyTime!.getEstimatedTime()}";
         }
 
         break;
@@ -128,7 +128,7 @@ class CustomerLaundryOrderEst extends StatelessWidget {
       case LaundryOrderStatus.PickedUpFromCustomer:
 
       case LaundryOrderStatus.AtLaundry:
-        if (order.estimatedLaundryReadyTime != null) {
+        if (order.estimatedPackageReadyTime != null) {
           return "${_i18n()["laundryReady"]}";
         }
 

@@ -30,10 +30,10 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
   @override
   void initState() {
     selectedDate.value =
-        widget.viewController.order.estimatedLaundryReadyTime?.toLocal() ??
+        widget.viewController.order.estimatedPackageReadyTime?.toLocal() ??
             DateTime.now().toLocal();
     selectedTime.value = TimeOfDay.fromDateTime(
-        widget.viewController.order.estimatedLaundryReadyTime?.toLocal() ??
+        widget.viewController.order.estimatedPackageReadyTime?.toLocal() ??
             DateTime.now().toLocal());
     super.initState();
   }
@@ -72,10 +72,10 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
                   SizedBox(
                     height: 5,
                   ),
-                  if (widget.viewController.order.estimatedLaundryReadyTime !=
+                  if (widget.viewController.order.estimatedPackageReadyTime !=
                       null)
                     Text(
-                      "${DateFormat("dd MMMM, hh:mm a ").format(widget.viewController.order.estimatedLaundryReadyTime!.toLocal())}",
+                      "${DateFormat("dd MMMM, hh:mm a ").format(widget.viewController.order.estimatedPackageReadyTime!.toLocal())}",
                       style: Get.theme.textTheme.bodyMedium,
                     ),
                 ],
@@ -144,11 +144,11 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: (widget.viewController.order.estimatedLaundryReadyTime !=
+              color: (widget.viewController.order.estimatedPackageReadyTime !=
                       null)
                   ? Colors.grey.shade300
                   : Colors.transparent),
-          child: (widget.viewController.order.estimatedLaundryReadyTime != null)
+          child: (widget.viewController.order.estimatedPackageReadyTime != null)
               ? Icon(
                   Icons.edit_outlined,
                   size: 18,

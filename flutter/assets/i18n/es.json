@@ -1096,6 +1096,7 @@
         "orderCost": "Costo de la orden",
         "deliveryCost": "Coste de envío",
         "stripeFees": "Tarifas de tarjeta",
+        "tax" : "Impuesto",
         "totalCost": "Coste total",
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado"
