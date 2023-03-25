@@ -155,9 +155,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          mezDbgPrint(notification.linkUrl);
-          MezRouter.toNamed("/laundryOrders/3658");
-          //    MezRouter.toNamed(notification.linkUrl);
+
+              MezRouter.toNamed(notification.linkUrl);
         },
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
