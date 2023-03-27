@@ -54,15 +54,13 @@ class CustCourierOrderViewController {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_courier_order_by_id(orderId: orderId)
             .listen((CourierOrder? event) {
-          if (event != null) {
-            mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.changePriceRequest}");
+          mezDbgPrint(
+              "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.changePriceRequest}");
 
-            _order.value = event;
-            if (_order.value?.changePriceRequest != null &&
-                _order.value?.costs.deliveryCost == 0) {
-              showPriceReqDialog();
-            }
+          _order.value = event;
+          if (_order.value?.changePriceRequest != null &&
+              _order.value?.costs.deliveryCost == 0) {
+            showPriceReqDialog();
           }
         });
       }, cancel: () {

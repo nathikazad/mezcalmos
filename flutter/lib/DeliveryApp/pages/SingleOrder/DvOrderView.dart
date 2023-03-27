@@ -24,6 +24,8 @@ class DvOrderView extends StatefulWidget {
   const DvOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
+    mezDbgPrint(
+        "To naviaget called =========================>$orderId=======>${DeliveryAppRoutes.kDvOrderView.replaceAll(":orderId", orderId.toString())}");
     return MezRouter.toPath(DeliveryAppRoutes.kDvOrderView
         .replaceAll(":orderId", orderId.toString()));
   }
@@ -64,8 +66,9 @@ class _DvOrderViewState extends State<DvOrderView> {
         AppBarLeftButtonType.Back,
         autoBack: true,
         showNotifications: true,
-        title:
-            '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"]}',
+        titleWidget: Obx(() => Text((viewController.hasData)
+            ? '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"]}'
+            : "")),
       ),
       bottomNavigationBar: Obx(
         () => (viewController.hasData)
