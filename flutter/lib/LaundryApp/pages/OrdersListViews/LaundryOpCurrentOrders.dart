@@ -138,7 +138,7 @@ class _LaundryOpCurrentOrdersListViewState
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,
                     textColor: primaryBlueColor,
-                    height: 32,
+                    height: 27.5,
                     //  width: 35.w,
                     borderRadius: 35,
                     label: '${_i18n()["pastButton"]}'.inCaps,

@@ -27,6 +27,7 @@ class ServiceReviewsFilters extends StatelessWidget {
             children: List.generate(
                 viewController.filters.length,
                 (int index) => FilterChip(
+                    selectedColor: Color(0xFFE0E4FF),
                     selected: viewController.filterBy.value ==
                         viewController.filters[index],
                     label: Text(

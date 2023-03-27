@@ -64,10 +64,7 @@ class OrderSummaryCard extends StatelessWidget {
                           '${_i18n()["orderCost"]}',
                           style: txt.bodyMedium,
                         ),
-                        Text(
-                            (orderCost == 0)
-                                ? "-"
-                                : orderCost?.toPriceString() ?? "-",
+                        Text(orderCost?.toPriceString() ?? "0",
                             style: txt.bodyMedium?.copyWith()),
                       ],
                     ),
@@ -131,13 +128,15 @@ class OrderSummaryCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('${_i18n()["totalCost"]}',
-                            style: txt.headlineMedium),
+                        Text(
+                          '${_i18n()["totalCost"]}',
+                          style: txt.bodyLarge,
+                        ),
                         Text(
                             (orderCost == 0)
                                 ? "-"
                                 : totalCost?.toPriceString() ?? "-",
-                            style: txt.headlineSmall),
+                            style: txt.bodyLarge),
                       ],
                     ),
                   ),

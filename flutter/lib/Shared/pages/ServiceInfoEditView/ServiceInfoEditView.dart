@@ -92,8 +92,10 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       SizedBox(
                         height: 25,
                       ),
-                      Text("${_i18n()['name']}",
-                      style: Get.textTheme.bodyLarge,),
+                      Text(
+                        "${_i18n()['name']}",
+                        style: Get.textTheme.bodyLarge,
+                      ),
                       SizedBox(
                         height: 5,
                       ),
@@ -101,7 +103,32 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       SizedBox(
                         height: 15,
                       ),
-                      Text("${_i18n()['phoneNumber']}", style: Get.textTheme.bodyLarge,),
+                      Text(
+                        '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}',
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _prdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}',
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _scdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "${_i18n()['phoneNumber']}",
+                        style: Get.textTheme.bodyLarge,
+                      ),
                       SizedBox(
                         height: 5,
                       ),
@@ -122,24 +149,9 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                          '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}', style: Get.textTheme.bodyLarge,),
-                      SizedBox(
-                        height: 5,
+                        "${_i18n()['location']}",
+                        style: Get.textTheme.bodyLarge,
                       ),
-                      _prdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                          '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}', style: Get.textTheme.bodyLarge,),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _scdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text("${_i18n()['location']}", style: Get.textTheme.bodyLarge,),
                       SizedBox(
                         height: 5,
                       ),

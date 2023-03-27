@@ -196,7 +196,7 @@
             "SaveLocationDailog": {
               "addLocationDialogTitle": "Ingrese el nombre de la ubicación",
               "editLocationDialogTitle": "Ingrese el nombre de la ubicación",
-              "pickLocationHintText":"Ingrese su nombre",
+              "pickLocationHintText": "Ingrese su nombre",
               "addLocationDialogButton": "Guardar",
               "editLocationDialogButton": "EDITAR",
               "addLocationDialogSkip": "Ahora no"
@@ -230,7 +230,7 @@
               "leftBtn": "Primero de pago",
               "rightBtn": "Sobrescribir",
               "subtitle": "Ya tienes algunos artículos en tu carrito de",
-              "overwriteText":"\n¿Quieres sobrescribir?",
+              "overwriteText": "\n¿Quieres sobrescribir?",
               "specialSubtitle": "Ya tiene algunos artículos especiales en su carrito con un tiempo de disponibilidad diferente, ¿desea verlos primero o sobrescribirlos?",
               "addToCart": "Añadir artículo",
               "modifyItem": "Modificar"
@@ -251,7 +251,7 @@
             "itemNotes": "Notas de artículos",
             "itemDescription": "Descripción del Artículo",
             "availability": "Disponibilidad",
-            "hintNote":"Escribe tus notas aquí"
+            "hintNote": "Escribe tus notas aquí"
           }
         },
         "ViewOrderScreen": {
@@ -335,7 +335,7 @@
         "ViewRestaurantScreen": {
           "CustomerRestaurantView": {
             "specials": "especiales",
-            "undefinedCategory":"Categoría indefinida",
+            "undefinedCategory": "Categoría indefinida",
             "scheduleTitle": "Solo disponible para los pedidos de programación"
           },
           "components": {
@@ -382,7 +382,7 @@
           "SavedLocationComponent": {
             "editLocation": "Editar ubicación",
             "deleteLocation": "Eliminar ubicación",
-            "defaultAddressText":"Defecto"
+            "defaultAddressText": "Defecto"
           },
           "SavedLocationIsEmpty": {
             "savedLocationsListEmpty": "Tu lista de ubicaciones guardadas está vacía",
@@ -392,7 +392,7 @@
         "SavedLocationView": {
           "title": "Mis ubicaciones",
           "addNewLoc": "Añadir nueva ubicación",
-          "location":"Ubicación"
+          "location": "Ubicación"
         }
       },
       "Taxi": {
@@ -567,12 +567,12 @@
             "orderStatus": "Estado de la orden",
             "laundry": "Lavandería",
             "estimatedDeliveryTime": "Tiempo de entrega estimado",
-            "deliveryDeatils":"Detalles de la entrega"
+            "deliveryDeatils": "Detalles de la entrega"
           }
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
-          "daysReturn" : "Días de regreso",
+          "daysReturn": "Días de regreso",
           "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
@@ -582,7 +582,7 @@
         "LaundriesListView": {
           "laundries": "Lavanderías",
           "title": "Encuentra tus lavanderías \nmás cercanas o tintorerías ",
-          "noLaundaryFound":"No se encontró lavandería",
+          "noLaundaryFound": "No se encontró lavandería",
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -597,8 +597,8 @@
         "LaundryRequestView": {
           "LaundryOrderRequestView": {
             "howItWorks": "Cómo funciona",
-            "categories" : "Categorías",
-            "summaryText":"Resumen",
+            "categories": "Categorías",
+            "summaryText": "Resumen",
             "deliveryLocation": "Lugar de entrega",
             "orderSummary": "Resumen de la orden",
             "orderCost": "Costo de la orden",
@@ -742,34 +742,32 @@
       }
     },
     "pages": {
-      "ServiceProfileView" : {
-        "profile" : "Perfil",
-        "info" : "Información",
-        "operators" : "Operadoras",
-        "drivers" : "Conductoras",
-        "schedule" :"Cronograma",
-        "payments" :"Pagos",
-        "delivery" :"Entrega",
-        "reviews" : "Reseñas",
-        "share" : "Compartir",
+      "ServiceProfileView": {
+        "profile": "Perfil",
+        "info": "Información",
+        "operators": "Operadoras",
+        "drivers": "Conductoras",
+        "schedule": "Cronograma",
+        "payments": "Pagos",
+        "delivery": "Entrega",
+        "reviews": "Reseñas",
+        "share": "Compartir",
         "privacyPolicies": "Políticas de privacidad",
-        "logout" : "Cerrar sesión",
-        "openService" : "Servicio abierto",
-        "closeService" : "Servicio cerrado",
-        "serviceClosed" : "El servicio está cerrado indefinidamente",
-        "restaurantReview" : "Su restaurante está bajo revisión, se le notificará, su aprobación."
-       
-
+        "logout": "Cerrar sesión",
+        "openService": "Servicio abierto",
+        "closeService": "Servicio cerrado",
+        "serviceClosed": "El servicio está cerrado indefinidamente",
+        "restaurantReview": "Su restaurante está bajo revisión, se le notificará, su aprobación."
       },
       "CreateServiceView": {
         "pages": {
-          "createServiceStartPage":{
-            "openNewRestaurantText":"Cree un nuevo restaurante y reciba pedidos de sus clientes locales."
+          "createServiceStartPage": {
+            "openNewRestaurantText": "Cree un nuevo restaurante y reciba pedidos de sus clientes locales."
           },
           "CreateServiceInfoPage": {
             "name": "Nombre del restaurante",
             "hintNameText": "Introduzca su nombre",
-            "uploadImageText":"Sube tu imagen de perfil",
+            "uploadImageText": "Sube tu imagen de perfil",
             "nameError": "Proporcione un nombre",
             "descriptionError": "Proporcione una descripción",
             "location": "Ubicación",
@@ -778,12 +776,12 @@
             "imageError": "Se requiere una imagen",
             "description": "Descripción",
             "descriptionHintText": "Ingrese una descripción para su restaurante",
-            "phoneText":"Número de teléfono",
-            "phoneTextDescription":"Ingrese su número telefónico",
-            "phoneTextError":"Ingrese un número de teléfono válido"
+            "phoneText": "Número de teléfono",
+            "phoneTextDescription": "Ingrese su número telefónico",
+            "phoneTextError": "Ingrese un número de teléfono válido"
           }
         },
-        "createText":"Crear",
+        "createText": "Crear",
         "info": "Información",
         "schedule": "Calendario",
         "delivery": "Entrega",
@@ -808,8 +806,8 @@
         "save": "Guardar",
         "cost": "Costo",
         "radius": "Rango de entrega",
-       
-        "costPerKmFromBase" : "Costo por km de la base"
+
+        "costPerKmFromBase": "Costo por km de la base"
       },
       "DeliverySettingsView": {
         "DeliverySettingsView": {
@@ -823,7 +821,7 @@
             "notFoundTitle": "No se encontraron socios de entrega",
             "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
             "joined": "Unida",
-            "errorText" :  "Seleccione una empresa o cambie al tiempo de entrega de sí mismo"
+            "errorText": "Seleccione una empresa o cambie al tiempo de entrega de sí mismo"
           }
         }
       },
@@ -874,9 +872,9 @@
       },
       "ServiceInfoEditView": {
         "name": "Nombre",
-        "phoneNumber" : "Número de teléfono",
+        "phoneNumber": "Número de teléfono",
         "location": "Localización",
-        "phoneErrorText" : "Por favor ingrese un número de teléfono válido",
+        "phoneErrorText": "Por favor ingrese un número de teléfono válido",
         "description": "Descripción",
         "info": "Información",
         "save": "Guardar",
@@ -936,7 +934,7 @@
           "alertClearNotificationTitle": "Borrar todas las notificaciones",
           "clear": "Borra",
           "no": "No",
-          "yesterday":"Ayer",
+          "yesterday": "Ayer",
           "noNotifTitle": "¡No hay notificaciones todavía!",
           "noNotifBody": "Actualmente no tienes notificaciones. \nTe notificaremos cuando se llega a algo nuevo."
         }
@@ -1006,9 +1004,9 @@
         "viewOrder": "Ver detalles de la orden",
         "order": "Orden",
         "writeMsgPlaceholder": "Escribe tu mensaje aqui ...",
-        "cancel" : "Cancelar",
-        "callApp" : "Llamar a través de la aplicación",
-        "callPhone" : "Llame con el número de teléfono"
+        "cancel": "Cancelar",
+        "callApp": "Llamar a través de la aplicación",
+        "callPhone": "Llame con el número de teléfono"
       },
       "ViewNotifications": {
         "title": "Notificaciones",
@@ -1097,7 +1095,7 @@
       },
       "OrderDeliveryLocation": {
         "title": "Lugar de entrega",
-        "deliveryDetails":"Delivery details"
+        "deliveryDetails": "Delivery details"
       },
       "OrderScheduledTimeCard": {
         "title": "Hora Programada"
@@ -1120,7 +1118,7 @@
       },
       "ClosedServiceProviderWidget": {
         "title": "¡Servicio cerrado!",
-        "btnTitle" : "Servicio abierto",
+        "btnTitle": "Servicio abierto",
         "subtitle": "Su servicio está cerrado indefinidamente, no recibirá ningún pedido.¿Te gustaría abrirlo?"
       },
       "ServiceWaitingForApproval": {
@@ -1616,10 +1614,9 @@
   },
   "DeliveryApp": {
     "pages": {
-      "UnAuthorizedDriverView" : {
-        "title" : "Invitación necesaria",
-        "subtitle" : "Necesita una invitación para usar nuestra aplicación de entrega"
-
+      "UnAuthorizedDriverView": {
+        "title": "Invitación necesaria",
+        "subtitle": "Necesita una invitación para usar nuestra aplicación de entrega"
       },
       "OrderDetailsScreen": {
         "cancelled": "Cancelada",
@@ -1748,17 +1745,16 @@
                 "notReadyBody": "El pedido aún no está listo para la entrega",
                 "startDelivery": "Iniciar entrega",
                 "startPickUp": "Iniciar recogida",
-                "atPickUp" : "En la recogida",
-                "atDropOff" : "En la caída",
+                "atPickUp": "En la recogida",
+                "atDropOff": "En la caída",
                 "received": "Orden recibida",
-                "finishDelivery" : "Entrega de finalización"
+                "finishDelivery": "Entrega de finalización"
               }
             }
           }
         }
       },
       "RestaurantOrderView": {
-       
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -1779,9 +1775,9 @@
           }
         },
         "title": "Entrega",
-        "restaurant" : "Restaurante",
-        "laundry" : "Lavadero",
-        "courier" : "Mensajera"
+        "restaurant": "Restaurante",
+        "laundry": "Lavadero",
+        "courier": "Mensajera"
       }
     },
     "notificationHandler": {
@@ -1925,7 +1921,7 @@
           },
           "MinimumCostCard": {
             "minCost": "Costo mínimo",
-            "save" : "Enregistrer costo mínimo"
+            "save": "Enregistrer costo mínimo"
           }
         }
       },
@@ -1972,7 +1968,7 @@
             "total": "Total",
             "itemsWeights": "Artículos pesos",
             "newItemsWeight": "Nuevos artículos de peso",
-            "itemsCategory": "Categoría de artículos",
+            "itemsCategory": "Categorías de artículos",
             "itemsWeight": "Artículos de peso",
             "itemsWeightErrorText": "Por favor ingrese un peso válido",
             "saveItemsWeight": "Guardar artículos de peso",
@@ -2039,6 +2035,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reseñas",
+        "review": "Revisar",
         "base": "Basada en",
         "perfomTitle": "Su rendimiento de revisión es",
         "excellent": "Excelente",
@@ -2084,9 +2081,9 @@
         }
       },
       "ROpOrderView": {
-        "review" : "Revisar",
-        "deliveryDet" :"Detalles de la entrega",
-        "restaurant" : "Restaurante",
+        "review": "Revisar",
+        "deliveryDet": "Detalles de la entrega",
+        "restaurant": "Restaurante",
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",
         "orderItems": "Encargar artículos",
@@ -2186,7 +2183,7 @@
           "ROpOrderCard": {
             "date": "Fecha :",
             "totalCost": "Coste total",
-            "waiting": "en proceso",
+            "waiting": "En proceso",
             "delivered": "Entregada",
             "canceled": "Cancelada"
           }
@@ -2331,7 +2328,7 @@
         },
         "ROpEditInfoView": {
           "saved": "Guardado",
-          "schedule" :"Horas Laborales",
+          "schedule": "Horas Laborales",
           "savedText": "Su información ha sido guardada",
           "openTitle": "Disponibilidad de restaurantes",
           "openSubtitle": "Esto cerrará su restaurante indefinidamente",

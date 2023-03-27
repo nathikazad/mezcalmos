@@ -20,7 +20,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: const EdgeInsets.only(bottom: 20, top: 20),
+      margin: const EdgeInsets.only(bottom: 10, top: 20),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(12),

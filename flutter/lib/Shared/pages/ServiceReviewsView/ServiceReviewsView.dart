@@ -114,7 +114,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
             height: 10,
           ),
           Text(
-              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()["reviews"].toString().toLowerCase()}")
+              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()[viewController.reviews.length == 1 ? "review" : "reviews"].toString().toLowerCase()}")
         ],
       ),
     );

@@ -41,7 +41,7 @@ class _LaundrySetCategoryComponentState
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 10),
       child: Container(
         padding: const EdgeInsets.all(8),
         width: double.infinity,

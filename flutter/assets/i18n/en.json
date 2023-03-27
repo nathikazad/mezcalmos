@@ -485,9 +485,9 @@
         "LaundryCurrentOrderView": {
           "Components": {
             "CustomerLaundryOrderEst": {
-              "pickup": "Pickup time:",
-              "delivery": "Delivery time:",
-              "laundryReady": "Laundry ready time:",
+              "pickup": "Pickup time",
+              "delivery": "Delivery time",
+              "laundryReady": "Laundry ready time",
               "estTimes": "Estimated times"
             },
             "LaundryOrderDriverCard": {
@@ -740,23 +740,22 @@
       }
     },
     "pages": {
-      "ServiceProfileView" : {
-        "profile" : "Profile",
-        "info" : "Information",
-        "operators" : "Operators",
-        "drivers" : "Drivers",
-        "schedule" :"Schedule",
-        "payments" :"Payments",
-        "delivery" :"Delivery",
-        "reviews" : "Reviews",
-        "share" : "Share",
+      "ServiceProfileView": {
+        "profile": "Profile",
+        "info": "Information",
+        "operators": "Operators",
+        "drivers": "Drivers",
+        "schedule": "Schedule",
+        "payments": "Payments",
+        "delivery": "Delivery",
+        "reviews": "Reviews",
+        "share": "Share",
         "privacyPolicies": "Privacy Policies",
-        "logout" : "Logout",
-        "openService" : "Open service",
-        "closeService" : "Close service",
-        "serviceClosed" : "Service is closed indefinitely",
-        "restaurantReview" : "Your restaurant is under review, you’ll be notifiedonce it’s approved."
-
+        "logout": "Logout",
+        "openService": "Open service",
+        "closeService": "Close service",
+        "serviceClosed": "Service is closed indefinitely",
+        "restaurantReview": "Your restaurant is under review, you’ll be notifiedonce it’s approved."
       },
       "CreateServiceView": {
         "pages": {
@@ -795,7 +794,7 @@
       "DeliveryCostSettingView": {
         "dvCost": "Delivery cost",
         "km": "Km",
-        "minCost": "Minimum Cost",
+        "minCost": "Minimum cost",
         "costPerKm": "Cost per km",
         "freeKmRange": "Free delivery range",
         "freeKmRangeText": "Within this distance, the customer won’t be charged for the delivery.",
@@ -819,7 +818,7 @@
             "notFoundTitle": "No delivery partners found",
             "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
             "joined": "Joined",
-            "errorText" :  "Please select a company or switch to self delivery time"
+            "errorText": "Please select a company or switch to self delivery time"
           }
         }
       },
@@ -1419,7 +1418,7 @@
         "SingleLaundryScreen": {
           "startingFrom": "Starting from :",
           "daysReturn": "days return",
-          "minimumCost": "Minimum Cost",
+          "minimumCost": "Minimum cost",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1621,10 +1620,9 @@
   },
   "DeliveryApp": {
     "pages": {
-      "UnAuthorizedDriverView" : {
-        "title" : "Invitation needed",
-        "subtitle" : "You need an invitation to use our delivery app"
-
+      "UnAuthorizedDriverView": {
+        "title": "Invitation needed",
+        "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
@@ -1661,9 +1659,9 @@
           }
         },
         "title": "Delivery",
-        "restaurant" : "Restaurant",
-        "laundry" : "Laundry",
-        "courier" : "Courier"
+        "restaurant": "Restaurant",
+        "laundry": "Laundry",
+        "courier": "Courier"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
@@ -1930,7 +1928,7 @@
             "days": "days"
           },
           "MinimumCostCard": {
-            "minCost": "Minimum Cost",
+            "minCost": "Minimum cost",
             "save": "Save minimum cost"
           }
         }
@@ -1977,7 +1975,7 @@
             "deleteItem": "Delete item",
             "itemsWeights": "Items weights",
             "newItemsWeight": "New items weight",
-            "itemsCategory": "Items Category",
+            "itemsCategory": "Item categories",
             "itemsWeight": "Items weight",
             "total": "Total",
             "itemsWeightErrorText": "Please enter a valid weight",
@@ -2045,6 +2043,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
+        "review": "Review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",
@@ -2060,9 +2059,9 @@
       },
       "ROpOrderView": {
         "schTitle": "Scheduled for",
-        "deliveryDet" :"Delivery details",
-        "review" : "Review",
-        "restaurant" : "Restaurant",
+        "deliveryDet": "Delivery details",
+        "review": "Review",
+        "restaurant": "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
         "components": {

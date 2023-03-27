@@ -64,7 +64,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
 
                 Container(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(order.value!.pickupLocation.address)),
                 SizedBox(
                   height: 20,
@@ -74,7 +74,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 4,
                 ),
                 Text("${order.value!.dropoffLocation.address}"),
                 SizedBox(

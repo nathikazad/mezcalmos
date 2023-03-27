@@ -54,7 +54,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                 child: Text(
                   (widget.viewController.isEditingCategory)
                       ? widget.viewController.editableCategory.value!
-                          .name[userLanguage]!
+                          .name[userLanguage]!.capitalizeFirst!
                       : "${_i18n()["newItemsWeight"]}",
                   style: Theme.of(context).textTheme.displaySmall,
                   maxLines: 2,
@@ -142,7 +142,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               decoration: InputDecoration(
                   isDense: true,
                   suffix: Container(
-                      padding: const EdgeInsets.all(1), child: Text("KG")),
+                      padding: const EdgeInsets.all(1), child: Text("kg")),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   alignLabelWithHint: false,
                   border: OutlineInputBorder(
@@ -186,5 +186,4 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
       );
     });
   }
-
 }

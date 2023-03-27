@@ -41,7 +41,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 25),
+      margin: const EdgeInsets.only(bottom: 10),
       child: Container(
         margin: const EdgeInsets.all(8),
         child: Row(

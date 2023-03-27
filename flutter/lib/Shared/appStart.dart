@@ -94,7 +94,7 @@ class _StartingPointState extends State<StartingPoint> {
 
     WidgetsFlutterBinding.ensureInitialized();
     const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
+        String.fromEnvironment('LMODE', defaultValue: "stage");
     _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
