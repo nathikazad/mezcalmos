@@ -760,7 +760,7 @@
         "info" : "Información",
         "operators" : "Operadoras",
         "drivers" : "Conductoras",
-        "schedule" :"Cronograma",
+        "schedule" :"Horarios",
         "payments" :"Pagos",
         "delivery" :"Entrega",
         "reviews" : "Reseñas",
@@ -1029,7 +1029,7 @@
         "alertClearNotificationTitle": "Eliminar todas las notificaciones"
       },
       "LocationPermissionScreen": {
-        "permissionBtn": "ACTIVAR AHORA",
+        "permissionBtn": "Continuar",
         "askForNotif": "La aplicación recopila los datos de su ubicación para emparejarlo con los mejores viajes y compartir su ubicación con los clientes, incluso cuando la aplicación está en segundo plano.",
         "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
         "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
@@ -1096,6 +1096,7 @@
         "orderCost": "Costo de la orden",
         "deliveryCost": "Coste de envío",
         "stripeFees": "Tarifas de tarjeta",
+        "tax" : "Impuesto",
         "totalCost": "Coste total",
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado"

@@ -60,7 +60,7 @@ class CustCourierOrderViewController {
 
             _order.value = event;
             if (_order.value?.changePriceRequest != null &&
-                _order.value?.deliveryCost == 0) {
+                _order.value?.costs.deliveryCost == 0) {
               showPriceReqDialog();
             }
           }
@@ -167,7 +167,7 @@ class CustCourierOrderViewController {
       ChangePriceResResponse res =
           await CloudFunctions.delivery2_changeDeliveryPriceResponse(
               accepted: accepted,
-              orderId: order.id,
+              orderId: order.orderId,
               orderType: cm.OrderType.Courier);
       if (res.success == false) {
         mezDbgPrint(res.error);
@@ -212,20 +212,19 @@ class CustCourierOrderViewController {
   }
 
   Future<bool> cancelOrder() async {
-    // try {
-    //   await CloudFunctions.del(
-    //       orderId: order.value!.orderId);
-    //   return true;
-    // } on FirebaseFunctionsException catch (e, stk) {
-    //   showErrorSnackBar(errorText: e.message.toString());
-    //   mezDbgPrint(stk);
-    //   mezDbgPrint(e);
-    //   return false;
-    // } catch (e) {
-    //   mezDbgPrint(e);
-    //   return false;
-    // }
-    return true;
+    try {
+      await CloudFunctions.delivery2_cancelCourierFromCustomer(
+          orderId: order.orderId);
+      return true;
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(stk);
+      mezDbgPrint(e);
+      return false;
+    } catch (e) {
+      mezDbgPrint(e);
+      return false;
+    }
   }
 
   void dispose() {

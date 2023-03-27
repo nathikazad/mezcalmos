@@ -4910,6 +4910,10 @@ type delivery_courier_order_variance_fields {
 columns and relationships of "delivery.details"
 """
 type delivery_details {
+  """
+  A computed field, executes function "delivery.baselocation"
+  """
+  base_location: geography
   cost_per_km: money!
   cost_per_km_from_base: money!
   customer_pickup: Boolean!
@@ -5010,6 +5014,7 @@ input delivery_details_bool_exp {
   _and: [delivery_details_bool_exp!]
   _not: delivery_details_bool_exp
   _or: [delivery_details_bool_exp!]
+  base_location: geography_comparison_exp
   cost_per_km: money_comparison_exp
   cost_per_km_from_base: money_comparison_exp
   customer_pickup: Boolean_comparison_exp
@@ -5159,6 +5164,7 @@ input delivery_details_on_conflict {
 
 """Ordering options when selecting data from "delivery.details"."""
 input delivery_details_order_by {
+  base_location: order_by
   cost_per_km: order_by
   cost_per_km_from_base: order_by
   customer_pickup: order_by
@@ -6667,6 +6673,11 @@ type delivery_order {
   """
   status: String!
 
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
+
   """in meters"""
   trip_distance: Int
 
@@ -6870,6 +6881,7 @@ input delivery_order_bool_exp {
   service_provider_review_by_driver_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
   status: String_comparison_exp
+  total_cost: money_comparison_exp
   trip_distance: Int_comparison_exp
   trip_duration: Int_comparison_exp
   trip_polyline: String_comparison_exp
@@ -7315,6 +7327,7 @@ input delivery_order_order_by {
   service_provider_review_by_driver_id: order_by
   service_provider_type: order_by
   status: order_by
+  total_cost: order_by
   trip_distance: order_by
   trip_duration: order_by
   trip_polyline: order_by

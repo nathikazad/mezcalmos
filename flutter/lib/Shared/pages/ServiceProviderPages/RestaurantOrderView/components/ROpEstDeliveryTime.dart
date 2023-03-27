@@ -338,7 +338,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
     isClicked.value = true;
     if (value
             .difference(
-                widget.order.estimatedFoodReadyTime ?? widget.order.orderTime)
+                widget.order.estimatedPackageReadyTime ?? widget.order.orderTime)
             .inDays
             .abs() >
         0) {
@@ -346,7 +346,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["deliveryMinTimes"]}',
           position: SnackPosition.TOP);
     } else if (value
-                .difference(widget.order.estimatedFoodReadyTime ??
+                .difference(widget.order.estimatedPackageReadyTime ??
                     widget.order.orderTime)
                 .inMinutes
                 .abs() >

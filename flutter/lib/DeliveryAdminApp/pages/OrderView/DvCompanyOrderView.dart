@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/controllers/DvCompanyOrderViewController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
@@ -96,12 +96,12 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 if (viewController.canSetDriver) _driverCard(),
                 if (viewController.order.value!.orderWithDriver)
                   OrderMapWidget(
-                      deliveryOrderId: viewController.order.value!.id,
+                      deliveryOrderId: viewController.order.value!.orderId,
                       updateDriver: viewController.order.value!.orderWithDriver,
                       polyline: viewController
                           .order.value!.routeInformation?.polyline,
                       from: viewController.order.value!.pickupLocation,
-                      to: viewController.order.value!.dropoffLocation),
+                      to: viewController.order.value!.dropOffLocation),
                 _serviceCard(),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
@@ -114,9 +114,9 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                     margin: const EdgeInsets.only(top: 5),
                     contentPadding: const EdgeInsets.all(8),
                     firstAvatarBgImage: CachedNetworkImageProvider(
-                        viewController.order.value!.customerInfo.image),
+                        viewController.order.value!.customer.image),
                     content: Text(
-                      viewController.order.value!.customerInfo.name,
+                      viewController.order.value!.customer.name,
                       style: context.txt.bodyLarge,
                     )),
 
@@ -131,12 +131,12 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                     time: viewController.order.value!.orderTime,
                     margin: const EdgeInsets.only(top: 20)),
                 OrderDeliveryLocation(
-                  address: viewController.order.value!.dropoffLocation.address,
+                  address: viewController.order.value!.dropOffLocation.address,
                   margin: const EdgeInsets.only(top: 20),
                 ),
                 OrderPaymentMethod(
                   stripeOrderPaymentInfo:
-                      viewController.order.value!.stripeOrderPaymentInfo,
+                      viewController.order.value!.stripePaymentInfo,
                   paymentType: viewController.order.value!.paymentType,
                   margin: const EdgeInsets.only(top: 20),
                 ),
@@ -203,7 +203,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                       .getEstimatedTime()),
                 ],
               )),
-        if (viewController.order.value!.estimatedArrivalAtPickupTime != null)
+        if (viewController.order.value!.estimatedArrivalAtPickup != null)
           MezCard(
               contentPadding: const EdgeInsets.all(8),
               firstAvatarBgColor: secondaryLightBlueColor,
@@ -222,11 +222,11 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                   SizedBox(
                     height: 2,
                   ),
-                  Text(viewController.order.value!.estimatedArrivalAtPickupTime!
+                  Text(viewController.order.value!.estimatedArrivalAtPickup!
                       .getEstimatedTime()),
                 ],
               )),
-        if (viewController.order.value!.estimatedArrivalAtDropoffTime != null)
+        if (viewController.order.value!.estimatedArrivalAtPickup != null)
           MezCard(
               contentPadding: const EdgeInsets.all(8),
               firstAvatarBgColor: secondaryLightBlueColor,
@@ -245,8 +245,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                   SizedBox(
                     height: 2,
                   ),
-                  Text(viewController
-                      .order.value!.estimatedArrivalAtDropoffTime!
+                  Text(viewController.order.value!.estimatedArrivalAtDropoff!
                       .getEstimatedTime()),
                 ],
               )),
@@ -276,7 +275,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           MezIconButton(
             onTap: () {
               PickDriverView.navigate(
-                  deliveryOrderId: viewController.order.value!.id,
+                  deliveryOrderId: viewController.order.value!.orderId,
                   showForwardButton: false);
             },
             icon: (viewController.order.value!.driverInfo != null)
@@ -284,13 +283,13 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 : Icons.add,
             iconSize: 22,
           ),
-          if (viewController.order.value!.driverInfo != null)
+          if (viewController.order.value!.serviceProviderDriverChatId != null)
             MessageButton(
                 chatId: 55,
                 onTap: () {
                   BaseMessagingScreen.navigate(
                       chatId: viewController
-                          .order.value!.chatWithServiceProviderId!);
+                          .order.value!.serviceProviderDriverChatId!);
                 })
         ],
       ),
@@ -302,7 +301,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
         margin: const EdgeInsets.only(top: 20),
         contentPadding: const EdgeInsets.all(8),
         firstAvatarBgImage: CachedNetworkImageProvider(
-            viewController.order.value!.serviceInfo.image),
+            viewController.order.value!.serviceProvider.image),
         action: MessageButton(
           chatId: 55,
           onTap: () {},
@@ -311,29 +310,29 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              viewController.order.value!.serviceInfo.name,
+              viewController.order.value!.serviceProvider.name,
               style: context.txt.bodyLarge,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.place,
-                  color: primaryBlueColor,
-                  size: 18,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Text(
-                    viewController.order.value!.serviceInfo.location.address,
-                    style: context.txt.bodyMedium,
-                    maxLines: 1,
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   children: [
+            //     Icon(
+            //       Icons.place,
+            //       color: primaryBlueColor,
+            //       size: 18,
+            //     ),
+            //     SizedBox(
+            //       width: 5,
+            //     ),
+            //     Flexible(
+            //       child: Text(
+            //         viewController.order.value!.serviceInfo.location.address,
+            //         style: context.txt.bodyMedium,
+            //         maxLines: 1,
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ));
   }

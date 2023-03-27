@@ -37,9 +37,13 @@ class PickDriverViewController {
       mezDbgPrint(stk);
     }
     if (order.value != null) {
-      serviceProviderId = order.value?.deliveryCompany.hasuraId;
-      await _getDrivers();
-      await _initMap();
+      serviceProviderId = order.value?.deliveryCompany?.hasuraId;
+      if (serviceProviderId != null) {
+        await _getDrivers();
+        await _initMap();
+      } else {
+        showErrorSnackBar(errorText: "Can't get order service provider ");
+      }
     }
   }
 
@@ -106,8 +110,8 @@ class PickDriverViewController {
       LocModel.MezLocation(
         "",
         LocModel.MezLocation.buildLocationData(
-          order.value?.dropoffLocation.latitude,
-          order.value?.dropoffLocation.longitude,
+          order.value?.dropOffLocation.latitude,
+          order.value?.dropOffLocation.longitude,
         ),
       ),
     );
@@ -119,7 +123,7 @@ class PickDriverViewController {
     );
     // customer's
     await mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value?.dropoffLocation.toLatLng(),
+      latLng: order.value?.dropOffLocation.toLatLng(),
       fitWithinBounds: true,
     );
     if (order.value!.routeInformation != null)
@@ -146,12 +150,11 @@ class PickDriverViewController {
 
   Future<void> _getDrivers() async {
     mezDbgPrint(
-        "ORDER DELIVERCOMPANY 👋===> ${order.value!.deliveryCompany.hasuraId}");
-    mezDbgPrint(order.value!.deliveryCompany.hasuraId);
+        "ORDER DELIVERCOMPANY 👋===> ${order.value!.deliveryCompany?.hasuraId}");
+
     drivers.clear();
     drivers.value = await get_drivers_by_service_provider_id(
-            withCache: false,
-            serviceProviderId: order.value!.deliveryCompany.hasuraId) ??
+            withCache: false, serviceProviderId: serviceProviderId!) ??
         [];
   }
 }

@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 void initilizeMap(MGoogleMapController mapController, Rxn<DeliveryOrder> order,
-    ServiceInfo service) {
+    UserInfo service) {
   final DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
   if (order.value?.routeInformation != null) {
@@ -20,7 +20,7 @@ void initilizeMap(MGoogleMapController mapController, Rxn<DeliveryOrder> order,
   Future.wait(<Future<void>>[
     // DESTINATION MARKER
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value?.dropoffLocation.toLatLng(),
+      latLng: order.value?.dropOffLocation.toLatLng(),
     ),
     // USER MARKER
     mapController.addOrUpdateUserMarker(

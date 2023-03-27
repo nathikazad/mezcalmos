@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/CustomerLaundryEstTimes.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/CustomerLaundryEstTimes.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderDriverCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderFooterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderStatusCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/OrderLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
@@ -123,10 +123,12 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                   polyline: viewController
                                       .order.value!.routeInformation?.polyline,
                                   from: viewController
-                                      .order.value!.laundry!.location,
-                                  to: viewController.order.value!.to),
+                                      .order.value!.pickupLocation,
+                                  to: viewController
+                                      .order.value!.dropOffLocation),
 
-                            if (viewController.order.value!.laundry != null)
+                            if (viewController.order.value!.serviceProvider !=
+                                null)
                               OrderLaundryCard(
                                   order: viewController.order.value!),
 
@@ -142,7 +144,8 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               ),
                             ),
                             OrderDeliveryLocation(
-                              address: viewController.order.value!.to.address,
+                              address: viewController
+                                  .order.value!.dropOffLocation.address,
                               margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderNoteCard(
@@ -151,15 +154,9 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
                               divideDeliveryCost: true,
-                              orderCost: viewController
-                                  .order.value!.costsByType?.weighedCost,
-                              refundAmmount:
-                                  viewController.order.value!.refundAmount,
-                              shippingCost:
-                                  viewController.order.value!.shippingCost,
+                              costs: viewController.order.value!.costs,
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
-                              totalCost: viewController.order.value!.totalCost,
                             ),
 
                             //Spacer(),
@@ -195,7 +192,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       autoBack: true,
       titleWidget: Obx(
         () => Text(
-          '${viewController.order.value?.laundry?.name ?? ""}',
+          '${viewController.order.value?.serviceProvider.name ?? ""}',
           style: context.txt.displaySmall,
         ),
       ),

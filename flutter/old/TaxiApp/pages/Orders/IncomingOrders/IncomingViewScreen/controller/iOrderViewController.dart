@@ -64,7 +64,7 @@ class IOrderViewController {
       );
 
       mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-        latLng: order.value?.to.toLatLng(),
+        latLng: order.value?.dropOffLocation.toLatLng(),
       );
 
       // set initial position

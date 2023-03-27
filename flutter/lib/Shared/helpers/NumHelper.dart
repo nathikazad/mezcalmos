@@ -1,8 +1,8 @@
 extension ParseNumber on num {
-  String toPriceString({bool rounded = true}) {
+  String toPriceString({bool rounded = true, bool hideZero = true}) {
     final String str =
         "\$${(rounded) ? round().toStringAsFixed(0) : toStringAsFixed(1)}";
-    return str;
+    return (this == 0 && hideZero) ? "-" : str;
   }
 }
 

@@ -134,10 +134,10 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () =>
-                              MezSnackbar(_i18n()["to"], order.to.address),
+                          onTap: () => MezSnackbar(
+                              _i18n()["to"], order.dropOffLocation.address),
                           child: Text(
-                            order.to.address, //13+..
+                            order.dropOffLocation.address, //13+..
                             style: TextStyle(fontSize: 15, fontFamily: 'psr'),
                             maxLines: 1,
                             softWrap: false,

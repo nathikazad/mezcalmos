@@ -70,7 +70,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                     alignment: Alignment.center,
                                     child: Text(
                                       '${_i18n()["refundYourCustomer"]}',
-                                      style: context.txt.headline3,
+                                      style: context.txt.displaySmall,
                                     ),
                                   ),
                                   Divider(),
@@ -79,7 +79,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                   ),
                                   Text(
                                     "${_i18n()["amount"]} :",
-                                    style: context.txt.bodyText1,
+                                    style: context.txt.bodyLarge,
                                   ),
                                   const SizedBox(
                                     height: 8,
@@ -102,7 +102,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                           }
                                           return null;
                                         },
-                                        style: context.txt.bodyText1,
+                                        style: context.txt.bodyLarge,
                                         textAlignVertical:
                                             TextAlignVertical.center,
                                         decoration: InputDecoration(
@@ -125,14 +125,14 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                   ),
                                   Text(
                                     "${_i18n()["to"]}",
-                                    style: context.txt.bodyText1,
+                                    style: context.txt.bodyLarge,
                                   ),
                                   const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
                                     "${widget.order.customer.name}",
-                                    style: context.txt.bodyText1,
+                                    style: context.txt.bodyLarge,
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -148,7 +148,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                         ),
                                         Text(
                                           "${widget.order.stripePaymentInfo?.brand!.toName()}",
-                                          style: context.txt.bodyText1,
+                                          style: context.txt.bodyLarge,
                                         ),
                                         const SizedBox(
                                           width: 8,
@@ -167,7 +167,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
                                         label: "${_i18n()["cancel"]}",
                                         height: 50,
                                         onClick: () async {
-                                          MezRouter.back();
+                                          await MezRouter.back();
                                         },
                                         backgroundColor: offRedColor,
                                         textColor: Colors.red,
@@ -225,8 +225,9 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
   }
 
   bool canRefund() {
-    if (widget.order.refundAmount != null) {
-      return (widget.order.refundAmount! < widget.order.totalCost!);
+    if (widget.order.costs.refundAmmount != null) {
+      return (widget.order.costs.refundAmmount! <
+          widget.order.costs.totalCost!);
     } else
       return true;
   }
@@ -240,10 +241,11 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
   }
 
   num maximumRefund() {
-    if (widget.order.refundAmount != null) {
-      return (widget.order.totalCost! - widget.order.refundAmount!);
+    if (widget.order.costs.refundAmmount != null) {
+      return (widget.order.costs.totalCost! -
+          widget.order.costs.refundAmmount!);
     } else {
-      return widget.order.totalCost!;
+      return widget.order.costs.totalCost!;
     }
   }
 }

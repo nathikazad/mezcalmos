@@ -3,17 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -231,11 +228,11 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             SizedBox(
               width: 8,
             ),
-            if (order.chatWithServiceProviderId != null)
+            if (order.serviceProviderDriverChatId != null)
               MessageButton(
                 withPadding: false,
                 onTap: onServiceMsgClick,
-                chatId: order.chatWithServiceProviderId!,
+                chatId: order.serviceProviderDriverChatId!,
               ),
           ],
         ),
@@ -270,11 +267,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
             ),
             SizedBox(width: 8),
-            MessageButton(
-              withPadding: false,
-              onTap: onCustomerMsgClick,
-              chatId: order.chatWithCustomerId,
-            ),
+            if (order.customerDriverChatId != null)
+              MessageButton(
+                withPadding: false,
+                onTap: onCustomerMsgClick,
+                chatId: order.customerDriverChatId!,
+              ),
           ],
         ),
         Align(
@@ -313,7 +311,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     label: "${_i18n()['details']}",
                     onClick: () async {
                       // ignore: unawaited_futures
-                      OrderDetailsScreen.navigate(orderId: order.id);
+                      OrderDetailsScreen.navigate(orderId: order.orderId);
                     },
                   ),
                 ),
@@ -324,7 +322,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "${order.packageCost.toPriceString(rounded: true)}",
+                "${order.costs.orderItemsCost!.toPriceString(rounded: true)}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

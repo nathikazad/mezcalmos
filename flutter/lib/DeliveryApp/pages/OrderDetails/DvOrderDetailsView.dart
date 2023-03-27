@@ -6,22 +6,20 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 
 //
@@ -132,7 +130,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           height: 10,
                         ),
                         Text(
-                            "${viewController.order.value!.dropoffLocation.address}"),
+                            "${viewController.order.value!.dropOffLocation.address}"),
                         SizedBox(
                           height: 20,
                         ),
@@ -164,52 +162,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   viewController: viewController,
                 ),
                 _billCard(context),
-                OrderSummaryCard(
-                  shippingCost: viewController.orderCosts.value?.deliveryCost ??
-                      viewController.order.value!.deliveryCost,
-                  orderCost: viewController.orderCosts.value?.orderItemsCost ??
-                      viewController.order.value!.packageCost,
-                  totalCost: viewController.orderCosts.value?.totalCost ??
-                      viewController.order.value!.totalCost,
-                  refundAmmount:
-                      viewController.orderCosts.value?.refundAmmount ??
-                          viewController.order.value!.stripeOrderPaymentInfo
-                              ?.amountRefunded,
-                  stripeOrderPaymentInfo:
-                      viewController.order.value!.stripeOrderPaymentInfo,
-                  newRow: Container(
-                    margin: const EdgeInsets.only(bottom: 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Flexible(
-                          fit: FlexFit.tight,
-                          child: Text(
-                            "${_i18n()['tax']}",
-                            style: context.txt.bodyMedium,
-                          ),
-                        ),
-                        MezIconButton(
-                          icon:
-                              viewController.taxSetted ? Icons.edit : Icons.add,
-                          iconSize: 17,
-                          padding: const EdgeInsets.all(3),
-                          onTap: () {
-                            viewController.taxText.text =
-                                viewController.tax.value?.toString() ?? "";
-                            _showTaxSheet(context);
-                          },
-                        ),
-                        if (viewController.taxSetted)
-                          Container(
-                            margin: const EdgeInsets.only(left: 3),
-                            child: Text(
-                                "${viewController.orderCosts.value?.tax?.toPriceString() ?? "-"}"),
-                          )
-                      ],
-                    ),
-                  ),
-                )
+                if (viewController.orderCosts.value != null)
+                  OrderSummaryCard(
+                    costs: viewController.orderCosts.value!,
+                    setTaxCallBack: () {
+                      viewController.taxText.text =
+                          viewController.tax.value?.toString() ?? "";
+                      _showTaxSheet(context);
+                    },
+                    stripeOrderPaymentInfo:
+                        viewController.order.value!.stripePaymentInfo,
+                  )
               ],
             ),
           );
@@ -286,22 +249,24 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           children: [
             CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                  viewController.order.value!.customerInfo.image),
+                  viewController.order.value!.customer.image),
             ),
             SizedBox(
               width: 8,
             ),
             Text(
-              "${viewController.order.value!.customerInfo.name}",
+              "${viewController.order.value!.customer.name}",
               style: context.txt.bodyLarge,
             ),
             Spacer(),
-            MessageButton(
-                chatId: viewController.order.value!.chatWithCustomerId,
-                onTap: () {
-                  BaseMessagingScreen.navigate(
-                      chatId: viewController.order.value!.chatWithCustomerId);
-                })
+            if (viewController.order.value!.customerDriverChatId != null)
+              MessageButton(
+                  chatId: viewController.order.value!.customerDriverChatId!,
+                  onTap: () {
+                    BaseMessagingScreen.navigate(
+                        chatId:
+                            viewController.order.value!.customerDriverChatId!);
+                  })
           ],
         ),
       ),
@@ -309,11 +274,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   String _getOrderType() {
-    switch (viewController.order.value!.serviceProviderType) {
-      case ServiceProviderType.Restaurant:
+    switch (viewController.order.value!.orderType) {
+      case OrderType.Restaurant:
         return "${_i18n()["restaurant"]}";
-      case ServiceProviderType.Laundry:
+      case OrderType.Laundry:
         return "${_i18n()["laundry"]}";
+      case OrderType.Courier:
+        return "Courier";
 
       default:
         return "";

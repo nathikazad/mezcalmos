@@ -8,10 +8,12 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -45,64 +47,80 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
         orderData.restaurant_order!.stripe_info);
   }
   return DeliveryOrder(
-      id: orderData.id,
-      scheduleTime: (orderData.schedule_time != null)
-          ? DateTime.tryParse(orderData.schedule_time!)
-          : null,
-      packageReady: orderData.package_ready,
-      orderType: orderData.order_type.toOrderType(),
-      stripeOrderPaymentInfo: _paymentInfo,
-      serviceOrderId: orderData.restaurant_order?.id,
-      deliveryCompany: _getDeliveryCompany(orderData)!,
-      serviceInfo: _getServiceInfo(orderData)!,
-      customerInfo: UserInfo(
-          hasuraId: orderData.customer.user.id,
-          image: orderData.customer.user.image,
-          name: orderData.customer.user.name),
-      deliveryDirection: orderData.direction.toDeliveryDirection(),
-      routeInformation: (orderData.trip_duration != null &&
-              orderData.trip_distance != null &&
-              orderData.trip_polyline != null)
-          ? RouteInformation(
-              duration: RideDuration(
-                  orderData.trip_duration.toString(), orderData.trip_duration!),
-              distance: RideDistance(
-                  orderData.trip_distance.toString(), orderData.trip_distance!),
-              polyline: orderData.trip_polyline!)
-          : null,
-      orderTime: DateTime.parse(orderData.order_time),
-      driverInfo: (orderData.delivery_driver != null)
-          ? UserInfo(
-              hasuraId: orderData.delivery_driver!.user.id,
-              name: orderData.delivery_driver!.user.name,
-              image: orderData.delivery_driver!.user.image)
-          : null,
-      estimatedArrivalAtDropoffTime: (orderData.estimated_arrival_at_dropoff_time != null)
-          ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
-          : null,
-      estimatedArrivalAtPickupTime: (orderData.estimated_arrival_at_pickup_time != null)
-          ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
-          : null,
-      estimatedPackageReadyTime: (orderData.estimated_package_ready_time != null)
-          ? DateTime.parse(orderData.estimated_package_ready_time!)
-          : null,
-      status: orderData.status.toDeliveryOrderStatus(),
-      serviceProviderType:
-          orderData.service_provider_type.toServiceProviderType(),
+    orderId: orderData.id,
+    scheduleTime: (orderData.schedule_time != null)
+        ? DateTime.tryParse(orderData.schedule_time!)
+        : null,
+    packageReady: orderData.package_ready,
+    orderType: orderData.order_type.toOrderType(),
+    stripePaymentInfo: _paymentInfo,
+    serviceOrderId: orderData.restaurant_order?.id,
+    deliveryCompany: _getDeliveryCompany(orderData)!,
+    serviceProvider: _getServiceInfo(orderData)!,
+    customer: UserInfo(
+        hasuraId: orderData.customer.user.id,
+        image: orderData.customer.user.image,
+        name: orderData.customer.user.name),
+    deliveryDirection: orderData.direction.toDeliveryDirection(),
+    routeInformation: (orderData.trip_duration != null &&
+            orderData.trip_distance != null &&
+            orderData.trip_polyline != null)
+        ? RouteInformation(
+            duration: RideDuration(
+                orderData.trip_duration.toString(), orderData.trip_duration!),
+            distance: RideDistance(
+                orderData.trip_distance.toString(), orderData.trip_distance!),
+            polyline: orderData.trip_polyline!)
+        : null,
+    orderTime: DateTime.parse(orderData.order_time),
+    driverInfo: (orderData.delivery_driver != null)
+        ? DeliveryDriverUserInfo(
+            hasuraId: orderData.delivery_driver!.user.id,
+            name: orderData.delivery_driver!.user.name,
+            image: orderData.delivery_driver!.user.image,
+            language: null)
+        : null,
+    estimatedArrivalAtDropoff:
+        (orderData.estimated_arrival_at_dropoff_time != null)
+            ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
+            : null,
+    estimatedArrivalAtPickup:
+        (orderData.estimated_arrival_at_pickup_time != null)
+            ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
+            : null,
+    estimatedPackageReadyTime: (orderData.estimated_package_ready_time != null)
+        ? DateTime.parse(orderData.estimated_package_ready_time!)
+        : null,
+    status: orderData.status.toDeliveryOrderStatus(),
+    deliveryProviderType:
+        orderData.service_provider_type.toServiceProviderType(),
+    // deliveryCost: orderData.delivery_cost,
+    // packageCost: orderData.package_cost_comp ?? 0,
+    driverLocation: (orderData.delivery_driver != null &&
+            orderData.delivery_driver?.current_location != null)
+        ? LatLng(orderData.delivery_driver!.current_location!.latitude,
+            orderData.delivery_driver!.current_location!.longitude)
+        : null,
+    pickupLocation: (orderData.pickup_address != null &&
+            orderData.pickup_gps != null)
+        ? MezLocation(
+            orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+        : null,
+    dropOffLocation: MezLocation(
+        orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
+    customerDriverChatId: orderData.chat_with_customer_id,
+    serviceProviderDriverChatId: orderData.chat_with_service_provider_id,
+    paymentType: orderData.payment_type.toPaymentType(),
+    chatId: orderData.chat_with_customer_id,
+    costs: OrderCosts(
       deliveryCost: orderData.delivery_cost,
-      packageCost: orderData.package_cost_comp ?? 0,
-      driverLocation:
-          (orderData.delivery_driver != null && orderData.delivery_driver?.current_location != null)
-              ? LatLng(orderData.delivery_driver!.current_location!.latitude,
-                  orderData.delivery_driver!.current_location!.longitude)
-              : null,
-      pickupLocation: (orderData.pickup_address != null && orderData.pickup_gps != null)
-          ? MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
-          : null,
-      dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
-      chatWithCustomerId: orderData.chat_with_customer_id,
-      chatWithServiceProviderId: orderData.chat_with_service_provider_id,
-      paymentType: orderData.payment_type.toPaymentType());
+      refundAmmount: null,
+      tax: null,
+      orderItemsCost: orderData.package_cost_comp,
+      totalCost: orderData.total_cost,
+    ),
+    deliveryOrderId: orderData.id,
+  );
 }
 
 Future<List<MinimalOrder>?> get_current_driver_orders(
@@ -130,7 +148,7 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
         deliveryCost: orderData.delivery_cost,
         image: orderData.customer.user.image,
         status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+        totalCost: orderData.total_cost,
       );
     }).toList();
     return orders;
@@ -164,7 +182,7 @@ Future<List<MinimalOrder>?> get_open_driver_orders(
         title: orderData.customer.user.name!,
         image: orderData.customer.user.image,
         status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+        totalCost: orderData.total_cost,
       );
     }).toList();
     return orders;
@@ -198,7 +216,7 @@ Future<List<MinimalOrder>?> get_past_driver_orders(
         deliveryCost: orderData.delivery_cost,
         image: orderData.customer.user.image,
         status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+        totalCost: orderData.total_cost,
       );
     }).toList();
     return orders;
@@ -229,10 +247,11 @@ Future<List<MinimalOrder>?> get_dvcompany_current_orders(
         toAdress: orderData.dropoff_address,
         orderType: orderData.order_type.toOrderType(),
         orderTime: DateTime.parse(orderData.order_time),
+        deliveryCost: orderData.delivery_cost,
         title: orderData.customer.user.name!,
         image: orderData.customer.user.image,
         status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+        totalCost: orderData.total_cost,
       );
     }).toList();
     return orders;
@@ -267,7 +286,7 @@ Future<List<MinimalOrder>?> get_dvcompany_past_orders(
         image: orderData.customer.user.image,
         deliveryCost: orderData.delivery_cost,
         status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-        totalCost: orderData.package_cost_comp ?? 0 + orderData.delivery_cost,
+        totalCost: orderData.total_cost,
       );
     }).toList();
     return orders;
@@ -297,19 +316,19 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
       deliveryDirection: DeliveryDirection.FromCustomer,
       packageReady: false,
       scheduleTime: null,
-      id: orderData.id,
+      orderId: orderData.id,
       orderType: orderData.order_type.toOrderType(),
-      stripeOrderPaymentInfo: null,
+      stripePaymentInfo: null,
       serviceOrderId: null,
       deliveryCompany: UserInfo(
           hasuraId: orderData.service_provider_id, name: "", image: ""),
-      serviceInfo: ServiceInfo(
+      serviceProvider: ServiceInfo(
           location: MezLocation.fromLocationData(
               MezLocation.buildLocationData(55, 55)),
           hasuraId: 1,
           image: "",
           name: ""),
-      customerInfo: UserInfo(
+      customer: UserInfo(
           hasuraId: orderData.customer.user.id,
           image: orderData.customer.user.image,
           name: orderData.customer.user.name),
@@ -326,16 +345,15 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
           : null,
       orderTime: DateTime.parse(orderData.order_time),
       driverInfo: (orderData.delivery_driver != null)
-          ? UserInfo(
+          ? DeliveryDriverUserInfo(
               hasuraId: orderData.delivery_driver!.user.id,
+              language: null,
               name: orderData.delivery_driver!.user.name,
               image: orderData.delivery_driver!.user.image)
           : null,
       status: orderData.status.toDeliveryOrderStatus(),
-      serviceProviderType:
+      deliveryProviderType:
           orderData.service_provider_type.toServiceProviderType(),
-      deliveryCost: orderData.delivery_cost,
-      packageCost: orderData.package_cost_comp ?? 0,
       driverLocation: (orderData.delivery_driver != null &&
               orderData.delivery_driver?.current_location != null)
           ? LatLng(orderData.delivery_driver!.current_location!.latitude,
@@ -345,14 +363,23 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
           ? MezLocation(
               orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
           : null,
-      dropoffLocation:
+      dropOffLocation:
           MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
-      chatWithCustomerId: 0,
+      chatId: 0,
       paymentType: orderData.payment_type.toPaymentType(),
-      chatWithServiceProviderId: null,
-      estimatedArrivalAtDropoffTime: null,
-      estimatedArrivalAtPickupTime: null,
-      estimatedPackageReadyTime: null);
+      customerDriverChatId: null,
+      estimatedArrivalAtDropoff: null,
+      estimatedArrivalAtPickup: null,
+      estimatedPackageReadyTime: null,
+      serviceProviderDriverChatId: null,
+      costs: OrderCosts(
+        deliveryCost: orderData.delivery_cost,
+        refundAmmount: null,
+        tax: null,
+        orderItemsCost: orderData.package_cost_comp,
+        totalCost: orderData.total_cost,
+      ),
+      deliveryOrderId: null);
 }
 
 Future<UserInfo?> get_order_driver_info({required int orderId}) async {

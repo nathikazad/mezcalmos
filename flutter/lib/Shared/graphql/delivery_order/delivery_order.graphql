@@ -128,6 +128,7 @@ query get_driver_order($orderId: Int!) {
     }
     order_time
     package_cost_comp
+    total_cost
     package_ready
     payment_type
     pickup_address
@@ -310,6 +311,7 @@ subscription listen_on_driver_order($orderId: Int!) {
     }
     order_time
     package_cost_comp
+    total_cost
     package_ready
     payment_type
     pickup_address
@@ -397,6 +399,7 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     order_time
     status
     package_cost_comp
+    total_cost
     package_ready
     order_type
     delivery_cost
@@ -439,6 +442,7 @@ query get_past_driver_orders($driverId: Int!) {
     status
     order_type
     package_cost_comp
+    total_cost
     delivery_cost
 
     dropoff_address
@@ -475,6 +479,7 @@ query get_inprocess_driver_orders($driverId: Int!) {
     status
     order_type
     package_cost_comp
+    total_cost
     package_ready
     delivery_cost
     dropoff_address
@@ -512,6 +517,7 @@ query get_open_driver_orders($in_process : Boolean!) {
     status
     order_type
     package_cost_comp
+    total_cost
     package_ready
     dropoff_address
     delivery_cost
@@ -549,6 +555,7 @@ subscription listen_open_driver_orders($in_process: Boolean!) {
     order_type
     package_cost_comp
     package_ready
+    total_cost
     dropoff_address
     delivery_cost
     dropoff_gps
@@ -587,6 +594,7 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     status
     package_cost_comp
     package_ready
+    total_cost
     dropoff_address
     delivery_cost
     order_type
@@ -625,6 +633,7 @@ query get_delivery_company_past_orders($companyId: Int!) {
     order_time
     status
     package_cost_comp
+    total_cost
     dropoff_address
     delivery_cost
     dropoff_gps
@@ -664,6 +673,7 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     order_time
     status
     package_cost_comp
+    total_cost
     order_type
     dropoff_address
     delivery_cost
@@ -724,6 +734,7 @@ query get_pick_driver_order($orderId: Int!) {
     id
     order_time
     package_cost_comp
+    total_cost
     payment_type
     pickup_address
     delivery_cost

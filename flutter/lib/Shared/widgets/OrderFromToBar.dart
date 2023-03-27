@@ -283,10 +283,10 @@ class OrderPositionedFromToTopBar {
                     SizedBox(width: 5),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () =>
-                            MezSnackbar(i18n()["to"], order.to.address),
+                        onTap: () => MezSnackbar(
+                            i18n()["to"], order.dropOffLocation.address),
                         child: Text(
-                          order.to.address
+                          order.dropOffLocation.address
                               .replaceAll(' ', '\u00a0')
                               .toUpperCase(),
                           textAlign: TextAlign.left,

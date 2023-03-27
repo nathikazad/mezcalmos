@@ -59,12 +59,12 @@ class LaundryOrderTimes extends StatelessWidget {
                       children: [
                         Text(
                           _getRightTitle()!.inCaps,
-                          style: context.txt.bodyText1,
+                          style: context.txt.bodyLarge,
                           maxLines: 1,
                         ),
                         Text(
                           _getEstimatedText()!.inCaps,
-                          style: context.txt.bodyText2,
+                          style: context.txt.bodyMedium,
                           maxLines: 1,
                         ),
                       ],
@@ -88,8 +88,8 @@ class LaundryOrderTimes extends StatelessWidget {
       case LaundryOrderStatus.PickedUpFromCustomer:
 
       case LaundryOrderStatus.AtLaundry:
-        if (order.estimatedLaundryReadyTime != null) {
-          return "${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
+        if (order.estimatedPackageReadyTime != null) {
+          return "${order.estimatedPackageReadyTime!.getEstimatedTime()}";
         }
 
         break;
@@ -97,8 +97,8 @@ class LaundryOrderTimes extends StatelessWidget {
       case LaundryOrderStatus.ReadyForDelivery:
 
       case LaundryOrderStatus.PickedUpFromLaundry:
-        if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+        if (order.estimatedArrivalAtDropoff != null) {
+          return "${order.estimatedArrivalAtDropoff!.getEstimatedTime()}";
         }
 
         break;
@@ -120,7 +120,7 @@ class LaundryOrderTimes extends StatelessWidget {
       case LaundryOrderStatus.PickedUpFromCustomer:
 
       case LaundryOrderStatus.AtLaundry:
-        if (order.estimatedLaundryReadyTime != null) {
+        if (order.estimatedPackageReadyTime != null) {
           return "${_i18n()["laundryReady"]}";
         }
 
@@ -129,7 +129,7 @@ class LaundryOrderTimes extends StatelessWidget {
       case LaundryOrderStatus.ReadyForDelivery:
 
       case LaundryOrderStatus.PickedUpFromLaundry:
-        if (order.estimatedDropoffAtCustomerTime != null) {
+        if (order.estimatedArrivalAtDropoff != null) {
           return "${_i18n()["delivery"]}";
         }
 

@@ -40,7 +40,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
             child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
-                child: (widget.order.dropoffDriver != null)
+                child: (widget.order.driverInfo != null)
                     ? Row(children: [
                         Stack(
                           clipBehavior: Clip.none,
@@ -48,7 +48,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             CircleAvatar(
                                 radius: 25,
                                 backgroundImage: CachedNetworkImageProvider(
-                                    widget.order.dropoffDriver!.image)),
+                                    widget.order.driverInfo!.image)),
                             Positioned(
                               right: -30,
                               bottom: 3,
@@ -76,14 +76,14 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.order.dropoffDriver!.name,
+                                widget.order.driverInfo!.name,
                                 style: context.txt.bodyLarge,
                               ),
                             ],
                           ),
                         ),
                         if (widget.order.inProcess() &&
-                            widget.order.dropoffDriver != null &&
+                            widget.order.driverInfo != null &&
                             widget.order.isSelfDelivery())
                           MezIconButton(
                             onTap: () async {
@@ -94,16 +94,14 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             },
                             icon: Icons.edit,
                           ),
-                        if (widget.order.serviceProviderDropOffDriverChatId !=
-                            null)
+                        if (widget.order.serviceProviderDriverChatId != null)
                           MessageButton(
                             onTap: () {
                               BaseMessagingScreen.navigate(
-                                  chatId: widget.order
-                                      .serviceProviderDropOffDriverChatId!);
+                                  chatId: widget
+                                      .order.serviceProviderDriverChatId!);
                             },
-                            chatId: widget
-                                .order.serviceProviderDropOffDriverChatId!,
+                            chatId: widget.order.serviceProviderDriverChatId!,
                           ),
                       ])
                     : _noDriverYet()),
@@ -161,10 +159,10 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: (widget.order.estimatedFoodReadyTime != null)
+                    color: (widget.order.estimatedPackageReadyTime != null)
                         ? Colors.grey.shade300
                         : Colors.transparent),
-                child: (widget.order.estimatedFoodReadyTime != null)
+                child: (widget.order.estimatedPackageReadyTime != null)
                     ? Icon(
                         Icons.edit_outlined,
                         size: 18,

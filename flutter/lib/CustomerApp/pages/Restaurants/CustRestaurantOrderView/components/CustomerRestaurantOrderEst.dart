@@ -235,15 +235,15 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
   }
 
   String? _getFoodReadyTime() {
-    if (order.estimatedFoodReadyTime != null) {
-      return "${order.estimatedFoodReadyTime!.getEstimatedTime()}";
+    if (order.estimatedPackageReadyTime != null) {
+      return "${order.estimatedPackageReadyTime!.getEstimatedTime()}";
     } else
       return null;
   }
 
   String? _getDeliveryTime() {
-    if (order.estDropOffTime != null) {
-      return "${order.estDropOffTime!.getEstimatedTime()}";
+    if (order.estimatedArrivalAtDropoff != null) {
+      return "${order.estimatedArrivalAtDropoff!.getEstimatedTime()}";
     } else
       return null;
   }

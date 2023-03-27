@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -64,7 +63,7 @@ class LaundryOrderViewController {
           await get_laundry_order_by_id(orderId: orderId, withCache: false);
       if (_order.value != null) {
         laundryCategories.value = await get_laundry_categories(
-            storeId: _order.value!.laundry!.hasuraId);
+            storeId: _order.value!.serviceProvider.hasuraId);
       }
 
       if (_order.value!.routeInformation != null) {
@@ -83,9 +82,9 @@ class LaundryOrderViewController {
             .listen((LaundryOrder? event) {
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.location?.toJson()}");
             _order.value = event;
-            _order.value?.dropoffDriver = event.dropoffDriver;
+            _order.value?.driverInfo = event.driverInfo;
           }
         });
       }, cancel: () {
@@ -259,7 +258,7 @@ class LaundryOrderViewController {
     }
     if (res != null) {
       closeEditMode();
-      MezRouter.back();
+      await MezRouter.back();
     }
   }
 

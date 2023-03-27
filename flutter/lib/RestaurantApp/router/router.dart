@@ -1,8 +1,6 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/ROpTabsView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
-import 'package:mezcalmos/RestaurantApp/router/deliveryRoutes.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -33,7 +31,7 @@ class RestaurantAppRoutes {
           builder: () => ROpUnauthorizedOpView(),
         ),
       ] +
-      DeliveryRouter().routes +
+      //  DeliveryRouter().routes +
       RestaurantRouter().routes +
       SharedRoutes.qRoutes +
       SharedServiceProviderRoutes.routes +

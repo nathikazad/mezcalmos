@@ -19,7 +19,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (order.dropoffDriver != null && order.inProcess()) {
+    if (order.driverInfo != null && order.inProcess()) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,7 +49,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                     CircleAvatar(
                         radius: 23,
                         backgroundImage: CachedNetworkImageProvider(
-                            order.dropoffDriver!.image)),
+                            order.driverInfo!.image)),
                     Positioned(
                       right: -35,
                       child: Container(
@@ -79,17 +79,17 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(
-                    order.dropoffDriver!.name,
+                    order.driverInfo!.name,
                     style: context.txt.bodyText1,
                   ),
                 ),
-                if (order.customerDropOffDriverChatId != null)
+                if (order.customerDriverChatId != null)
                   MessageButton(
                     onTap: () {
                       BaseMessagingScreen.navigate(
-                          chatId: order.customerDropOffDriverChatId!);
+                          chatId: order.customerDriverChatId!);
                     },
-                    chatId: order.customerDropOffDriverChatId!,
+                    chatId: order.customerDriverChatId!,
                   ),
               ],
             ),

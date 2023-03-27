@@ -137,9 +137,10 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => MezSnackbar(_i18n()["to"], order.to.address),
+                      onTap: () => MezSnackbar(
+                          _i18n()["to"], order.dropOffLocation.address),
                       child: Text(
-                        order.to.address,
+                        order.dropOffLocation.address,
                         style: TextStyle(
                           fontSize: 13,
                           fontFamily: 'Nunito',

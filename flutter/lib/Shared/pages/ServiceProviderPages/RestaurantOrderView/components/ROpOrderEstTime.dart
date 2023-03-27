@@ -31,10 +31,10 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
 
   @override
   void initState() {
-    selectedDate.value = widget.order.estimatedFoodReadyTime?.toLocal() ??
+    selectedDate.value = widget.order.estimatedPackageReadyTime?.toLocal() ??
         DateTime.now().toLocal();
     selectedTime.value = TimeOfDay.fromDateTime(
-        widget.order.estimatedFoodReadyTime?.toLocal() ??
+        widget.order.estimatedPackageReadyTime?.toLocal() ??
             DateTime.now().toLocal());
     super.initState();
   }
@@ -74,9 +74,9 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
                   SizedBox(
                     height: 5,
                   ),
-                  if (widget.order.estimatedFoodReadyTime != null)
+                  if (widget.order.estimatedPackageReadyTime != null)
                     Text(
-                      "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.estimatedFoodReadyTime!.toLocal())}",
+                      "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.estimatedPackageReadyTime!.toLocal())}",
                       style: Get.theme.textTheme.bodyMedium,
                     ),
                 ],
@@ -145,10 +145,10 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
           padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: (widget.order.estimatedFoodReadyTime != null)
+              color: (widget.order.estimatedPackageReadyTime != null)
                   ? secondaryLightBlueColor
                   : Colors.transparent),
-          child: (widget.order.estimatedFoodReadyTime != null)
+          child: (widget.order.estimatedPackageReadyTime != null)
               ? Icon(
                   Icons.edit,
                   size: 20,

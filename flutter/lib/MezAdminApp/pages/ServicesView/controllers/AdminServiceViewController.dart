@@ -96,8 +96,9 @@ class AdminServicesViewController {
         return _restaurants.value;
       case ServiceProviderType.DeliveryCompany:
         return _dvCompanies.value;
+      case ServiceProviderType.Customer:
+        return null;
     }
-    return null;
   }
 
   Future<void> approveService({required int detailsId}) async {

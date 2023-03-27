@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
@@ -48,12 +47,12 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         () => AnimatedOrderInfoCard(
           viewController: widget.viewcontroller,
           // customer
-          customerImage: widget.viewcontroller.order.customerInfo.image,
+          customerImage: widget.viewcontroller.order.customer.image,
           subtitle: (_showFoodReadyTime())
               ? "${_i18n()["packageReady"]} ${widget.viewcontroller.order.estimatedPackageReadyTime!.getEstimatedTime()}"
               : null,
           secondSubtitle: _getDeliveryTime(),
-          customerName: widget.viewcontroller.order.customerInfo.name,
+          customerName: widget.viewcontroller.order.customer.name,
           enableExpand: (widget.viewcontroller.order.inProcess())
               ? _isTimesSetted()
               : true,
@@ -62,20 +61,24 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               : _dropOffTimeSetter(),
 
           onCustomerMsgClick: () {
-            BaseMessagingScreen.navigate(
-              chatId: widget.viewcontroller.order.chatWithCustomerId,
-            );
+            if (widget.viewcontroller.order.customerDriverChatId != null)
+              BaseMessagingScreen.navigate(
+                chatId: widget.viewcontroller.order.customerDriverChatId!,
+              );
           },
           // landry
-          serviceProviderImage: widget.viewcontroller.order.serviceInfo.image,
-          serviceProviderName: widget.viewcontroller.order.serviceInfo.name,
+          serviceProviderImage:
+              widget.viewcontroller.order.serviceProvider.image,
+          serviceProviderName: widget.viewcontroller.order.serviceProvider.name,
           serviceProviderTimeWidget: widget.viewcontroller.inPickupPhase
               ? _dropOffTimeSetter()
               : _pickUpTimeSetter(),
           onServiceMsgClick: () {
-            if (widget.viewcontroller.order.chatWithServiceProviderId != null) {
+            if (widget.viewcontroller.order.serviceProviderDriverChatId !=
+                null) {
               BaseMessagingScreen.navigate(
-                chatId: widget.viewcontroller.order.chatWithServiceProviderId!,
+                chatId:
+                    widget.viewcontroller.order.serviceProviderDriverChatId!,
               );
             }
           },
@@ -98,7 +101,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
   }
 
   String? _getDeliveryTime() {
-    if (widget.viewcontroller.order.isScheduled()) {
+    if (widget.viewcontroller.order.isScheduled) {
       // todo @m66are fix this
       //  return "${_i18n()["dvTime"]}: ${widget.viewcontroller.order.deliveryTime!.toLocal().toDayName()}, ${DateFormat("hh:mm a").format(widget.viewcontroller.order.deliveryTime!.toLocal())}";
     }
@@ -106,8 +109,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
   }
 
   bool _isTimesSetted() {
-    return widget.viewcontroller.order.estimatedArrivalAtPickupTime != null &&
-        widget.viewcontroller.order.estimatedArrivalAtDropoffTime != null;
+    return widget.viewcontroller.order.estimatedArrivalAtPickup != null &&
+        widget.viewcontroller.order.estimatedArrivalAtDropoff != null;
   }
 
 // get order status readable title
@@ -118,7 +121,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
       case DeliveryOrderStatus.CancelledByServiceProvider:
         return '${_i18n()["orderStatus"]["canceled"]}';
       case DeliveryOrderStatus.OrderReceived:
-        if (widget.viewcontroller.order.isScheduled()) {
+        if (widget.viewcontroller.order.isScheduled) {
           return '${_i18n()["orderStatus"]["scheduled"]}';
         } else if (!widget.viewcontroller.order.packageReady) {
           return '${_i18n()["orderStatus"]["waiting"]}';
@@ -193,8 +196,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                     if (widget.viewcontroller.pickuSetted) {
                       DateTime? newTime = await _pickDateAndTime(
                           context: context,
-                          firstDate: widget.viewcontroller.order
-                              .estimatedArrivalAtPickupTime);
+                          firstDate: widget
+                              .viewcontroller.order.estimatedArrivalAtPickup);
                       if (newTime != null) {
                         await widget.viewcontroller
                             .setDropoffTime(newTime.toLocal());
@@ -256,8 +259,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
       onTap: () async {
         DateTime? newTime = await _pickDateAndTime(
             context: context,
-            firstDate:
-                widget.viewcontroller.order.estimatedArrivalAtPickupTime);
+            firstDate: widget.viewcontroller.order.estimatedArrivalAtPickup);
         if (newTime != null) {
           await widget.viewcontroller.setPickupTime(newTime);
         }

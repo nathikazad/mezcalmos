@@ -142,9 +142,9 @@ class LaundryOrderDriverCard extends StatelessWidget {
     if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         viewController.order.estimatedPickupFromCustomerTime != null) {
       return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(viewController.order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(viewController.order.estimatedPickupFromCustomerTime!.toLocal())}";
-    } else if (viewController.order.estimatedDropoffAtCustomerTime != null &&
+    } else if (viewController.order.estimatedArrivalAtDropoff != null &&
         viewController.order.status != LaundryOrderStatus.PickedUpFromLaundry) {
-      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(viewController.order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(viewController.order.estimatedDropoffAtCustomerTime!.toLocal())}";
+      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(viewController.order.estimatedArrivalAtDropoff!.toLocal())} ${DateFormat("hh:mm a").format(viewController.order.estimatedArrivalAtDropoff!.toLocal())}";
     } else {
       return null;
     }
@@ -154,7 +154,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
     if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return viewController.order.pickupDriver != null;
     } else {
-      return viewController.order.dropoffDriver != null;
+      return viewController.order.driverInfo != null;
     }
   }
 
@@ -162,7 +162,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
     if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return viewController.order.serviceProviderPickupDriverChatId!;
     } else {
-      return viewController.order.serviceProviderDropOffDriverChatId!;
+      return viewController.order.serviceProviderDriverChatId!;
     }
   }
 
@@ -170,7 +170,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
     if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return viewController.order.pickupDriver;
     } else {
-      return viewController.order.dropoffDriver;
+      return viewController.order.driverInfo;
     }
   }
 
@@ -184,7 +184,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
 
   void _laundryDropOffDriverMessageRoute() {
     BaseMessagingScreen.navigate(
-      chatId: viewController.order.serviceProviderDropOffDriverChatId!,
+      chatId: viewController.order.serviceProviderDriverChatId!,
     );
   }
 
