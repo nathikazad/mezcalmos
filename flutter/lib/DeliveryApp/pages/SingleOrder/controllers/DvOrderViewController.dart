@@ -46,6 +46,12 @@ class DvOrderViewcontroller {
     return _order.value!.status;
   }
 
+  bool get showEditPrice {
+    return (order.orderType == OrderType.Courier ||
+            order.orderType == OrderType.Laundry) &&
+        order.status == DeliveryOrderStatus.OrderReceived;
+  }
+
   bool get isLaundry {
     return order.orderType == OrderType.Laundry;
   }

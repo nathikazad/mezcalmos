@@ -322,7 +322,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "${order.costs.orderItemsCost!.toPriceString(rounded: true)}",
+                "${order.costs.orderItemsCost?.toPriceString(rounded: true)}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -336,17 +336,18 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
             ],
           ),
-          Container(
-            margin: const EdgeInsets.only(left: 8),
-            child: MezIconButton(
-              onTap: () {
-                _showPriceSheet(context);
-              },
-              icon: Icons.edit,
-              iconSize: 20,
-              padding: const EdgeInsets.all(3),
-            ),
-          )
+          if (viewController.showEditPrice)
+            Container(
+              margin: const EdgeInsets.only(left: 8),
+              child: MezIconButton(
+                onTap: () {
+                  _showPriceSheet(context);
+                },
+                icon: Icons.edit,
+                iconSize: 20,
+                padding: const EdgeInsets.all(3),
+              ),
+            )
         ],
       ),
     );

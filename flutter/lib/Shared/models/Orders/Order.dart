@@ -98,12 +98,7 @@ abstract class Order {
 // ignore: constant_identifier_names
 // enum OrderType { Taxi, Restaurant, Laundry, Water, Courier }
 
-extension ParseOrderTypeToString on OrderType {
-  // String toFirebaseFormatString() {
-  //   final String str = toString().split('.').last;
-  //   return str[0].toLowerCase() + str.substring(1);
-  // }
-
+extension OrderTypeHelper on OrderType {
   mat.IconData toIcon() {
     switch (this) {
       case OrderType.Restaurant:
@@ -120,18 +115,6 @@ extension ParseOrderTypeToString on OrderType {
         return mat.Icons.watch_later;
     }
   }
-  // cloudFunctionModels.OrderType toCloudFunctionsModel() {
-  //   switch (this) {
-  //     case OrderType.Laundry:
-  //       return cloudFunctionModels.OrderType.Laundry;
-  //     case OrderType.Restaurant:
-  //       return cloudFunctionModels.OrderType.Restaurant;
-  //     case OrderType.Taxi:
-  //       return cloudFunctionModels.OrderType.Taxi;
-  //     case OrderType.Water:
-  //       return cloudFunctionModels.OrderType.Water;
-  //   }
-  // }
 
   String toPlural() {
     switch (this) {
@@ -148,13 +131,6 @@ extension ParseOrderTypeToString on OrderType {
     }
   }
 }
-
-// extension ParseStringToOrderType on String {
-//   OrderType toOrderType() {
-//     return OrderType.values
-//         .firstWhere((OrderType e) => e.toFirebaseFormatString() == this);
-//   }
-// }
 
 abstract class DeliverableOrder extends Order {
   DeliveryDriverUserInfo? driverInfo;
@@ -218,7 +194,6 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required super.orderTime,
       required super.deliveryProviderType,
       required this.customerPickupDriverChatId,
-      
       required super.costs,
       required super.deliveryDirection,
       required super.deliveryOrderId,
@@ -237,7 +212,6 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required super.customerDriverChatId,
       this.pickupDriver,
       required this.serviceProviderPickupDriverChatId,
-     
       super.estimatedArrivalAtPickup,
       super.estimatedArrivalAtDropoff,
       this.estimatedPickupFromCustomerTime,
