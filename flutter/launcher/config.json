@@ -1,293 +1,283 @@
 {
-    "settings": {
+  "settings": {
+    "envs": {
+      "stage": {
+        "db": "test",
+        "lmode": "stage"
+      },
 
-        "envs": {
-            "stage": {
+      "dev": {
+        "db": "production",
+        "lmode": "dev"
+      },
 
-                "db": "test",
-                "lmode": "stage"
-            },
+      "prod": {
+        "db": "production",
+        "lmode": "prod"
+      }
+    },
+    "launcher.xml": "../android/app/src/main/res/values/launcher.xml",
+    "launcherPackageProperties": "../android/launcherPackage.properties",
+    "appGoogleServices": "../android/app/google-services.json",
+    "appAppleServices": "../ios/Runner/GoogleService-Info.plist",
+    "pubspec.yaml": "../pubspec.yaml",
+    "local.properties": "../android/local.properties",
 
-            "dev": {
+    "sharedPermissions": [
+      "<uses-permission android:name='android.permission.INTERNET'/>",
+      "<uses-permission android:name='android.permission.ACCESS_FINE_LOCATION'/>",
+      "<uses-permission android:name='android.permission.ACCESS_COARSE_LOCATION'/>",
+      "<uses-permission android:name='android.permission.FOREGROUND_SERVICE'/>",
+      "<uses-permission android:name='com.google.android.gms.permission.AD_ID' tools:node='remove'/>"
+    ]
+  },
 
-                "db": "production",
-                "lmode": "dev"
-            },
-
-            "prod": {
-
-                "db": "production",
-                "lmode": "prod"
-            }
+  "apps": {
+    "TaxiApp": {
+      "folderName": "TaxiApp",
+      "packages": {
+        "stage": {
+          "appName": "MeztaxiStaging",
+          "packageName": "com.mezstaging.taxi",
+          "googe-service-file": "services/stage/android/taxi.json",
+          "apple-service-file": "services/stage/ios/taxi.plist"
         },
-        "launcher.xml": "../android/app/src/main/res/values/launcher.xml",
-        "launcherPackageProperties": "../android/launcherPackage.properties",
-        "appGoogleServices": "../android/app/google-services.json",
-        "appAppleServices": "../ios/Runner/GoogleService-Info.plist",
-        "pubspec.yaml": "../pubspec.yaml",
-        "local.properties": "../android/local.properties",
 
-        "sharedPermissions": [
+        "prod": {
+          "appName": "Meztaxi",
+          "packageName": "com.mezcalmos.taxi",
+          "googe-service-file": "services/prod/android/taxi.json",
+          "apple-service-file": "services/prod/ios/taxi.plist"
+        },
 
-            "<uses-permission android:name='android.permission.INTERNET'/>",
-            "<uses-permission android:name='android.permission.ACCESS_FINE_LOCATION'/>",
-            "<uses-permission android:name='android.permission.ACCESS_COARSE_LOCATION'/>",
-            "<uses-permission android:name='android.permission.FOREGROUND_SERVICE'/>",
-            "<uses-permission android:name='com.google.android.gms.permission.AD_ID' tools:node='remove'/>"
-        ]
-
+        "dev": {
+          "appName": "MeztaxiDev",
+          "packageName": "com.mezcalmos.taxi",
+          "googe-service-file": "services/prod/android/taxi.json",
+          "apple-service-file": "services/prod/ios/taxi.plist"
+        }
+      },
+      "appPermissions": [
+        "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
+      ]
     },
 
-    "apps": {
-        "TaxiApp": {
-            "folderName": "TaxiApp",
-            "packages": {
-                "stage": {
-
-                    "appName": "MeztaxiStaging",
-                    "packageName": "com.mezstaging.taxi",
-                    "googe-service-file": "services/stage/android/taxi.json",
-                    "apple-service-file": "services/stage/ios/taxi.plist"
-                },
-
-                "prod": {
-
-                    "appName": "Meztaxi",
-                    "packageName": "com.mezcalmos.taxi",
-                    "googe-service-file": "services/prod/android/taxi.json",
-                    "apple-service-file": "services/prod/ios/taxi.plist"
-                },
-
-                "dev": {
-
-                    "appName": "MeztaxiDev",
-                    "packageName": "com.mezcalmos.taxi",
-                    "googe-service-file": "services/prod/android/taxi.json",
-                    "apple-service-file": "services/prod/ios/taxi.plist"
-                }
-            },
-            "appPermissions": [
-                "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
-            ]
+    "CustomerApp": {
+      "folderName": "CustomerApp",
+      "packages": {
+        "stage": {
+          "appName": "MezcustomerStaging",
+          "packageName": "com.mezstaging.customer",
+          "googe-service-file": "services/stage/android/customer.json",
+          "apple-service-file": "services/stage/ios/customer.plist"
         },
 
-        "CustomerApp": {
-            "folderName": "CustomerApp",
-            "packages": {
-
-                "stage": {
-
-                    "appName": "MezcustomerStaging",
-                    "packageName": "com.mezstaging.customer",
-                    "googe-service-file": "services/stage/android/customer.json",
-                    "apple-service-file": "services/stage/ios/customer.plist"
-
-                },
-
-                "prod": {
-                    "appName": "Mezcalmos",
-                    "packageName": "com.mezcalmos.customer",
-                    "googe-service-file": "services/prod/android/customer.json",
-                    "apple-service-file": "services/prod/ios/customer.plist"
-                },
-
-                "dev": {
-
-                    "appName": "MezcustomerDev",
-                    "packageName": "com.mezcalmos.customer",
-                    "googe-service-file": "services/prod/android/customer.json",
-                    "apple-service-file": "services/prod/ios/customer.plist"
-                }
-            },
-
-            "appPermissions": [
-                "<uses-permission android:name='android.permission.READ_PHONE_STATE' />",
-                "<uses-permission android:name='android.permission.RECORD_AUDIO' />",
-                "<uses-permission android:name='android.permission.CAMERA' />",
-                "<uses-permission android:name='android.permission.MODIFY_AUDIO_SETTINGS' />",
-                "<uses-permission android:name='android.permission.ACCESS_NETWORK_STATE' />",
-                "<uses-permission android:name='android.permission.BLUETOOTH' />",
-                "<uses-permission android:name='android.permission.ACCESS_WIFI_STATE' />",
-                "<uses-permission android:name='android.permission.READ_EXTERNAL_STORAGE' />",
-                "<uses-permission android:name='android.permission.WAKE_LOCK' />",
-                "<uses-permission android:name='android.permission.READ_PRIVILEGED_PHONE_STATE' />"
-            ],
-
-            "MainActivityKt": {
-                "imports": [
-                    "import io.flutter.embedding.android.FlutterFragmentActivity"
-                ],
-                "super": "FlutterFragmentActivity"
-            }
+        "prod": {
+          "appName": "Mezcalmos",
+          "packageName": "com.mezcalmos.customer",
+          "googe-service-file": "services/prod/android/customer.json",
+          "apple-service-file": "services/prod/ios/customer.plist"
         },
-        "DeliveryApp": {
-            "folderName": "DeliveryApp",
-            "packages": {
-                "stage": {
-                    "appName": "MezdeliveryStaging",
-                    "packageName": "com.mezstaging.delivery",
-                    "googe-service-file": "services/stage/android/delivery.json",
-                    "apple-service-file": "services/stage/ios/delivery.plist"
-                },
-                "prod": {
-                    "appName": "Mezdelivery",
-                    "packageName": "com.mezcalmos.delivery",
-                    "googe-service-file": "services/prod/android/delivery.json",
-                    "apple-service-file": "services/prod/ios/delivery.plist"
-                },
-                "dev": {
-                    "appName": "Mezdelivery",
-                    "packageName": "com.mezcalmos.delivery",
-                    "googe-service-file": "services/prod/android/delivery.json",
-                    "apple-service-file": "services/prod/ios/delivery.plist"
-                }
-            },
-            "appPermissions": [
 
-                "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>",
-                "<uses-permission android:name='android.permission.READ_PHONE_STATE' />",
-                "<uses-permission android:name='android.permission.RECORD_AUDIO' />",
-                "<uses-permission android:name='android.permission.CAMERA' />",
-                "<uses-permission android:name='android.permission.MODIFY_AUDIO_SETTINGS' />",
-                "<uses-permission android:name='android.permission.ACCESS_NETWORK_STATE' />",
-                "<uses-permission android:name='android.permission.BLUETOOTH' />",
-                "<uses-permission android:name='android.permission.ACCESS_WIFI_STATE' />",
-                "<uses-permission android:name='android.permission.READ_EXTERNAL_STORAGE' />",
-                "<uses-permission android:name='android.permission.WAKE_LOCK' />",
-                "<uses-permission android:name='android.permission.READ_PRIVILEGED_PHONE_STATE' />"
-
-            ]
-        },
-        "TaxiAdminApp": {
-            "folderName": "TaxiAdminApp",
-            "packages": {
-                "stage": {
-                    "appName": "Meztaxi Admin Stage",
-                    "packageName": "com.mezstaging.taxiadmin",
-                    "googe-service-file": "services/stage/android/taxiadmin.json",
-                    "apple-service-file": "services/stage/ios/taxiadmin.plist"
-                },
-                "prod": {
-                    "appName": "Meztaxi Admin",
-                    "packageName": "com.mezcalmos.taxiadmin",
-                    "googe-service-file": "services/prod/android/taxiadmin.json",
-                    "apple-service-file": "services/prod/ios/taxiadmin.plist"
-                },
-                "dev": {
-                    "appName": "Meztaxi Admin Dev",
-                    "packageName": "com.mezcalmos.taxiadmin",
-                    "googe-service-file": "services/prod/android/taxiadmin.json",
-                    "apple-service-file": "services/prod/ios/taxiadmin.plist"
-                }
-            }
-        },
-        "DeliveryAdminApp": {
-            "folderName": "DeliveryAdminApp",
-            "packages": {
-                "stage": {
-                    "appName": "Mezdelivery admin Stage",
-                    "packageName": "com.mezstaging.deliveryadmin",
-                    "googe-service-file": "services/stage/android/deliveryadmin.json",
-                    "apple-service-file": "services/stage/ios/deliveryadmin.plist"
-                },
-                "prod": {
-                    "appName": "Mezdelivery Admin",
-                    "packageName": "com.mezcalmos.deliveryadmin",
-                    "googe-service-file": "services/prod/android/deliveryadmin.json",
-                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
-                },
-                "dev": {
-                    "appName": "Mezdelivery Admin Dev",
-                    "packageName": "com.meztaxi.driver",
-                    "googe-service-file": "services/prod/android/deliveryadmin.json",
-                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
-                }
-            },
-            
-            "MainActivityKt": {
-                "imports": [
-                    "import io.flutter.embedding.android.FlutterFragmentActivity"
-                ],
-                "super": "FlutterFragmentActivity"
-            }
-        },
-        "LaundryApp": {
-            "folderName": "LaundryApp",
-            "packages": {
-                "stage": {
-                    "appName": "MezLaundry Stage",
-                    "packageName": "com.mezstaging.laundry",
-                    "googe-service-file": "services/stage/android/laundry.json",
-                    "apple-service-file": "services/stage/ios/laundry.plist"
-                },
-
-                "prod": {
-                    "appName": "MezLaundry",
-                    "packageName": "com.mezcalmos.laundry",
-                    "googe-service-file": "services/prod/android/laundry.json",
-                    "apple-service-file": "services/prod/ios/laundry.plist"
-                }
-
-            }
-        },
-        "RestaurantApp": {
-            "folderName": "RestaurantApp",
-            "packages": {
-                "stage": {
-                    "appName": "MezChef Stage",
-                    "packageName": "com.mezstaging.restaurant",
-                    "googe-service-file": "services/stage/android/restaurant.json",
-                    "apple-service-file": "services/stage/ios/restaurant.plist"
-                },
-                "prod": {
-                    "appName": "MezChef",
-                    "packageName": "com.mezcalmos.restaurant",
-                    "googe-service-file": "services/prod/android/restaurant.json",
-                    "apple-service-file": "services/prod/ios/restaurant.plist"
-                },
-                "dev": {
-                    "appName": "MezChef Dev",
-                    "packageName": "com.mezcalmos.restaurant",
-                    "googe-service-file": "services/prod/android/restaurant.json",
-                    "apple-service-file": "services/prod/ios/restaurant.plist"
-                }
-            },
-            "MainActivityKt": {
-                "imports": [
-                    "import io.flutter.embedding.android.FlutterFragmentActivity"
-                ],
-                "super": "FlutterFragmentActivity"
-            }
-        },
-        "MezAdminApp": {
-            "folderName": "MezAdminApp",
-            "packages": {
-                "stage": {
-                    "appName": "MezAdmin Stage",
-                    "packageName": "com.mezstaging.admin",
-                    "googe-service-file": "services/stage/android/deliveryadmin.json",
-                    "apple-service-file": "services/stage/ios/deliveryadmin.plist"
-                },
-                "prod": {
-                    "appName": "MezAdmin",
-                    "packageName": "com.mezcalmos.admin",
-                    "googe-service-file": "services/prod/android/mezadmin.json",
-                    "apple-service-file": "services/prod/ios/mezadmin.plist"
-                },
-                "dev": {
-                    "appName": "MezAdmin Dev",
-                    "packageName": "com.mezcalmos.admin",
-                    "googe-service-file": "services/prod/android/mezadmin.json",
-                    "apple-service-file": "services/prod/ios/mezadmin.plist"
-                }
-            },
-            
-            "MainActivityKt": {
-                "imports": [
-                    "import io.flutter.embedding.android.FlutterFragmentActivity"
-                ],
-                "super": "FlutterFragmentActivity"
-            }
+        "dev": {
+          "appName": "MezcustomerDev",
+          "packageName": "com.mezcalmos.customer",
+          "googe-service-file": "services/prod/android/customer.json",
+          "apple-service-file": "services/prod/ios/customer.plist"
         }
+      },
+
+      "appPermissions": [
+        "<uses-permission android:name='android.permission.READ_PHONE_STATE' />",
+        "<uses-permission android:name='android.permission.RECORD_AUDIO' />",
+        "<uses-permission android:name='android.permission.CAMERA' />",
+        "<uses-permission android:name='android.permission.MODIFY_AUDIO_SETTINGS' />",
+        "<uses-permission android:name='android.permission.ACCESS_NETWORK_STATE' />",
+        "<uses-permission android:name='android.permission.BLUETOOTH' />",
+        "<uses-permission android:name='android.permission.ACCESS_WIFI_STATE' />",
+        "<uses-permission android:name='android.permission.READ_EXTERNAL_STORAGE' />",
+        "<uses-permission android:name='android.permission.WAKE_LOCK' />",
+        "<uses-permission android:name='android.permission.READ_PRIVILEGED_PHONE_STATE' />"
+      ],
+
+      "MainActivityKt": {
+        "imports": [
+          "import io.flutter.embedding.android.FlutterFragmentActivity"
+        ],
+        "super": "FlutterFragmentActivity"
+      }
+    },
+    "DeliveryApp": {
+      "folderName": "DeliveryApp",
+      "packages": {
+        "stage": {
+          "appName": "MezdeliveryStaging",
+          "packageName": "com.mezstaging.delivery",
+          "googe-service-file": "services/stage/android/delivery.json",
+          "apple-service-file": "services/stage/ios/delivery.plist"
+        },
+        "prod": {
+          "appName": "Mezdelivery",
+          "packageName": "com.mezcalmos.delivery",
+          "googe-service-file": "services/prod/android/delivery.json",
+          "apple-service-file": "services/prod/ios/delivery.plist"
+        },
+        "dev": {
+          "appName": "Mezdelivery",
+          "packageName": "com.mezcalmos.delivery",
+          "googe-service-file": "services/prod/android/delivery.json",
+          "apple-service-file": "services/prod/ios/delivery.plist"
+        }
+      },
+      "appPermissions": [
+        "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>",
+        "<uses-permission android:name='android.permission.READ_PHONE_STATE' />",
+        "<uses-permission android:name='android.permission.RECORD_AUDIO' />",
+        "<uses-permission android:name='android.permission.CAMERA' />",
+        "<uses-permission android:name='android.permission.MODIFY_AUDIO_SETTINGS' />",
+        "<uses-permission android:name='android.permission.ACCESS_NETWORK_STATE' />",
+        "<uses-permission android:name='android.permission.BLUETOOTH' />",
+        "<uses-permission android:name='android.permission.ACCESS_WIFI_STATE' />",
+        "<uses-permission android:name='android.permission.READ_EXTERNAL_STORAGE' />",
+        "<uses-permission android:name='android.permission.WAKE_LOCK' />",
+        "<uses-permission android:name='android.permission.READ_PRIVILEGED_PHONE_STATE' />"
+      ],
+      "MainActivityKt": {
+        "imports": [
+          "import io.flutter.embedding.android.FlutterFragmentActivity"
+        ],
+        "super": "FlutterFragmentActivity"
+      }
+    },
+    "TaxiAdminApp": {
+      "folderName": "TaxiAdminApp",
+      "packages": {
+        "stage": {
+          "appName": "Meztaxi Admin Stage",
+          "packageName": "com.mezstaging.taxiadmin",
+          "googe-service-file": "services/stage/android/taxiadmin.json",
+          "apple-service-file": "services/stage/ios/taxiadmin.plist"
+        },
+        "prod": {
+          "appName": "Meztaxi Admin",
+          "packageName": "com.mezcalmos.taxiadmin",
+          "googe-service-file": "services/prod/android/taxiadmin.json",
+          "apple-service-file": "services/prod/ios/taxiadmin.plist"
+        },
+        "dev": {
+          "appName": "Meztaxi Admin Dev",
+          "packageName": "com.mezcalmos.taxiadmin",
+          "googe-service-file": "services/prod/android/taxiadmin.json",
+          "apple-service-file": "services/prod/ios/taxiadmin.plist"
+        }
+      }
+    },
+    "DeliveryAdminApp": {
+      "folderName": "DeliveryAdminApp",
+      "packages": {
+        "stage": {
+          "appName": "Mezdelivery admin Stage",
+          "packageName": "com.mezstaging.deliveryadmin",
+          "googe-service-file": "services/stage/android/deliveryadmin.json",
+          "apple-service-file": "services/stage/ios/deliveryadmin.plist"
+        },
+        "prod": {
+          "appName": "Mezdelivery Admin",
+          "packageName": "com.mezcalmos.deliveryadmin",
+          "googe-service-file": "services/prod/android/deliveryadmin.json",
+          "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+        },
+        "dev": {
+          "appName": "Mezdelivery Admin Dev",
+          "packageName": "com.meztaxi.driver",
+          "googe-service-file": "services/prod/android/deliveryadmin.json",
+          "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+        }
+      },
+
+      "MainActivityKt": {
+        "imports": [
+          "import io.flutter.embedding.android.FlutterFragmentActivity"
+        ],
+        "super": "FlutterFragmentActivity"
+      }
+    },
+    "LaundryApp": {
+      "folderName": "LaundryApp",
+      "packages": {
+        "stage": {
+          "appName": "MezLaundry Stage",
+          "packageName": "com.mezstaging.laundry",
+          "googe-service-file": "services/stage/android/laundry.json",
+          "apple-service-file": "services/stage/ios/laundry.plist"
+        },
+
+        "prod": {
+          "appName": "MezLaundry",
+          "packageName": "com.mezcalmos.laundry",
+          "googe-service-file": "services/prod/android/laundry.json",
+          "apple-service-file": "services/prod/ios/laundry.plist"
+        }
+      }
+    },
+    "RestaurantApp": {
+      "folderName": "RestaurantApp",
+      "packages": {
+        "stage": {
+          "appName": "MezChef Stage",
+          "packageName": "com.mezstaging.restaurant",
+          "googe-service-file": "services/stage/android/restaurant.json",
+          "apple-service-file": "services/stage/ios/restaurant.plist"
+        },
+        "prod": {
+          "appName": "MezChef",
+          "packageName": "com.mezcalmos.restaurant",
+          "googe-service-file": "services/prod/android/restaurant.json",
+          "apple-service-file": "services/prod/ios/restaurant.plist"
+        },
+        "dev": {
+          "appName": "MezChef Dev",
+          "packageName": "com.mezcalmos.restaurant",
+          "googe-service-file": "services/prod/android/restaurant.json",
+          "apple-service-file": "services/prod/ios/restaurant.plist"
+        }
+      },
+      "MainActivityKt": {
+        "imports": [
+          "import io.flutter.embedding.android.FlutterFragmentActivity"
+        ],
+        "super": "FlutterFragmentActivity"
+      }
+    },
+    "MezAdminApp": {
+      "folderName": "MezAdminApp",
+      "packages": {
+        "stage": {
+          "appName": "MezAdmin Stage",
+          "packageName": "com.mezstaging.admin",
+          "googe-service-file": "services/stage/android/deliveryadmin.json",
+          "apple-service-file": "services/stage/ios/deliveryadmin.plist"
+        },
+        "prod": {
+          "appName": "MezAdmin",
+          "packageName": "com.mezcalmos.admin",
+          "googe-service-file": "services/prod/android/mezadmin.json",
+          "apple-service-file": "services/prod/ios/mezadmin.plist"
+        },
+        "dev": {
+          "appName": "MezAdmin Dev",
+          "packageName": "com.mezcalmos.admin",
+          "googe-service-file": "services/prod/android/mezadmin.json",
+          "apple-service-file": "services/prod/ios/mezadmin.plist"
+        }
+      },
+
+      "MainActivityKt": {
+        "imports": [
+          "import io.flutter.embedding.android.FlutterFragmentActivity"
+        ],
+        "super": "FlutterFragmentActivity"
+      }
     }
+  }
 }
