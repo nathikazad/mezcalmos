@@ -21,27 +21,25 @@ mutation set_notif_token($customer_id: Int!, $token: String!) {
 
 # Get customer's infos
 query get_customer_info($customer_id: Int!) {
-  customer_customer(where: { user_id: { _eq: $customer_id } }) {
+  customer_customer_by_pk(user_id: $customer_id) {
     app_version
     notification_info {
       token
       turn_off_notifications
     }
     user {
-      id
       name
       image
       email
-      phone
       language_id
+      phone
     }
-    # stripe_info
-    saved_locations(where: { customer_id: { _eq: $customer_id } }) {
-      id
-      name
+    saved_locations {
       location_gps
       location_text
+      name
       default
+      id
     }
   }
 }

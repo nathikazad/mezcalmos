@@ -55,20 +55,24 @@ class CustomerAuthController extends GetxController {
       customer = await set_customer_info(
           app_version: _appVersion, user_id: _authController.hasuraUserId!);
     }
-    await fetchSavedLocations();
+    // await fetchSavedLocations();
 
     _customer.value = customer;
-    _customer.value?.savedLocations = customer?.savedLocations ?? [];
+    // _customer.value?.savedLocations = customer?.savedLocations ?? [];
     mezDbgPrint(
         "Getting cust saved locations ====😀===========>>>${_customer.value?.savedLocations.length}");
     _customer.refresh();
     mezDbgPrint("[+] Customer currently using App v$_appVersion");
-    await set_customer_app_version(
-        version: _appVersion, customer_id: _authController.hasuraUserId!);
+    if (_customer.value?.appVersion == null) {
+      await set_customer_app_version(
+          version: _appVersion, customer_id: _authController.hasuraUserId!);
+    }
+
     // setting device notification
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    if (deviceNotificationToken != null) {
+    if (deviceNotificationToken != null &&
+        _customer.value?.notificationInfo?.token != deviceNotificationToken) {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
       unawaited(_authController.saveNotificationToken());
     }

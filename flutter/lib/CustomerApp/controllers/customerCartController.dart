@@ -41,14 +41,8 @@ class CustomerCartController extends GetxController {
         if (event != null) {
           mezDbgPrint(
               "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length}");
-          if (cart.value != null) {
-            cart.value?.cartItems.clear();
-            cart.value?.cartItems.addAll(event.cartItems);
 
-            cart.value?.restaurant = event.restaurant;
-          } else {
-            cart.value = event;
-          }
+          cart.value = event;
 
           _handlerRestaurantId();
           mezDbgPrint(
