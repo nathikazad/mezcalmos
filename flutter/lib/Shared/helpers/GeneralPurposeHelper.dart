@@ -193,7 +193,7 @@ Future<TimeOfDay?> getTimePicker(
       });
 }
 
-Future<void> showConfirmationDialog(
+Future showConfirmationDialog(
   BuildContext context, {
   required Future<dynamic> Function() onYesClick,
   void Function()? onNoClick,
