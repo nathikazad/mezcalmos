@@ -1637,7 +1637,7 @@
           "currentOrders": "Órdenes actuales",
           "offlineTitle": "Estas desconectado",
           "offlineBody": "Enciende para ver las órdenes entrantes",
-          "pastOrders": "Órdenes Pasadas",
+          "pastOrders": "Hoy",
           "title": "Órdenes  Entrantes",
           "Components": {
             "DriverNoOrdersComponent": {

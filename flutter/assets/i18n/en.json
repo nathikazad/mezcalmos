@@ -1666,7 +1666,7 @@
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Current orders",
-          "pastOrders": "Past orders",
+          "pastOrders": "Today",
           "title": "Incoming  Orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",
