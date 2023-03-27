@@ -2068,6 +2068,8 @@
         "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
         "deleteTitle": "Eliminar este artículo",
         "deleteItem": "Eliminar elemento",
+        "added" : "Agregada",
+        "addedSubtitle" : "Artículo agregado con éxito",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Porfavor seleccione una categoría",
