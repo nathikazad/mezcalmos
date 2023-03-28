@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -8,6 +7,10 @@ class MinimalOrder {
   int id;
   String? toAdress;
   DateTime orderTime;
+  DateTime? estReadyTime;
+  DateTime? estDeliveryTime;
+  int? numberOfItems;
+  double? itemsWeight;
   String title;
   String? image;
   MinimalOrderStatus status;
@@ -29,6 +32,10 @@ class MinimalOrder {
     required this.orderType,
     this.serviceProviderId,
     this.serviceProviderType,
+    this.estDeliveryTime,
+    this.estReadyTime,
+    this.numberOfItems,
+    this.itemsWeight,
   });
 
   MinimalOrder copyWith({
@@ -92,8 +99,6 @@ class MinimalOrder {
         status.hashCode ^
         totalCost.hashCode;
   }
-
-
 
   bool get isPast {
     return status == RestaurantOrderStatus.Delivered ||
