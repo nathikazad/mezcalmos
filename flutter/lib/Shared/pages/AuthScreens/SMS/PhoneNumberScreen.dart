@@ -243,7 +243,8 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                         await MezRouter.toNamed(SharedRoutes.kOtpConfirmRoute,
                             arguments: {"phone": phone});
                       } else {
-                        MezSnackbar("Error", response!.error.toString());
+                        MezSnackbar(
+                            "Error", response?.error.toString() ?? "Unknown");
                       }
                     } else
                       MezSnackbar("Error", "Invalid phone Number !");

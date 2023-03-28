@@ -19,14 +19,16 @@ class ConnectivityHelper {
 
   static ConnectivityHelper get instance => _instance;
 
-  static late StreamController<InternetStatus> _internetStatusStreamController;
+  // static late StreamController<InternetStatus> _internetStatusStreamController;
+  static StreamController<InternetStatus> _internetStatusStreamController =
+      StreamController<InternetStatus>.broadcast();
 
   static Stream<InternetStatus> get internetStatusStream =>
       _internetStatusStreamController.stream;
 
   Future<void> startCheckingInternet() async {
-    _internetStatusStreamController =
-        StreamController<InternetStatus>.broadcast();
+    // _internetStatusStreamController =
+    // StreamController<InternetStatus>.broadcast();
     mezDbgPrint("NETWORK CHECKER");
     _internetStatusStreamController.add(await checkForInternet());
     Timer.periodic(const Duration(seconds: 10), (Timer timer) async {

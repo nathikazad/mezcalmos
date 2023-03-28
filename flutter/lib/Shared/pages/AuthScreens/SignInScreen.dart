@@ -132,8 +132,41 @@ class _SignInViewState extends State<SignInView> {
         ),
         if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
           appleLoginBtn(),
+        if (lmode == AppLaunchMode.stage && kIsWeb) webLoginBtn(),
       ];
     }
+  }
+
+  Widget webLoginBtn() {
+    return Container(
+      width: double.infinity,
+      child: TextButton(
+          onPressed: () {
+            clickedLogin.value = true;
+            signIn("trist@trist.com", "password")
+                .whenComplete(() => clickedLogin.value = false);
+          },
+          style: TextButton.styleFrom(
+              backgroundColor: Colors.black,
+              fixedSize: Size(double.infinity, 50)),
+          child: Container(
+            alignment: Alignment.center,
+            child: Row(
+              children: [
+                Container(
+                    padding: EdgeInsets.only(
+                        left: Get.width * 0.05, right: Get.width * 0.05),
+                    child: Icon(Ionicons.logo_apple)),
+                Spacer(),
+                Text(
+                  "webLogin",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Spacer()
+              ],
+            ),
+          )),
+    );
   }
 
   Widget appleLoginBtn() {

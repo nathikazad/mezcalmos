@@ -231,7 +231,7 @@ extension ParseStringTo#### on String {
   #### to####() {
     return ####.values.firstWhere(
         (#### ****) =>
-            ****.toFirebaseFormatString() == this);
+            ****.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 '''

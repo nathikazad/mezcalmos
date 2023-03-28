@@ -177,7 +177,7 @@ extension ParseStringToParticipantType on String {
   ParticipantType toParticipantType() {
     return ParticipantType.values.firstWhere(
         (ParticipantType participantType) =>
-            participantType.toFirebaseFormatString() == this);
+            participantType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -273,7 +273,7 @@ extension ParseStringToDeliveryServiceProviderType on String {
   DeliveryServiceProviderType toDeliveryServiceProviderType() {
     return DeliveryServiceProviderType.values.firstWhere(
         (DeliveryServiceProviderType deliveryServiceProviderType) =>
-            deliveryServiceProviderType.toFirebaseFormatString() == this);
+            deliveryServiceProviderType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -365,7 +365,7 @@ extension ParseStringToCustomerAppType on String {
   CustomerAppType toCustomerAppType() {
     return CustomerAppType.values.firstWhere(
         (CustomerAppType customerAppType) =>
-            customerAppType.toFirebaseFormatString() == this);
+            customerAppType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -381,7 +381,7 @@ extension ParseStringToPaymentType on String {
   PaymentType toPaymentType() {
     return PaymentType.values.firstWhere(
         (PaymentType paymentType) =>
-            paymentType.toFirebaseFormatString() == this);
+            paymentType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -397,7 +397,7 @@ extension ParseStringToDeliveryType on String {
   DeliveryType toDeliveryType() {
     return DeliveryType.values.firstWhere(
         (DeliveryType deliveryType) =>
-            deliveryType.toFirebaseFormatString() == this);
+            deliveryType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -553,7 +553,7 @@ extension ParseStringToDeliveryOrderStatus on String {
   DeliveryOrderStatus toDeliveryOrderStatus() {
     return DeliveryOrderStatus.values.firstWhere(
         (DeliveryOrderStatus deliveryOrderStatus) =>
-            deliveryOrderStatus.toFirebaseFormatString() == this);
+            deliveryOrderStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -648,7 +648,7 @@ extension ParseStringToOrderType on String {
   OrderType toOrderType() {
     return OrderType.values.firstWhere(
         (OrderType orderType) =>
-            orderType.toFirebaseFormatString() == this);
+            orderType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -698,7 +698,7 @@ extension ParseStringToAppType on String {
   AppType toAppType() {
     return AppType.values.firstWhere(
         (AppType appType) =>
-            appType.toFirebaseFormatString() == this);
+            appType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -714,7 +714,7 @@ extension ParseStringToLanguage on String {
   Language toLanguage() {
     return Language.values.firstWhere(
         (Language language) =>
-            language.toFirebaseFormatString() == this);
+            language.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -730,7 +730,7 @@ extension ParseStringToServerResponseStatus on String {
   ServerResponseStatus toServerResponseStatus() {
     return ServerResponseStatus.values.firstWhere(
         (ServerResponseStatus serverResponseStatus) =>
-            serverResponseStatus.toFirebaseFormatString() == this);
+            serverResponseStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -746,7 +746,7 @@ extension ParseStringToSendOtpError on String {
   SendOtpError toSendOtpError() {
     return SendOtpError.values.firstWhere(
         (SendOtpError sendOtpError) =>
-            sendOtpError.toFirebaseFormatString() == this);
+            sendOtpError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -762,7 +762,7 @@ extension ParseStringToAuthOtpError on String {
   AuthOtpError toAuthOtpError() {
     return AuthOtpError.values.firstWhere(
         (AuthOtpError authOtpError) =>
-            authOtpError.toFirebaseFormatString() == this);
+            authOtpError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -778,7 +778,7 @@ extension ParseStringToPaymentIntentError on String {
   PaymentIntentError toPaymentIntentError() {
     return PaymentIntentError.values.firstWhere(
         (PaymentIntentError paymentIntentError) =>
-            paymentIntentError.toFirebaseFormatString() == this);
+            paymentIntentError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -794,7 +794,7 @@ extension ParseStringToAddCardError on String {
   AddCardError toAddCardError() {
     return AddCardError.values.firstWhere(
         (AddCardError addCardError) =>
-            addCardError.toFirebaseFormatString() == this);
+            addCardError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -810,7 +810,7 @@ extension ParseStringToChargeCardError on String {
   ChargeCardError toChargeCardError() {
     return ChargeCardError.values.firstWhere(
         (ChargeCardError chargeCardError) =>
-            chargeCardError.toFirebaseFormatString() == this);
+            chargeCardError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -826,7 +826,7 @@ extension ParseStringToRemoveCardError on String {
   RemoveCardError toRemoveCardError() {
     return RemoveCardError.values.firstWhere(
         (RemoveCardError removeCardError) =>
-            removeCardError.toFirebaseFormatString() == this);
+            removeCardError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -842,7 +842,7 @@ extension ParseStringToSetupStripeError on String {
   SetupStripeError toSetupStripeError() {
     return SetupStripeError.values.firstWhere(
         (SetupStripeError setupStripeError) =>
-            setupStripeError.toFirebaseFormatString() == this);
+            setupStripeError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -858,7 +858,7 @@ extension ParseStringToUpdateStripeError on String {
   UpdateStripeError toUpdateStripeError() {
     return UpdateStripeError.values.firstWhere(
         (UpdateStripeError updateStripeError) =>
-            updateStripeError.toFirebaseFormatString() == this);
+            updateStripeError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -874,7 +874,7 @@ extension ParseStringToCallUserError on String {
   CallUserError toCallUserError() {
     return CallUserError.values.firstWhere(
         (CallUserError callUserError) =>
-            callUserError.toFirebaseFormatString() == this);
+            callUserError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -890,7 +890,7 @@ extension ParseStringToAddOperatorError on String {
   AddOperatorError toAddOperatorError() {
     return AddOperatorError.values.firstWhere(
         (AddOperatorError addOperatorError) =>
-            addOperatorError.toFirebaseFormatString() == this);
+            addOperatorError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -906,7 +906,7 @@ extension ParseStringToAuthOperatorError on String {
   AuthOperatorError toAuthOperatorError() {
     return AuthOperatorError.values.firstWhere(
         (AuthOperatorError authOperatorError) =>
-            authOperatorError.toFirebaseFormatString() == this);
+            authOperatorError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -922,7 +922,7 @@ extension ParseStringToAddDriverError on String {
   AddDriverError toAddDriverError() {
     return AddDriverError.values.firstWhere(
         (AddDriverError addDriverError) =>
-            addDriverError.toFirebaseFormatString() == this);
+            addDriverError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -938,7 +938,7 @@ extension ParseStringToAuthorizeDriverError on String {
   AuthorizeDriverError toAuthorizeDriverError() {
     return AuthorizeDriverError.values.firstWhere(
         (AuthorizeDriverError authorizeDriverError) =>
-            authorizeDriverError.toFirebaseFormatString() == this);
+            authorizeDriverError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -954,7 +954,7 @@ extension ParseStringToRestaurantError on String {
   RestaurantError toRestaurantError() {
     return RestaurantError.values.firstWhere(
         (RestaurantError restaurantError) =>
-            restaurantError.toFirebaseFormatString() == this);
+            restaurantError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -970,7 +970,7 @@ extension ParseStringToCheckoutResponseError on String {
   CheckoutResponseError toCheckoutResponseError() {
     return CheckoutResponseError.values.firstWhere(
         (CheckoutResponseError checkoutResponseError) =>
-            checkoutResponseError.toFirebaseFormatString() == this);
+            checkoutResponseError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -986,7 +986,7 @@ extension ParseStringToChangeRestaurantStatusError on String {
   ChangeRestaurantStatusError toChangeRestaurantStatusError() {
     return ChangeRestaurantStatusError.values.firstWhere(
         (ChangeRestaurantStatusError changeRestaurantStatusError) =>
-            changeRestaurantStatusError.toFirebaseFormatString() == this);
+            changeRestaurantStatusError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1002,7 +1002,7 @@ extension ParseStringToCancelOrderError on String {
   CancelOrderError toCancelOrderError() {
     return CancelOrderError.values.firstWhere(
         (CancelOrderError cancelOrderError) =>
-            cancelOrderError.toFirebaseFormatString() == this);
+            cancelOrderError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1018,7 +1018,7 @@ extension ParseStringToLaundryError on String {
   LaundryError toLaundryError() {
     return LaundryError.values.firstWhere(
         (LaundryError laundryError) =>
-            laundryError.toFirebaseFormatString() == this);
+            laundryError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1034,7 +1034,7 @@ extension ParseStringToReqLaundryError on String {
   ReqLaundryError toReqLaundryError() {
     return ReqLaundryError.values.firstWhere(
         (ReqLaundryError reqLaundryError) =>
-            reqLaundryError.toFirebaseFormatString() == this);
+            reqLaundryError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1050,7 +1050,7 @@ extension ParseStringToChangeLaundryStatusError on String {
   ChangeLaundryStatusError toChangeLaundryStatusError() {
     return ChangeLaundryStatusError.values.firstWhere(
         (ChangeLaundryStatusError changeLaundryStatusError) =>
-            changeLaundryStatusError.toFirebaseFormatString() == this);
+            changeLaundryStatusError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1066,7 +1066,7 @@ extension ParseStringToCancelLaundryError on String {
   CancelLaundryError toCancelLaundryError() {
     return CancelLaundryError.values.firstWhere(
         (CancelLaundryError cancelLaundryError) =>
-            cancelLaundryError.toFirebaseFormatString() == this);
+            cancelLaundryError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1082,7 +1082,7 @@ extension ParseStringToAssignDriverError on String {
   AssignDriverError toAssignDriverError() {
     return AssignDriverError.values.firstWhere(
         (AssignDriverError assignDriverError) =>
-            assignDriverError.toFirebaseFormatString() == this);
+            assignDriverError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1098,7 +1098,7 @@ extension ParseStringToChangeDeliveryStatusError on String {
   ChangeDeliveryStatusError toChangeDeliveryStatusError() {
     return ChangeDeliveryStatusError.values.firstWhere(
         (ChangeDeliveryStatusError changeDeliveryStatusError) =>
-            changeDeliveryStatusError.toFirebaseFormatString() == this);
+            changeDeliveryStatusError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1114,7 +1114,7 @@ extension ParseStringToCreateCourierError on String {
   CreateCourierError toCreateCourierError() {
     return CreateCourierError.values.firstWhere(
         (CreateCourierError createCourierError) =>
-            createCourierError.toFirebaseFormatString() == this);
+            createCourierError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1130,7 +1130,7 @@ extension ParseStringToChangePriceError on String {
   ChangePriceError toChangePriceError() {
     return ChangePriceError.values.firstWhere(
         (ChangePriceError changePriceError) =>
-            changePriceError.toFirebaseFormatString() == this);
+            changePriceError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1146,7 +1146,7 @@ extension ParseStringToCancelCourierError on String {
   CancelCourierError toCancelCourierError() {
     return CancelCourierError.values.firstWhere(
         (CancelCourierError cancelCourierError) =>
-            cancelCourierError.toFirebaseFormatString() == this);
+            cancelCourierError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
