@@ -110,7 +110,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
           RatingBarIndicator(
             rating: rating.value!.toDouble(),
             itemBuilder: (BuildContext context, int index) => Icon(
-              Icons.star_rate_rounded,
+              Icons.star_rate,
               color: primaryBlueColor,
             ),
             itemCount: 5,

@@ -359,7 +359,8 @@
                 "thursday": "Jue",
                 "friday": "Vie",
                 "saturday": "Sáb",
-                "sunday": "Dom"
+                "sunday": "Dom",
+                "viewAll": "Ver Todo"
               }
             },
             "workinHoursCart": {
@@ -868,7 +869,8 @@
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
-        "copiedText": "Enlace copiado con éxito"
+        "copiedText": "Enlace copiado con éxito",
+        "yourDriverList": "Su lista de conducir"
       },
       "ServiceInfoEditView": {
         "name": "Nombre",
@@ -1464,13 +1466,13 @@
               "customer": "Cliente"
             },
             "LaundryOrderStatusCard": {
-              "orderReceived": "Orden Recibida",
+              "orderReceived": "Orden recibida",
               "otwPickUp": "Recoger en el camino",
               "pickedUp": "Pedido recogido",
               "atLaundry": "En la lavandería",
               "readyForDelivery": "Listo para entregar",
               "otwDelivery": "Entrega en el camino",
-              "delivered": "Orden Entregado"
+              "delivered": "Orden entregado"
             },
             "LaundryOrderSummary": {
               "orderSummary": "Resumen de la orden",
@@ -1929,14 +1931,14 @@
         "Components": {
           "LaundryOpOrderStatusCard": {
             "status": {
-              "canceled": "Orden Cancelada",
-              "orderReceived": "Orden Recibida",
+              "canceled": "Orden cancelada",
+              "orderReceived": "Orden recibida",
               "otwPickUp": "Recoger en el camino",
               "pickedUp": "pedidoRecogido",
               "atLaundry": "En la lavandería",
               "readyForDelivery": "Listo para entregar",
               "otwDelivery": "Entrega en el camino",
-              "delivered": "Orden Entregado"
+              "delivered": "Orden entregado"
             },
             "estTimes": {
               "laundryArriving": "Lavandería que llega",

@@ -57,10 +57,10 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
             onTap: (isLoading)
                 ? null
                 : () async {
-                    setState(() {
-                      isLoading = true;
-                    });
                     if (widget.value > widget.minVal) {
+                      setState(() {
+                        isLoading = true;
+                      });
                       await widget.decrementCallback().whenComplete(() {
                         setState(() {
                           isLoading = false;

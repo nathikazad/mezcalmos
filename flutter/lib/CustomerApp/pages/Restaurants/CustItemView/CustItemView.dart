@@ -196,7 +196,7 @@ class _CustItemViewState extends State<CustItemView> {
 
   Container _itemDescription(BuildContext context, Item item) {
     return Container(
-      margin: const EdgeInsets.only(top: 15, bottom: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -228,7 +228,7 @@ class _CustItemViewState extends State<CustItemView> {
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               controller: viewController.notesController,
-              minLines: 3,
+              minLines: 2,
               maxLines: 7,
               style: Get.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,

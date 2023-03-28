@@ -49,11 +49,12 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                       Positioned(
                         right: -35,
                         child: CircleAvatar(
+                          backgroundColor: Color(0xFFE1E4FF),
                           radius: 23,
                           child: Icon(
                             Icons.delivery_dining,
                             size: 30,
-                            color: Colors.white,
+                            color: Color(0xFF6779FE),
                           ),
                         ),
                       )
@@ -65,33 +66,9 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                   Flexible(
                     flex: 3,
                     fit: FlexFit.tight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          widget.operator.info.name,
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              size: 11.sp,
-                              color: widget.operator.isAuthorized
-                                  ? primaryBlueColor
-                                  : Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Flexible(
-                                child: Text(widget.operator.isAuthorized
-                                    ? '${_i18n()["available"]}'
-                                    : '${_i18n()["unavailable"]}'))
-                          ],
-                        )
-                      ],
+                    child: Text(
+                      widget.operator.info.name,
+                      style: Get.textTheme.bodyText1,
                     ),
                   ),
                   const Spacer(),

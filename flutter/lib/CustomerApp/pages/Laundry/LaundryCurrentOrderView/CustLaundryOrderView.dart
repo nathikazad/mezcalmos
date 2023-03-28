@@ -106,16 +106,19 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             LaundryOrderDriverCard(
                                 order: viewController.order.value!),
                             if (viewController.order.value!.inDeliveryPhase())
-                              OrderMapWidget(
-                                  deliveryOrderId: viewController
-                                      .order.value!.deliveryOrderId,
-                                  updateDriver: viewController.order.value!
-                                      .inDeliveryPhase(),
-                                  polyline: viewController
-                                      .order.value!.routeInformation?.polyline,
-                                  from: viewController
-                                      .order.value!.laundry!.location,
-                                  to: viewController.order.value!.to),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: OrderMapWidget(
+                                    deliveryOrderId: viewController
+                                        .order.value!.deliveryOrderId,
+                                    updateDriver: viewController.order.value!
+                                        .inDeliveryPhase(),
+                                    polyline: viewController.order.value!
+                                        .routeInformation?.polyline,
+                                    from: viewController
+                                        .order.value!.laundry!.location,
+                                    to: viewController.order.value!.to),
+                              ),
 
                             if (viewController.order.value!.laundry != null)
                               OrderLaundryCard(

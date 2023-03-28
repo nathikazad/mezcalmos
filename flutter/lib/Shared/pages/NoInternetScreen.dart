@@ -47,13 +47,12 @@ class NoInternetScreen extends StatelessWidget {
               AppColors.colorGradientPrimary,
               AppColors.colorGradientSecondary,
             ],
-            height: 10.h,
+            height: 5.h,
             width: 50.w,
-            borderRadius: 20.0,
+            borderRadius: 25.0,
             onTap: () {
               ConnectivityHelper.instance.checkForInternet(null);
             },
-            textAlignement: Alignment.center,
             text: Text(
               _i18n()['tryAgain'],
               style: TextStyle(

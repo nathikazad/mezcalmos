@@ -190,7 +190,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         Text(
           "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
           //maxLines: 1,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
           style: Get.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
@@ -205,7 +205,9 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
         ),
         Text(
-          "${laundry.value!.averageNumberOfDays} ${_i18n()["daysReturn"]}",
+          laundry.value!.averageNumberOfDays < 2
+              ? "${laundry.value!.averageNumberOfDays} ${_i18n()["day"]} ${_i18n()["return"]}"
+              : "${laundry.value!.averageNumberOfDays} ${_i18n()["days"]} ${_i18n()["return"]}",
           maxLines: 1,
           textAlign: TextAlign.center,
           style: Get.textTheme.bodyMedium?.copyWith(
