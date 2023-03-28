@@ -676,7 +676,15 @@
       "counterOfferTitle": "Nueva contraoferta",
       "counterOfferBody": "New oferta de ",
       "priceChange": "Cambio de precio",
-      "driverSentYouMessage": "El conductor le envió un nuevo mensaje"
+      "driverSentYouMessage": "El conductor le envió un nuevo mensaje",
+      "courier": {
+        "atPickupTitle": "En la recogida",
+        "atPickupBody": "Lugar de recogida de pedido de controlador",
+        "onTheWayPickupTitle": "Recogida en el camino",
+        "onTheWayPickupBody": "El conductor está en camino de recoger su pedido",
+        "onTheWayDropoffTitle": "Entrega en camino",
+        "onTheWayDropoffBody": "El conductor está en camino a cumplir su pedido"
+      }
     }
   },
   "Shared": {

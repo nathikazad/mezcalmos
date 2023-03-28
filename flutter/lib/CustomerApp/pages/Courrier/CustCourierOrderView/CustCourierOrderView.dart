@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -66,6 +67,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
+          showNotifications: true,
+          ordersRoute: CustomerRoutes.customerOrdersRoute,
           titleWidget: Obx(() => viewController.hasData
               ? Text(viewController.order.deliveryCompany?.name ?? "")
               : SizedBox())),

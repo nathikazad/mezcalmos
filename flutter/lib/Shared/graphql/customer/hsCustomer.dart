@@ -183,22 +183,20 @@ Future<List<MinimalOrder>> get_customer_orders(
     throwError(res.exception);
   }
   return res.parsedData!.customer_minimal_orders
-      .map<MinimalOrder>((Query$get_customer_orders$customer_minimal_orders
-              order) =>
-          MinimalOrder(
-              id: order.id,
-              toAdress: order.to_address,
-              deliveryCost: order.delivery_cost,
-              orderTime: DateTime.parse(order.order_time),
-              title: order.name,
-              image: order.image,
-              status: (order.order_type.toOrderType() == OrderType.Restaurant)
-                  ? order.status
-                      .toRestaurantOrderStatus()
-                      .toMinimalOrderStatus()
-                  : order.status.toLaundryOrderStatus().toMinimalOrderStatus(),
-              totalCost: order.total_cost,
-              orderType: order.order_type.toOrderType()))
+      .map<MinimalOrder>(
+          (Query$get_customer_orders$customer_minimal_orders order) =>
+              MinimalOrder(
+                  id: order.id,
+                  toAdress: order.to_address,
+                  deliveryCost: order.delivery_cost,
+                  orderTime: DateTime.parse(order.order_time),
+                  title: order.name,
+                  image: order.image,
+                  status: _getStatus(
+                      orderType: order.order_type.toOrderType(),
+                      status: order.status),
+                  totalCost: order.total_cost,
+                  orderType: order.order_type.toOrderType()))
       .toList();
 }
 
@@ -226,14 +224,9 @@ Stream<List<MinimalOrder>?> listen_on_customer_orders(
                   orderTime: DateTime.parse(order.order_time),
                   title: order.name,
                   image: order.image,
-                  status: (order.order_type.toOrderType() ==
-                          OrderType.Restaurant)
-                      ? order.status
-                          .toRestaurantOrderStatus()
-                          .toMinimalOrderStatus()
-                      : order.status
-                          .toLaundryOrderStatus()
-                          .toMinimalOrderStatus(),
+                  status: _getStatus(
+                      orderType: order.order_type.toOrderType(),
+                      status: order.status),
                   totalCost: order.total_cost,
                   orderType: order.order_type.toOrderType()))
           .toList();
@@ -244,4 +237,19 @@ Stream<List<MinimalOrder>?> listen_on_customer_orders(
     }
     return null;
   });
+}
+
+MinimalOrderStatus _getStatus(
+    {required String status, required OrderType orderType}) {
+  switch (orderType) {
+    case OrderType.Restaurant:
+      return status.toRestaurantOrderStatus().toMinimalOrderStatus();
+    case OrderType.Laundry:
+      return status.toLaundryOrderStatus().toMinimalOrderStatus();
+    case OrderType.Courier:
+      return status.toDeliveryOrderStatus().toMinimalOrderStatus();
+
+    default:
+      return status.toRestaurantOrderStatus().toMinimalOrderStatus();
+  }
 }
