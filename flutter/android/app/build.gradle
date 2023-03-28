@@ -48,6 +48,7 @@ else
 }
 
 android {
+    ndkVersion "25.1.8937393"
     compileSdkVersion 33
     compileOptions {
         sourceCompatibility 1.8
