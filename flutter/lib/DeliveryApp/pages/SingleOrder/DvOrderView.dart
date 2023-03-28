@@ -56,8 +56,10 @@ class _DvOrderViewState extends State<DvOrderView> {
         AppBarLeftButtonType.Back,
         autoBack: true,
         showNotifications: true,
-        title:
-            '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"]}',
+        titleWidget: Obx(() => viewController.hasData
+            ? Text(
+                '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"]}')
+            : SizedBox.shrink()),
       ),
       bottomNavigationBar: Obx(
         () => (viewController.hasData)

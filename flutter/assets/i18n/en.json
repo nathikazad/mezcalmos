@@ -1643,7 +1643,7 @@
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
             "pickUpTimeError": "The Pickup time should be before the delivery time.",
-            "restaurantDelivery": "Restaurant Delivery",
+            "restaurantDelivery": "Restaurant delivery",
             "orderStatus": {
               "waiting": "Waiting for restaurant",
               "preparing": "Order is being prepared",
