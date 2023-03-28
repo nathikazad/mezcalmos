@@ -56,7 +56,8 @@ class _DvOrderStatusControllButtonsState
   Widget _getFooterComponent() {
     switch (widget.viewController.order.status) {
       case DeliveryOrderStatus.OrderReceived:
-        if (widget.viewController.isLaundry) {
+        if (widget.viewController.isLaundryPickup ||
+            widget.viewController.isCourier) {
           return _handleBtn();
         } else if (!widget.viewController.order.packageReady) {
           return _waitingDisabledButton(

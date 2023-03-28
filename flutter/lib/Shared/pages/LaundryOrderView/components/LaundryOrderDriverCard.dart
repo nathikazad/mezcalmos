@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
@@ -166,7 +167,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
     }
   }
 
-  DeliveryDriverUserInfo? _getDriver() {
+  UserInfo? _getDriver() {
     if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return viewController.order.pickupDriver;
     } else {

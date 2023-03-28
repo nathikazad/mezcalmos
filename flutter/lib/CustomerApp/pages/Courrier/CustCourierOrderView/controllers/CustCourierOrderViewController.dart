@@ -54,15 +54,22 @@ class CustCourierOrderViewController {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_courier_order_by_id(orderId: orderId)
             .listen((CourierOrder? event) {
-          if (event != null) {
-            mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.changePriceRequest}");
+          mezDbgPrint(
+              "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.driverInfo}");
 
+          if (event != null) {
             _order.value = event;
-            if (_order.value?.changePriceRequest != null &&
-                _order.value?.costs.deliveryCost == 0) {
-              showPriceReqDialog();
-            }
+            _order.value?.status = event.status;
+            _order.value?.driverInfo = event.driverInfo;
+            _order.value?.costs = event.costs;
+            _order.refresh();
+          }
+
+          if (event?.changePriceRequest != null &&
+              event?.costs.deliveryCost == 0 &&
+              event?.driverInfo != null) {
+            mezDbgPrint("Should Showwwww");
+            showPriceReqDialog();
           }
         });
       }, cancel: () {
@@ -73,6 +80,7 @@ class CustCourierOrderViewController {
   }
 
   void showPriceReqDialog() {
+    mezDbgPrint("Show dialog called");
     showDialog(
         barrierDismissible: false,
         context: context,

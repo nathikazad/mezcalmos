@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 
 void MezSnackbar(String title, String msg,
         {SnackPosition position = SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3)}) =>
+        duration = const Duration(seconds: 3)}) =>
     ScaffoldMessenger.of(QR.context!).showSnackBar(SnackBar(
         content: Column(
       mainAxisSize: MainAxisSize.min,
@@ -31,11 +31,11 @@ void customSnackBar(
     Color textColor = Colors.white,
     Icon? icon,
     SnackPosition position = SnackPosition.BOTTOM,
-    duration: const Duration(seconds: 3),
-    EdgeInsetsGeometry? padding}) {
+    duration = const Duration(seconds: 3),
+    EdgeInsetsGeometry padding = const EdgeInsets.all(10)}) {
   ScaffoldMessenger.of(QR.context!).showSnackBar(SnackBar(
       duration: duration,
-      padding: padding ?? EdgeInsets.zero,
+      padding: padding,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -45,21 +45,43 @@ void customSnackBar(
                 children: [
                   if (icon != null) ...[icon],
                   SizedBox(
-                    width: 10.w,
+                    width: 15,
                   ),
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: '$title\n', style: TextStyle(color: textColor)),
-                    WidgetSpan(
-                        child: SizedBox(
-                      height: 10,
-                    )),
-                    TextSpan(
-                      text: subTitle ?? '',
-                      style: TextStyle(color: textColor),
-                    )
-                  ]))
+                  Flexible(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title ?? "",
+                          style: TextStyle(
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.sp,
+                              color: textColor)),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(subTitle ?? "",
+                          style: TextStyle(
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 11.sp,
+                              color: textColor)),
+                    ],
+                  ))
+                  // RichText(
+                  //     text: TextSpan(children: [
+                  //   TextSpan(
+                  //       text: '$title\n', style: TextStyle(color: textColor)),
+                  //   WidgetSpan(
+                  //       child: SizedBox(
+                  //     height: 10,
+                  //   )),
+                  //   TextSpan(
+                  //     text: subTitle ?? '',
+
+                  //     style: TextStyle(color: textColor),
+                  //   )
+                  // ]))
                 ],
               ),
         ],

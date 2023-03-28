@@ -35740,3 +35740,2203 @@ class _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk$custome
   }) =>
       _res;
 }
+
+class Variables$Query$getCustomerDvOrdersCount {
+  factory Variables$Query$getCustomerDvOrdersCount({required int id}) =>
+      Variables$Query$getCustomerDvOrdersCount._({
+        r'id': id,
+      });
+
+  Variables$Query$getCustomerDvOrdersCount._(this._$data);
+
+  factory Variables$Query$getCustomerDvOrdersCount.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$getCustomerDvOrdersCount._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getCustomerDvOrdersCount<
+          Variables$Query$getCustomerDvOrdersCount>
+      get copyWith => CopyWith$Variables$Query$getCustomerDvOrdersCount(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getCustomerDvOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getCustomerDvOrdersCount<TRes> {
+  factory CopyWith$Variables$Query$getCustomerDvOrdersCount(
+    Variables$Query$getCustomerDvOrdersCount instance,
+    TRes Function(Variables$Query$getCustomerDvOrdersCount) then,
+  ) = _CopyWithImpl$Variables$Query$getCustomerDvOrdersCount;
+
+  factory CopyWith$Variables$Query$getCustomerDvOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getCustomerDvOrdersCount;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$getCustomerDvOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getCustomerDvOrdersCount<TRes> {
+  _CopyWithImpl$Variables$Query$getCustomerDvOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getCustomerDvOrdersCount _instance;
+
+  final TRes Function(Variables$Query$getCustomerDvOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$getCustomerDvOrdersCount._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getCustomerDvOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getCustomerDvOrdersCount<TRes> {
+  _CopyWithStubImpl$Variables$Query$getCustomerDvOrdersCount(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$getCustomerDvOrdersCount {
+  Query$getCustomerDvOrdersCount({
+    required this.delivery_order_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerDvOrdersCount.fromJson(Map<String, dynamic> json) {
+    final l$delivery_order_aggregate = json['delivery_order_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerDvOrdersCount(
+      delivery_order_aggregate:
+          Query$getCustomerDvOrdersCount$delivery_order_aggregate.fromJson(
+              (l$delivery_order_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getCustomerDvOrdersCount$delivery_order_aggregate
+      delivery_order_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    _resultData['delivery_order_aggregate'] =
+        l$delivery_order_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCustomerDvOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final lOther$delivery_order_aggregate = other.delivery_order_aggregate;
+    if (l$delivery_order_aggregate != lOther$delivery_order_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerDvOrdersCount
+    on Query$getCustomerDvOrdersCount {
+  CopyWith$Query$getCustomerDvOrdersCount<Query$getCustomerDvOrdersCount>
+      get copyWith => CopyWith$Query$getCustomerDvOrdersCount(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerDvOrdersCount<TRes> {
+  factory CopyWith$Query$getCustomerDvOrdersCount(
+    Query$getCustomerDvOrdersCount instance,
+    TRes Function(Query$getCustomerDvOrdersCount) then,
+  ) = _CopyWithImpl$Query$getCustomerDvOrdersCount;
+
+  factory CopyWith$Query$getCustomerDvOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCustomerDvOrdersCount;
+
+  TRes call({
+    Query$getCustomerDvOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate;
+}
+
+class _CopyWithImpl$Query$getCustomerDvOrdersCount<TRes>
+    implements CopyWith$Query$getCustomerDvOrdersCount<TRes> {
+  _CopyWithImpl$Query$getCustomerDvOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerDvOrdersCount _instance;
+
+  final TRes Function(Query$getCustomerDvOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCustomerDvOrdersCount(
+        delivery_order_aggregate: delivery_order_aggregate == _undefined ||
+                delivery_order_aggregate == null
+            ? _instance.delivery_order_aggregate
+            : (delivery_order_aggregate
+                as Query$getCustomerDvOrdersCount$delivery_order_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate {
+    final local$delivery_order_aggregate = _instance.delivery_order_aggregate;
+    return CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate(
+        local$delivery_order_aggregate,
+        (e) => call(delivery_order_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCustomerDvOrdersCount<TRes>
+    implements CopyWith$Query$getCustomerDvOrdersCount<TRes> {
+  _CopyWithStubImpl$Query$getCustomerDvOrdersCount(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getCustomerDvOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate =>
+          CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate.stub(
+              _res);
+}
+
+const documentNodeQuerygetCustomerDvOrdersCount = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getCustomerDvOrdersCount'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'id')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getCustomerDvOrdersCount _parserFn$Query$getCustomerDvOrdersCount(
+        Map<String, dynamic> data) =>
+    Query$getCustomerDvOrdersCount.fromJson(data);
+
+class Options$Query$getCustomerDvOrdersCount
+    extends graphql.QueryOptions<Query$getCustomerDvOrdersCount> {
+  Options$Query$getCustomerDvOrdersCount({
+    String? operationName,
+    required Variables$Query$getCustomerDvOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetCustomerDvOrdersCount,
+          parserFn: _parserFn$Query$getCustomerDvOrdersCount,
+        );
+}
+
+class WatchOptions$Query$getCustomerDvOrdersCount
+    extends graphql.WatchQueryOptions<Query$getCustomerDvOrdersCount> {
+  WatchOptions$Query$getCustomerDvOrdersCount({
+    String? operationName,
+    required Variables$Query$getCustomerDvOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetCustomerDvOrdersCount,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getCustomerDvOrdersCount,
+        );
+}
+
+class FetchMoreOptions$Query$getCustomerDvOrdersCount
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getCustomerDvOrdersCount({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getCustomerDvOrdersCount variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetCustomerDvOrdersCount,
+        );
+}
+
+extension ClientExtension$Query$getCustomerDvOrdersCount
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getCustomerDvOrdersCount>>
+      query$getCustomerDvOrdersCount(
+              Options$Query$getCustomerDvOrdersCount options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getCustomerDvOrdersCount>
+      watchQuery$getCustomerDvOrdersCount(
+              WatchOptions$Query$getCustomerDvOrdersCount options) =>
+          this.watchQuery(options);
+  void writeQuery$getCustomerDvOrdersCount({
+    required Query$getCustomerDvOrdersCount data,
+    required Variables$Query$getCustomerDvOrdersCount variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetCustomerDvOrdersCount),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getCustomerDvOrdersCount? readQuery$getCustomerDvOrdersCount({
+    required Variables$Query$getCustomerDvOrdersCount variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetCustomerDvOrdersCount),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getCustomerDvOrdersCount.fromJson(result);
+  }
+}
+
+class Query$getCustomerDvOrdersCount$delivery_order_aggregate {
+  Query$getCustomerDvOrdersCount$delivery_order_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerDvOrdersCount$delivery_order_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerDvOrdersCount$delivery_order_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCustomerDvOrdersCount$delivery_order_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerDvOrdersCount$delivery_order_aggregate
+    on Query$getCustomerDvOrdersCount$delivery_order_aggregate {
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate<
+          Query$getCustomerDvOrdersCount$delivery_order_aggregate>
+      get copyWith =>
+          CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate<
+    TRes> {
+  factory CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate(
+    Query$getCustomerDvOrdersCount$delivery_order_aggregate instance,
+    TRes Function(Query$getCustomerDvOrdersCount$delivery_order_aggregate) then,
+  ) = _CopyWithImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate;
+
+  factory CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate;
+
+  TRes call({
+    Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerDvOrdersCount$delivery_order_aggregate _instance;
+
+  final TRes Function(Query$getCustomerDvOrdersCount$delivery_order_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCustomerDvOrdersCount$delivery_order_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithStubImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate {
+  Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate
+    on Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate {
+  CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+          Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate(
+    Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate instance,
+    TRes Function(
+            Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate;
+
+  factory CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+      Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getRestaurantOrdersCount {
+  factory Variables$Query$getRestaurantOrdersCount(
+          {required int restuarantId}) =>
+      Variables$Query$getRestaurantOrdersCount._({
+        r'restuarantId': restuarantId,
+      });
+
+  Variables$Query$getRestaurantOrdersCount._(this._$data);
+
+  factory Variables$Query$getRestaurantOrdersCount.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$restuarantId = data['restuarantId'];
+    result$data['restuarantId'] = (l$restuarantId as int);
+    return Variables$Query$getRestaurantOrdersCount._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get restuarantId => (_$data['restuarantId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$restuarantId = restuarantId;
+    result$data['restuarantId'] = l$restuarantId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurantOrdersCount<
+          Variables$Query$getRestaurantOrdersCount>
+      get copyWith => CopyWith$Variables$Query$getRestaurantOrdersCount(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurantOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restuarantId = restuarantId;
+    final lOther$restuarantId = other.restuarantId;
+    if (l$restuarantId != lOther$restuarantId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$restuarantId = restuarantId;
+    return Object.hashAll([l$restuarantId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurantOrdersCount<TRes> {
+  factory CopyWith$Variables$Query$getRestaurantOrdersCount(
+    Variables$Query$getRestaurantOrdersCount instance,
+    TRes Function(Variables$Query$getRestaurantOrdersCount) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurantOrdersCount;
+
+  factory CopyWith$Variables$Query$getRestaurantOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurantOrdersCount;
+
+  TRes call({int? restuarantId});
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurantOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getRestaurantOrdersCount<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurantOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurantOrdersCount _instance;
+
+  final TRes Function(Variables$Query$getRestaurantOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? restuarantId = _undefined}) =>
+      _then(Variables$Query$getRestaurantOrdersCount._({
+        ..._instance._$data,
+        if (restuarantId != _undefined && restuarantId != null)
+          'restuarantId': (restuarantId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurantOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getRestaurantOrdersCount<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurantOrdersCount(this._res);
+
+  TRes _res;
+
+  call({int? restuarantId}) => _res;
+}
+
+class Query$getRestaurantOrdersCount {
+  Query$getRestaurantOrdersCount({
+    required this.delivery_order_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantOrdersCount.fromJson(Map<String, dynamic> json) {
+    final l$delivery_order_aggregate = json['delivery_order_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantOrdersCount(
+      delivery_order_aggregate:
+          Query$getRestaurantOrdersCount$delivery_order_aggregate.fromJson(
+              (l$delivery_order_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurantOrdersCount$delivery_order_aggregate
+      delivery_order_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    _resultData['delivery_order_aggregate'] =
+        l$delivery_order_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final lOther$delivery_order_aggregate = other.delivery_order_aggregate;
+    if (l$delivery_order_aggregate != lOther$delivery_order_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantOrdersCount
+    on Query$getRestaurantOrdersCount {
+  CopyWith$Query$getRestaurantOrdersCount<Query$getRestaurantOrdersCount>
+      get copyWith => CopyWith$Query$getRestaurantOrdersCount(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantOrdersCount<TRes> {
+  factory CopyWith$Query$getRestaurantOrdersCount(
+    Query$getRestaurantOrdersCount instance,
+    TRes Function(Query$getRestaurantOrdersCount) then,
+  ) = _CopyWithImpl$Query$getRestaurantOrdersCount;
+
+  factory CopyWith$Query$getRestaurantOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantOrdersCount;
+
+  TRes call({
+    Query$getRestaurantOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate;
+}
+
+class _CopyWithImpl$Query$getRestaurantOrdersCount<TRes>
+    implements CopyWith$Query$getRestaurantOrdersCount<TRes> {
+  _CopyWithImpl$Query$getRestaurantOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantOrdersCount _instance;
+
+  final TRes Function(Query$getRestaurantOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantOrdersCount(
+        delivery_order_aggregate: delivery_order_aggregate == _undefined ||
+                delivery_order_aggregate == null
+            ? _instance.delivery_order_aggregate
+            : (delivery_order_aggregate
+                as Query$getRestaurantOrdersCount$delivery_order_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate {
+    final local$delivery_order_aggregate = _instance.delivery_order_aggregate;
+    return CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate(
+        local$delivery_order_aggregate,
+        (e) => call(delivery_order_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantOrdersCount<TRes>
+    implements CopyWith$Query$getRestaurantOrdersCount<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantOrdersCount(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurantOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate =>
+          CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate.stub(
+              _res);
+}
+
+const documentNodeQuerygetRestaurantOrdersCount = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getRestaurantOrdersCount'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'restuarantId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'restaurant'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'restuarantId')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getRestaurantOrdersCount _parserFn$Query$getRestaurantOrdersCount(
+        Map<String, dynamic> data) =>
+    Query$getRestaurantOrdersCount.fromJson(data);
+
+class Options$Query$getRestaurantOrdersCount
+    extends graphql.QueryOptions<Query$getRestaurantOrdersCount> {
+  Options$Query$getRestaurantOrdersCount({
+    String? operationName,
+    required Variables$Query$getRestaurantOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetRestaurantOrdersCount,
+          parserFn: _parserFn$Query$getRestaurantOrdersCount,
+        );
+}
+
+class WatchOptions$Query$getRestaurantOrdersCount
+    extends graphql.WatchQueryOptions<Query$getRestaurantOrdersCount> {
+  WatchOptions$Query$getRestaurantOrdersCount({
+    String? operationName,
+    required Variables$Query$getRestaurantOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetRestaurantOrdersCount,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getRestaurantOrdersCount,
+        );
+}
+
+class FetchMoreOptions$Query$getRestaurantOrdersCount
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getRestaurantOrdersCount({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getRestaurantOrdersCount variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetRestaurantOrdersCount,
+        );
+}
+
+extension ClientExtension$Query$getRestaurantOrdersCount
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getRestaurantOrdersCount>>
+      query$getRestaurantOrdersCount(
+              Options$Query$getRestaurantOrdersCount options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getRestaurantOrdersCount>
+      watchQuery$getRestaurantOrdersCount(
+              WatchOptions$Query$getRestaurantOrdersCount options) =>
+          this.watchQuery(options);
+  void writeQuery$getRestaurantOrdersCount({
+    required Query$getRestaurantOrdersCount data,
+    required Variables$Query$getRestaurantOrdersCount variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetRestaurantOrdersCount),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getRestaurantOrdersCount? readQuery$getRestaurantOrdersCount({
+    required Variables$Query$getRestaurantOrdersCount variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetRestaurantOrdersCount),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getRestaurantOrdersCount.fromJson(result);
+  }
+}
+
+class Query$getRestaurantOrdersCount$delivery_order_aggregate {
+  Query$getRestaurantOrdersCount$delivery_order_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantOrdersCount$delivery_order_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantOrdersCount$delivery_order_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantOrdersCount$delivery_order_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantOrdersCount$delivery_order_aggregate
+    on Query$getRestaurantOrdersCount$delivery_order_aggregate {
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate<
+          Query$getRestaurantOrdersCount$delivery_order_aggregate>
+      get copyWith =>
+          CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate<
+    TRes> {
+  factory CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate(
+    Query$getRestaurantOrdersCount$delivery_order_aggregate instance,
+    TRes Function(Query$getRestaurantOrdersCount$delivery_order_aggregate) then,
+  ) = _CopyWithImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate;
+
+  factory CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate;
+
+  TRes call({
+    Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantOrdersCount$delivery_order_aggregate _instance;
+
+  final TRes Function(Query$getRestaurantOrdersCount$delivery_order_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantOrdersCount$delivery_order_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate {
+  Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate
+    on Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate {
+  CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+          Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate(
+    Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate instance,
+    TRes Function(
+            Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate;
+
+  factory CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+      Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurantOrdersCount$delivery_order_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getLaundryOrdersCount {
+  factory Variables$Query$getLaundryOrdersCount({required int laundryId}) =>
+      Variables$Query$getLaundryOrdersCount._({
+        r'laundryId': laundryId,
+      });
+
+  Variables$Query$getLaundryOrdersCount._(this._$data);
+
+  factory Variables$Query$getLaundryOrdersCount.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$laundryId = data['laundryId'];
+    result$data['laundryId'] = (l$laundryId as int);
+    return Variables$Query$getLaundryOrdersCount._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get laundryId => (_$data['laundryId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$laundryId = laundryId;
+    result$data['laundryId'] = l$laundryId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getLaundryOrdersCount<
+          Variables$Query$getLaundryOrdersCount>
+      get copyWith => CopyWith$Variables$Query$getLaundryOrdersCount(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getLaundryOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$laundryId = laundryId;
+    final lOther$laundryId = other.laundryId;
+    if (l$laundryId != lOther$laundryId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$laundryId = laundryId;
+    return Object.hashAll([l$laundryId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getLaundryOrdersCount<TRes> {
+  factory CopyWith$Variables$Query$getLaundryOrdersCount(
+    Variables$Query$getLaundryOrdersCount instance,
+    TRes Function(Variables$Query$getLaundryOrdersCount) then,
+  ) = _CopyWithImpl$Variables$Query$getLaundryOrdersCount;
+
+  factory CopyWith$Variables$Query$getLaundryOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getLaundryOrdersCount;
+
+  TRes call({int? laundryId});
+}
+
+class _CopyWithImpl$Variables$Query$getLaundryOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getLaundryOrdersCount<TRes> {
+  _CopyWithImpl$Variables$Query$getLaundryOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getLaundryOrdersCount _instance;
+
+  final TRes Function(Variables$Query$getLaundryOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? laundryId = _undefined}) =>
+      _then(Variables$Query$getLaundryOrdersCount._({
+        ..._instance._$data,
+        if (laundryId != _undefined && laundryId != null)
+          'laundryId': (laundryId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getLaundryOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getLaundryOrdersCount<TRes> {
+  _CopyWithStubImpl$Variables$Query$getLaundryOrdersCount(this._res);
+
+  TRes _res;
+
+  call({int? laundryId}) => _res;
+}
+
+class Query$getLaundryOrdersCount {
+  Query$getLaundryOrdersCount({
+    required this.delivery_order_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryOrdersCount.fromJson(Map<String, dynamic> json) {
+    final l$delivery_order_aggregate = json['delivery_order_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryOrdersCount(
+      delivery_order_aggregate:
+          Query$getLaundryOrdersCount$delivery_order_aggregate.fromJson(
+              (l$delivery_order_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getLaundryOrdersCount$delivery_order_aggregate
+      delivery_order_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    _resultData['delivery_order_aggregate'] =
+        l$delivery_order_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getLaundryOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final lOther$delivery_order_aggregate = other.delivery_order_aggregate;
+    if (l$delivery_order_aggregate != lOther$delivery_order_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryOrdersCount
+    on Query$getLaundryOrdersCount {
+  CopyWith$Query$getLaundryOrdersCount<Query$getLaundryOrdersCount>
+      get copyWith => CopyWith$Query$getLaundryOrdersCount(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryOrdersCount<TRes> {
+  factory CopyWith$Query$getLaundryOrdersCount(
+    Query$getLaundryOrdersCount instance,
+    TRes Function(Query$getLaundryOrdersCount) then,
+  ) = _CopyWithImpl$Query$getLaundryOrdersCount;
+
+  factory CopyWith$Query$getLaundryOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Query$getLaundryOrdersCount;
+
+  TRes call({
+    Query$getLaundryOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate;
+}
+
+class _CopyWithImpl$Query$getLaundryOrdersCount<TRes>
+    implements CopyWith$Query$getLaundryOrdersCount<TRes> {
+  _CopyWithImpl$Query$getLaundryOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryOrdersCount _instance;
+
+  final TRes Function(Query$getLaundryOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundryOrdersCount(
+        delivery_order_aggregate: delivery_order_aggregate == _undefined ||
+                delivery_order_aggregate == null
+            ? _instance.delivery_order_aggregate
+            : (delivery_order_aggregate
+                as Query$getLaundryOrdersCount$delivery_order_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate {
+    final local$delivery_order_aggregate = _instance.delivery_order_aggregate;
+    return CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate(
+        local$delivery_order_aggregate,
+        (e) => call(delivery_order_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getLaundryOrdersCount<TRes>
+    implements CopyWith$Query$getLaundryOrdersCount<TRes> {
+  _CopyWithStubImpl$Query$getLaundryOrdersCount(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getLaundryOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate =>
+          CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate.stub(
+              _res);
+}
+
+const documentNodeQuerygetLaundryOrdersCount = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getLaundryOrdersCount'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'laundryId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'laundry'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: VariableNode(name: NameNode(value: 'laundryId')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getLaundryOrdersCount _parserFn$Query$getLaundryOrdersCount(
+        Map<String, dynamic> data) =>
+    Query$getLaundryOrdersCount.fromJson(data);
+
+class Options$Query$getLaundryOrdersCount
+    extends graphql.QueryOptions<Query$getLaundryOrdersCount> {
+  Options$Query$getLaundryOrdersCount({
+    String? operationName,
+    required Variables$Query$getLaundryOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetLaundryOrdersCount,
+          parserFn: _parserFn$Query$getLaundryOrdersCount,
+        );
+}
+
+class WatchOptions$Query$getLaundryOrdersCount
+    extends graphql.WatchQueryOptions<Query$getLaundryOrdersCount> {
+  WatchOptions$Query$getLaundryOrdersCount({
+    String? operationName,
+    required Variables$Query$getLaundryOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetLaundryOrdersCount,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getLaundryOrdersCount,
+        );
+}
+
+class FetchMoreOptions$Query$getLaundryOrdersCount
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getLaundryOrdersCount({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getLaundryOrdersCount variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetLaundryOrdersCount,
+        );
+}
+
+extension ClientExtension$Query$getLaundryOrdersCount on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getLaundryOrdersCount>>
+      query$getLaundryOrdersCount(
+              Options$Query$getLaundryOrdersCount options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getLaundryOrdersCount>
+      watchQuery$getLaundryOrdersCount(
+              WatchOptions$Query$getLaundryOrdersCount options) =>
+          this.watchQuery(options);
+  void writeQuery$getLaundryOrdersCount({
+    required Query$getLaundryOrdersCount data,
+    required Variables$Query$getLaundryOrdersCount variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetLaundryOrdersCount),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getLaundryOrdersCount? readQuery$getLaundryOrdersCount({
+    required Variables$Query$getLaundryOrdersCount variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetLaundryOrdersCount),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getLaundryOrdersCount.fromJson(result);
+  }
+}
+
+class Query$getLaundryOrdersCount$delivery_order_aggregate {
+  Query$getLaundryOrdersCount$delivery_order_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryOrdersCount$delivery_order_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryOrdersCount$delivery_order_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getLaundryOrdersCount$delivery_order_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryOrdersCount$delivery_order_aggregate
+    on Query$getLaundryOrdersCount$delivery_order_aggregate {
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate<
+          Query$getLaundryOrdersCount$delivery_order_aggregate>
+      get copyWith =>
+          CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate<
+    TRes> {
+  factory CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate(
+    Query$getLaundryOrdersCount$delivery_order_aggregate instance,
+    TRes Function(Query$getLaundryOrdersCount$delivery_order_aggregate) then,
+  ) = _CopyWithImpl$Query$getLaundryOrdersCount$delivery_order_aggregate;
+
+  factory CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate;
+
+  TRes call({
+    Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$getLaundryOrdersCount$delivery_order_aggregate<TRes>
+    implements
+        CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithImpl$Query$getLaundryOrdersCount$delivery_order_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryOrdersCount$delivery_order_aggregate _instance;
+
+  final TRes Function(Query$getLaundryOrdersCount$delivery_order_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundryOrdersCount$delivery_order_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate {
+  Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate
+    on Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate {
+  CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<
+          Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+    Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate instance,
+    TRes Function(
+            Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate;
+
+  factory CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+      Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}

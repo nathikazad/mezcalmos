@@ -82,7 +82,7 @@ class LaundryOrderViewController {
             .listen((LaundryOrder? event) {
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.location?.toJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
             _order.value = event;
             _order.value?.driverInfo = event.driverInfo;
           }

@@ -128,16 +128,15 @@ Future<LaundryOrder?> get_laundry_order_by_id(
     serviceProviderPickupDriverChatId:
         orderData.from_customer_delivery?.chat_with_service_provider_id,
     driverInfo: orderData.to_customer_delivery?.delivery_driver != null
-        ? DeliveryDriverUserInfo(
-            location: null,
+        ? UserInfo(
             hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id,
             name: orderData.to_customer_delivery!.delivery_driver!.user.name,
             image: orderData.to_customer_delivery!.delivery_driver!.user.image,
             language: LanguageType.EN)
         : null,
     pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
-        ? DeliveryDriverUserInfo(
-            location: null,
+        ? UserInfo(
+          
             hasuraId:
                 orderData.from_customer_delivery!.delivery_driver!.user.id,
             name: orderData.from_customer_delivery!.delivery_driver!.user.name,
@@ -250,8 +249,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
         serviceProviderPickupDriverChatId:
             orderData.from_customer_delivery?.chat_with_service_provider_id,
         driverInfo: orderData.to_customer_delivery?.delivery_driver != null
-            ? DeliveryDriverUserInfo(
-                location: null,
+            ? UserInfo(
                 hasuraId:
                     orderData.to_customer_delivery!.delivery_driver!.user.id,
                 name:
@@ -261,8 +259,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                 language: LanguageType.EN)
             : null,
         pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
-            ? DeliveryDriverUserInfo(
-                location: null,
+            ? UserInfo(
                 hasuraId:
                     orderData.from_customer_delivery!.delivery_driver!.user.id,
                 name: orderData

@@ -21,42 +21,13 @@ Notification deliveryDriverNotificationHandler(String key, value) {
 
   switch (notificationType) {
     case NotificationType.NewOrder:
-      return Notification(
-          id: key,
-          icon:
-              (value['orderType'].toString().toOrderType() == OrderType.Laundry)
-                  ? mat.Icons.local_laundry_service
-                  : mat.Icons.flatware,
-          linkUrl: DeliveryAppRoutes.kDvOrderView
-              .replaceFirst(":orderId", value["orderId"]),
-
-          // needs to be changed, need to add laundry
-          body: '${_i18n()['driverNotifBody']}', // needs to be changed
-          imgUrl:
-              'assets/images/shared/notifications/onTheWay.png', // needs to be changed
-          title: '${_i18n()['driverNotifTitle']}',
-          timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.NewOrder,
-          notificationAction:
-              (value["notificationAction"] as String).toNotificationAction(),
-          variableParams: value);
+      return _newOrderNotification(key, value);
     case NotificationType.DriverApproved:
-      return Notification(
-          id: key,
-          icon: mat.Icons.delete_forever_rounded,
-          linkUrl: DeliveryAppRoutes
-              .kCurrentOrdersListRoute, // needs to be changed, need to add laundry
-          body: 'You have been approved', // needs to be changed
-          imgUrl:
-              'assets/images/shared/notifications/delivered.png', // needs to be changed
-          title: 'Congrats ',
-          timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.DriverApproved,
-          notificationAction:
-              (value["notificationAction"] as String).toNotificationAction(),
-          variableParams: value);
+      return _driverAprrovedNotification(key, value);
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
+    case NotificationType.PriceChange:
+      return newPriceChangeNotification(key, value);
     case NotificationType.OrderStatusChange:
       switch (value['orderType'].toString().toOrderType()) {
         case OrderType.Restaurant:
@@ -69,6 +40,44 @@ Notification deliveryDriverNotificationHandler(String key, value) {
     default:
       throw StateError("Invalid Notification Type");
   }
+}
+
+Notification _driverAprrovedNotification(String key, value) {
+  return Notification(
+      id: key,
+      icon: mat.Icons.delete_forever_rounded,
+      linkUrl: DeliveryAppRoutes
+          .kCurrentOrdersListRoute, // needs to be changed, need to add laundry
+      body: 'You have been approved', // needs to be changed
+      imgUrl:
+          'assets/images/shared/notifications/delivered.png', // needs to be changed
+      title: 'Congrats ',
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.DriverApproved,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
+}
+
+Notification _newOrderNotification(String key, value) {
+  return Notification(
+      id: key,
+      icon: (value['orderType'].toString().toOrderType() == OrderType.Laundry)
+          ? mat.Icons.local_laundry_service
+          : mat.Icons.flatware,
+      linkUrl: DeliveryAppRoutes.kDvOrderView
+          .replaceFirst(":orderId", value["orderId"].toString()),
+
+      // needs to be changed, need to add laundry
+      body: '${_i18n()['driverNotifBody']}', // needs to be changed
+      imgUrl:
+          'assets/images/shared/notifications/onTheWay.png', // needs to be changed
+      title: '${_i18n()['driverNotifTitle']}',
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewOrder,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
@@ -87,7 +96,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
           ? mat.Icons.close
           : null,
       linkUrl: DeliveryAppRoutes.kDvOrderView
-          .replaceFirst(":orderId", value["orderId"]),
+          .replaceFirst(":orderId", value["orderId"].toString()),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -149,7 +158,8 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
                   LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: DeliveryAppRoutes.getRestaurantOrderRoute(value["orderId"]),
+      linkUrl: DeliveryAppRoutes.kDvOrderView
+          .replaceFirst(":orderId", value["orderId"].toString()),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -223,6 +233,24 @@ Notification newMessageNotification(String key, value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
+}
+
+Notification newPriceChangeNotification(String key, value) {
+  bool accepted = value["accepted"];
+  return Notification(
+      id: key,
+      linkUrl: value["linkUrl"],
+      body: accepted
+          ? "Congrats ! your price offer has been accepted"
+          : "Sorry ! your price offer has been rejected",
+      imgUrl: null,
+      icon: mat.Icons.delivery_dining,
+      title: accepted ? "Accepted" : "Rejected",
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.PriceChange,
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);

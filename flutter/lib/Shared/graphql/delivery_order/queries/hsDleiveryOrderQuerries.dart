@@ -74,7 +74,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
         : null,
     orderTime: DateTime.parse(orderData.order_time),
     driverInfo: (orderData.delivery_driver != null)
-        ? DeliveryDriverUserInfo(
+        ? UserInfo(
             hasuraId: orderData.delivery_driver!.user.id,
             name: orderData.delivery_driver!.user.name,
             image: orderData.delivery_driver!.user.image,
@@ -345,7 +345,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
           : null,
       orderTime: DateTime.parse(orderData.order_time),
       driverInfo: (orderData.delivery_driver != null)
-          ? DeliveryDriverUserInfo(
+          ? UserInfo(
               hasuraId: orderData.delivery_driver!.user.id,
               language: null,
               name: orderData.delivery_driver!.user.name,

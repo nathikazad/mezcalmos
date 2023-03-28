@@ -765,3 +765,24 @@ query get_pick_driver_order($orderId: Int!) {
     }
   }
 }
+query getCustomerDvOrdersCount($id: Int!) {
+  delivery_order_aggregate(where: {customer_id: {_eq: $id}}) {
+    aggregate {
+      count
+    }
+  }
+}
+query getRestaurantOrdersCount($restuarantId: Int!) {
+  delivery_order_aggregate(where: {restaurant: {id: {_eq: $restuarantId}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+query getLaundryOrdersCount($laundryId: Int!) {
+  delivery_order_aggregate(where: {laundry: {id: {_eq: $laundryId}}}) {
+    aggregate {
+      count
+    }
+  }
+}

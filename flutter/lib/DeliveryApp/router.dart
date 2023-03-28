@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryAppRoutes {
-  static const String kCurrentOrdersListRoute = '/orders';
+  static const String kCurrentOrdersListRoute = '/currentOrders';
   static const String kLaundryOrderViewRoute = '/laundryOrders/:orderId';
   static const String kDvOrderView = '/orders/:orderId';
   static const String kOrderDetailsViewRoute = "/orderDetails/:orderId";

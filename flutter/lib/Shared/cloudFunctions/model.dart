@@ -645,6 +645,7 @@ extension ParseOrderTypeToString on OrderType {
   }
 }
 extension ParseStringToOrderType on String {
+
   OrderType toOrderType() {
     return OrderType.values.firstWhere(
         (OrderType orderType) =>
