@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.d
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mime_type/mime_type.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileScreen"]["UserProfileScreen"];
@@ -340,6 +341,91 @@ class _UserProfileState extends State<UserProfile>
           }));
         }
       } catch (e) {
+        mezDbgPrint(
+            "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
+      }
+    }
+  }
+
+  Future<void> onBrowsImageClickForWeb() async {
+    String? strResult = await pickImageChoiceDialogForWeb(context);
+    if (strResult == "yes") {
+      try {
+        mezDbgPrint("this is a test for web ");
+        // MediaInfo? mediaData = await ImagePickerWeb.getImageInfo;
+
+        var mediaData = await imagePicker(
+            picker: widget.userProfileController.picker,
+            source: imPicker.ImageSource.gallery);
+        mezDbgPrint(
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ this is the current path of image ${mediaData?.path}");
+        String? mimeType = mime(Path.basename(mediaData!.path));
+        mezDbgPrint(
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ check if the path is correcte ${Path.basename(mediaData.path)}");
+        mezDbgPrint(
+            "🖼️🖼️🖼️🖼️🖼️🖼️🖼️ this after we used the mimeType  ${mimeType}");
+
+        imPicker.XFile xFile = imPicker.XFile.fromData(
+            await mediaData.readAsBytes(),
+            path: Path.basename(mediaData.path));
+        widget.userProfileController.userImg.value = xFile;
+        widget.userProfileController.userImgBytes.value =
+            await mediaData.readAsBytes();
+
+        final Uint8List _compressedVersion = await compressImageBytesForWeb(
+            await mediaData.readAsBytes(), mediaData.path);
+
+        // Get the actual File compressed
+        html.File compressedFile = await writeFileFromBytesAndReturnItForWeb(
+            filePath: widget.userProfileController.userImg.value!.path,
+            imgBytes: _compressedVersion,
+            mimeType: Path.basename(mediaData.path));
+
+        mezDbgPrint("compressed file  compressedFile ${compressedFile}");
+        // generating a temp image from the Fiel , so we can resolve image provider.
+        final Image img = Image.memory(await mediaData.readAsBytes());
+        // resolving ImagePrivider (We will use this late to reduce the height and width of the image to the same percenteage )
+        img.image
+            .resolve(new ImageConfiguration())
+            .addListener(ImageStreamListener((ImageInfo info, bool _) async {
+          mezDbgPrint("inside image streammer  !!!!!!");
+          // ------------------- Original Version -----------------//
+          // put the original file to firebaseStorage
+          final String _originalUrl =
+              await _authController.uploadUserImgToFbStorageForWeb(
+                  pikedFile: widget.userProfileController.userImg.value!,
+                  uint8list: await mediaData.readAsBytes());
+          // we set our original FirebaseStorage Url in our controller.
+          widget.userProfileController.originalImgUrl = _originalUrl;
+          // Setting Original Image aka (bigImage)
+          await _authController.setOriginalUserImage(
+              widget.userProfileController.originalImgUrl);
+          // ------------------- Compressed Version ----------------- //
+          // put the compressed file to firebaseStorage
+          final String _compressedUrl =
+              await _authController.uploadUserImgToFbStorageForWeb(
+                  pikedFile: widget.userProfileController.userImg.value!,
+                  uint8list: _compressedVersion,
+                  isCompressed: true);
+          // we set our _compressed FirebaseStorage Url in our controller .
+          widget.userProfileController.compressedImgUrl = _compressedUrl;
+          // we right away set it in database
+          await _authController.editUserProfile(
+              null, widget.userProfileController.compressedImgUrl);
+          mezDbgPrint("ayono@ayono@ : ClickedSave = false!");
+          mezDbgPrint(
+            "ayono@ayono@ widget.userProfileController.checkIfUserHasAllInfosSet() : ${widget.userProfileController.checkIfUserHasAllInfosSet()}",
+          );
+          // mezDbgPrint(
+          //   "ayono@ayono@ widget.userProfileController.didUserChangedInfos() : ${widget.userProfileController.didUserChangedInfos()}",
+          // );
+
+          // once uploaded we need to remove the temporary compressed version from user's device
+          //await compressedFile.delete();
+          // after the uploading of the image is done, we set back this to false.
+          isUploadingImg.value = false;
+        }));
+      } on Exception catch (e) {
         mezDbgPrint(
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }

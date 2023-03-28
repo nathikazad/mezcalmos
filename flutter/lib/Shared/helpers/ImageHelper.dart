@@ -6,8 +6,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:image_compression_flutter/image_compression_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -16,8 +16,11 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'dart:html' as html;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
@@ -25,11 +28,19 @@ dynamic _i18n() =>
 /// this compresses the Original Image using jpeg format Since it's much ligher.
 ///
 /// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
-Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
-  final Uint8List result = await FlutterImageCompress.compressWithList(
-      originalImg,
-      quality: nQualityCompressionOfUserImage);
-  return result;
+Future<Uint8List> compressImageBytes(Uint8List uint8list, String path) async {
+  Configuration config = Configuration(
+    outputType: ImageOutputType.jpg,
+    useJpgPngNativeCompressor: true,
+    quality: nQualityCompressionOfUserImage,
+  );
+  mezDbgPrint("🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path ${path}");
+  final ImageFileConfiguration param = ImageFileConfiguration(
+      input: ImageFile(filePath: path, rawBytes: uint8list), config: config);
+  final ImageFile output = await compressor.compress(param);
+  mezDbgPrint(
+      "🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path ${output.rawBytes}");
+  return output.rawBytes;
 }
 
 Future<File> writeFileFromBytesAndReturnIt(
@@ -46,6 +57,25 @@ Future<File> writeFileFromBytesAndReturnIt(
       .writeAsBytes(imgBytes));
 }
 
+Future<html.File> writeFileFromBytesAndReturnItForWeb(
+    {required String filePath,
+    required Uint8List imgBytes,
+    required dynamic mimeType}) async {
+  // compressed Image
+  final List<String> splittedPath = filePath.split('.');
+  final String pathWithoutExtension =
+      splittedPath.sublist(0, splittedPath.length - 1).join('.');
+  mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
+  mezDbgPrint("PATH WITH EXTENSION $filePath");
+  return html.File(
+      imgBytes,
+      '$pathWithoutExtension.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}',
+      {'type': mimeType});
+  // return (await File(
+  //         '$pathWithoutExtension.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
+  //     .writeAsBytes(imgBytes));
+}
+
 /// this is only used for UserProfilePicture whereever we show bigImage [User.bigImage]
 Image showDefaultOrUserImg({Uint8List? memoryImg}) {
   if (memoryImg != null) {
@@ -58,6 +88,38 @@ Image showDefaultOrUserImg({Uint8List? memoryImg}) {
   return mLoadImage(
       url: Get.find<AuthController>().user!.image,
       assetInCaseFailed: aDefaultDbUserImgAsset);
+}
+
+Future<String?> pickImageChoiceDialogForWeb(BuildContext context) {
+  return showDialog<String?>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      // title: const Text('AlertDialog Title'),
+      content: Container(
+        width: 100.sp,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            MezButton(
+              backgroundColor: Colors.white,
+              label: "Upload photo",
+              onClick: () async {
+                Navigator.pop(context, "yes");
+              },
+            ),
+            Divider(),
+            MezButton(
+              backgroundColor: Colors.white,
+              label: "Cancel",
+              onClick: () async {
+                Navigator.pop(context, "no");
+              },
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 Future<imPicker.ImageSource?> imagePickerChoiceDialog(
@@ -124,51 +186,6 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                     ),
                   ),
                 ),
-
-                // TextButton(
-                //     onPressed: () {
-                //      _result = imPicker.ImageSource.gallery;
-                //       MezRouter.back();
-                //     },
-                //     style: TextButton.styleFrom(
-                //         backgroundColor: Colors.purple.shade400,
-                //         padding: EdgeInsets.all(12)),
-                //     child: Container(
-                //         alignment: Alignment.center,
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             Icon(
-                //               Icons.camera_enhance,
-                //               color: Colors.white,
-                //             ),
-                //             Text(_i18n()['camera'])
-                //           ],
-                //         ))),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextButton(
-                //     onPressed: () {
-
-                //     },
-                //     style: TextButton.styleFrom(
-                //         backgroundColor: Colors.deepPurple,
-                //         padding: EdgeInsets.all(12)),
-                //     child: Container(
-                //         alignment: Alignment.center,
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             Icon(
-                //               Icons.photo_library_outlined,
-                //               color: Colors.white,
-                //             ),
-                //             Text(_i18n()['gallery'])
-                //           ],
-                //         ))),
               ],
             ),
           ),
@@ -256,11 +273,22 @@ Image mLoadImage({
 }
 
 // BitmapLoading stuff -------------------
-
 Future<BitmapDescriptor> bitmapDescriptorLoader(asset, num width, num height,
-    {bool isBytes = false}) async {
-  return BitmapDescriptor.fromBytes(
-      await getBytesFromCanvas(width, height, asset, isBytes: isBytes));
+    {bool isBytes = false, String? urlStr}) async {
+  mezDbgPrint(
+      "[cc] this function ($width , $height) called bitmapDescriptorLoader  :: Asset => ${asset.runtimeType}  | isByte ==> $isBytes");
+  if (kIsWeb)
+    return BitmapDescriptor.fromBytes(
+      asset,
+      size: Size(
+        width.toDouble() / 2,
+        height.toDouble() / 2,
+      ),
+      // await getBytesFromCanvas(width, height, asset, isBytes: isBytes),
+    );
+  else
+    return BitmapDescriptor.fromBytes(
+        await getBytesFromCanvas(width, height, asset, isBytes: isBytes));
   // return await getBytesFromCanvas(width, height, asset, isBytes: isBytes);
 }
 
@@ -291,7 +319,8 @@ Future<Uint8List> getBytesFromCanvas(num width, num height, urlAsset,
 Future<ui.Image> loadImage(Uint8List img) async {
   final Completer<ui.Image> completer = new Completer();
   ui.decodeImageFromList(img, (ui.Image img) {
-    return completer.complete(img);
+    mezDbgPrint("[cc] COMPLEEEEETER DONE! $img");
+    completer.complete(img);
   });
   return completer.future;
 }
