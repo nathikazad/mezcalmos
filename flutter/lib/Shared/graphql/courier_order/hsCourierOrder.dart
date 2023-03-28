@@ -103,6 +103,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
           ? MezLocation(orderData.delivery_order.pickup_address!,
               orderData.delivery_order.pickup_gps!.toLocationData())
           : null,
+      billImage: orderData.bill_image,
       dropOffLocation: MezLocation(orderData.delivery_order.dropoff_address,
           orderData.delivery_order.dropoff_gps.toLocationData()),
       customerDriverChatId: orderData.delivery_order.chat_with_customer_id,
@@ -179,6 +180,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         scheduleTime: (orderData.delivery_order.schedule_time != null)
             ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
             : null,
+        billImage: orderData.bill_image,
         deliveryDirection:
             orderData.delivery_order.direction.toDeliveryDirection(),
         customer: UserInfo(

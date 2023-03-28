@@ -17,7 +17,9 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderBillImage.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
@@ -110,9 +112,14 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     address: viewController.order.dropOffLocation.address,
                     margin: const EdgeInsets.only(top: 8),
                   ),
-                  // OrderNoteCard(
-                  //     margin: const EdgeInsets.only(top: 15),
-                  //     note: viewController.order),
+                  if (viewController.order.billImage != null)
+                    OrderBillImage(
+                      billImage: viewController.order.billImage,
+                      margin: const EdgeInsets.only(top: 15),
+                    ),
+                  OrderNoteCard(
+                      margin: const EdgeInsets.only(top: 15),
+                      note: viewController.order.notes),
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(top: 15),
                     costs: viewController.order.costs,
