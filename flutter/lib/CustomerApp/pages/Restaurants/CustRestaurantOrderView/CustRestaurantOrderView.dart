@@ -8,15 +8,17 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -27,12 +29,16 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
-import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(RestaurantRoutes.restaurantOrdersRoute
+        .replaceAll(":orderId", orderId.toString()));
+  }
+
   @override
   _ViewRestaurantOrderScreenState createState() =>
       _ViewRestaurantOrderScreenState();
@@ -41,12 +47,12 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   CustRestaurantOrderViewController viewController =
       CustRestaurantOrderViewController();
+
   @override
   void initState() {
     super.initState();
 
-    final int orderId = int.parse(Get.parameters['orderId']!);
-    if (Get.parameters['orderId'] == null) MezRouter.back();
+    final int orderId = int.parse(MezRouter.urlArguments['orderId'].toString());
     viewController.init(orderId: orderId);
     super.initState();
   }
@@ -62,11 +68,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           autoBack: true,
-          ordersRoute: kOrdersRoute,
+          ordersRoute: CustomerRoutes.customerOrdersRoute,
           showNotifications: true,
           titleWidget: Obx(() => Text(
                 viewController.order.value?.restaurant.name ?? "",
-                style: Get.textTheme.displaySmall,
+                style: context.txt.displaySmall,
               ))),
       bottomNavigationBar: Obx(() {
         if (showReviewBtn() && viewController.order.value != null) {
@@ -126,7 +132,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             RestaurantOrderDriverCard(
                               order: viewController.order.value!,
                             ),
-                            if (viewController.order.value!.inDeliveryPhase())
+                            if (viewController.order.value!.inDeliveryPhase() &&
+                                viewController.order.value!.deliveryOrderId !=
+                                    null)
                               OrderMapWidget(
                                   deliveryOrderId: viewController
                                       .order.value!.deliveryOrderId!,
@@ -136,7 +144,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                       .order.value!.routeInformation?.polyline,
                                   from: viewController
                                       .order.value!.restaurant.location,
-                                  to: viewController.order.value!.to),
+                                  to: viewController
+                                      .order.value!.dropOffLocation),
                             OrderRestaurantCard(
                                 order: viewController.order.value!),
                             OrderItemsCard(
@@ -146,18 +155,19 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               margin: const EdgeInsets.only(top: 15),
                               child: Text(
                                 '${_i18n()["deliveryDet"]}',
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                             ),
                             OrderScheduledTimeCard(
-                                time: viewController.order.value!.scheduledTime,
+                                time: viewController.order.value!.scheduleTime,
                                 margin: const EdgeInsets.only(top: 8)),
-                            RestaurantOrderDeliveryTimeCard(
-                              order: viewController.order.value!,
-                              margin: const EdgeInsets.only(top: 8),
-                            ),
+                            // RestaurantOrderDeliveryTimeCard(
+                            //   order: viewController.order.value!,
+                            //   margin: const EdgeInsets.only(top: 8),
+                            // ),
                             OrderDeliveryLocation(
-                              address: viewController.order.value!.to.address,
+                              address: viewController
+                                  .order.value!.dropOffLocation.address,
                               margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderPaymentMethod(
@@ -172,7 +182,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             OrderNoteCard(
                                 note: viewController.order.value!.notes),
                             OrderSummaryCard(
-                              order: viewController.order.value!,
+                              margin: const EdgeInsets.only(top: 15),
+                              costs: viewController.order.value!.costs,
+                              stripeOrderPaymentInfo:
+                                  viewController.order.value!.stripePaymentInfo,
                             ),
 
                             //===============================>button cancel===========================
@@ -223,7 +236,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   bool showReviewBtn() {
     return viewController.order.value != null &&
-        //  viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
+        viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
         viewController.order.value!.review == null;
   }
 }

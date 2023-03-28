@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -35,12 +37,14 @@ class ROpItemCard extends StatefulWidget {
 class _ROpItemCardState extends State<ROpItemCard> {
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
+
   @override
   void initState() {
     super.initState();
   }
 
   RxBool imageError = RxBool(false);
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -50,12 +54,11 @@ class _ROpItemCardState extends State<ROpItemCard> {
           onTap: (widget.viewController.reOrderMode.isTrue)
               ? null
               : () async {
-                  final bool? shouldRefresh = await MezRouter.toNamed(
-                          getEditItemRoute(
-                              itemId: widget.item.id!,
-                              categoryId: widget.category?.id ?? null,
-                              restaurntID: widget.viewController.restaurnatId))
-                      as bool?;
+                  final bool? shouldRefresh = await ROpItemView.navigate(
+                      itemId: widget.item.id!,
+                      categoryId: widget.category?.id ?? null,
+                      restaurantId: widget.viewController.restaurnatId,
+                      arguments: <String, dynamic>{"specials": false}) as bool;
 
                   if (shouldRefresh == true) {
                     await widget.viewController.fetchCategories();
@@ -85,7 +88,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                       fit: FlexFit.tight,
                       child: Text(
                         widget.item.name[userLanguage] ?? "",
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                         maxLines: 2,
                       ),
                     ),
@@ -93,7 +96,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                         ? ROpRerorderIcon()
                         : Text(
                             widget.item.cost.toPriceString(),
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyLarge,
                           ),
                     SizedBox(
                       width: 10,
@@ -105,6 +108,9 @@ class _ROpItemCardState extends State<ROpItemCard> {
                 ),
                 Divider(
                   height: 4,
+                  thickness: 0.2,
+                  endIndent: 8,
+                  indent: 8,
                 ),
                 Row(
                   children: [
@@ -119,7 +125,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                                 Text(
                                   widget.category?.name![userLanguage] ??
                                       "Error",
-                                  style: Get.textTheme.bodyText2,
+                                  style: context.txt.bodyMedium,
                                 ),
                               ],
                             ),
@@ -134,12 +140,8 @@ class _ROpItemCardState extends State<ROpItemCard> {
                       onChanged: (widget.viewController.reOrderMode.isTrue)
                           ? null
                           : (bool v) {
-                              // _restaurantInfoController.switchItemAvailable(
-                              //     itemId: widget.item.id!,
-                              //     value: v,
-                              //     caytegoryId: (widget.category != null)
-                              //         ? widget.category!.id
-                              //         : null);
+                              widget.viewController
+                                  .switchItemAv(item: widget.item, value: v);
                             },
                       activeColor: primaryBlueColor,
                       activeTrackColor: secondaryLightBlueColor,

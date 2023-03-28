@@ -9,6 +9,7 @@ functionNamesGroup1 = []
 functionNamesGroup2 = {}
 uniqueTypes = {}
 models = {}
+errors = {}
 
 types = {"number": "num", "string": "String", "boolean": "bool"}
 
@@ -37,7 +38,10 @@ def searchForModel(search):
           if found:
             if ":" in line:
               v = line.split(":")
-              typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace(";","")                   
+              typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace(";","") 
+              if typeDictionary["values"][v[0].strip()] not in ["string", "number", "boolean", "JSON"]:
+                # print(typeDictionary["values"][v[0].strip()])
+                errors[typeDictionary["values"][v[0].strip()]] = True
             if "=" in line:
               v = line.split("=")
               typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace("\"","").replace(";","")                 
@@ -96,7 +100,7 @@ def getArguments(corresponding):
     print(fileName)
     print()
     sys.exit()
-
+ 
 def getReturnType(corresponding):
   # print(corresponding)
   fileName = getFileName(corresponding)
@@ -222,8 +226,18 @@ def printDartFormatEnum(key, values):
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
-}'''
+}
+extension ParseStringTo#### on String {
+  #### to####() {
+    return ####.values.firstWhere(
+        (#### ****) =>
+            ****.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+'''
+  name = key[0].lower() + key[1:]
   converter = converter.replace("####",key)
+  converter = converter.replace("****",name)
   return str+converter+"\n\n"
 
 def printDartFormatFunction(key, value):
@@ -253,10 +267,14 @@ def printDartFormatFunction(key, value):
         prefix = prefix.replace("Record","Map")
         prefix = prefix.replace(" ",",")
         arr = prefix.split("<")[1].split(">")[0].split(",")
-        if(arr[0] in types):
+        if arr[0] in types:
           prefix = prefix.replace(arr[0], types[arr[0]])
-        if(arr[1] in types):
+        elif models[arr[0]]["type"] == "enum":
+          prefix = prefix.replace(arr[0], "String")
+        if arr[1] in types:
           prefix = prefix.replace(arr[1], types[arr[1]])
+        elif models[arr[1]]["type"] == "enum":
+          prefix = prefix.replace(arr[1], "String")
       # print(prefix)
       
         
@@ -316,10 +334,10 @@ def printDartFormatFunction(key, value):
         if v1[-1] == "?":
           p2 = p2.replace(".toFir","?.toFir")
         params += p2
-      elif value["arguments"][v1] == "JSON":
-        params += "\""+v+"\""+":json.encode("+v+"),"+"\n"+"        "
+      # elif value["arguments"][v1] == "JSON":
+      #   params += "\""+v+"\""+":json.encode("+v+"),"+"\n"+"        "
       else:
-        params += "\""+v+"\""+":"+v+","+"\n"+"        "
+        params += "\""+v+"\""+": "+v+","+"\n"+"        "
       # params = params.replace("?","")
     body = body.replace("<String, dynamic>{}",params[:-2]+"}")
 
@@ -354,15 +372,15 @@ def getModels():
         toWriteModel += "factory "+key+".fromFirebaseFormattedJson(dynamic json) { "
         toWriteModel += "\n   return "+key+"("
         for v in models[key]["values"]:
-          toWriteModel += '''json["'''+v+'''"], '''
+          toWriteModel += '''json["'''+v.replace("?","")+'''"], '''
+          # print(models[key]["values"][v])
+          if models[key]["values"][v] in models:
+            if models[models[key]["values"][v]]["type"] == "enum":
+              toWriteModel = toWriteModel[:-2]
+              toWriteModel += "?.toString().to" + models[key]["values"][v] + "(), "
         toWriteModel = toWriteModel[:-2]
         toWriteModel += ''');
   }'''
-      ## @sanchit todo
-      ## add Factory
-  #       factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) {
-  #   return CheckoutResponse(json["orderId"], json["nullableField"]);
-  # }
       toWriteModel +=  "\n}\n\n"
     if models[key]["type"] == "enum":
       toWriteModel +=  printDartFormatEnum(key, models[key]["values"])
@@ -418,6 +436,10 @@ if __name__ == "__main__":
       if matches[0] in ["string", "number", "boolean", "JSON"]:
         continue
     if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key: #and "Array" not in key:
+      # models[key] = 
+      searchForModel(key)
+  for key in errors:
+    if "Error" in key: #and "Array" not in key:
       # models[key] = 
       searchForModel(key)
 

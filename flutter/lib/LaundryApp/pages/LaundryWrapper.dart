@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/notificationHandler.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -54,7 +55,7 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
       // navigateToCreateService(
       //     serviceProviderType: ServiceProviderType.Restaurant);
     } else {
-      await MezRouter.toNamed(kLaundryTabsView);
+      await MezRouter.toNamed(LaundryAppRoutes.kLaundryTabsViewRoute);
     }
   }
 

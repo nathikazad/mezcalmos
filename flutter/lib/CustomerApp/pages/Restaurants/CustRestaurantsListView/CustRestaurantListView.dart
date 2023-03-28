@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/RestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/RestaurantShimmerList.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -18,6 +20,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class CustRestaurantListView extends StatefulWidget {
   const CustRestaurantListView({Key? key}) : super(key: key);
+  static Future<void> navigate() {
+    return MezRouter.toNamed(RestaurantRoutes.restaurantsListRoute);
+  }
 
   @override
   _CustRestaurantListViewState createState() => _CustRestaurantListViewState();
@@ -28,6 +33,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
   CustRestaurantListViewController viewController =
       CustRestaurantListViewController();
+
   @override
   void initState() {
     viewController.init();
@@ -42,6 +48,15 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text("${_i18n()['restaurants']}"),
+      // ),
+      // appBar: MezcalmosAppBar(
+      //   AppBarLeftButtonType.Back,
+      //   onClick: MezRouter.back,
+      //   title: "${_i18n()['restaurants']}",
+      // ),
+
       appBar: CustomerAppBar(
         title: "${_i18n()['restaurants']}",
         autoBack: true,
@@ -97,7 +112,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noItemTitle"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -148,7 +163,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             "${_i18n()["restaurants"]}",
-                            style: Get.textTheme.bodyText1?.copyWith(
+                            style: context.txt.bodyLarge?.copyWith(
                               color: !viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
@@ -194,7 +209,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         Flexible(
                           child: Text(
                             '${_i18n()["meal"]}',
-                            style: Get.textTheme.bodyText1?.copyWith(
+                            style: context.txt.bodyLarge?.copyWith(
                               color: viewController.byRestaurants
                                   ? Colors.grey.shade700
                                   : Colors.white,
@@ -225,15 +240,10 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
               customerLocation: viewController.customerLocation,
-              onClick: () {
-                MezRouter.toNamed<void>(
-                    getRestaurantRoute(
-                      viewController.filteredRestaurants[index].info.hasuraId,
-                    ),
-                    arguments: {
-                      "restaurant": viewController.filteredRestaurants[index]
-                    });
-              },
+              onClick: () => CustomerRestaurantView.navigate(
+                restaurantId:
+                    viewController.filteredRestaurants[index].info.hasuraId,
+              ),
             );
           }),
         );
@@ -253,7 +263,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noOpenRestaurant"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             )
           ],
         );
@@ -273,8 +283,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         title: Text(
           "${_i18n()["showOnlyOpen"]}",
-          style:
-              Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+          style: context.txt.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
     );
@@ -283,7 +292,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   Widget _searchInput() {
     return TextFormField(
       textAlignVertical: TextAlignVertical.center,
-      style: Get.textTheme.bodyLarge,
+      style: context.txt.bodyLarge,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
         viewController.filter();

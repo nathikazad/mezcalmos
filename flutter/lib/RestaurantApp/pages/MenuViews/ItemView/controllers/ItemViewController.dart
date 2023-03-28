@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -21,6 +21,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/env_example.dart';
 
 class ROpItemViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -70,12 +73,13 @@ class ROpItemViewController {
 
   bool get isEditing => editMode.value && editableItem.value != null;
   late int restaurantId;
+
   Future<void> init(
-      {String? itemId,
-      String? categoryId,
+      {int? itemId,
+      int? categoryId,
       bool? specials,
-      required String restaurantId}) async {
-    this.restaurantId = int.parse(restaurantId);
+      required int restaurantId}) async {
+    this.restaurantId = restaurantId;
     if (specials != null) {
       specialMode.value = specials;
     }
@@ -94,12 +98,10 @@ class ROpItemViewController {
     isInitalized.value = true;
   }
 
-  Future<void> _initEditMode(
-      {required String itemId, String? categoryId}) async {
+  Future<void> _initEditMode({required int itemId, int? categoryId}) async {
     editMode.value = true;
 
-    editableItem.value =
-        await get_one_item_by_id(int.parse(itemId), withCache: false);
+    editableItem.value = await get_one_item_by_id(itemId, withCache: false);
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
     newImageUrl.value = editableItem.value!.image;
@@ -163,13 +165,16 @@ class ROpItemViewController {
       //   newImageUrl.value = value;
       // });
     }
-    const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
-    final AppLaunchMode mode = _tmpLmode.toLaunchMode();
-    if (mode == AppLaunchMode.dev || mode == AppLaunchMode.stage) {
+    if (MezEnv.appLaunchMode == AppLaunchMode.dev ||
+        MezEnv.appLaunchMode == AppLaunchMode.stage) {
       mezDbgPrint("Settign default image");
       newImageUrl.value =
           "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
+    }
+    if (newImageFile.value != null) {
+      newImageUrl.value = await Get.find<AuthController>().uploadImgToFbStorage(
+          imageFile: newImageFile.value!,
+          path: "/restaurants/$restaurantId/items/images");
     }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(
@@ -193,10 +198,9 @@ class ROpItemViewController {
       final bool result = await update_item_by_id(
           itemId: editableItem.value!.id!, item: _contructItem());
       if (result) {
-        Get.snackbar('Saved', 'Item saved successfuly',
-            backgroundColor: Colors.black,
-            colorText: Colors.white,
-            shouldIconPulse: false,
+        customSnackBar(
+            title: 'Saved',
+            subTitle: 'Item saved successfuly',
             icon: Icon(
               Icons.check_circle,
               color: Colors.green,
@@ -236,10 +240,10 @@ class ROpItemViewController {
     }
   }
 
-  Future<bool?> deleteItem({required String itemId, String? catgeoryId}) async {
-    final int? deletedItemId = await delete_item_by_id(int.parse(itemId));
+  Future<bool?> deleteItem({required int itemId, int? catgeoryId}) async {
+    final int? deletedItemId = await delete_item_by_id(itemId);
     if (deletedItemId != null) {
-      MezRouter.back();
+      await MezRouter.back();
       mezDbgPrint("Item $deletedItemId have deleted 😢😢😢");
       return true;
     }

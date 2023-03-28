@@ -4,7 +4,10 @@ import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/CustomerInprocessOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/CustomerPastOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -12,6 +15,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 
 class CustomerOrdersListView extends StatefulWidget {
   const CustomerOrdersListView({Key? key}) : super(key: key);
+  static Future<void> navigate() {
+    return MezRouter.toPath(CustomerRoutes.customerOrdersRoute);
+  }
 
   @override
   _CustomerOrdersListView createState() => _CustomerOrdersListView();
@@ -81,7 +87,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
         ),
         Text(
           "${_i18n()["orders"]["noOrders"]}",
-          style: Get.textTheme.displaySmall,
+          style: context.txt.displaySmall,
         ),
         SizedBox(
           height: 8,
@@ -90,7 +96,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
           margin: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             "${_i18n()["orders"]["noOrdersBody"]}",
-            style: Get.textTheme.bodyMedium,
+            style: context.txt.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),

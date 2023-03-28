@@ -350,6 +350,13 @@ const documentNodeSubscriptionadmin_listen_on_dv_orders =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'order_type'),
             alias: null,
             arguments: [],
@@ -531,6 +538,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     required this.status,
     required this.package_cost,
     required this.package_ready,
+    required this.delivery_cost,
     required this.order_type,
     required this.dropoff_address,
     required this.dropoff_gps,
@@ -547,6 +555,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     final l$status = json['status'];
     final l$package_cost = json['package_cost'];
     final l$package_ready = json['package_ready'];
+    final l$delivery_cost = json['delivery_cost'];
     final l$order_type = json['order_type'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
@@ -560,6 +569,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
       status: (l$status as String),
       package_cost: moneyFromJson(l$package_cost),
       package_ready: (l$package_ready as bool),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       order_type: (l$order_type as String),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
@@ -580,6 +590,8 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
   final double package_cost;
 
   final bool package_ready;
+
+  final double delivery_cost;
 
   final String order_type;
 
@@ -607,6 +619,8 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     _resultData['package_cost'] = moneyToJson(l$package_cost);
     final l$package_ready = package_ready;
     _resultData['package_ready'] = l$package_ready;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$order_type = order_type;
     _resultData['order_type'] = l$order_type;
     final l$dropoff_address = dropoff_address;
@@ -631,6 +645,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     final l$status = status;
     final l$package_cost = package_cost;
     final l$package_ready = package_ready;
+    final l$delivery_cost = delivery_cost;
     final l$order_type = order_type;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
@@ -644,6 +659,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
       l$status,
       l$package_cost,
       l$package_ready,
+      l$delivery_cost,
       l$order_type,
       l$dropoff_address,
       l$dropoff_gps,
@@ -686,6 +702,11 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     final l$package_ready = package_ready;
     final lOther$package_ready = other.package_ready;
     if (l$package_ready != lOther$package_ready) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
       return false;
     }
     final l$order_type = order_type;
@@ -755,6 +776,7 @@ abstract class CopyWith$Subscription$admin_listen_on_dv_orders$delivery_order<
     String? status,
     double? package_cost,
     bool? package_ready,
+    double? delivery_cost,
     String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
@@ -788,6 +810,7 @@ class _CopyWithImpl$Subscription$admin_listen_on_dv_orders$delivery_order<TRes>
     Object? status = _undefined,
     Object? package_cost = _undefined,
     Object? package_ready = _undefined,
+    Object? delivery_cost = _undefined,
     Object? order_type = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
@@ -810,6 +833,9 @@ class _CopyWithImpl$Subscription$admin_listen_on_dv_orders$delivery_order<TRes>
         package_ready: package_ready == _undefined || package_ready == null
             ? _instance.package_ready
             : (package_ready as bool),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
@@ -859,6 +885,7 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_dv_orders$delivery_order<
     String? status,
     double? package_cost,
     bool? package_ready,
+    double? delivery_cost,
     String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
@@ -1193,9 +1220,13 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_dv_orders$delivery_order$cu
 }
 
 class Variables$Query$admin_get_dv_orders {
-  factory Variables$Query$admin_get_dv_orders({required bool inProccess}) =>
+  factory Variables$Query$admin_get_dv_orders({
+    required bool inProccess,
+    int? limit,
+  }) =>
       Variables$Query$admin_get_dv_orders._({
         r'inProccess': inProccess,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$admin_get_dv_orders._(this._$data);
@@ -1205,16 +1236,25 @@ class Variables$Query$admin_get_dv_orders {
     final result$data = <String, dynamic>{};
     final l$inProccess = data['inProccess'];
     result$data['inProccess'] = (l$inProccess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$admin_get_dv_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   bool get inProccess => (_$data['inProccess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$inProccess = inProccess;
     result$data['inProccess'] = l$inProccess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -1238,13 +1278,25 @@ class Variables$Query$admin_get_dv_orders {
     if (l$inProccess != lOther$inProccess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$inProccess = inProccess;
-    return Object.hashAll([l$inProccess]);
+    final l$limit = limit;
+    return Object.hashAll([
+      l$inProccess,
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -1257,7 +1309,10 @@ abstract class CopyWith$Variables$Query$admin_get_dv_orders<TRes> {
   factory CopyWith$Variables$Query$admin_get_dv_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_dv_orders;
 
-  TRes call({bool? inProccess});
+  TRes call({
+    bool? inProccess,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_dv_orders<TRes>
@@ -1273,11 +1328,15 @@ class _CopyWithImpl$Variables$Query$admin_get_dv_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? inProccess = _undefined}) =>
+  TRes call({
+    Object? inProccess = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_dv_orders._({
         ..._instance._$data,
         if (inProccess != _undefined && inProccess != null)
           'inProccess': (inProccess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -1287,7 +1346,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_dv_orders<TRes>
 
   TRes _res;
 
-  call({bool? inProccess}) => _res;
+  call({
+    bool? inProccess,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_dv_orders {
@@ -1459,7 +1522,16 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -1467,6 +1539,10 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
         name: NameNode(value: 'delivery_order'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -1492,7 +1568,7 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
                 ]),
               ),
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -1519,6 +1595,13 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'package_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_cost'),
             alias: null,
             arguments: [],
             directives: [],
@@ -1740,6 +1823,7 @@ class Query$admin_get_dv_orders$delivery_order {
     required this.order_time,
     required this.status,
     required this.package_cost,
+    required this.delivery_cost,
     required this.package_ready,
     required this.dropoff_address,
     required this.dropoff_gps,
@@ -1756,6 +1840,7 @@ class Query$admin_get_dv_orders$delivery_order {
     final l$order_time = json['order_time'];
     final l$status = json['status'];
     final l$package_cost = json['package_cost'];
+    final l$delivery_cost = json['delivery_cost'];
     final l$package_ready = json['package_ready'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
@@ -1769,6 +1854,7 @@ class Query$admin_get_dv_orders$delivery_order {
       order_time: (l$order_time as String),
       status: (l$status as String),
       package_cost: moneyFromJson(l$package_cost),
+      delivery_cost: moneyFromJson(l$delivery_cost),
       package_ready: (l$package_ready as bool),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
@@ -1788,6 +1874,8 @@ class Query$admin_get_dv_orders$delivery_order {
   final String status;
 
   final double package_cost;
+
+  final double delivery_cost;
 
   final bool package_ready;
 
@@ -1815,6 +1903,8 @@ class Query$admin_get_dv_orders$delivery_order {
     _resultData['status'] = l$status;
     final l$package_cost = package_cost;
     _resultData['package_cost'] = moneyToJson(l$package_cost);
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$package_ready = package_ready;
     _resultData['package_ready'] = l$package_ready;
     final l$dropoff_address = dropoff_address;
@@ -1840,6 +1930,7 @@ class Query$admin_get_dv_orders$delivery_order {
     final l$order_time = order_time;
     final l$status = status;
     final l$package_cost = package_cost;
+    final l$delivery_cost = delivery_cost;
     final l$package_ready = package_ready;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
@@ -1853,6 +1944,7 @@ class Query$admin_get_dv_orders$delivery_order {
       l$order_time,
       l$status,
       l$package_cost,
+      l$delivery_cost,
       l$package_ready,
       l$dropoff_address,
       l$dropoff_gps,
@@ -1891,6 +1983,11 @@ class Query$admin_get_dv_orders$delivery_order {
     final l$package_cost = package_cost;
     final lOther$package_cost = other.package_cost;
     if (l$package_cost != lOther$package_cost) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
       return false;
     }
     final l$package_ready = package_ready;
@@ -1961,6 +2058,7 @@ abstract class CopyWith$Query$admin_get_dv_orders$delivery_order<TRes> {
     String? order_time,
     String? status,
     double? package_cost,
+    double? delivery_cost,
     bool? package_ready,
     String? dropoff_address,
     Geography? dropoff_gps,
@@ -1991,6 +2089,7 @@ class _CopyWithImpl$Query$admin_get_dv_orders$delivery_order<TRes>
     Object? order_time = _undefined,
     Object? status = _undefined,
     Object? package_cost = _undefined,
+    Object? delivery_cost = _undefined,
     Object? package_ready = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
@@ -2011,6 +2110,9 @@ class _CopyWithImpl$Query$admin_get_dv_orders$delivery_order<TRes>
         package_cost: package_cost == _undefined || package_cost == null
             ? _instance.package_cost
             : (package_cost as double),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
         package_ready: package_ready == _undefined || package_ready == null
             ? _instance.package_ready
             : (package_ready as bool),
@@ -2058,6 +2160,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_orders$delivery_order<TRes>
     String? order_time,
     String? status,
     double? package_cost,
+    double? delivery_cost,
     bool? package_ready,
     String? dropoff_address,
     Geography? dropoff_gps,
@@ -2714,6 +2817,28 @@ const documentNodeSubscriptionadmin_listen_on_restaurant_orders =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'delivery_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'total_cost'),
             alias: null,
             arguments: [],
@@ -2875,6 +3000,7 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
     required this.restaurant_id,
     required this.order_time,
     required this.status,
+    this.delivery,
     this.total_cost,
     this.to_location_address,
     required this.customer,
@@ -2887,6 +3013,7 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
     final l$restaurant_id = json['restaurant_id'];
     final l$order_time = json['order_time'];
     final l$status = json['status'];
+    final l$delivery = json['delivery'];
     final l$total_cost = json['total_cost'];
     final l$to_location_address = json['to_location_address'];
     final l$customer = json['customer'];
@@ -2896,6 +3023,10 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
       restaurant_id: (l$restaurant_id as int),
       order_time: (l$order_time as String),
       status: (l$status as String),
+      delivery: l$delivery == null
+          ? null
+          : Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery
+              .fromJson((l$delivery as Map<String, dynamic>)),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       to_location_address: (l$to_location_address as String?),
       customer:
@@ -2912,6 +3043,9 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
   final String order_time;
 
   final String status;
+
+  final Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery?
+      delivery;
 
   final double? total_cost;
 
@@ -2932,6 +3066,8 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
     _resultData['order_time'] = l$order_time;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$delivery = delivery;
+    _resultData['delivery'] = l$delivery?.toJson();
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
         l$total_cost == null ? null : moneyToJson(l$total_cost);
@@ -2950,6 +3086,7 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
     final l$restaurant_id = restaurant_id;
     final l$order_time = order_time;
     final l$status = status;
+    final l$delivery = delivery;
     final l$total_cost = total_cost;
     final l$to_location_address = to_location_address;
     final l$customer = customer;
@@ -2959,6 +3096,7 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
       l$restaurant_id,
       l$order_time,
       l$status,
+      l$delivery,
       l$total_cost,
       l$to_location_address,
       l$customer,
@@ -2994,6 +3132,11 @@ class Subscription$admin_listen_on_restaurant_orders$restaurant_order {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$delivery = delivery;
+    final lOther$delivery = other.delivery;
+    if (l$delivery != lOther$delivery) {
       return false;
     }
     final l$total_cost = total_cost;
@@ -3049,12 +3192,16 @@ abstract class CopyWith$Subscription$admin_listen_on_restaurant_orders$restauran
     int? restaurant_id,
     String? order_time,
     String? status,
+    Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery?
+        delivery,
     double? total_cost,
     String? to_location_address,
     Subscription$admin_listen_on_restaurant_orders$restaurant_order$customer?
         customer,
     String? $__typename,
   });
+  CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+      TRes> get delivery;
   CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$customer<
       TRes> get customer;
 }
@@ -3082,6 +3229,7 @@ class _CopyWithImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_or
     Object? restaurant_id = _undefined,
     Object? order_time = _undefined,
     Object? status = _undefined,
+    Object? delivery = _undefined,
     Object? total_cost = _undefined,
     Object? to_location_address = _undefined,
     Object? customer = _undefined,
@@ -3098,6 +3246,10 @@ class _CopyWithImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_or
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        delivery: delivery == _undefined
+            ? _instance.delivery
+            : (delivery
+                as Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery?),
         total_cost: total_cost == _undefined
             ? _instance.total_cost
             : (total_cost as double?),
@@ -3112,6 +3264,16 @@ class _CopyWithImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_or
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+      TRes> get delivery {
+    final local$delivery = _instance.delivery;
+    return local$delivery == null
+        ? CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery
+            .stub(_then(_instance))
+        : CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery(
+            local$delivery, (e) => call(delivery: e));
+  }
+
   CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$customer<
       TRes> get customer {
     final local$customer = _instance.customer;
@@ -3135,6 +3297,8 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_restaurant_orders$restauran
     int? restaurant_id,
     String? order_time,
     String? status,
+    Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery?
+        delivery,
     double? total_cost,
     String? to_location_address,
     Subscription$admin_listen_on_restaurant_orders$restaurant_order$customer?
@@ -3142,11 +3306,161 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_restaurant_orders$restauran
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+          TRes>
+      get delivery =>
+          CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery
+              .stub(_res);
   CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$customer<
           TRes>
       get customer =>
           CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$customer
               .stub(_res);
+}
+
+class Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery {
+  Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery({
+    required this.delivery_cost,
+    required this.$__typename,
+  });
+
+  factory Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_cost = json['delivery_cost'];
+    final l$$__typename = json['__typename'];
+    return Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery(
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double delivery_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_cost = delivery_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery
+    on Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery {
+  CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+          Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery>
+      get copyWith =>
+          CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+    TRes> {
+  factory CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery(
+    Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery
+        instance,
+    TRes Function(
+            Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery)
+        then,
+  ) = _CopyWithImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery;
+
+  factory CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery;
+
+  TRes call({
+    double? delivery_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+            TRes> {
+  _CopyWithImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery
+      _instance;
+
+  final TRes Function(
+          Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery(
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery<
+            TRes> {
+  _CopyWithStubImpl$Subscription$admin_listen_on_restaurant_orders$restaurant_order$delivery(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? delivery_cost,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$admin_listen_on_restaurant_orders$restaurant_order$customer {
@@ -3475,10 +3789,13 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_restaurant_orders$restauran
 }
 
 class Variables$Query$admin_get_restaurant_orders {
-  factory Variables$Query$admin_get_restaurant_orders(
-          {required bool inProccess}) =>
+  factory Variables$Query$admin_get_restaurant_orders({
+    required bool inProccess,
+    int? limit,
+  }) =>
       Variables$Query$admin_get_restaurant_orders._({
         r'inProccess': inProccess,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$admin_get_restaurant_orders._(this._$data);
@@ -3488,16 +3805,25 @@ class Variables$Query$admin_get_restaurant_orders {
     final result$data = <String, dynamic>{};
     final l$inProccess = data['inProccess'];
     result$data['inProccess'] = (l$inProccess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$admin_get_restaurant_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   bool get inProccess => (_$data['inProccess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$inProccess = inProccess;
     result$data['inProccess'] = l$inProccess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -3521,13 +3847,25 @@ class Variables$Query$admin_get_restaurant_orders {
     if (l$inProccess != lOther$inProccess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$inProccess = inProccess;
-    return Object.hashAll([l$inProccess]);
+    final l$limit = limit;
+    return Object.hashAll([
+      l$inProccess,
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -3540,7 +3878,10 @@ abstract class CopyWith$Variables$Query$admin_get_restaurant_orders<TRes> {
   factory CopyWith$Variables$Query$admin_get_restaurant_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_restaurant_orders;
 
-  TRes call({bool? inProccess});
+  TRes call({
+    bool? inProccess,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_restaurant_orders<TRes>
@@ -3556,11 +3897,15 @@ class _CopyWithImpl$Variables$Query$admin_get_restaurant_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? inProccess = _undefined}) =>
+  TRes call({
+    Object? inProccess = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_restaurant_orders._({
         ..._instance._$data,
         if (inProccess != _undefined && inProccess != null)
           'inProccess': (inProccess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -3570,7 +3915,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_restaurant_orders<TRes>
 
   TRes _res;
 
-  call({bool? inProccess}) => _res;
+  call({
+    bool? inProccess,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_restaurant_orders {
@@ -3746,7 +4095,16 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3754,6 +4112,10 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
         name: NameNode(value: 'restaurant_order'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -3767,7 +4129,7 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -3798,6 +4160,28 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'delivery_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'total_cost'),
@@ -3990,6 +4374,7 @@ class Query$admin_get_restaurant_orders$restaurant_order {
     required this.restaurant_id,
     required this.order_time,
     required this.status,
+    this.delivery,
     this.total_cost,
     this.to_location_address,
     required this.customer,
@@ -4002,6 +4387,7 @@ class Query$admin_get_restaurant_orders$restaurant_order {
     final l$restaurant_id = json['restaurant_id'];
     final l$order_time = json['order_time'];
     final l$status = json['status'];
+    final l$delivery = json['delivery'];
     final l$total_cost = json['total_cost'];
     final l$to_location_address = json['to_location_address'];
     final l$customer = json['customer'];
@@ -4011,6 +4397,10 @@ class Query$admin_get_restaurant_orders$restaurant_order {
       restaurant_id: (l$restaurant_id as int),
       order_time: (l$order_time as String),
       status: (l$status as String),
+      delivery: l$delivery == null
+          ? null
+          : Query$admin_get_restaurant_orders$restaurant_order$delivery
+              .fromJson((l$delivery as Map<String, dynamic>)),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       to_location_address: (l$to_location_address as String?),
       customer:
@@ -4027,6 +4417,8 @@ class Query$admin_get_restaurant_orders$restaurant_order {
   final String order_time;
 
   final String status;
+
+  final Query$admin_get_restaurant_orders$restaurant_order$delivery? delivery;
 
   final double? total_cost;
 
@@ -4046,6 +4438,8 @@ class Query$admin_get_restaurant_orders$restaurant_order {
     _resultData['order_time'] = l$order_time;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$delivery = delivery;
+    _resultData['delivery'] = l$delivery?.toJson();
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
         l$total_cost == null ? null : moneyToJson(l$total_cost);
@@ -4064,6 +4458,7 @@ class Query$admin_get_restaurant_orders$restaurant_order {
     final l$restaurant_id = restaurant_id;
     final l$order_time = order_time;
     final l$status = status;
+    final l$delivery = delivery;
     final l$total_cost = total_cost;
     final l$to_location_address = to_location_address;
     final l$customer = customer;
@@ -4073,6 +4468,7 @@ class Query$admin_get_restaurant_orders$restaurant_order {
       l$restaurant_id,
       l$order_time,
       l$status,
+      l$delivery,
       l$total_cost,
       l$to_location_address,
       l$customer,
@@ -4107,6 +4503,11 @@ class Query$admin_get_restaurant_orders$restaurant_order {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$delivery = delivery;
+    final lOther$delivery = other.delivery;
+    if (l$delivery != lOther$delivery) {
       return false;
     }
     final l$total_cost = total_cost;
@@ -4160,11 +4561,14 @@ abstract class CopyWith$Query$admin_get_restaurant_orders$restaurant_order<
     int? restaurant_id,
     String? order_time,
     String? status,
+    Query$admin_get_restaurant_orders$restaurant_order$delivery? delivery,
     double? total_cost,
     String? to_location_address,
     Query$admin_get_restaurant_orders$restaurant_order$customer? customer,
     String? $__typename,
   });
+  CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery<TRes>
+      get delivery;
   CopyWith$Query$admin_get_restaurant_orders$restaurant_order$customer<TRes>
       get customer;
 }
@@ -4188,6 +4592,7 @@ class _CopyWithImpl$Query$admin_get_restaurant_orders$restaurant_order<TRes>
     Object? restaurant_id = _undefined,
     Object? order_time = _undefined,
     Object? status = _undefined,
+    Object? delivery = _undefined,
     Object? total_cost = _undefined,
     Object? to_location_address = _undefined,
     Object? customer = _undefined,
@@ -4204,6 +4609,10 @@ class _CopyWithImpl$Query$admin_get_restaurant_orders$restaurant_order<TRes>
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        delivery: delivery == _undefined
+            ? _instance.delivery
+            : (delivery
+                as Query$admin_get_restaurant_orders$restaurant_order$delivery?),
         total_cost: total_cost == _undefined
             ? _instance.total_cost
             : (total_cost as double?),
@@ -4218,6 +4627,16 @@ class _CopyWithImpl$Query$admin_get_restaurant_orders$restaurant_order<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery<TRes>
+      get delivery {
+    final local$delivery = _instance.delivery;
+    return local$delivery == null
+        ? CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery
+            .stub(_then(_instance))
+        : CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery(
+            local$delivery, (e) => call(delivery: e));
+  }
+
   CopyWith$Query$admin_get_restaurant_orders$restaurant_order$customer<TRes>
       get customer {
     final local$customer = _instance.customer;
@@ -4239,16 +4658,161 @@ class _CopyWithStubImpl$Query$admin_get_restaurant_orders$restaurant_order<TRes>
     int? restaurant_id,
     String? order_time,
     String? status,
+    Query$admin_get_restaurant_orders$restaurant_order$delivery? delivery,
     double? total_cost,
     String? to_location_address,
     Query$admin_get_restaurant_orders$restaurant_order$customer? customer,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery<TRes>
+      get delivery =>
+          CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery
+              .stub(_res);
   CopyWith$Query$admin_get_restaurant_orders$restaurant_order$customer<TRes>
       get customer =>
           CopyWith$Query$admin_get_restaurant_orders$restaurant_order$customer
               .stub(_res);
+}
+
+class Query$admin_get_restaurant_orders$restaurant_order$delivery {
+  Query$admin_get_restaurant_orders$restaurant_order$delivery({
+    required this.delivery_cost,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_restaurant_orders$restaurant_order$delivery.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_cost = json['delivery_cost'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_restaurant_orders$restaurant_order$delivery(
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double delivery_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_cost = delivery_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$admin_get_restaurant_orders$restaurant_order$delivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_restaurant_orders$restaurant_order$delivery
+    on Query$admin_get_restaurant_orders$restaurant_order$delivery {
+  CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery<
+          Query$admin_get_restaurant_orders$restaurant_order$delivery>
+      get copyWith =>
+          CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery<
+    TRes> {
+  factory CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery(
+    Query$admin_get_restaurant_orders$restaurant_order$delivery instance,
+    TRes Function(Query$admin_get_restaurant_orders$restaurant_order$delivery)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_restaurant_orders$restaurant_order$delivery;
+
+  factory CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_restaurant_orders$restaurant_order$delivery;
+
+  TRes call({
+    double? delivery_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$admin_get_restaurant_orders$restaurant_order$delivery<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_restaurant_orders$restaurant_order$delivery(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_restaurant_orders$restaurant_order$delivery _instance;
+
+  final TRes Function(
+      Query$admin_get_restaurant_orders$restaurant_order$delivery) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_restaurant_orders$restaurant_order$delivery(
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$admin_get_restaurant_orders$restaurant_order$delivery<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_restaurant_orders$restaurant_order$delivery<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_restaurant_orders$restaurant_order$delivery(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? delivery_cost,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_restaurant_orders$restaurant_order$customer {
@@ -4900,6 +5464,50 @@ const documentNodeSubscriptionadmin_listen_on_laundry_orders =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'from_customer_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'delivery_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_customer_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'delivery_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'total_cost'),
             alias: null,
             arguments: [],
@@ -5060,6 +5668,8 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
     required this.store_id,
     required this.order_time,
     required this.status,
+    this.from_customer_delivery,
+    this.to_customer_delivery,
     this.total_cost,
     this.customer_address,
     required this.customer,
@@ -5072,6 +5682,8 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
     final l$store_id = json['store_id'];
     final l$order_time = json['order_time'];
     final l$status = json['status'];
+    final l$from_customer_delivery = json['from_customer_delivery'];
+    final l$to_customer_delivery = json['to_customer_delivery'];
     final l$total_cost = json['total_cost'];
     final l$customer_address = json['customer_address'];
     final l$customer = json['customer'];
@@ -5081,6 +5693,14 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
       store_id: (l$store_id as int),
       order_time: (l$order_time as String),
       status: (l$status as String),
+      from_customer_delivery: l$from_customer_delivery == null
+          ? null
+          : Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery
+              .fromJson((l$from_customer_delivery as Map<String, dynamic>)),
+      to_customer_delivery: l$to_customer_delivery == null
+          ? null
+          : Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery
+              .fromJson((l$to_customer_delivery as Map<String, dynamic>)),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       customer_address: (l$customer_address as String?),
       customer:
@@ -5097,6 +5717,12 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
   final String order_time;
 
   final String status;
+
+  final Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery?
+      from_customer_delivery;
+
+  final Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery?
+      to_customer_delivery;
 
   final double? total_cost;
 
@@ -5117,6 +5743,10 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
     _resultData['order_time'] = l$order_time;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$from_customer_delivery = from_customer_delivery;
+    _resultData['from_customer_delivery'] = l$from_customer_delivery?.toJson();
+    final l$to_customer_delivery = to_customer_delivery;
+    _resultData['to_customer_delivery'] = l$to_customer_delivery?.toJson();
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
         l$total_cost == null ? null : moneyToJson(l$total_cost);
@@ -5135,6 +5765,8 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
     final l$store_id = store_id;
     final l$order_time = order_time;
     final l$status = status;
+    final l$from_customer_delivery = from_customer_delivery;
+    final l$to_customer_delivery = to_customer_delivery;
     final l$total_cost = total_cost;
     final l$customer_address = customer_address;
     final l$customer = customer;
@@ -5144,6 +5776,8 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
       l$store_id,
       l$order_time,
       l$status,
+      l$from_customer_delivery,
+      l$to_customer_delivery,
       l$total_cost,
       l$customer_address,
       l$customer,
@@ -5178,6 +5812,16 @@ class Subscription$admin_listen_on_laundry_orders$laundry_order {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$from_customer_delivery = from_customer_delivery;
+    final lOther$from_customer_delivery = other.from_customer_delivery;
+    if (l$from_customer_delivery != lOther$from_customer_delivery) {
+      return false;
+    }
+    final l$to_customer_delivery = to_customer_delivery;
+    final lOther$to_customer_delivery = other.to_customer_delivery;
+    if (l$to_customer_delivery != lOther$to_customer_delivery) {
       return false;
     }
     final l$total_cost = total_cost;
@@ -5232,12 +5876,20 @@ abstract class CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_orde
     int? store_id,
     String? order_time,
     String? status,
+    Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery?
+        from_customer_delivery,
+    Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery?
+        to_customer_delivery,
     double? total_cost,
     String? customer_address,
     Subscription$admin_listen_on_laundry_orders$laundry_order$customer?
         customer,
     String? $__typename,
   });
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+      TRes> get from_customer_delivery;
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+      TRes> get to_customer_delivery;
   CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$customer<
       TRes> get customer;
 }
@@ -5264,6 +5916,8 @@ class _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order<
     Object? store_id = _undefined,
     Object? order_time = _undefined,
     Object? status = _undefined,
+    Object? from_customer_delivery = _undefined,
+    Object? to_customer_delivery = _undefined,
     Object? total_cost = _undefined,
     Object? customer_address = _undefined,
     Object? customer = _undefined,
@@ -5280,6 +5934,14 @@ class _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order<
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        from_customer_delivery: from_customer_delivery == _undefined
+            ? _instance.from_customer_delivery
+            : (from_customer_delivery
+                as Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery?),
+        to_customer_delivery: to_customer_delivery == _undefined
+            ? _instance.to_customer_delivery
+            : (to_customer_delivery
+                as Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery?),
         total_cost: total_cost == _undefined
             ? _instance.total_cost
             : (total_cost as double?),
@@ -5294,6 +5956,27 @@ class _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order<
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+      TRes> get from_customer_delivery {
+    final local$from_customer_delivery = _instance.from_customer_delivery;
+    return local$from_customer_delivery == null
+        ? CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery
+            .stub(_then(_instance))
+        : CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery(
+            local$from_customer_delivery,
+            (e) => call(from_customer_delivery: e));
+  }
+
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+      TRes> get to_customer_delivery {
+    final local$to_customer_delivery = _instance.to_customer_delivery;
+    return local$to_customer_delivery == null
+        ? CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery
+            .stub(_then(_instance))
+        : CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery(
+            local$to_customer_delivery, (e) => call(to_customer_delivery: e));
+  }
+
   CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$customer<
       TRes> get customer {
     final local$customer = _instance.customer;
@@ -5317,6 +6000,10 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_orde
     int? store_id,
     String? order_time,
     String? status,
+    Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery?
+        from_customer_delivery,
+    Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery?
+        to_customer_delivery,
     double? total_cost,
     String? customer_address,
     Subscription$admin_listen_on_laundry_orders$laundry_order$customer?
@@ -5324,11 +6011,311 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_orde
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+          TRes>
+      get from_customer_delivery =>
+          CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery
+              .stub(_res);
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+          TRes>
+      get to_customer_delivery =>
+          CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery
+              .stub(_res);
   CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$customer<
           TRes>
       get customer =>
           CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$customer
               .stub(_res);
+}
+
+class Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery {
+  Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery({
+    required this.delivery_cost,
+    required this.$__typename,
+  });
+
+  factory Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_cost = json['delivery_cost'];
+    final l$$__typename = json['__typename'];
+    return Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery(
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double delivery_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_cost = delivery_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery
+    on Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery {
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+          Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery>
+      get copyWith =>
+          CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+    TRes> {
+  factory CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery(
+    Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery
+        instance,
+    TRes Function(
+            Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery)
+        then,
+  ) = _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery;
+
+  factory CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery;
+
+  TRes call({
+    double? delivery_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+            TRes> {
+  _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery
+      _instance;
+
+  final TRes Function(
+          Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery(
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery<
+            TRes> {
+  _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$from_customer_delivery(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? delivery_cost,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery {
+  Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery({
+    required this.delivery_cost,
+    required this.$__typename,
+  });
+
+  factory Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_cost = json['delivery_cost'];
+    final l$$__typename = json['__typename'];
+    return Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery(
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double delivery_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_cost = delivery_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery
+    on Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery {
+  CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+          Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery>
+      get copyWith =>
+          CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+    TRes> {
+  factory CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery(
+    Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery
+        instance,
+    TRes Function(
+            Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery)
+        then,
+  ) = _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery;
+
+  factory CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery;
+
+  TRes call({
+    double? delivery_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+            TRes> {
+  _CopyWithImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery
+      _instance;
+
+  final TRes Function(
+          Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery(
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery<
+            TRes> {
+  _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_order$to_customer_delivery(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? delivery_cost,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$admin_listen_on_laundry_orders$laundry_order$customer {
@@ -5654,10 +6641,13 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_laundry_orders$laundry_orde
 }
 
 class Variables$Query$admin_get_laundry_orders {
-  factory Variables$Query$admin_get_laundry_orders(
-          {required bool inProccess}) =>
+  factory Variables$Query$admin_get_laundry_orders({
+    required bool inProccess,
+    int? limit,
+  }) =>
       Variables$Query$admin_get_laundry_orders._({
         r'inProccess': inProccess,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$admin_get_laundry_orders._(this._$data);
@@ -5667,16 +6657,25 @@ class Variables$Query$admin_get_laundry_orders {
     final result$data = <String, dynamic>{};
     final l$inProccess = data['inProccess'];
     result$data['inProccess'] = (l$inProccess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$admin_get_laundry_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   bool get inProccess => (_$data['inProccess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$inProccess = inProccess;
     result$data['inProccess'] = l$inProccess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -5700,13 +6699,25 @@ class Variables$Query$admin_get_laundry_orders {
     if (l$inProccess != lOther$inProccess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$inProccess = inProccess;
-    return Object.hashAll([l$inProccess]);
+    final l$limit = limit;
+    return Object.hashAll([
+      l$inProccess,
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -5719,7 +6730,10 @@ abstract class CopyWith$Variables$Query$admin_get_laundry_orders<TRes> {
   factory CopyWith$Variables$Query$admin_get_laundry_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_laundry_orders;
 
-  TRes call({bool? inProccess});
+  TRes call({
+    bool? inProccess,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_laundry_orders<TRes>
@@ -5735,11 +6749,15 @@ class _CopyWithImpl$Variables$Query$admin_get_laundry_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? inProccess = _undefined}) =>
+  TRes call({
+    Object? inProccess = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_laundry_orders._({
         ..._instance._$data,
         if (inProccess != _undefined && inProccess != null)
           'inProccess': (inProccess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -5749,7 +6767,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_laundry_orders<TRes>
 
   TRes _res;
 
-  call({bool? inProccess}) => _res;
+  call({
+    bool? inProccess,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_laundry_orders {
@@ -5921,7 +6943,16 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -5929,6 +6960,10 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
         name: NameNode(value: 'laundry_order'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -5942,7 +6977,7 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -5973,6 +7008,50 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'from_customer_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'delivery_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_customer_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'delivery_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'total_cost'),
@@ -6165,6 +7244,8 @@ class Query$admin_get_laundry_orders$laundry_order {
     required this.store_id,
     required this.order_time,
     required this.status,
+    this.from_customer_delivery,
+    this.to_customer_delivery,
     this.total_cost,
     this.customer_address,
     required this.customer,
@@ -6177,6 +7258,8 @@ class Query$admin_get_laundry_orders$laundry_order {
     final l$store_id = json['store_id'];
     final l$order_time = json['order_time'];
     final l$status = json['status'];
+    final l$from_customer_delivery = json['from_customer_delivery'];
+    final l$to_customer_delivery = json['to_customer_delivery'];
     final l$total_cost = json['total_cost'];
     final l$customer_address = json['customer_address'];
     final l$customer = json['customer'];
@@ -6186,6 +7269,14 @@ class Query$admin_get_laundry_orders$laundry_order {
       store_id: (l$store_id as int),
       order_time: (l$order_time as String),
       status: (l$status as String),
+      from_customer_delivery: l$from_customer_delivery == null
+          ? null
+          : Query$admin_get_laundry_orders$laundry_order$from_customer_delivery
+              .fromJson((l$from_customer_delivery as Map<String, dynamic>)),
+      to_customer_delivery: l$to_customer_delivery == null
+          ? null
+          : Query$admin_get_laundry_orders$laundry_order$to_customer_delivery
+              .fromJson((l$to_customer_delivery as Map<String, dynamic>)),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       customer_address: (l$customer_address as String?),
       customer: Query$admin_get_laundry_orders$laundry_order$customer.fromJson(
@@ -6201,6 +7292,12 @@ class Query$admin_get_laundry_orders$laundry_order {
   final String order_time;
 
   final String status;
+
+  final Query$admin_get_laundry_orders$laundry_order$from_customer_delivery?
+      from_customer_delivery;
+
+  final Query$admin_get_laundry_orders$laundry_order$to_customer_delivery?
+      to_customer_delivery;
 
   final double? total_cost;
 
@@ -6220,6 +7317,10 @@ class Query$admin_get_laundry_orders$laundry_order {
     _resultData['order_time'] = l$order_time;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$from_customer_delivery = from_customer_delivery;
+    _resultData['from_customer_delivery'] = l$from_customer_delivery?.toJson();
+    final l$to_customer_delivery = to_customer_delivery;
+    _resultData['to_customer_delivery'] = l$to_customer_delivery?.toJson();
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
         l$total_cost == null ? null : moneyToJson(l$total_cost);
@@ -6238,6 +7339,8 @@ class Query$admin_get_laundry_orders$laundry_order {
     final l$store_id = store_id;
     final l$order_time = order_time;
     final l$status = status;
+    final l$from_customer_delivery = from_customer_delivery;
+    final l$to_customer_delivery = to_customer_delivery;
     final l$total_cost = total_cost;
     final l$customer_address = customer_address;
     final l$customer = customer;
@@ -6247,6 +7350,8 @@ class Query$admin_get_laundry_orders$laundry_order {
       l$store_id,
       l$order_time,
       l$status,
+      l$from_customer_delivery,
+      l$to_customer_delivery,
       l$total_cost,
       l$customer_address,
       l$customer,
@@ -6281,6 +7386,16 @@ class Query$admin_get_laundry_orders$laundry_order {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$from_customer_delivery = from_customer_delivery;
+    final lOther$from_customer_delivery = other.from_customer_delivery;
+    if (l$from_customer_delivery != lOther$from_customer_delivery) {
+      return false;
+    }
+    final l$to_customer_delivery = to_customer_delivery;
+    final lOther$to_customer_delivery = other.to_customer_delivery;
+    if (l$to_customer_delivery != lOther$to_customer_delivery) {
       return false;
     }
     final l$total_cost = total_cost;
@@ -6331,11 +7446,19 @@ abstract class CopyWith$Query$admin_get_laundry_orders$laundry_order<TRes> {
     int? store_id,
     String? order_time,
     String? status,
+    Query$admin_get_laundry_orders$laundry_order$from_customer_delivery?
+        from_customer_delivery,
+    Query$admin_get_laundry_orders$laundry_order$to_customer_delivery?
+        to_customer_delivery,
     double? total_cost,
     String? customer_address,
     Query$admin_get_laundry_orders$laundry_order$customer? customer,
     String? $__typename,
   });
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+      TRes> get from_customer_delivery;
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+      TRes> get to_customer_delivery;
   CopyWith$Query$admin_get_laundry_orders$laundry_order$customer<TRes>
       get customer;
 }
@@ -6358,6 +7481,8 @@ class _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order<TRes>
     Object? store_id = _undefined,
     Object? order_time = _undefined,
     Object? status = _undefined,
+    Object? from_customer_delivery = _undefined,
+    Object? to_customer_delivery = _undefined,
     Object? total_cost = _undefined,
     Object? customer_address = _undefined,
     Object? customer = _undefined,
@@ -6374,6 +7499,14 @@ class _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order<TRes>
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        from_customer_delivery: from_customer_delivery == _undefined
+            ? _instance.from_customer_delivery
+            : (from_customer_delivery
+                as Query$admin_get_laundry_orders$laundry_order$from_customer_delivery?),
+        to_customer_delivery: to_customer_delivery == _undefined
+            ? _instance.to_customer_delivery
+            : (to_customer_delivery
+                as Query$admin_get_laundry_orders$laundry_order$to_customer_delivery?),
         total_cost: total_cost == _undefined
             ? _instance.total_cost
             : (total_cost as double?),
@@ -6388,6 +7521,27 @@ class _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+      TRes> get from_customer_delivery {
+    final local$from_customer_delivery = _instance.from_customer_delivery;
+    return local$from_customer_delivery == null
+        ? CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery
+            .stub(_then(_instance))
+        : CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery(
+            local$from_customer_delivery,
+            (e) => call(from_customer_delivery: e));
+  }
+
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+      TRes> get to_customer_delivery {
+    final local$to_customer_delivery = _instance.to_customer_delivery;
+    return local$to_customer_delivery == null
+        ? CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery
+            .stub(_then(_instance))
+        : CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery(
+            local$to_customer_delivery, (e) => call(to_customer_delivery: e));
+  }
+
   CopyWith$Query$admin_get_laundry_orders$laundry_order$customer<TRes>
       get customer {
     final local$customer = _instance.customer;
@@ -6407,16 +7561,316 @@ class _CopyWithStubImpl$Query$admin_get_laundry_orders$laundry_order<TRes>
     int? store_id,
     String? order_time,
     String? status,
+    Query$admin_get_laundry_orders$laundry_order$from_customer_delivery?
+        from_customer_delivery,
+    Query$admin_get_laundry_orders$laundry_order$to_customer_delivery?
+        to_customer_delivery,
     double? total_cost,
     String? customer_address,
     Query$admin_get_laundry_orders$laundry_order$customer? customer,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+          TRes>
+      get from_customer_delivery =>
+          CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery
+              .stub(_res);
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+          TRes>
+      get to_customer_delivery =>
+          CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery
+              .stub(_res);
   CopyWith$Query$admin_get_laundry_orders$laundry_order$customer<TRes>
       get customer =>
           CopyWith$Query$admin_get_laundry_orders$laundry_order$customer.stub(
               _res);
+}
+
+class Query$admin_get_laundry_orders$laundry_order$from_customer_delivery {
+  Query$admin_get_laundry_orders$laundry_order$from_customer_delivery({
+    required this.delivery_cost,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_laundry_orders$laundry_order$from_customer_delivery.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_cost = json['delivery_cost'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_laundry_orders$laundry_order$from_customer_delivery(
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double delivery_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_cost = delivery_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$admin_get_laundry_orders$laundry_order$from_customer_delivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery
+    on Query$admin_get_laundry_orders$laundry_order$from_customer_delivery {
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+          Query$admin_get_laundry_orders$laundry_order$from_customer_delivery>
+      get copyWith =>
+          CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+    TRes> {
+  factory CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery(
+    Query$admin_get_laundry_orders$laundry_order$from_customer_delivery
+        instance,
+    TRes Function(
+            Query$admin_get_laundry_orders$laundry_order$from_customer_delivery)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery;
+
+  factory CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery;
+
+  TRes call({
+    double? delivery_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_laundry_orders$laundry_order$from_customer_delivery
+      _instance;
+
+  final TRes Function(
+          Query$admin_get_laundry_orders$laundry_order$from_customer_delivery)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_laundry_orders$laundry_order$from_customer_delivery(
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_laundry_orders$laundry_order$from_customer_delivery(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? delivery_cost,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$admin_get_laundry_orders$laundry_order$to_customer_delivery {
+  Query$admin_get_laundry_orders$laundry_order$to_customer_delivery({
+    required this.delivery_cost,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_laundry_orders$laundry_order$to_customer_delivery.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_cost = json['delivery_cost'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_laundry_orders$laundry_order$to_customer_delivery(
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double delivery_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_cost = delivery_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$admin_get_laundry_orders$laundry_order$to_customer_delivery) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery
+    on Query$admin_get_laundry_orders$laundry_order$to_customer_delivery {
+  CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+          Query$admin_get_laundry_orders$laundry_order$to_customer_delivery>
+      get copyWith =>
+          CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+    TRes> {
+  factory CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery(
+    Query$admin_get_laundry_orders$laundry_order$to_customer_delivery instance,
+    TRes Function(
+            Query$admin_get_laundry_orders$laundry_order$to_customer_delivery)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery;
+
+  factory CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery;
+
+  TRes call({
+    double? delivery_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_laundry_orders$laundry_order$to_customer_delivery
+      _instance;
+
+  final TRes Function(
+      Query$admin_get_laundry_orders$laundry_order$to_customer_delivery) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_laundry_orders$laundry_order$to_customer_delivery(
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_laundry_orders$laundry_order$to_customer_delivery(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? delivery_cost,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_laundry_orders$laundry_order$customer {

@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/__generated/laundry_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -100,50 +100,106 @@ Future<LaundryOrder?> get_laundry_order_by_id(
   Query$get_laundry_order_by_id$laundry_order_by_pk orderData =
       res.parsedData!.laundry_order_by_pk!;
   return LaundryOrder(
-        deliveryProviderType:  orderData.to_customer_delivery?.service_provider_type.toServiceProviderType() ?? orderData.from_customer_delivery!.service_provider_type.toServiceProviderType() ,
-
-      estimatedDropoffAtCustomerTime: DateTime.tryParse(
-          orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??
-              ""),
-      estimatedDropoffAtServiceProviderTime: DateTime.tryParse(
-          orderData.from_customer_delivery?.estimated_arrival_at_dropoff_time ??
-              ""),
-      estimatedPickupFromCustomerTime: DateTime.tryParse(
-          orderData.from_customer_delivery?.estimated_arrival_at_pickup_time ??
-              ""),
-      estimatedPickupFromServiceProviderTime: DateTime.tryParse(
-          orderData.to_customer_delivery?.estimated_arrival_at_pickup_time ??
-              ""),
-      estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
-          ? DateTime.parse(orderData.estimated_ready_time!)
-          : null,
-      orderId: orderData.id,
-      notes: orderData.notes,
-      customerPickupDriverChatId:
-          orderData.from_customer_delivery?.chat_with_customer_id,
-      customerDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_customer_id,
-      laundryDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_service_provider_id,
-      laundryPickupDriverChatId: orderData.from_customer_delivery?.chat_with_service_provider_id,
-      dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id, name: orderData.to_customer_delivery!.delivery_driver!.user.name, image: orderData.to_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
-      pickupDriver: orderData.from_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.from_customer_delivery!.delivery_driver!.user.id, name: orderData.from_customer_delivery!.delivery_driver!.user.name, image: orderData.from_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
-      toCustomerDeliveryId: orderData.to_customer_delivery_id,
-      
-      fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
-      costsByType: LaundryOrderCosts(lineItems: orderData.categories.map((Query$get_laundry_order_by_id$laundry_order_by_pk$categories cat) => LaundryOrderCostLineItem(cost: cat.category.cost_by_kilo, id: cat.category_id, name: toLanguageMap(translations: cat.category.name.translations), weight: cat.weight_in_kilo!)).toList()),
-      cost: orderData.items_cost ?? 0,
-      customerLocation: MezLocation.fromHasura(orderData.customer_location_gps!, orderData.customer_address!),
-      laundryLocation: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address),
-      orderTime: DateTime.parse(orderData.order_time),
-      paymentType: orderData.payment_type.toPaymentType(),
-      status: orderData.status.toLaundryOrderStatus(),
-      customer: UserInfo(
-        hasuraId: orderData.customer_id,
-        name: orderData.customer.user.name,
-        image: orderData.customer.user.image,
-      ),
-      laundry: ServiceInfo(location: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address), hasuraId: orderData.store_id, image: orderData.store.details!.image, name: orderData.store.details!.name),
-      shippingCost: orderData.delivery_cost,
-      chatId: orderData.chat_id!);
+    deliveryProviderType: orderData.to_customer_delivery?.service_provider_type
+            .toServiceProviderType() ??
+        orderData.from_customer_delivery!.service_provider_type
+            .toServiceProviderType(),
+    estimatedArrivalAtDropoff: DateTime.tryParse(
+        orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??
+            ""),
+    estimatedDropoffAtServiceProviderTime: DateTime.tryParse(
+        orderData.from_customer_delivery?.estimated_arrival_at_dropoff_time ??
+            ""),
+    estimatedPickupFromCustomerTime: DateTime.tryParse(
+        orderData.from_customer_delivery?.estimated_arrival_at_pickup_time ??
+            ""),
+    estimatedArrivalAtPickup: DateTime.tryParse(
+        orderData.to_customer_delivery?.estimated_arrival_at_pickup_time ?? ""),
+    estimatedPackageReadyTime: (orderData.estimated_ready_time != null)
+        ? DateTime.parse(orderData.estimated_ready_time!)
+        : null,
+    orderId: orderData.id,
+    notes: orderData.notes,
+    customerPickupDriverChatId:
+        orderData.from_customer_delivery?.chat_with_customer_id,
+    customerDriverChatId: orderData.to_customer_delivery?.chat_with_customer_id,
+    serviceProviderDriverChatId:
+        orderData.to_customer_delivery?.chat_with_service_provider_id,
+    serviceProviderPickupDriverChatId:
+        orderData.from_customer_delivery?.chat_with_service_provider_id,
+    driverInfo: orderData.to_customer_delivery?.delivery_driver != null
+        ? UserInfo(
+            hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id,
+            name: orderData.to_customer_delivery!.delivery_driver!.user.name,
+            image: orderData.to_customer_delivery!.delivery_driver!.user.image,
+            language: LanguageType.EN)
+        : null,
+    pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
+        ? UserInfo(
+          
+            hasuraId:
+                orderData.from_customer_delivery!.delivery_driver!.user.id,
+            name: orderData.from_customer_delivery!.delivery_driver!.user.name,
+            image:
+                orderData.from_customer_delivery!.delivery_driver!.user.image,
+            language: LanguageType.EN)
+        : null,
+    toCustomerDeliveryId: orderData.to_customer_delivery_id,
+    fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
+    costsByType: LaundryOrderCosts(
+        lineItems: orderData.categories
+            .map((Query$get_laundry_order_by_id$laundry_order_by_pk$categories
+                    cat) =>
+                LaundryOrderCostLineItem(
+                    cost: cat.category.cost_by_kilo,
+                    id: cat.category_id,
+                    name: toLanguageMap(
+                        translations: cat.category.name.translations),
+                    weight: cat.weight_in_kilo!))
+            .toList()),
+    // cost: orderData.items_cost ?? 0,
+    customerLocation: MezLocation.fromHasura(
+        orderData.customer_location_gps!, orderData.customer_address!),
+    laundryLocation: MezLocation.fromHasura(
+        orderData.store.details!.location.gps,
+        orderData.store.details!.location.address),
+    orderTime: DateTime.parse(orderData.order_time),
+    paymentType: orderData.payment_type.toPaymentType(),
+    status: orderData.status.toLaundryOrderStatus(),
+    customer: UserInfo(
+      hasuraId: orderData.customer_id,
+      name: orderData.customer.user.name,
+      image: orderData.customer.user.image,
+    ),
+    serviceProvider: ServiceInfo(
+        location: MezLocation.fromHasura(orderData.store.details!.location.gps,
+            orderData.store.details!.location.address),
+        hasuraId: orderData.store_id,
+        image: orderData.store.details!.image,
+        name: orderData.store.details!.name),
+    shippingCost: orderData.delivery_cost,
+    chatId: orderData.chat_id!,
+    pickupLocation: null,
+    costs: OrderCosts(
+        deliveryCost: orderData.delivery_cost,
+        refundAmmount: orderData.refund_amount,
+        tax: orderData.tax,
+        orderItemsCost: orderData.items_cost,
+        totalCost: orderData.total_cost),
+    deliveryCompany: null,
+    deliveryDirection: orderData.to_customer_delivery != null
+        ? DeliveryDirection.ToCustomer
+        : DeliveryDirection.FromCustomer,
+    deliveryOrderId: orderData.to_customer_delivery_id != null
+        ? orderData.to_customer_delivery_id
+        : orderData.from_customer_delivery_id,
+    driverLocation: null,
+    dropOffLocation: orderData.to_customer_delivery != null
+        ? MezLocation.fromHasura(
+            orderData.customer_location_gps!, orderData.customer_address!)
+        : MezLocation.fromHasura(orderData.store.details!.location.gps,
+            orderData.store.details!.location.address),
+  );
 }
 
 Stream<LaundryOrder?> listen_on_laundry_order_by_id({
@@ -162,10 +218,12 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =
           event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
-                deliveryProviderType:  orderData.to_customer_delivery?.service_provider_type.toServiceProviderType() ?? orderData.from_customer_delivery!.service_provider_type.toServiceProviderType() ,
-
-        notes: orderData.notes,
-        estimatedDropoffAtCustomerTime: DateTime.tryParse(
+        deliveryProviderType: orderData
+                .to_customer_delivery?.service_provider_type
+                .toServiceProviderType() ??
+            orderData.from_customer_delivery!.service_provider_type
+                .toServiceProviderType(),
+        estimatedArrivalAtDropoff: DateTime.tryParse(
             orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??
                 ""),
         estimatedDropoffAtServiceProviderTime: DateTime.tryParse(orderData
@@ -174,25 +232,24 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
         estimatedPickupFromCustomerTime: DateTime.tryParse(orderData
                 .from_customer_delivery?.estimated_arrival_at_pickup_time ??
             ""),
-        estimatedPickupFromServiceProviderTime: DateTime.tryParse(
+        estimatedArrivalAtPickup: DateTime.tryParse(
             orderData.to_customer_delivery?.estimated_arrival_at_pickup_time ??
                 ""),
-        estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
+        estimatedPackageReadyTime: (orderData.estimated_ready_time != null)
             ? DateTime.parse(orderData.estimated_ready_time!)
             : null,
-        cost: orderData.items_cost ?? 0,
-        toCustomerDeliveryId: orderData.to_customer_delivery_id,
+        orderId: orderData.id,
+        notes: orderData.notes,
         customerPickupDriverChatId:
             orderData.from_customer_delivery?.chat_with_customer_id,
-        customerDropOffDriverChatId:
+        customerDriverChatId:
             orderData.to_customer_delivery?.chat_with_customer_id,
-        laundryDropOffDriverChatId:
+        serviceProviderDriverChatId:
             orderData.to_customer_delivery?.chat_with_service_provider_id,
-        laundryPickupDriverChatId:
+        serviceProviderPickupDriverChatId:
             orderData.from_customer_delivery?.chat_with_service_provider_id,
-        dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null
-            ? DeliveryDriverUserInfo(
-                location: null,
+        driverInfo: orderData.to_customer_delivery?.delivery_driver != null
+            ? UserInfo(
                 hasuraId:
                     orderData.to_customer_delivery!.delivery_driver!.user.id,
                 name:
@@ -202,16 +259,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                 language: LanguageType.EN)
             : null,
         pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
-            ? DeliveryDriverUserInfo(
-                location: (orderData.from_customer_delivery?.delivery_driver
-                            ?.current_location !=
-                        null)
-                    ? LatLng(
-                        orderData.from_customer_delivery!.delivery_driver!
-                            .current_location!.latitude,
-                        orderData.from_customer_delivery!.delivery_driver!
-                            .current_location!.longitude)
-                    : null,
+            ? UserInfo(
                 hasuraId:
                     orderData.from_customer_delivery!.delivery_driver!.user.id,
                 name: orderData
@@ -220,8 +268,8 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                     .from_customer_delivery!.delivery_driver!.user.image,
                 language: LanguageType.EN)
             : null,
+        toCustomerDeliveryId: orderData.to_customer_delivery_id,
         fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
-        orderId: orderData.id,
         costsByType: LaundryOrderCosts(
             lineItems: orderData.categories
                 .map(
@@ -234,6 +282,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                                 translations: cat.category.name.translations),
                             weight: cat.weight_in_kilo!))
                 .toList()),
+        // cost: orderData.items_cost ?? 0,
         customerLocation: MezLocation.fromHasura(
             orderData.customer_location_gps!, orderData.customer_address!),
         laundryLocation: MezLocation.fromHasura(
@@ -247,7 +296,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
           name: orderData.customer.user.name,
           image: orderData.customer.user.image,
         ),
-        laundry: ServiceInfo(
+        serviceProvider: ServiceInfo(
             location: MezLocation.fromHasura(
                 orderData.store.details!.location.gps,
                 orderData.store.details!.location.address),
@@ -256,6 +305,26 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
             name: orderData.store.details!.name),
         shippingCost: orderData.delivery_cost,
         chatId: orderData.chat_id!,
+        pickupLocation: null,
+        costs: OrderCosts(
+            deliveryCost: orderData.delivery_cost,
+            refundAmmount: orderData.refund_amount,
+            tax: orderData.tax,
+            orderItemsCost: orderData.items_cost,
+            totalCost: orderData.total_cost),
+        deliveryCompany: null,
+        deliveryDirection: orderData.to_customer_delivery != null
+            ? DeliveryDirection.ToCustomer
+            : DeliveryDirection.FromCustomer,
+        deliveryOrderId: orderData.to_customer_delivery_id != null
+            ? orderData.to_customer_delivery_id
+            : orderData.from_customer_delivery_id,
+        driverLocation: null,
+        dropOffLocation: orderData.to_customer_delivery != null
+            ? MezLocation.fromHasura(
+                orderData.customer_location_gps!, orderData.customer_address!)
+            : MezLocation.fromHasura(orderData.store.details!.location.gps,
+                orderData.store.details!.location.address),
       );
     }
     return null;

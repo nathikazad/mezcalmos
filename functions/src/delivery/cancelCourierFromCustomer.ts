@@ -1,44 +1,68 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getCourierOrder } from "../shared/graphql/delivery/courier/getCourierOrder"
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { DeliveryOperator, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { CourierOrder, CourierOrderStatusChangeNotification, orderInProcess } from "../shared/models/Services/Courier/Courier"
-
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
-
 
 interface CancelOrderDetails {
     orderId: number
 }
-  
-export async function cancelCourierFromCustomer(userId: number, cancelOrderDetails: CancelOrderDetails) {
-    
-    let courierOrder: CourierOrder = await getCourierOrder(cancelOrderDetails.orderId);
-    
-    if (courierOrder.customerId != userId) {
-        throw new HttpsError(
-          "internal",
-          `Order does not belong to customer`,
-        );
-    }
-    if (!orderInProcess(courierOrder.deliveryOrder.status)) {
-        throw new HttpsError(
-          "internal",
-          `Order cannot be cancelled because it is not in process`,
-        );
-    }
+export interface CancelCourierResponse {
+    success: boolean,
+    error?: CancelCourierError
+    unhandledError?: string,
+}
+enum CancelCourierError {
+    UnhandledError = "unhandledError",
+    OrderNotFound = " orderNotFound",
+    IncorrectOrderId = "incorrectOrderId",
+    OrderNotInProcess = "orderNotInProcess",
+}
 
-    courierOrder.deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
-    updateDeliveryOrderStatus(courierOrder.deliveryOrder);
+export async function cancelCourierFromCustomer(userId: number, cancelOrderDetails: CancelOrderDetails): Promise<CancelCourierResponse> {
+    try {
+        let courierOrder: CourierOrder = await getCourierOrder(cancelOrderDetails.orderId);
+        
+        if (courierOrder.customerId != userId) {
+            throw new MezError(CancelCourierError.IncorrectOrderId);
+        }
+        if (!orderInProcess(courierOrder.deliveryOrder.status)) {
+            throw new MezError(CancelCourierError.OrderNotInProcess);
+        }
 
-    notify(courierOrder, cancelOrderDetails);
+        courierOrder.deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+        updateDeliveryOrderStatus(courierOrder.deliveryOrder);
+
+        notify(courierOrder, cancelOrderDetails);
+        return {
+            success: true,
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(CancelCourierError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: CancelCourierError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+        throw e
+        }
+    }
 }
 
 async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrderDetails) {

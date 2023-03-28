@@ -1,9 +1,8 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { notification_info_constraint, notification_info_update_column } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { RestaurantDetails } from "../../../restaurant/createNewRestaurant";
 import { getHasura } from "../../../utilities/hasura";
-import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
-import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
+import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { PaymentType } from '../../models/Generic/Order';
 
@@ -13,15 +12,19 @@ export async function createRestaurant(
   restaurantOperatorUserId: number
 ): Promise<ServiceProvider> {
   let chain = getHasura();
+
+  let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
+
+  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Restaurant)
   
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
       object: {
         delivery_details: {
           data: {
-            minimum_cost: restaurantDetails.deliveryDetails.minimumCost,
-            cost_per_km: restaurantDetails.deliveryDetails.costPerKm,
-            radius: restaurantDetails.deliveryDetails.radius,
+            minimum_cost: restaurantDetails.deliveryDetails.minimumCost ?? 0,
+            cost_per_km: restaurantDetails.deliveryDetails.costPerKm ?? 0,
+            radius: restaurantDetails.deliveryDetails.radius ?? 0,
             free_delivery_minimum_cost: restaurantDetails.deliveryDetails.freeDeliveryMinimumCost,
             free_delivery_km_range: restaurantDetails.deliveryDetails.freeDeliveryKmRange,
             delivery_available: restaurantDetails.deliveryDetails.deliveryAvailable,
@@ -37,6 +40,7 @@ export async function createRestaurant(
             firebase_id: restaurantDetails.firebaseId ?? undefined,
             language: JSON.stringify(restaurantDetails.language),
             service_provider_type: ServiceProviderType.Restaurant,
+            unique_id: uniqueId,
             accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
               [PaymentType.Cash]: true,
               [PaymentType.Card]: false,
@@ -51,6 +55,16 @@ export async function createRestaurant(
                 address: restaurantDetails.location.address
               }
             },
+            service_link: {
+              data: {
+                customer_deep_link: linksResponse[DeepLinkType.Customer].url,
+                customer_qr_image_link: linksResponse[DeepLinkType.Customer].urlQrImage,
+                operator_deep_link: linksResponse[DeepLinkType.AddOperator].url,
+                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
+                driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
+                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+              }
+            }
           }
         },
         delivery_partners: (restaurantDetails.deliveryPartnerId) ? {
@@ -66,7 +80,7 @@ export async function createRestaurant(
                 owner: true,
                 status: AuthorizationStatus.Authorized,
                 user_id: restaurantOperatorUserId,
-                app_type_id: AppType.RestaurantApp,
+                app_type_id: AppType.Restaurant,
               }
             },
           }]
@@ -83,13 +97,14 @@ export async function createRestaurant(
   console.log("response: ", response);
 
   if (response.insert_restaurant_restaurant_one == null) {
-    throw new HttpsError("internal", "restaurant creation error");
+
+    throw new MezError("restaurantCreationError");
   }
   if(restaurantDetails.restaurantOperatorNotificationToken) {
     chain.mutation({
       insert_notification_info_one: [{
         object: {
-          app_type_id: AppType.RestaurantApp,
+          app_type_id: AppType.Restaurant,
           token: restaurantDetails.restaurantOperatorNotificationToken,
           user_id: restaurantOperatorUserId
         },
@@ -120,41 +135,41 @@ export async function createRestaurant(
   // }
 
   // Generating 3 links/Qr
-  let restaurantOpLinks: IDeepLink | null = await generateDeepLink(
-    "Restaurant",
-    {
-      providerId: response.insert_restaurant_restaurant_one.id,
-      deepLinkType: "addRestaurantOperator",
-    }
-  );
-  let customerLinks: IDeepLink | null = await generateDeepLink("Customer", {
-    providerType: "restaurant",
-    providerId: response.insert_restaurant_restaurant_one.id,
-    deepLinkType: "publicLink",
-  });
-  let deliveryLinks: IDeepLink | null = await generateDeepLink("Delivery", {
-    providerType: "restaurant",
-    providerId: response.insert_restaurant_restaurant_one.id,
-    deepLinkType: "addDriver",
-  });
+  // let restaurantOpLinks: IDeepLink | null = await generateDeepLink(
+  //   "Restaurant",
+  //   {
+  //     providerId: response.insert_restaurant_restaurant_one.id,
+  //     deepLinkType: "addRestaurantOperator",
+  //   }
+  // );
+  // let customerLinks: IDeepLink | null = await generateDeepLink("Customer", {
+  //   providerType: "restaurant",
+  //   providerId: response.insert_restaurant_restaurant_one.id,
+  //   deepLinkType: "publicLink",
+  // });
+  // let deliveryLinks: IDeepLink | null = await generateDeepLink("Delivery", {
+  //   providerType: "restaurant",
+  //   providerId: response.insert_restaurant_restaurant_one.id,
+  //   deepLinkType: "addDriver",
+  // });
 
-  chain.mutation({
-    insert_service_provider_service_link_one: [
-      {
-        object: {
-          customer_deep_link: customerLinks?.url,
-          customer_qr_image_link: customerLinks?.urlQr,
-          driver_deep_link: deliveryLinks?.url,
-          driver_qr_image_link: deliveryLinks?.urlQr,
-          operator_deep_link: restaurantOpLinks?.url,
-          operator_qr_image_link: restaurantOpLinks?.urlQr,
-        },
-      },
-      {
-        id: true,
-      },
-    ],
-  });
+  // chain.mutation({
+  //   insert_service_provider_service_link_one: [
+  //     {
+  //       object: {
+  //         customer_deep_link: customerLinks?.url,
+  //         customer_qr_image_link: customerLinks?.urlQr,
+  //         driver_deep_link: deliveryLinks?.url,
+  //         driver_qr_image_link: deliveryLinks?.urlQr,
+  //         operator_deep_link: restaurantOpLinks?.url,
+  //         operator_qr_image_link: restaurantOpLinks?.urlQr,
+  //       },
+  //     },
+  //     {
+  //       id: true,
+  //     },
+  //   ],
+  // });
 
   return {
     id: response.insert_restaurant_restaurant_one.id,
@@ -167,5 +182,19 @@ export async function createRestaurant(
     deliveryDetails: restaurantDetails.deliveryDetails,
     language: restaurantDetails.language,
     firebaseId: restaurantDetails.firebaseId,
+    serviceProviderType: ServiceProviderType.Restaurant,
+    uniqueId
   };
+}
+
+function generateString(): string {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < 8) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
 }

@@ -1,15 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -21,6 +23,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class SingleLaundryScreen extends StatefulWidget {
   const SingleLaundryScreen({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int laundryId}) {
+    return MezRouter.toPath(LaundryRoutes.singleLaundryRoute
+        .replaceAll(":laundryId", laundryId.toString()));
+  }
+
   @override
   State<SingleLaundryScreen> createState() => _SingleLaundryScreenState();
 }
@@ -30,9 +37,10 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   Rxn<Laundry> laundry = Rxn();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
+
   @override
   void initState() {
-    laundryId = int.tryParse(Get.parameters["laundryId"] ?? "");
+    laundryId = int.tryParse(MezRouter.urlArguments["laundryId"].toString());
     if (laundryId != null) {
       Future(() async =>
           laundry.value = await get_laundry_store_by_id(id: laundryId!));
@@ -65,32 +73,39 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   ),
                   Text(
                     laundry.value!.info.name,
-                    style: Get.textTheme.headline5,
+                    style: context.txt.headlineSmall,
                   ),
                   SizedBox(
                     height: 9,
                   ),
                   _laundryInfoHeader(),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "${_i18n()["description"]}",
-                    style: Get.textTheme.bodyLarge,
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    "${laundry.value!.info.description!.values.first}",
-                    style: Get.textTheme.subtitle2,
-                  ),
+                  if (laundry.value?.info.description != null &&
+                      laundry.value!.info.description!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          "${_i18n()["description"]}",
+                          style: context.txt.bodyLarge,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "${laundry.value!.info.description![userLanguage]}",
+                          style: context.txt.titleSmall,
+                        ),
+                      ],
+                    ),
                   SizedBox(
                     height: 15,
                   ),
                   Text(
                     "${_i18n()["categories"]}",
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 4,
@@ -131,7 +146,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             flex: 1,
             child: Text(
               item.name[userLanguage]?.toString().inCaps ?? "",
-              style: Get.textTheme.subtitle2,
+              style: context.txt.titleSmall,
               maxLines: 1,
             ),
           ),
@@ -140,7 +155,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
           Text(
             "${item.cost.toPriceString()}/kg",
-            style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+            style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
           )
         ],
       ),
@@ -157,7 +172,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             backgroundColor: Colors.transparent),
         child: Text("${_i18n()["sendMyLaundry"]}"),
         onPressed: () {
-          MezRouter.toNamed(kLaundryOrderRequest, arguments: laundry.value);
+          CustLaundryOrderRequestView.navigate(laundryId: laundryId!);
         },
       ),
     );
@@ -184,7 +199,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
           //maxLines: 1,
           textAlign: TextAlign.center,
-          style: Get.textTheme.bodyMedium?.copyWith(
+          style: context.txt.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
               fontSize: 14),
@@ -201,7 +216,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${laundry.value!.averageNumberOfDays} ${_i18n()["daysReturn"]}",
           maxLines: 1,
           textAlign: TextAlign.center,
-          style: Get.textTheme.bodyMedium?.copyWith(
+          style: context.txt.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
               fontSize: 14),
@@ -218,7 +233,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory.toPriceString()}/kg",
           //maxLines: 2,
           textAlign: TextAlign.center,
-          style: Get.textTheme.bodyMedium?.copyWith(
+          style: context.txt.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
               fontSize: 14),

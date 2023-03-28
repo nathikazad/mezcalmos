@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:sizer/sizer.dart';
@@ -28,7 +30,7 @@ class OrderPaymentMethod extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["paymentMethod"]}',
-            style: Get.textTheme.bodyText1,
+            style: context.txt.bodyText1,
           ),
           const SizedBox(
             height: 4,
@@ -52,7 +54,7 @@ class OrderPaymentMethod extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         "${stripeOrderPaymentInfo?.brand!.toName()}",
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                     ),
                   Flexible(
@@ -60,8 +62,8 @@ class OrderPaymentMethod extends StatelessWidget {
                     child: Text(
                       _getTitle(),
                       style: (stripeOrderPaymentInfo != null)
-                          ? Get.textTheme.bodyText1
-                          : Get.textTheme.bodyText1,
+                          ? context.txt.bodyText1
+                          : context.txt.bodyText1,
                     ),
                   ),
                 ],

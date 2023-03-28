@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,9 +15,10 @@ class MezButton extends StatefulWidget {
     this.withGradient = false,
     this.backgroundColor,
     this.textColor,
-    this.borderRadius = 10,
+    this.borderRadius = 8,
     this.textStyle,
     this.height = 55,
+    this.border,
     this.width,
     this.icon,
     required this.label,
@@ -33,6 +35,7 @@ class MezButton extends StatefulWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
   final IconData? icon;
+  final BoxBorder? border;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -71,6 +74,8 @@ class _MezButtonState extends State<MezButton> {
               width: widget.width ?? double.infinity,
               height: widget.height,
               decoration: BoxDecoration(
+                  gradient: widget.withGradient ? bluePurpleGradient : null,
+                  border: widget.border,
                   color: (widget.enabled && widget.onClick != null)
                       ? (widget.backgroundColor != null)
                           ? widget.backgroundColor
@@ -83,8 +88,8 @@ class _MezButtonState extends State<MezButton> {
                 child: (isLoading.value)
                     ? Transform.scale(
                         scale: 0.6,
-                        child: const CircularProgressIndicator(
-                          color: Colors.white,
+                        child: CircularProgressIndicator(
+                          color: widget.textColor ?? Colors.white,
                         ),
                       )
                     : Row(
@@ -106,7 +111,7 @@ class _MezButtonState extends State<MezButton> {
                               child: Text(
                                 widget.label,
                                 style: widget.textStyle ??
-                                    Get.textTheme.bodyLarge?.copyWith(
+                                    context.txt.bodyLarge?.copyWith(
                                         color:
                                             widget.textColor ?? Colors.white),
                               ),

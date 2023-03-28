@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType, DriverApprovedNotification } from "../shared/models/Generic/Delivery";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { updateDriverStatustoAuthorized } from "../shared/graphql/delivery/driver/updateDriverStatus";
@@ -8,56 +7,85 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { AuthorizationStatus } from "../shared/models/Generic/Generic";
+import { AuthorizationStatus, MezError } from "../shared/models/Generic/Generic";
 import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { Operator } from "../shared/models/Services/Service";
+import { isMezAdmin } from "../shared/helper";
 
 export interface AuthorizeDetails {
-    deliveryDriverId: number,
-    approved: boolean,
-    deliveryServiceProviderType: DeliveryServiceProviderType
+  deliveryDriverId: number,
+  approved: boolean,
+  deliveryServiceProviderType: DeliveryServiceProviderType
+}
+export interface AuthorizeDriverResponse {
+  success: boolean,
+  error?: AuthorizeDriverError
+  unhandledError?: string,
 }
 
-export async function authorizeDriver(userId: number, authorizeDetails: AuthorizeDetails) {
-  let deliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId)//, ParticipantType.DeliveryDriver);
+enum AuthorizeDriverError {
+  UnhandledError = "unhandledError",
+  DriverNotFound = "driverNotFound",
+  OperatorNotFound = "operatorNotFound",
+  UnauthorizedAccess = "unauthorizedAccess"
+}
 
-  await checkAuthorization();
+export async function authorizeDriver(userId: number, authorizeDetails: AuthorizeDetails): Promise<AuthorizeDriverResponse> {
+  try {
+    let deliveryDriver: DeliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId)//, ParticipantType.DeliveryDriver);
 
-  if(authorizeDetails.approved) {
+    await checkAuthorization();
+
+    if(authorizeDetails.approved) {
       await updateDriverStatustoAuthorized(authorizeDetails.deliveryDriverId)
-  } else {
+    } else {
       await deleteDeliveryDriver(authorizeDetails.deliveryDriverId);
+    }
+    
+    sendNotification(authorizeDetails, deliveryDriver);
+    return {
+      success: true
+    }
+  } catch (e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(AuthorizeDriverError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: AuthorizeDriverError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
   }
-  
-  sendNotification(authorizeDetails, deliveryDriver);
 
   async function checkAuthorization() {
+    if((await isMezAdmin(userId)) == true)
+      return;
+      
     switch (authorizeDetails.deliveryServiceProviderType) {
       case DeliveryServiceProviderType.Restaurant:
         let restaurantOperator: Operator = await getRestaurantOperatorByUserId(userId);
         if (!restaurantOperator.owner || restaurantOperator.status != AuthorizationStatus.Authorized) {
-          throw new HttpsError(
-            "internal",
-            "Only authorized restaurant owners can add drivers"
-          );
+          throw new MezError(AuthorizeDriverError.UnauthorizedAccess);
         }
         break;
       case DeliveryServiceProviderType.Laundry:
         let laundryOperator: Operator = await getLaundryOperatorByUserId(userId);
         if (!laundryOperator.owner || laundryOperator.status != AuthorizationStatus.Authorized) {
-          throw new HttpsError(
-            "internal",
-            "Only authorized laundry owners can add drivers"
-          );
+          throw new MezError(AuthorizeDriverError.UnauthorizedAccess);
         }
         break;
       case DeliveryServiceProviderType.DeliveryCompany:
         let deliveryOperator: DeliveryOperator = await getDeliveryOperatorByUserId(userId);
         if (!deliveryOperator.owner || deliveryOperator.status != AuthorizationStatus.Authorized) {
-          throw new HttpsError(
-            "internal",
-            "Only authorized delivery owners can add drivers"
-          );
+          throw new MezError(AuthorizeDriverError.UnauthorizedAccess);
         }
       default:
         break;

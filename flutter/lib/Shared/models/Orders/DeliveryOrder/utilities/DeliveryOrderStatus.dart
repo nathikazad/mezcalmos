@@ -1,31 +1,22 @@
-enum DeliveryOrderStatus {
-  OrderReceived,
-  OnTheWayToPickup,
-  AtPickup,
-  OnTheWayToDropoff,
-  AtDropoff,
-  Delivered,
-  CancelledByCustomer,
-  CancelledByDeliverer,
-  CancelledByServiceProvider
-}
+// import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
+// enum DeliveryOrderStatus {
+//   OrderReceived,
+//   OnTheWayToPickup,
+//   AtPickup,
+//   OnTheWayToDropoff,
+//   AtDropoff,
+//   Delivered,
+//   CancelledByCustomer,
+//   CancelledByDeliverer,
+//   CancelledByServiceProvider,
+//   CancelledByAdmin
+// }
 
-  String toNormalString() {
-    final String str = toString().split('.').last;
+// extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
+//   String toNormalString() {
+//     final String str = toString().split('.').last;
 
-    return str;
-  }
-}
-
-extension ParseStringToDeliveryOrderStatus on String {
-  DeliveryOrderStatus toDeliveryOrderStatus() {
-    return DeliveryOrderStatus.values.firstWhere((DeliveryOrderStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
+//     return str;
+//   }
+// }

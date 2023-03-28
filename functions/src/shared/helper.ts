@@ -31,7 +31,7 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder, delive
         orderId: deliveryOrder.deliveryId
       },
       background: deliveryNewOrderMessage,
-      linkUrl: '/'
+      linkUrl: `/orders/${deliveryOrder.deliveryId}`
     }
   
     deliveryOperators.forEach((d) => {
@@ -74,7 +74,7 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder, delive
     deliveryDrivers.forEach((d) => {
       pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver);
     });
-  }
+}
   
   function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
       if ((lat1 == lat2) && (lon1 == lon2)) {

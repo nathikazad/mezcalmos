@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
@@ -22,7 +23,9 @@ class CustRequestCourierItems extends StatelessWidget {
               children: List.generate(
                   viewController.items.length,
                   (int index) => _buildItem(
-                      item: viewController.items[index], index: index)),
+                      item: viewController.items[index],
+                      index: index,
+                      context: context)),
             ),
           ),
           SizedBox(
@@ -38,7 +41,10 @@ class CustRequestCourierItems extends StatelessWidget {
     );
   }
 
-  Widget _buildItem({required CourierItem item, required int index}) {
+  Widget _buildItem(
+      {required CourierItem item,
+      required int index,
+      required BuildContext context}) {
     return Column(
       children: [
         SizedBox(
@@ -52,8 +58,8 @@ class CustRequestCourierItems extends StatelessWidget {
               children: [
                 Text(
                   "Item ${index + 1}",
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
+                  style:
+                      context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
                 if (index != 0)
                   MezIconButton(
@@ -71,7 +77,7 @@ class CustRequestCourierItems extends StatelessWidget {
             ),
             Text(
               "What can we get you?",
-              style: Get.textTheme.bodyMedium?.copyWith(),
+              style: context.txt.bodyMedium?.copyWith(),
             ),
             SizedBox(
               height: 10,
@@ -82,6 +88,7 @@ class CustRequestCourierItems extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: _textInput(
                       hint: "Name",
+                      context: context,
                       validator: (String? p0) {
                         if (p0 == null || p0.isEmpty) {
                           return "Required";
@@ -93,15 +100,51 @@ class CustRequestCourierItems extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                MezIconButton(
-                  icon: Icons.image,
-                  iconColor: Colors.black,
-                  padding: const EdgeInsets.all(12),
-                  backgroundColor: Colors.white,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () {},
+                Obx(
+                  () => InkWell(
+                    onTap: () async {
+                      await viewController.addItemImage(
+                          itemIndex: index, context: context);
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        image:
+                            (viewController.imagesFiles[index].path.isNotEmpty)
+                                ? DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: FileImage(
+                                        viewController.imagesFiles[index]))
+                                : null,
+                      ),
+                      child: (viewController.imagesFiles[index].path.isNotEmpty)
+                          ? MezIconButton(
+                              onTap: () async {
+                                await viewController.addItemImage(
+                                    itemIndex: index, context: context);
+                              },
+                              iconSize: 12,
+                              icon: Icons.edit,
+                              backgroundColor:
+                                  secondaryLightBlueColor.withOpacity(0.5),
+                            )
+                          : (viewController.imagesLoading.contains(index))
+                              ? CircularProgressIndicator()
+                              : Icon(Icons.image),
+                    ),
+                  ),
                 )
+                // MezIconButton(
+                //   icon: Icons.image,
+                //   iconColor: Colors.black,
+                //   padding: const EdgeInsets.all(12),
+                //   backgroundColor: Colors.white,
+                //   shape: BoxShape.rectangle,
+                //   borderRadius: BorderRadius.circular(5),
+                //   onTap: () {},
+                // )
               ],
             ),
           ],
@@ -109,19 +152,17 @@ class CustRequestCourierItems extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        _textInput(hint: "Notes", controller: viewController.itemsNotes[index]),
+        _textInput(
+            hint: "Notes",
+            controller: viewController.itemsNotes[index],
+            context: context),
         SizedBox(
           height: 10,
         ),
         _textInput(
             hint: "Estimated cost",
+            context: context,
             suffix: Icons.attach_money,
-            validator: (String? p0) {
-              if (p0 == null || p0.isEmpty) {
-                return "Required";
-              }
-              return null;
-            },
             controller: viewController.itemsEstCosts[index]),
       ],
     );
@@ -130,6 +171,7 @@ class CustRequestCourierItems extends StatelessWidget {
   Widget _textInput(
       {required String hint,
       required TextEditingController controller,
+      required BuildContext context,
       IconData? suffix,
       bool isPrice = false,
       String? Function(String?)? validator}) {
@@ -143,7 +185,7 @@ class CustRequestCourierItems extends StatelessWidget {
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ]
             : [],
-        style: Get.textTheme.bodyLarge,
+        style: context.txt.bodyLarge,
         decoration: InputDecoration(
             fillColor: Colors.white,
             hintText: hint,

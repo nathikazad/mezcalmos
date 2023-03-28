@@ -9,44 +9,45 @@ import {
 import { ParticipantType } from "./Chat";
 
 export interface DeliveryOrder {
-    deliveryId: number;
-    pickupLocation?: Location;
-    pickupLocationText?: string;
-    dropoffLocation: Location;
-    // deliveryDriverType?: ParticipantType
-    deliveryDriverId?: number;
-    chatWithServiceProviderId?: number;
-    packageReady: boolean;
-    chatWithCustomerId: number;
-    paymentType: PaymentType;
-    stripePaymentId?: number;
-    estimatedPackageReadyTime?: string;
-    actualPackageReadyTime?: string;
-    estimatedArrivalAtPickupTime?: string;
-    actualArrivalAtPickupTime?: string;
-    estimatedArrivalAtDropoffTime?: string;
-    actualArrivalAtDropoffTime?: string;
-    actualDeliveredTime?: string;
-    status: DeliveryOrderStatus;
-    driverReviewByServiceProviderId?: number;
-    driverReviewByCustomerId?: number;
-    serviceProviderReviewBydriverId?: number;
-    customerReviewByDriverId?: number;
-    customerId: number;
-    serviceProviderId: number;
-    serviceProviderType: DeliveryServiceProviderType;
-    tripPolyline?: string;
-    deliveryCost: number;
-    packageCost?: number;
-    currentGps?: Location
-    tripDistance?: number;
-    tripDuration?: number;
-    orderTime: string;
-    cancellationTime?: string;
-    deliveryDriver?: DeliveryDriver;
-    orderType: OrderType;
-    direction: DeliveryDirection;
-    distanceFromBase?: number;
+  deliveryId: number;
+  pickupLocation?: Location;
+  pickupLocationText?: string;
+  dropoffLocation: Location;
+  // deliveryDriverType?: ParticipantType
+  deliveryDriverId?: number;
+  chatWithServiceProviderId?: number;
+  packageReady: boolean;
+  chatWithCustomerId: number;
+  paymentType: PaymentType;
+  stripePaymentId?: number;
+  estimatedPackageReadyTime?: string;
+  actualPackageReadyTime?: string;
+  estimatedArrivalAtPickupTime?: string;
+  actualArrivalAtPickupTime?: string;
+  estimatedArrivalAtDropoffTime?: string;
+  actualArrivalAtDropoffTime?: string;
+  actualDeliveredTime?: string;
+  status: DeliveryOrderStatus;
+  driverReviewByServiceProviderId?: number;
+  driverReviewByCustomerId?: number;
+  serviceProviderReviewBydriverId?: number;
+  customerReviewByDriverId?: number;
+  customerId: number;
+  serviceProviderId: number;
+  serviceProviderType: DeliveryServiceProviderType;
+  tripPolyline?: string;
+  deliveryCost: number;
+  packageCost?: number;
+  currentGps?: Location
+  tripDistance?: number;
+  tripDuration?: number;
+  orderTime: string;
+  cancellationTime?: string;
+  deliveryDriver?: DeliveryDriver;
+  orderType: OrderType;
+  direction: DeliveryDirection;
+  distanceFromBase?: number;
+  changePriceRequest?: DeliveryChangePriceRequest
 }
 export enum DeliveryDirection {
   FromCustomer = "fromCustomer",
@@ -75,10 +76,14 @@ export interface DeliveryOperator {
     status: AuthorizationStatus,
     owner: boolean,
     appVersion?: string,
+    online: boolean,
     // deliveryDriverType:,
     notificationInfo?: NotificationInfo,
     user?: UserInfo
 }
+// export interface DeliveryCompany extends ServiceProvider {
+//   deliveryoperators?: DeliveryOperator[];
+// }
 export interface DeliveryDetails {
     minimumCost?: number,
     costPerKm?: number,
@@ -89,7 +94,17 @@ export interface DeliveryDetails {
     customerPickup: boolean;
     selfDelivery: boolean;
 }
-
+export interface DeliveryChangePriceRequest {
+  status: ChangePriceStatus,
+  newPrice: number,
+  oldPrice: number,
+  reason: string
+}
+export enum ChangePriceStatus {
+  Requested = "requested",
+  Accepted = "accepted",
+  Rejected = "rejected",
+}
 export enum DeliveryOrderStatus {
   OrderReceived = "orderReceived",
   OnTheWayToPickup = "onTheWayToPickup",
@@ -143,6 +158,9 @@ export interface AuthorizeDriverNotification extends ForegroundNotification {
 }
 export interface DriverApprovedNotification extends ForegroundNotification {
   approved: boolean;
+}
+export interface PriceChangeApprovalNotification extends ForegroundNotification {
+  accepted: boolean;
 }
 
 export interface DeliveryOperatorApprovedNotification

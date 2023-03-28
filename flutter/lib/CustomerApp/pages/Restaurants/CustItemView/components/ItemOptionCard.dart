@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -34,7 +35,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   void initState() {
     optionId = widget.option.id.toString();
-    if (!widget.editMode) {
+    if (!widget.editMode && widget.option.getChoices.isNotEmpty) {
       assignDefaultChoice();
       assignMinimumChoices();
     }
@@ -44,111 +45,121 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //  margin: const EdgeInsets.only(top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(widget.option.name[userLanguage].toString().inCaps,
-              style: Get.theme.textTheme.bodyText1),
-          if (widget.option.optionType == OptionType.Custom)
-            Container(
-              child: Text(
-                "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                style: Get.textTheme.headline6?.copyWith(
-                    fontStyle: FontStyle.italic),
+    if (widget.option.haveAtLeastOneChoiceAvailable) {
+      return Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.option.name[userLanguage].toString().inCaps,
+                textAlign: TextAlign.left,
+                style: Get.theme.textTheme.bodyLarge),
+            if (widget.option.optionType == OptionType.Custom)
+              Container(
+                child: Text(
+                  "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
+                  style: context.txt.titleLarge
+                      ?.copyWith(fontStyle: FontStyle.italic),
+                ),
+              ),
+            Column(
+              children: List.generate(
+                widget.option.choices.length,
+                (int index) => optionChoiceCard(
+                  choice: widget.option.choices[index],
+                ),
               ),
             ),
-          Column(
-            children: List.generate(
-              widget.option.choices.length,
-              (int index) => optionChoiceCard(
-                choice: widget.option.choices[index],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    } else
+      return SizedBox();
   }
 
   // Single choice card  //
   Widget optionChoiceCard({
     required Choice choice,
   }) {
-    return Container(
-      child: Row(
-        children: [
-          Flexible(
-            flex: 3,
-            fit: FlexFit.tight,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  choice.name[userLanguage].toString().inCaps,
-                  style: Get.theme.textTheme.bodyText2?.copyWith(
-                    color: (widget.cartItem.value!.chosenChoices[optionId]
-                                ?.contains(choice) ??
-                            false)
-                        ? primaryBlueColor
-                        : null,
-                    fontWeight: (widget.cartItem.value!.chosenChoices[optionId]
-                                ?.contains(choice) ??
-                            false)
-                        ? FontWeight.w700
-                        : null,
+    if (choice.available) {
+      return Container(
+        child: Row(
+          children: [
+            Flexible(
+              flex: 3,
+              fit: FlexFit.tight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    choice.name[userLanguage].toString().inCaps,
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: (widget.cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? primaryBlueColor
+                          : null,
+                      fontWeight: (widget
+                                  .cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? FontWeight.w700
+                          : null,
+                    ),
+                    maxLines: 2,
                   ),
-                  maxLines: 2,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
-                  style: Get.theme.textTheme.bodyText2!.copyWith(
-                    color: Get.theme.primaryColorLight,
-                    fontWeight: (widget.cartItem.value!.chosenChoices[optionId]
-                                ?.contains(choice) ??
-                            false)
-                        ? FontWeight.w700
-                        : null,
+                  SizedBox(
+                    width: 5,
                   ),
-                ),
-              ],
+                  Text(
+                    (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                      color: Get.theme.primaryColorLight,
+                      fontWeight: (widget
+                                  .cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? FontWeight.w700
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          //  Spacer(),
-          if (widget.option.optionType == OptionType.ChooseMany)
-            _selectCircle(
-                value: widget.cartItem.value!.chosenChoices[optionId]
-                        ?.contains(choice) ??
-                    false,
-                onTap: (bool? v) {
-                  handleChoiceCheckBox(choice);
-                }),
-          if (widget.option.optionType == OptionType.ChooseOne)
-            _radioCircle(
-              value: widget.cartItem.value!.chosenChoices[optionId]
-                      ?.contains(choice) ??
-                  false,
-              onTap: (bool? v) {
-                handleChoiceCheckBox(choice);
-              },
-            ),
-          if (widget.option.optionType == OptionType.Custom)
-            Container(
-              child: _selectCircle(
+            //  Spacer(),
+            if (widget.option.optionType == OptionType.ChooseMany)
+              _selectCircle(
                   value: widget.cartItem.value!.chosenChoices[optionId]
                           ?.contains(choice) ??
                       false,
                   onTap: (bool? v) {
                     handleChoiceCheckBox(choice);
                   }),
-            ),
-        ],
-      ),
-    );
+            if (widget.option.optionType == OptionType.ChooseOne)
+              _radioCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                },
+              ),
+            if (widget.option.optionType == OptionType.Custom)
+              Container(
+                child: _selectCircle(
+                    value: widget.cartItem.value!.chosenChoices[optionId]
+                            ?.contains(choice) ??
+                        false,
+                    onTap: (bool? v) {
+                      handleChoiceCheckBox(choice);
+                    }),
+              ),
+          ],
+        ),
+      );
+    } else
+      return SizedBox();
   }
 
   Widget _selectCircle(

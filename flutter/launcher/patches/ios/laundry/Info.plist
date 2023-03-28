@@ -85,7 +85,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
+		<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://mezc.co</string>
+	</array>
 
  	<key>CFBundlePrimaryIcon</key>
 	<dict>

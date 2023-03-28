@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderWeightSelector.dart';
 import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -67,7 +67,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               children: [
                 Text(
                   "${_i18n()["itemsCategory"]}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 Spacer(),
                 if (widget.viewController.isEditingCategory)
@@ -84,9 +84,8 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                             .deleteCategory()
                             .then((int? value) {
                           if (value != null) {
-                            MezRouter.untill((Route route) =>
-                                route.settings.name ==
-                                getLaundryOpOrderRoute(
+                            MezRouter.popTillExclusive(
+                                LaundryAppRoutes.getLaundryOpOrderRoute(
                                     widget.viewController.order.orderId));
                           }
                         });
@@ -102,7 +101,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                           ),
                           Text(
                             "${_i18n()["deleteItem"]}",
-                            style: Get.textTheme.bodyMedium?.copyWith(
+                            style: context.txt.bodyMedium?.copyWith(
                                 color: Colors.red, fontWeight: FontWeight.w700),
                           )
                         ],
@@ -120,7 +119,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
             SizedBox(
               height: 25,
             ),
-            Text("${_i18n()["itemsWeight"]}", style: Get.textTheme.bodyLarge),
+            Text("${_i18n()["itemsWeight"]}", style: context.txt.bodyLarge),
             SizedBox(
               height: 10,
             ),
@@ -178,7 +177,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                   child: Center(
                       child: Text(
                     "${_i18n()["cancel"]}",
-                    style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+                    style: context.txt.bodyLarge?.copyWith(color: Colors.red),
                   )),
                 )),
           ],
@@ -186,5 +185,4 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
       );
     });
   }
-
 }

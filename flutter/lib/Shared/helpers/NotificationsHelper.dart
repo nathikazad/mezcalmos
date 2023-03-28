@@ -4,14 +4,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -42,26 +41,28 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
-  if (isCurrentRoute(notification.linkUrl))
-    await showStatusInfoDialog(Get.context!,
+  if (Get.context != null) {
+    if (MezRouter.isCurrentRoute(notification.linkUrl)) {
+      await showStatusInfoDialog(Get.context!,
+          status: notification.title,
+          description: notification.body,
+          primaryIcon: notification.icon,
+          bottomRightIcon: notification.secondaryIcon,
+          showSmallIcon: notification.secondaryIcon != null);
+    } else
+      await showStatusInfoDialog(
+        Get.context!,
         status: notification.title,
-        description: notification.body,
         primaryIcon: notification.icon,
+        description: notification.body,
+        showSmallIcon: notification.secondaryIcon != null,
         bottomRightIcon: notification.secondaryIcon,
-        showSmallIcon: notification.secondaryIcon != null);
-  else
-    await showStatusInfoDialog(
-      Get.context!,
-      status: notification.title,
-      primaryIcon: notification.icon,
-      description: notification.body,
-      showSmallIcon: notification.secondaryIcon != null,
-      bottomRightIcon: notification.secondaryIcon,
-      primaryCallBack: () {
-        MezRouter.back(closeOverlays: true);
-      },
-      secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
-    );
+        primaryCallBack: () {
+          MezRouter.back();
+        },
+        secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
+      );
+  }
 }
 
 void notificationSnackBar(notifs.Notification notification) {

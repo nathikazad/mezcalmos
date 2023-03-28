@@ -4,6 +4,23 @@ import { getHasura } from "../../../../utilities/hasura";
 export async function insertCustomers(data: any) {
     let chain = getHasura();
     // console.log("Hi")
+    let queryResponse = await chain.query({
+        customer_customer: [{}, {
+            user: {
+                firebase_id: true
+            }
+        }]
+    })
+    let insertedCustomers: Record<string, boolean> = {};
+    queryResponse.customer_customer.forEach((r) => {
+        // if(rdetails?.firebase_id == null)
+            // return;
+        // console.log(typeof r.details.firebase_id)
+        insertedCustomers[r.user.firebase_id] = true;
+    })
+    console.log(data.length)
+    data = data.filter((r: any) => insertedCustomers[r.userFirebaseId] == undefined)
+    console.log(data.length)
 
     let customers = data.map(async (c: any) => {
         

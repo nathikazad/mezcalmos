@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, AuthorizationStatus, Language } from "../../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, Language, MezError } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 // import { ParticipantType } from "../../../models/Generic/Chat";
 
@@ -75,10 +74,7 @@ export async function getDeliveryDriver(deliveryDriverId: number): Promise<Deliv
       }]
     });
     if (response.delivery_driver_by_pk == null) {
-      throw new HttpsError(
-        "internal",
-        "No delivery driver with that id found"
-      );
+      throw new MezError("driverNotFound");
     }
     return {
       id: deliveryDriverId,
@@ -96,7 +92,7 @@ export async function getDeliveryDriver(deliveryDriverId: number): Promise<Deliv
         phoneNumber: response.delivery_driver_by_pk.user.phone
       },
       notificationInfo: (response.delivery_driver_by_pk.notification_info) ? {
-        appType: AppType.DeliveryApp,
+        appType: AppType.Delivery,
         token: response.delivery_driver_by_pk.notification_info.token,
         turnOffNotifications: response.delivery_driver_by_pk.notification_info.turn_off_notifications
       } : undefined,
@@ -109,6 +105,11 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
 
   let chain = getHasura();
   let response = await chain.query({
+    delivery_company_by_pk: [{
+      id: deliveryCompanyId
+    }, {
+      id: true
+    }],
     delivery_driver: [{
       where: {
         _and: [{
@@ -142,11 +143,11 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
         },
       }]
     });
+    if(response.delivery_company_by_pk == null) {
+      throw new MezError("deliveryCompanyNotFound");
+    }
     if (response.delivery_driver.length == 0) {
-      throw new HttpsError(
-        "internal",
-        "No delivery company with that id found or the company has no drivers"
-      );
+      throw new MezError("deliveryCompanyHasNoDrivers");
     }
     return response.delivery_driver.map((d) => {
       return {
@@ -169,7 +170,7 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
           phoneNumber: d.user.phone
         },
         notificationInfo: (d.notification_info) ? {
-          appType: AppType.DeliveryApp,
+          appType: AppType.Delivery,
           token: d.notification_info.token,
           turnOffNotifications: d.notification_info.turn_off_notifications
         } : undefined,

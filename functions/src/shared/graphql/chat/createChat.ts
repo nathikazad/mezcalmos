@@ -10,7 +10,7 @@ export async function createRestaurantCustomerChat(restaurant: ServiceProvider, 
     let restaurantOperatorsDetails = restaurant.operators!.map((r) => {
         return {
             participant_id: r.userId,
-            app_type_id: AppType.RestaurantApp
+            app_type_id: AppType.Restaurant
         };
     });
 

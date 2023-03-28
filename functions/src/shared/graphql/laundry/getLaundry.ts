@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Language } from "../../models/Generic/Generic";
-import { OpenStatus, Operator, ServiceProvider } from "../../models/Services/Service";
+import { Language, MezError } from "../../models/Generic/Generic";
+import { OpenStatus, Operator, ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { AuthorizationStatus } from "../../models/Generic/Generic"
 
 export async function getLaundryStore(storeId: number): Promise<ServiceProvider> {
@@ -64,6 +63,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
                 user_id: true,
                 operator_details: {
                     status: true,
+                    online: true,
                 },
                 user: {
                     firebase_id: true,
@@ -73,10 +73,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
         }]
     });
     if(response.laundry_store_by_pk == null || response.laundry_store_by_pk.details == null) {
-        throw new HttpsError(
-            "internal",
-            "No laundry store with that id found"
-        );
+        throw new MezError("laundryStoreNotfound");
     }
     let laundryOperators: Operator[] = response.laundry_store_by_pk.operators.map((o) => {
         return {
@@ -85,6 +82,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             userId: o.user_id,
             detailsId: o.details_id,
             status: o.operator_details.status as AuthorizationStatus,
+            online: o.operator_details.online,
             user: {
                 id: o.user_id,
                 firebaseId: o.user.firebase_id,
@@ -138,5 +136,6 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
         deliveryPartnerId: response.laundry_store_by_pk.delivery_partners[0] 
             ? response.laundry_store_by_pk.delivery_partners[0].delivery_company_id
             : undefined,
+        serviceProviderType: ServiceProviderType.Laundry
     }
 }

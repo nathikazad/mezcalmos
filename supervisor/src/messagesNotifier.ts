@@ -210,9 +210,9 @@ async function notifyDeliveryOperatorsNewOrder(notificationForQueue: AssignDeliv
 
 async function notifyOtherMessageParticipants(notificationForQueue: chatModule.MessageNotificationForQueue) {
   let chat = await getChat(notificationForQueue.chatId);
-  let sender = chat.participants.find((p) => {
-    return p.id == notificationForQueue.userId
-  });
+  let sender = chat.participants.find((p) =>  
+    (p.id == notificationForQueue.userId) && (p.participantType == notificationForQueue.participantType)
+  );
   if(!sender) {
     throw new HttpsError(
       "internal",

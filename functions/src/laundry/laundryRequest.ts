@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { setLaundryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { updateDeliveryOrderCompany } from "../shared/graphql/delivery/updateDelivery";
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
@@ -7,7 +6,7 @@ import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { notifyDeliveryCompany } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { CustomerAppType, Language, Location } from "../shared/models/Generic/Generic";
+import { CustomerAppType, Language, Location, MezError } from "../shared/models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -36,77 +35,104 @@ export interface LaundryRequestDetails {
     distanceFromBase?: number
 }
 export interface ReqLaundryResponse {
-    orderId: number
+    success: boolean,
+    error?: ReqLaundryError
+    unhandledError?: string,
+    orderId?: number
+}
+export enum ReqLaundryError {
+    UnhandledError = "unhandledError",
+    LaundryStoreNotfound = "laundryStoreNotfound",
+    CustomerNotFound = "customerNotFound",
+    LaundryStoreNotApproved = "laundryStoreNotApproved",
+    StoreClosed = "storeClosed",
+    NoDeliveryPartner = "noDeliveryPartner",
+    DeliveryNotAvailable = "deliveryNotAvailable",
+    OrderCreationError = "orderCreationError",
+    NoChatId = "noChatId",
+    DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+    ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+    InvalidOrderType = "invalidOrderType",
+    NoStripeAccountOfServiceProvider = "noStripeAccountOfServiceProvider",
+    UpdateOrderStripeError = "updateOrderStripeError",
 }
 
 export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails): Promise<ReqLaundryResponse> {
-    let response = await Promise.all([
-        getLaundryStore(laundryRequestDetails.storeId), 
-        getCustomer(customerId),
-        getMezAdmins()
-    ])
-    let laundryStore: ServiceProvider = response[0];
-    let customer: CustomerInfo = response[1];
-    let mezAdmins: MezAdmin[] = response[2];
+    try {
+        let response = await Promise.all([
+            getLaundryStore(laundryRequestDetails.storeId), 
+            getCustomer(customerId),
+            getMezAdmins()
+        ])
+        let laundryStore: ServiceProvider = response[0];
+        let customer: CustomerInfo = response[1];
+        let mezAdmins: MezAdmin[] = response[2];
 
-    errorChecks(laundryStore, laundryRequestDetails);
-    
-    let orderResponse = await createLaundryOrder(customerId, laundryRequestDetails, laundryStore, mezAdmins);
+        errorChecks(laundryStore, laundryRequestDetails);
+        
+        let orderResponse = await createLaundryOrder(customerId, laundryRequestDetails, laundryStore, mezAdmins);
 
-    setLaundryOrderChatInfo(orderResponse.laundryOrder, laundryStore, orderResponse.fromCustomerDeliveryOrder, customer);
+        setLaundryOrderChatInfo(orderResponse.laundryOrder, laundryStore, orderResponse.fromCustomerDeliveryOrder, customer);
 
-    // assign delivery company 
-    if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
+        // assign delivery company 
+        if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
-        updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
-        notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry)
-    }
-
-    notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
-
-    // payment
-    if(laundryRequestDetails.paymentType == PaymentType.Card) {
-        let paymentDetails: PaymentDetails = {
-            orderId: orderResponse.laundryOrder.orderId!,
-            serviceProviderDetailsId: laundryStore.serviceProviderDetailsId
+            updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
+            notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry)
         }
-        await updateOrderIdAndFetchPaymentInfo(paymentDetails, laundryRequestDetails.stripePaymentId!, laundryRequestDetails.stripeFees ?? 0)
-    }
-    
-    return {
-        orderId: orderResponse.laundryOrder.orderId!
+
+        notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
+
+        // payment
+        if(laundryRequestDetails.paymentType == PaymentType.Card) {
+            let paymentDetails: PaymentDetails = {
+                orderId: orderResponse.laundryOrder.orderId!,
+                serviceProviderDetailsId: laundryStore.serviceProviderDetailsId
+            }
+            await updateOrderIdAndFetchPaymentInfo(paymentDetails, laundryRequestDetails.stripePaymentId!, laundryRequestDetails.stripeFees ?? 0)
+        }
+        
+        return {
+            success: true,
+            orderId: orderResponse.laundryOrder.orderId
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(ReqLaundryError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: ReqLaundryError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
     }
 }
 
 function errorChecks(laundryStore: ServiceProvider, laundryRequestDetails: LaundryRequestDetails) {
 
     if(laundryStore.approved == false) {
-      throw new HttpsError(
-        "internal",
-        "Laundry store is not approved and taking orders right now"
-      );
+        throw new MezError(ReqLaundryError.LaundryStoreNotApproved);
     }
     if(laundryStore.openStatus != "open") {
-      throw new HttpsError(
-        "internal",
-        "Laundry store is closed"
-      );
+        throw new MezError(ReqLaundryError.StoreClosed);
     }
     if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
         if(laundryStore.deliveryDetails.deliveryAvailable) {
             if(!(laundryStore.deliveryDetails.selfDelivery)) {
                 if(laundryStore.deliveryPartnerId == null) {
-                    throw new HttpsError(
-                        "internal",
-                        "No delivery partner"
-                    );
+                    throw new MezError(ReqLaundryError.NoDeliveryPartner);
                 }
             }
         } else {
-            throw new HttpsError(
-                "internal",
-                "Laundry store not accepting delivery orders"
-            );
+            throw new MezError(ReqLaundryError.DeliveryNotAvailable);
         }
     }
 }

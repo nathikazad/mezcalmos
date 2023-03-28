@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -29,7 +32,7 @@ class ContactUsPopUp extends StatelessWidget {
                 await launchUrl(_url);
               } catch (e) {
                 //To handle error and display error message
-                Get.snackbar("Error", "");
+                customSnackBar(title: 'Error', subTitle: '');
               } finally {
                 MezRouter.back();
               }
@@ -50,7 +53,7 @@ class ContactUsPopUp extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '${_i18n()["contactEmail"]}',
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                       maxLines: 1,
                     ),
                   )
@@ -71,10 +74,10 @@ class ContactUsPopUp extends StatelessWidget {
               final String whatsappUrl =
                   "whatsapp://send?phone=$recieverNumber" + "&text=$text";
               try {
-                await launch(whatsappUrl);
+                await launchUrlString(whatsappUrl);
               } catch (e) {
                 //To handle error and display error message
-                Get.snackbar("Error", "");
+                customSnackBar(title: 'Error', subTitle: '');
               } finally {
                 MezRouter.back();
               }
@@ -95,7 +98,7 @@ class ContactUsPopUp extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '${_i18n()["contactWhatsapp"]}',
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyText1,
                       maxLines: 1,
                     ),
                   )

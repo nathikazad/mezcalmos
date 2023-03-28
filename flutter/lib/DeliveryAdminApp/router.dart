@@ -1,31 +1,33 @@
-// GetX based Router (For navigating)
-import 'package:get/route_manager.dart';
-import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpTabsView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-// const String kCurrentOrdersList = "/currentDeliveryOrders";
-const String kDeliveryOpHomeScreen = '/home';
+class DeliveryAdminRoutes {
+  static const String kDeliveryOpHomeScreenRoute = '/home';
 
-const String kNotAuthorizedOperator = "/unauthorized";
-const String kOrderView = "/orders/:orderId";
+  static const String kNotAuthorizedOperatorRoute = "/unauthorized";
+  static const String kOrderViewRoute = "/orders/:orderId";
 
-String getDvCompanyOrderRoute(int orderId) {
-  return kOrderView.replaceFirst(":orderId", "$orderId");
-}
+  static String getDvCompanyOrderRoute(int orderId) {
+    return kOrderViewRoute.replaceFirst(":orderId", "$orderId");
+  }
 
-class XRouter {
-  static List<GetPage<dynamic>> mainRoutes = [
-        GetPage(name: kDeliveryOpHomeScreen, page: () => DvOpTabsView()),
-        GetPage(
-          name: kHomeRoute,
-          page: () => DeliveryAdminWrapper(),
+  static final List<QRoute> mainRoutes = <QRoute>[
+        QRoute(
+          path: kDeliveryOpHomeScreenRoute,
+          name: kDeliveryOpHomeScreenRoute,
+          builder: () => DvOpTabsView(),
         ),
-        GetPage(
-          name: kOrderView,
-          page: () => DvCompanyOrderView(),
+        QRoute(
+          path: kOrderViewRoute,
+          name: kOrderViewRoute,
+          builder: () => DvCompanyOrderView(),
         ),
       ] +
-      SharedRouter.sharedRoutes;
+      SharedRoutes.qRoutes +
+      SharedServiceProviderRoutes.routes +
+      NativeOnlyRoutes.routes;
 }

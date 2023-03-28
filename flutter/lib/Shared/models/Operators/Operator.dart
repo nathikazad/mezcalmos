@@ -5,12 +5,14 @@ class OperatorState {
   final int? serviceProviderId;
   final int? serviceProviderDetailsId;
   final int? deliveryDetailsId;
+  final int? serviceLinkId;
   final AgentStatus operatorState;
   final bool owner;
   const OperatorState(
       {required this.serviceProviderId,
       required this.operatorState,
       required this.deliveryDetailsId,
+      required this.serviceLinkId,
       required this.serviceProviderDetailsId,
       required this.owner});
 
@@ -18,10 +20,11 @@ class OperatorState {
     final int restaurantId = data['restaurantId'] ?? null;
     return OperatorState(
         serviceProviderId: restaurantId,
+        serviceLinkId: null,
         serviceProviderDetailsId: null,
         deliveryDetailsId: null,
         owner: false,
-        operatorState: AgentStatus.Awaiting_approval);
+        operatorState: AgentStatus.AwaitingApproval);
   }
 
   Map<String, dynamic> toJson() => {
@@ -71,7 +74,7 @@ class Operator {
   }
 
   bool get isWaitingToBeApprovedByOwner {
-    return state.operatorState == AgentStatus.Awaiting_approval &&
+    return state.operatorState == AgentStatus.AwaitingApproval &&
         state.owner == false;
   }
 }

@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -33,7 +33,10 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
-    Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
+    if (_deliveryAuthController.driverState?.isAuthorized == true) {
+      Get.find<SideMenuDrawerController>().pastOrdersRoute =
+          DeliveryAppRoutes.kPastOrdersViewRoute;
+    }
 
     viewController.init();
 
@@ -53,7 +56,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
-            showNotifications: true, ordersRoute: kPastOrdersView),
+            showNotifications: true,
+            ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15),
@@ -91,8 +95,45 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                         secondLine: "${_i18n()["offlineBody"]}",
                       ),
                     )
+                  else if (viewController.currentOrders.isNotEmpty ||
+                      viewController.openOrders.isNotEmpty)
+                    Column(
+                      children: [
+                        if (viewController.currentOrders.isNotEmpty)
+                          _incomingOrdersList(),
+                        if (viewController.openOrders.isNotEmpty)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (viewController.currentOrders.isNotEmpty)
+                                Divider(),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  "${_i18n()["openOrders"]}",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Column(
+                                children: List.generate(
+                                    viewController.openOrders.length,
+                                    (int index) => MinimalOrderCard(
+                                          order:
+                                              viewController.openOrders[index],
+                                          onTap: () {
+                                            DvOrderView.navigate(
+                                                orderId: viewController
+                                                    .openOrders[index].id);
+                                          },
+                                        )).reversed.toList(),
+                              ),
+                            ],
+                          ),
+                      ],
+                    )
                   else
-                    _incomingOrdersList()
+                    NoOrdersComponent(),
                 ],
               ),
             ),
@@ -103,33 +144,29 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   }
 
   Widget _incomingOrdersList() {
-    if (viewController.currentOrders.isNotEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(5),
-            child: Text(
-              "${_i18n()["currentOrders"]}",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(5),
+          child: Text(
+            "${_i18n()["currentOrders"]}",
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          SizedBox(height: 5),
-          Column(
-            children: List.generate(
-                viewController.currentOrders.length,
-                (int index) => MinimalOrderCard(
-                      order: viewController.currentOrders[index],
-                      onTap: () {
-                        MezRouter.toNamed(getRestaurantOrderRoute(
-                            viewController.currentOrders[index].id));
-                      },
-                    )).reversed.toList(),
-          ),
-        ],
-      );
-    } else {
-      return NoOrdersComponent();
-    }
+        ),
+        SizedBox(height: 5),
+        Column(
+          children: List.generate(
+              viewController.currentOrders.length,
+              (int index) => MinimalOrderCard(
+                    order: viewController.currentOrders[index],
+                    onTap: () {
+                      DvOrderView.navigate(
+                          orderId: viewController.currentOrders[index].id);
+                    },
+                  )).reversed.toList(),
+        ),
+      ],
+    );
   }
 }

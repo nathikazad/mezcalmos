@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { AppType } from "../../../models/Generic/Generic";
+import { AppType, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { Cart } from "../../../models/Services/Restaurant/Cart";
@@ -18,7 +17,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   let restaurantOperatorsDetails = restaurant.operators!.map((v) => {
     return {
       participant_id: v.userId,
-      app_type_id: AppType.RestaurantApp
+      app_type_id: AppType.Restaurant
     };
   });
   let mezAdminDetails = mezAdmins!.map((v) => {
@@ -137,10 +136,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   });
 
   if(response.insert_restaurant_order_one == null) {
-    throw new HttpsError(
-      "internal",
-      "order creation error"
-    );
+    throw new MezError("orderCreationError");
   }
   let orderItems: OrderItem[] = customerCart.items.map((i) => {
     return {
@@ -174,10 +170,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   let deliveryOrder: DeliveryOrder;
   if(checkoutReq.deliveryType == DeliveryType.Delivery) {
     if(response.insert_restaurant_order_one.delivery == null) {
-      throw new HttpsError(
-        "internal",
-        "order creation error"
-      );
+      throw new MezError("orderCreationError");
     }
     restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
     deliveryOrder = {

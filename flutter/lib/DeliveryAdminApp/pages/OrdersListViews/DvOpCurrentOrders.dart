@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -105,7 +104,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyText1)),
+                        style: context.txt.bodyText1)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,
@@ -129,8 +128,9 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                     return MinimalOrderCard(
                       order: viewController.currentOrders.value![index],
                       onTap: () {
-                        MezRouter.toNamed(getDvCompanyOrderRoute(
-                            viewController.currentOrders.value![index].id));
+                        DvCompanyOrderView.navigate(
+                            orderId:
+                                viewController.currentOrders.value![index].id);
                       },
                     );
                   }),

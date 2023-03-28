@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -36,7 +37,7 @@ class ROpAvailableChips extends StatelessWidget {
                 children: [
                   Text(
                     '${_i18n()["available"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyText1,
                   ),
                   radioCircleButton(
                       onTap: onAvailableTap, value: isAvailable == true),
@@ -52,7 +53,7 @@ class ROpAvailableChips extends StatelessWidget {
                 children: [
                   Text(
                     "${_i18n()["unavailable"]}",
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyText1,
                   ),
                   radioCircleButton(
                       onTap: onUnavailableTap, value: isAvailable == false),

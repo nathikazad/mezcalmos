@@ -3,12 +3,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/controller/LocationPermissionController.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/widgets/LocationPermissionsWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['LocationPermissionScreen'];
@@ -43,10 +42,10 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   void initState() {
     viewWidgets = LocationPermissionWidgets(viewController: viewController);
     viewController.init(
-      onLocationPermissionsStatusChange: _onLocationPermissionsChange,
-      initialAndroidBodyTextSetter: _updateAndroidPermissionAskingText,
-      initialIosBodyTextSetter: _updateIosPermissionAskingText,
-    );
+        onLocationPermissionsStatusChange: _onLocationPermissionsChange,
+        initialAndroidBodyTextSetter: _updateAndroidPermissionAskingText,
+        initialIosBodyTextSetter: _updateIosPermissionAskingText,
+        initialWebBodyTextSetter: _updateWebPermissionAskingText);
     super.initState();
   }
 
@@ -82,6 +81,11 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
         setErrorTextByRefrence(null);
         break;
     }
+  }
+
+  void _updateWebPermissionAskingText() {
+    setAskPermissionsTextByRefrence(
+        () => _i18n()['locationPermissionText']['ios']['foreground']);
   }
 
   void _updateIosPermissionAskingText() {

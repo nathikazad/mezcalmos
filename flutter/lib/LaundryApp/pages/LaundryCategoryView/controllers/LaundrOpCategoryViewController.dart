@@ -2,14 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // ignore_for_file: constant_identifier_names
 enum SelectedTab { Primary, Secondary }
@@ -97,7 +98,7 @@ class LaundrOpCategoryViewController {
         await add_laundry_category(category: newCategory, storeId: laundryId);
     if (res != null) {
       shouldRefetch = true;
-      MezRouter.back(result: shouldRefetch);
+      await MezRouter.back(backResult: shouldRefetch);
     }
   }
 

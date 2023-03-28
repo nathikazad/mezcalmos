@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -30,6 +33,8 @@ class LaundryOpCurrentOrdersController {
 // getters
   bool get isOpen => _serviceStatus == ServiceStatus.Open;
   bool get isAproved => _isApproved.value;
+  bool get isClosedIdf =>
+      _serviceStatus.value == ServiceStatus.ClosedIndefinitely;
 
   Future<void> init() async {
     laundryId = opAuthController.laundryId!;
@@ -56,6 +61,16 @@ class LaundryOpCurrentOrdersController {
               .listen((List<MinimalOrder>? event) {
         if (event != null) {
           currentOrders.value = event;
+          currentOrders.value.forEach((MinimalOrder order) {
+            mezDbgPrint(
+                "orderNotifications/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}");
+            Get.find<FirebaseDb>()
+                .firebaseDatabase
+                .ref()
+                .child(
+                    "orderNotifications/laundry/${order.id}/notified/${Get.find<AuthController>().hasuraUserId}")
+                .set(true);
+          });
         }
       });
     }, cancel: () {
@@ -71,13 +86,21 @@ class LaundryOpCurrentOrdersController {
   }
 
   Future<void> turnOffOrders() async {
-    // _serviceStatus.value = await update_laundry_status(
-    //     id: laundryId, status: ServiceStatus.Closed_temporarily);
+    await update_service_state(
+        status: ServiceStatus.ClosedTemporarily,
+        detailsId:
+            opAuthController.operator.value!.state.serviceProviderDetailsId!,
+        approved: null);
+    await _fetchServiceStatus();
   }
 
   Future<void> turnOnOrders() async {
-    // _serviceStatus.value =
-    //     await update_laundry_status(id: laundryId, status: ServiceStatus.Open);
+    await update_service_state(
+        status: ServiceStatus.Open,
+        detailsId:
+            opAuthController.operator.value!.state.serviceProviderDetailsId!,
+        approved: null);
+    await _fetchServiceStatus();
   }
 
   void dispose() {

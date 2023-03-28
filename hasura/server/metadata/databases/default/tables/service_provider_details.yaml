@@ -39,40 +39,42 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - service_link_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - schedule
+        - service_link_id
         - service_provider_type
-        - creation_time
-        - language
+        - unique_id
       filter: {}
   - role: customer
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - service_link_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - schedule
+        - service_link_id
         - service_provider_type
-        - creation_time
-        - language
+        - unique_id
       filter: {}
   - role: delivery_driver
     permission:

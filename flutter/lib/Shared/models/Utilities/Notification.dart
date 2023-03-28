@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:intl/intl.dart';
 
 enum NotificationType {
@@ -11,7 +12,8 @@ enum NotificationType {
   DriverApproved,
   OperatorApproved,
   NewDriver,
-  Call
+  Call,
+  PriceChange
 }
 
 extension ParseNotificationTypeToString on NotificationType {

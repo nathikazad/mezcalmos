@@ -1,23 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
 
 class ROpDrawer extends StatefulWidget {
   const ROpDrawer({Key? key}) : super(key: key);
+
   // controllers //
 
   @override
@@ -29,17 +31,11 @@ class _ROpDrawerState extends State<ROpDrawer> {
   final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
   AuthController authController = Get.find<AuthController>();
+
   // static RestaurantInfoController restaurantInfoController =
   //     Get.find<RestaurantInfoController>();
   RestaurantOpAuthController restaurantOpAuthController =
       Get.find<RestaurantOpAuthController>();
-
-  // helpers //
-  static final AppLaunchMode lmd = getAppLaunchMode();
-
-  // variables //
-  static final String version =
-      GetStorage().read<String>(getxAppVersion) as String;
   Rxn<Restaurant> restaurant = Rxn();
 
   @override
@@ -95,7 +91,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       icon: Icons.alternate_email,
                       titleWidget: Text(
                         '${_i18n()["contact"]}',
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                     ),
                     _languageSwitcher(),
@@ -108,8 +104,8 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       icon: Icons.logout,
                       titleWidget: Text(
                         '${_i18n()["logout"]}',
-                        style: Get.textTheme.bodyText1
-                            ?.copyWith(color: Colors.red),
+                        style:
+                            context.txt.bodyText1?.copyWith(color: Colors.red),
                       ),
                     ),
                   ],
@@ -119,11 +115,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
             Container(
                 alignment: Alignment.center,
                 child: Text(
-                  version +
-                      (lmd != AppLaunchMode.prod
-                          ? " ${lmd.toShortString()}"
-                          : ""),
-                ))
+                    "{PlatformOSHelper.getAppVersion} ${MezEnv.appLaunchMode.toShortString()}"))
           ],
         ),
       ),
@@ -142,7 +134,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
           children: [
             Text(
               "${_i18n()["language"]}",
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
             SizedBox(
               height: 5,
@@ -181,12 +173,12 @@ class _ROpDrawerState extends State<ROpDrawer> {
 
         _navigationLink(
             onClick: () {
-              MezRouter.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(
               "${_i18n()["notifications"]}",
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             )),
       ],
     );
@@ -218,7 +210,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     ),
                     Text(
                       restaurantOpAuthController.operator.value!.info.name,
-                      style: Get.textTheme.headline3,
+                      style: context.txt.headline3,
                     ),
                     SizedBox(
                       height: 30,

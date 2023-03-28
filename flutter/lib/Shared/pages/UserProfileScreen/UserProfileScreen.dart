@@ -21,7 +21,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 
 class UserProfile extends StatefulWidget {
   final AuthController authController = Get.find<AuthController>();
-  // this is just to controll incase we want to make a push to this route with a pre-defined mode.
+  // this is just to controll incase we want to make a push to this router with a pre-defined mode.
   final UserProfileMode pageInitMode;
   // UserProfileController
   final UserProfileController userProfileController = UserProfileController();
@@ -307,7 +307,7 @@ class _UserProfileState extends State<UserProfile>
             // ------------------- Original Version -----------------//
             // put the original file to firebaseStorage
             final String _originalUrl =
-                await _authController.uploadUserImgToFbStorage(
+                await _authController.uploadImgToFbStorage(
                     imageFile: io.File(
                         widget.userProfileController.userImg.value!.path));
             // we set our original FirebaseStorage Url in our controller.
@@ -318,7 +318,7 @@ class _UserProfileState extends State<UserProfile>
             // ------------------- Compressed Version -----------------//
             // put the compressed file to firebaseStorage
             final String _compressedUrl =
-                await _authController.uploadUserImgToFbStorage(
+                await _authController.uploadImgToFbStorage(
                     imageFile: compressedFile, isCompressed: true);
             // we set our _compressed FirebaseStorage Url in our controller.
             widget.userProfileController.compressedImgUrl = _compressedUrl;

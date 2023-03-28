@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
@@ -53,13 +54,13 @@ class _ReviewCardState extends State<ReviewCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(widget.review.customer?.name ?? "",
-                            style: Get.textTheme.bodyLarge),
+                            style: context.txt.bodyLarge),
                         SizedBox(
                           height: 2,
                         ),
                         Text(
                           widget.review.reviewTime.timeAgo().capitalizeFirst!,
-                          style: Get.textTheme.titleMedium?.copyWith(
+                          style: context.txt.titleMedium?.copyWith(
                               fontWeight: FontWeight.w500,
                               color: Color(0XFF494949)),
                         ),
@@ -83,7 +84,7 @@ class _ReviewCardState extends State<ReviewCard> {
             ),
             Text(
               widget.review.comment?.inCaps ?? "",
-              style: Get.textTheme.bodyMedium,
+              style: context.txt.bodyMedium,
             ),
             SizedBox(
               height: 5,

@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
-import { CourierRequest } from "../../../../delivery/createCourierOrder";
+import { CourierRequest, CreateCourierError } from "../../../../delivery/createCourierOrder";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { AppType } from "../../../models/Generic/Generic";
+import { AppType, MezError } from "../../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { CourierOrder } from "../../../models/Services/Courier/Courier";
@@ -37,7 +36,7 @@ export async function createNewCourierOrder(
                     "coordinates": [courierRequest.fromLocationGps.lng, courierRequest.fromLocationGps.lat ],
                 }): undefined,
                 from_location_text: courierRequest.fromLocationText,
-                to_location_adress: courierRequest.toLocation.address,
+                to_location_address: courierRequest.toLocation.address,
                 to_location_gps: JSON.stringify({
                     "type": "Point",
                     "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat ],
@@ -84,7 +83,7 @@ export async function createNewCourierOrder(
                                 }
                             }
                         },
-                        delivery_cost: courierRequest.deliveryCost,
+                        delivery_cost: courierRequest.deliveryCost ?? 0,
                         
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: courierRequest.deliveryCompanyId,
@@ -110,10 +109,7 @@ export async function createNewCourierOrder(
         }]
     });
     if(response.insert_delivery_courier_order_one == null) {
-        throw new HttpsError(
-            "internal",
-            "order creation error"
-        );
+        throw new MezError(CreateCourierError.OrderCreationError);
     }
 
     return {
@@ -138,7 +134,7 @@ export async function createNewCourierOrder(
             paymentType: PaymentType.Cash,
             status: DeliveryOrderStatus.OrderReceived,
             customerId,
-            deliveryCost: courierRequest.deliveryCost,
+            deliveryCost: courierRequest.deliveryCost ?? 0,
             packageCost,
             orderTime: response.insert_delivery_courier_order_one.order_time,
             tripDistance : courierRequest.tripDistance,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
@@ -44,7 +45,7 @@ class CardSummaryCard extends StatelessWidget {
                 width: Get.width,
                 child: Text(
                   "${_i18n()["orderSummary"]}",
-                  style: Get.textTheme.bodyText1,
+                  style: context.txt.bodyText1,
                 ),
               ),
               SizedBox(height: 4),
@@ -56,8 +57,8 @@ class CardSummaryCard extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        child:
-                            Text("${_i18n()["orderCost"]}", style: txt.bodyText2),
+                        child: Text("${_i18n()["orderCost"]}",
+                            style: txt.bodyText2),
                       ),
                     ),
                     Expanded(
@@ -129,7 +130,8 @@ class CardSummaryCard extends StatelessWidget {
                       Expanded(
                         child: Container(
                           alignment: Alignment.centerRight,
-                          child: Text(controller.cart.stripeFees.toPriceString(),
+                          child: Text(
+                              controller.cart.stripeFees.toPriceString(),
                               style: txt.bodyText2),
                         ),
                       )

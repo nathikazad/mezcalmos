@@ -2,20 +2,20 @@
 // import 'package:intl/intl.dart';
 // import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as cloudFunctionModels;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/BankInfo.dart';
 
-enum PaymentType { Cash, Card, BankTransfer }
+// enum PaymentType { Cash, Card, BankTransfer }
 
 extension ParsePaymentTypeToString on PaymentType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
+  // String toFirebaseFormatString() {
+  //   final String str = toString().split('.').last;
 
-    return str[0].toLowerCase() + str.substring(1);
-  }
+  //   return str[0].toLowerCase() + str.substring(1);
+  // }
 
   String toNormalString() {
     final String str = toString().split('.').last;
@@ -23,20 +23,20 @@ extension ParsePaymentTypeToString on PaymentType {
     return str;
   }
 
-  cloudFunctionModels.PaymentType toFirebaseFormatEnum() {
+  PaymentType toFirebaseFormatEnum() {
     switch (this) {
       case PaymentType.Cash:
-        return cloudFunctionModels.PaymentType.Cash;
+        return PaymentType.Cash;
       case PaymentType.Card:
-        return cloudFunctionModels.PaymentType.Card;
+        return PaymentType.Card;
       default:
-        return cloudFunctionModels.PaymentType.Card;
+        return PaymentType.Card;
     }
   }
 }
 
 extension ParseStringToPaymentType on String {
-  PaymentType toPaymentType() {
+  PaymentType convertToPaymentType() {
     return PaymentType.values.firstWhere((PaymentType e) =>
         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
@@ -141,9 +141,9 @@ class PaymentInfo {
       PaymentType.BankTransfer: false,
       PaymentType.Cash: true
     };
-  
+
     acceptedPayments?.forEach((String key, data) {
-      _acceptedPayments[key.toPaymentType()] = data;
+      _acceptedPayments[key.convertToPaymentType()] = data;
     });
     StripeInfo? stripe;
     if (_acceptedPayments[PaymentType.Card] == true && stripeInfo != null) {
@@ -208,7 +208,7 @@ class PaymentInfo {
   Map<PaymentType, bool> parseAcceptedPayments(data) {
     final Map<PaymentType, bool> result = {};
     data.forEach((String key, data) {
-      result[key.toPaymentType()] = data;
+      result[key.convertToPaymentType()] = data;
     });
     return result;
   }

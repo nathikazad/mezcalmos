@@ -13,6 +13,16 @@ export interface Review {
   toEntityType: string
 }
 
+export class MezError extends Error {
+  details: Record<string, any>;
+  constructor(message: string, details: Record<string, any> = {}){
+    super(message);
+    this.details = details;      
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
 export enum Language {
   EN = "en",
   ES = "es",
@@ -20,12 +30,12 @@ export enum Language {
 
 export enum AppType {
   Customer = "customer",
-  RestaurantApp = "restaurant",
-  DeliveryApp = "delivery",
+  Restaurant = "restaurant",
+  Delivery = "delivery",
   DeliveryAdmin = "deliveryAdmin",
   MezAdmin = "mezAdmin",
-  LaundryApp = "laundry",
-  BusinessApp = "business",
+  Business = "business",
+  Laundry = "laundry",
 }
 export enum CustomerAppType {
   Native = "native",

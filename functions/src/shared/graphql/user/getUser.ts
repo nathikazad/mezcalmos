@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Language } from "../../models/Generic/Generic";
+import { Language, MezError } from "../../models/Generic/Generic";
 import { UserInfo } from "../../models/Generic/User";
 
 export async function getUser(userId: number): Promise<UserInfo> {
@@ -20,10 +19,7 @@ export async function getUser(userId: number): Promise<UserInfo> {
         }]
     });
     if(response.user_by_pk == null) {
-        throw new HttpsError(
-            "internal",
-            "User not found"
-        );
+        throw new MezError("userNotFound");
     }
     let user: UserInfo = {
         id: userId,

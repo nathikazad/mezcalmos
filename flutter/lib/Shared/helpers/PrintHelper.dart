@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/env.dart';
 
 void mezDbgPrint(log, {bool showMilliSeconds = false}) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
@@ -35,7 +37,7 @@ void logLongString(String s) {
   int endIndex = n;
   while (startIndex < s.length) {
     if (endIndex > s.length) endIndex = s.length;
-    mezDbgPrint(s.substring(startIndex, endIndex));
+    mezDbgPrint(s.substring(startIndex, endIndex) + "\n --END -- \n");
     startIndex += n;
     endIndex = startIndex + n;
   }
@@ -52,7 +54,7 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
 
 void logCrashes({required String crashInfos}) {
   final UserInfo? user = Get.find<AuthController>().user;
-  if (user != null && getAppLaunchMode() == AppLaunchMode.prod) {
+  if (user != null && MezEnv.appLaunchMode == AppLaunchMode.prod) {
     Get.find<FirebaseDb>()
         .firebaseDatabase
         .ref()
@@ -60,9 +62,9 @@ void logCrashes({required String crashInfos}) {
             '/crashes/${user.firebaseId}/${DateTime.now().millisecondsSinceEpoch}/')
         .set(
       <String, dynamic>{
-        "platform": Platform.operatingSystem,
-        "app": getAppName(),
-        "version": getLocalVersionName(),
+        "platform": kIsWeb ? "Web" : Platform.operatingSystem,
+        "app": PlatformOSHelper.getAppName,
+        "version": PlatformOSHelper.getAppVersion,
         "details": crashInfos
       },
     );
@@ -94,6 +96,5 @@ void runMainGuarded(Function runMain) {
 }
 
 void throwError(error) {
-  mezDbgPrint("ERROR =================>$error");
   throw Exception(" ======🛑 Error 🛑=====  \n $error   ");
 }

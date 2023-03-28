@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
-import { LaundryRequestDetails } from "../../../../laundry/laundryRequest";
+import { LaundryRequestDetails, ReqLaundryError } from "../../../../laundry/laundryRequest";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { AppType } from "../../../models/Generic/Generic";
+import { AppType, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { LaundryOrder, LaundryOrderStatus } from "../../../models/Services/Laundry/LaundryOrder";
@@ -19,7 +18,7 @@ export async function createLaundryOrder(
     let laundryOperatorsDetails = laundryStore.operators?.map((v) => {
         return {
             participant_id: v.userId,
-            app_type_id: AppType.LaundryApp
+            app_type_id: AppType.Laundry
         };
     }) ?? [];
 
@@ -123,10 +122,7 @@ export async function createLaundryOrder(
     })
 
     if(response.insert_laundry_order_one == null) {
-        throw new HttpsError(
-            "internal",
-            "order creation error"
-        );
+        throw new MezError(ReqLaundryError.OrderCreationError);
     }
     let laundryOrder: LaundryOrder = {
         orderId: response.insert_laundry_order_one.id,
@@ -149,10 +145,7 @@ export async function createLaundryOrder(
 
     if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
         if(response.insert_laundry_order_one.from_customer_delivery == null) {
-            throw new HttpsError(
-                "internal",
-                "order creation error"
-            );
+            throw new MezError(ReqLaundryError.OrderCreationError);
         }
         laundryOrder.fromCustomerDeliveryId = response.insert_laundry_order_one.from_customer_delivery.id;
         return {

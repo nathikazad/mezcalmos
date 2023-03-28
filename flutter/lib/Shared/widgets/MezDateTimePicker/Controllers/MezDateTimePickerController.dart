@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -227,7 +227,7 @@ class MezDateTimePickerController {
 
   // Confirm CallBack //
 
-  void confirmCallBack() {
+  void confirmCallBack(BuildContext context) {
     final DateTime date = DateTime(
       pickedDate.value!.year,
       pickedDate.value!.month,
@@ -236,6 +236,6 @@ class MezDateTimePickerController {
       minutes.value!,
     );
 
-    MezRouter.back(result: date);
+    Navigator.pop(context, date);
   }
 }

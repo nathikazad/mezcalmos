@@ -1,7 +1,6 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -14,10 +13,11 @@ import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
@@ -94,7 +94,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromCamera"]}",
-                                style: Get.textTheme.bodyText1),
+                                style: context.txt.bodyText1),
                           ),
                         ],
                       ),
@@ -117,7 +117,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromGallery"]}",
-                                style: Get.textTheme.bodyText1),
+                                style: context.txt.bodyText1),
                           ),
                         ],
                       ),

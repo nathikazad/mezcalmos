@@ -2,17 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/controllers/CustLaundryOrderRequestViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -22,6 +24,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 
 class CustLaundryOrderRequestView extends StatefulWidget {
   const CustLaundryOrderRequestView({Key? key}) : super(key: key);
+
+  static Future<void> navigate({required int laundryId}) {
+    return MezRouter.toPath(LaundryRoutes.laundryOrderRequestRoute
+        .replaceAll(":laundryId", laundryId.toString()));
+  }
 
   @override
   State<CustLaundryOrderRequestView> createState() =>
@@ -33,9 +40,20 @@ class _CustLaundryOrderRequestViewState
   CustLaundryOrderRequestViewController viewController =
       CustLaundryOrderRequestViewController();
 
+  late final Laundry? _laundry;
+
   @override
   void initState() {
-    viewController.init(laundry: Get.arguments);
+    final int? laundryId =
+        int.tryParse(MezRouter.urlArguments["laundryId"].toString());
+
+    if (laundryId != null) {
+      Future(() async {
+        _laundry = await get_laundry_store_by_id(id: laundryId);
+        await viewController.init(laundry: _laundry!);
+      });
+    }
+
     super.initState();
   }
 
@@ -48,7 +66,7 @@ class _CustLaundryOrderRequestViewState
           onClick: MezRouter.back,
           titleWidget: Obx(() => Text(
                 viewController.laundry.value?.info.name ?? "",
-                style: Get.textTheme.headline3,
+                style: context.txt.displaySmall,
               )),
         ),
         body: Obx(
@@ -75,7 +93,7 @@ class _CustLaundryOrderRequestViewState
                             height: 20,
                           ),
                           Text(viewController.laundry.value!.info.name,
-                              style: Get.textTheme.headlineSmall),
+                              style: context.txt.headlineSmall),
                           SizedBox(
                             height: 9,
                           ),
@@ -98,7 +116,7 @@ class _CustLaundryOrderRequestViewState
                                   viewController
                                       .laundry.value!.info.location.address,
                                   maxLines: 2,
-                                  style: Get.textTheme.titleSmall,
+                                  style: context.txt.titleSmall,
                                 ),
                               )
                             ],
@@ -159,7 +177,7 @@ class _CustLaundryOrderRequestViewState
                                     width: Get.width,
                                     child: Text(
                                       "${_i18n()["summaryText"]}",
-                                      style: Get.textTheme.bodyText1,
+                                      style: context.txt.bodyLarge,
                                     ),
                                   ),
                                   SizedBox(height: 4),
@@ -176,18 +194,18 @@ class _CustLaundryOrderRequestViewState
                                           child: Container(
                                             child: Text(
                                                 "${_i18n()["deliveryCost"]}",
-                                                style: Get.textTheme.bodyText2),
+                                                style: context.txt.bodyMedium),
                                           ),
                                         ),
                                         (viewController.shippingCost.value !=
                                                 null)
                                             ? Text(
-                                                "${(viewController.shippingCost.value! * 2).toPriceString()}",
-                                                style: Get.textTheme.bodyText2,
+                                                "${(viewController.shippingCost.value!).toPriceString()} x 2",
+                                                style: context.txt.bodyMedium,
                                               )
                                             : Text(
                                                 "_",
-                                                style: Get.textTheme.bodyText2,
+                                                style: context.txt.bodyMedium,
                                               ),
                                       ],
                                     ),
@@ -231,7 +249,7 @@ class _CustLaundryOrderRequestViewState
           ),
           Card(
             child: TextField(
-              style: Get.textTheme.titleMedium?.copyWith(
+              style: context.txt.titleMedium?.copyWith(
                 color: blackColor,
               ),
               controller: viewController.orderNote,
@@ -239,8 +257,7 @@ class _CustLaundryOrderRequestViewState
               minLines: 3,
               decoration: InputDecoration(
                 hintText: "${_i18n()["noteHint"]}",
-                hintStyle:
-                    Get.textTheme.titleMedium?.copyWith(color: blackColor),
+                hintStyle: context.txt.titleMedium?.copyWith(color: blackColor),
                 filled: true,
                 fillColor: Theme.of(context).primaryColor,
               ),
@@ -255,11 +272,13 @@ class _CustLaundryOrderRequestViewState
     return Card(
       child: InkWell(
         onTap: () async {
-          final MezLocation? currentLoc =
-              await MezRouter.toNamed(kPickLocationNotAuth) as MezLocation?;
-          if (currentLoc != null) {
-            viewController.switchLocation(currentLoc);
-          }
+          // TODO M66ARE NEW LOC
+          // final MezLocation? currentLoc =
+          //     await MezRouter.toNamed(PickLocationRoutes.pickLocationNotAuth)
+          //         as MezLocation?;
+          // if (currentLoc != null) {
+          //   viewController.switchLocation(currentLoc);
+          // }
         },
         child: Container(
           padding: const EdgeInsets.all(8),
@@ -303,16 +322,11 @@ class _CustLaundryOrderRequestViewState
           if (viewController.isUserSignedIn) {
             final num? res = await viewController.createLaundryOrder();
             if (res != null) {
-              popEverythingAndNavigateTo(
-                getLaundryOrderRoute(
-                  res.toInt(),
-                ),
-              );
+              await MezRouter.popEverythingTillBeforeHome().then((value) =>
+                  CustLaundryOrderView.navigate(orderId: res.toInt()));
             }
           } else {
-            Get.find<AuthController>().preserveNavigationStackAfterSignIn =
-                true;
-            await MezRouter.toNamed<void>(kSignInRouteOptional);
+            await SignInView.navigateAtOrderTime();
           }
         },
       ),
@@ -329,7 +343,7 @@ class _CustLaundryOrderRequestViewState
             flex: 1,
             child: Text(
               item.name[userLanguage]?.toString().inCaps ?? "",
-              style: Get.textTheme.bodyMedium,
+              style: context.txt.bodyMedium,
               maxLines: 1,
             ),
           ),
@@ -338,7 +352,7 @@ class _CustLaundryOrderRequestViewState
           ),
           Text(
             "${item.cost.toPriceString()}/KG",
-            style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+            style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
           )
         ],
       ),

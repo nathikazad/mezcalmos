@@ -18,6 +18,7 @@ class CustomerCartController extends GetxController {
 // instances //
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
   AuthController _auth = Get.find<AuthController>();
+  //
   Rxn<Cart> cart = Rxn<Cart>();
   // streams //
   StreamSubscription<Cart?>? cartStream;
@@ -41,10 +42,15 @@ class CustomerCartController extends GetxController {
         if (event != null) {
           mezDbgPrint(
               "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length}");
-          cart.value?.cartItems.clear();
-          cart.value?.cartItems.addAll(event.cartItems);
+          if (cart.value != null) {
+            cart.value?.cartItems.clear();
+            cart.value?.cartItems.addAll(event.cartItems);
 
-          cart.value?.restaurant = event.restaurant;
+            cart.value?.restaurant = event.restaurant;
+          } else {
+            cart.value = event;
+          }
+
           _handlerRestaurantId();
           mezDbgPrint(
               "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
@@ -103,7 +109,9 @@ class CustomerCartController extends GetxController {
   }
 
   Future<bool> updateCartItem(CartItem cartItem) async {
-    await update_cart_item(cartItem: cartItem, id: cartItem.idInCart!);
+    if (cartItem.idInCart != null) {
+      await update_cart_item(cartItem: cartItem, id: cartItem.idInCart!);
+    }
     return true;
   }
 
@@ -159,9 +167,9 @@ class CustomerCartController extends GetxController {
           await CloudFunctions.restaurant2_checkoutCart(
               customerAppType: cloudFunctionModels.CustomerAppType.Native,
               customerLocation: cloudFunctionModels.Location(
-                  cart.value?.toLocation!.latitude,
-                  cart.value?.toLocation!.longitude,
-                  cart.value?.toLocation!.address),
+                  lat: cart.value?.toLocation!.latitude,
+                  lng: cart.value?.toLocation!.longitude,
+                  address: cart.value?.toLocation!.address),
               deliveryCost: cart.value!.shippingCost!,
               paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
               notes: cart.value?.notes,
@@ -173,6 +181,10 @@ class CustomerCartController extends GetxController {
               scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
               stripePaymentId: stripePaymentId,
               stripeFees: cart.value?.stripeFees);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
       return res.orderId;
     } catch (e, stk) {
       mezDbgPrint("error function");

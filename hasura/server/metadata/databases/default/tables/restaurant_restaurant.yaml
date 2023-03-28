@@ -95,7 +95,24 @@ select_permissions:
         - delivery_details_id
         - details_id
         - id
-      filter: {}
+      filter:
+        _or:
+          - orders:
+              delivery:
+                delivery_driver:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - _and:
+              - orders:
+                  delivery:
+                    delivery_driver_id:
+                      _is_null: true
+              - orders:
+                  delivery:
+                    delivery_company:
+                      drivers:
+                        user_id:
+                          _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:

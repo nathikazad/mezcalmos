@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/components/itemChosenChoices.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/ItemInformationCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -34,51 +34,51 @@ class CartItemsBuilder extends StatelessWidget {
             viewController: viewController,
           ),
           SizedBox(height: 9),
-          Card(
-            child: Column(
-              children: viewController.cart.cartItems.fold<List<Widget>>(
-                  <Widget>[], (List<Widget> children, CartItem cartItem) {
-                // final Rx<num> counter = cartItem.totalCost().obs;
-                children.add(Container(
-                  child: MyExpansionPanelComponent(
-                    child: Flexible(
-                        child: ItemInformationCart(
-                      item: cartItem,
-                      showImage: viewController.showItemsImages,
-                      imageUrl: cartItem.item.image,
-                      itemName:
-                          cartItem.item.name[userLanguage]![0].toUpperCase() +
-                              cartItem.item.name[userLanguage]!.substring(1),
-                      itemsPrice: cartItem.totalCost().toStringAsFixed(0),
-                      viewController: viewController,
-                    )),
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 9),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: buildChoices(cartItem),
-                        ),
+          Column(
+            children: viewController.cart.cartItems.fold<List<Widget>>(
+                <Widget>[], (List<Widget> children, CartItem cartItem) {
+              // final Rx<num> counter = cartItem.totalCost().obs;
+              children.add(Container(
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                child: MyExpansionPanelComponent(
+                  child: Flexible(
+                      child: ItemInformationCart(
+                    item: cartItem,
+                    showImage: viewController.showItemsImages,
+                    imageUrl: cartItem.item.image,
+                    itemName:
+                        cartItem.item.name[userLanguage]![0].toUpperCase() +
+                            cartItem.item.name[userLanguage]!.substring(1),
+                    itemsPrice: cartItem.totalCost().toStringAsFixed(0),
+                    viewController: viewController,
+                  )),
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 9),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: buildChoices(cartItem),
                       ),
-                      if (cartItem.notes != null && cartItem.notes != "")
-                        _itemNotesComponent(cartItem, context),
-                      SizedBox(
-                        height: 9,
-                      ),
-                    ],
-                    onEdit: () {
-                      mezDbgPrint(
-                          " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
-                      if (cartItem.idInCart != null)
-                        MezRouter.toNamed(editCartItemRoute(cartItem.idInCart!));
-                    },
-                  ),
-                ));
-                return children;
-              }),
-            ),
+                    ),
+                    if (cartItem.notes != null && cartItem.notes != "")
+                      _itemNotesComponent(cartItem, context),
+                    SizedBox(
+                      height: 9,
+                    ),
+                  ],
+                  onEdit: () {
+                    mezDbgPrint(
+                        " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
+                    if (cartItem.idInCart != null)
+                      CustItemView.navigateToCartItem(
+                          cartItemId: cartItem.idInCart!);
+                  },
+                ),
+              ));
+              return children;
+            }),
           ),
-         // SizedBox(height: 15),
+          // SizedBox(height: 15),
         ],
       ),
     );
@@ -95,7 +95,7 @@ class CartItemsBuilder extends StatelessWidget {
           Container(
             child: Text(
               "${_i18n()["itemNotes"]}",
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
           ),
           SizedBox(
@@ -104,7 +104,7 @@ class CartItemsBuilder extends StatelessWidget {
           Container(
             child: Text(
               cartItem.notes!,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
         ],

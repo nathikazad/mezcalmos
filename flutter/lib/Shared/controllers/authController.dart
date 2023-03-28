@@ -7,19 +7,15 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -48,15 +44,15 @@ class AuthController extends GetxController {
 
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
-  bool preserveNavigationStackAfterSignIn = false;
-
+  bool userRedirectFinish = false;
   @override
   void onInit() {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    mezDbgPrint('Auth controller init!');
     _auth.authStateChanges().listen((fireAuth.User? user) async {
+      mezDbgPrint('Auth controller init! 👋👋👋👋👋');
+      userRedirectFinish = false;
       if (user?.toString() == _previousUserValue) {
         mezDbgPrint(
             'Authcontroller:: same sign in event fired again, skipping it');
@@ -131,24 +127,6 @@ class AuthController extends GetxController {
     return difference.length > 0;
   }
 
-  Future<void> saveNotificationToken() async {
-    final String? deviceNotificationToken =
-        await Get.find<BackgroundNotificationsController>().getToken();
-    try {
-      if (deviceNotificationToken != null) {
-        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
-        // ignore: unawaited_futures
-        insert_notif_info(
-            userId: hasuraUserId!,
-            token: deviceNotificationToken,
-            appType: Get.find<SettingsController>().appType.toHasuraString());
-      }
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
-  }
-
   Future<void> fetchUserInfoFromHasura() async {
     mezDbgPrint(
         "[777] fetchingUser Info from hasure using firebaseid : ${fireAuthUser?.uid} \n hasura id : $hasuraUserId ");
@@ -194,8 +172,9 @@ class AuthController extends GetxController {
   /// This Functions takes a File (Image) and an optional [isCompressed]
   ///
   /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
-  Future<String> uploadUserImgToFbStorage({
+  Future<String> uploadImgToFbStorage({
     required File imageFile,
+    String? path,
     bool isCompressed = false,
   }) async {
     File compressedFile = imageFile;
@@ -211,7 +190,7 @@ class AuthController extends GetxController {
     }
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
-    final String imgPath =
+    final String imgPath = path ??
         "users/$hasuraUserId/avatar/$hasuraUserId.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance

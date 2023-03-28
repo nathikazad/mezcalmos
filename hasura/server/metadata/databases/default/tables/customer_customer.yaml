@@ -61,6 +61,12 @@ insert_permissions:
         - app_version
         - user_id
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - service_provider_type
+        - user_id
+      filter: {}
   - role: customer
     permission:
       columns:
@@ -73,11 +79,7 @@ select_permissions:
     permission:
       columns:
         - user_id
-      filter:
-        deliveries:
-          delivery_driver:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: delivery_operator
     permission:
       columns:

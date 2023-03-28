@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
-["MezClearButton"];
+    ["MezClearButton"];
 
 class MezClearButton extends StatelessWidget {
   final GestureTapCallback onTapFunction;

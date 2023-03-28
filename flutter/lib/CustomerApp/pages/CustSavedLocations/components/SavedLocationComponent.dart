@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -47,7 +49,7 @@ class SavedLocationComponent extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(savelocation.name.capitalizeFirst.toString(),
-                      style: Get.textTheme.headlineMedium),
+                      style: context.txt.headlineMedium),
                 ),
                 InkWell(
                   onTap: () {
@@ -85,13 +87,17 @@ class SavedLocationComponent extends StatelessWidget {
                   width: 11,
                 ),
                 InkWell(
-                  onTap: () {
-                    MezRouter.toNamed<void>(
-                      kPickLocationEditRoute,
-                      parameters: <String, String>{
-                        // TODO:544D-HASURA
-// added to.String()
-                        "id": savelocation.id!.toString()
+                  onTap: () async {
+                    MezLocation? newLoc = await PickLocationView.navigate(
+                      initialLocation: savelocation.location.toLatLng(),
+                      onSaveLocation: ({MezLocation? location}) async {
+                        if (location != null) {
+                          await savedLocationDailog(
+                              context: context,
+                              loc: location,
+                              savedLoc: savelocation,
+                              skippable: false);
+                        }
                       },
                     );
                   },
@@ -146,7 +152,7 @@ class SavedLocationComponent extends StatelessWidget {
               margin: const EdgeInsets.only(top: 5),
               child: Text(
                 savelocation.location.address,
-                style: Get.textTheme.titleMedium?.copyWith(
+                style: context.txt.titleMedium?.copyWith(
                   color: offShadeGreyColor,
                   fontWeight: FontWeight.w600,
                 ),

@@ -3,14 +3,14 @@ import * as functions from "firebase-functions";
 
 import * as fs from 'fs';
 import { getHasura } from "../../../../functions/src/utilities/hasura";
-import { insertRestaurants } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
+import { insertRestaurants, insertRestaurantStripeInfo } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
 import { insertRestaurantOrders } from "../../../../functions/src/shared/graphql/restaurant/order/insertRestaurantOrders"
 import { insertRestaurantOperators } from "../../../../functions/src/shared/graphql/restaurant/operators/insertRestaurantOperators"
 import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/delivery/driver/insertDeliveryDrivers"
 import { insertCustomers } from "../../../../functions/src/shared/graphql/user/customer/insertCustomers"
 import { insertLaundryStores } from "../../../../functions/src/shared/graphql/laundry/insertLaundry"
 import { insertLaundryOrders } from "../../../../functions/src/shared/graphql/laundry/order/insertLaundryOrders"
-
+import { insertServiceLinks } from "../../../../functions/src/shared/graphql/insertServiceLinks"
 
 import { insertUsers } from "../../../../functions/src/shared/graphql/user/insertUsers"
 import { Language } from "../../../../functions/src/shared/models/Generic/Generic";
@@ -18,10 +18,26 @@ import { Language } from "../../../../functions/src/shared/models/Generic/Generi
 // process.env.FUNCTIONS_EMULATOR = "true";
 var serviceAccount = require("./../../../../../../../../service_account_production.json");
 
-const firebase = firebaseAdmin.initializeApp({
+const firebaseConfig = {
+  apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+  authDomain: "mezcalmos-31f1c.firebaseapp.com",
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-}, "production");
+  projectId: "mezcalmos-31f1c",
+  storageBucket: "mezcalmos-31f1c.appspot.com",
+  messagingSenderId: "804036698204",
+  appId: "1:804036698204:web:39b22436cbb4ef633f8699",
+  measurementId: "G-5R20EL7CL9",
+  credential: firebaseAdmin.credential.cert("/home/sanchit/Work/mezcalmos/service_account_production.json")
+};
+
+const firebase = firebaseAdmin.initializeApp(
+  firebaseConfig
+//   {
+//   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+//   credential: firebaseAdmin.credential.cert(serviceAccount),
+// }
+)
+// , "production");
 
 functions.config()
 
@@ -36,6 +52,22 @@ async function saveFile() {
   let data = JSON.stringify(db, null, "\t");
   fs.writeFileSync("./data/db-snapshot-laundry-orders.json", data);
   console.log("Finished");
+
+  // let chain = getHasura();
+  // let response = await chain.query({
+  //   service_provider_details: [{}, {
+  //     name: true,
+  //     id: true
+  //   }]
+  // })
+  // let detailsIds: Record<string, number> = {};
+  // response.service_provider_details.forEach((d) => {
+  //   // if(!d.unique_id || !d.service_link_id)
+  //   //   return;
+  //   detailsIds[d.name] = d.id;
+  // })
+  // fs.writeFileSync("./details-Ids.json", JSON.stringify(detailsIds));
+
 }
 async function writeToDB() {
 
@@ -44,9 +76,10 @@ async function writeToDB() {
 //   // await deleteOrders()
 //   // return
   let restaurants = JSON.parse(fs.readFileSync('./data/db-snapshot.json').toString());
-  
+  // let serviceLinkIds: Record<string, number> = JSON.parse(fs.readFileSync('./service-link-Ids.json').toString());
   // let drivers = data.taxiDrivers
   // let users = data.users
+  let chain = getHasura();
 
   let array = []
   for(let restaurantFirebaseId in restaurants) {
@@ -127,9 +160,32 @@ async function writeToDB() {
                 optionArray.push(optionObject);
               }
             }
-
+            if(!item.image)
+              continue;
+            await chain.mutation({
+              update_restaurant_item: [{
+                where: {
+                  name: {
+                    translations: {
+                      // language_id: {
+                      //   _eq: "en"
+                      // },
+                      value: {
+                        _eq: item.name.en
+                      }
+                    }
+                  }
+                },
+                _set: {
+                  image: item.image
+                }
+              }, {
+                affected_rows: true
+              }]
+            })
             let itemObject = {
               name: item.name,
+              image: item.image,
               description: item.description,
               position: item.position,
               available: item.available,
@@ -140,6 +196,8 @@ async function writeToDB() {
             // break;
           }
         }
+        console.log(itemArray.length)
+
         let categoryObject = {
           name: category.name,
           description: category.dialog,
@@ -160,14 +218,15 @@ async function writeToDB() {
       // languageId: restaurant.details.language.primary,
       approved: restaurant.state.authorizationStatus == "authorized",
       schedule: JSON.stringify(restaurant.details.schedule),
-      categories: (categoryArray.length) ? categoryArray : null
+      categories: (categoryArray.length) ? categoryArray : null,
+      uniqueId: restaurant.info.name.split(" ").join("").slice(0, 8).toLowerCase()
     }
     array.push(restaurantObject);
     // break;
   }
   // console.log( JSON.stringify(array[0].categories![0].items[0].options![0]))
-  insertRestaurants(array);
-
+  // insertRestaurants(array);
+  // insertRestaurantStripeInfo(restaurants)
 
 
 //   let driversArray = []
@@ -270,7 +329,7 @@ async function writeToDB() {
 async function writeToDBUsers() {
 
   
-  let users = JSON.parse(fs.readFileSync('./data/db-snapshot-users.json').toString());
+  let users = JSON.parse(fs.readFileSync('./data/db-snapshot-restaurant-operators.json').toString());
 
   let array = []
   for (let userId in users) {
@@ -398,10 +457,10 @@ async function writeToDBRestoOrders() {
         }
     }]
 });
-  // for(let i=1400; i<3200; i+=200) {
+  // for(let i=0; i<3600; i+=200) {
   //   console.log(i)
     let array = []
-    for (let orderId of Object.keys(orders).slice(3200, 3338)) {
+    for (let orderId of Object.keys(orders).slice(3600, 3691)) {
       let order = orders[orderId]
       if (!order)
         continue
@@ -623,11 +682,12 @@ async function writeToDBCustomers() {
 
 // insertDeliveryPartners()
   // saveFile()
-  // writeToDB()  
+  writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
 // writeToDBDeliDrivers()
 // writeToDBCustomers()
 // writeToDBRestoOrders()
 // writeToDBLaundry()
-writeToDBLaundryOrders()
+// writeToDBLaundryOrders()
+// insertServiceLinks()

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
@@ -50,6 +51,12 @@ class LaundryAppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         fillColor: Colors.grey.shade200,
+        errorStyle: TextStyle(
+          fontFamily: "Nunito",
+          fontWeight: FontWeight.w400,
+          fontSize: 11.sp,
+          color: Colors.red,
+        ),
         filled: true,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),

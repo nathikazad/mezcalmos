@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -10,6 +12,7 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool showOrders;
   bool canGoBack;
   Function? onClick;
+
   ROpAppBar(
       {Key? key,
       this.title,
@@ -23,6 +26,7 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
         super(key: key);
   @override
   final Size preferredSize;
+
   @override
   Widget build(BuildContext context) {
     return MezcalmosAppBar(leftBtnType,
@@ -31,6 +35,6 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
         tabBar: bottom,
         onClick: () => onClick?.call(),
         showNotifications: true,
-        ordersRoute: (showOrders) ? kPastOrdersListView : null);
+        ordersRoute: (showOrders) ? RestaurantRouter.pastOrdersRoute : null);
   }
 }

@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,7 +29,7 @@ class OrderRestaurantCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 3),
           child: Text(
             '${_i18n()["restaurant"]}',
-            style: Get.textTheme.bodyText1,
+            style: context.txt.bodyText1,
           ),
         ),
         SizedBox(
@@ -60,7 +58,7 @@ class OrderRestaurantCard extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 5),
                           child: Text(
                             order.restaurant.name,
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                         ),
                         SizedBox(
@@ -81,7 +79,7 @@ class OrderRestaurantCard extends StatelessWidget {
                               fit: FlexFit.tight,
                               child: Text(
                                 order.restaurant.location.address,
-                                style: Get.textTheme.bodyText2,
+                                style: context.txt.bodyText2,
                                 overflow: TextOverflow.visible,
                                 maxLines: 1,
                               ),
@@ -92,14 +90,7 @@ class OrderRestaurantCard extends StatelessWidget {
                     )),
                 MessageButton(
                   onTap: () {
-                    MezRouter.toNamed(
-                      getMessagesRoute(
-                        chatId: order.chatId,
-                        recipientType: ParticipantType.RestaurantOperator,
-                        orderType: OrderType.Restaurant,
-                        orderId: order.orderId,
-                      ),
-                    );
+                    BaseMessagingScreen.navigate(chatId: order.chatId);
                   },
                   chatId: order.chatId,
                 )

@@ -5,80 +5,113 @@ import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaund
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { Operator } from "../shared/models/Services/Service";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { PaymentDetails, capturePayment } from "../utilities/stripe/payment";
 import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Generic/Delivery";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
+import { MezError } from "../shared/models/Generic/Generic";
  
 // Customer Canceling
 interface CancelOrderDetails {
   orderId: number
 }
+export interface CancelLaundryResponse {
+  success: boolean,
+  error?: CancelLaundryError
+  unhandledError?: string,
+}
+enum CancelLaundryError {
+  UnhandledError = "unhandledError",
+  OrderNotFound = "orderNotFound",
+  LaundryStoreNotfound = "laundryStoreNotfound",
+  IncorrectOrderId = "incorrectOrderId",
+  OrderNotInProcess = "orderNotInProcess",
+  ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+  OrderStripeInfoNotDefined = "orderStripeInfoNotDefined",
+  ServiceProviderStripeAccountDoesNotExist = "serviceProviderStripeAccountDoesNotExist",
+  UpdateOrderStripeError = "updateOrderStripeError",
+  DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+}
 
-export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetails: CancelOrderDetails) {
+export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetails: CancelOrderDetails): Promise<CancelLaundryResponse> {
+  try {
+    let order: LaundryOrder = await getLaundryOrder(cancelOrderDetails.orderId);
+    let promiseResponse = await Promise.all([getMezAdmins(), getLaundryOperators(order.storeId)]);
 
-  let order: LaundryOrder = await getLaundryOrder(cancelOrderDetails.orderId);
-  let promiseResponse = await Promise.all([getMezAdmins(), getLaundryOperators(order.storeId)]);
+    let mezAdmins: MezAdmin[] = promiseResponse[0];
+    let laundryOperators: Operator[] = promiseResponse[1];
 
-  let mezAdmins: MezAdmin[] = promiseResponse[0];
-  let laundryOperators: Operator[] = promiseResponse[1];
+    if (order.customerId != userId) {
+      throw new MezError(CancelLaundryError.IncorrectOrderId);
+    }
+    if (!orderInProcess(order.status)) {
+      throw new MezError(CancelLaundryError.OrderNotInProcess);
+    }
 
-  if (order.customerId != userId) {
-    throw new HttpsError(
-      "internal",
-      `Order does not belong to customer`,
-    );
-  }
-  if (!orderInProcess(order.status)) {
-    throw new HttpsError(
-      "internal",
-      `Order cannot be cancelled because it is not in process`,
-    );
-  }
+    let paymentDetails: PaymentDetails = {
+      orderId: cancelOrderDetails.orderId,
+      serviceProviderDetailsId: order.spDetailsId,
+      orderStripePaymentInfo: order.stripeInfo
+    }
+    switch (order.status) {
+      case LaundryOrderStatus.OrderReceived:
+        if (order.paymentType == PaymentType.Card) {
+          capturePayment(paymentDetails, 0)
+        }
+        order.refundAmount = order.totalCost;
+        break;
+      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case LaundryOrderStatus.PickedUpFromCustomer:
+      case LaundryOrderStatus.AtLaundry:
+      case LaundryOrderStatus.ReadyForDelivery:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+      case LaundryOrderStatus.PickedUpFromLaundry:
+        if (order.paymentType == PaymentType.Card) {
+          capturePayment(paymentDetails, order.totalCost)
+        }
+        break;
+      default:
+        break;
+    }
+    // let prevStatus: LaundryOrderStatus = order.status;
 
-  let paymentDetails: PaymentDetails = {
-    orderId: cancelOrderDetails.orderId,
-    serviceProviderDetailsId: order.spDetailsId,
-    orderStripePaymentInfo: order.stripeInfo
-  }
-  switch (order.status) {
-    case LaundryOrderStatus.OrderReceived:
-      if (order.paymentType == PaymentType.Card) {
-        capturePayment(paymentDetails, 0)
+    order.status = LaundryOrderStatus.CancelledByCustomer;
+    updateLaundryOrderStatus(order);
+
+    notify(cancelOrderDetails, mezAdmins, laundryOperators);
+
+    updateDeliveryStatus(order);
+
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(CancelLaundryError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: CancelLaundryError.UnhandledError,
+          unhandledError: e.message as any
+        }
       }
-      order.refundAmount = order.totalCost;
-      break;
-    case LaundryOrderStatus.OtwPickupFromCustomer:
-    case LaundryOrderStatus.PickedUpFromCustomer:
-    case LaundryOrderStatus.AtLaundry:
-    case LaundryOrderStatus.ReadyForDelivery:
-    case LaundryOrderStatus.OtwPickupFromLaundry:
-    case LaundryOrderStatus.PickedUpFromLaundry:
-      if (order.paymentType == PaymentType.Card) {
-        capturePayment(paymentDetails, order.totalCost)
-      }
-      break;
-    default:
-      break;
+    } else {
+      throw e
+    }
   }
-  // let prevStatus: LaundryOrderStatus = order.status;
 
-  order.status = LaundryOrderStatus.CancelledByCustomer;
-  updateLaundryOrderStatus(order);
-
-  let notification = notify(cancelOrderDetails, mezAdmins, laundryOperators);
-
-  updateDeliveryStatus();
-
-  async function updateDeliveryStatus() {
+  async function updateDeliveryStatus(order: LaundryOrder) {
     if (order.deliveryType == DeliveryType.Delivery && order.fromCustomerDeliveryId) {
 
       let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId);
@@ -93,6 +126,17 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
       //   break;
       // }
       //notify driver
+      let notification: Notification = {
+        foreground: <DeliveryOrderStatusChangeNotification>{
+          status: DeliveryOrderStatus.CancelledByCustomer,
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.OrderStatusChange,
+          notificationAction: NotificationAction.ShowPopUp,
+          orderId: order.fromCustomerDeliveryId
+        },
+        background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
+        linkUrl: `/orders/${order.fromCustomerDeliveryId}`
+      };
       deliveryOperators.forEach((d) => {
         pushNotification(d.user?.firebaseId!,
           notification,
@@ -110,6 +154,17 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
         );
 
       if(order.toCustomerDeliveryId) {
+        notification = {
+          foreground: <DeliveryOrderStatusChangeNotification>{
+            status: DeliveryOrderStatus.CancelledByCustomer,
+            time: (new Date()).toISOString(),
+            notificationType: NotificationType.OrderStatusChange,
+            notificationAction: NotificationAction.ShowPopUp,
+            orderId: order.toCustomerDeliveryId
+          },
+          background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
+          linkUrl: `/orders/${order.toCustomerDeliveryId}`
+        };
         let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
 
         toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
@@ -146,5 +201,4 @@ function notify(cancelOrderDetails: CancelOrderDetails, mezAdmins: MezAdmin[], l
   laundryOperators.forEach((r) => {
     pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.LaundryOperator);
   });
-  return notification;
 }

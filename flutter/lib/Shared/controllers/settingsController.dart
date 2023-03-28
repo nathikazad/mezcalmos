@@ -29,14 +29,12 @@ class SettingsController extends GetxController {
 
   final List<SideMenuItem> sideMenuItems;
   final LocationPermissionType locationType;
-  AppType appType;
 
   ThemeController get appTheme => _appTheme;
 
   LanguageController get appLanguage => _appLanguage;
 
-  SettingsController(this.appType, this.locationType,
-      {this.sideMenuItems = const []});
+  SettingsController(this.locationType, {this.sideMenuItems = const []});
 
   @override
   Future<void> onInit() async {

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -66,6 +67,7 @@ Future<int?> add_option(
                 item_id: itemId, restaurant_id: restaurantId)
           ]),
           position: option.position,
+          cost_per_extra: option.costPerExtra.toDouble(),
           option_type: option.optionType.toFirebaseFormatString(),
           maximum_choice: option.maximumChoice.toInt(),
           minimum_choice: option.minimumChoice.toInt(),

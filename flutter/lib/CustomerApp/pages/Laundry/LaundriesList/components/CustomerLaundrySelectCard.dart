@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryScreen.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -32,15 +32,15 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            MezRouter.toNamed(getSingleLaundryRoute(laundry.info.hasuraId));
+            SingleLaundryScreen.navigate(laundryId: laundry.info.hasuraId);
           },
           child: Container(
-            child: _laundryInfoHeader(),
+            child: _laundryInfoHeader(context),
           ),
         ));
   }
 
-  Widget _laundryInfoHeader() {
+  Widget _laundryInfoHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 10, right: 5, left: 10, bottom: 10),
       alignment: Alignment.center,
@@ -67,7 +67,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                 ),
                 Text(
                   laundry.info.name,
-                  style: Get.textTheme.bodyLarge?.copyWith(
+                  style: context.txt.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -96,7 +96,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             child: ShippingCostComponent(
                                 shippingCost: _getShippingPrice(),
                                 alignment: MainAxisAlignment.start,
-                                textStyle: Get.textTheme.bodySmall),
+                                textStyle: context.txt.bodySmall),
                           ),
                         ],
                       ),
@@ -118,7 +118,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Flexible(
                               child: Text(
                                   ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                                  style: Get.textTheme.bodySmall)),
+                                  style: context.txt.bodySmall)),
                         ],
                       ),
                     ),
@@ -143,7 +143,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             Flexible(
                               child: Text(
                                   "${laundry.getCheapestCategory.toPriceString()}/kg",
-                                  style: Get.textTheme.bodySmall),
+                                  style: context.txt.bodySmall),
                             ),
                           ],
                         ),
@@ -163,8 +163,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             customerLocation, laundry.info.location.toLocationData()) /
         1000;
     final num deliveryCost =
-        ((customerDistance * laundry.deliveryCost.costPerKm) / 5).round() * 5;
-    return max(laundry.deliveryCost.minimumCost, (2 * deliveryCost));
+        ((customerDistance * laundry.deliveryCost!.costPerKm) / 5).round() * 5;
+    return max(laundry.deliveryCost!.minimumCost, (2 * deliveryCost));
   }
 
   String _getDollarsSign() {

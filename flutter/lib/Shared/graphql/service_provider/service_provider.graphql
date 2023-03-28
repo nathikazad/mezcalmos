@@ -1,5 +1,5 @@
 query getServiceProviderLinks($serviceLinkId: Int!) {
-  service_provider_service_link_by_pk(id: $id) {
+  service_provider_service_link_by_pk(id: $serviceLinkId) {
     id
     driver_deep_link
     driver_qr_image_link
@@ -22,6 +22,7 @@ query getServiceDetails($id: Int!) {
     name
     open_status
     phone_number
+    
     service_link_id
     stripe_info {
       charge_fees_on_customer
@@ -140,3 +141,17 @@ query getServicePaymentInfo($serviceDetailsId: Int!) {
     }
   }
 }
+
+query getServiceProviderType($unique_id: String!) {
+  service_provider_details(where: {unique_id: {_eq: $unique_id}}) {
+    id
+    service_provider_type
+    laundry_store {
+      id
+    }
+    restaurant {
+      id
+    }
+  }
+}
+

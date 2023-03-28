@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 //
@@ -25,7 +26,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
           children: [
             Text(
               '${_i18n()["title"]}',
-              style: Get.textTheme.headline6,
+              style: context.txt.headline6,
             ),
             const SizedBox(
               height: 4,
@@ -48,7 +49,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
                       fit: FlexFit.tight,
                       child: Text(
                         time!.getOrderTime(),
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                         maxLines: 1,
                       ),
                     ),

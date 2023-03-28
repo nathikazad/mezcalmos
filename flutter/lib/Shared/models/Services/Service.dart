@@ -1,6 +1,8 @@
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -13,6 +15,9 @@ abstract class Service {
   ServiceProviderType? serviceProviderType;
   ServiceState state;
   Map<LanguageType, bool> languages;
+  List<Review> reviews = <Review>[];
+  num? rate;
+  DeliveryCost? deliveryCost;
 
   PaymentInfo? paymentInfo;
 
@@ -25,6 +30,9 @@ abstract class Service {
       this.serviceProviderType,
       required this.state,
       required this.languages,
+      this.reviews = const [],
+      this.rate,
+      required this.deliveryCost,
       this.paymentInfo});
 
   LanguageType get primaryLanguage => languages.entries
@@ -32,6 +40,10 @@ abstract class Service {
           (MapEntry<LanguageType, bool> element) => element.value == true)
       .key;
   LanguageType get secondaryLanguage => primaryLanguage.toOpLang();
+
+  bool get showReviews {
+    return rate != null && reviews.isNotEmpty;
+  }
 }
 
 class ServiceState {
@@ -83,5 +95,6 @@ class MainService extends Service {
     required super.phoneNumber,
     required super.serviceLinkId,
     required super.serviceProviderType,
+    required super.deliveryCost,
   });
 }

@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as cloudFunctionModels;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -153,9 +154,9 @@ class CustLaundryOrderRequestViewController {
         storeId: laundryRequest.laundryId,
         customerAppType: cloudFunctionModels.CustomerAppType.Native,
         customerLocation: cloudFunctionModels.Location(
-            laundryRequest.to!.latitude,
-            laundryRequest.to!.longitude,
-            laundryRequest.to!.address),
+            lat: laundryRequest.to!.latitude,
+            lng: laundryRequest.to!.longitude,
+            address: laundryRequest.to!.address),
         deliveryCost: shippingCost.value! * 2,
         paymentType: laundryRequest.paymentType.toFirebaseFormatEnum(),
         notes: laundryRequest.notes,
@@ -165,6 +166,10 @@ class CustLaundryOrderRequestViewController {
         tripPolyline: laundryRequest.routeInformation!.polyline,
         deliveryType: cloudFunctionModels.DeliveryType.Delivery,
       );
+      if (response.success == false) {
+        mezDbgPrint(response.error);
+        showErrorSnackBar(errorText: response.error.toString());
+      }
       return response.orderId;
     } catch (e, stk) {
       mezDbgPrint("error function");

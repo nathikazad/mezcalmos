@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildCart"];
@@ -29,10 +29,7 @@ class CartItemsHeader extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  child: Text(
-                    "${_i18n()["inCart"]}",
-                    style: txt.bodyText1
-                  ),
+                  child: Text("${_i18n()["inCart"]}", style: txt.bodyLarge),
                 ),
               ),
               Expanded(
@@ -62,7 +59,7 @@ class CartItemsHeader extends StatelessWidget {
 
                               await viewController.cartController.clearCart();
 
-                              MezRouter.popDialog<void>();
+                              await MezRouter.back();
                             });
                           },
                           child: const Icon(

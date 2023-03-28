@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,6 +14,7 @@ class UnautthDriverViewController {
 
   // obs
   Rxn<AgentStatus> _status = Rxn();
+  AgentStatus? get status => _status.value;
 
   // stream sub
   StreamSubscription<AgentStatus>? statusStream;
@@ -24,7 +23,8 @@ class UnautthDriverViewController {
   Future<void> init() async {
     await dvAuthController.setupDeliveryDriver();
     _status.value = dvAuthController.driver?.deliveryDriverState.status;
-    if (_status.value! == AgentStatus.Awaiting_approval) {
+    if (_status.value != null &&
+        _status.value! == AgentStatus.AwaitingApproval) {
       _startListeningOnSatus();
     }
   }
@@ -54,7 +54,7 @@ class UnautthDriverViewController {
     if (_status.value == AgentStatus.Authorized) {
       await dvAuthController.setupDeliveryDriver();
       // ignore: inference_failure_on_function_invocation, unawaited_futures
-      MezRouter.offAndToNamed(kCurrentOrdersListRoute);
+      // MezRouter.popEverythingTillBeforeHome().then((value) => DvOpCurrentOrdersListView().navigate());
     }
   }
 

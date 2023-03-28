@@ -26,7 +26,8 @@ export interface ServiceProvider {
   deliveryPartnerId?: number;
   deliveryDetails: DeliveryDetails;
   operators?: Operator[];
-  serviceProviderType?: ServiceProviderType;
+  serviceProviderType: ServiceProviderType;
+  uniqueId?: string;
 }
 
 export interface Operator {
@@ -35,6 +36,7 @@ export interface Operator {
   serviceProviderId: number;
   userId: number;
   status: AuthorizationStatus;
+  online: boolean,
   owner?: boolean;
   appVersion?: string;
   currentGps?: Location;
@@ -82,7 +84,8 @@ export enum ServiceProviderType {
   Restaurant = "restaurant",
   Laundry = "laundry",
   Taxi = "taxi",
-  Business = "business"
+  Business = "business",
+  Delivery = "delivery",
 }
 
 export interface OperatorApprovedNotification extends ForegroundNotification {

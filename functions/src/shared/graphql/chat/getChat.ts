@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Chat, Participant, AppParticipant } from "../../models/Generic/Chat";
-import { AppType, Language } from "../../models/Generic/Generic";
+import { Chat, Participant, AppParticipant, ChatType } from "../../models/Generic/Chat";
+import { AppType, Language, MezError } from "../../models/Generic/Generic";
 
 export async function getChatParticipant(chatId: number): Promise<Participant> {
     const chain = getHasura();
@@ -74,10 +74,7 @@ export async function getChat(chatId: number): Promise<Chat> {
         }]
     });
     if (!(response.chat_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "chat not found"
-        );
+        throw new MezError("chatNotFound");
     }
     let participants: Participant[] = response.chat_by_pk.chat_participants.map((p) => {
         return <Participant>{
@@ -94,9 +91,9 @@ export async function getChat(chatId: number): Promise<Chat> {
             } : null
         }
     })
-    return <Chat>{
+    return {
         participants: participants,
         chatInfo: JSON.parse(response.chat_by_pk.chat_info),
-        chatType: response.chat_by_pk.chat_type
+        chatType: response.chat_by_pk.chat_type as ChatType
     };
 }

@@ -1,24 +1,26 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/mapInitHelper.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DvOrderViewcontroller {
@@ -26,6 +28,9 @@ class DvOrderViewcontroller {
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
+  TextEditingController openOrderPriceText = TextEditingController();
+  TextEditingController openOrderReasonText = TextEditingController();
+  GlobalKey<FormState> updatePriceFormKey = GlobalKey<FormState>();
 
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
@@ -41,18 +46,30 @@ class DvOrderViewcontroller {
     return _order.value!.status;
   }
 
-  bool get isLaundry {
-    return order.orderType == OrderType.Laundry;
+  bool get showEditPrice {
+    return (order.orderType == OrderType.Courier ||
+            order.orderType == OrderType.Laundry) &&
+        order.isDriverAssigned &&
+        order.status == DeliveryOrderStatus.OrderReceived;
+  }
+
+  bool get isLaundryPickup {
+    return order.orderType == OrderType.Laundry &&
+        order.deliveryDirection == DeliveryDirection.FromCustomer;
+  }
+
+  bool get isCourier {
+    return order.orderType == OrderType.Courier;
   }
 
   DeliveryOrder get order => _order.value!;
   bool get hasData => _order.value != null;
   bool get inPickupPhase =>
       _order.value!.deliveryDirection == DeliveryDirection.FromCustomer;
-  bool get pickuSetted => _order.value?.estimatedArrivalAtPickupTime != null;
-  bool get dropoffSetted => _order.value?.estimatedArrivalAtDropoffTime != null;
-  DateTime? get pickupTime => _order.value?.estimatedArrivalAtPickupTime;
-  DateTime? get dropoffTime => _order.value?.estimatedArrivalAtDropoffTime;
+  bool get pickuSetted => _order.value?.estimatedArrivalAtPickup != null;
+  bool get dropoffSetted => _order.value?.estimatedArrivalAtDropoff != null;
+  DateTime? get pickupTime => _order.value?.estimatedArrivalAtPickup;
+  DateTime? get dropoffTime => _order.value?.estimatedArrivalAtDropoff;
 
   // streams //
   StreamSubscription<DeliveryOrder?>? orderStream;
@@ -78,6 +95,11 @@ class DvOrderViewcontroller {
           if (event != null) {
             mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
             _order.value = event;
+            _order.value?.driverInfo = event.driverInfo;
+            _order.value?.costs = event.costs;
+            _order.value?.status = event.status;
+            _order.refresh();
+
             handleRestaurantOrder(event);
           }
         });
@@ -93,7 +115,7 @@ class DvOrderViewcontroller {
 
   void initOrderMap() {
     mezDbgPrint(
-        "Locations 📍  \n DROPOFF : ${_order.value!.dropoffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
+        "Locations 📍  \n DROPOFF : ${_order.value!.dropOffLocation.toJson()}  \n PICKUP : ${_order.value!.pickupLocation?.toJson()} ,  \n DRIVER : ${_order.value!.driverLocation?.toJson()}");
     Future<void>.microtask(
       () => deliveryAuthAuthController.currentLocation != null
           ? mapController.setLocation(
@@ -111,7 +133,7 @@ class DvOrderViewcontroller {
     // Future.wait(<Future<void>>[
     // DESTINATION MARKER
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: _order.value?.dropoffLocation.toLatLng(),
+      latLng: _order.value?.dropOffLocation.toLatLng(),
     );
     // USER MARKER
     mapController.addOrUpdateUserMarker(
@@ -120,7 +142,7 @@ class DvOrderViewcontroller {
     );
     // Restaurant Marker
     mapController.addOrUpdatePackageMarkerMarker(
-      latLng: _order.value?.pickupLocation.toLatLng(),
+      latLng: _order.value?.pickupLocation?.toLatLng(),
     );
     //   if (_order.value != null) handleRestaurantOrder(_order.value!);
 
@@ -128,12 +150,12 @@ class DvOrderViewcontroller {
       if (_order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          MezRouter.back<Null>();
+          MezRouter.back();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
         mezDbgPrint("InitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiiiInitiiiiiiiii");
-        initilizeMap(mapController, _order, _order.value!.serviceInfo);
+        initilizeMap(mapController, _order, _order.value!.serviceProvider);
       }
     });
   }
@@ -179,14 +201,14 @@ class DvOrderViewcontroller {
         if (_statusSnapshot != order.status) {
           // ignoring Restaurant's marker
           mapController.addOrUpdateUserMarker(
-            latLng: order.dropoffLocation.toLatLng(),
-            markerId: order.serviceInfo.hasuraId.toString(),
-            customImgHttpUrl: order.serviceInfo.image,
+            latLng: order.dropOffLocation.toLatLng(),
+            markerId: order.serviceProvider.hasuraId.toString(),
+            customImgHttpUrl: order.serviceProvider.image,
             fitWithinBounds: false,
           );
 
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.dropoffLocation.toLatLng(),
+            latLng: order.dropOffLocation.toLatLng(),
             fitWithinBounds: true,
           );
         }
@@ -238,8 +260,15 @@ class DvOrderViewcontroller {
       cModel.DeliveryOrderStatus status) async {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
-      await CloudFunctions.delivery2_changeStatus(
-          deliveryOrderId: order.id, newStatus: status);
+      ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery2_changeStatus(
+        deliveryId: order.orderId,
+        newStatus: status,
+      );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
     } on FirebaseFunctionsException catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -250,6 +279,7 @@ class DvOrderViewcontroller {
 // dispose
   void dispose() {
     mezDbgPrint("Called dispose 😔😔😔😔");
+
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     _order.close();
   }
@@ -258,7 +288,7 @@ class DvOrderViewcontroller {
     isSettingDropoffTime.value = true;
     mezDbgPrint("Setting dropOff time ======>>> ⏰⏰⏰⏰⏰⏰  ");
     try {
-      await dv_update_est_dropoff_time(orderId: order.id, time: newTime);
+      await dv_update_est_dropoff_time(orderId: order.orderId, time: newTime);
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);
@@ -272,13 +302,62 @@ class DvOrderViewcontroller {
     isSettingPickUpTime.value = true;
     mezDbgPrint("Setting pickup time ======>>> ⏰⏰⏰⏰⏰⏰  ");
     try {
-      await dv_update_est_pickup_time(orderId: order.id, time: newTime);
+      await dv_update_est_pickup_time(orderId: order.orderId, time: newTime);
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);
       mezDbgPrint(stk);
     } finally {
       isSettingPickUpTime.value = false;
+    }
+  }
+
+  Future<void> acceptOpenOrder() async {
+    try {
+      AssignDriverResponse res = await CloudFunctions.delivery2_assignDriver(
+          deliveryOrderId: order.orderId,
+          deliveryDriverId:
+              deliveryAuthAuthController.driver!.deliveryDriverId);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
+
+  Future<void> requestPriceChange(BuildContext context) async {
+    if (updatePriceFormKey.currentState?.validate() == true) {
+      try {
+        ChangePriceReqResponse res =
+            await CloudFunctions.delivery2_changeDeliveryPrice(
+                deliveryOrderId: order.orderId,
+                newPrice: double.parse(openOrderPriceText.text),
+                reason: openOrderReasonText.text);
+
+        if (res.success == false) {
+          mezDbgPrint(res.error);
+          mezDbgPrint("ERRORRRR ========>${res.unhandledError}");
+          showErrorSnackBar(errorText: res.error.toString());
+        } else {
+          showSavedSnackBar(
+              title: "Sended", subtitle: "Price change request sended");
+          Navigator.pop(context);
+        }
+      } on FirebaseFunctionsException catch (e, stk) {
+        showErrorSnackBar(errorText: e.message.toString());
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      } catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
     }
   }
 }

@@ -2,11 +2,18 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/env.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
@@ -17,7 +24,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
     // await markInDb(event.data["markReceivedUrl"]);
   } else if (event.data["notificationType"] ==
       NotificationType.Call.toFirebaseFormatString()) {
-    unawaited(Sagora.handleCallNotificationEvent(event));
+    // unawaited(Sagora.handleCallNotificationEvent(event));
   }
 }
 
@@ -40,9 +47,8 @@ class BackgroundNotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   StreamSubscription<RemoteMessage>? onMessageOpenedAppListener;
   StreamSubscription<RemoteMessage>? onMessageListener;
-  DateTime? _lastTimeBackgroundNotificationOpenedApp;
-  DateTime? get lastTimeBackgroundNotificationOpenedApp =>
-      _lastTimeBackgroundNotificationOpenedApp;
+
+  AuthController authController = Get.find<AuthController>();
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -58,7 +64,6 @@ class BackgroundNotificationsController extends GetxController {
         );
     onMessageOpenedAppListener =
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      _lastTimeBackgroundNotificationOpenedApp = DateTime.now();
       notificationClickHandler(message);
     });
 
@@ -75,6 +80,15 @@ class BackgroundNotificationsController extends GetxController {
         unawaited(Sagora.handleCallNotificationEvent(event));
       }
     });
+
+    if (authController.fireAuthUser != null) {
+      saveNotificationToken();
+    }
+    authController.authStateStream.listen((User? fireUser) {
+      if (fireUser != null) {
+        saveNotificationToken();
+      }
+    });
   }
 
   void notificationClickHandler(RemoteMessage message) {
@@ -83,27 +97,25 @@ class BackgroundNotificationsController extends GetxController {
     mezDbgPrint(message.data);
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {
-      if (isCurrentRoute(kWrapperRoute)) {
+      if (MezRouter.isCurrentRoute(SharedRoutes.kWrapperRoute)) {
         Future<void>.delayed(Duration(milliseconds: 100), () {
-          MezRouter.toNamed<void>(kHomeRoute);
-          MezRouter.toNamed<void>(
+          MezRouter.toNamed(SharedRoutes.kHomeRoute);
+          MezRouter.toNamed(
             message.data["linkUrl"],
-            arguments: <String, bool>{'showViewOrderBtn': true},
           );
         });
       } else {
         Future<void>.delayed(
           Duration(milliseconds: 100),
-          () => MezRouter.toNamed<void>(
+          () => MezRouter.toNamed(
             message.data["linkUrl"],
-            arguments: <String, bool>{'showViewOrderBtn': true},
           ),
         );
       }
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),
-        () => MezRouter.toNamed<void>(message.data["linkUrl"]),
+        () => MezRouter.toNamed(message.data["linkUrl"]),
       );
   }
 
@@ -125,6 +137,40 @@ class BackgroundNotificationsController extends GetxController {
   Future<String?> getToken() async {
     final String? token = await _messaging.getToken();
     return token;
+  }
+
+  Future<void> saveNotificationToken() async {
+    final String? deviceNotificationToken = await getToken();
+    if (deviceNotificationToken != null) {
+      mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
+      final NotificationInfo? notifInfo = await get_notif_info(
+          userId: authController.hasuraUserId!, appType: "customer");
+
+      try {
+        SettingsController settingsController = Get.find<SettingsController>();
+
+        if (notifInfo != null &&
+            deviceNotificationToken != null &&
+            notifInfo.token != deviceNotificationToken) {
+          // ignore: unawaited_futures
+          update_notif_info(
+              notificationInfo: NotificationInfo(
+                  userId: authController.hasuraUserId!,
+                  appType: MezEnv.appType.toNormalString(),
+                  id: notifInfo.id,
+                  token: deviceNotificationToken));
+        } else if (deviceNotificationToken != null && notifInfo == null) {
+          // ignore: unawaited_futures
+          insert_notif_info(
+              userId: authController.hasuraUserId!,
+              token: deviceNotificationToken,
+              appType: "customer");
+        }
+      } catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
+    }
   }
 
   @override

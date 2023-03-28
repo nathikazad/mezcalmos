@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryDirection, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { AppType, AuthorizationStatus, Language, Location } from "../../../models/Generic/Generic";
+import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
+import { AppType, AuthorizationStatus, Language, Location, MezError } from "../../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../../models/Generic/Order";
 import { CourierItem, CourierOrder } from "../../../models/Services/Courier/Courier";
 
@@ -23,7 +22,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
                 refund_amount: true,
                 stripe_fees: true,
                 tax: true,
-                to_location_adress: true,
+                to_location_address: true,
                 to_location_gps: true,
                 customer_app_type: true,
                 delivery_order_id: true,
@@ -50,6 +49,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
                     trip_distance: true,
                     trip_duration: true,
                     trip_polyline: true,
+                    change_price_request: [{}, true],
                     delivery_driver: {
                         id: true,
                         delivery_company_type: true,
@@ -75,10 +75,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
         ]
     })
     if(response.delivery_courier_order_by_pk == null) {
-      throw new HttpsError(
-        "internal",
-        "No order with that id found"
-      );
+        throw new MezError("orderNotFound");
     }
     
     let toLocation: Location = {
@@ -138,24 +135,99 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             tripDistance: response.delivery_courier_order_by_pk.delivery_order.trip_distance,
             tripDuration: response.delivery_courier_order_by_pk.delivery_order.trip_duration,
             tripPolyline: response.delivery_courier_order_by_pk.delivery_order.trip_polyline,
+            changePriceRequest: (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+                ? JSON.parse(response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+                : undefined,
             deliveryDriver: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver) ? {
-            id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
-            deliveryCompanyType: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
-            deliveryCompanyId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_id,
-            status: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.status as AuthorizationStatus,
-            userId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
-            user: {
-                id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
-                firebaseId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.firebase_id,
-                language: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.language_id as Language
-            },
-            notificationInfo: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info) ? {
-                appType: AppType.DeliveryApp,
-                token: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.token,
-                turnOffNotifications: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.turn_off_notifications,
-            } : undefined,
+                id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
+                deliveryCompanyType: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
+                deliveryCompanyId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_id,
+                status: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.status as AuthorizationStatus,
+                userId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
+                user: {
+                    id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
+                    firebaseId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.firebase_id,
+                    language: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.language_id as Language
+                },
+                notificationInfo: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info) ? {
+                    appType: AppType.Delivery,
+                    token: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.token,
+                    turnOffNotifications: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.notification_info.turn_off_notifications,
+                } : undefined,
             }: undefined
         }
+    }
+
+    return courierOrder;
+}
+
+export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder): Promise<CourierOrder> {
+    let chain = getHasura();
+  
+    let response =  await chain.query({
+        delivery_courier_order: [{
+            where: {
+                delivery_order_id: {
+                    _eq: deliveryOrder.deliveryId
+                }
+            } 
+        }, {
+            id: true,
+            cancellation_time: true,
+            customer_id: true,
+            discount_value: true,
+            from_location_gps: true,
+            from_location_text: true,
+            payment_type: true,
+            order_time: true,
+            refund_amount: true,
+            stripe_fees: true,
+            tax: true,
+            to_location_address: true,
+            to_location_gps: true,
+            customer_app_type: true,
+            delivery_order_id: true,
+            stripe_info: [{}, true],
+            items: [{}, {
+                id: true,
+                name: true,
+                unavailable: true,
+            }]
+        }]
+    })
+    if(response.delivery_courier_order.length == 0) {
+        throw new MezError("orderNotFound");
+    }
+    
+    let toLocation: Location = {
+      lat: response.delivery_courier_order[0].to_location_gps.coordinates[1],
+      lng: response.delivery_courier_order[0].to_location_gps.coordinates[0],
+    }
+  
+    let items: CourierItem[] = response.delivery_courier_order[0].items.map((i) => {
+      return {
+        id: i.id,
+        name: i.name,
+        unavailable: true
+      }
+    })
+    let courierOrder: CourierOrder = {
+        id: response.delivery_courier_order[0].id,
+        orderTime: response.delivery_courier_order[0].order_time,
+        PaymentType: response.delivery_courier_order[0].payment_type as PaymentType,
+        discountValue: response.delivery_courier_order[0].discount_value,
+        fromLocationGps: (response.delivery_courier_order[0].from_location_gps) ? {
+            lat: response.delivery_courier_order[0].from_location_gps.coordinates[1],
+            lng: response.delivery_courier_order[0].from_location_gps.coordinates[0],
+        }: undefined,
+        fromLocationText: response.delivery_courier_order[0].from_location_text,
+        toLocation,
+        customerId: response.delivery_courier_order[0].customer_id,
+        stripeInfo: JSON.parse(response.delivery_courier_order[0].stripe_info),
+        stripeFees: response.delivery_courier_order[0].stripe_fees,
+        tax: response.delivery_courier_order[0].tax,
+        items,
+        deliveryOrder
     }
 
     return courierOrder;

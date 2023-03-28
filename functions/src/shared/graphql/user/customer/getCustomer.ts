@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { CustomerCard } from "../../../../utilities/stripe/model";
-import { AppType, Language } from "../../../models/Generic/Generic";
+import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { CustomerInfo } from "../../../models/Generic/User";
 
 export async function getCustomer(customerId: number): Promise<CustomerInfo> {
@@ -40,10 +39,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
     })
 
     if(response.customer_customer_by_pk == null) {
-        throw new HttpsError(
-            "internal",
-            "Customer not found"
-        );
+        throw new MezError("customerNotFound");
     }
     let stripeSPIds: Record<number, string> = {};
     response.customer_customer_by_pk.stripe_sp_ids.forEach((i) => {

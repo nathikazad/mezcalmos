@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,6 +43,12 @@ class MezAdminTheme {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           isDense: false,
+          errorStyle: TextStyle(
+            fontFamily: "Nunito",
+            fontWeight: FontWeight.w400,
+            fontSize: 11.sp,
+            color: Colors.red,
+          ),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide.none),

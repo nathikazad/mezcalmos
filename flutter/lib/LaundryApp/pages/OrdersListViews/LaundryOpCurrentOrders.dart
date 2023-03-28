@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/controllers/LaundryOpCurrentOrdersController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -16,6 +17,8 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ClosedServiceProviderWidget.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -67,7 +70,11 @@ class _LaundryOpCurrentOrdersListViewState
               centered: true,
             );
           } else if (viewController.isAproved == false) {
-            return Container();
+            return ServiceWaitingForApproval();
+          } else if (viewController.isClosedIdf) {
+            return ClosedServiceProviderWidget(
+              openCallBack: viewController.turnOnOrders,
+            );
           } else {
             return Column(
               children: [
@@ -127,7 +134,7 @@ class _LaundryOpCurrentOrdersListViewState
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyLarge)),
+                        style: context.txt.bodyLarge)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,
@@ -137,7 +144,8 @@ class _LaundryOpCurrentOrdersListViewState
                     borderRadius: 35,
                     label: '${_i18n()["pastButton"]}'.inCaps,
                     onClick: () async {
-                      await MezRouter.toNamed(kPastOrdersListView);
+                      await MezRouter.toNamed(
+                          LaundryAppRoutes.kPastOrdersListViewRoute);
                     },
                   ),
                 ),
@@ -153,8 +161,9 @@ class _LaundryOpCurrentOrdersListViewState
                         return MinimalOrderCard(
                           order: viewController.currentOrders[index],
                           onTap: () {
-                            MezRouter.toNamed(getLaundryOpOrderRoute(
-                                viewController.currentOrders[index].id));
+                            LaundryOrderView.navigate(
+                                orderId:
+                                    viewController.currentOrders[index].id);
                           },
                         );
                       }),

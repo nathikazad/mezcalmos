@@ -373,6 +373,13 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'approved'),
                 alias: null,
                 arguments: [],
@@ -409,13 +416,6 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'language'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'schedule'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1184,13 +1184,13 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deli
 class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   Query$getDeliveryCompanyById$delivery_company_by_pk$details({
     required this.id,
+    this.schedule,
     required this.approved,
     this.description_id,
     required this.image,
     required this.location_id,
     required this.name,
     required this.language,
-    this.schedule,
     required this.open_status,
     required this.creation_time,
     required this.service_provider_type,
@@ -1202,13 +1202,13 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   factory Query$getDeliveryCompanyById$delivery_company_by_pk$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$schedule = json['schedule'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
     final l$image = json['image'];
     final l$location_id = json['location_id'];
     final l$name = json['name'];
     final l$language = json['language'];
-    final l$schedule = json['schedule'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
     final l$service_provider_type = json['service_provider_type'];
@@ -1217,13 +1217,13 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$$__typename = json['__typename'];
     return Query$getDeliveryCompanyById$delivery_company_by_pk$details(
       id: (l$id as int),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
       image: (l$image as String),
       location_id: (l$location_id as int),
       name: (l$name as String),
       language: mapFromJson(l$language),
-      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
@@ -1240,6 +1240,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
 
   final int id;
 
+  final dynamic? schedule;
+
   final bool approved;
 
   final int? description_id;
@@ -1251,8 +1253,6 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   final String name;
 
   final dynamic language;
-
-  final dynamic? schedule;
 
   final String open_status;
 
@@ -1272,6 +1272,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
@@ -1284,8 +1286,6 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     _resultData['name'] = l$name;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
-    final l$schedule = schedule;
-    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$creation_time = creation_time;
@@ -1304,13 +1304,13 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   @override
   int get hashCode {
     final l$id = id;
+    final l$schedule = schedule;
     final l$approved = approved;
     final l$description_id = description_id;
     final l$image = image;
     final l$location_id = location_id;
     final l$name = name;
     final l$language = language;
-    final l$schedule = schedule;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
     final l$service_provider_type = service_provider_type;
@@ -1319,13 +1319,13 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$schedule,
       l$approved,
       l$description_id,
       l$image,
       l$location_id,
       l$name,
       l$language,
-      l$schedule,
       l$open_status,
       l$creation_time,
       l$service_provider_type,
@@ -1348,6 +1348,11 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$approved = approved;
@@ -1378,11 +1383,6 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
-      return false;
-    }
-    final l$schedule = schedule;
-    final lOther$schedule = other.schedule;
-    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$open_status = open_status;
@@ -1444,13 +1444,13 @@ abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
 
   TRes call({
     int? id,
+    dynamic? schedule,
     bool? approved,
     int? description_id,
     String? image,
     int? location_id,
     String? name,
     dynamic? language,
-    dynamic? schedule,
     String? open_status,
     String? creation_time,
     String? service_provider_type,
@@ -1485,13 +1485,13 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
 
   TRes call({
     Object? id = _undefined,
+    Object? schedule = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
     Object? image = _undefined,
     Object? location_id = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
-    Object? schedule = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
     Object? service_provider_type = _undefined,
@@ -1501,6 +1501,9 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
   }) =>
       _then(Query$getDeliveryCompanyById$delivery_company_by_pk$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -1519,9 +1522,6 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
-        schedule: schedule == _undefined
-            ? _instance.schedule
-            : (schedule as dynamic?),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -1574,13 +1574,13 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
 
   call({
     int? id,
+    dynamic? schedule,
     bool? approved,
     int? description_id,
     String? image,
     int? location_id,
     String? name,
     dynamic? language,
-    dynamic? schedule,
     String? open_status,
     String? creation_time,
     String? service_provider_type,

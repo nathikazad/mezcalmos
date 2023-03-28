@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 //
@@ -21,7 +19,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (order.dropoffDriver != null && order.inProcess()) {
+    if (order.driverInfo != null && order.inProcess()) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,7 +31,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
           ),
           SizedBox(
@@ -51,7 +49,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                     CircleAvatar(
                         radius: 23,
                         backgroundImage: CachedNetworkImageProvider(
-                            order.dropoffDriver!.image)),
+                            order.driverInfo!.image)),
                     Positioned(
                       right: -35,
                       child: Container(
@@ -81,23 +79,17 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(
-                    order.dropoffDriver!.name,
-                    style: Get.textTheme.bodyText1,
+                    order.driverInfo!.name,
+                    style: context.txt.bodyText1,
                   ),
                 ),
-                if (order.customerDropOffDriverChatId != null)
+                if (order.customerDriverChatId != null)
                   MessageButton(
                     onTap: () {
-                      MezRouter.toNamed(
-                        getMessagesRoute(
-                          chatId: order.customerDropOffDriverChatId!,
-                          recipientType: ParticipantType.DeliveryDriver,
-                          orderType: OrderType.Restaurant,
-                          orderId: order.orderId,
-                        ),
-                      );
+                      BaseMessagingScreen.navigate(
+                          chatId: order.customerDriverChatId!);
                     },
-                    chatId: order.customerDropOffDriverChatId!,
+                    chatId: order.customerDriverChatId!,
                   ),
               ],
             ),
@@ -116,7 +108,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyText1,
             ),
           ),
           SizedBox(
@@ -158,7 +150,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                     children: [
                       Text(
                         order.restaurant.name,
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyText1,
                       ),
                       const SizedBox(
                         height: 5,

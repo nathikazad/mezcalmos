@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProfileView/ServiceProfileView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -78,8 +79,8 @@ class _LaundryTabsViewState extends State<LaundryTabsView> {
     return Obx(
       () => tabsViewViewController.showTabs.value
           ? BottomNavigationBar(
-              selectedLabelStyle: Get.textTheme.bodyLarge,
-              unselectedLabelStyle: Get.textTheme.bodyMedium,
+              selectedLabelStyle: context.txt.bodyLarge,
+              unselectedLabelStyle: context.txt.bodyMedium,
               currentIndex: _index.value,
               onTap: (int v) {
                 _index.value = v;

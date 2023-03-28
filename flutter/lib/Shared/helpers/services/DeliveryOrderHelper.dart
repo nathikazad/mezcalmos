@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -27,7 +28,7 @@ extension DeliveryOrderHelper on DeliveryOrder {
       case DeliveryOrderStatus.OnTheWayToDropoff:
         return "${_i18n()["status"]['otwDropOff']}";
       case DeliveryOrderStatus.AtDropoff:
-        return "${_i18n()["status"]['atDropoff']}";
+        return "${_i18n()["status"]['atDropOff']}";
       case DeliveryOrderStatus.Delivered:
         return "${_i18n()["status"]['delivered']}";
 
@@ -58,7 +59,7 @@ extension DeliveryOrderHelper on DeliveryOrder {
         return Container(
           // padding: const EdgeInsets.only(right: 10.0),
           child: Icon(
-            Icons.move_to_inbox_rounded,
+            Icons.shopping_bag,
             size: 35,
             color: primaryBlueColor,
           ),

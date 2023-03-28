@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/controllers/UserProfileViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -51,7 +52,7 @@ class UserProfileImage extends StatelessWidget {
                                     padding: const EdgeInsets.all(5),
                                     child: Text(
                                       'Your face, your profile',
-                                      style: Get.textTheme.bodyMedium,
+                                      style: context.txt.bodyMedium,
                                       textAlign: TextAlign.center,
                                     ),
                                   )
@@ -91,7 +92,7 @@ class UserProfileImage extends StatelessWidget {
               //       child: Text(
               //         state.errorText ?? "",
               //         style:
-              //             Get.textTheme.subtitle1?.copyWith(color: Colors.red),
+              //             context.txt.subtitle1?.copyWith(color: Colors.red),
               //       ))
             ],
           ),

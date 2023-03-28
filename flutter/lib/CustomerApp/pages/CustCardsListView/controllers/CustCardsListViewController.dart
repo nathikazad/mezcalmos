@@ -16,6 +16,7 @@ class CustCardsListViewController {
   List<CreditCard> get cards => _cards.value!;
 
   Future<void> init() async {
+   
     await fetchCards();
   }
 
@@ -38,4 +39,6 @@ class CustCardsListViewController {
 
     return true;
   }
+
+  void dispose() {}
 }

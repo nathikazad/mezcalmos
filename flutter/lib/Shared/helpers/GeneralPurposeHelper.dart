@@ -2,21 +2,23 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -63,12 +65,12 @@ enum AppLaunchMode { prod, dev, stage }
 
 extension AppLaunchModeParser on String {
   /// if couldn't parse it returns dev as default
-  AppLaunchMode toLaunchMode({AppLaunchMode defaultLmode = AppLaunchMode.dev}) {
+  AppLaunchMode toLaunchMode() {
     mezDbgPrint("Called [toLaunchMode] on $this ");
     return AppLaunchMode.values.firstWhere(
       (AppLaunchMode v) =>
           v.toString().toLowerCase().split('.').last == toLowerCase(),
-      orElse: () => defaultLmode,
+      orElse: () => AppLaunchMode.dev,
     );
   }
 }
@@ -78,10 +80,6 @@ extension AppLaunchModeConverter on AppLaunchMode {
   String toShortString() {
     return toString().toLowerCase().split('.').last;
   }
-}
-
-AppLaunchMode getAppLaunchMode() {
-  return (GetStorage().read<String>(getxLmodeKey).toString()).toLaunchMode();
 }
 
 extension DateTimeCopy on DateTime {
@@ -94,20 +92,6 @@ extension DateTimeCopy on DateTime {
   DateTime copyWithDate(DateTime newDate) {
     return new DateTime(newDate.year, newDate.month, newDate.day, hour, minute);
   }
-}
-
-SnackbarController showSuccessSnackBar(
-    {required String tilte,
-    required String subtitle,
-    Color? iconColor = Colors.green}) {
-  return Get.snackbar(tilte, subtitle,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
-      icon: Icon(
-        Icons.check_circle,
-        color: Colors.green,
-      ));
 }
 
 Future<DateTime?> getDatePicker(
@@ -262,7 +246,7 @@ Future<void> showConfirmationDialog(
                 SizedBox(height: 2),
                 Text('${_i18n()["subtitle"]}',
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headlineLarge
+                    style: context.txt.headlineLarge
                         ?.copyWith(color: Color(0xFF494949))),
                 SizedBox(height: 4),
                 GestureDetector(
@@ -310,7 +294,7 @@ Future<void> showConfirmationDialog(
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    MezRouter.back<void>(closeOverlays: true);
+                    MezRouter.back();
                   },
                   child: Container(
                     width: double.infinity,
@@ -373,7 +357,7 @@ Future<void> showStatusInfoDialog(
                     width: 66,
                     child: getRightNotifIcon(primaryImageUrl, primaryIcon),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(103, 121, 254, 1),
+                      color: secondaryLightBlueColor,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -422,12 +406,12 @@ Future<void> showStatusInfoDialog(
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => MezRouter.back<void>(closeOverlays: true)
+                    ? () => MezRouter.back()
                     : primaryCallBack,
                 child: Container(
                   height: 44,
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(225, 228, 255, 1),
+                    color: primaryBlueColor,
                     borderRadius: BorderRadius.circular(9),
                   ),
                   child: Center(
@@ -435,7 +419,7 @@ Future<void> showStatusInfoDialog(
                       primaryClickTitle ?? "${_i18n()["ok"]}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color.fromRGBO(103, 121, 254, 1),
+                        color: Colors.white,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700,
                         fontSize: 16.34,
@@ -574,7 +558,7 @@ Future<int?> showReviewDialog(
               ),
               const SizedBox(height: 18),
               MezButton(
-                textStyle: Get.textTheme.headline4?.copyWith(
+                textStyle: context.txt.headlineMedium?.copyWith(
                   color: primaryBlueColor,
                 ),
                 label: "${_i18n()["review"]["send"]}",
@@ -593,20 +577,20 @@ Future<int?> showReviewDialog(
 
                   final int? reviewId = await insert_review(review: review);
                   if (reviewId != null) {
-                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
-                        "${_i18n()["review"]["successSubtitle"]}",
-                        backgroundColor: Colors.black, colorText: Colors.white);
+                    customSnackBar(
+                      title: _i18n()["review"]["successTitle"],
+                      subTitle: _i18n()["review"]["successSubtitle"],
+                    );
                   } else {
-                    Get.snackbar("Error", "error",
-                        backgroundColor: Colors.black, colorText: Colors.white);
+                    customSnackBar(title: 'Error', subTitle: 'error');
                   }
-                  MezRouter.popDialog(result: reviewId, closeOverlays: true);
+                  MezRouter.back(backResult: reviewId);
                 },
               ),
               SizedBox(height: 10),
               InkWell(
                 onTap: () {
-                  MezRouter.back(closeOverlays: true);
+                  MezRouter.back();
                 },
                 child: Ink(
                   padding: const EdgeInsets.symmetric(vertical: 5),
@@ -614,7 +598,7 @@ Future<int?> showReviewDialog(
                   child: Text(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headline4?.copyWith(
+                    style: context.txt.headlineMedium?.copyWith(
                       color: offShadeGreyColor,
                     ),
                   ),
@@ -688,36 +672,32 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
   } else if (icon != null) {
     return Icon(
       icon,
-      color: Colors.white,
+      color: primaryBlueColor,
       size: 33,
     );
   } else {
     return Icon(
-      Icons.local_taxi_rounded,
-      color: Colors.white,
+      Icons.flatware,
+      color: primaryBlueColor,
       size: 33,
     );
   }
 }
 
-SnackbarController showSavedSnackBar({String? title, String? subtitle}) {
-  return Get.snackbar(
-      title ?? "${_i18n()['saved']}", subtitle ?? "${_i18n()['savedTitle']}",
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
+void showSavedSnackBar({String? title, String? subtitle}) {
+  return customSnackBar(
+      title: _i18n()['saved'],
+      subTitle: _i18n()['savedTitle'],
       icon: Icon(
         Icons.check_circle,
         color: Colors.green,
       ));
 }
 
-SnackbarController showErrorSnackBar(
-    {String errorTitle = "Error", String errorText = ""}) {
-  return Get.snackbar(errorTitle, errorText,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
+void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
+  return customSnackBar(
+      title: errorTitle,
+      subTitle: errorText,
       icon: Icon(
         Icons.cancel,
         color: Colors.redAccent,

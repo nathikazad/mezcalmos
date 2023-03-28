@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -256,6 +257,7 @@ List<Choice> _convertChoices(
     return Choice(
         id: oneChoice.id,
         nameId: oneChoice.name.id,
+        available: oneChoice.available,
         name: toLanguageMap(translations: oneChoice.name.translations),
         cost: oneChoice.cost);
   }).toList();

@@ -3,14 +3,15 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ROpCreateRestuarantView extends StatefulWidget {
   const ROpCreateRestuarantView({super.key});
@@ -24,6 +25,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
   GlobalKey<FormState> _formKey = GlobalKey();
   ROpCreateRestuarantViewController viewController =
       ROpCreateRestuarantViewController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +45,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                 context,
                 primaryClickTitle: "OK",
                 primaryCallBack: () {
-                  MezRouter.toNamed(kWrapperRoute);
+                  MezRouter.toNamed(SharedRoutes.kWrapperRoute);
                 },
                 status: "Your restaurantis under review",
                 description:
@@ -51,11 +53,10 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
               );
               //
             } else {
-              Get.snackbar('Error',
-                  res.errorMessage ?? "Unkwown error, please try again",
-                  backgroundColor: Colors.black,
-                  colorText: Colors.white,
-                  shouldIconPulse: false,
+              customSnackBar(
+                  title: 'Error',
+                  subTitle:
+                      res.errorMessage ?? "Unkwown error, please try again",
                   icon: Icon(
                     Icons.error,
                     color: Colors.red,
@@ -83,7 +84,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   }
                   return null;
                 },
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant name",
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -100,7 +101,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   }
                   return null;
                 },
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
                 decoration: InputDecoration(
                   labelText: "Enter your restaurant description",
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -138,12 +139,12 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
               borderRadius: BorderRadius.circular(10),
               onTap: () async {
                 // ignore: prefer_final_locals
-                MezLocation? currentLoc =
-                    await MezRouter.toNamed(kPickLocationWithoutAuth)
-                        as MezLocation?;
-                if (currentLoc != null) {
-                  viewController.restaurantLocation.value = currentLoc;
-                }
+                // TODO @m66are
+                // MezLocation? currentLoc = await MezRouter.toNamed(
+                //     SharedRoutes.kPickLocationWithoutAuth) as MezLocation?;
+                // if (currentLoc != null) {
+                //   viewController.restaurantLocation.value = currentLoc;
+                // }
               },
               child: Container(
                 padding: const EdgeInsets.all(12),
@@ -168,7 +169,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                         viewController.restaurantLocation.value?.address ??
                             "Pick location",
                         maxLines: 1,
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     Icon(
@@ -184,7 +185,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                   margin: const EdgeInsets.only(top: 5, left: 22),
                   child: Text(
                     state.errorText ?? "",
-                    style: Get.textTheme.subtitle1
+                    style: context.txt.titleMedium
                         ?.copyWith(color: Colors.red.shade800),
                   ))
           ],

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -13,13 +12,13 @@ class Laundry extends Service {
   num averageNumberOfDays = 2;
   bool selfDelivery;
   int deliveryDetailsId;
-  DeliveryCost deliveryCost;
+
   Laundry({
     required ServiceInfo userInfo,
     required Schedule? schedule,
     required PaymentInfo paymentInfo,
     required ServiceState laundryState,
-    required this.deliveryCost,
+    required super.deliveryCost,
     required this.deliveryDetailsId,
     this.averageNumberOfDays = 2,
     required super.serviceDetailsId,

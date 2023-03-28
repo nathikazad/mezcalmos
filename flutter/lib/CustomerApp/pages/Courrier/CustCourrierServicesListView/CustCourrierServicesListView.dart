@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/CustCourierServiceView.dart';
+import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -14,6 +16,10 @@ import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
 class CustCourierServicesListView extends StatefulWidget {
+  static Future<void> navigate() {
+    return MezRouter.toPath(CourierRoutes.kCouriersRoute);
+  }
+
   const CustCourierServicesListView({super.key});
 
   @override
@@ -50,7 +56,7 @@ class _CustCourierServicesListViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
+          MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
       body: Obx(
         () {
           if (companies.value != null) {
@@ -66,7 +72,7 @@ class _CustCourierServicesListViewState
                           elevation: 0.5,
                           borderRadius: BorderRadius.circular(5),
                           child: TextFormField(
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                             decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 hintText: "Search...",
@@ -94,8 +100,10 @@ class _CustCourierServicesListViewState
                     height: 15,
                   ),
                   Column(
-                    children: List.generate(companies.value!.length,
-                        (int index) => _companyCard(companies.value![index])),
+                    children: List.generate(
+                        companies.value!.length,
+                        (int index) =>
+                            _companyCard(companies.value![index], context)),
                   )
                 ],
               ),
@@ -111,10 +119,11 @@ class _CustCourierServicesListViewState
     );
   }
 
-  Widget _companyCard(DeliveryCompany company) {
+  Widget _companyCard(DeliveryCompany company, BuildContext context) {
     return MezCard(
         onClick: () {
-          MezRouter.toNamed(getCourierRoute(company.info.hasuraId));
+          mezDbgPrint("Clicked");
+          CustCourierServiceView.navigate(companyId: company.info.hasuraId);
         },
         firstAvatarBgImage: CachedNetworkImageProvider(company.info.image),
         content: Column(
@@ -122,18 +131,18 @@ class _CustCourierServicesListViewState
           children: [
             Text(
               company.info.name,
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
             ),
-            _detailsRow(company)
+            _detailsRow(company, context)
           ],
         ));
   }
 }
 
-Widget _detailsRow(DeliveryCompany company) {
+Widget _detailsRow(DeliveryCompany company, BuildContext context) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -153,7 +162,7 @@ Widget _detailsRow(DeliveryCompany company) {
               shippingCost: 50,
               showPerKm: true,
               alignment: MainAxisAlignment.start,
-              textStyle: Get.textTheme.bodyMedium,
+              textStyle: context.txt.bodyMedium,
             ),
           ],
         ),
@@ -199,7 +208,7 @@ Widget _detailsRow(DeliveryCompany company) {
               ),
               Text(
                 0.toString(),
-                style: Get.textTheme.bodyMedium,
+                style: context.txt.bodyMedium,
               )
             ],
           ),

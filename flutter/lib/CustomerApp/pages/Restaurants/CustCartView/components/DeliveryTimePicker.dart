@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -16,22 +18,29 @@ dynamic _i18n() =>
 
 //
 class DeliveryTimePicker extends StatefulWidget {
-  const DeliveryTimePicker(
-      {Key? key,
-      required this.deliveryTime,
-      required this.periodOfTime,
-      required this.isServiceOpen,
-      required this.numberOfDays,
-      required this.onValue,
-      required this.schedule})
-      : super(key: key);
+  const DeliveryTimePicker({
+    Key? key,
+    required this.deliveryTime,
+    required this.periodOfTime,
+    required this.isServiceOpen,
+    required this.fixed7days,
+    required this.numberOfDays,
+    required this.onValue,
+    required this.schedule,
+    this.shoudSchedule = false,
+    required this.onClear,
+  }) : super(key: key);
   // final CustCartViewController viewCartController;
   final PeriodOfTime? periodOfTime;
   final DateTime? deliveryTime;
   final Schedule? schedule;
   final bool isServiceOpen;
+  final bool fixed7days;
+  final bool shoudSchedule;
+
   final int numberOfDays;
   final Function(DateTime?) onValue;
+  final Function() onClear;
 
   @override
   State<DeliveryTimePicker> createState() => _DeliveryTimePickerState();
@@ -59,7 +68,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           ),
           Text(
             '${_i18n()["dvTime"]}',
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           if (widget.periodOfTime != null)
             Container(
@@ -87,7 +96,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   Flexible(
                     child: Text(
                       '${_i18n()["restClosed"]}',
-                      style: Get.textTheme.bodyMedium,
+                      style: context.txt.bodyMedium,
                     ),
                   ),
                 ],
@@ -127,14 +136,14 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                   (widget.isServiceOpen == false)
                                       ? '${_i18n()["pickTime"]}'
                                       : '${_i18n()["now"]}',
-                                  style: Get.textTheme.bodyLarge?.copyWith(
+                                  style: context.txt.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   )),
                             )
                           : Flexible(
                               fit: FlexFit.tight,
                               child: Text(_formattedTime,
-                                  style: Get.textTheme.bodyLarge?.copyWith(
+                                  style: context.txt.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   )),
                             ),
@@ -150,38 +159,38 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                           },
                           customBorder: CircleBorder(),
                           child: Ink(
-                            // padding: const EdgeInsets.all(3),
-                            // decoration: BoxDecoration(
-                            //     color: secondaryLightBlueColor,
-                            //     shape: BoxShape.circle),
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                                color: secondaryLightBlueColor,
+                                shape: BoxShape.circle),
                             child: Icon(
-                              Icons.expand_more,
+                              Icons.edit,
                               size: 24,
-                              color: Colors.black,
+                              color: primaryBlueColor,
                             ),
                           ),
                         ),
-                      // if (widget.deliveryTime != null &&
-                      //     widget.viewCartController.shoudSchedule == false)
-                      //   Padding(
-                      //     padding: const EdgeInsets.only(left: 8),
-                      //     child: InkWell(
-                      //      // customBorder: CircleBorder(),
-                      //       onTap: () {
-                      //         widget.deliveryTime =
-                      //             null;
-                      //         widget.viewCartController.cartController.cart
-                      //             .refresh();
-                      //       },
-                      //       child: Ink(
-                      //         child: Icon(
-                      //           Icons.expand_more,
-                      //           size: 24,
-                      //           color: Colors.grey.shade800,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   )
+                      if (widget.deliveryTime != null &&
+                          widget.shoudSchedule == false)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: InkWell(
+                            customBorder: CircleBorder(),
+                            onTap: () {
+                              widget.onClear.call();
+                            },
+                            child: Ink(
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  color: offRedColor, shape: BoxShape.circle),
+                              child: Icon(
+                                Icons.close,
+                                size: 24,
+                                color: redAccentColor,
+                              ),
+                            ),
+                          ),
+                        )
                     ],
                   ),
                 ),
@@ -209,14 +218,16 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           isDismissible: true,
           builder: (BuildContext ctx) {
             return MezDateTimePicker(
-              fixed7days: true,
+              fixed7days: widget.fixed7days,
               startDate: widget.deliveryTime?.toLocal(),
               periodOfTime: widget.periodOfTime,
               numberOfDaysInterval: widget.numberOfDays,
               serviceSchedule: widget.schedule!,
             );
           }).then((DateTime? value) {
-        widget.onValue.call(value);
+        if (value != null) {
+          widget.onValue.call(value);
+        }
       });
     } else {
       mezDbgPrint("[OPS] Restaurant have no schedule!=>");
@@ -239,7 +250,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           Flexible(
             child: Text(
               '${_i18n()["timeError"]}',
-              style: Get.textTheme.bodyLarge
+              style: context.txt.bodyLarge
                   ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),

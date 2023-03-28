@@ -116,10 +116,13 @@ class CustItemViewController {
   // handling items and cart methods //
   Future<void> handleEditItem() async {
     cartItem.value?.notes = notesController.text;
-    mezDbgPrint(
-        "Handle Editting ===================>${cartItem.value!.idInCart!}");
+
     await cartController?.updateCartItem(cartItem.value!);
   }
+
+  // bool showRestaurant() {
+  //   return MezRouter.isRouteInStack(RestaurantRouter.restaurantItemViewRoute);
+  // }
 
   Future<int?> handleAddItem() async {
     cartItem.value?.notes = notesController.text;

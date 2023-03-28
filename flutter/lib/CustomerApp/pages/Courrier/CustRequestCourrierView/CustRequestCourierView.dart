@@ -2,18 +2,34 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
+import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:sizer/sizer.dart';
 
 class CustRequestCourierView extends StatefulWidget {
+  static Future<void> navigate(
+    int courierId,
+  ) {
+    return MezRouter.toPath(CourierRoutes.kCourierRequestRoute
+        .replaceFirst(":courierId", courierId.toString()));
+  }
+
   const CustRequestCourierView({super.key});
 
   @override
@@ -26,11 +42,9 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   int? courierId;
   @override
   void initState() {
-    courierId = int.tryParse(Get.parameters["courierId"] ?? "");
+    courierId = int.tryParse(MezRouter.urlArguments["courierId"].toString());
     if (courierId != null) {
       viewController.init(courierId: courierId!);
-    } else {
-      showErrorSnackBar();
     }
     super.initState();
   }
@@ -38,9 +52,9 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        ordersRoute: kOrdersRoute,
+        ordersRoute: CustomerRoutes.customerOrdersRoute,
         onClick: viewController.handleBack,
         title: "Courier",
       ),
@@ -59,7 +73,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                       children: [
                         Text(
                           "Delivery company",
-                          style: Get.textTheme.bodyMedium,
+                          style: context.txt.bodyMedium,
                         ),
                         SizedBox(
                           height: 5,
@@ -70,12 +84,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                                   viewController.company.value!.info.image),
                               content: Text(
                                 viewController.company.value!.info.name,
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               )),
                         SizedBox(
                           height: 15,
                         ),
                         DeliveryTimePicker(
+                          fixed7days: true,
                           deliveryTime: viewController.deliveryTime.value,
                           isServiceOpen:
                               viewController.company.value?.isOpen() ?? true,
@@ -83,9 +98,21 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           onValue: (DateTime? value) {
                             viewController.deliveryTime.value = value;
                           },
+                          onClear: () {
+                            viewController.deliveryTime.value = null;
+                          },
                           periodOfTime: null,
                           schedule: viewController.company.value!.schedule,
                         ),
+                        OrderSummaryCard(
+                            costs: OrderCosts(
+                                deliveryCost: viewController.shippingCost.value,
+                                refundAmmount: null,
+                                tax: null,
+                                orderItemsCost: null,
+                                totalCost: null),
+                            showNullValues: true,
+                            stripeOrderPaymentInfo: null)
                       ],
                     ),
                   ),
@@ -119,7 +146,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           children: [
             Text(
               "From",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
@@ -130,7 +157,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             Text(
               "To",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
@@ -138,11 +165,11 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             DropDownLocationList(
               onValueChangeCallback: ({MezLocation? location}) {
                 if (location != null && location.isValidLocation()) {
-                  viewController.toLoc.value = location;
+                  viewController.setToLocation(location);
                 }
               },
               bgColor: Colors.white,
-              checkDistance: true,
+              checkDistance: false,
               passedInLocation: viewController.toLoc.value,
               serviceProviderLocation: null,
             ),
@@ -151,48 +178,110 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             CustRequestCourierItems(
               viewController: viewController,
-            )
+            ),
+            SizedBox(
+              height: 75,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Row _fromFeild() {
-    return Row(
+  Widget _fromFeild() {
+    return Column(
       children: [
-        Flexible(
-          fit: FlexFit.tight,
-          child: Material(
-            elevation: 0.5,
-            borderRadius: BorderRadius.circular(10),
-            child: TextFormField(
-                style: Get.textTheme.bodyLarge,
-                decoration: InputDecoration(
-                  isDense: true,
-                  fillColor: Colors.white,
-                  hintText: "Enter location",
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                      gapPadding: 0),
-                )),
-          ),
+        Row(
+          children: [
+            Flexible(
+              fit: FlexFit.tight,
+              child: Material(
+                elevation: 0.5,
+                borderRadius: BorderRadius.circular(10),
+                child: TextFormField(
+                    style: context.txt.bodyLarge,
+                    controller: viewController.fromLocText,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      fillColor: Colors.white,
+                      hintText: "Enter location",
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                          gapPadding: 0),
+                    )),
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            MezIconButton(
+              icon: Icons.place,
+              iconColor: Colors.black,
+              padding: const EdgeInsets.all(12),
+              backgroundColor: Colors.white,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(5),
+              onTap: () async {
+                SavedLocation? newSavedLoc;
+                MezLocation? newLoc = await PickLocationView.navigate(
+                  initialLocation: null,
+                  onSaveLocation: ({MezLocation? location}) async {
+                    newSavedLoc = await savedLocationDailog(
+                        context: context, loc: location!);
+                  },
+                );
+                if (newSavedLoc != null) {
+                  viewController.addFromLoc(
+                      location: newSavedLoc!.location,
+                      address: newSavedLoc!.name);
+                } else if (newLoc != null) {
+                  viewController.addFromLoc(location: newLoc);
+                }
+
+                //         final locModel.MezLocation? newLoc = await PickLocationView.navigate(
+                // initialLocation: null,
+                // onSaveLocation: ({locModel.MezLocation? location}) async {
+                //   SavedLocation? newSavedLoc;
+
+                //   newSavedLoc =
+                //       await savedLocationDailog(context: context, loc: location!);
+
+                //   if (newSavedLoc != null) {
+                //     setState(() {
+                //       listOfSavedLoacations.add(newSavedLoc!);
+                //       dropDownListValue =
+                //           listOfSavedLoacations[listOfSavedLoacations.length - 1];
+                //     });
+                //     mezDbgPrint(
+                //         " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
+                //     await _verifyDistanceAndSetLocation(newSavedLoc);
+                //   }}
+              },
+            )
+          ],
         ),
         SizedBox(
-          width: 5,
+          height: 8,
         ),
-        MezIconButton(
-          icon: Icons.place,
-          iconColor: Colors.black,
-          padding: const EdgeInsets.all(12),
-          backgroundColor: Colors.white,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(5),
-          onTap: () {},
+        Row(
+          children: [
+            Icon(
+              Icons.info_outline,
+              color: primaryBlueColor,
+              size: 16.sp,
+            ),
+            SizedBox(
+              width: 3,
+            ),
+            Text(
+              "This field can be empty",
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
+            )
+          ],
         )
       ],
     );

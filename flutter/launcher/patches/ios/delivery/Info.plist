@@ -61,12 +61,16 @@
 	<string>Older devices need location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App needs location when in use to update your customer about your location</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app require PhotoLibrary Access</string>
+<key>NSPhotoLibraryUsageDescription</key>
+	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>asasas</string>
+	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -79,6 +83,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://mezc.co</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

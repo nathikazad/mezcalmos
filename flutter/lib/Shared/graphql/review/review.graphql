@@ -37,7 +37,7 @@ query get_service_reviews($serviceId: Int!) {
     to_entity_type
     created_at
      customer {
-      app_version
+      
         user {
           id
           image

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminServiceOrdersViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/MezAdminApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
@@ -17,6 +19,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
 //
 class AdminServiceOrdersView extends StatefulWidget {
   const AdminServiceOrdersView({super.key});
+
+  static Future<void> navigate(
+      {required int serviceProviderId,
+      required String serviceName,
+      required ServiceProviderType serviceProviderType}) {
+    return MezRouter.toPath(
+        MezAdminRoutes.kServiceOrdersRoute
+            .replaceAll(":serviceProviderId", serviceProviderId.toString()),
+        arguments: <String, dynamic>{
+          'serviceProviderType': serviceProviderType,
+          'serviceName': serviceName
+        });
+  }
 
   @override
   State<AdminServiceOrdersView> createState() => _AdminServiceOrdersViewState();
@@ -33,19 +48,21 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
       serviceProviderId != null &&
       serviceProviderType != null &&
       serviceName != null;
+
   @override
   void initState() {
-    serviceProviderType =
-        Get.arguments?["serviceProviderType"] as ServiceProviderType?;
-    serviceName = Get.arguments?["serviceName"] as String?;
-    serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
+    serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
+        .toString() as ServiceProviderType?;
+    serviceName = MezRouter.bodyArguments?["serviceName"].toString();
+    serviceProviderId =
+        int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
 
     if (hasValues) {
       viewController.init(
           serviceId: serviceProviderId!,
           serviceProviderType: serviceProviderType!);
     } else {
-      MezRouter.back<Null>();
+      MezRouter.back();
     }
     super.initState();
   }
@@ -80,7 +97,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
               children: [
                 Text(
                   "${_i18n()['currentOrders']}",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 20,
@@ -90,7 +107,27 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                       viewController.currentOrders.value!.length,
                       (int index) => MinimalOrderCard(
                           order: viewController.currentOrders.value![index],
-                          onTap: () {})),
+                          onTap: () {
+                            switch (viewController.providerType) {
+                              case ServiceProviderType.DeliveryCompany:
+                                //   MezRouter.toNamed(getDvCompanyOrderRoute(
+                                //       viewController
+                                //           .currentOrders.value![index].id));
+                                //   break;
+                                // case ServiceProviderType.Laundry:
+                                //   MezRouter.toNamed(getLaundryOrderRoute(
+                                //       viewController
+                                //           .currentOrders.value![index].id));
+                                //   break;
+                                // case ServiceProviderType.Restaurant:
+                                //   MezRouter.toNamed(getRestaurantOrderRoute(
+                                //       viewController
+                                //           .currentOrders.value![index].id));
+
+                                break;
+                              default:
+                            }
+                          })),
                 ),
                 SizedBox(
                   height: 25,
@@ -103,7 +140,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                   children: [
                     Text(
                       "${_i18n()['pastOrders']}",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 20,
@@ -113,7 +150,28 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                           viewController.pastOrders.value!.length,
                           (int index) => MinimalOrderCard(
                               order: viewController.pastOrders.value![index],
-                              onTap: () {})),
+                              onTap: () {
+                                // @m66are TODO add routing
+                                // switch (viewController.providerType) {
+                                //   case ServiceProviderType.DeliveryCompany:
+                                //     MezRouter.toNamed(getDvCompanyOrderRoute(
+                                //         viewController
+                                //             .currentOrders.value![index].id));
+                                //     break;
+                                //   case ServiceProviderType.Laundry:
+                                //     MezRouter.toNamed(getLaundryOrderRoute(
+                                //         viewController
+                                //             .currentOrders.value![index].id));
+                                //     break;
+                                //   case ServiceProviderType.Restaurant:
+                                //     MezRouter.toNamed(getRestaurantOrderRoute(
+                                //         viewController
+                                //             .currentOrders.value![index].id));
+
+                                //     break;
+                                //   default:
+                                // }
+                              })),
                     ),
                     if (viewController.pastOrders.value!.length ==
                         viewController.pastOrders.value)

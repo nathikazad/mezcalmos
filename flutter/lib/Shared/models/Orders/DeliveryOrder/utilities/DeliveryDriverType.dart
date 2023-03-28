@@ -2,12 +2,12 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 
 extension DeliveryOrderParser on String {
-  DeliveryOrderStatus toDeliveryOrderStatus() {
-    return DeliveryOrderStatus.values.firstWhere(
-      (DeliveryOrderStatus element) =>
-          element.toString().split('.').last.toLowerCase() == toLowerCase(),
-    );
-  }
+  // DeliveryOrderStatus toDeliveryOrderStatus() {
+  //   return DeliveryOrderStatus.values.firstWhere(
+  //     (DeliveryOrderStatus element) =>
+  //         element.toString().split('.').last.toLowerCase() == toLowerCase(),
+  //   );
+  // }
 
   DeliveryServiceType toDeliveryProviderType() {
     return DeliveryServiceType.values.firstWhere(

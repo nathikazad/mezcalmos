@@ -1,10 +1,6 @@
 query get_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-    actual_arrival_at_dropoff_time
-    actual_arrival_at_pickup_time
-    actual_delivered_time
-    actual_package_ready_time
-    cancellation_time
+   schedule_time
     chat_with_customer_id
     order_type
     direction
@@ -16,6 +12,10 @@ query get_driver_order($orderId: Int!) {
         id
         image
         name
+          location {
+          gps
+          address
+        }
         service_provider_type
       }
     }
@@ -127,7 +127,8 @@ query get_driver_order($orderId: Int!) {
       }
     }
     order_time
-    package_cost
+    package_cost_comp
+    total_cost
     package_ready
     payment_type
     pickup_address
@@ -186,10 +187,15 @@ subscription listen_on_driver_order($orderId: Int!) {
     chat_with_customer_id
     order_type
     direction
+    schedule_time
     chat_with_service_provider_id
     delivery_company {
       id
       details {
+          location {
+          gps
+          address
+        }
         id
         image
         name
@@ -304,7 +310,8 @@ subscription listen_on_driver_order($orderId: Int!) {
       }
     }
     order_time
-    package_cost
+    package_cost_comp
+    total_cost
     package_ready
     payment_type
     pickup_address
@@ -391,10 +398,13 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
+    total_cost
     package_ready
     order_type
+    delivery_cost
     dropoff_address
+    delivery_cost
     dropoff_gps
     customer {
       user {
@@ -431,7 +441,9 @@ query get_past_driver_orders($driverId: Int!) {
     order_time
     status
     order_type
-    package_cost
+    package_cost_comp
+    total_cost
+    delivery_cost
 
     dropoff_address
     dropoff_gps
@@ -466,9 +478,86 @@ query get_inprocess_driver_orders($driverId: Int!) {
     order_time
     status
     order_type
-    package_cost
+    package_cost_comp
+    total_cost
+    package_ready
+    delivery_cost
+    dropoff_address
+    delivery_cost
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
+      }
+    }
+  }
+}
+query get_open_driver_orders($in_process : Boolean!) {
+  delivery_order(
+   where: {delivery_driver_id: {_is_null: true}, in_process: { _eq: $in_process }}
+  ) {
+    id
+    order_time
+    status
+    order_type
+    package_cost_comp
+    total_cost
     package_ready
     dropoff_address
+    delivery_cost
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
+      }
+    }
+  }
+}
+subscription listen_open_driver_orders($in_process: Boolean!) {
+  delivery_order(
+    where: {delivery_driver_id: {_is_null: true}, in_process: { _eq: $in_process }}
+  ) {
+    id
+    order_time
+    status
+    order_type
+    package_cost_comp
+    package_ready
+    total_cost
+    dropoff_address
+    delivery_cost
     dropoff_gps
     customer {
       user {
@@ -503,9 +592,11 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
     package_ready
+    total_cost
     dropoff_address
+    delivery_cost
     order_type
     dropoff_gps
     customer {
@@ -541,10 +632,12 @@ query get_delivery_company_past_orders($companyId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
+    total_cost
     dropoff_address
+    delivery_cost
     dropoff_gps
-    
+    delivery_cost
     order_type
     customer {
       user {
@@ -579,9 +672,11 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     id
     order_time
     status
-    package_cost
+    package_cost_comp
+    total_cost
     order_type
     dropoff_address
+    delivery_cost
     package_ready
     dropoff_gps
     customer {
@@ -622,6 +717,10 @@ query get_pick_driver_order($orderId: Int!) {
       id
       details {
         id
+          location {
+          gps
+          address
+        }
         image
         name
         service_provider_type
@@ -634,9 +733,11 @@ query get_pick_driver_order($orderId: Int!) {
 
     id
     order_time
-    package_cost
+    package_cost_comp
+    total_cost
     payment_type
     pickup_address
+    delivery_cost
     pickup_gps
     service_provider_id
     delivery_driver {
@@ -661,6 +762,27 @@ query get_pick_driver_order($orderId: Int!) {
         name
         language_id
       }
+    }
+  }
+}
+query getCustomerDvOrdersCount($id: Int!) {
+  delivery_order_aggregate(where: {customer_id: {_eq: $id}}) {
+    aggregate {
+      count
+    }
+  }
+}
+query getRestaurantOrdersCount($restuarantId: Int!) {
+  delivery_order_aggregate(where: {restaurant: {id: {_eq: $restuarantId}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+query getLaundryOrdersCount($laundryId: Int!) {
+  delivery_order_aggregate(where: {laundry: {id: {_eq: $laundryId}}}) {
+    aggregate {
+      count
     }
   }
 }

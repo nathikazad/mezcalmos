@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/controllers/LaundrOpCategoryViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -13,6 +15,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 
 class LaundrOpCategoryView extends StatefulWidget {
   const LaundrOpCategoryView({Key? key}) : super(key: key);
+
+  static Future<void> navigate({int? categoryId, required int laundryId}) {
+    String route = LaundryAppRoutes.kCategoryViewRoute
+        .replaceAll(":laundryId", laundryId.toString());
+    if (categoryId != null) {
+      route = route.replaceAll(":categoryId", categoryId.toString());
+    }
+    return MezRouter.toPath(route);
+  }
 
   @override
   State<LaundrOpCategoryView> createState() => _LaundrOpCategoryViewState();
@@ -27,11 +38,13 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
   int? categoryId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int? laundryId;
+
   @override
   void initState() {
-    laundryId = int.tryParse(Get.parameters["laundryId"]!);
-    if (Get.parameters["categoryId"] != null) {
-      categoryId = int.tryParse(Get.parameters["categoryId"]!);
+    laundryId = int.tryParse(MezRouter.urlArguments["laundryId"].toString());
+    if (MezRouter.urlArguments["categoryId"] != null) {
+      categoryId =
+          int.tryParse(MezRouter.urlArguments["categoryId"].toString());
     }
 
     if (laundryId != null) {
@@ -74,7 +87,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
     return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
       onClick: () {
-        MezRouter.back(result: _viewController.shouldRefetch);
+        MezRouter.back(backResult: _viewController.shouldRefetch);
       },
       titleWidget: Obx(
         () => Text((_viewController.editMode.value &&
@@ -100,7 +113,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                     const SizedBox(height: 20),
                     Text(
                       "${_i18n()["categoryName"]}",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                     const SizedBox(height: 15),
                     _categoryNameComponent(
@@ -115,7 +128,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                           ),
                           Text(
                             "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                           const SizedBox(height: 15),
                           _categoryNameComponent(
@@ -170,7 +183,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
       children: [
         Text(
           "${_i18n()["categoryPrice"]}",
-          style: Get.textTheme.bodyLarge,
+          style: context.txt.bodyLarge,
         ),
         const SizedBox(height: 8),
         TextFormField(
