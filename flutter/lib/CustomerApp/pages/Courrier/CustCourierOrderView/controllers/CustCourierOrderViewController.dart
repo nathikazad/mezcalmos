@@ -57,12 +57,13 @@ class CustCourierOrderViewController {
           mezDbgPrint(
               "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.driverInfo}");
 
-          _order.value = event;
-          _order.value?.driverInfo = event?.driverInfo;
-          if (event?.costs != null) {
-            _order.value?.costs = event!.costs;
+          if (event != null) {
+            _order.value = event;
+            _order.value?.status = event.status;
+            _order.value?.driverInfo = event.driverInfo;
+            _order.value?.costs = event.costs;
+            _order.refresh();
           }
-          _order.refresh();
 
           if (event?.changePriceRequest != null &&
               event?.costs.deliveryCost == 0 &&

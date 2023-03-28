@@ -96,6 +96,8 @@ class DvOrderViewcontroller {
             mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
             _order.value = event;
             _order.value?.driverInfo = event.driverInfo;
+            _order.value?.costs = event.costs;
+            _order.value?.status = event.status;
             _order.refresh();
 
             handleRestaurantOrder(event);

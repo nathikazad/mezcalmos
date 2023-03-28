@@ -228,7 +228,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             SizedBox(
               width: 8,
             ),
-            if (order.serviceProviderDriverChatId != null)
+            if (order.isDriverAssigned &&
+                order.serviceProviderDriverChatId != null)
               MessageButton(
                 withPadding: false,
                 onTap: onServiceMsgClick,
@@ -236,13 +237,14 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
           ],
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5.0),
-            child: serviceProviderTimeWidget,
-          ),
-        )
+        if (order.isDriverAssigned)
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: serviceProviderTimeWidget,
+            ),
+          )
       ],
     );
   }
