@@ -29,7 +29,7 @@ export async function handleOrderRequestByAdmin(userId: number, handleRequestDet
 
     if(handleRequestDetails.requestConfirmed) {
          
-        order.status = BusinessOrderRequestStatus.RequestApprovedByBusiness;
+        order.status = BusinessOrderRequestStatus.ApprovedByBusiness;
 
         handleRequestDetails.items?.forEach((i) => {
             let itemIdx = order.items.findIndex((j) => (i.serviceId == j.serviceId && i.serviceType == j.serviceType));
@@ -37,7 +37,7 @@ export async function handleOrderRequestByAdmin(userId: number, handleRequestDet
         });
         confirmBusinessOrderFromOperator(order);
     } else {
-        order.status = BusinessOrderRequestStatus.RequestRejectedByBusiness;
+        order.status = BusinessOrderRequestStatus.CancelledByBusiness;
         updateBusinessOrderRequest(order)
     }
 
@@ -51,11 +51,11 @@ function notifyCustomer(order: BusinessOrder, customer: CustomerInfo) {
             time: (new Date()).toISOString(),
             notificationType: NotificationType.OrderStatusChange,
             orderType: OrderType.Business,
-            notificationAction: order.status != BusinessOrderRequestStatus.RequestRejectedByBusiness
+            notificationAction: order.status != BusinessOrderRequestStatus.CancelledByBusiness
                 ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
             orderId: order.orderId,
         },
-        background: order.status == BusinessOrderRequestStatus.RequestApprovedByBusiness ? {
+        background: order.status == BusinessOrderRequestStatus.ApprovedByBusiness ? {
             [Language.ES]: {
                 title: "Solicitud confirmada",
                 body: `Su solicitud de pedido ha sido confirmada`

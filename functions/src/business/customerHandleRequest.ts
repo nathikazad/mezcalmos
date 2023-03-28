@@ -33,9 +33,9 @@ export async function handleOrderRequestFromCustomer(userId: number, handleReque
     errorChecks(order, userId, handleRequestDetails); 
 
     if(handleRequestDetails.requestConfirmed) {
-        order.status = BusinessOrderRequestStatus.RequestConfirmedByCustomer;
+        order.status = BusinessOrderRequestStatus.ConfirmedByCustomer;
     } else {
-        order.status = BusinessOrderRequestStatus.RequestCancelledByCustomer;
+        order.status = BusinessOrderRequestStatus.CancelledByCustomer;
     }
     updateBusinessOrderRequest(order);
 
@@ -49,7 +49,7 @@ function errorChecks(order: BusinessOrder, userId: number, handleRequestDetails:
             `Order does not belong to customer`
         );
     }
-    if (handleRequestDetails.requestConfirmed && order.status != BusinessOrderRequestStatus.RequestApprovedByBusiness) {
+    if (handleRequestDetails.requestConfirmed && order.status != BusinessOrderRequestStatus.ApprovedByBusiness) {
         throw new HttpsError(
             "internal",
             "request already confirmed or cancelled"
@@ -67,7 +67,7 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
             notificationAction: NotificationAction.ShowPopUp,
             orderId: order.orderId
       },
-        background: order.status == BusinessOrderRequestStatus.RequestConfirmedByCustomer ? {
+        background: order.status == BusinessOrderRequestStatus.ConfirmedByCustomer ? {
             [Language.ES]: {
                 title: "Solicitud confirmada",
                 body: `La solicitud de pedido ha sido confirmada por el cliente.`

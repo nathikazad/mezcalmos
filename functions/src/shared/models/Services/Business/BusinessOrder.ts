@@ -24,10 +24,12 @@ export interface BusinessOrderRequestItem {
 
 export enum BusinessOrderRequestStatus {
     RequestReceived = "requestReceived",
-    RequestApprovedByBusiness = "requestApprovedByBusiness",
-    RequestRejectedByBusiness = "requestRejectedByBusiness",
-    RequestConfirmedByCustomer = "requestConfirmedByCustomer",
-    RequestCancelledByCustomer = "requestCancelledByCustomer",
+    ApprovedByBusiness = "approvedByBusiness",
+    CancelledByBusiness = "cancelledByBusiness",
+    ConfirmedByCustomer = "confirmedByCustomer",
+    CancelledByCustomer = "cancelledByCustomer",
+    InProgress = "inProgress",
+    Completed = "completed"
 }
 
 export interface NewBusinessOrderRequestNotification extends OrderNotification {
