@@ -7,7 +7,7 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-const String kCurrentOrdersListRoute = '/orders';
+const String kCurrentOrdersListRoute = '/currentOrders';
 const String kDriverOrderView = '/orders/:orderId';
 const String kOrderDetailsView = "/orderDetails/:orderId";
 const String kPastOrdersView = "/pastOrders";
