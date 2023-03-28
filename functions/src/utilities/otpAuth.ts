@@ -17,8 +17,8 @@ interface SendOtpResponse {
 enum SendOtpError {
   UnhandledError = "unhandledError",
   UserNotFound = "userNotFound",
-  OTPAskedTooSoon = "OTPAskedTooSoon",
-  SMSSendError = "SMSSendError"
+  OTPAskedTooSoon = "oTPAskedTooSoon",
+  SMSSendError = "sMSSendError"
 }
 
 export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<SendOtpResponse> {
