@@ -55,8 +55,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
 
-  StreamSubscription<bool>? _locationStreamSub;
-
   RxInt numberOfCurrentOrders = RxInt(0);
 
   StreamSubscription<dynamic>? _orderCountListener;

@@ -13,9 +13,7 @@ class CustomerAuthHooksBase {
     );
 
     await Get.delete<CustomerAuthController>(force: true);
-
     await Get.delete<CustomerOrderController>(force: true);
-    await Get.delete<MessageController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
   }
 
