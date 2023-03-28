@@ -133,7 +133,7 @@ extension OrderTypeHelper on OrderType {
 }
 
 abstract class DeliverableOrder extends Order {
-  DeliveryDriverUserInfo? driverInfo;
+  UserInfo? driverInfo;
   UserInfo? deliveryCompany;
   MezLocation? pickupLocation;
   int? deliveryOrderId;
@@ -180,7 +180,7 @@ abstract class DeliverableOrder extends Order {
 }
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
-  DeliveryDriverUserInfo? pickupDriver;
+  UserInfo? pickupDriver;
   int? serviceProviderPickupDriverChatId;
   int? customerPickupDriverChatId;
   DateTime? estimatedPickupFromCustomerTime;

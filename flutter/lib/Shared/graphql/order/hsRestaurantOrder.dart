@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -161,8 +160,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
           name: orderData.restaurant.details!.name,
         ),
         driverInfo: (orderData.delivery?.delivery_driver != null)
-            ? DeliveryDriverUserInfo(
-                location: null,
+            ? UserInfo(
                 hasuraId: orderData.delivery!.delivery_driver!.user.id,
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
@@ -336,8 +334,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       name: orderData.restaurant.details!.name,
     ),
     driverInfo: (orderData.delivery?.delivery_driver != null)
-        ? DeliveryDriverUserInfo(
-            location: null,
+        ? UserInfo(
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,

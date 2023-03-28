@@ -55,11 +55,19 @@ class CustCourierOrderViewController {
         orderStream = listen_on_courier_order_by_id(orderId: orderId)
             .listen((CourierOrder? event) {
           mezDbgPrint(
-              "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.changePriceRequest}");
+              "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.driverInfo}");
 
           _order.value = event;
-          if (_order.value?.changePriceRequest != null &&
-              _order.value?.costs.deliveryCost == 0) {
+          _order.value?.driverInfo = event?.driverInfo;
+          if (event?.costs != null) {
+            _order.value?.costs = event!.costs;
+          }
+          _order.refresh();
+
+          if (event?.changePriceRequest != null &&
+              event?.costs.deliveryCost == 0 &&
+              event?.driverInfo != null) {
+            mezDbgPrint("Should Showwwww");
             showPriceReqDialog();
           }
         });
@@ -71,6 +79,7 @@ class CustCourierOrderViewController {
   }
 
   void showPriceReqDialog() {
+    mezDbgPrint("Show dialog called");
     showDialog(
         barrierDismissible: false,
         context: context,

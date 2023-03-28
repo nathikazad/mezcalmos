@@ -204,31 +204,34 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
         ));
   }
 
-  MezCard _driverCard() {
-    return MezCard(
-      margin: const EdgeInsets.only(top: 20),
-      contentPadding: const EdgeInsets.all(8),
-      secondAvatarIcon: Icons.delivery_dining,
-      secondAvatarIconColor: Colors.white,
-      secondAvatarBgColor: primaryBlueColor,
-      firstAvatarBgColor: secondaryLightBlueColor,
-      firstAvatarBgImage: (viewController.order.driverInfo == null)
-          ? null
-          : CachedNetworkImageProvider(viewController.order.driverInfo!.image),
-      content: Text(
-        viewController.order.driverInfo?.name ?? "No driver assigned yet",
-        style: context.txt.bodyLarge,
-      ),
-      action: Row(
-        children: [
-          if (viewController.order.customerDriverChatId != null)
-            MessageButton(
-                chatId: 55,
-                onTap: () {
-                  BaseMessagingScreen.navigate(
-                      chatId: viewController.order.customerDriverChatId!);
-                })
-        ],
+  Widget _driverCard() {
+    return Obx(
+      () => MezCard(
+        margin: const EdgeInsets.only(top: 20),
+        contentPadding: const EdgeInsets.all(8),
+        secondAvatarIcon: Icons.delivery_dining,
+        secondAvatarIconColor: Colors.white,
+        secondAvatarBgColor: primaryBlueColor,
+        firstAvatarBgColor: secondaryLightBlueColor,
+        firstAvatarBgImage: (viewController.order.driverInfo == null)
+            ? null
+            : CachedNetworkImageProvider(
+                viewController.order.driverInfo!.image),
+        content: Text(
+          viewController.order.driverInfo?.name ?? "No driver assigned yet",
+          style: context.txt.bodyLarge,
+        ),
+        action: Row(
+          children: [
+            if (viewController.order.customerDriverChatId != null)
+              MessageButton(
+                  chatId: 55,
+                  onTap: () {
+                    BaseMessagingScreen.navigate(
+                        chatId: viewController.order.customerDriverChatId!);
+                  })
+          ],
+        ),
       ),
     );
   }

@@ -50,7 +50,7 @@ class CustRestaurantOrderViewController {
             .listen((RestaurantOrder? event) {
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.location?.toJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
             order.value = event;
           }
         });

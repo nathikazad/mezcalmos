@@ -26,6 +26,8 @@ Notification deliveryDriverNotificationHandler(String key, value) {
       return _driverAprrovedNotification(key, value);
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
+    case NotificationType.PriceChange:
+      return newPriceChangeNotification(key, value);
     case NotificationType.OrderStatusChange:
       switch (value['orderType'].toString().toOrderType()) {
         case OrderType.Restaurant:
@@ -231,6 +233,24 @@ Notification newMessageNotification(String key, value) {
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
+}
+
+Notification newPriceChangeNotification(String key, value) {
+  bool accepted = value["accepted"];
+  return Notification(
+      id: key,
+      linkUrl: value["linkUrl"],
+      body: accepted
+          ? "Congrats ! your price offer has been accepted"
+          : "Sorry ! your price offer has been rejected",
+      imgUrl: null,
+      icon: mat.Icons.delivery_dining,
+      title: accepted ? "Accepted" : "Rejected",
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.PriceChange,
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);

@@ -49,11 +49,17 @@ class DvOrderViewcontroller {
   bool get showEditPrice {
     return (order.orderType == OrderType.Courier ||
             order.orderType == OrderType.Laundry) &&
+        order.isDriverAssigned &&
         order.status == DeliveryOrderStatus.OrderReceived;
   }
 
-  bool get isLaundry {
-    return order.orderType == OrderType.Laundry;
+  bool get isLaundryPickup {
+    return order.orderType == OrderType.Laundry &&
+        order.deliveryDirection == DeliveryDirection.FromCustomer;
+  }
+
+  bool get isCourier {
+    return order.orderType == OrderType.Courier;
   }
 
   DeliveryOrder get order => _order.value!;
@@ -89,6 +95,9 @@ class DvOrderViewcontroller {
           if (event != null) {
             mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
             _order.value = event;
+            _order.value?.driverInfo = event.driverInfo;
+            _order.refresh();
+
             handleRestaurantOrder(event);
           }
         });
@@ -329,13 +338,15 @@ class DvOrderViewcontroller {
                 deliveryOrderId: order.orderId,
                 newPrice: double.parse(openOrderPriceText.text),
                 reason: openOrderReasonText.text);
-        Navigator.pop(context);
+
         if (res.success == false) {
           mezDbgPrint(res.error);
+          mezDbgPrint("ERRORRRR ========>${res.unhandledError}");
           showErrorSnackBar(errorText: res.error.toString());
         } else {
           showSavedSnackBar(
               title: "Sended", subtitle: "Price change request sended");
+          Navigator.pop(context);
         }
       } on FirebaseFunctionsException catch (e, stk) {
         showErrorSnackBar(errorText: e.message.toString());

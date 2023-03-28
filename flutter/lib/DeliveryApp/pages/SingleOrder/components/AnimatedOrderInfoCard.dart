@@ -267,7 +267,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
             ),
             SizedBox(width: 8),
-            if (order.customerDriverChatId != null)
+            if (order.isDriverAssigned && order.customerDriverChatId != null)
               MessageButton(
                 withPadding: false,
                 onTap: onCustomerMsgClick,
@@ -275,13 +275,14 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
           ],
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5.0),
-            child: customerTimeWidget,
-          ),
-        )
+        if (order.isDriverAssigned)
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: customerTimeWidget,
+            ),
+          )
       ],
     );
   }
@@ -322,7 +323,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "${order.costs.orderItemsCost?.toPriceString(rounded: true)}",
+                "${order.costs.totalCost?.toPriceString(rounded: true)}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -330,6 +331,17 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w700,
                   fontSize: 13.sp,
+                ),
+              ),
+              Text(
+                "${order.costs.orderItemsCost?.toPriceString(rounded: true)} + ${order.costs.deliveryCost?.toPriceString(rounded: true)}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 11.sp,
                 ),
               ),
               Text(
@@ -508,7 +520,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                         height: 50,
                         label: "${_i18n()['save']}",
                         onClick: () async {
-                          await viewController.requestPriceChange(context);
+                          await viewController.requestPriceChange(ctx);
                           // await viewController.editTax();
                           // await MezRouter.back();
                         },

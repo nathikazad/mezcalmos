@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
@@ -63,7 +62,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
               polyline: orderData.delivery_order.trip_polyline!)
           : null,
       driverInfo: (orderData.delivery_order.delivery_driver != null)
-          ? DeliveryDriverUserInfo(
+          ? UserInfo(
               hasuraId: orderData.delivery_order.delivery_driver!.user.id,
               name: orderData.delivery_order.delivery_driver!.user.name,
               image: orderData.delivery_order.delivery_driver!.user.image,
@@ -199,7 +198,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                 polyline: orderData.delivery_order.trip_polyline!)
             : null,
         driverInfo: (orderData.delivery_order.delivery_driver != null)
-            ? DeliveryDriverUserInfo(
+            ? UserInfo(
                 hasuraId: orderData.delivery_order.delivery_driver!.user.id,
                 name: orderData.delivery_order.delivery_driver!.user.name,
                 image: orderData.delivery_order.delivery_driver!.user.image,
@@ -239,6 +238,11 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         serviceProviderDriverChatId:
             orderData.delivery_order.chat_with_service_provider_id,
         paymentType: orderData.payment_type.toPaymentType(),
+        changePriceRequest:
+            (orderData.delivery_order.change_price_request != null)
+                ? ChangePriceRequest.fromMap(
+                    orderData.delivery_order.change_price_request)
+                : null,
         packageReady: orderData.delivery_order.package_ready,
         stripePaymentInfo: _paymentInfo,
         serviceProvider: ServiceInfo(

@@ -123,7 +123,8 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                if (costs.tax != null && costs.tax != 0)
+                if ((costs.tax != null && costs.tax != 0) ||
+                    setTaxCallBack != null)
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
