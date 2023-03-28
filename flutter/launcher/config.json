@@ -77,7 +77,6 @@
                 "image_picker": "^0.8.4",
                 "progress_indicators": "^1.0.0",
                 "lottie": "^2.2.0",
-                "flutter_image_compress": "^1.1.0",
                 "rive": "^0.10.0",
                 "flutter_rating_bar": "^4.0.1",
                 "ionicons": "^0.2.1",
