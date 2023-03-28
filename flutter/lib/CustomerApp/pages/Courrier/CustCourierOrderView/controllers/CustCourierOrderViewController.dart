@@ -64,7 +64,9 @@ class CustCourierOrderViewController {
             _order.value?.costs = event.costs;
 
             _order.refresh();
-            if (event.changePriceRequest != null && event.driverInfo != null) {
+            if (event.changePriceRequest != null &&
+                event.changePriceRequest?.status ==
+                    ChangePriceRequestStatus.Requested) {
               mezDbgPrint("Should Showwwww");
               showPriceReqDialog();
             }
