@@ -1,5 +1,5 @@
 import { getHasura } from "../../../utilities/hasura";
-import { ParticipantType } from "../../models/Generic/Chat";
+import { ChatInfoAppName, ParticipantType } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
 import { MezError } from "../../models/Generic/Generic";
 import { DeliveryType, OrderType } from "../../models/Generic/Order";
@@ -26,21 +26,21 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
       },
       _set: {
         chat_info: JSON.stringify({
-          CustomerApp: {
+          [ChatInfoAppName.CustomerApp]: {
             chatTitle: restaurant.name,
             chatImage: restaurant.image,
             phoneNumber: restaurant.phoneNumber,
             participantType: ParticipantType.RestaurantOperator,
             parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
           },
-          RestaurantApp: {
+          [ChatInfoAppName.RestaurantApp]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
             parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
           },
-          MezAdminApp: {
+          [ChatInfoAppName.MezAdminApp]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
@@ -61,14 +61,14 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
         },
         _set: {
           chat_info: JSON.stringify({
-            DeliveryApp: {
+            [ChatInfoAppName.DeliveryApp]: {
               chatTitle: customer.name ?? "Customer",
               chatImage: customer.image,
               phoneNumber: customer.phoneNumber,
               participantType: ParticipantType.Customer,
               parentLink: `/Orders/${delivery.deliveryId}`
             },
-            CustomerApp: {
+            [ChatInfoAppName.CustomerApp]: {
               parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
               participantType: ParticipantType.DeliveryDriver
             }
@@ -85,18 +85,18 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
         },
         _set: {
           chat_info: JSON.stringify({
-            DeliveryApp: {
+            [ChatInfoAppName.DeliveryApp]: {
               chatTitle: restaurant.name,
               chatImage: restaurant.image,
               phoneNumber: restaurant.phoneNumber,
               participantType: ParticipantType.RestaurantOperator,
               parentLink: `/Orders/${delivery.deliveryId}`
             },
-            RestaurantApp: {
+            [ChatInfoAppName.RestaurantApp]: {
               parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
               participantType: ParticipantType.DeliveryDriver,
             },
-            MezAdminApp: {
+            [ChatInfoAppName.MezAdminApp]: {
               parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
               participantType: ParticipantType.DeliveryDriver,
             }
@@ -126,21 +126,21 @@ export async function setLaundryOrderChatInfo(
       },
       _set: {
         chat_info: JSON.stringify({
-          CustomerApp: {
+          [ChatInfoAppName.CustomerApp]: {
             chatTitle: laundryStore.name,
             chatImage: laundryStore.image,
             phoneNumber: laundryStore.phoneNumber,
             participantType: ParticipantType.LaundryOperator,
             parentLink: `/laundryOrders/${laundryOrder.orderId}`,
           },
-          LaundryApp: {
+          [ChatInfoAppName.LaundryApp]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
             parentLink: `/laundryOrders/${laundryOrder.orderId}`,
           },
-          MezAdminApp: {
+          [ChatInfoAppName.MezAdminApp]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
@@ -156,14 +156,14 @@ export async function setLaundryOrderChatInfo(
   if(laundryOrder.deliveryType == DeliveryType.Delivery) {
     
     let chatInfo: any = {
-      DeliveryApp: {
+      [ChatInfoAppName.DeliveryApp]: {
         chatTitle: customer.name ?? "Customer",
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
         parentLink: `/Orders/${fromCustomerDelivery.deliveryId}`
       },
-      CustomerApp: {
+      [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver
       }
@@ -183,18 +183,18 @@ export async function setLaundryOrderChatInfo(
     });
 
     chatInfo = {
-      DeliveryApp: {
+      [ChatInfoAppName.DeliveryApp]: {
         chatTitle: laundryStore.name,
         chatImage: laundryStore.image,
         phoneNumber: laundryStore.phoneNumber,
         participantType: ParticipantType.LaundryOperator,
         parentLink: `/Orders/${fromCustomerDelivery.deliveryId}`
       },
-      LaundryApp: {
+      [ChatInfoAppName.LaundryApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver,
       },
-      MezAdminApp: {
+      [ChatInfoAppName.MezAdminApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver,
       }
@@ -226,14 +226,14 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
       throw new MezError("noDeliveryChatWithStoreId");
     }
     let chatInfo: any = {
-      DeliveryApp: {
+      [ChatInfoAppName.DeliveryApp]: {
         chatTitle: customer.name ?? "Customer",
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
         parentLink: `/Orders/${toCustomerDelivery.deliveryId}`
       },
-      CustomerApp: {
+      [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver
       }
@@ -253,18 +253,18 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
     });
 
     chatInfo = {
-      DeliveryApp: {
+      [ChatInfoAppName.DeliveryApp]: {
         chatTitle: laundryStore.name,
         chatImage: laundryStore.image,
         phoneNumber: laundryStore.phoneNumber,
         participantType: ParticipantType.LaundryOperator,
         parentLink: `/Orders/${toCustomerDelivery.deliveryId}`
       },
-      LaundryApp: {
+      [ChatInfoAppName.LaundryApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver,
       },
-      MezAdminApp: {
+      [ChatInfoAppName.MezAdminApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver,
       }
@@ -381,18 +381,18 @@ export async function setCourierChatInfo(courierOrder: CourierOrder, customer: C
       },
       _set: {
         chat_info: JSON.stringify({
-          DeliveryApp: {
+          [ChatInfoAppName.DeliveryApp]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
             parentLink: `/Orders/${courierOrder.deliveryOrder.deliveryId}`
           },
-          CustomerApp: {
+          [ChatInfoAppName.CustomerApp]: {
             parentLink: `/courierOrders/${courierOrder.id}`,
             participantType: ParticipantType.DeliveryDriver
           },
-          MezAdminApp: {
+          [ChatInfoAppName.MezAdminApp]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,

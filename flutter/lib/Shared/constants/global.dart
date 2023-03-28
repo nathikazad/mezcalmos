@@ -158,6 +158,23 @@ extension ParseOrderTypeToString on AppType {
     return str;
   }
 
+  String toChatInfoString() {
+    switch (this) {
+      case AppType.Customer:
+        return "CustomerApp";
+      case AppType.DeliveryAdmin:
+        return "DeliveryAdminApp";
+      case AppType.MezAdmin:
+        return "MezAdminApp";
+      case AppType.Delivery:
+        return "DeliveryApp";
+      case AppType.Laundry:
+        return "LaundryApp";
+      case AppType.Restaurant:
+        return "RestaurantApp";
+    }
+  }
+
   ParticipantType? toParticipantType() {
     switch (this) {
       case AppType.Customer:
