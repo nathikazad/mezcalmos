@@ -674,7 +674,15 @@
       "counterOfferTitle": "New counter offer",
       "counterOfferBody": "New offer from ",
       "priceChange": "Price change",
-      "driverSentYouMessage": "Driver sent you a new message"
+      "driverSentYouMessage": "Driver sent you a new message",
+      "courier": {
+        "atPickupTitle": "At pickup",
+        "atPickupBody": "Driver reached order pickup location",
+        "onTheWayPickupTitle": "Pickup on the way",
+        "onTheWayPickupBody": "Driver is on his way to pickup your order",
+        "onTheWayDropoffTitle": "Delivery on the way",
+        "onTheWayDropoffBody": "Driver is on the way to deliver you order"
+      }
     }
   },
   "Shared": {
@@ -753,23 +761,22 @@
       }
     },
     "pages": {
-      "ServiceProfileView" : {
-        "profile" : "Profile",
-        "info" : "Information",
-        "operators" : "Operators",
-        "drivers" : "Drivers",
-        "schedule" :"Schedule",
-        "payments" :"Payments",
-        "delivery" :"Delivery",
-        "reviews" : "Reviews",
-        "share" : "Share",
+      "ServiceProfileView": {
+        "profile": "Profile",
+        "info": "Information",
+        "operators": "Operators",
+        "drivers": "Drivers",
+        "schedule": "Schedule",
+        "payments": "Payments",
+        "delivery": "Delivery",
+        "reviews": "Reviews",
+        "share": "Share",
         "privacyPolicies": "Privacy Policies",
-        "logout" : "Logout",
-        "openService" : "Open service",
-        "closeService" : "Close service",
-        "serviceClosed" : "Service is closed indefinitely",
-        "restaurantReview" : "Your restaurant is under review, you’ll be notifiedonce it’s approved."
-
+        "logout": "Logout",
+        "openService": "Open service",
+        "closeService": "Close service",
+        "serviceClosed": "Service is closed indefinitely",
+        "restaurantReview": "Your restaurant is under review, you’ll be notifiedonce it’s approved."
       },
       "CreateServiceView": {
         "pages": {
@@ -832,7 +839,7 @@
             "notFoundTitle": "No delivery partners found",
             "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
             "joined": "Joined",
-            "errorText" :  "Please select a company or switch to self delivery time"
+            "errorText": "Please select a company or switch to self delivery time"
           }
         }
       },
@@ -1089,7 +1096,7 @@
         "totalCost": "Total cost",
         "deliveryLocation": "Delivery location",
         "refundAmount": "Refund amount",
-        "tax" : "Tax",
+        "tax": "Tax",
         "toBeCalc": "To be calculated"
       },
       "OrderPaymentMethod": {
@@ -1635,10 +1642,9 @@
   },
   "DeliveryApp": {
     "pages": {
-      "UnAuthorizedDriverView" : {
-        "title" : "Invitation needed",
-        "subtitle" : "You need an invitation to use our delivery app"
-
+      "UnAuthorizedDriverView": {
+        "title": "Invitation needed",
+        "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
@@ -1691,9 +1697,9 @@
           }
         },
         "title": "Delivery",
-        "restaurant" : "Restaurant",
-        "laundry" : "Laundry",
-        "courier" : "Courier"
+        "restaurant": "Restaurant",
+        "laundry": "Laundry",
+        "courier": "Courier"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
@@ -1781,7 +1787,6 @@
             },
             "DriverBottomRestaurantOrderCard": {
               "acceptOrder": "Accept order",
-
               "restaurantDelivery": "Restaurant Delivery",
               "laundryDelivery": "Laundry Delivery",
               "packageReady": "Package ready",
@@ -2100,9 +2105,9 @@
       },
       "ROpOrderView": {
         "schTitle": "Scheduled for",
-        "deliveryDet" :"Delivery details",
-        "review" : "Review",
-        "restaurant" : "Restaurant",
+        "deliveryDet": "Delivery details",
+        "review": "Review",
+        "restaurant": "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
         "components": {

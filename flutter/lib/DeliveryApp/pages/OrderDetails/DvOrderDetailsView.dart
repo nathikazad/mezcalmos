@@ -20,7 +20,10 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -193,7 +196,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       ),
       action: Container(
         child: (viewController.billLoading.isTrue)
-            ? CircularProgressIndicator()
+            ? SizedBox(
+                height: 30, width: 30, child: CircularProgressIndicator())
             : (viewController.newBillUrl.value == null)
                 ? Flexible(
                     child: MezButton(
@@ -205,11 +209,53 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       borderRadius: 5,
                     ),
                   )
-                : CachedNetworkImage(
-                    imageUrl: viewController.newBillUrl.value!,
-                    width: 70,
-                    height: 40,
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  contentPadding: EdgeInsets.zero,
+                                  content: Container(
+                                    width: 70.w,
+                                    height: 60.h,
+                                    child: PhotoView(
+                                      imageProvider: CachedNetworkImageProvider(
+                                        viewController.newBillUrl.value!,
+                                        //  style: context.txt.titleSmall,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: viewController.newBillUrl.value!,
+                          fit: BoxFit.contain,
+                          width: 70,
+                          height: 50,
+
+                          //  style: context.txt.titleSmall,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      MezIconButton(
+                          onTap: () async {
+                            await viewController.editImage(context);
+                          },
+                          icon: Icons.edit_rounded)
+                    ],
                   ),
+        // CachedNetworkImage(
+        //     imageUrl: viewController.newBillUrl.value!,
+        //     width: 70,
+        //     height: 40,
+        //   ),
       ),
     );
   }

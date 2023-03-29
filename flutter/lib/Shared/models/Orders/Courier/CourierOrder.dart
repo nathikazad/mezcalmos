@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart'
 class CourierOrder extends DeliveryOrder {
   List<CourierOrdeItem> items = [];
   ChangePriceRequest? changePriceRequest;
+  String? billImage;
 
   CourierOrder(
       {required super.orderType,
@@ -32,8 +33,8 @@ class CourierOrder extends DeliveryOrder {
       required super.routeInformation,
       required super.orderId,
       required super.chatId,
+      this.billImage,
       required super.customer,
-      
       required super.dropOffLocation,
       required super.serviceProviderDriverChatId,
       required super.customerDriverChatId,

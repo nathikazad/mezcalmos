@@ -62,14 +62,14 @@ class CustCourierOrderViewController {
             _order.value?.status = event.status;
             _order.value?.driverInfo = event.driverInfo;
             _order.value?.costs = event.costs;
-            _order.refresh();
-          }
 
-          if (event?.changePriceRequest != null &&
-              event?.costs.deliveryCost == 0 &&
-              event?.driverInfo != null) {
-            mezDbgPrint("Should Showwwww");
-            showPriceReqDialog();
+            _order.refresh();
+            if (event.changePriceRequest != null &&
+                event.changePriceRequest?.status ==
+                    ChangePriceRequestStatus.Requested) {
+              mezDbgPrint("Should Showwwww");
+              showPriceReqDialog();
+            }
           }
         });
       }, cancel: () {

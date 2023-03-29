@@ -14,6 +14,10 @@ class CourierRoutes {
   static const String kCourierServiceRoute = '/courier/:companyId';
   static const String kCourierRequestRoute = '/requestCourier/:courierId';
   static const String kCourierOrderView = '/courierOrders/:orderId';
+static  String custCourierOrderRoute(int orderId) {
+    return kCourierOrderView.replaceFirst(":orderId", "$orderId");
+  }
+
   final List<QRoute> routes = [
     QRoute(
         path: kCouriersRoute,

@@ -472,6 +472,13 @@ const documentNodeQueryget_courier_order_by_id = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'bill_image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_order'),
             alias: null,
             arguments: [],
@@ -988,6 +995,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     this.total_cost,
     this.actual_items_cost,
     required this.items,
+    this.bill_image,
     required this.delivery_order,
     required this.$__typename,
   });
@@ -1010,6 +1018,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     final l$total_cost = json['total_cost'];
     final l$actual_items_cost = json['actual_items_cost'];
     final l$items = json['items'];
+    final l$bill_image = json['bill_image'];
     final l$delivery_order = json['delivery_order'];
     final l$$__typename = json['__typename'];
     return Query$get_courier_order_by_id$delivery_courier_order_by_pk(
@@ -1037,6 +1046,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
               Query$get_courier_order_by_id$delivery_courier_order_by_pk$items
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
+      bill_image: (l$bill_image as String?),
       delivery_order:
           Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order
               .fromJson((l$delivery_order as Map<String, dynamic>)),
@@ -1076,6 +1086,8 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
 
   final List<Query$get_courier_order_by_id$delivery_courier_order_by_pk$items>
       items;
+
+  final String? bill_image;
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order
       delivery_order;
@@ -1121,6 +1133,8 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
         l$actual_items_cost == null ? null : moneyToJson(l$actual_items_cost);
     final l$items = items;
     _resultData['items'] = l$items.map((e) => e.toJson()).toList();
+    final l$bill_image = bill_image;
+    _resultData['bill_image'] = l$bill_image;
     final l$delivery_order = delivery_order;
     _resultData['delivery_order'] = l$delivery_order.toJson();
     final l$$__typename = $__typename;
@@ -1146,6 +1160,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
     final l$total_cost = total_cost;
     final l$actual_items_cost = actual_items_cost;
     final l$items = items;
+    final l$bill_image = bill_image;
     final l$delivery_order = delivery_order;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -1165,6 +1180,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
       l$total_cost,
       l$actual_items_cost,
       Object.hashAll(l$items.map((v) => v)),
+      l$bill_image,
       l$delivery_order,
       l$$__typename,
     ]);
@@ -1267,6 +1283,11 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk {
         return false;
       }
     }
+    final l$bill_image = bill_image;
+    final lOther$bill_image = other.bill_image;
+    if (l$bill_image != lOther$bill_image) {
+      return false;
+    }
     final l$delivery_order = delivery_order;
     final lOther$delivery_order = other.delivery_order;
     if (l$delivery_order != lOther$delivery_order) {
@@ -1322,6 +1343,7 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
     double? actual_items_cost,
     List<Query$get_courier_order_by_id$delivery_courier_order_by_pk$items>?
         items,
+    String? bill_image,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order?
         delivery_order,
     String? $__typename,
@@ -1370,6 +1392,7 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk<
     Object? total_cost = _undefined,
     Object? actual_items_cost = _undefined,
     Object? items = _undefined,
+    Object? bill_image = _undefined,
     Object? delivery_order = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -1421,6 +1444,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk<
             ? _instance.items
             : (items as List<
                 Query$get_courier_order_by_id$delivery_courier_order_by_pk$items>),
+        bill_image: bill_image == _undefined
+            ? _instance.bill_image
+            : (bill_image as String?),
         delivery_order: delivery_order == _undefined || delivery_order == null
             ? _instance.delivery_order
             : (delivery_order
@@ -1477,6 +1503,7 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
     double? actual_items_cost,
     List<Query$get_courier_order_by_id$delivery_courier_order_by_pk$items>?
         items,
+    String? bill_image,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order?
         delivery_order,
     String? $__typename,
@@ -8447,6 +8474,13 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'bill_image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'total_cost'),
             alias: null,
             arguments: [],
@@ -9040,6 +9074,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     required this.refund_amount,
     required this.stripe_fees,
     this.stripe_info,
+    this.bill_image,
     this.total_cost,
     this.actual_items_cost,
     required this.tax,
@@ -9062,6 +9097,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     final l$refund_amount = json['refund_amount'];
     final l$stripe_fees = json['stripe_fees'];
     final l$stripe_info = json['stripe_info'];
+    final l$bill_image = json['bill_image'];
     final l$total_cost = json['total_cost'];
     final l$actual_items_cost = json['actual_items_cost'];
     final l$tax = json['tax'];
@@ -9083,6 +9119,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
       refund_amount: moneyFromJson(l$refund_amount),
       stripe_fees: moneyFromJson(l$stripe_fees),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
+      bill_image: (l$bill_image as String?),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       actual_items_cost: l$actual_items_cost == null
           ? null
@@ -9121,6 +9158,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
   final double stripe_fees;
 
   final dynamic? stripe_info;
+
+  final String? bill_image;
 
   final double? total_cost;
 
@@ -9166,6 +9205,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] =
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
+    final l$bill_image = bill_image;
+    _resultData['bill_image'] = l$bill_image;
     final l$total_cost = total_cost;
     _resultData['total_cost'] =
         l$total_cost == null ? null : moneyToJson(l$total_cost);
@@ -9199,6 +9240,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     final l$refund_amount = refund_amount;
     final l$stripe_fees = stripe_fees;
     final l$stripe_info = stripe_info;
+    final l$bill_image = bill_image;
     final l$total_cost = total_cost;
     final l$actual_items_cost = actual_items_cost;
     final l$tax = tax;
@@ -9218,6 +9260,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
       l$refund_amount,
       l$stripe_fees,
       l$stripe_info,
+      l$bill_image,
       l$total_cost,
       l$actual_items_cost,
       l$tax,
@@ -9287,6 +9330,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk {
     final l$stripe_info = stripe_info;
     final lOther$stripe_info = other.stripe_info;
     if (l$stripe_info != lOther$stripe_info) {
+      return false;
+    }
+    final l$bill_image = bill_image;
+    final lOther$bill_image = other.bill_image;
+    if (l$bill_image != lOther$bill_image) {
       return false;
     }
     final l$total_cost = total_cost;
@@ -9376,6 +9424,7 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
     double? refund_amount,
     double? stripe_fees,
     dynamic? stripe_info,
+    String? bill_image,
     double? total_cost,
     double? actual_items_cost,
     double? tax,
@@ -9427,6 +9476,7 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
     Object? refund_amount = _undefined,
     Object? stripe_fees = _undefined,
     Object? stripe_info = _undefined,
+    Object? bill_image = _undefined,
     Object? total_cost = _undefined,
     Object? actual_items_cost = _undefined,
     Object? tax = _undefined,
@@ -9466,6 +9516,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
+        bill_image: bill_image == _undefined
+            ? _instance.bill_image
+            : (bill_image as String?),
         total_cost: total_cost == _undefined
             ? _instance.total_cost
             : (total_cost as double?),
@@ -9534,6 +9587,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
     double? refund_amount,
     double? stripe_fees,
     dynamic? stripe_info,
+    String? bill_image,
     double? total_cost,
     double? actual_items_cost,
     double? tax,

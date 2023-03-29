@@ -16,15 +16,6 @@ class DeliveryAppRoutes {
   static const String kPastOrdersViewRoute = "/pastOrders";
   static const String kDriverUnAuthRoute = "/driverUnauth";
 
-  //recheck
-  static String getLaundryOrderRoute(int orderId) {
-    return kLaundryOrderViewRoute.replaceFirst(":orderId", orderId.toString());
-  }
-
-  static String getRestaurantOrderRoute(int orderId) {
-    return kDvOrderView.replaceFirst(":orderId", orderId.toString());
-  }
-
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(
           path: kCurrentOrdersListRoute,

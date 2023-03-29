@@ -29,6 +29,7 @@ query get_courier_order_by_id($orderId: Int!) {
       notes
       unavailable
     }
+    bill_image
     delivery_order {
       schedule_time
         customer {
@@ -63,7 +64,6 @@ query get_courier_order_by_id($orderId: Int!) {
       in_process
       id
       schedule_time
-
       status
       service_provider_type
       trip_distance
@@ -162,7 +162,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
     refund_amount
     stripe_fees
     stripe_info
-    
+    bill_image
     
     total_cost
     actual_items_cost

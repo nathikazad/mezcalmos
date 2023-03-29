@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -17,7 +18,9 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderBillImage.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
@@ -64,6 +67,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
+          showNotifications: true,
+          ordersRoute: CustomerRoutes.customerOrdersRoute,
           titleWidget: Obx(() => viewController.hasData
               ? Text(viewController.order.deliveryCompany?.name ?? "")
               : SizedBox())),
@@ -110,9 +115,14 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     address: viewController.order.dropOffLocation.address,
                     margin: const EdgeInsets.only(top: 8),
                   ),
-                  // OrderNoteCard(
-                  //     margin: const EdgeInsets.only(top: 15),
-                  //     note: viewController.order),
+                  if (viewController.order.billImage != null)
+                    OrderBillImage(
+                      billImage: viewController.order.billImage,
+                      margin: const EdgeInsets.only(top: 15),
+                    ),
+                  OrderNoteCard(
+                      margin: const EdgeInsets.only(top: 15),
+                      note: viewController.order.notes),
                   OrderSummaryCard(
                     margin: const EdgeInsets.only(top: 15),
                     costs: viewController.order.costs,
