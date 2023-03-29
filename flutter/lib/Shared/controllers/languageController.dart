@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io' as dartIO;
 //import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
@@ -25,7 +25,11 @@ class LanguageController extends GetxController {
   LanguageController() {
     final LanguageType? lang =
         GetStorage().read("lang").toString().toLanguageType();
-    if (lang != null) {
+    if (lang == null) {
+      _userLanguageKey.value = _getSystemLanguage();
+      GetStorage()
+          .write("lang", _userLanguageKey.value.toFirebaseFormatString());
+    } else {
       _userLanguageKey.value = lang;
     }
 
@@ -67,13 +71,14 @@ class LanguageController extends GetxController {
       ? mexicoFlagAsset
       : usaFlagAsset;
 
-  Future<void> changeUserLanguage({LanguageType? language = null}) async {
-    if (Get.find<AuthController>().isUserSignedIn) {
+  Future<void> changeUserLanguage(
+      {LanguageType? language = null, bool saveToDatabase = true}) async {
+    if (saveToDatabase && Get.find<AuthController>().isUserSignedIn) {
       await Get.find<AuthController>()
-          .changeLanguage(_userLanguageKey.value.toOpLang())
+          .changeLanguage(language ?? _userLanguageKey.value.toOpLang())
           .then((LanguageType value) => _userLanguageKey.value = value);
     } else {
-      _userLanguageKey.value = _userLanguageKey.value.toOpLang();
+      _userLanguageKey.value = language!; //_userLanguageKey.value.toOpLang();
     }
     await GetStorage()
         .write("lang", _userLanguageKey.value.toFirebaseFormatString());
@@ -137,6 +142,12 @@ class LanguageController extends GetxController {
         controllerHasInitialized.value = false;
       }
     });
+  }
+
+  LanguageType _getSystemLanguage() {
+    return dartIO.Platform.localeName.substring(0, 2) == 'es'
+        ? LanguageType.ES
+        : LanguageType.EN;
   }
 
   @override

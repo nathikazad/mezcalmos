@@ -96,6 +96,7 @@ class AuthController extends GetxController {
 
           await hasuraDb.initializeHasura();
           await fetchUserInfoFromHasura();
+          _setLAppLanguage();
           await _onSignInCallback();
         } else {
           unawaited(fireAuth.FirebaseAuth.instance.signOut());
@@ -253,6 +254,13 @@ class AuthController extends GetxController {
   Future<LanguageType> changeLanguage(LanguageType newLanguage) async {
     return await change_user_language(
         userId: user!.hasuraId, language: newLanguage);
+  }
+
+  void _setLAppLanguage() {
+    if (_userInfo.value != null) {
+      Get.find<LanguageController>().changeUserLanguage(
+          language: _userInfo.value?.language, saveToDatabase: false);
+    }
   }
 
   @override
