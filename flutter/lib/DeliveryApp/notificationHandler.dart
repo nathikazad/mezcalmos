@@ -34,6 +34,8 @@ Notification deliveryDriverNotificationHandler(String key, value) {
           return restaurantOrderStatusChangeNotificationHandler(key, value);
         case OrderType.Laundry:
           return laundryOrderStatusChangeNotificationHandler(key, value);
+        case OrderType.Courier:
+          return _courierOrderStatusChangeNotificationHandler(key, value);
         default:
           throw Exception("Unexpected Order Type $value['orderType']");
       }
