@@ -150,7 +150,7 @@ export async function changeDeliveryPriceResponse(userId: number, changePriceRes
             updateDeliveryChangePriceRequest(deliveryOrder);
         }
 
-        notifyDriver(deliveryOrder.deliveryDriverId!, changePriceResponseDetails.accepted);
+        notifyDriver(deliveryOrder.deliveryDriverId!, changePriceResponseDetails.accepted, deliveryOrder.deliveryId);
         return {
             success: true,
         }
@@ -174,7 +174,7 @@ export async function changeDeliveryPriceResponse(userId: number, changePriceRes
     }
 }
 
-async function notifyDriver(deliveryDriverId: number, accepted: boolean) {
+async function notifyDriver(deliveryDriverId: number, accepted: boolean, deliveryId: number) {
     let deliveryDriver: DeliveryDriver = await getDeliveryDriver(deliveryDriverId);
 
     let notification: Notification = {
@@ -204,7 +204,7 @@ async function notifyDriver(deliveryDriverId: number, accepted: boolean) {
                 body: `Su solicitud para cambiar el precio de envío ha sido denegada`
             }
         },
-        linkUrl: '/'
+        linkUrl: `/orderDetails/${deliveryId}`
     };
 
     pushNotification(
@@ -217,18 +217,26 @@ async function notifyDriver(deliveryDriverId: number, accepted: boolean) {
 
 async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
     let orderId: number;
+    let linkUrlForCustomer: string;
+    let linkUrlForOperator: string;
     switch (deliveryOrder.orderType) {
         case OrderType.Restaurant:
             let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(deliveryOrder.deliveryId);
             orderId = restaurantOrder.orderId;
+            linkUrlForCustomer = `/restaurantOrders/${orderId}`;
+            linkUrlForOperator = `/restaurantOrders/${orderId}`;
             break;
         case OrderType.Laundry:
             let laundryOrder: LaundryOrder = await getLaundryOrderFromDelivery(deliveryOrder);
             orderId = laundryOrder.orderId;
+            linkUrlForCustomer = `/laundryOrders/${orderId}`;
+            linkUrlForOperator = `/laundryOrders/${orderId}`;
             break;
         default:
             let courierOrder: CourierOrder = await getCourierOrderFromDelivery(deliveryOrder);
             orderId = courierOrder.id;
+            linkUrlForCustomer = `/courierOrders/${orderId}`;
+            linkUrlForOperator = `/orders/${deliveryOrder.deliveryId}`;
             break;
     }
     let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
@@ -250,7 +258,7 @@ async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
                 body: `El conductor está solicitando un cambio en el precio de entrega`
             }
         },
-        linkUrl: `/`
+        linkUrl: linkUrlForCustomer
     };
     pushNotification(
         customer.firebaseId,
@@ -276,7 +284,7 @@ async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
                 body: `El conductor está solicitando un cambio en el precio de entrega`
             }
         },
-        linkUrl: `/`
+        linkUrl: linkUrlForOperator
     };
     switch (deliveryOrder.serviceProviderType) {
         case DeliveryServiceProviderType.DeliveryCompany:
