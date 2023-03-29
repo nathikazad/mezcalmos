@@ -238,7 +238,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
         ),
         action: Row(
           children: [
-            if (viewController.order.customerDriverChatId != null)
+            if (viewController.order.customerDriverChatId != null &&
+                viewController.order.inProcess() &&
+                viewController.order.isDriverAssigned)
               MessageButton(
                   chatId: 55,
                   onTap: () {

@@ -7,11 +7,13 @@ import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/Cus
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
@@ -59,8 +61,12 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
         height: 75,
         label: '${_i18n()["orderNow"]}',
         onClick: () async {
-          await CustRequestCourierView.navigate(
-              _viewController.company.info.hasuraId);
+          if (Get.find<AuthController>().isUserSignedIn) {
+            await CustRequestCourierView.navigate(
+                _viewController.company.info.hasuraId);
+          } else {
+            dialogRequiredSignIn();
+          }
         },
       ),
       body: Obx(() {

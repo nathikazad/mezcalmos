@@ -124,14 +124,16 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             );
         },
       ),
-      bottomSheet: MezButton(
-        label: "Next",
-        withGradient: true,
-        height: 75,
-        onClick: () async {
-          await viewController.handleNext();
-        },
-        borderRadius: 0,
+      bottomSheet: Obx(
+        () => MezButton(
+          label: viewController.currentPage.value == 0 ? "Next" : "Order now",
+          withGradient: true,
+          height: 75,
+          onClick: () async {
+            await viewController.handleNext();
+          },
+          borderRadius: 0,
+        ),
       ),
     );
   }
