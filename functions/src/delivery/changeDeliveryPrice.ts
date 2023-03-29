@@ -237,7 +237,7 @@ async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
             time: (new Date()).toISOString(),
             notificationType: NotificationType.PriceChange,
             orderType: deliveryOrder.orderType,
-            notificationAction: NotificationAction.ShowSnackBarAlways,
+            notificationAction: NotificationAction.ShowPopUp,
             orderId
         },
         background: {

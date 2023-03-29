@@ -184,8 +184,7 @@ Future<imPicker.XFile?> imagePicker(
   try {
     return await picker.pickImage(
       source: source,
-      requestFullMetadata: true,
-      // preferredCameraDevice: imPicker.CameraDevice.front,
+      preferredCameraDevice: imPicker.CameraDevice.front,
       imageQuality: nQualityCompressionOfUserImage,
     );
   } on PlatformException catch (exception) {
