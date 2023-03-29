@@ -161,18 +161,38 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   height: 5,
                 ),
                 _customerCard(),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "${_i18n()['service']}",
+                  style: context.txt.bodyLarge,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                _serviceCard(),
                 DvOrderItems(
                   viewController: viewController,
                 ),
-                _billCard(context),
-                if (viewController.orderCosts.value != null)
+                if (viewController.order.value?.isDriverAssigned == true)
+                  _billCard(context),
+                if (viewController.orderCosts != null)
                   OrderSummaryCard(
-                    costs: viewController.orderCosts.value!,
-                    setTaxCallBack: () {
-                      viewController.taxText.text =
-                          viewController.tax.value?.toString() ?? "";
-                      _showTaxSheet(context);
-                    },
+                    costs: viewController.orderCosts!,
+                    setTaxCallBack:
+                        (viewController.order.value?.isDriverAssigned == true)
+                            ? () {
+                                viewController.taxText.text =
+                                    viewController.tax.value?.toString() ?? "";
+                                _showTaxSheet(context);
+                              }
+                            : null,
+                    setDeliveryCallBack: (viewController.showEditPrice)
+                        ? () {
+                            _showPriceSheet(context);
+                          }
+                        : null,
                     stripeOrderPaymentInfo:
                         viewController.order.value!.stripePaymentInfo,
                   )
@@ -300,11 +320,52 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             SizedBox(
               width: 8,
             ),
-            Text(
-              "${viewController.order.value!.customer.name}",
-              style: context.txt.bodyLarge,
+            Flexible(
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${viewController.order.value!.customer.name}",
+                    style: context.txt.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.watch_later,
+                        color: primaryBlueColor,
+                        size: 18.sp,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        "${viewController.customerOrdersCount.value?.toString() ?? "-"} Orders",
+                        style: context.txt.bodyMedium,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: 18.sp,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        "4.7",
+                        style: context.txt.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            Spacer(),
             if (viewController.order.value!.customerDriverChatId != null)
               MessageButton(
                   chatId: viewController.order.value!.customerDriverChatId!,
@@ -312,6 +373,81 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     BaseMessagingScreen.navigate(
                         chatId:
                             viewController.order.value!.customerDriverChatId!);
+                  })
+          ],
+        ),
+      ),
+    );
+  }
+
+  Card _serviceCard() {
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: CachedNetworkImageProvider(
+                  viewController.order.value!.serviceProvider.image),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${viewController.order.value!.serviceProvider.name}",
+                    style: context.txt.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.watch_later,
+                        color: primaryBlueColor,
+                        size: 18.sp,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        "${viewController.serviceOrdersCount.value?.toString() ?? "-"} Orders",
+                        style: context.txt.bodyMedium,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: 18.sp,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        "4.5",
+                        style: context.txt.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            if (viewController.order.value!.serviceProviderDriverChatId != null)
+              MessageButton(
+                  chatId:
+                      viewController.order.value!.serviceProviderDriverChatId!,
+                  onTap: () {
+                    BaseMessagingScreen.navigate(
+                        chatId: viewController
+                            .order.value!.serviceProviderDriverChatId!);
                   })
           ],
         ),
@@ -411,6 +547,115 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       height: 15,
                     ),
                   ],
+                )),
+          );
+        });
+  }
+
+  Future<dynamic> _showPriceSheet(BuildContext context) {
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        )),
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding:
+                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+            child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                child: Form(
+                  key: viewController.updatePriceFormKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "${_i18n()['updateTitle']}",
+                          style: context.txt.bodyLarge,
+                        ),
+                      ),
+                      Divider(
+                        height: 25,
+                      ),
+                      Text("${_i18n()['updateReason']}"),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: viewController.openOrderReasonText,
+                        style: context.txt.bodyLarge,
+                        validator: (String? v) {
+                          if (v == null || v.isEmpty) {
+                            return "${_i18n()['required']}";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text("${_i18n()['updatePrice']}"),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: viewController.openOrderPriceText,
+                        style: context.txt.bodyLarge,
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.attach_money_rounded),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                        ],
+                        validator: (String? v) {
+                          if (v == null || v.isEmpty) {
+                            return "${_i18n()['required']}";
+                          } else if (double.tryParse(v) == null) {
+                            return "${_i18n()['notValid']}";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      MezButton(
+                        height: 50,
+                        label: "${_i18n()['save']}",
+                        onClick: () async {
+                          await viewController.requestPriceChange(ctx);
+                          // await viewController.editTax();
+                          // await MezRouter.back();
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      MezButton(
+                        height: 45,
+                        label: "${_i18n()['cancel']}",
+                        backgroundColor: offRedColor,
+                        textColor: Colors.red,
+                        onClick: () async {
+                          Navigator.pop(context);
+                          // await MezRouter.back();
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
                 )),
           );
         });

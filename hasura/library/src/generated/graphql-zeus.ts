@@ -1038,10 +1038,14 @@ count?: [{	columns?:ValueTypes["customer_favourited_item_select_column"][],	dist
 ["customer_minimal_order"]: AliasType<{
 	customer_id?:true,
 	delivery_cost?:true,
+	estimated_delivery_time?:true,
+	estimated_ready_time?:true,
 	id?:true,
 	image?:true,
 	in_process?:true,
+	items_weight?:true,
 	name?:true,
+	number_of_items?:true,
 	order_time?:true,
 	order_type?:true,
 	payment_type?:true,
@@ -1076,6 +1080,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1086,10 +1092,14 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	_or?:ValueTypes["customer_minimal_order_bool_exp"][],
 	customer_id?:ValueTypes["Int_comparison_exp"],
 	delivery_cost?:ValueTypes["money_comparison_exp"],
+	estimated_delivery_time?:ValueTypes["timestamptz_comparison_exp"],
+	estimated_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
 	in_process?:ValueTypes["Boolean_comparison_exp"],
+	items_weight?:ValueTypes["float8_comparison_exp"],
 	name?:ValueTypes["String_comparison_exp"],
+	number_of_items?:ValueTypes["Int_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	order_type?:ValueTypes["String_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
@@ -1104,16 +1114,22 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	id?:number,
+	items_weight?:ValueTypes["float8"],
+	number_of_items?:number,
 	total_cost?:ValueTypes["money"]
 };
 	/** input type for inserting data into table "customer.minimal_order" */
 ["customer_minimal_order_insert_input"]: {
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
+	estimated_delivery_time?:ValueTypes["timestamptz"],
+	estimated_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:ValueTypes["float8"],
 	name?:string,
+	number_of_items?:number,
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
@@ -1125,9 +1141,13 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 ["customer_minimal_order_max_fields"]: AliasType<{
 	customer_id?:true,
 	delivery_cost?:true,
+	estimated_delivery_time?:true,
+	estimated_ready_time?:true,
 	id?:true,
 	image?:true,
+	items_weight?:true,
 	name?:true,
+	number_of_items?:true,
 	order_time?:true,
 	order_type?:true,
 	payment_type?:true,
@@ -1140,9 +1160,13 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 ["customer_minimal_order_min_fields"]: AliasType<{
 	customer_id?:true,
 	delivery_cost?:true,
+	estimated_delivery_time?:true,
+	estimated_ready_time?:true,
 	id?:true,
 	image?:true,
+	items_weight?:true,
 	name?:true,
+	number_of_items?:true,
 	order_time?:true,
 	order_type?:true,
 	payment_type?:true,
@@ -1169,10 +1193,14 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 ["customer_minimal_order_order_by"]: {
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
+	estimated_delivery_time?:ValueTypes["order_by"],
+	estimated_ready_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
 	in_process?:ValueTypes["order_by"],
+	items_weight?:ValueTypes["order_by"],
 	name?:ValueTypes["order_by"],
+	number_of_items?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	order_type?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
@@ -1191,10 +1219,14 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 ["customer_minimal_order_set_input"]: {
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
+	estimated_delivery_time?:ValueTypes["timestamptz"],
+	estimated_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:ValueTypes["float8"],
 	name?:string,
+	number_of_items?:number,
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
@@ -1207,6 +1239,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1215,6 +1249,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1223,6 +1259,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1237,10 +1275,14 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 ["customer_minimal_order_stream_cursor_value_input"]: {
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
+	estimated_delivery_time?:ValueTypes["timestamptz"],
+	estimated_ready_time?:ValueTypes["timestamptz"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:ValueTypes["float8"],
 	name?:string,
+	number_of_items?:number,
 	order_time?:ValueTypes["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
@@ -1253,6 +1295,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1271,6 +1315,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1279,6 +1325,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1287,6 +1335,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	customer_id?:true,
 	delivery_cost?:true,
 	id?:true,
+	items_weight?:true,
+	number_of_items?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -20728,10 +20778,14 @@ the end). throws an error if top level container is not an array */
 		__typename?: "customer_minimal_order";
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
+			estimated_delivery_time?:PartialObjects["timestamptz"],
+			estimated_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
 			image?:string,
 			in_process?:boolean,
+			items_weight?:PartialObjects["float8"],
 			name?:string,
+			number_of_items?:number,
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			payment_type?:string,
@@ -20766,6 +20820,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			id?:number,
+			items_weight?:number,
+			number_of_items?:number,
 			total_cost?:number
 	},
 	/** Boolean expression to filter rows from the table "customer.minimal_order". All fields are combined with a logical 'AND'. */
@@ -20775,10 +20831,14 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["customer_minimal_order_bool_exp"][],
 	customer_id?:PartialObjects["Int_comparison_exp"],
 	delivery_cost?:PartialObjects["money_comparison_exp"],
+	estimated_delivery_time?:PartialObjects["timestamptz_comparison_exp"],
+	estimated_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
 	in_process?:PartialObjects["Boolean_comparison_exp"],
+	items_weight?:PartialObjects["float8_comparison_exp"],
 	name?:PartialObjects["String_comparison_exp"],
+	number_of_items?:PartialObjects["Int_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	order_type?:PartialObjects["String_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
@@ -20793,16 +20853,22 @@ the end). throws an error if top level container is not an array */
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	id?:number,
+	items_weight?:PartialObjects["float8"],
+	number_of_items?:number,
 	total_cost?:PartialObjects["money"]
 },
 	/** input type for inserting data into table "customer.minimal_order" */
 ["customer_minimal_order_insert_input"]: {
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
+	estimated_delivery_time?:PartialObjects["timestamptz"],
+	estimated_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:PartialObjects["float8"],
 	name?:string,
+	number_of_items?:number,
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
@@ -20815,9 +20881,13 @@ the end). throws an error if top level container is not an array */
 		__typename?: "customer_minimal_order_max_fields";
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
+			estimated_delivery_time?:PartialObjects["timestamptz"],
+			estimated_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
 			image?:string,
+			items_weight?:PartialObjects["float8"],
 			name?:string,
+			number_of_items?:number,
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			payment_type?:string,
@@ -20830,9 +20900,13 @@ the end). throws an error if top level container is not an array */
 		__typename?: "customer_minimal_order_min_fields";
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
+			estimated_delivery_time?:PartialObjects["timestamptz"],
+			estimated_ready_time?:PartialObjects["timestamptz"],
 			id?:number,
 			image?:string,
+			items_weight?:PartialObjects["float8"],
 			name?:string,
+			number_of_items?:number,
 			order_time?:PartialObjects["timestamptz"],
 			order_type?:string,
 			payment_type?:string,
@@ -20858,10 +20932,14 @@ the end). throws an error if top level container is not an array */
 ["customer_minimal_order_order_by"]: {
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
+	estimated_delivery_time?:PartialObjects["order_by"],
+	estimated_ready_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
 	in_process?:PartialObjects["order_by"],
+	items_weight?:PartialObjects["order_by"],
 	name?:PartialObjects["order_by"],
+	number_of_items?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	order_type?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
@@ -20880,10 +20958,14 @@ the end). throws an error if top level container is not an array */
 ["customer_minimal_order_set_input"]: {
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
+	estimated_delivery_time?:PartialObjects["timestamptz"],
+	estimated_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:PartialObjects["float8"],
 	name?:string,
+	number_of_items?:number,
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
@@ -20897,6 +20979,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			id?:number,
+			items_weight?:number,
+			number_of_items?:number,
 			total_cost?:number
 	},
 	/** aggregate stddev_pop on columns */
@@ -20905,6 +20989,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			id?:number,
+			items_weight?:number,
+			number_of_items?:number,
 			total_cost?:number
 	},
 	/** aggregate stddev_samp on columns */
@@ -20913,6 +20999,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			id?:number,
+			items_weight?:number,
+			number_of_items?:number,
 			total_cost?:number
 	},
 	/** Streaming cursor of the table "customer_minimal_order" */
@@ -20926,10 +21014,14 @@ the end). throws an error if top level container is not an array */
 ["customer_minimal_order_stream_cursor_value_input"]: {
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
+	estimated_delivery_time?:PartialObjects["timestamptz"],
+	estimated_ready_time?:PartialObjects["timestamptz"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:PartialObjects["float8"],
 	name?:string,
+	number_of_items?:number,
 	order_time?:PartialObjects["timestamptz"],
 	order_type?:string,
 	payment_type?:string,
@@ -20943,6 +21035,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			id?:number,
+			items_weight?:PartialObjects["float8"],
+			number_of_items?:number,
 			total_cost?:PartialObjects["money"]
 	},
 	/** update columns of table "customer.minimal_order" */
@@ -20961,6 +21055,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			id?:number,
+			items_weight?:number,
+			number_of_items?:number,
 			total_cost?:number
 	},
 	/** aggregate var_samp on columns */
@@ -20969,6 +21065,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			id?:number,
+			items_weight?:number,
+			number_of_items?:number,
 			total_cost?:number
 	},
 	/** aggregate variance on columns */
@@ -20977,6 +21075,8 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			id?:number,
+			items_weight?:number,
+			number_of_items?:number,
 			total_cost?:number
 	},
 	["customer_minimal_orders_args"]: {
@@ -39057,10 +39157,14 @@ export type customer_minimal_order = {
 	__typename?: "customer_minimal_order",
 	customer_id:number,
 	delivery_cost:money,
+	estimated_delivery_time?:timestamptz,
+	estimated_ready_time?:timestamptz,
 	id:number,
 	image:string,
 	in_process:boolean,
+	items_weight?:float8,
 	name:string,
+	number_of_items?:number,
 	order_time:timestamptz,
 	order_type:string,
 	payment_type:string,
@@ -39098,6 +39202,8 @@ export type customer_minimal_order_avg_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	id?:number,
+	items_weight?:number,
+	number_of_items?:number,
 	total_cost?:number
 }
 
@@ -39108,10 +39214,14 @@ export type customer_minimal_order_bool_exp = {
 	_or?:customer_minimal_order_bool_exp[],
 	customer_id?:Int_comparison_exp,
 	delivery_cost?:money_comparison_exp,
+	estimated_delivery_time?:timestamptz_comparison_exp,
+	estimated_ready_time?:timestamptz_comparison_exp,
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
 	in_process?:Boolean_comparison_exp,
+	items_weight?:float8_comparison_exp,
 	name?:String_comparison_exp,
+	number_of_items?:Int_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
 	order_type?:String_comparison_exp,
 	payment_type?:String_comparison_exp,
@@ -39130,6 +39240,8 @@ export type customer_minimal_order_inc_input = {
 		customer_id?:number,
 	delivery_cost?:money,
 	id?:number,
+	items_weight?:float8,
+	number_of_items?:number,
 	total_cost?:money
 }
 
@@ -39137,10 +39249,14 @@ export type customer_minimal_order_inc_input = {
 export type customer_minimal_order_insert_input = {
 		customer_id?:number,
 	delivery_cost?:money,
+	estimated_delivery_time?:timestamptz,
+	estimated_ready_time?:timestamptz,
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:float8,
 	name?:string,
+	number_of_items?:number,
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
@@ -39154,9 +39270,13 @@ export type customer_minimal_order_max_fields = {
 	__typename?: "customer_minimal_order_max_fields",
 	customer_id?:number,
 	delivery_cost?:money,
+	estimated_delivery_time?:timestamptz,
+	estimated_ready_time?:timestamptz,
 	id?:number,
 	image?:string,
+	items_weight?:float8,
 	name?:string,
+	number_of_items?:number,
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
@@ -39170,9 +39290,13 @@ export type customer_minimal_order_min_fields = {
 	__typename?: "customer_minimal_order_min_fields",
 	customer_id?:number,
 	delivery_cost?:money,
+	estimated_delivery_time?:timestamptz,
+	estimated_ready_time?:timestamptz,
 	id?:number,
 	image?:string,
+	items_weight?:float8,
 	name?:string,
+	number_of_items?:number,
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
@@ -39201,10 +39325,14 @@ export type customer_minimal_order_on_conflict = {
 export type customer_minimal_order_order_by = {
 		customer_id?:order_by,
 	delivery_cost?:order_by,
+	estimated_delivery_time?:order_by,
+	estimated_ready_time?:order_by,
 	id?:order_by,
 	image?:order_by,
 	in_process?:order_by,
+	items_weight?:order_by,
 	name?:order_by,
+	number_of_items?:order_by,
 	order_time?:order_by,
 	order_type?:order_by,
 	payment_type?:order_by,
@@ -39223,10 +39351,14 @@ export type customer_minimal_order_pk_columns_input = {
 export enum customer_minimal_order_select_column {
 	customer_id = "customer_id",
 	delivery_cost = "delivery_cost",
+	estimated_delivery_time = "estimated_delivery_time",
+	estimated_ready_time = "estimated_ready_time",
 	id = "id",
 	image = "image",
 	in_process = "in_process",
+	items_weight = "items_weight",
 	name = "name",
+	number_of_items = "number_of_items",
 	order_time = "order_time",
 	order_type = "order_type",
 	payment_type = "payment_type",
@@ -39239,10 +39371,14 @@ export enum customer_minimal_order_select_column {
 export type customer_minimal_order_set_input = {
 		customer_id?:number,
 	delivery_cost?:money,
+	estimated_delivery_time?:timestamptz,
+	estimated_ready_time?:timestamptz,
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:float8,
 	name?:string,
+	number_of_items?:number,
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
@@ -39257,6 +39393,8 @@ export type customer_minimal_order_stddev_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	id?:number,
+	items_weight?:number,
+	number_of_items?:number,
 	total_cost?:number
 }
 
@@ -39266,6 +39404,8 @@ export type customer_minimal_order_stddev_pop_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	id?:number,
+	items_weight?:number,
+	number_of_items?:number,
 	total_cost?:number
 }
 
@@ -39275,6 +39415,8 @@ export type customer_minimal_order_stddev_samp_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	id?:number,
+	items_weight?:number,
+	number_of_items?:number,
 	total_cost?:number
 }
 
@@ -39290,10 +39432,14 @@ export type customer_minimal_order_stream_cursor_input = {
 export type customer_minimal_order_stream_cursor_value_input = {
 		customer_id?:number,
 	delivery_cost?:money,
+	estimated_delivery_time?:timestamptz,
+	estimated_ready_time?:timestamptz,
 	id?:number,
 	image?:string,
 	in_process?:boolean,
+	items_weight?:float8,
 	name?:string,
+	number_of_items?:number,
 	order_time?:timestamptz,
 	order_type?:string,
 	payment_type?:string,
@@ -39308,6 +39454,8 @@ export type customer_minimal_order_sum_fields = {
 	customer_id?:number,
 	delivery_cost?:money,
 	id?:number,
+	items_weight?:float8,
+	number_of_items?:number,
 	total_cost?:money
 }
 
@@ -39315,10 +39463,14 @@ export type customer_minimal_order_sum_fields = {
 export enum customer_minimal_order_update_column {
 	customer_id = "customer_id",
 	delivery_cost = "delivery_cost",
+	estimated_delivery_time = "estimated_delivery_time",
+	estimated_ready_time = "estimated_ready_time",
 	id = "id",
 	image = "image",
 	in_process = "in_process",
+	items_weight = "items_weight",
 	name = "name",
+	number_of_items = "number_of_items",
 	order_time = "order_time",
 	order_type = "order_type",
 	payment_type = "payment_type",
@@ -39342,6 +39494,8 @@ export type customer_minimal_order_var_pop_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	id?:number,
+	items_weight?:number,
+	number_of_items?:number,
 	total_cost?:number
 }
 
@@ -39351,6 +39505,8 @@ export type customer_minimal_order_var_samp_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	id?:number,
+	items_weight?:number,
+	number_of_items?:number,
 	total_cost?:number
 }
 
@@ -39360,6 +39516,8 @@ export type customer_minimal_order_variance_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	id?:number,
+	items_weight?:number,
+	number_of_items?:number,
 	total_cost?:number
 }
 
@@ -61323,6 +61481,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		estimated_delivery_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -61341,8 +61511,20 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_weight:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		name:{
 			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_items:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -61404,6 +61586,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_weight:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_items:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		total_cost:{
 			type:"money",
 			array:false,
@@ -61420,6 +61614,18 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_cost:{
 			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_delivery_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -61442,8 +61648,20 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_weight:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		name:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_items:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -61518,6 +61736,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		estimated_delivery_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -61536,7 +61766,19 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_weight:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		name:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_items:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -61607,6 +61849,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		estimated_delivery_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -61625,8 +61879,20 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_weight:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		name:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_items:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -61695,6 +61961,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		estimated_delivery_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -61713,8 +61991,20 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_weight:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		name:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_items:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -113735,10 +114025,14 @@ export const ReturnTypes: Record<string,any> = {
 	customer_minimal_order:{
 		customer_id:"Int",
 		delivery_cost:"money",
+		estimated_delivery_time:"timestamptz",
+		estimated_ready_time:"timestamptz",
 		id:"Int",
 		image:"String",
 		in_process:"Boolean",
+		items_weight:"float8",
 		name:"String",
+		number_of_items:"Int",
 		order_time:"timestamptz",
 		order_type:"String",
 		payment_type:"String",
@@ -113767,14 +114061,20 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		id:"Float",
+		items_weight:"Float",
+		number_of_items:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_max_fields:{
 		customer_id:"Int",
 		delivery_cost:"money",
+		estimated_delivery_time:"timestamptz",
+		estimated_ready_time:"timestamptz",
 		id:"Int",
 		image:"String",
+		items_weight:"float8",
 		name:"String",
+		number_of_items:"Int",
 		order_time:"timestamptz",
 		order_type:"String",
 		payment_type:"String",
@@ -113785,9 +114085,13 @@ export const ReturnTypes: Record<string,any> = {
 	customer_minimal_order_min_fields:{
 		customer_id:"Int",
 		delivery_cost:"money",
+		estimated_delivery_time:"timestamptz",
+		estimated_ready_time:"timestamptz",
 		id:"Int",
 		image:"String",
+		items_weight:"float8",
 		name:"String",
+		number_of_items:"Int",
 		order_time:"timestamptz",
 		order_type:"String",
 		payment_type:"String",
@@ -113803,42 +114107,56 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		id:"Float",
+		items_weight:"Float",
+		number_of_items:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_stddev_pop_fields:{
 		customer_id:"Float",
 		delivery_cost:"Float",
 		id:"Float",
+		items_weight:"Float",
+		number_of_items:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_stddev_samp_fields:{
 		customer_id:"Float",
 		delivery_cost:"Float",
 		id:"Float",
+		items_weight:"Float",
+		number_of_items:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_sum_fields:{
 		customer_id:"Int",
 		delivery_cost:"money",
 		id:"Int",
+		items_weight:"float8",
+		number_of_items:"Int",
 		total_cost:"money"
 	},
 	customer_minimal_order_var_pop_fields:{
 		customer_id:"Float",
 		delivery_cost:"Float",
 		id:"Float",
+		items_weight:"Float",
+		number_of_items:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_var_samp_fields:{
 		customer_id:"Float",
 		delivery_cost:"Float",
 		id:"Float",
+		items_weight:"Float",
+		number_of_items:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_variance_fields:{
 		customer_id:"Float",
 		delivery_cost:"Float",
 		id:"Float",
+		items_weight:"Float",
+		number_of_items:"Float",
 		total_cost:"Float"
 	},
 	customer_saved_location:{

@@ -6444,6 +6444,576 @@ class _CopyWithStubImpl$Query$get_courier_order_items_by_id$delivery_courier_ord
       _res;
 }
 
+class Variables$Query$get_courier_order_bill {
+  factory Variables$Query$get_courier_order_bill({required int orderId}) =>
+      Variables$Query$get_courier_order_bill._({
+        r'orderId': orderId,
+      });
+
+  Variables$Query$get_courier_order_bill._(this._$data);
+
+  factory Variables$Query$get_courier_order_bill.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    return Variables$Query$get_courier_order_bill._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_courier_order_bill<
+          Variables$Query$get_courier_order_bill>
+      get copyWith => CopyWith$Variables$Query$get_courier_order_bill(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_courier_order_bill) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    return Object.hashAll([l$orderId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_courier_order_bill<TRes> {
+  factory CopyWith$Variables$Query$get_courier_order_bill(
+    Variables$Query$get_courier_order_bill instance,
+    TRes Function(Variables$Query$get_courier_order_bill) then,
+  ) = _CopyWithImpl$Variables$Query$get_courier_order_bill;
+
+  factory CopyWith$Variables$Query$get_courier_order_bill.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_courier_order_bill;
+
+  TRes call({int? orderId});
+}
+
+class _CopyWithImpl$Variables$Query$get_courier_order_bill<TRes>
+    implements CopyWith$Variables$Query$get_courier_order_bill<TRes> {
+  _CopyWithImpl$Variables$Query$get_courier_order_bill(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_courier_order_bill _instance;
+
+  final TRes Function(Variables$Query$get_courier_order_bill) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? orderId = _undefined}) =>
+      _then(Variables$Query$get_courier_order_bill._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_courier_order_bill<TRes>
+    implements CopyWith$Variables$Query$get_courier_order_bill<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_courier_order_bill(this._res);
+
+  TRes _res;
+
+  call({int? orderId}) => _res;
+}
+
+class Query$get_courier_order_bill {
+  Query$get_courier_order_bill({
+    required this.delivery_courier_order,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_bill.fromJson(Map<String, dynamic> json) {
+    final l$delivery_courier_order = json['delivery_courier_order'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_bill(
+      delivery_courier_order: (l$delivery_courier_order as List<dynamic>)
+          .map((e) =>
+              Query$get_courier_order_bill$delivery_courier_order.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_courier_order_bill$delivery_courier_order>
+      delivery_courier_order;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_courier_order = delivery_courier_order;
+    _resultData['delivery_courier_order'] =
+        l$delivery_courier_order.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_courier_order = delivery_courier_order;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_courier_order.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_courier_order_bill) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_courier_order = delivery_courier_order;
+    final lOther$delivery_courier_order = other.delivery_courier_order;
+    if (l$delivery_courier_order.length !=
+        lOther$delivery_courier_order.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_courier_order.length; i++) {
+      final l$delivery_courier_order$entry = l$delivery_courier_order[i];
+      final lOther$delivery_courier_order$entry =
+          lOther$delivery_courier_order[i];
+      if (l$delivery_courier_order$entry !=
+          lOther$delivery_courier_order$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_bill
+    on Query$get_courier_order_bill {
+  CopyWith$Query$get_courier_order_bill<Query$get_courier_order_bill>
+      get copyWith => CopyWith$Query$get_courier_order_bill(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_bill<TRes> {
+  factory CopyWith$Query$get_courier_order_bill(
+    Query$get_courier_order_bill instance,
+    TRes Function(Query$get_courier_order_bill) then,
+  ) = _CopyWithImpl$Query$get_courier_order_bill;
+
+  factory CopyWith$Query$get_courier_order_bill.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_bill;
+
+  TRes call({
+    List<Query$get_courier_order_bill$delivery_courier_order>?
+        delivery_courier_order,
+    String? $__typename,
+  });
+  TRes delivery_courier_order(
+      Iterable<Query$get_courier_order_bill$delivery_courier_order> Function(
+              Iterable<
+                  CopyWith$Query$get_courier_order_bill$delivery_courier_order<
+                      Query$get_courier_order_bill$delivery_courier_order>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_courier_order_bill<TRes>
+    implements CopyWith$Query$get_courier_order_bill<TRes> {
+  _CopyWithImpl$Query$get_courier_order_bill(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_bill _instance;
+
+  final TRes Function(Query$get_courier_order_bill) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_courier_order = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_courier_order_bill(
+        delivery_courier_order: delivery_courier_order == _undefined ||
+                delivery_courier_order == null
+            ? _instance.delivery_courier_order
+            : (delivery_courier_order
+                as List<Query$get_courier_order_bill$delivery_courier_order>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_courier_order(
+          Iterable<Query$get_courier_order_bill$delivery_courier_order> Function(
+                  Iterable<
+                      CopyWith$Query$get_courier_order_bill$delivery_courier_order<
+                          Query$get_courier_order_bill$delivery_courier_order>>)
+              _fn) =>
+      call(
+          delivery_courier_order: _fn(_instance.delivery_courier_order.map(
+              (e) =>
+                  CopyWith$Query$get_courier_order_bill$delivery_courier_order(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_bill<TRes>
+    implements CopyWith$Query$get_courier_order_bill<TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_bill(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_courier_order_bill$delivery_courier_order>?
+        delivery_courier_order,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_courier_order(_fn) => _res;
+}
+
+const documentNodeQueryget_courier_order_bill = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_courier_order_bill'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_courier_order'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'delivery_order_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'orderId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'bill_image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_courier_order_bill _parserFn$Query$get_courier_order_bill(
+        Map<String, dynamic> data) =>
+    Query$get_courier_order_bill.fromJson(data);
+
+class Options$Query$get_courier_order_bill
+    extends graphql.QueryOptions<Query$get_courier_order_bill> {
+  Options$Query$get_courier_order_bill({
+    String? operationName,
+    required Variables$Query$get_courier_order_bill variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_courier_order_bill,
+          parserFn: _parserFn$Query$get_courier_order_bill,
+        );
+}
+
+class WatchOptions$Query$get_courier_order_bill
+    extends graphql.WatchQueryOptions<Query$get_courier_order_bill> {
+  WatchOptions$Query$get_courier_order_bill({
+    String? operationName,
+    required Variables$Query$get_courier_order_bill variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_courier_order_bill,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_courier_order_bill,
+        );
+}
+
+class FetchMoreOptions$Query$get_courier_order_bill
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_courier_order_bill({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_courier_order_bill variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_courier_order_bill,
+        );
+}
+
+extension ClientExtension$Query$get_courier_order_bill
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_courier_order_bill>>
+      query$get_courier_order_bill(
+              Options$Query$get_courier_order_bill options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_courier_order_bill>
+      watchQuery$get_courier_order_bill(
+              WatchOptions$Query$get_courier_order_bill options) =>
+          this.watchQuery(options);
+  void writeQuery$get_courier_order_bill({
+    required Query$get_courier_order_bill data,
+    required Variables$Query$get_courier_order_bill variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_courier_order_bill),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_courier_order_bill? readQuery$get_courier_order_bill({
+    required Variables$Query$get_courier_order_bill variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryget_courier_order_bill),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$get_courier_order_bill.fromJson(result);
+  }
+}
+
+class Query$get_courier_order_bill$delivery_courier_order {
+  Query$get_courier_order_bill$delivery_courier_order({
+    this.bill_image,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_bill$delivery_courier_order.fromJson(
+      Map<String, dynamic> json) {
+    final l$bill_image = json['bill_image'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_bill$delivery_courier_order(
+      bill_image: (l$bill_image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? bill_image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$bill_image = bill_image;
+    _resultData['bill_image'] = l$bill_image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$bill_image = bill_image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$bill_image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_courier_order_bill$delivery_courier_order) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$bill_image = bill_image;
+    final lOther$bill_image = other.bill_image;
+    if (l$bill_image != lOther$bill_image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_bill$delivery_courier_order
+    on Query$get_courier_order_bill$delivery_courier_order {
+  CopyWith$Query$get_courier_order_bill$delivery_courier_order<
+          Query$get_courier_order_bill$delivery_courier_order>
+      get copyWith =>
+          CopyWith$Query$get_courier_order_bill$delivery_courier_order(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_bill$delivery_courier_order<
+    TRes> {
+  factory CopyWith$Query$get_courier_order_bill$delivery_courier_order(
+    Query$get_courier_order_bill$delivery_courier_order instance,
+    TRes Function(Query$get_courier_order_bill$delivery_courier_order) then,
+  ) = _CopyWithImpl$Query$get_courier_order_bill$delivery_courier_order;
+
+  factory CopyWith$Query$get_courier_order_bill$delivery_courier_order.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_bill$delivery_courier_order;
+
+  TRes call({
+    String? bill_image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_courier_order_bill$delivery_courier_order<TRes>
+    implements
+        CopyWith$Query$get_courier_order_bill$delivery_courier_order<TRes> {
+  _CopyWithImpl$Query$get_courier_order_bill$delivery_courier_order(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_bill$delivery_courier_order _instance;
+
+  final TRes Function(Query$get_courier_order_bill$delivery_courier_order)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? bill_image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_courier_order_bill$delivery_courier_order(
+        bill_image: bill_image == _undefined
+            ? _instance.bill_image
+            : (bill_image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_bill$delivery_courier_order<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_bill$delivery_courier_order<TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_bill$delivery_courier_order(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? bill_image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$updateCourierOrderItem {
   factory Variables$Mutation$updateCourierOrderItem({
     Input$delivery_courier_order_item_set_input? data,

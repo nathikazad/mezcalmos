@@ -7,8 +7,8 @@ import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
@@ -50,7 +50,6 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           orderId: int.parse(MezRouter.urlArguments['orderId'].toString()),
           context: context);
     } else {
-      mezDbgPrint("Order id null from the parameters ######");
       MezRouter.back();
     }
     super.initState();
@@ -136,7 +135,13 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     MezButton(
                       label: "Cancel order",
                       onClick: () async {
-                        await viewController.cancelOrder();
+                        await showConfirmationDialog(context,
+                            onYesClick: () async {
+                          final bool resp = await viewController.cancelOrder();
+                          if (resp) {
+                            await MezRouter.popEverythingTillBeforeHome();
+                          }
+                        });
                       },
                       backgroundColor: offRedColor,
                       textColor: Colors.redAccent,

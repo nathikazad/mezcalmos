@@ -94,7 +94,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromCamera"]}",
-                                style: context.txt.bodyText1),
+                                style: context.txt.bodyLarge),
                           ),
                         ],
                       ),
@@ -117,7 +117,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromGallery"]}",
-                                style: context.txt.bodyText1),
+                                style: context.txt.bodyLarge),
                           ),
                         ],
                       ),
@@ -184,7 +184,8 @@ Future<imPicker.XFile?> imagePicker(
   try {
     return await picker.pickImage(
       source: source,
-      preferredCameraDevice: imPicker.CameraDevice.front,
+      requestFullMetadata: true,
+      // preferredCameraDevice: imPicker.CameraDevice.front,
       imageQuality: nQualityCompressionOfUserImage,
     );
   } on PlatformException catch (exception) {
@@ -195,13 +196,15 @@ Future<imPicker.XFile?> imagePicker(
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(_i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
           position: SnackPosition.TOP);
-    } else {
-      return await picker.pickImage(
-        source: source,
-        preferredCameraDevice: imPicker.CameraDevice.front,
-        imageQuality: nQualityCompressionOfUserImage,
-      );
     }
+    //else {
+    //   return await picker.pickImage(
+    //     source: source,
+    //     preferredCameraDevice: imPicker.CameraDevice.front,
+    //     imageQuality: nQualityCompressionOfUserImage,
+    //     requestFullMetadata: true,
+    //   );
+    // }
     return null;
   }
 }
@@ -211,7 +214,7 @@ Image mLoadImage({
   Uint8List? memoryImage,
   double? height,
   double? width,
-  fit: BoxFit.cover,
+  fit = BoxFit.cover,
   String assetInCaseFailed = aNoImgAsset,
 }) {
   Image _img;

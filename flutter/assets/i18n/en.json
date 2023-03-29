@@ -678,6 +678,8 @@
       "courier": {
         "atPickupTitle": "At pickup",
         "atPickupBody": "Driver reached order pickup location",
+        "atDropoffTitle": "At dropoff",
+        "atDropoffBody": "Driver reached order dropoff location",
         "onTheWayPickupTitle": "Pickup on the way",
         "onTheWayPickupBody": "Driver is on his way to pickup your order",
         "onTheWayDropoffTitle": "Delivery on the way",
@@ -1647,10 +1649,14 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
+        "service" :"Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
         "schTime": "Scheduled time",
         "orderDetails": "Order details",
+        "updateTitle": "Update Price",
+        "updateReason": "Reason for price change",
+        "updatePrice": "New price",
         "orderItems": "Order Items",
         "addCost": "Add cost",
         "save": "Save",

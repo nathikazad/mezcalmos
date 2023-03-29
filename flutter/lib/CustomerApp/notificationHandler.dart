@@ -200,6 +200,12 @@ Map<String, dynamic>? _getCourierOrderStatusFields(DeliveryOrderStatus status) {
         "body": "${_i18n()["courier"]["onTheWayDropoffBody"]}",
         "imgUrl": "assets/images/shared/notifications/laundry/onTheWay.png",
       };
+    case DeliveryOrderStatus.AtDropoff:
+      return <String, dynamic>{
+        "title": "${_i18n()["courier"]["atDropoffTitle"]}",
+        "body": "${_i18n()["courier"]["atDropoffBody"]}",
+        "imgUrl": "assets/images/shared/notifications/laundry/onTheWay.png",
+      };
 
     case DeliveryOrderStatus.Delivered:
       return <String, dynamic>{

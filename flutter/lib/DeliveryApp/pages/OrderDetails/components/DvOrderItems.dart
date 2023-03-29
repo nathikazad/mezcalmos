@@ -40,6 +40,7 @@ class DvOrderItems extends StatelessWidget {
                         viewController.items.value!.length,
                         (int index) => MezExpandableCard(
                                 title: _itemHeader(index, context),
+                              
                                 imageUrl:
                                     viewController.items.value![index].image,
                                 expandableWidget: [
@@ -52,7 +53,6 @@ class DvOrderItems extends StatelessWidget {
                                   ),
                                   Text(
                                       "${viewController.items.value![index].estCost?.toPriceString() ?? "_"}"),
-                                  Divider(),
                                   if (viewController.items.value![index].notes
                                           ?.isNotEmpty ==
                                       true)
@@ -60,6 +60,7 @@ class DvOrderItems extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Divider(),
                                         Text(
                                           "${_i18n()['note']}",
                                           style: context.txt.bodyLarge,
@@ -72,27 +73,30 @@ class DvOrderItems extends StatelessWidget {
                                         Divider(),
                                       ],
                                     ),
-                                  MezButton(
-                                    label: (viewController
-                                            .items.value![index].unavailable)
-                                        ? "${_i18n()['markAv']}"
-                                        : "${_i18n()['markUnav']}",
-                                    backgroundColor: (!viewController
-                                            .items.value![index].unavailable)
-                                        ? offRedColor
-                                        : secondaryLightBlueColor,
-                                    textColor: (!viewController
-                                            .items.value![index].unavailable)
-                                        ? Colors.red
-                                        : primaryBlueColor,
-                                    onClick: () async {
-                                      await viewController.markItemAvailable(
-                                          itemId: viewController
-                                              .items.value![index].id,
-                                          isAvailable: !viewController
-                                              .items.value![index].unavailable);
-                                    },
-                                  ),
+                                  if (viewController
+                                          .order.value?.isDriverAssigned ==
+                                      true)
+                                    MezButton(
+                                      label: (viewController
+                                              .items.value![index].unavailable)
+                                          ? "${_i18n()['markAv']}"
+                                          : "${_i18n()['markUnav']}",
+                                      backgroundColor: (!viewController
+                                              .items.value![index].unavailable)
+                                          ? offRedColor
+                                          : secondaryLightBlueColor,
+                                      textColor: (!viewController
+                                              .items.value![index].unavailable)
+                                          ? Colors.red
+                                          : primaryBlueColor,
+                                      onClick: () async {
+                                        await viewController.markItemAvailable(
+                                            itemId: viewController
+                                                .items.value![index].id,
+                                            isAvailable: !viewController.items
+                                                .value![index].unavailable);
+                                      },
+                                    ),
                                 ]))),
               ],
             )
@@ -116,7 +120,8 @@ class DvOrderItems extends StatelessWidget {
                     : null),
           ),
           (viewController.items.value![index].actualCost == null &&
-                  !viewController.items.value![index].unavailable)
+                  !viewController.items.value![index].unavailable &&
+                  viewController.order.value?.isDriverAssigned == true)
               ? MezButton(
                   label: "${_i18n()['addCost']}",
                   height: 30,
@@ -131,7 +136,7 @@ class DvOrderItems extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "${viewController.items.value![index].actualCost!.toPriceString(rounded: false)}",
+                        "${viewController.items.value![index].actualCost?.toPriceString(rounded: false) ?? ""}",
                         style: context.txt.bodyLarge?.copyWith(
                             color:
                                 viewController.items.value![index].unavailable
@@ -145,7 +150,8 @@ class DvOrderItems extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      if (!viewController.items.value![index].unavailable)
+                      if (!viewController.items.value![index].unavailable &&
+                          viewController.order.value?.isDriverAssigned == true)
                         MezIconButton(
                             iconSize: 18,
                             padding: EdgeInsets.all(3),

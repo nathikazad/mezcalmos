@@ -62,6 +62,9 @@ class CustCourierOrderViewController {
             _order.value?.status = event.status;
             _order.value?.driverInfo = event.driverInfo;
             _order.value?.costs = event.costs;
+            _order.value?.billImage = event.billImage;
+            mezDbgPrint(
+                "Order bill imaaaaaaaaggggggeeee======>${_order.value?.billImage}");
 
             _order.refresh();
             if (event.changePriceRequest != null &&

@@ -28,9 +28,7 @@ class DvOrderViewcontroller {
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
-  TextEditingController openOrderPriceText = TextEditingController();
-  TextEditingController openOrderReasonText = TextEditingController();
-  GlobalKey<FormState> updatePriceFormKey = GlobalKey<FormState>();
+
 
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
@@ -46,12 +44,6 @@ class DvOrderViewcontroller {
     return _order.value!.status;
   }
 
-  bool get showEditPrice {
-    return (order.orderType == OrderType.Courier ||
-            order.orderType == OrderType.Laundry) &&
-        order.isDriverAssigned &&
-        order.status == DeliveryOrderStatus.OrderReceived;
-  }
 
   bool get isLaundryPickup {
     return order.orderType == OrderType.Laundry &&
@@ -332,32 +324,4 @@ class DvOrderViewcontroller {
     }
   }
 
-  Future<void> requestPriceChange(BuildContext context) async {
-    if (updatePriceFormKey.currentState?.validate() == true) {
-      try {
-        ChangePriceReqResponse res =
-            await CloudFunctions.delivery2_changeDeliveryPrice(
-                deliveryOrderId: order.orderId,
-                newPrice: double.parse(openOrderPriceText.text),
-                reason: openOrderReasonText.text);
-
-        if (res.success == false) {
-          mezDbgPrint(res.error);
-          mezDbgPrint("ERRORRRR ========>${res.unhandledError}");
-          showErrorSnackBar(errorText: res.error.toString());
-        } else {
-          showSavedSnackBar(
-              title: "Sended", subtitle: "Price change request sended");
-          Navigator.pop(context);
-        }
-      } on FirebaseFunctionsException catch (e, stk) {
-        showErrorSnackBar(errorText: e.message.toString());
-        mezDbgPrint(e);
-        mezDbgPrint(stk);
-      } catch (e, stk) {
-        mezDbgPrint(e);
-        mezDbgPrint(stk);
-      }
-    }
-  }
 }

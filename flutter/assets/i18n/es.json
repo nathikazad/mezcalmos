@@ -680,6 +680,8 @@
       "courier": {
         "atPickupTitle": "En la recogida",
         "atPickupBody": "Lugar de recogida de pedido de controlador",
+        "atDropoffTitle": "En la caída",
+        "atDropoffBody": "Lugar de caída de pedido al controlador",
         "onTheWayPickupTitle": "Recogida en el camino",
         "onTheWayPickupBody": "El conductor está en camino de recoger su pedido",
         "onTheWayDropoffTitle": "Entrega en camino",
@@ -1644,12 +1646,16 @@
 
       },
       "OrderDetailsScreen": {
+        "service" :"Servicio",
         "cancelled": "Cancelada",
         "approved": "Aprobada",
         "scheduled": "Programada",
         "dvTime": "El tiempo de entrega",
         "paymentMethod": "Método de pago",
         "schTime": "Hora programada",
+        "updateTitle": "Actualizar precio",
+        "updateReason": "Razón del cambio de precios",
+        "updatePrice": "Nuevo precio",
         "actualCost": "Costo real",
         "orderDetails": "Detalles del pedido",
         "orderItems": "Encargar artículos",

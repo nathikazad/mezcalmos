@@ -772,8 +772,8 @@ query getCustomerDvOrdersCount($id: Int!) {
     }
   }
 }
-query getRestaurantOrdersCount($restuarantId: Int!) {
-  delivery_order_aggregate(where: {restaurant: {id: {_eq: $restuarantId}}}) {
+query getRestaurantOrdersCount($restId: Int!) {
+  delivery_order_aggregate(where: {restaurant: {id: {_eq: $restId}}}) {
     aggregate {
       count
     }
@@ -781,6 +781,12 @@ query getRestaurantOrdersCount($restuarantId: Int!) {
 }
 query getLaundryOrdersCount($laundryId: Int!) {
   delivery_order_aggregate(where: {laundry: {id: {_eq: $laundryId}}}) {
+    aggregate {
+      count
+    }
+  }
+}query getCompanyOrdersCount($companyId: Int!) {
+  delivery_order_aggregate(where: {service_provider_id:  {_eq: $companyId}}) {
     aggregate {
       count
     }

@@ -143,6 +143,49 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
   return null;
 }
 
+Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
+  final DeliveryOrderStatus newOrdersStatus =
+      value['status'].toString().toDeliveryOrderStatus();
+  final Map<String, dynamic> dynamicFields =
+      _getCourierOrderStatusFields(newOrdersStatus)!;
+
+  return Notification(
+      id: key,
+      icon: mat.Icons.shopping_bag,
+      secondaryIcon: (newOrdersStatus == DeliveryOrderStatus.CancelledByAdmin ||
+              newOrdersStatus == DeliveryOrderStatus.CancelledByDeliverer ||
+              newOrdersStatus == DeliveryOrderStatus.CancelledByCustomer)
+          ? mat.Icons.close
+          : null,
+      linkUrl: DeliveryAppRoutes.kDvOrderView
+          .replaceFirst(":orderId", value["orderId"].toString()),
+      body: dynamicFields["body"],
+      imgUrl: dynamicFields["imgUrl"],
+      title: dynamicFields["title"],
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.OrderStatusChange,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
+}
+
+Map<String, dynamic>? _getCourierOrderStatusFields(
+    DeliveryOrderStatus restaurantOrderStatus) {
+  switch (restaurantOrderStatus) {
+    case DeliveryOrderStatus.CancelledByAdmin:
+    case DeliveryOrderStatus.CancelledByCustomer:
+    case DeliveryOrderStatus.CancelledByDeliverer:
+      return <String, dynamic>{
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
+        "imgUrl": aCancelledIcon,
+      };
+    default:
+    // do nothing
+  }
+  return null;
+}
+
 Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   final LaundryOrderStatus newOrdersStatus =
       value['status'].toString().toLaundryOrderStatus();

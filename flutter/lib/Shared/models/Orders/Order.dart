@@ -3,7 +3,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -113,6 +112,21 @@ extension OrderTypeHelper on OrderType {
         break;
       default:
         return mat.Icons.watch_later;
+    }
+  }
+
+  ServiceProviderType toServiceProviderType() {
+    switch (this) {
+      case OrderType.Restaurant:
+        return ServiceProviderType.Restaurant;
+      case OrderType.Laundry:
+        return ServiceProviderType.Laundry;
+      case OrderType.Courier:
+        return ServiceProviderType.DeliveryCompany;
+
+        break;
+      default:
+        return ServiceProviderType.DeliveryCompany;
     }
   }
 

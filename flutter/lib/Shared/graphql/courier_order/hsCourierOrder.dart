@@ -322,6 +322,7 @@ Stream<OrderCosts?> listen_on_courier_order_costs({required orderId}) {
 
 Future<List<CourierOrdeItem>?> get_courier_order_items(
     {required int orderId, bool withCache = true}) async {
+  mezDbgPrint("getting courier order items of order ===============>$orderId");
   QueryResult<Query$get_courier_order_items_by_id> res =
       await _hasuraDb.graphQLClient.query$get_courier_order_items_by_id(
           Options$Query$get_courier_order_items_by_id(
@@ -329,6 +330,7 @@ Future<List<CourierOrdeItem>?> get_courier_order_items(
                   withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
               variables: Variables$Query$get_courier_order_items_by_id(
                   orderId: orderId)));
+
   if (res.parsedData?.delivery_courier_order == null ||
       res.parsedData!.delivery_courier_order.isEmpty) {
     throwError(res.exception);
@@ -347,6 +349,23 @@ Future<List<CourierOrdeItem>?> get_courier_order_items(
                     notes: item.notes,
                     estCost: item.estimated_cost))
         .toList();
+  }
+  return null;
+}
+
+Future<String?> get_courier_bill_order_image(
+    {required int orderId, bool withCache = true}) async {
+  QueryResult<Query$get_courier_order_bill> res = await _hasuraDb.graphQLClient
+      .query$get_courier_order_bill(Options$Query$get_courier_order_bill(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables: Variables$Query$get_courier_order_bill(orderId: orderId)));
+
+  if (res.parsedData?.delivery_courier_order == null ||
+      res.parsedData!.delivery_courier_order.isEmpty) {
+    throwError(res.exception);
+  } else {
+    return res.parsedData!.delivery_courier_order.first.bill_image;
   }
   return null;
 }

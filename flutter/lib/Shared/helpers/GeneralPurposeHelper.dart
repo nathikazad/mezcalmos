@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -216,7 +215,7 @@ Future<void> showConfirmationDialog(
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 Text(
                   title ?? "${_i18n()["cancelOrder"]}",
                   textAlign: TextAlign.center,
@@ -229,7 +228,7 @@ Future<void> showConfirmationDialog(
                 helperText != ""
                     ? Column(
                         children: [
-                          SizedBox(height: 4),
+                          SizedBox(height: 5),
                           Text(
                             helperText ??
                                 '${_i18n()["cancelConfirmationText"]}',
@@ -243,12 +242,12 @@ Future<void> showConfirmationDialog(
                         ],
                       )
                     : SizedBox(),
-                SizedBox(height: 2),
+                SizedBox(height: 5),
                 Text('${_i18n()["subtitle"]}',
                     textAlign: TextAlign.center,
                     style: context.txt.headlineLarge
                         ?.copyWith(color: Color(0xFF494949))),
-                SizedBox(height: 4),
+                SizedBox(height: 12),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;
@@ -290,7 +289,7 @@ Future<void> showConfirmationDialog(
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
@@ -584,7 +583,7 @@ Future<int?> showReviewDialog(
                   } else {
                     customSnackBar(title: 'Error', subTitle: 'error');
                   }
-                  MezRouter.back(backResult: reviewId);
+                  await MezRouter.back(backResult: reviewId);
                 },
               ),
               SizedBox(height: 10),
