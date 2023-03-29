@@ -78,7 +78,7 @@ class LanguageController extends GetxController {
           .changeLanguage(language ?? _userLanguageKey.value.toOpLang())
           .then((LanguageType value) => _userLanguageKey.value = value);
     } else {
-      _userLanguageKey.value = language!; //_userLanguageKey.value.toOpLang();
+      _userLanguageKey.value = language ?? _userLanguageKey.value.toOpLang();
     }
     await GetStorage()
         .write("lang", _userLanguageKey.value.toFirebaseFormatString());
