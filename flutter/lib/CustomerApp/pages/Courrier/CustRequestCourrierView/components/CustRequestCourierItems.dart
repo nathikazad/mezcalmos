@@ -154,6 +154,7 @@ class CustRequestCourierItems extends StatelessWidget {
         ),
         _textInput(
             hint: "Notes",
+            textStyle: context.txt.bodyMedium,
             controller: viewController.itemsNotes[index],
             context: context),
         SizedBox(
@@ -171,6 +172,7 @@ class CustRequestCourierItems extends StatelessWidget {
   Widget _textInput(
       {required String hint,
       required TextEditingController controller,
+      TextStyle? textStyle,
       required BuildContext context,
       IconData? suffix,
       bool isPrice = false,
@@ -185,7 +187,7 @@ class CustRequestCourierItems extends StatelessWidget {
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ]
             : [],
-        style: context.txt.bodyLarge,
+        style: textStyle ?? context.txt.bodyLarge,
         decoration: InputDecoration(
             fillColor: Colors.white,
             hintText: hint,

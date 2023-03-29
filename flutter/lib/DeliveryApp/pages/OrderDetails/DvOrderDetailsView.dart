@@ -584,23 +584,29 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       Divider(
                         height: 25,
                       ),
-                      Text("${_i18n()['updateReason']}"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: viewController.openOrderReasonText,
-                        style: context.txt.bodyLarge,
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      if (viewController.orderCosts?.deliveryCost != 0)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${_i18n()['updateReason']}"),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                              controller: viewController.openOrderReasonText,
+                              style: context.txt.bodyLarge,
+                              validator: (String? v) {
+                                if (v == null || v.isEmpty) {
+                                  return "${_i18n()['required']}";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
                       Text("${_i18n()['updatePrice']}"),
                       SizedBox(
                         height: 10,

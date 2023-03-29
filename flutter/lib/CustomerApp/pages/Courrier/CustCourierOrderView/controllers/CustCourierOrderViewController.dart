@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 class CustCourierOrderViewController {
@@ -58,11 +57,9 @@ class CustCourierOrderViewController {
               "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.driverInfo}");
 
           if (event != null) {
+            _order.value = null;
             _order.value = event;
-            _order.value?.status = event.status;
-            _order.value?.driverInfo = event.driverInfo;
-            _order.value?.costs = event.costs;
-            _order.value?.billImage = event.billImage;
+
             mezDbgPrint(
                 "Order bill imaaaaaaaaggggggeeee======>${_order.value?.billImage}");
 
@@ -132,18 +129,24 @@ class CustCourierOrderViewController {
                         height: 5,
                       ),
                       Text(order.changePriceRequest?.newPrice.toPriceString() ??
-                          "20"),
-                      Divider(
-                        height: 20,
-                      ),
-                      Text(
-                        "Reason",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(order.changePriceRequest?.reason ?? "reason"),
+                          "-"),
+                      if (order.changePriceRequest?.reason != null)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(
+                              height: 20,
+                            ),
+                            Text(
+                              "Reason",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(order.changePriceRequest?.reason ?? "reason"),
+                          ],
+                        ),
                       SizedBox(
                         height: 8,
                       ),
@@ -195,31 +198,11 @@ class CustCourierOrderViewController {
 
 // Order status change methods
 
-  Future<ServerResponse> addReview({
-    required int orderId,
-    required int serviceId,
+  Future<void> addReview({
     required String comment,
-    required OrderType orderType,
     required num rate,
   }) async {
-    final HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
-    try {
-      final HttpsCallableResult<dynamic> response =
-          await cancelOrder.call(<String, dynamic>{
-        "orderId": orderId,
-        "serviceProviderId": serviceId,
-        "rating": rate,
-        "comment": comment,
-        "orderType": orderType.toFirebaseFormatString(),
-      });
-      mezDbgPrint(response.toString());
-      print(response.data);
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
+    //CloudFunctions.res
   }
 
   Future<bool> cancelOrder() async {

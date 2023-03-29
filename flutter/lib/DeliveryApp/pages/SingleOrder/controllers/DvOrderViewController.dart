@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
@@ -29,7 +28,6 @@ class DvOrderViewcontroller {
     enableMezSmartPointer: true,
   );
 
-
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
   HasuraDb hasuraDb = Get.find<HasuraDb>();
@@ -43,7 +41,6 @@ class DvOrderViewcontroller {
   DeliveryOrderStatus get orderStatus {
     return _order.value!.status;
   }
-
 
   bool get isLaundryPickup {
     return order.orderType == OrderType.Laundry &&
@@ -70,6 +67,9 @@ class DvOrderViewcontroller {
   // init
   Future<void> init({required int orderId}) async {
     _order.value = await get_driver_order_by_id(orderId: orderId);
+    mezDbgPrint(
+        "TIME FROM QUERY ========>${_order.value?.estimatedArrivalAtDropoff}");
+
     if (_order.value!.routeInformation != null) {
       mezDbgPrint(_order.value.toString());
       mapController.decodeAndAddPolyline(
@@ -83,13 +83,10 @@ class DvOrderViewcontroller {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_driver_order_by_id(orderId: orderId)
             .listen((DeliveryOrder? event) {
-          mezDbgPrint(event);
           if (event != null) {
-            mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
+            _order.value = null;
             _order.value = event;
-            _order.value?.driverInfo = event.driverInfo;
-            _order.value?.costs = event.costs;
-            _order.value?.status = event.status;
+
             _order.refresh();
 
             handleRestaurantOrder(event);
@@ -323,5 +320,4 @@ class DvOrderViewcontroller {
       mezDbgPrint(stk);
     }
   }
-
 }

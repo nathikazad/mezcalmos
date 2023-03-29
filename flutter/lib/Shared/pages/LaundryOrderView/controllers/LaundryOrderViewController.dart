@@ -83,8 +83,8 @@ class LaundryOrderViewController {
           if (event != null) {
             mezDbgPrint(
                 "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+            _order.value = null;
             _order.value = event;
-            _order.value?.driverInfo = event.driverInfo;
           }
         });
       }, cancel: () {

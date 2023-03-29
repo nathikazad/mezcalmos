@@ -64,38 +64,7 @@ class _CustCourierServicesListViewState
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Material(
-                          elevation: 0.5,
-                          borderRadius: BorderRadius.circular(5),
-                          child: TextFormField(
-                            style: context.txt.bodyLarge,
-                            decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                hintText: "Search...",
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: primaryBlueColor,
-                                )),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      MezIconButton(
-                        icon: Icons.place,
-                        padding: const EdgeInsets.all(12),
-                        backgroundColor: Colors.white,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5),
-                        onTap: () {},
-                      )
-                    ],
-                  ),
+                  // _searchCoomponent(context),
                   SizedBox(
                     height: 15,
                   ),
@@ -116,6 +85,41 @@ class _CustCourierServicesListViewState
             );
         },
       ),
+    );
+  }
+
+  Widget _searchCoomponent(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+          fit: FlexFit.tight,
+          child: Material(
+            elevation: 0.5,
+            borderRadius: BorderRadius.circular(5),
+            child: TextFormField(
+              style: context.txt.bodyLarge,
+              decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  hintText: "Search...",
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: primaryBlueColor,
+                  )),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        MezIconButton(
+          icon: Icons.place,
+          padding: const EdgeInsets.all(12),
+          backgroundColor: Colors.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(5),
+          onTap: () {},
+        )
+      ],
     );
   }
 

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -84,4 +85,16 @@ class DeliveryOrder extends DeliverableOrder {
         status == DeliveryOrderStatus.AtDropoff ||
         status == DeliveryOrderStatus.AtPickup;
   }
+
+  // static void copyTo(DeliveryOrder from, DeliveryOrder to) {
+  //   to.driverInfo = from.driverInfo;
+  //   to.costs = from.costs;
+  //   to.status = from.status;
+  //   to.estimatedArrivalAtDropoff = ;
+  //   to.estimatedArrivalAtDropoff = ;
+  //   to.estimatedArrivalAtDropoff = ;
+  // }
+
+  @override
+  String toString() => super.toString();
 }

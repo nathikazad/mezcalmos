@@ -193,7 +193,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                 MezIconButton(
                   onTap: () async {
                     mezDbgPrint(widget.viewcontroller.inPickupPhase);
-                    if (widget.viewcontroller.pickuSetted) {
+                    if (widget.viewcontroller.pickuSetted ||
+                        widget.viewcontroller.isCourier) {
                       DateTime? newTime = await _pickDateAndTime(
                           context: context,
                           firstDate: widget
@@ -221,7 +222,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     return InkWell(
       onTap: () async {
         mezDbgPrint(widget.viewcontroller.pickuSetted);
-        if (widget.viewcontroller.pickuSetted) {
+        if (widget.viewcontroller.pickuSetted ||
+            widget.viewcontroller.isCourier) {
           DateTime? newTime = await _pickDateAndTime(
               context: context,
               initalDate: widget.viewcontroller.pickupTime?.toLocal(),
@@ -231,8 +233,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
           }
         } else {
           showErrorSnackBar(
-              errorTitle: "${_i18n()['noDeliveryTimeTitle']}",
-              errorText: "${_i18n()['noDeliveryTimeBody']}");
+              errorTitle: "${_i18n()['noPickupTimeTitle']}",
+              errorText: "${_i18n()['noPickupTimeBody']}");
         }
       },
       borderRadius: BorderRadius.circular(5),

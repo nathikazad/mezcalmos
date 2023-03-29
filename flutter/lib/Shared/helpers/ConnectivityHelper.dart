@@ -55,7 +55,6 @@ class ConnectivityHelper {
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
         .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
-    mezDbgPrint('ping() executed in ${results.toString()}');
     if (results.contains(false)) {
       return InternetStatus.Offline;
     } else {

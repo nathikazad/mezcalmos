@@ -81,14 +81,11 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      __headerButtons(),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      //  __headerButtons(),
                       Row(
                         children: [
                           RawChip(
@@ -225,36 +222,39 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   }
 
   Widget __headerButtons() {
-    return Row(
-      children: [
-        Flexible(
-          child: MezButton(
-            label: '${_i18n()["chatWithUs"]}',
-            height: 32.5,
-            backgroundColor: Colors.white,
-            textColor: primaryBlueColor,
-            onClick: () async {},
-            icon: Icons.message,
-            borderRadius: 20,
-            border: Border.all(width: 1, color: primaryBlueColor),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Flexible(
+            child: MezButton(
+              label: '${_i18n()["chatWithUs"]}',
+              height: 32.5,
+              backgroundColor: Colors.white,
+              textColor: primaryBlueColor,
+              onClick: () async {},
+              icon: Icons.message,
+              borderRadius: 20,
+              border: Border.all(width: 1, color: primaryBlueColor),
+            ),
           ),
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Flexible(
-          child: MezButton(
-            label: '${_i18n()["contactUs"]}',
-            height: 32.5,
-            onClick: () async {},
-            backgroundColor: Colors.white,
-            textColor: primaryBlueColor,
-            icon: Icons.phone,
-            borderRadius: 20,
-            border: Border.all(width: 1, color: primaryBlueColor),
+          SizedBox(
+            width: 15,
           ),
-        ),
-      ],
+          Flexible(
+            child: MezButton(
+              label: '${_i18n()["contactUs"]}',
+              height: 32.5,
+              onClick: () async {},
+              backgroundColor: Colors.white,
+              textColor: primaryBlueColor,
+              icon: Icons.phone,
+              borderRadius: 20,
+              border: Border.all(width: 1, color: primaryBlueColor),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

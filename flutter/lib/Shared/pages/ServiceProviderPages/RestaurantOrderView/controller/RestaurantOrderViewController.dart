@@ -53,6 +53,7 @@ class RestaurantOrderViewController {
           if (event != null) {
             mezDbgPrint(
                 "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.toFirebaseFormatJson()}");
+            order.value = null;
             order.value = event;
             order.value?.driverInfo = event.driverInfo;
           }

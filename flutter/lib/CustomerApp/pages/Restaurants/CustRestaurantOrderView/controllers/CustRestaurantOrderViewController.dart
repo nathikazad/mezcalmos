@@ -51,6 +51,8 @@ class CustRestaurantOrderViewController {
           if (event != null) {
             mezDbgPrint(
                 "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+                
+                 order.value = null;
             order.value = event;
           }
         });
