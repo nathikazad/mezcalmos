@@ -42,6 +42,35 @@ class MezcalmosSharedWidgets {
         ),
       );
 
+  static RichText mezkalaTitle({
+    double textSize = nDefaultMezcalmosTextSize,
+    bool isBold = false,
+  }) =>
+      RichText(
+        text: TextSpan(
+          style: TextStyle(
+            fontFamily: 'psr',
+            color: Color.fromARGB(255, 103, 122, 253),
+            fontSize: textSize,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: sMez,
+              style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: sKala,
+              style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      );
+
   static Widget fillTitle({required int actionLength, bool showLogo = true}) {
     return Container(
       width: 45.w,
@@ -57,6 +86,28 @@ class MezcalmosSharedWidgets {
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: mezcalmosTitle(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget fillMezkalaTitle({required int actionLength, bool showLogo = true}) {
+    return Container(
+      width: 45.w,
+      //  width: ,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (showLogo)
+              logo(size: getSizeRelativeToScreen(60, Get.width, Get.height)),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: mezkalaTitle(),
             ),
           ],
         ),

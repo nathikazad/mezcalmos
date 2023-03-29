@@ -65,4 +65,5 @@ doc/api/
 .flutter-plugins-dependencies
  
 .idea/
- 
+.fvm
+launcher/env

@@ -75,6 +75,8 @@ const String sDefaultTheme = "light";
 const String sMez = "MEZ";
 const String sCalmos = "CALMOS";
 const String sMezcalmos = "MEZCALMOS";
+const String sKala = "KALA";
+const String sMezkala = "MEZKALA";
 
 const String sDefaultUserName = "Unknown";
 const String sDefaultCustomerName = "Unknown";
@@ -131,6 +133,13 @@ const rive.RiveAnimation aWashingAnimation = rive.RiveAnimation.asset(
   "assets/animation/washingMachine.riv",
   fit: BoxFit.cover,
 );
+const String aAdventure = "assets/images/customer/adventure.png";
+const String aChakras = "assets/images/customer/chakras.png";
+const String aDelivery = "assets/images/customer/delivery.png";
+const String aDiscoBall = "assets/images/customer/discoBall.png";
+const String aRentals = "assets/images/customer/rentals.png";
+const String aVolunteering = "assets/images/customer/volunteering.png";
+const String aYoga = "assets/images/customer/yoga.png";
 
 const String _imgs_path = "assets/images/customer/taxi/";
 const String header_asset = "${_imgs_path}header.png";

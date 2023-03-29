@@ -469,6 +469,19 @@
           }
         }
       },
+      "CustHomeWrapper": {
+        "services": "Servicios",
+        "deliveries": "Deliveries",
+        "rentals": "Rentals",
+        "classes": "Classes",
+        "wellness": "Wellness",
+        "events": "Events",
+        "volunteer": "Volunteer",
+        "adventure": "Adventure",
+        "search": "Buscar",
+        "welcomeText": "Bienvenido a MEZKALA 👋",
+        "appDescription": "Your one stop place to find all your local businesses."
+      },
       "CustomerWrapper": {
         "savedLocations": "Ubicaciones guardadas",
         "welcomeText": "Bienvenido a MEZCALMOS 👋",
@@ -765,24 +778,22 @@
       }
     },
     "pages": {
-      "ServiceProfileView" : {
-        "profile" : "Perfil",
-        "info" : "Información",
-        "operators" : "Operadoras",
-        "drivers" : "Conductoras",
-        "schedule" :"Horarios",
-        "payments" :"Pagos",
-        "delivery" :"Entrega",
-        "reviews" : "Reseñas",
-        "share" : "Compartir",
+      "ServiceProfileView": {
+        "profile": "Perfil",
+        "info": "Información",
+        "operators": "Operadoras",
+        "drivers": "Conductoras",
+        "schedule": "Horarios",
+        "payments": "Pagos",
+        "delivery": "Entrega",
+        "reviews": "Reseñas",
+        "share": "Compartir",
         "privacyPolicies": "Políticas de privacidad",
-        "logout" : "Cerrar sesión",
-        "openService" : "Servicio abierto",
-        "closeService" : "Servicio cerrado",
-        "serviceClosed" : "El servicio está cerrado indefinidamente",
-        "restaurantReview" : "Su restaurante está bajo revisión, se le notificará, su aprobación."
-       
-
+        "logout": "Cerrar sesión",
+        "openService": "Servicio abierto",
+        "closeService": "Servicio cerrado",
+        "serviceClosed": "El servicio está cerrado indefinidamente",
+        "restaurantReview": "Su restaurante está bajo revisión, se le notificará, su aprobación."
       },
       "CreateServiceView": {
         "pages": {
@@ -846,7 +857,7 @@
             "notFoundTitle": "No se encontraron socios de entrega",
             "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
             "joined": "Unida",
-            "errorText" :  "Seleccione una empresa o cambie al tiempo de entrega de sí mismo"
+            "errorText": "Seleccione una empresa o cambie al tiempo de entrega de sí mismo"
           }
         }
       },
@@ -1106,7 +1117,7 @@
         "orderCost": "Costo de la orden",
         "deliveryCost": "Coste de envío",
         "stripeFees": "Tarifas de tarjeta",
-        "tax" : "Impuesto",
+        "tax": "Impuesto",
         "totalCost": "Coste total",
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado"
@@ -1640,13 +1651,12 @@
   },
   "DeliveryApp": {
     "pages": {
-      "UnAuthorizedDriverView" : {
-        "title" : "Invitación necesaria",
-        "subtitle" : "Necesita una invitación para usar nuestra aplicación de entrega"
-
+      "UnAuthorizedDriverView": {
+        "title": "Invitación necesaria",
+        "subtitle": "Necesita una invitación para usar nuestra aplicación de entrega"
       },
       "OrderDetailsScreen": {
-        "service" :"Servicio",
+        "service": "Servicio",
         "cancelled": "Cancelada",
         "approved": "Aprobada",
         "scheduled": "Programada",
@@ -1801,17 +1811,16 @@
                 "notReadyBody": "El pedido aún no está listo para la entrega",
                 "startDelivery": "Iniciar entrega",
                 "startPickUp": "Iniciar recogida",
-                "atPickUp" : "En la recogida",
-                "atDropOff" : "En la caída",
+                "atPickUp": "En la recogida",
+                "atDropOff": "En la caída",
                 "received": "Orden recibida",
-                "finishDelivery" : "Entrega de finalización"
+                "finishDelivery": "Entrega de finalización"
               }
             }
           }
         }
       },
       "RestaurantOrderView": {
-       
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -1832,9 +1841,9 @@
           }
         },
         "title": "Entrega",
-        "restaurant" : "Restaurante",
-        "laundry" : "Lavadero",
-        "courier" : "Mensajera"
+        "restaurant": "Restaurante",
+        "laundry": "Lavadero",
+        "courier": "Mensajera"
       }
     },
     "notificationHandler": {
@@ -2137,9 +2146,9 @@
         }
       },
       "ROpOrderView": {
-        "review" : "Revisar",
-        "deliveryDet" :"Detalles de la entrega",
-        "restaurant" : "Restaurante",
+        "review": "Revisar",
+        "deliveryDet": "Detalles de la entrega",
+        "restaurant": "Restaurante",
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",
         "orderItems": "Encargar artículos",

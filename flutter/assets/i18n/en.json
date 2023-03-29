@@ -467,6 +467,19 @@
           }
         }
       },
+      "CustHomeWrapper": {
+        "services": "Services",
+        "deliveries": "Deliveries",
+        "rentals": "Rentals",
+        "classes": "Classes",
+        "wellness": "Wellness",
+        "events": "Events",
+        "volunteer": "Volunteer",
+        "adventure": "Adventure",
+        "welcomeText": "Welcome to MEZKALA 👋",
+        "search": "Search",
+        "appDescription": "Your one stop place to find all your local businesses."
+      },
       "CustomerWrapper": {
         "savedLocations": "Saved locations",
         "welcomeText": "Welcome to MEZCALMOS 👋",
@@ -1649,7 +1662,7 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
-        "service" :"Service",
+        "service": "Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
         "schTime": "Scheduled time",

@@ -5,7 +5,7 @@ class MezCard extends StatelessWidget {
       {super.key,
       this.margin,
       this.onClick,
-      this.raidus = 25,
+      this.radius = 10,
       this.contentPadding = const EdgeInsets.all(8),
       required this.content,
       this.action,
@@ -29,7 +29,7 @@ class MezCard extends StatelessWidget {
   final Color? secondAvatarIconColor;
   final ImageProvider? secondAvatarBgImage;
   final IconData? secondAvatarIcon;
-  final double raidus;
+  final double radius;
   final Widget content;
   final Widget? action;
   final Widget? leading;
@@ -37,9 +37,12 @@ class MezCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      ),
       margin: margin,
       child: InkWell(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(radius),
         onTap: onClick,
         child: Container(
           padding: contentPadding,

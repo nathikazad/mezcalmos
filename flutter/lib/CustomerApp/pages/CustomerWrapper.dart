@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Delivery/DeliveryServiceView/DeliveryServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
@@ -25,7 +26,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -248,6 +248,14 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                 singleOrderRoute: (int orderId) {
                   CustCourierOrderView.navigate(orderId: orderId);
                 });
+          },
+        ),
+        ServicesCard(
+          title: "Delivery",
+          url: "assets/images/customer/delivery.png",
+          subtitle: "Obtain delivery of anything you desire to your location.",
+          onTap: () {
+            DeliveryServiceView.navigate();
           },
         ),
       ],
