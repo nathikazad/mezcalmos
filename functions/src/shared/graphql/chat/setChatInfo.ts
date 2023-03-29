@@ -416,10 +416,7 @@ export async function setBusinessOrderRequestChatInfo(
   customer: CustomerInfo
 ) {
   if(order.chatId == undefined) {
-    throw new HttpsError(
-      "internal",
-      "No chat id"
-    );
+    throw new MezError("noChatId");
   }
   
   let chain = getHasura();

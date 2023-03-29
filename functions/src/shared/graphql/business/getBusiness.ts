@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { Language } from "../../models/Generic/Generic";
-import { OpenStatus, Operator } from "../../models/Services/Service";
+import { OpenStatus, Operator, ServiceProviderType } from "../../models/Services/Service";
 import { AuthorizationStatus } from "../../models/Generic/Generic"
 import { Business, BusinessProfile } from "../../models/Services/Business/Business";
 
@@ -39,6 +39,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
                 user_id: true,
                 operator_details: {
                     status: true,
+                    online: true
                 },
                 user: {
                     firebase_id: true,
@@ -60,6 +61,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
             serviceProviderId: businessId,
             userId: o.user_id,
             detailsId: o.details_id,
+            online: o.operator_details.online,
             status: o.operator_details.status as AuthorizationStatus,
             user: {
                 id: o.user_id,
@@ -75,6 +77,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
         serviceProviderDetailsId: response.business_business_by_pk.details_id,
         name: response.business_business_by_pk.details.name,
         image: response.business_business_by_pk.details.image,
+        serviceProviderType: ServiceProviderType.Business,
         location: {
             lat: response.business_business_by_pk.details.location.gps.coordinates[1],
             lng: response.business_business_by_pk.details.location.gps.coordinates[0],

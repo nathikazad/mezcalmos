@@ -20,7 +20,7 @@ export async function createOrderRequest(
     let businessOperatorsDetails = business.operators?.map((v) => {
         return {
             participant_id: v.userId,
-            app_type_id: AppType.BusinessApp
+            app_type_id: AppType.Business
         };
     }) ?? [];
 
@@ -53,7 +53,7 @@ export async function createOrderRequest(
                         chat_participants: {
                             data: [{
                                 participant_id: customerId,
-                                app_type_id: AppType.BusinessApp
+                                app_type_id: AppType.Business
                             },
                             ...businessOperatorsDetails,
                             ...mezAdminDetails]

@@ -20,6 +20,7 @@ export async function getBusinessOperatorByUserId(businessOperatorUserId: number
         id: true,
         status: true,
         owner: true,
+        online: true,
         notification_info: {
         token: true,
         turn_off_notifications: true
@@ -43,9 +44,10 @@ export async function getBusinessOperatorByUserId(businessOperatorUserId: number
     userId: businessOperatorUserId,
     serviceProviderId: response.business_operator[0].business_id,
     status: response.business_operator[0].operator_details.status as AuthorizationStatus,
+    online: response.business_operator[0].operator_details.online,
     owner: response.business_operator[0].operator_details.owner,
     notificationInfo: (response.business_operator[0].operator_details.notification_info) ? {
-      appType: AppType.BusinessApp,
+      appType: AppType.Business,
       token: response.business_operator[0].operator_details.notification_info.token,
       turnOffNotifications: response.business_operator[0].operator_details.notification_info.turn_off_notifications
     }: undefined,
@@ -75,6 +77,7 @@ export async function getBusinessOperators(businessId: number): Promise<Operator
         id: true,
         status: true,
         owner: true,
+        online: true,
         notification_info: {
         token: true,
         turn_off_notifications: true
@@ -101,8 +104,9 @@ export async function getBusinessOperators(businessId: number): Promise<Operator
       serviceProviderId: o.business_id,
       status: o.operator_details.status as AuthorizationStatus,
       owner: o.operator_details.owner,
+      online: o.operator_details.online,
       notificationInfo: (o.operator_details.notification_info) ? {
-        appType: AppType.BusinessApp,
+        appType: AppType.Business,
         token: o.operator_details.notification_info.token,
         turnOffNotifications: o.operator_details.notification_info.turn_off_notifications
       }: undefined,

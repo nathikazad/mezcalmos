@@ -17,7 +17,7 @@ export interface BusinessService {
     cost: number;
 }
 export interface Rental extends BusinessService {
-
+    rentalCategory1: RentalCategory1
 }
 export interface Class extends BusinessService {
     scheduleType: ScheduleType;
@@ -27,7 +27,12 @@ export interface Event extends BusinessService {
     scheduleType: ScheduleType;
     schedule?: any;
 }
-
+export enum RentalCategory1 {
+    Surf,
+    Motorcycle,
+    Home,
+    x
+}
 export enum ServiceType {
     Rental = "rental",
     Class = "class",

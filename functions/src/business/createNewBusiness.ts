@@ -2,7 +2,7 @@ import { createBusiness } from "../shared/graphql/business/createBusiness";
 import { getUser } from "../shared/graphql/user/getUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { Language, Location } from "../shared/models/Generic/Generic";
+import { Language, Location, MezError } from "../shared/models/Generic/Generic";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Business, BusinessProfile, NewBusinessNotification } from "../shared/models/Services/Business/Business";
@@ -17,9 +17,23 @@ export interface BusinessDetails {
     businessOperatorNotificationToken?: string,
     language: Record<Language, boolean>
 }
+export interface BusinessResponse {
+  success: boolean,
+  error?: BusinessError
+  unhandledError?: string
+}
+export enum BusinessError {
+  UnhandledError = "unhandledError",
+  UserNotFound = "userNotFound",
   
-export async function createNewBusiness(userId: number, businessDetails: BusinessDetails) {
-  
+
+  DriverAlreadyExists = "driverAlreadyExists",
+  DriverCreationError = "driverCreationError",
+  InvalidServiceProviderType = "invalidServiceProviderType"
+}
+
+export async function createNewBusiness(userId: number, businessDetails: BusinessDetails): Promise<BusinessResponse> {
+  try {
     let userPromise = getUser(userId);
     let mezAdminsPromise = getMezAdmins();
     let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
@@ -28,7 +42,27 @@ export async function createNewBusiness(userId: number, businessDetails: Busines
     let business: Business = await createBusiness(businessDetails, userId);
   
     notifyAdmins(business, mezAdmins);
-  
+    return {
+      success: true
+    }
+  } catch (e: any) {
+    if (e instanceof MezError) {
+        if (Object.values(BusinessError).includes(e.message as any)) {
+            return {
+                success: false,
+                error: e.message as any
+            }
+        } else {
+            return {
+                success: false,
+                error: BusinessError.UnhandledError,
+                unhandledError: e.message as any
+            }
+        }
+    } else {
+        throw e
+    }
+  }
 };
 
 function notifyAdmins(business: Business, mezAdmins: MezAdmin[]) {

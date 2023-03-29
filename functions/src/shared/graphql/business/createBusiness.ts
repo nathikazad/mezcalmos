@@ -38,7 +38,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                                 user_id: businessOperatorUserId,
                                 status: AuthorizationStatus.Authorized,
                                 owner: true,
-                                app_type_id: AppType.BusinessApp,
+                                app_type_id: AppType.Business,
                             }
                         }
                     }]
@@ -54,6 +54,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
     console.log("response: ", response);
     
     if(response.insert_business_business_one == null) {
+        
         throw new HttpsError(
             "internal",
             "business creation error"
@@ -72,13 +73,14 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
         },
         language: businessDetails.language,
         profile: businessDetails.profile,
+        serviceProviderType: ServiceProviderType.Business
     }
     if(businessDetails.businessOperatorNotificationToken) {
         chain.mutation({
             insert_notification_info_one: [{
                 object: {
                     user_id: businessOperatorUserId,
-                    app_type_id: AppType.LaundryApp,
+                    app_type_id: AppType.Laundry,
                     token: businessDetails.businessOperatorNotificationToken
                 }
             }, {
