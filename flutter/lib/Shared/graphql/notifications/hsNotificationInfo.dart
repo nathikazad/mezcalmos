@@ -12,6 +12,7 @@ Future<void> insert_notif_info(
     {required int userId,
     required String token,
     required String appType}) async {
+  mezDbgPrint("Called insert notif token with ==========<$appType");
   final QueryResult<Mutation$insertNotifInfo> res = await _db.graphQLClient
       .mutate$insertNotifInfo(Options$Mutation$insertNotifInfo(
           variables: Variables$Mutation$insertNotifInfo(

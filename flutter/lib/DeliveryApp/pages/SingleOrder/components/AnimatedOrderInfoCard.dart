@@ -76,7 +76,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         cardHeader(),
-        if (order.routeInformation != null) routeInformationWidget(),
+        if (order.routeInformation?.valid == true) routeInformationWidget(),
         Divider(),
         orderCardMainBody(context),
         AnimatedSize(

@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderBillImage.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
@@ -85,6 +86,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MezCard(
                     contentPadding: const EdgeInsets.all(12),
@@ -97,7 +99,6 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   ),
                   if (viewController.order.estimatedArrivalAtDropoff != null)
                     _estTime(),
-
                   _driverCard(),
                   if (viewController.order.inDeliveryPhase &&
                       viewController.order.deliveryOrderId != null)
@@ -109,19 +110,24 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         from: viewController.order.pickupLocation,
                         to: viewController.order.dropOffLocation),
                   _items(),
-
-                  // OrderScheduledTimeCard(
-                  //     time: viewController.order.t,
-                  //     margin: const EdgeInsets.only(top: 8)),
+                  Container(
+                    margin: const EdgeInsets.only(top: 15),
+                    child: Text(
+                      'Delivery details',
+                      style: context.txt.bodyLarge,
+                    ),
+                  ),
+                  OrderScheduledTimeCard(
+                      time: viewController.order.scheduleTime,
+                      margin: const EdgeInsets.only(top: 8)),
+                  OrderDeliveryLocation(
+                    address: viewController.order.dropOffLocation.address,
+                    margin: const EdgeInsets.only(top: 8),
+                  ),
                   OrderPaymentMethod(
                     stripeOrderPaymentInfo:
                         viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
-                  ),
-                  OrderDeliveryLocation(
-                    address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 8),
-                    titleTextStyle: context.txt.bodyText1,
                   ),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
@@ -215,7 +221,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         ? [
                             Text(
                               'Note',
-                              style: context.txt.bodyText1,
+                              style: context.txt.bodyLarge,
                             ),
                             Text(
                               viewController.order.items[index].notes!,
