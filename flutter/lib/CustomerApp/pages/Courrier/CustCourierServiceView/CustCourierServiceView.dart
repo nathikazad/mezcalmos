@@ -111,6 +111,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               .company.info.description?[userLanguage] !=
                           null)
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 10,

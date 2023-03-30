@@ -4,9 +4,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 
 class CustCourierOrderViewController {
   // instances //
@@ -91,7 +90,7 @@ class CustCourierOrderViewController {
           return AlertDialog(
             scrollable: false,
             contentPadding:
-                const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+                const EdgeInsets.only(bottom: 0, top: 16, left: 16, right: 16),
             insetPadding:
                 const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
             // contentPadding:
@@ -103,7 +102,7 @@ class CustCourierOrderViewController {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: secondaryLightBlueColor, shape: BoxShape.circle),
+                        color: Color(0xFFECEEFF), shape: BoxShape.circle),
                     padding: const EdgeInsets.all(16),
                     child: Icon(
                       Icons.price_change_rounded,
@@ -124,16 +123,16 @@ class CustCourierOrderViewController {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "New price",
-                        style: context.textTheme.bodyLarge,
-                      ),
+                      Text("New price",
+                          style: context.textTheme.displaySmall
+                              ?.copyWith(fontSize: 20)),
                       SizedBox(
                         height: 5,
                       ),
                       Text(order.changePriceRequest?.newPrice.toPriceString() ??
                           "-"),
-                      if (order.changePriceRequest?.reason != null)
+                      if (order.changePriceRequest?.reason != null &&
+                          order.changePriceRequest!.reason.isNotEmpty)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -163,7 +162,7 @@ class CustCourierOrderViewController {
                     },
                   ),
                   MezButton(
-                    label: "Cancel",
+                    label: "Cancel order",
                     height: 50,
                     backgroundColor: Colors.transparent,
                     textColor: Colors.grey.shade900,

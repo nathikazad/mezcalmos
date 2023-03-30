@@ -17,10 +17,12 @@ class OrderPaymentMethod extends StatelessWidget {
       {super.key,
       required this.paymentType,
       required this.stripeOrderPaymentInfo,
+      this.titleStyle,
       this.margin});
   final PaymentType paymentType;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
   final EdgeInsets? margin;
+  final TextStyle? titleStyle;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +32,7 @@ class OrderPaymentMethod extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["paymentMethod"]}',
-            style: context.txt.bodyText1,
+            style: titleStyle ?? context.txt.bodyLarge,
           ),
           const SizedBox(
             height: 4,
@@ -54,7 +56,7 @@ class OrderPaymentMethod extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         "${stripeOrderPaymentInfo?.brand!.toName()}",
-                        style: context.txt.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                   Flexible(
@@ -62,8 +64,8 @@ class OrderPaymentMethod extends StatelessWidget {
                     child: Text(
                       _getTitle(),
                       style: (stripeOrderPaymentInfo != null)
-                          ? context.txt.bodyText1
-                          : context.txt.bodyText1,
+                          ? context.txt.bodyLarge
+                          : context.txt.bodyLarge,
                     ),
                   ),
                 ],

@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderBillImage.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
@@ -72,7 +73,11 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           showNotifications: true,
           ordersRoute: CustomerRoutes.customerOrdersRoute,
           titleWidget: Obx(() => viewController.hasData
-              ? Text(viewController.order.deliveryCompany?.name ?? "")
+              ? Text(
+                  viewController.order.deliveryCompany?.name ?? "",
+                  style: context.txt.bodyLarge
+                      ?.copyWith(fontSize: 23.5, fontWeight: FontWeight.bold),
+                )
               : SizedBox())),
       bottomNavigationBar: _addReviewButton(context),
       body: Obx(
@@ -81,6 +86,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MezCard(
                     contentPadding: const EdgeInsets.all(12),
@@ -93,10 +99,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   ),
                   if (viewController.order.estimatedArrivalAtDropoff != null)
                     _estTime(),
-
                   _driverCard(),
-                  _items(),
-
                   if (viewController.order.inDeliveryPhase &&
                       viewController.order.deliveryOrderId != null)
                     OrderMapWidget(
@@ -106,17 +109,25 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                             viewController.order.routeInformation?.polyline,
                         from: viewController.order.pickupLocation,
                         to: viewController.order.dropOffLocation),
-                  // OrderScheduledTimeCard(
-                  //     time: viewController.order.t,
-                  //     margin: const EdgeInsets.only(top: 8)),
+                  _items(),
+                  Container(
+                    margin: const EdgeInsets.only(top: 15),
+                    child: Text(
+                      'Delivery details',
+                      style: context.txt.bodyLarge,
+                    ),
+                  ),
+                  OrderScheduledTimeCard(
+                      time: viewController.order.scheduleTime,
+                      margin: const EdgeInsets.only(top: 8)),
+                  OrderDeliveryLocation(
+                    address: viewController.order.dropOffLocation.address,
+                    margin: const EdgeInsets.only(top: 8),
+                  ),
                   OrderPaymentMethod(
                     stripeOrderPaymentInfo:
                         viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
-                  ),
-                  OrderDeliveryLocation(
-                    address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 8),
                   ),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
@@ -209,6 +220,10 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                             true)
                         ? [
                             Text(
+                              'Note',
+                              style: context.txt.bodyLarge,
+                            ),
+                            Text(
                               viewController.order.items[index].notes!,
                             )
                           ]
@@ -230,7 +245,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Delivery :",
+              "Delivery",
               style: context.txt.bodyLarge,
             ),
             SizedBox(

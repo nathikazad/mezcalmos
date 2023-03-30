@@ -42,7 +42,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
 
   Widget _laundryInfoHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 10, right: 5, left: 10, bottom: 10),
+      padding:
+          const EdgeInsets.only(top: 12.5, right: 5, left: 12.5, bottom: 12.5),
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,9 +63,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 4,
-                ),
                 Text(
                   laundry.info.name,
                   style: context.txt.bodyLarge?.copyWith(
@@ -72,7 +70,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 4,
+                  height: 12.5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

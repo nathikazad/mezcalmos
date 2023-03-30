@@ -95,22 +95,26 @@ extension DeliveryOrderHelper on DeliveryOrder {
         );
       case DeliveryOrderStatus.AtDropoff:
         return Container(
-          // padding: const EdgeInsets.only(right: 10.0),
+          margin: const EdgeInsets.only(right: 14),
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
-            Icons.check_circle,
-            size: 35,
+            Icons.check_rounded,
             color: primaryBlueColor,
           ),
         );
 
       case DeliveryOrderStatus.Delivered:
         return Container(
-          padding: const EdgeInsets.all(5),
+          margin: const EdgeInsets.only(right: 14),
+          width: 25,
+          height: 25,
           decoration: BoxDecoration(
               color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
-            Icons.check,
-            size: 25,
+            Icons.check_rounded,
             color: primaryBlueColor,
           ),
         );

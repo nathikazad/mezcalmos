@@ -17,7 +17,6 @@ Notification deliveryDriverNotificationHandler(String key, value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
 
-  mezDbgPrint("👋 new notification 👋\n $value");
 
   switch (notificationType) {
     case NotificationType.NewOrder:

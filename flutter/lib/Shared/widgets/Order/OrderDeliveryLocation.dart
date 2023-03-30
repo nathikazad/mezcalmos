@@ -31,7 +31,7 @@ class OrderDeliveryLocation extends StatelessWidget {
             height: 4,
           ),
           Card(
-            elevation: 1,
+            elevation: .5,
             margin: EdgeInsets.zero,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),

@@ -16,7 +16,6 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -295,7 +294,7 @@ Future<void> showConfirmationDialog(
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    MezRouter.back();
+                    Navigator.pop(context);
                   },
                   child: Container(
                     width: double.infinity,
@@ -467,7 +466,7 @@ Future<void> showStatusInfoDialog(
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => MezRouter.back()
+                    ? () => Navigator.pop(context)
                     : primaryCallBack,
                 child: Container(
                   height: 44,
@@ -764,6 +763,7 @@ void showSavedSnackBar({String? title, String? subtitle}) {
       subTitle: _i18n()['savedTitle'],
       icon: Icon(
         Icons.check_circle,
+        size: 40,
         color: Colors.green,
       ));
 }
@@ -793,6 +793,7 @@ void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
       subTitle: errorText,
       icon: Icon(
         Icons.cancel,
+        size: 40,
         color: Colors.redAccent,
       ));
 }

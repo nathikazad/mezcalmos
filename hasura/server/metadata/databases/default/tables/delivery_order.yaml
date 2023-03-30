@@ -206,6 +206,7 @@ select_permissions:
                   drivers:
                     user_id:
                       _eq: X-Hasura-User-Id
+      allow_aggregations: true
   - role: delivery_operator
     permission:
       columns:
