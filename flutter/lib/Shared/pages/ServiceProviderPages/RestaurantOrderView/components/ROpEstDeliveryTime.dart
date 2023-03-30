@@ -344,7 +344,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
         0) {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["deliveryMinTimes"]}',
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     } else if (value
                 .difference(widget.order.estimatedPackageReadyTime ??
                     widget.order.orderTime)
@@ -370,7 +370,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
     } else {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["deliveryMinTimes"]}',
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     }
   }
 

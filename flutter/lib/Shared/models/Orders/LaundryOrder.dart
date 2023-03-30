@@ -196,8 +196,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   bool get canAddReview {
-    return true;
-    //return review == null && status == RestaurantOrderStatus.Delivered;
+    return review == null && status == LaundryOrderStatus.Delivered;
   }
 
   bool afterAtLaundry() {

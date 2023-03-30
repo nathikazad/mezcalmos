@@ -87,8 +87,7 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   bool get canAddReview {
-    return true;
-    //return review == null && status == RestaurantOrderStatus.Delivered;
+    return review == null && status == RestaurantOrderStatus.Delivered;
   }
 
   @override

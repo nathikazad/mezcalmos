@@ -285,65 +285,58 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
     );
   }
 
-  PreferredSize _getAppBar() {
-    return PreferredSize(
-      preferredSize: _viewController.hasData
-          ? Size.fromHeight(_viewController.getAppbarHeight)
-          : Size.fromHeight(kTextTabBarHeight),
-      child: Obx(
-        () => MezcalmosAppBar(
-          asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: (asTab) ? null : MezRouter.back,
-          showNotifications: true,
-          title: "${_i18n()['profile']}",
-          tabBar: (!_viewController.isApproved ||
-                  _viewController.service.state.isClosedIndef)
-              ? PreferredSize(
-                  preferredSize: Size(double.infinity, kToolbarHeight),
-                  child: Column(
-                    children: [
-                      if (_viewController.service.state.isClosedIndef)
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          width: double.infinity,
-                          color: offRedColor,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.lock,
-                                color: Colors.redAccent,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  "${_i18n()['serviceClosed']}",
-                                  textAlign: TextAlign.center,
-                                  style: context.txt.bodyLarge
-                                      ?.copyWith(color: Colors.redAccent),
-                                ),
-                              ),
-                            ],
+  AppBar _getAppBar() {
+    return MezcalmosAppBar(
+      asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+      onClick: (asTab) ? null : MezRouter.back,
+      tabbarHeight: _viewController.getAppbarHeight,
+      title: "Dashboard",
+      tabBar: (!_viewController.isApproved ||
+              _viewController.service.state.isClosedIndef)
+          ? PreferredSize(
+              preferredSize: Size(double.infinity, kToolbarHeight),
+              child: Column(
+                children: [
+                  if (_viewController.service.state.isClosedIndef)
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      width: double.infinity,
+                      color: offRedColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.lock,
+                            color: Colors.redAccent,
                           ),
-                        ),
-                      if (!_viewController.isApproved)
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          color: secondaryLightBlueColor,
-                          child: Text(
-                            "${_i18n()['restaurantReview']}",
-                            style: Get.textTheme.bodyLarge
-                                ?.copyWith(color: primaryBlueColor),
+                          SizedBox(
+                            width: 5,
                           ),
-                        ),
-                    ],
-                  ),
-                )
-              : null,
-        ),
-      ),
+                          Flexible(
+                            child: Text(
+                              "Service is closed indefinitely",
+                              textAlign: TextAlign.center,
+                              style: context.txt.bodyLarge
+                                  ?.copyWith(color: Colors.redAccent),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (!_viewController.isApproved)
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      color: secondaryLightBlueColor,
+                      child: Text(
+                        "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
+                        style: context.txt.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ),
+                ],
+              ),
+            )
+          : null,
     );
   }
 

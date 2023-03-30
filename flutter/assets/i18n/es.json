@@ -2465,6 +2465,7 @@
     "required": "Requerida",
     "error": "error",
     "noRoute": "No se encontró ruta.Ingrese un destino válido",
-    "minutes": "minutos"
+    "minutes": "minutos",
+    "slowInternet": "Internet lento"
   }
 }

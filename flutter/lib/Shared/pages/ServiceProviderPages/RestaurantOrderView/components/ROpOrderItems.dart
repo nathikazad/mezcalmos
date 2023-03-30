@@ -206,83 +206,8 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
     );
   }
 
-  Widget _unAvailableBtn() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5, top: 0),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: (!widget.order.inProcess() || widget.item.unavailable)
-            ? null
-            : () async {
-                // TODO handle @m66are handle unavailable
-                // setState(() {
-                //   isLoading = true;
-                // });
-                // await Get.find<ROpOrderController>()
-                //     .markItemUnavailable(widget.order.orderId.toString(),
-                //         widget.item.idInCart.toString())
-                //     .then((ServerResponse response) {
-                //   if (!response.success) {
-                //     Get.snackbar("Error", response.errorMessage ?? "Error");
-                //   }
-                // }).whenComplete(() async {
-                //   if (!(_maximumRefund() > 0)) {
-                //     await Get.find<ROpOrderController>()
-                //         .cancelOrder(widget.order.orderId);
-                //   }
-                //   setState(() {
-                //     isLoading = false;
-                //   });
-                // });
-              },
-        child: Ink(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                color:
-                    (widget.item.unavailable) ? offRedColor : primaryBlueColor,
-                borderRadius: BorderRadius.circular(15)),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 2),
-                  child: Icon(
-                    widget.item.unavailable
-                        ? Icons.do_disturb_off
-                        : Icons.do_disturb_on,
-                    color: widget.item.unavailable ? Colors.red : Colors.white,
-                    size: 14.sp,
-                  ),
-                ),
-                SizedBox(
-                  width: 3,
-                ),
-                Text(
-                  (widget.item.unavailable)
-                      ? "${_i18n()["itemUnav"]}".capitalizeFirstofEach
-                      : '${_i18n()["markitemUnav"]}',
-                  style: context.txt.titleLarge?.copyWith(
-                      color:
-                          widget.item.unavailable ? Colors.red : Colors.white),
-                ),
-                SizedBox(
-                  width: 3,
-                ),
-              ],
-            )),
-      ),
-    );
-  }
 
-  num _maximumRefund() {
-    if (widget.order.costs.refundAmmount != null) {
-      return (widget.order.costs.orderItemsCost! -
-          widget.order.costs.refundAmmount!);
-    } else {
-      return widget.order.costs.totalCost!;
-    }
-  }
+
 
   List<Widget> buildChoices(BuildContext context,
       Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {

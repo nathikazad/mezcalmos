@@ -66,7 +66,6 @@ class _MezButtonState extends State<MezButton> {
                             .whenComplete(() => isLoading.value = false)
                             .onError((Object? e, StackTrace stk) {
                           mezDbgPrint(stk);
-                          // Get.snackbar("Error", "", backgroundColor: Colors.black);
                         });
                       }
                     : null,

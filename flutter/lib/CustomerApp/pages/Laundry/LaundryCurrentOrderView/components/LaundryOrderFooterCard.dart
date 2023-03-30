@@ -46,7 +46,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                         MezSnackbar(
                           _i18n()["titleSuccess"],
                           _i18n()["orderCancelSuccess"],
-                          position: SnackPosition.TOP,
+                          position: Alignment.topCenter,
                         );
                       }
                     });

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_partner/hsDeliveryPartner.dart';
@@ -64,7 +63,7 @@ class ServiceProfileController extends GetxController {
   }
 
   double get getAppbarHeight {
-    double height = kToolbarHeight;
+    double height = 0;
     if (!isApproved) {
       height += kToolbarHeight;
     }
