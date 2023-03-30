@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 class CustCourierOrderView extends StatefulWidget {
@@ -122,6 +123,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       billImage: viewController.order.billImage,
                       margin: const EdgeInsets.only(top: 15),
                     ),
+                  if (viewController.order.review != null)
+                    ReviewCard(review: viewController.order.review!),
                   OrderNoteCard(
                       margin: const EdgeInsets.only(top: 15),
                       note: viewController.order.notes),
@@ -275,9 +278,11 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
 
   Widget _addReviewButton(BuildContext context) {
     return Obx(() {
-      if (viewController.hasData && viewController.order.canAddReview == true) {
+      if (viewController.hasData &&
+          viewController.order.canAddReview == true &&
+          viewController.order.deliveryOrderId != null) {
         return customerAddReviewButton(context,
-            orderId: viewController.order.orderId,
+            orderId: viewController.order.deliveryOrderId!,
             serviceProviderId: viewController.order.serviceProvider.hasuraId,
             serviceProviderType: ServiceProviderType.DeliveryCompany,
             orderType: OrderType.Courier);

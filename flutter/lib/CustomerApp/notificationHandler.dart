@@ -51,6 +51,7 @@ Notification customerNotificationHandler(
           icon: Material.Icons.price_change,
           linkUrl: value['linkUrl'],
           notificationType: notificationType,
+          variableParams: value,
           notificationAction:
               value["notificationAction"].toString().toNotificationAction());
 

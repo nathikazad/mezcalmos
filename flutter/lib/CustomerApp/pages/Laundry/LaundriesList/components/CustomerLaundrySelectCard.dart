@@ -124,19 +124,21 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     ),
                     (laundry.rate != null && laundry.rate != 0)
                         ? Flexible(
+                            flex: 5,
+                            fit: FlexFit.tight,
                             child: Row(
                               children: [
                                 Icon(
                                   Icons.star,
-                                  size: 22,
+                                  size: 20,
                                   color: Color(0xFF6779FE),
                                 ),
                                 SizedBox(
                                   width: 2,
                                 ),
                                 Text(
-                                  laundry.rate.toString(),
-                                  style: context.txt.bodyMedium,
+                                  laundry.rate!.toStringAsFixed(1),
+                                  style: context.txt.bodySmall,
                                 )
                               ],
                             ),

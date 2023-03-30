@@ -722,6 +722,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
+        "writeReview" :"Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",
         "no": "No",
@@ -1080,6 +1081,9 @@
     "widgets": {
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
+      },
+      "ReviewCard" : {
+        "review" :"Review"
       },
       "MezDateTimePicker": {
         "cancel": "Cancel",

@@ -66,6 +66,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.toCustomerDeliveryId,
       required this.shippingCost,
       this.costsByType,
+      super.review,
       super.stripePaymentInfo,
       super.scheduleTime,
       super.serviceProviderId,
@@ -198,6 +199,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     return true;
     //return review == null && status == RestaurantOrderStatus.Delivered;
   }
+
   bool afterAtLaundry() {
     return status == LaundryOrderStatus.AtLaundry ||
         status == LaundryOrderStatus.Delivered ||

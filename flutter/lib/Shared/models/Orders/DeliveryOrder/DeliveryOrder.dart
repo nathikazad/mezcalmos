@@ -32,6 +32,7 @@ class DeliveryOrder extends DeliverableOrder {
       required super.routeInformation,
       required super.orderId,
       required super.chatId,
+      super.review,
       required super.customer,
       required super.dropOffLocation,
       required super.serviceProviderDriverChatId,

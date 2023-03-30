@@ -724,6 +724,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Guardado",
+        "writeReview" :"Escribir un comentario",
         "savedTitle": "tu información ha sido guardada",
         "yesCancel": "Sí, Cancelar pedido",
         "no": "No",
@@ -1089,6 +1090,9 @@
       }
     },
     "widgets": {
+      "ReviewCard" : {
+        "review" :"Revisar"
+      },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "El tiempo de entrega"
       },

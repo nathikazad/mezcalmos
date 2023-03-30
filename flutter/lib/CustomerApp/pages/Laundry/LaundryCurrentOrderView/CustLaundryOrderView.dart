@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -131,10 +132,8 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                   to: viewController
                                       .order.value!.dropOffLocation),
 
-                            if (viewController.order.value!.serviceProvider !=
-                                null)
-                              OrderLaundryCard(
-                                  order: viewController.order.value!),
+                            OrderLaundryCard(
+                                order: viewController.order.value!),
 
                             LaundryOrderPricingComponent(
                                 order: viewController.order.value!),
@@ -152,6 +151,10 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                   .order.value!.dropOffLocation.address,
                               margin: const EdgeInsets.only(top: 8),
                             ),
+                            if (viewController.order.value!.review != null)
+                              ReviewCard(
+                                  margin: const EdgeInsets.only(top: 15),
+                                  review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 margin: const EdgeInsets.only(top: 15),
                                 note: viewController.order.value!.notes),

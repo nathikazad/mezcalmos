@@ -139,7 +139,7 @@ class ForegroundNotificationsController extends GetxController {
         "fbNotificationsController: Clearing All Messages Notifications");
     notifications()
         .where((Notification notification) =>
-            notification.variableParams["orderId"] == orderId &&
+            notification.orderId == orderId &&
             notification.variableParams["orderType"] ==
                 orderType.toFirebaseFormatString())
         .forEach((Notification element) {

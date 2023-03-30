@@ -42,8 +42,8 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   void initState() {
     laundryId = int.tryParse(MezRouter.urlArguments["laundryId"].toString());
     if (laundryId != null) {
-      Future(() async =>
-          laundry.value = await get_laundry_store_by_id(id: laundryId!));
+      get_laundry_store_by_id(id: laundryId!)
+          .then((Laundry? value) => laundry.value = value);
     } else {
       MezRouter.back();
     }

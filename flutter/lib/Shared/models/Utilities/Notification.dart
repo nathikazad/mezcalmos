@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:intl/intl.dart';
 
 enum NotificationType {
@@ -75,7 +74,7 @@ class Notification {
     return null;
   }
 
-  int? get orderId => int.tryParse(variableParams['orderId']);
+  int? get orderId => variableParams['orderId'];
   String? get orderType => variableParams['orderType'];
   Notification(
       {required this.id,

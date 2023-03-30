@@ -19,6 +19,7 @@ class CourierOrder extends DeliveryOrder {
       required super.serviceOrderId,
       required super.driverInfo,
       required super.status,
+      super.review,
       required this.items,
       super.stripePaymentInfo,
       this.changePriceRequest,
@@ -80,7 +81,6 @@ class ChangePriceRequest {
       'reason': reason,
     };
   }
-
 
   factory ChangePriceRequest.fromMap(Map<String, dynamic> map) {
     return ChangePriceRequest(

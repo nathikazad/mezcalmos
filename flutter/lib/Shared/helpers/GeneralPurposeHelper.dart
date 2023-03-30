@@ -470,7 +470,7 @@ Widget customerAddReviewButton(
   required OrderType orderType,
 }) {
   return MezButton(
-    label: "Write Review",
+    label: "${_i18n()['writeReview']}",
     withGradient: true,
     borderRadius: 0,
     height: 80,
