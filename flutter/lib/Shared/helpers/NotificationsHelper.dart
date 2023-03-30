@@ -70,7 +70,7 @@ Future<void> decideWhichButtonDialogToUse(
 void notificationSnackBar(notifs.Notification notification) {
   customSnackBar(
     onTap: () {
-      MezRouter.toNamed(notification.linkUrl);
+      MezRouter.toPath(notification.linkUrl);
     },
     title: notification.title,
     subTitle: notification.body,
