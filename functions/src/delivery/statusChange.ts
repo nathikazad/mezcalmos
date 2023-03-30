@@ -25,10 +25,11 @@ let statusArrayInSeq: Array<DeliveryOrderStatus> = [
 ]
 
 function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
-  if(newStatus == (DeliveryOrderStatus.CancelledByAdmin || DeliveryOrderStatus.CancelledByDeliverer)) {
+  if(newStatus == DeliveryOrderStatus.CancelledByAdmin || newStatus == DeliveryOrderStatus.CancelledByDeliverer) {
     if(!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
       throw new MezError(ChangeDeliveryStatusError.OrderNotInProcess);
     }
+
     return;
   }
   if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
@@ -56,7 +57,7 @@ enum ChangeDeliveryStatusError {
   OrderNotFound = "orderNotFound",
   DriverNotAssigned = "driverNotAssigned",
   OrderNotInProcess = "orderNotInProcess",
-  UnAuthorizedAccess = "unAuthorizedAccess",
+  UnauthorizedAccess = "unauthorizedAccess",
   OrderDriverMismatch = "orderDriverMismatch",
   CustomerNotFound = "customerNotFound",
   InvalidStatus = "invalidStatus",
@@ -127,16 +128,16 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStat
   if (deliveryOrder.deliveryDriver == null) {
     throw new MezError(ChangeDeliveryStatusError.DriverNotAssigned);
   }
-  if (deliveryOrder.status == (DeliveryOrderStatus.Delivered
-    || DeliveryOrderStatus.CancelledByCustomer
-    || DeliveryOrderStatus.CancelledByDeliverer
-    || DeliveryOrderStatus.CancelledByServiceProvider
-  )) {
-    throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
+  if (deliveryOrder.status == DeliveryOrderStatus.Delivered
+    || deliveryOrder.status == DeliveryOrderStatus.CancelledByCustomer
+    || deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer
+    || deliveryOrder.status == DeliveryOrderStatus.CancelledByServiceProvider
+  ) {
+    throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
   }
   if (!(await isMezAdmin(userId))) {
     if(userId != deliveryOrder.deliveryDriver.userId)
-      throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
+      throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
     else if(newStatus == DeliveryOrderStatus.CancelledByDeliverer && deliveryOrder.orderType != OrderType.Courier)
       throw new MezError(ChangeDeliveryStatusError.CannotCancelByDriver);
   }
