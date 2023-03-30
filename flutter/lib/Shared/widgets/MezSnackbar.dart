@@ -24,7 +24,7 @@ void customSnackBar(
     Widget? icon,
     Alignment position = Alignment.topCenter,
     duration = const Duration(seconds: 1),
-    EdgeInsetsGeometry padding = const EdgeInsets.all(12)}) {
+    EdgeInsetsGeometry padding = const EdgeInsets.all(8)}) {
   BotToast.showNotification(
     onTap: onTap,
     align: position,

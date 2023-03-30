@@ -64,11 +64,8 @@ class DriverCurrentOrdersController {
       });
       openOrdersListener = listen_on_open_driver_orders(driverId: driverId)
           .listen((List<MinimalOrder>? event) {
-        mezDbgPrint(" ====> Event from open ===>>😒🤪 ====>>>$event");
         if (event != null) {
           openOrders.value = event;
-          mezDbgPrint(
-              " ====> Event from open ===>>😒🤪 ====>>>${openOrders.value.length}");
         }
       });
     }, cancel: () {

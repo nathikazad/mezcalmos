@@ -764,6 +764,7 @@ void showSavedSnackBar({String? title, String? subtitle}) {
       subTitle: _i18n()['savedTitle'],
       icon: Icon(
         Icons.check_circle,
+        size: 40,
         color: Colors.green,
       ));
 }
@@ -793,6 +794,7 @@ void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
       subTitle: errorText,
       icon: Icon(
         Icons.cancel,
+        size: 40,
         color: Colors.redAccent,
       ));
 }

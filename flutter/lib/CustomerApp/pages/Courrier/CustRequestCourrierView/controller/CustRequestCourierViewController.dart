@@ -146,6 +146,7 @@ class CustRequestCourierViewController {
             .toList(),
         deliveryCompanyId: company.value!.info.hasuraId,
         deliveryCost: shippingCost.value,
+        scheduledTime: deliveryTime.value?.toUtc().toString(),
         customerAppType: cModel.CustomerAppType.Native,
         tripDistance: routeInfo?.distance.distanceInMeters,
         tripDuration: routeInfo?.duration.seconds,
