@@ -170,27 +170,7 @@ class _LaundrySetCategoryComponentState
     };
   }
 
-  // delete item
-  Future<void> deleteItem(LaundryOrderCostLineItem item) async {
-    // final LaundryOrderCosts? oldCosts = widget.viewController.order.costsByType;
-    // if (oldCosts != null) {
-    //   if (oldCosts.lineItems.length > 1) {
-    //     int? res = await widget.viewController.deleteCategory(item.id);
-    //     if (res != null) {
-    //       MezRouter.back()
 
-    //     }
-    //   } else {
-    //     Get.snackbar(
-    //       "${_i18n()["error"]}",
-    //       "${_i18n()["deleteLast"]}",
-    //       padding: EdgeInsets.all(16),
-    //       backgroundColor: Colors.grey.shade800,
-    //       colorText: Colors.white,
-    //     );
-    //   }
-    // }
-  }
 
   Widget _itemRowCard({required LaundryOrderCostLineItem item}) {
     return Container(

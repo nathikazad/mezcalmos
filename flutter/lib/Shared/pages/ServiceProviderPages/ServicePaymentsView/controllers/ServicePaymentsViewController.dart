@@ -1,6 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
@@ -177,19 +176,6 @@ class ServicePaymentsViewController {
     setupClicked.value = true;
 
     await _setupService();
-
-    // onboardServiceProvider(
-    //     serviceProviderId, serviceProviderType, paymentInfo!.acceptedPayments);
-
-    // if (value.success) {
-    //   mezDbgPrint("response ============> $value");
-    //   stripeUrl = value.data["url"];
-    //   showStripe.value = true;
-    //   initWebView();
-    // } else {
-    //   Get.snackbar("Error", value.errorMessage ?? "Error");
-    // }
-    // setupClicked.value = false;
   }
 
   Future<void> _setupService() async {
