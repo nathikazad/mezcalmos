@@ -645,7 +645,6 @@ extension ParseOrderTypeToString on OrderType {
   }
 }
 extension ParseStringToOrderType on String {
-
   OrderType toOrderType() {
     return OrderType.values.firstWhere(
         (OrderType orderType) =>
@@ -1088,7 +1087,7 @@ extension ParseStringToAssignDriverError on String {
 }
 
 
-enum ChangeDeliveryStatusError { UnhandledError, OrderNotFound, DriverNotAssigned, OrderNotInProcess, UnAuthorizedAccess, OrderDriverMismatch, CustomerNotFound, InvalidStatus, RestaurantNotfound, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError, LaundryStoreNotfound, OrderCreationError, NoDeliveryChatWithStoreId, DeliveryCompanyOperatorsNotFound }
+enum ChangeDeliveryStatusError { UnhandledError, OrderNotFound, DriverNotAssigned, OrderNotInProcess, UnAuthorizedAccess, OrderDriverMismatch, CustomerNotFound, InvalidStatus, RestaurantNotfound, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError, LaundryStoreNotfound, OrderCreationError, NoDeliveryChatWithStoreId, DeliveryCompanyOperatorsNotFound, CannotCancelByDriver }
 extension ParseChangeDeliveryStatusErrorToString on ChangeDeliveryStatusError {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
