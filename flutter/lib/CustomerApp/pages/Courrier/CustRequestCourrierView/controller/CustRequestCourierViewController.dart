@@ -94,6 +94,10 @@ class CustRequestCourierViewController {
     itemsNotes.removeAt(index);
   }
 
+  void removeItemImage(int index) {
+    imagesFiles[index] = File("");
+  }
+
   void handleBack() {
     if (currentPage == 0) {
       MezRouter.back();

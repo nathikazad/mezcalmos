@@ -206,10 +206,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   }
 
   Widget mezListOfServices() {
-    return Column(
-      children: [
-        Obx(
-          () => ServicesCard(
+    return Obx(
+      () => Column(
+        children: [
+          ServicesCard(
             title: "${_i18n()['food']["title"]}",
             url: "assets/images/customer/foodService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
@@ -222,9 +222,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   });
             },
           ),
-        ),
-        Obx(
-          () => ServicesCard(
+          ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
             subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
@@ -237,21 +235,21 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   });
             },
           ),
-        ),
-        ServicesCard(
-          title: "Courier",
-          url: "assets/images/customer/courrierService.png",
-          subtitle: "Obtain delivery of anything you desire to your location.",
-          onTap: () {
-            getServiceRoute(
-                orderType: OrderType.Courier,
-                serviceRoute: CustCourierServicesListView.navigate,
-                singleOrderRoute: (int orderId) {
-                  CustCourierOrderView.navigate(orderId: orderId);
-                });
-          },
-        ),
-      ],
+          ServicesCard(
+            title: "${_i18n()['courier']["title"]}",
+            subtitle: "${_i18n()['courier']["subtitle"]}",
+            url: "assets/images/customer/courrierService.png",
+            onTap: () {
+              getServiceRoute(
+                  orderType: OrderType.Courier,
+                  serviceRoute: CustCourierServicesListView.navigate,
+                  singleOrderRoute: (int orderId) {
+                    CustCourierOrderView.navigate(orderId: orderId);
+                  });
+            },
+          ),
+        ],
+      ),
     );
   }
 

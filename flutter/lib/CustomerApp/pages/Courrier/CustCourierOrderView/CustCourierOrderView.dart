@@ -72,7 +72,11 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           showNotifications: true,
           ordersRoute: CustomerRoutes.customerOrdersRoute,
           titleWidget: Obx(() => viewController.hasData
-              ? Text(viewController.order.deliveryCompany?.name ?? "")
+              ? Text(
+                  viewController.order.deliveryCompany?.name ?? "",
+                  style: context.txt.bodyLarge
+                      ?.copyWith(fontSize: 23.5, fontWeight: FontWeight.bold),
+                )
               : SizedBox())),
       bottomNavigationBar: _addReviewButton(context),
       body: Obx(
@@ -95,8 +99,6 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     _estTime(),
 
                   _driverCard(),
-                  _items(),
-
                   if (viewController.order.inDeliveryPhase &&
                       viewController.order.deliveryOrderId != null)
                     OrderMapWidget(
@@ -106,6 +108,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                             viewController.order.routeInformation?.polyline,
                         from: viewController.order.pickupLocation,
                         to: viewController.order.dropOffLocation),
+                  _items(),
+
                   // OrderScheduledTimeCard(
                   //     time: viewController.order.t,
                   //     margin: const EdgeInsets.only(top: 8)),
@@ -117,6 +121,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   OrderDeliveryLocation(
                     address: viewController.order.dropOffLocation.address,
                     margin: const EdgeInsets.only(top: 8),
+                    titleTextStyle: context.txt.bodyText1,
                   ),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
@@ -209,6 +214,10 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                             true)
                         ? [
                             Text(
+                              'Note',
+                              style: context.txt.bodyText1,
+                            ),
+                            Text(
                               viewController.order.items[index].notes!,
                             )
                           ]
@@ -230,7 +239,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Delivery :",
+              "Delivery",
               style: context.txt.bodyLarge,
             ),
             SizedBox(

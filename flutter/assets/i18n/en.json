@@ -484,6 +484,10 @@
           "subtitle": "Get your clothes cleaned by your nearest laundry service",
           "title": "Laundry"
         },
+        "courier": {
+          "title": "Courier",
+          "subtitle": "Obtain delivery of anything you desire to your location."
+        },
         "comingSoon": "Coming soon ...",
         "supportText": "Need help ? contact our support team"
       },
@@ -699,9 +703,9 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
-          "delivered": "Order Delivered",
-          "received": "Order Received",
-          "canceled": "Order Cancelled",
+          "delivered": "Order delivered",
+          "received": "Order received",
+          "canceled": "Order cancelled",
           "atDropOff": "At dropoff"
         }
       },
@@ -1653,7 +1657,7 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
-        "service" :"Service",
+        "service": "Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
         "schTime": "Scheduled time",

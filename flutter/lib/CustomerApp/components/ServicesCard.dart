@@ -40,30 +40,18 @@ class ServicesCard extends StatelessWidget {
               const SizedBox(width: 5),
               Flexible(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     //================= title=============
-                    Container(
-                      padding: const EdgeInsets.all(3),
-                      alignment: Alignment.centerLeft,
-                      child: Text("$title", style: textTheme.displaySmall),
-                    ),
+                    Text("$title", style: textTheme.displaySmall),
                     //================ subtitle============
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 7,
-                        vertical: 3,
-                      ),
-                      alignment: Alignment.centerLeft,
-                      // padding:
-                      //     subtitle == null ? EdgeInsets.only(left: 10) : null,
-                      child: subtitle != null
-                          ? Text("$subtitle", style: textTheme.titleMedium)
-                          : Text(
-                              "${i18n["comingSoon"]}",
-                              style: textTheme.titleMedium,
-                            ),
-                    )
+                    subtitle != null
+                        ? Text("$subtitle", style: textTheme.titleMedium)
+                        : Text(
+                            "${i18n["comingSoon"]}",
+                            style: textTheme.titleMedium,
+                          )
                   ],
                 ),
               ),
