@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -23,6 +25,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 class CustCourierOrderView extends StatefulWidget {
@@ -75,6 +78,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       ?.copyWith(fontSize: 23.5, fontWeight: FontWeight.bold),
                 )
               : SizedBox())),
+      bottomNavigationBar: _addReviewButton(context),
       body: Obx(
         () {
           if (viewController.hasData) {
@@ -124,6 +128,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       billImage: viewController.order.billImage,
                       margin: const EdgeInsets.only(top: 15),
                     ),
+                  if (viewController.order.review != null)
+                    ReviewCard(review: viewController.order.review!),
                   OrderNoteCard(
                       margin: const EdgeInsets.only(top: 15),
                       note: viewController.order.notes),
@@ -179,9 +185,26 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       viewController.order.items[index].name,
                       style: context.txt.bodyLarge,
                     ),
-                    Text(
-                      "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)?.toPriceString() ?? "-"}",
-                      style: context.txt.bodyLarge,
+                    Row(
+                      children: [
+                        Text(
+                          "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
+                          style: context.txt.bodyLarge?.copyWith(
+                              decoration: viewController
+                                          .order.items[index].actualCost !=
+                                      null
+                                  ? TextDecoration.lineThrough
+                                  : null),
+                        ),
+                        if (viewController.order.items[index].actualCost !=
+                            null)
+                          Icon(Icons.arrow_forward_rounded),
+                        if (viewController.order.items[index].actualCost !=
+                            null)
+                          Text(
+                              "${viewController.order.items[index].actualCost!.toPriceString()}",
+                              style: context.txt.bodyLarge)
+                      ],
                     ),
                   ],
                 ),
@@ -245,16 +268,36 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           viewController.order.driverInfo?.name ?? "No driver assigned yet",
           style: context.txt.bodyLarge,
         ),
-        action: viewController.order.customerDriverChatId != null &&
-                viewController.order.driverInfo?.name != null
-            ? MessageButton(
-                chatId: 55,
-                onTap: () {
-                  BaseMessagingScreen.navigate(
-                      chatId: viewController.order.customerDriverChatId!);
-                })
-            : SizedBox.shrink(),
+        action: Row(
+          children: [
+            if (viewController.order.customerDriverChatId != null &&
+                viewController.order.inProcess() &&
+                viewController.order.isDriverAssigned)
+              MessageButton(
+                  chatId: 55,
+                  onTap: () {
+                    BaseMessagingScreen.navigate(
+                        chatId: viewController.order.customerDriverChatId!);
+                  })
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _addReviewButton(BuildContext context) {
+    return Obx(() {
+      if (viewController.hasData &&
+          viewController.order.canAddReview == true &&
+          viewController.order.deliveryOrderId != null) {
+        return customerAddReviewButton(context,
+            orderId: viewController.order.deliveryOrderId!,
+            serviceProviderId: viewController.order.serviceProvider.hasuraId,
+            serviceProviderType: ServiceProviderType.DeliveryCompany,
+            orderType: OrderType.Courier);
+      } else {
+        return SizedBox();
+      }
+    });
   }
 }

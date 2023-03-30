@@ -39,7 +39,7 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
     throw new MezError(ChangeDeliveryStatusError.InvalidStatus);
   }
 }
- 
+
 export interface ChangeDeliveryStatusDetails {
   deliveryId: number,
   newStatus: DeliveryOrderStatus
@@ -83,17 +83,17 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
     deliveryOrder.status = changeDeliveryStatusDetails.newStatus;
     updateDeliveryOrderStatus(deliveryOrder);
 
-  switch (deliveryOrder.orderType) {
-    case OrderType.Restaurant:
-      changeRestaurantOrderStatus(customer, deliveryOrder)
-      break;
-    case OrderType.Laundry:
-      changeLaundryOrderStatus(customer, deliveryOrder)
-      break;
-    case OrderType.Courier:
-      notifyCourierStatusChange(deliveryOrder, customer);
-    default:
-      break;
+    switch (deliveryOrder.orderType) {
+      case OrderType.Restaurant:
+        changeRestaurantOrderStatus(customer, deliveryOrder)
+        break;
+      case OrderType.Laundry:
+        changeLaundryOrderStatus(customer, deliveryOrder)
+        break;
+      case OrderType.Courier:
+        notifyCourierStatusChange(deliveryOrder, customer);
+      default:
+        break;
     }
     return {
       success: true
@@ -129,20 +129,14 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStat
   )) {
     throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
   }
-  if((await isMezAdmin(userId))) {
-    if(newStatus != DeliveryOrderStatus.CancelledByAdmin)
-      throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
-  } else {
-    if (userId != deliveryOrder.deliveryDriver.userId) {
-      throw new MezError(ChangeDeliveryStatusError.OrderDriverMismatch);
-    }
-    if(newStatus == DeliveryOrderStatus.CancelledByAdmin)
-      throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
+  if (userId != deliveryOrder.deliveryDriver.userId && !(await isMezAdmin(userId))) {
+    throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
   }
+
 }
 
 function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
-  
+
   let notification: Notification = {
     foreground: <CourierOrderStatusChangeNotification>{
       status: deliveryOrder.status,
@@ -170,6 +164,6 @@ function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: Custo
       deliveryOrder.deliveryDriver.notificationInfo,
       ParticipantType.DeliveryDriver,
       deliveryOrder.deliveryDriver.user?.language
-  );
+    );
   }
 }

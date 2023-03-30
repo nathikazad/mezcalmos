@@ -20,20 +20,19 @@ class CustCourierServiceViewController {
 
   Future<void> init({required int companyId}) async {
     _deliveryCompany.value = await get_delivery_company(companyId: companyId);
-    
-    
 
-    unawaited(
-        get_service_reviews(serviceId: companyId).then((List<Review>? value) {
+    unawaited(get_service_reviews(serviceId: companyId, withCache: false)
+        .then((List<Review>? value) {
       if (value != null) {
         _deliveryCompany.value?.reviews = value;
       }
     }));
 
-    unawaited(
-        get_service_review_average(serviceId: companyId).then((double? value) {
+    unawaited(get_service_review_average(serviceId: companyId, withCache: false)
+        .then((double? value) {
       if (value != null) {
         _deliveryCompany.value?.rate = value;
+        _deliveryCompany.refresh();
       }
     }));
   }

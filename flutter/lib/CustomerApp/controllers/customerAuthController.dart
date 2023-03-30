@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
@@ -96,6 +97,33 @@ class CustomerAuthController extends GetxController {
     return customer?.savedLocations.firstWhere((SavedLocation savedLocation) {
       return savedLocation.id == locationId;
     }, orElse: null).location;
+  }
+
+  Future<int?> setReviewId(
+      {required int reviewId,
+      required int orderId,
+      required ServiceProviderType entityType}) async {
+    switch (entityType) {
+      case ServiceProviderType.Laundry:
+        return addLaundryOrderReviewId(
+          orderId: orderId,
+          reviewId: reviewId,
+        );
+      case ServiceProviderType.Restaurant:
+        return addRestaurantOrderReviewId(
+          orderId: orderId,
+          reviewId: reviewId,
+        );
+      case ServiceProviderType.DeliveryCompany:
+      case ServiceProviderType.DeliveryDriver:
+        return addDriverOrderReviewId(
+          orderId: orderId,
+          reviewId: reviewId,
+        );
+
+      default:
+    }
+    return null;
   }
 
   @override

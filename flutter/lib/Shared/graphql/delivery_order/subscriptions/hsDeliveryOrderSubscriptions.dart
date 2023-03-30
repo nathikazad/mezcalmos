@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -34,6 +33,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           (QueryResult<Subscription$listen_on_driver_order> event) {
     final Subscription$listen_on_driver_order$delivery_order_by_pk orderData =
         event.parsedData!.delivery_order_by_pk!;
+
     StripeOrderPaymentInfo? _paymentInfo;
     if (orderData.restaurant_order?.stripe_info != null) {
       _paymentInfo = StripeOrderPaymentInfo.fromJson(
@@ -53,6 +53,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           ? DateTime.tryParse(orderData.schedule_time!)
           : null,
       packageReady: orderData.package_ready,
+
       orderType: orderData.order_type.toOrderType(),
       stripePaymentInfo: _paymentInfo,
       serviceOrderId: orderData.restaurant_order?.id,
@@ -85,6 +86,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           (orderData.estimated_arrival_at_dropoff_time != null)
               ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
               : null,
+
       estimatedArrivalAtPickup:
           (orderData.estimated_arrival_at_pickup_time != null)
               ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)

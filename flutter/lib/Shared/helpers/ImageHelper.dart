@@ -184,18 +184,17 @@ Future<imPicker.XFile?> imagePicker(
   try {
     return await picker.pickImage(
       source: source,
-      requestFullMetadata: true,
-      // preferredCameraDevice: imPicker.CameraDevice.front,
+      preferredCameraDevice: imPicker.CameraDevice.front,
       imageQuality: nQualityCompressionOfUserImage,
     );
   } on PlatformException catch (exception) {
     if (exception.code == 'camera_access_denied') {
       MezSnackbar(
           _i18n()['cameraAccessOffTitle'], _i18n()['cameraAccessOffBody'],
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(_i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     }
     //else {
     //   return await picker.pickImage(

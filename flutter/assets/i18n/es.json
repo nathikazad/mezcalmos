@@ -159,7 +159,7 @@
           "components": {
             "DeliveryTimePicker": {
               "dvTime": "El tiempo de entrega",
-              "restClosed": "El restaurante está cerrado ahora",
+              "restClosed": "El servicio está cerrado ahora, pero puedes programar su pedido para más adelante.",
               "pickTime": "Elige tu tiempo",
               "now": "Ahora",
               "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido"
@@ -728,6 +728,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Guardado",
+        "writeReview" :"Escribir un comentario",
         "savedTitle": "tu información ha sido guardada",
         "yesCancel": "Sí, Cancelar pedido",
         "no": "No",
@@ -1091,6 +1092,9 @@
       }
     },
     "widgets": {
+      "ReviewCard" : {
+        "review" :"Revisar"
+      },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "El tiempo de entrega"
       },
@@ -2461,6 +2465,7 @@
     "required": "Requerida",
     "error": "error",
     "noRoute": "No se encontró ruta.Ingrese un destino válido",
-    "minutes": "minutos"
+    "minutes": "minutos",
+    "slowInternet": "Internet lento"
   }
 }

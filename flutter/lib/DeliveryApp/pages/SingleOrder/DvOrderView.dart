@@ -24,8 +24,8 @@ class DvOrderView extends StatefulWidget {
   const DvOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-    mezDbgPrint(
-        "To naviaget called =========================>$orderId=======>${DeliveryAppRoutes.kDvOrderView.replaceAll(":orderId", orderId.toString())}");
+   
+   
     return MezRouter.toPath(DeliveryAppRoutes.kDvOrderView
         .replaceAll(":orderId", orderId.toString()));
   }

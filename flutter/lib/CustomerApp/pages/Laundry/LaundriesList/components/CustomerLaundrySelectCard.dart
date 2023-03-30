@@ -120,32 +120,52 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (laundry.getCheapestCategory != null)
-                      Flexible(
-                        flex: 5,
-                        fit: FlexFit.tight,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // SizedBox(
-                            //   width: 8,
-                            // ),
-                            Icon(
-                              Icons.north_east,
-                              size: 20,
-                              color: Colors.black,
+                    (laundry.rate != null && laundry.rate != 0)
+                        ? Flexible(
+                            flex: 5,
+                            fit: FlexFit.tight,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 20,
+                                  color: Color(0xFF6779FE),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  laundry.rate!.toStringAsFixed(1),
+                                  style: context.txt.bodySmall,
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              width: 4,
+                          )
+                        : Flexible(
+                            flex: 5,
+                            fit: FlexFit.tight,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // SizedBox(
+                                //   width: 8,
+                                // ),
+                                Icon(
+                                  Icons.north_east,
+                                  size: 20,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                      "${laundry.getCheapestCategory.toPriceString()}/kg",
+                                      style: context.txt.bodySmall),
+                                ),
+                              ],
                             ),
-                            Flexible(
-                              child: Text(
-                                  "${laundry.getCheapestCategory.toPriceString()}/kg",
-                                  style: context.txt.bodySmall),
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
                   ],
                 ),
               ],

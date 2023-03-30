@@ -64,38 +64,7 @@ class _CustCourierServicesListViewState
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Material(
-                          elevation: 0.5,
-                          borderRadius: BorderRadius.circular(5),
-                          child: TextFormField(
-                            style: context.txt.bodyLarge,
-                            decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                hintText: "Search...",
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: primaryBlueColor,
-                                )),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      MezIconButton(
-                        icon: Icons.place,
-                        padding: const EdgeInsets.all(12),
-                        backgroundColor: Colors.white,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5),
-                        onTap: () {},
-                      )
-                    ],
-                  ),
+                  // _searchCoomponent(context),
                   SizedBox(
                     height: 15,
                   ),
@@ -116,6 +85,41 @@ class _CustCourierServicesListViewState
             );
         },
       ),
+    );
+  }
+
+  Widget _searchCoomponent(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+          fit: FlexFit.tight,
+          child: Material(
+            elevation: 0.5,
+            borderRadius: BorderRadius.circular(5),
+            child: TextFormField(
+              style: context.txt.bodyLarge,
+              decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  hintText: "Search...",
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: primaryBlueColor,
+                  )),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        MezIconButton(
+          icon: Icons.place,
+          padding: const EdgeInsets.all(12),
+          backgroundColor: Colors.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(5),
+          onTap: () {},
+        )
+      ],
     );
   }
 
@@ -197,26 +201,25 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
         SizedBox(
           width: 8,
         ),
-        Flexible(
-          child: Row(
-            children: [
-              Icon(
-                Icons.star,
-                size: 22,
-                color: Color(0xFF6779FE),
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              Text(
-                0.toString(),
-                style: context.txt.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
+        if (company.rate != null && company.rate != 0)
+          Flexible(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  size: 22,
+                  color: Color(0xFF6779FE),
                 ),
-              )
-            ],
+                SizedBox(
+                  width: 2,
+                ),
+                Text(
+                  company.rate.toString(),
+                  style: context.txt.bodyMedium,
+                )
+              ],
+            ),
           ),
-        ),
       ],
     ),
   );

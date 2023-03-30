@@ -52,7 +52,6 @@ class DvOrderDetailsViewController {
     return (order.value?.orderType == OrderType.Courier ||
             order.value?.orderType == OrderType.Laundry) &&
         order.value?.isDriverAssigned == true &&
-        order.value?.costs.deliveryCost == 0 &&
         order.value?.status == DeliveryOrderStatus.OrderReceived;
   }
 

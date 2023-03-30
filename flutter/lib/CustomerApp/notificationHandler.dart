@@ -40,6 +40,17 @@ Notification customerNotificationHandler(
       }
     case NotificationType.Call:
       throw StateError("Callllll forgrouned notif!!");
+    case NotificationType.PriceChange:
+    //@saad needs to be implemented
+    // return Notification(
+    //     id: id,
+    //     timestamp: timestamp,
+    //     title: headline6,
+    //     body: body,
+    //     imgUrl: imgUrl,
+    //     linkUrl: linkUrl,
+    //     notificationType: notificationType,
+    //     notificationAction: notificationAction);
 
     case NotificationType.PriceChange:
       return Notification(
@@ -51,6 +62,7 @@ Notification customerNotificationHandler(
           icon: Material.Icons.price_change,
           linkUrl: value['linkUrl'],
           notificationType: notificationType,
+          variableParams: value,
           notificationAction:
               value["notificationAction"].toString().toNotificationAction());
 

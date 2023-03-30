@@ -56,6 +56,7 @@ class DvCompanyOrderViewController {
           mezDbgPrint(event);
           if (event != null) {
             mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
+            order.value = null;
             order.value = event;
           }
         });

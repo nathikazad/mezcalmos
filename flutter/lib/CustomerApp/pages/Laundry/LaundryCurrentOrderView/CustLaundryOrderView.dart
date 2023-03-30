@@ -10,18 +10,22 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -90,6 +94,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
+      bottomNavigationBar: _addReviewButton(context),
       body: Obx(
         () {
           if (viewController.order.value != null) {
@@ -127,10 +132,8 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                   to: viewController
                                       .order.value!.dropOffLocation),
 
-                            if (viewController.order.value!.serviceProvider !=
-                                null)
-                              OrderLaundryCard(
-                                  order: viewController.order.value!),
+                            OrderLaundryCard(
+                                order: viewController.order.value!),
 
                             LaundryOrderPricingComponent(
                                 order: viewController.order.value!),
@@ -148,6 +151,10 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                   .order.value!.dropOffLocation.address,
                               margin: const EdgeInsets.only(top: 8),
                             ),
+                            if (viewController.order.value!.review != null)
+                              ReviewCard(
+                                  margin: const EdgeInsets.only(top: 15),
+                                  review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 margin: const EdgeInsets.only(top: 15),
                                 note: viewController.order.value!.notes),
@@ -199,5 +206,20 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       showNotifications: true,
       ordersRoute: CustomerRoutes.customerOrdersRoute,
     );
+  }
+
+  Widget _addReviewButton(BuildContext context) {
+    return Obx(() {
+      if (viewController.order.value?.canAddReview == true) {
+        return customerAddReviewButton(context,
+            orderId: viewController.order.value!.orderId,
+            serviceProviderId:
+                viewController.order.value!.serviceProvider.hasuraId,
+            serviceProviderType: ServiceProviderType.Laundry,
+            orderType: OrderType.Laundry);
+      } else {
+        return SizedBox();
+      }
+    });
   }
 }

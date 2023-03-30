@@ -25,13 +25,14 @@ class ConnectivityHelper {
 
   static Stream<InternetStatus> get internetStatusStream =>
       _internetStatusStreamController.stream;
-
+  Timer? _timer;
   Future<void> startCheckingInternet() async {
     // _internetStatusStreamController =
     // StreamController<InternetStatus>.broadcast();
     mezDbgPrint("NETWORK CHECKER");
     _internetStatusStreamController.add(await checkForInternet());
-    Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
       try {
         _internetStatusStreamController.add(await checkForInternet());
       } catch (e) {
@@ -55,7 +56,6 @@ class ConnectivityHelper {
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
         .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
-    mezDbgPrint('ping() executed in ${results.toString()}');
     if (results.contains(false)) {
       return InternetStatus.Offline;
     } else {

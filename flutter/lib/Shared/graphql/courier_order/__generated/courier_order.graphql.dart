@@ -550,6 +550,128 @@ const documentNodeQueryget_courier_order_by_id = DocumentNode(definitions: [
                 ]),
               ),
               FieldNode(
+                name: NameNode(value: 'driver_review_by_customer'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'created_at'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'from_entity_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'from_entity_type'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'note'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'rating'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'to_entity_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'to_entity_type'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'customer'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'user'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'name'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: 'chat_with_customer_id'),
                 alias: null,
                 arguments: [],
@@ -1780,6 +1902,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
   Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
     this.schedule_time,
     required this.customer,
+    this.driver_review_by_customer,
     required this.chat_with_customer_id,
     this.chat_with_service_provider_id,
     required this.dropoff_address,
@@ -1809,6 +1932,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       Map<String, dynamic> json) {
     final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
+    final l$driver_review_by_customer = json['driver_review_by_customer'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
@@ -1840,6 +1964,10 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       customer:
           Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
               .fromJson((l$customer as Map<String, dynamic>)),
+      driver_review_by_customer: l$driver_review_by_customer == null
+          ? null
+          : Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+              .fromJson((l$driver_review_by_customer as Map<String, dynamic>)),
       chat_with_customer_id: (l$chat_with_customer_id as int),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       dropoff_address: (l$dropoff_address as String),
@@ -1878,6 +2006,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
       customer;
+
+  final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
+      driver_review_by_customer;
 
   final int chat_with_customer_id;
 
@@ -1933,6 +2064,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     _resultData['schedule_time'] = l$schedule_time;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
+    final l$driver_review_by_customer = driver_review_by_customer;
+    _resultData['driver_review_by_customer'] =
+        l$driver_review_by_customer?.toJson();
     final l$chat_with_customer_id = chat_with_customer_id;
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -1992,6 +2126,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
   int get hashCode {
     final l$schedule_time = schedule_time;
     final l$customer = customer;
+    final l$driver_review_by_customer = driver_review_by_customer;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$dropoff_address = dropoff_address;
@@ -2019,6 +2154,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     return Object.hashAll([
       l$schedule_time,
       l$customer,
+      l$driver_review_by_customer,
       l$chat_with_customer_id,
       l$chat_with_service_provider_id,
       l$dropoff_address,
@@ -2063,6 +2199,11 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$customer = customer;
     final lOther$customer = other.customer;
     if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$driver_review_by_customer = driver_review_by_customer;
+    final lOther$driver_review_by_customer = other.driver_review_by_customer;
+    if (l$driver_review_by_customer != lOther$driver_review_by_customer) {
       return false;
     }
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -2221,6 +2362,8 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
     String? schedule_time,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
+        driver_review_by_customer,
     int? chat_with_customer_id,
     int? chat_with_service_provider_id,
     String? dropoff_address,
@@ -2249,6 +2392,8 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
   });
   CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer<
       TRes> get customer;
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+      TRes> get driver_review_by_customer;
   CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company<
       TRes> get delivery_company;
   CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver<
@@ -2277,6 +2422,7 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
   TRes call({
     Object? schedule_time = _undefined,
     Object? customer = _undefined,
+    Object? driver_review_by_customer = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? dropoff_address = _undefined,
@@ -2310,6 +2456,10 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
             ? _instance.customer
             : (customer
                 as Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer),
+        driver_review_by_customer: driver_review_by_customer == _undefined
+            ? _instance.driver_review_by_customer
+            : (driver_review_by_customer
+                as Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?),
         chat_with_customer_id:
             chat_with_customer_id == _undefined || chat_with_customer_id == null
                 ? _instance.chat_with_customer_id
@@ -2394,6 +2544,17 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
         local$customer, (e) => call(customer: e));
   }
 
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+      TRes> get driver_review_by_customer {
+    final local$driver_review_by_customer = _instance.driver_review_by_customer;
+    return local$driver_review_by_customer == null
+        ? CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+            .stub(_then(_instance))
+        : CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+            local$driver_review_by_customer,
+            (e) => call(driver_review_by_customer: e));
+  }
+
   CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company<
       TRes> get delivery_company {
     final local$delivery_company = _instance.delivery_company;
@@ -2429,6 +2590,8 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
     String? schedule_time,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
+        driver_review_by_customer,
     int? chat_with_customer_id,
     int? chat_with_service_provider_id,
     String? dropoff_address,
@@ -2460,6 +2623,11 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
           TRes>
       get customer =>
           CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
+              .stub(_res);
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+          TRes>
+      get driver_review_by_customer =>
+          CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
               .stub(_res);
   CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company<
           TRes>
@@ -2831,6 +2999,674 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
     String? image,
     String? name,
     String? language_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer {
+  Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer({
+    required this.created_at,
+    required this.from_entity_id,
+    required this.from_entity_type,
+    required this.id,
+    this.note,
+    required this.rating,
+    required this.to_entity_id,
+    required this.to_entity_type,
+    this.customer,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$created_at = json['created_at'];
+    final l$from_entity_id = json['from_entity_id'];
+    final l$from_entity_type = json['from_entity_type'];
+    final l$id = json['id'];
+    final l$note = json['note'];
+    final l$rating = json['rating'];
+    final l$to_entity_id = json['to_entity_id'];
+    final l$to_entity_type = json['to_entity_type'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+      created_at: (l$created_at as String),
+      from_entity_id: (l$from_entity_id as int),
+      from_entity_type: (l$from_entity_type as String),
+      id: (l$id as int),
+      note: (l$note as String?),
+      rating: (l$rating as int),
+      to_entity_id: (l$to_entity_id as int),
+      to_entity_type: (l$to_entity_type as String),
+      customer: l$customer == null
+          ? null
+          : Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String created_at;
+
+  final int from_entity_id;
+
+  final String from_entity_type;
+
+  final int id;
+
+  final String? note;
+
+  final int rating;
+
+  final int to_entity_id;
+
+  final String to_entity_type;
+
+  final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?
+      customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$created_at = created_at;
+    _resultData['created_at'] = l$created_at;
+    final l$from_entity_id = from_entity_id;
+    _resultData['from_entity_id'] = l$from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    _resultData['from_entity_type'] = l$from_entity_type;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$note = note;
+    _resultData['note'] = l$note;
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$to_entity_id = to_entity_id;
+    _resultData['to_entity_id'] = l$to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    _resultData['to_entity_type'] = l$to_entity_type;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$created_at = created_at;
+    final l$from_entity_id = from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    final l$id = id;
+    final l$note = note;
+    final l$rating = rating;
+    final l$to_entity_id = to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$created_at,
+      l$from_entity_id,
+      l$from_entity_type,
+      l$id,
+      l$note,
+      l$rating,
+      l$to_entity_id,
+      l$to_entity_type,
+      l$customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$created_at = created_at;
+    final lOther$created_at = other.created_at;
+    if (l$created_at != lOther$created_at) {
+      return false;
+    }
+    final l$from_entity_id = from_entity_id;
+    final lOther$from_entity_id = other.from_entity_id;
+    if (l$from_entity_id != lOther$from_entity_id) {
+      return false;
+    }
+    final l$from_entity_type = from_entity_type;
+    final lOther$from_entity_type = other.from_entity_type;
+    if (l$from_entity_type != lOther$from_entity_type) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$note = note;
+    final lOther$note = other.note;
+    if (l$note != lOther$note) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$to_entity_id = to_entity_id;
+    final lOther$to_entity_id = other.to_entity_id;
+    if (l$to_entity_id != lOther$to_entity_id) {
+      return false;
+    }
+    final l$to_entity_type = to_entity_type;
+    final lOther$to_entity_type = other.to_entity_type;
+    if (l$to_entity_type != lOther$to_entity_type) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+    on Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer {
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer>
+      get copyWith =>
+          CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+    TRes> {
+  factory CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+        instance,
+    TRes Function(
+            Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer)
+        then,
+  ) = _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer;
+
+  factory CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer;
+
+  TRes call({
+    String? created_at,
+    int? from_entity_id,
+    String? from_entity_type,
+    int? id,
+    String? note,
+    int? rating,
+    int? to_entity_id,
+    String? to_entity_type,
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?
+        customer,
+    String? $__typename,
+  });
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+      TRes> get customer;
+}
+
+class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+            TRes> {
+  _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+      _instance;
+
+  final TRes Function(
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? created_at = _undefined,
+    Object? from_entity_id = _undefined,
+    Object? from_entity_type = _undefined,
+    Object? id = _undefined,
+    Object? note = _undefined,
+    Object? rating = _undefined,
+    Object? to_entity_id = _undefined,
+    Object? to_entity_type = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+        created_at: created_at == _undefined || created_at == null
+            ? _instance.created_at
+            : (created_at as String),
+        from_entity_id: from_entity_id == _undefined || from_entity_id == null
+            ? _instance.from_entity_id
+            : (from_entity_id as int),
+        from_entity_type:
+            from_entity_type == _undefined || from_entity_type == null
+                ? _instance.from_entity_type
+                : (from_entity_type as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        note: note == _undefined ? _instance.note : (note as String?),
+        rating: rating == _undefined || rating == null
+            ? _instance.rating
+            : (rating as int),
+        to_entity_id: to_entity_id == _undefined || to_entity_id == null
+            ? _instance.to_entity_id
+            : (to_entity_id as int),
+        to_entity_type: to_entity_type == _undefined || to_entity_type == null
+            ? _instance.to_entity_type
+            : (to_entity_type as String),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer
+                as Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+      TRes> get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+            .stub(_then(_instance))
+        : CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+            local$customer, (e) => call(customer: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+            TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? created_at,
+    int? from_entity_id,
+    String? from_entity_type,
+    int? id,
+    String? note,
+    int? rating,
+    int? to_entity_id,
+    String? to_entity_type,
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?
+        customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+          TRes>
+      get customer =>
+          CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+              .stub(_res);
+}
+
+class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer {
+  Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+      user:
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+    on Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer {
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer>
+      get copyWith =>
+          CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+    TRes> {
+  factory CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+        instance,
+    TRes Function(
+            Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer)
+        then,
+  ) = _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer;
+
+  factory CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer;
+
+  TRes call({
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user?
+        user,
+    String? $__typename,
+  });
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+            TRes> {
+  _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+      _instance;
+
+  final TRes Function(
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+            TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user?
+        user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+          TRes>
+      get user =>
+          CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+              .stub(_res);
+}
+
+class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user {
+  Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user({
+    this.image,
+    this.name,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+      image: (l$image as String?),
+      name: (l$name as String?),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? image;
+
+  final String? name;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+    on Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user {
+  CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user>
+      get copyWith =>
+          CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+    TRes> {
+  factory CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+    Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+        instance,
+    TRes Function(
+            Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user)
+        then,
+  ) = _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user;
+
+  factory CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user;
+
+  TRes call({
+    String? image,
+    String? name,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+            TRes> {
+  _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+      _instance;
+
+  final TRes Function(
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined ? _instance.name : (name as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+        TRes>
+    implements
+        CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+            TRes> {
+  _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? image,
+    String? name,
+    int? id,
     String? $__typename,
   }) =>
       _res;
@@ -9170,6 +10006,128 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'driver_review_by_customer'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'created_at'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'from_entity_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'from_entity_type'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'note'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'rating'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'to_entity_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'to_entity_type'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'customer'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'user'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'name'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: 'change_price_request'),
                 alias: null,
                 arguments: [],
@@ -10442,6 +11400,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
 
 class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order {
   Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
+    this.driver_review_by_customer,
     this.change_price_request,
     this.schedule_time,
     required this.customer,
@@ -10472,6 +11431,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order.fromJson(
       Map<String, dynamic> json) {
+    final l$driver_review_by_customer = json['driver_review_by_customer'];
     final l$change_price_request = json['change_price_request'];
     final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
@@ -10502,6 +11462,10 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+      driver_review_by_customer: l$driver_review_by_customer == null
+          ? null
+          : Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+              .fromJson((l$driver_review_by_customer as Map<String, dynamic>)),
       change_price_request: l$change_price_request == null
           ? null
           : mapFromJson(l$change_price_request),
@@ -10542,6 +11506,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
+      driver_review_by_customer;
 
   final dynamic? change_price_request;
 
@@ -10600,6 +11567,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$driver_review_by_customer = driver_review_by_customer;
+    _resultData['driver_review_by_customer'] =
+        l$driver_review_by_customer?.toJson();
     final l$change_price_request = change_price_request;
     _resultData['change_price_request'] = l$change_price_request == null
         ? null
@@ -10665,6 +11635,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   @override
   int get hashCode {
+    final l$driver_review_by_customer = driver_review_by_customer;
     final l$change_price_request = change_price_request;
     final l$schedule_time = schedule_time;
     final l$customer = customer;
@@ -10693,6 +11664,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$driver_review_by_customer,
       l$change_price_request,
       l$schedule_time,
       l$customer,
@@ -10730,6 +11702,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     if (!(other
             is Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driver_review_by_customer = driver_review_by_customer;
+    final lOther$driver_review_by_customer = other.driver_review_by_customer;
+    if (l$driver_review_by_customer != lOther$driver_review_by_customer) {
       return false;
     }
     final l$change_price_request = change_price_request;
@@ -10900,6 +11877,8 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
       _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order;
 
   TRes call({
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
+        driver_review_by_customer,
     dynamic? change_price_request,
     String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
@@ -10930,6 +11909,8 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
         delivery_driver,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+      TRes> get driver_review_by_customer;
   CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer<
       TRes> get customer;
   CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company<
@@ -10958,6 +11939,7 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   static const _undefined = {};
 
   TRes call({
+    Object? driver_review_by_customer = _undefined,
     Object? change_price_request = _undefined,
     Object? schedule_time = _undefined,
     Object? customer = _undefined,
@@ -10987,6 +11969,10 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   }) =>
       _then(
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+        driver_review_by_customer: driver_review_by_customer == _undefined
+            ? _instance.driver_review_by_customer
+            : (driver_review_by_customer
+                as Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?),
         change_price_request: change_price_request == _undefined
             ? _instance.change_price_request
             : (change_price_request as dynamic?),
@@ -11074,6 +12060,17 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+      TRes> get driver_review_by_customer {
+    final local$driver_review_by_customer = _instance.driver_review_by_customer;
+    return local$driver_review_by_customer == null
+        ? CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+            local$driver_review_by_customer,
+            (e) => call(driver_review_by_customer: e));
+  }
+
   CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer<
       TRes> get customer {
     final local$customer = _instance.customer;
@@ -11113,6 +12110,8 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
   TRes _res;
 
   call({
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
+        driver_review_by_customer,
     dynamic? change_price_request,
     String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
@@ -11144,6 +12143,11 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+          TRes>
+      get driver_review_by_customer =>
+          CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+              .stub(_res);
   CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer<
           TRes>
       get customer =>
@@ -11159,6 +12163,674 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
       get delivery_driver =>
           CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver
               .stub(_res);
+}
+
+class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer {
+  Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer({
+    required this.created_at,
+    required this.from_entity_id,
+    required this.from_entity_type,
+    required this.id,
+    this.note,
+    required this.rating,
+    required this.to_entity_id,
+    required this.to_entity_type,
+    this.customer,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$created_at = json['created_at'];
+    final l$from_entity_id = json['from_entity_id'];
+    final l$from_entity_type = json['from_entity_type'];
+    final l$id = json['id'];
+    final l$note = json['note'];
+    final l$rating = json['rating'];
+    final l$to_entity_id = json['to_entity_id'];
+    final l$to_entity_type = json['to_entity_type'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+      created_at: (l$created_at as String),
+      from_entity_id: (l$from_entity_id as int),
+      from_entity_type: (l$from_entity_type as String),
+      id: (l$id as int),
+      note: (l$note as String?),
+      rating: (l$rating as int),
+      to_entity_id: (l$to_entity_id as int),
+      to_entity_type: (l$to_entity_type as String),
+      customer: l$customer == null
+          ? null
+          : Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String created_at;
+
+  final int from_entity_id;
+
+  final String from_entity_type;
+
+  final int id;
+
+  final String? note;
+
+  final int rating;
+
+  final int to_entity_id;
+
+  final String to_entity_type;
+
+  final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?
+      customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$created_at = created_at;
+    _resultData['created_at'] = l$created_at;
+    final l$from_entity_id = from_entity_id;
+    _resultData['from_entity_id'] = l$from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    _resultData['from_entity_type'] = l$from_entity_type;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$note = note;
+    _resultData['note'] = l$note;
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$to_entity_id = to_entity_id;
+    _resultData['to_entity_id'] = l$to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    _resultData['to_entity_type'] = l$to_entity_type;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$created_at = created_at;
+    final l$from_entity_id = from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    final l$id = id;
+    final l$note = note;
+    final l$rating = rating;
+    final l$to_entity_id = to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$created_at,
+      l$from_entity_id,
+      l$from_entity_type,
+      l$id,
+      l$note,
+      l$rating,
+      l$to_entity_id,
+      l$to_entity_type,
+      l$customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$created_at = created_at;
+    final lOther$created_at = other.created_at;
+    if (l$created_at != lOther$created_at) {
+      return false;
+    }
+    final l$from_entity_id = from_entity_id;
+    final lOther$from_entity_id = other.from_entity_id;
+    if (l$from_entity_id != lOther$from_entity_id) {
+      return false;
+    }
+    final l$from_entity_type = from_entity_type;
+    final lOther$from_entity_type = other.from_entity_type;
+    if (l$from_entity_type != lOther$from_entity_type) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$note = note;
+    final lOther$note = other.note;
+    if (l$note != lOther$note) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$to_entity_id = to_entity_id;
+    final lOther$to_entity_id = other.to_entity_id;
+    if (l$to_entity_id != lOther$to_entity_id) {
+      return false;
+    }
+    final l$to_entity_type = to_entity_type;
+    final lOther$to_entity_type = other.to_entity_type;
+    if (l$to_entity_type != lOther$to_entity_type) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+    on Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer {
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+        instance,
+    TRes Function(
+            Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer;
+
+  factory CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer;
+
+  TRes call({
+    String? created_at,
+    int? from_entity_id,
+    String? from_entity_type,
+    int? id,
+    String? note,
+    int? rating,
+    int? to_entity_id,
+    String? to_entity_type,
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?
+        customer,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+      TRes> get customer;
+}
+
+class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? created_at = _undefined,
+    Object? from_entity_id = _undefined,
+    Object? from_entity_type = _undefined,
+    Object? id = _undefined,
+    Object? note = _undefined,
+    Object? rating = _undefined,
+    Object? to_entity_id = _undefined,
+    Object? to_entity_type = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+        created_at: created_at == _undefined || created_at == null
+            ? _instance.created_at
+            : (created_at as String),
+        from_entity_id: from_entity_id == _undefined || from_entity_id == null
+            ? _instance.from_entity_id
+            : (from_entity_id as int),
+        from_entity_type:
+            from_entity_type == _undefined || from_entity_type == null
+                ? _instance.from_entity_type
+                : (from_entity_type as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        note: note == _undefined ? _instance.note : (note as String?),
+        rating: rating == _undefined || rating == null
+            ? _instance.rating
+            : (rating as int),
+        to_entity_id: to_entity_id == _undefined || to_entity_id == null
+            ? _instance.to_entity_id
+            : (to_entity_id as int),
+        to_entity_type: to_entity_type == _undefined || to_entity_type == null
+            ? _instance.to_entity_type
+            : (to_entity_type as String),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer
+                as Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+      TRes> get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+            local$customer, (e) => call(customer: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? created_at,
+    int? from_entity_id,
+    String? from_entity_type,
+    int? id,
+    String? note,
+    int? rating,
+    int? to_entity_id,
+    String? to_entity_type,
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer?
+        customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+          TRes>
+      get customer =>
+          CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+              .stub(_res);
+}
+
+class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer {
+  Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+      user:
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+    on Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer {
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+        instance,
+    TRes Function(
+            Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer;
+
+  factory CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer;
+
+  TRes call({
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user?
+        user,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user?
+        user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+          TRes>
+      get user =>
+          CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+              .stub(_res);
+}
+
+class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user {
+  Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user({
+    this.image,
+    this.name,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+      image: (l$image as String?),
+      name: (l$name as String?),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? image;
+
+  final String? name;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+    on Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user {
+  CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+    Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+        instance,
+    TRes Function(
+            Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user;
+
+  factory CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user;
+
+  TRes call({
+    String? image,
+    String? name,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined ? _instance.name : (name as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer$customer$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? image,
+    String? name,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer {

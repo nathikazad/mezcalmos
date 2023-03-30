@@ -26,6 +26,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustRequestCourierViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+  AuthController _authController = Get.find<AuthController>();
 
   PageController pageController = PageController(initialPage: 0);
 
@@ -62,12 +63,14 @@ class CustRequestCourierViewController {
     unawaited(
         get_delivery_cost(deliveryDetailsId: company.value!.deliveryDetailsId!)
             .then((DeliveryCost? value) => deliveryCost = value));
-    toLoc.value = Get.find<CustomerAuthController>()
-        .customer
-        ?.savedLocations
-        .firstWhereOrNull(
-            (SavedLocation element) => element.defaultLocation == true)
-        ?.location;
+    if (_authController.isUserSignedIn) {
+      toLoc.value = Get.find<CustomerAuthController>()
+          .customer
+          ?.savedLocations
+          .firstWhereOrNull(
+              (SavedLocation element) => element.defaultLocation == true)
+          ?.location;
+    }
 
     addNewEmptyItem();
   }
@@ -119,6 +122,7 @@ class CustRequestCourierViewController {
       // call cloud func
       await _makeOrder();
     }
+
     return null;
   }
 
@@ -152,7 +156,7 @@ class CustRequestCourierViewController {
         tripPolyline: routeInfo?.polyline,
       );
       if (res.success == true) {
-        MezRouter.popEverythingTillBeforeHome().then((_) =>
+        await MezRouter.popEverythingTillBeforeHome().then((_) =>
             CustCourierOrderView.navigate(orderId: res.orderId!.toInt()));
       } else {
         showErrorSnackBar(errorText: res.error.toString());

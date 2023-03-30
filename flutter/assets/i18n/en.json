@@ -158,7 +158,7 @@
           "components": {
             "DeliveryTimePicker": {
               "dvTime": "Delivery time",
-              "restClosed": "Restaurant is closed now",
+              "restClosed": "Service is closed now, but you can schedule your order for later.",
               "pickTime": "Pick your time",
               "now": "Now",
               "timeError": "Picked delivery time is passed, please pick a valid time"
@@ -726,6 +726,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
+        "writeReview" :"Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",
         "no": "No",
@@ -1084,6 +1085,9 @@
     "widgets": {
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
+      },
+      "ReviewCard" : {
+        "review" :"Review"
       },
       "MezDateTimePicker": {
         "cancel": "Cancel",
@@ -2471,6 +2475,7 @@
     "noRoute": "No route found. please enter a valid destination",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "minutes": "minutes"
+    "minutes": "minutes",
+    "slowInternet": "Slow internet"
   }
 }

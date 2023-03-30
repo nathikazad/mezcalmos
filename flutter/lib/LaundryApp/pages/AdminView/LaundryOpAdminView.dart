@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/LaundryOpNormalDeliveryTime.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/MinmumCostCard.dart';
@@ -12,6 +10,7 @@ import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -57,9 +56,8 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LaundryAppAppBar(
-        leftBtnType:
-            (asTab) ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(
+        (asTab) ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
         onClick: (asTab) ? null : MezRouter.back,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),

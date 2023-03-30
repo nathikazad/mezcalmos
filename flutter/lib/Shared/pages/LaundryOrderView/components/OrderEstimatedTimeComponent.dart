@@ -325,7 +325,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
     } else {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["minTimes"]}',
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     }
   }
 }

@@ -212,7 +212,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         Clipboard.setData(ClipboardData(
                 text: viewController.order.value?.clipBoardText(userLanguage)))
             .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
-                position: SnackPosition.TOP));
+                position: Alignment.topCenter));
       },
       tooltip: 'Copy',
       child: new Icon(Icons.copy),
