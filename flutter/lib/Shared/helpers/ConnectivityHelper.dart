@@ -25,13 +25,14 @@ class ConnectivityHelper {
 
   static Stream<InternetStatus> get internetStatusStream =>
       _internetStatusStreamController.stream;
-
+  Timer? _timer;
   Future<void> startCheckingInternet() async {
     // _internetStatusStreamController =
     // StreamController<InternetStatus>.broadcast();
     mezDbgPrint("NETWORK CHECKER");
     _internetStatusStreamController.add(await checkForInternet());
-    Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
       try {
         _internetStatusStreamController.add(await checkForInternet());
       } catch (e) {

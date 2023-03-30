@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -31,6 +32,8 @@ class CustRestaurantOrderViewController {
   Future<void> init({required int orderId}) async {
     mezDbgPrint(
         '======================================================================> $orderId');
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Restaurant, orderId: orderId);
     try {
       order.value =
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
