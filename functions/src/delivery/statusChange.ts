@@ -94,10 +94,11 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
         changeLaundryOrderStatus(customer, deliveryOrder)
         break;
       case OrderType.Courier:
-        notifyCourierStatusChange(deliveryOrder, customer);
+        notifyCourierStatusChange(deliveryOrder, customer, 5); //@sanchit needs to change to courier order id
         if(deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer) {
           cancelCourierFromDelivery(deliveryOrder.deliveryId)
         }
+        
       default:
         break;
     }
@@ -143,7 +144,7 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStat
   }
 }
 
-function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
+function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo, courierOrderId: number) {
 
   let notification: Notification = {
     foreground: <CourierOrderStatusChangeNotification>{
@@ -156,7 +157,7 @@ function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: Custo
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: deliveryOrderStatusChangeMessages[deliveryOrder.status],
-    linkUrl: '/'
+    linkUrl: `/courierOrders/${courierOrderId}`
   };
 
   pushNotification(
@@ -165,7 +166,8 @@ function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: Custo
     customer.notificationInfo,
     ParticipantType.Customer,
     customer.language
-  );
+  ); 
+  notification.foreground.linkUrl = `/orderDetails/${deliveryOrder.deliveryId}`
   if(deliveryOrder.status == DeliveryOrderStatus.CancelledByAdmin && deliveryOrder.deliveryDriver) {
     pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!,
       notification,

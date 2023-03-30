@@ -9,7 +9,7 @@ class DeliveryAdminRoutes {
   static const String kDeliveryOpHomeScreenRoute = '/home';
 
   static const String kNotAuthorizedOperatorRoute = "/unauthorized";
-  static const String kOrderViewRoute = "/orders/:orderId";
+  static const String kOrderViewRoute = "/deliveryOrders/:orderId";
 
   static String getDvCompanyOrderRoute(int orderId) {
     return kOrderViewRoute.replaceFirst(":orderId", "$orderId");
