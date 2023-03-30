@@ -425,6 +425,8 @@ if __name__ == "__main__":
   uniqueTypes["AppType"] = True
   uniqueTypes["Language"] = True
   uniqueTypes["ServerResponseStatus"] = True
+  uniqueTypes["ServiceType"] = True
+  uniqueTypes["BusinessService"] = True
 
   for key in uniqueTypes:
     # print(key)

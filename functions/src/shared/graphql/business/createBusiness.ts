@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
-import { BusinessDetails } from "../../../business/createNewBusiness";
+import { BusinessDetails, BusinessError } from "../../../business/createNewBusiness";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { Business } from "../../models/Services/Business/Business";
 import { ServiceProviderType } from "../../models/Services/Service";
 
@@ -54,11 +53,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
     console.log("response: ", response);
     
     if(response.insert_business_business_one == null) {
-        
-        throw new HttpsError(
-            "internal",
-            "business creation error"
-        );
+        throw new MezError(BusinessError.BusinessCreationError);
     }
     let business: Business = {
         id: response.insert_business_business_one.id,

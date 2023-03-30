@@ -25,11 +25,7 @@ export interface BusinessResponse {
 export enum BusinessError {
   UnhandledError = "unhandledError",
   UserNotFound = "userNotFound",
-  
-
-  DriverAlreadyExists = "driverAlreadyExists",
-  DriverCreationError = "driverCreationError",
-  InvalidServiceProviderType = "invalidServiceProviderType"
+  BusinessCreationError = "businessCreationError"
 }
 
 export async function createNewBusiness(userId: number, businessDetails: BusinessDetails): Promise<BusinessResponse> {
@@ -42,6 +38,7 @@ export async function createNewBusiness(userId: number, businessDetails: Busines
     let business: Business = await createBusiness(businessDetails, userId);
   
     notifyAdmins(business, mezAdmins);
+    
     return {
       success: true
     }

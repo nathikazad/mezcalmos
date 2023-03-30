@@ -1,5 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { MezError } from "../../../models/Generic/Generic";
 import { BusinessOrder } from "../../../models/Services/Business/BusinessOrder";
 
 export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
@@ -41,11 +41,8 @@ export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
         }]
     });
     if(response.update_business_order_request_by_pk == null) {
-        throw new HttpsError(
-          "internal",
-          "error in updating status"
-        );
-      }
+        throw new MezError("updateStatusError");
+    }
 }
 
 export async function updateBusinessOrderRequest(order: BusinessOrder) {
@@ -64,9 +61,6 @@ export async function updateBusinessOrderRequest(order: BusinessOrder) {
         }],
     });
     if(response.update_business_order_request_by_pk == null) {
-        throw new HttpsError(
-          "internal",
-          "error in updating status"
-        );
-      }
+        throw new MezError("updateStatusError");
+    }
 }

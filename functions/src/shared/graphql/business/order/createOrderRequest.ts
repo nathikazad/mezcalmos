@@ -1,7 +1,6 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { OrderRequestDetails } from "../../../../business/orderRequest";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType } from "../../../models/Generic/Generic";
+import { AppType, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { Business } from "../../../models/Services/Business/Business";
@@ -69,10 +68,7 @@ export async function createOrderRequest(
     })
 
     if(response.insert_business_order_request_one == null) {
-        throw new HttpsError(
-            "internal",
-            "order creation error"
-        );
+        throw new MezError("orderCreationError");
     }
     let businessOrder: BusinessOrder = {
         orderId: response.insert_business_order_request_one.id,

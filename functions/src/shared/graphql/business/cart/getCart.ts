@@ -1,5 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { MezError } from "../../../models/Generic/Generic";
 import { ServiceType } from "../../../models/Services/Business/Business";
 import { BusinessCart, BusinessCartItem } from "../../../models/Services/Business/Cart";
 
@@ -23,10 +23,7 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
     });
 
     if(response.business_cart_by_pk == null) {
-        throw new HttpsError(
-          "internal",
-          "Cart for that customer does not exist"
-        );
+        throw new MezError("cartNotFound");
     }
     
     let items: BusinessCartItem[] = response.business_cart_by_pk.items.map((i) => {

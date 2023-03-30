@@ -1,10 +1,9 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getBusinessOperators } from "../shared/graphql/business/operator/getBusinessOperator";
 import { getBusinessOrderRequest } from "../shared/graphql/business/order/getOrderRequest";
 import { updateBusinessOrderRequest } from "../shared/graphql/business/order/updateOrderRequest";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { Language } from "../shared/models/Generic/Generic";
+import { Language, MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
@@ -13,47 +12,76 @@ import { Operator } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 
-interface HandleRequestDetails {
+interface CustomerHandleRequestDetails {
     orderRequestId: number,
     requestConfirmed: boolean,
 }
-
-export async function handleOrderRequestFromCustomer(userId: number, handleRequestDetails: HandleRequestDetails) {
-
-    let order: BusinessOrder = await getBusinessOrderRequest(handleRequestDetails.orderRequestId);
-
-    let promiseResponse = await Promise.all([
-        getMezAdmins(), 
-        getBusinessOperators(order.businessId)
-    ]);
-
-    let mezAdmins: MezAdmin[] = promiseResponse[0];
-    let businessOperators: Operator[] = promiseResponse[1];
-
-    errorChecks(order, userId, handleRequestDetails); 
-
-    if(handleRequestDetails.requestConfirmed) {
-        order.status = BusinessOrderRequestStatus.ConfirmedByCustomer;
-    } else {
-        order.status = BusinessOrderRequestStatus.CancelledByCustomer;
-    }
-    updateBusinessOrderRequest(order);
-
-    notify(mezAdmins, businessOperators, order);
+export interface CustomerHandleRequestResponse {
+    success: boolean,
+    error?: CustomerHandleRequestError
+    unhandledError?: string
+}
+enum CustomerHandleRequestError {
+    UnhandledError = "unhandledError",
+    OrderRequestNotFound = "orderRequestNotFound",
+    BusinessNotFound = "businessNotFound",
+    IncorrectOrderRequestId = "incorrectOrderRequestId",
+    RequestAlreadyConfirmedOrCancelled = "requestAlreadyConfirmedOrCancelled",
+    UpdateStatusError = "updateStatusError"
 }
 
-function errorChecks(order: BusinessOrder, userId: number, handleRequestDetails: HandleRequestDetails) {
+export async function handleOrderRequestFromCustomer(userId: number, handleRequestDetails: CustomerHandleRequestDetails): Promise<CustomerHandleRequestResponse> {
+    try {
+        let order: BusinessOrder = await getBusinessOrderRequest(handleRequestDetails.orderRequestId);
+
+        let promiseResponse = await Promise.all([
+            getMezAdmins(), 
+            getBusinessOperators(order.businessId)
+        ]);
+
+        let mezAdmins: MezAdmin[] = promiseResponse[0];
+        let businessOperators: Operator[] = promiseResponse[1];
+
+        errorChecks(order, userId, handleRequestDetails); 
+
+        if(handleRequestDetails.requestConfirmed) {
+            order.status = BusinessOrderRequestStatus.ConfirmedByCustomer;
+        } else {
+            order.status = BusinessOrderRequestStatus.CancelledByCustomer;
+        }
+        updateBusinessOrderRequest(order);
+
+        notify(mezAdmins, businessOperators, order);
+
+        return {
+            success: true
+        }
+    } catch (e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(CustomerHandleRequestError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: CustomerHandleRequestError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
+    }
+}
+
+function errorChecks(order: BusinessOrder, userId: number, handleRequestDetails: CustomerHandleRequestDetails) {
     if (order.customerId != userId) {
-        throw new HttpsError(
-            "internal",
-            `Order does not belong to customer`
-        );
+        throw new MezError(CustomerHandleRequestError.IncorrectOrderRequestId);
     }
     if (handleRequestDetails.requestConfirmed && order.status != BusinessOrderRequestStatus.ApprovedByBusiness) {
-        throw new HttpsError(
-            "internal",
-            "request already confirmed or cancelled"
-        );
+        throw new MezError(CustomerHandleRequestError.RequestAlreadyConfirmedOrCancelled);
     }
 }
 

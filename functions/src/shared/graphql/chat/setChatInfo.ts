@@ -415,16 +415,13 @@ export async function setBusinessOrderRequestChatInfo(
   business: Business,
   customer: CustomerInfo
 ) {
-  if(order.chatId == undefined) {
-    throw new MezError("noChatId");
-  }
   
   let chain = getHasura();
   
   chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
-        id: order.chatId,
+        id: order.chatId!,
       },
       _set: {
         chat_info: JSON.stringify({

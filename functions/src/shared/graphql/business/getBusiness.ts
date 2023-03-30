@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Language } from "../../models/Generic/Generic";
+import { Language, MezError } from "../../models/Generic/Generic";
 import { OpenStatus, Operator, ServiceProviderType } from "../../models/Services/Service";
 import { AuthorizationStatus } from "../../models/Generic/Generic"
 import { Business, BusinessProfile } from "../../models/Services/Business/Business";
@@ -50,10 +49,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
         
     });
     if(response.business_business_by_pk == null || response.business_business_by_pk.details == null) {
-        throw new HttpsError(
-            "internal",
-            "No business with that id found"
-        );
+        throw new MezError("businessNotFound");
     }
     let businessOperators: Operator[] = response.business_business_by_pk.operators.map((o) => {
         return {

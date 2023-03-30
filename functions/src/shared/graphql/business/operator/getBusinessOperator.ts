@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AuthorizationStatus, AppType, Language } from "../../../models/Generic/Generic";
+import { AuthorizationStatus, AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { Operator } from "../../../models/Services/Service";
 
 export async function getBusinessOperatorByUserId(businessOperatorUserId: number): Promise<Operator> {
@@ -33,10 +32,7 @@ export async function getBusinessOperatorByUserId(businessOperatorUserId: number
     }]
   });
   if(response.business_operator == null) {
-    throw new HttpsError(
-      "internal",
-      "No business operator with that user id found"
-    );
+    throw new MezError("businessOperatorNotFound");
   }
   return {
     id: response.business_operator[0].id,
@@ -91,10 +87,7 @@ export async function getBusinessOperators(businessId: number): Promise<Operator
     }]
   });
   if(response.business_operator.length == 0) {
-    throw new HttpsError(
-      "internal",
-      "No business operator with that business id found"
-    );
+    throw new MezError("businessNotFound");
   }
   return response.business_operator.map((o) => {
     return {

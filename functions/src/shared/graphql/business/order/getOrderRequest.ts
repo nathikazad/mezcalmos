@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { CustomerAppType } from "../../../models/Generic/Generic";
+import { CustomerAppType, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { ServiceType } from "../../../models/Services/Business/Business";
 import { BusinessOrder, BusinessOrderRequestItem, BusinessOrderRequestStatus } from "../../../models/Services/Business/BusinessOrder";
@@ -35,10 +34,7 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
         }]
     })
     if(response.business_order_request_by_pk == null) {
-        throw new HttpsError(
-            "internal",
-            "No order request with that id found"
-        );
+        throw new MezError("orderRequestNotFound");
     }
   
     let items: BusinessOrderRequestItem[] = response.business_order_request_by_pk.items.map((i) => {

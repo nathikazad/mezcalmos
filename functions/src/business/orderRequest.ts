@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getBusiness } from "../shared/graphql/business/getBusiness";
 import { getBusinessCart } from "../shared/graphql/business/cart/getCart";
 import { createOrderRequest } from "../shared/graphql/business/order/createOrderRequest";
@@ -6,7 +5,7 @@ import { setBusinessOrderRequestChatInfo } from "../shared/graphql/chat/setChatI
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { CustomerAppType, Language } from "../shared/models/Generic/Generic";
+import { CustomerAppType, Language, MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -23,10 +22,24 @@ export interface OrderRequestDetails {
     notes?: string,
 } 
 export interface OrderReqResponse {
-    orderId: number
+  success: boolean,
+  error?: OrderReqError
+  unhandledError?: string
+  orderId?: number
+}
+enum OrderReqError {
+  UnhandledError = "unhandledError",
+  BusinessNotFound = "businessNotFound",
+  CustomerNotFound = "customerNotFound",
+  CartNotFound = "cartNotFound",
+  BusinessNotApproved  = "businessNotApproved",
+  BusinessClosed = "businessClosed",
+  EmptyCart = "emptyCart",
+  OrderCreationError = "orderCreationError",
 }
 
 export async function requestOrder(customerId: number, orderRequestDetails: OrderRequestDetails): Promise<OrderReqResponse> {
+  try {
     let response = await Promise.all([
         getBusiness(orderRequestDetails.businessId), 
         getCustomer(customerId),
@@ -49,30 +62,39 @@ export async function requestOrder(customerId: number, orderRequestDetails: Orde
     clearBusinessCart(customerId);
     
     return {
-        orderId: order.orderId
+      success: true,
+      orderId: order.orderId
     }
+  } catch (e: any) {
+    if (e instanceof MezError) {
+        if (Object.values(OrderReqError).includes(e.message as any)) {
+            return {
+                success: false,
+                error: e.message as any
+            }
+        } else {
+            return {
+                success: false,
+                error: OrderReqError.UnhandledError,
+                unhandledError: e.message as any
+            }
+        }
+    } else {
+        throw e
+    }
+  }
 }
 
 function errorChecks(business: Business, cart: BusinessCart) {
-
-    if(business.approved == false) {
-      throw new HttpsError(
-        "internal",
-        "business is not approved and taking order requests right now"
-      );
-    }
-    if(business.openStatus != "open") {
-      throw new HttpsError(
-        "internal",
-        "business is closed"
-      );
-    }
-    if((cart.items.length ?? 0) == 0) {
-        throw new HttpsError(
-          "internal",
-          "Empty cart"
-        );
-      }
+  if(business.approved == false) {
+    throw new MezError(OrderReqError.BusinessNotApproved);
+  }
+  if(business.openStatus != "open") {
+    throw new MezError(OrderReqError.BusinessClosed);
+  }
+  if((cart.items.length ?? 0) == 0) {
+    throw new MezError(OrderReqError.EmptyCart);
+  }
 }
 
 async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAdmin[]) {
