@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/AllServiceListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -43,12 +44,12 @@ class _AllServiceViewState extends State<AllServiceView> {
           actionLength: 2,
         ),
         actionIcons: <Widget>[
-          _customIconButton(
+          AppBarActionButton(
             icon: Icons.notifications,
             onpress: () {},
           ),
           SizedBox(width: 5),
-          _customIconButton(
+          AppBarActionButton(
             icon: Icons.access_time_filled,
             onpress: () {},
           ),

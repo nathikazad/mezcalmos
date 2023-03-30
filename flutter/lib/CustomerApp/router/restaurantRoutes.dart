@@ -1,13 +1,13 @@
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustItemView/CustItemView.dart'
     deferred as restoItemView;
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart'
     deferred as restoList;
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/CustomerRestaurantView.dart'
     deferred as restoView;
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart'
     deferred as restaurantOrder;
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustCartView/CustCartView.dart'
     deferred as viewCart;
 import 'package:qlevar_router/qlevar_router.dart';
 

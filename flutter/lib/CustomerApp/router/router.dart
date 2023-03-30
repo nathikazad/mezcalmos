@@ -9,9 +9,11 @@ import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'rentalRoutes.dart';
 
 class XRouter {
   static String deliveryServicesRoute = "/deliveryServices";
+
   static List<QRoute> mainRoutes = [
         QRoute(
             name: SharedRoutes.kHomeRoute,
@@ -28,6 +30,7 @@ class XRouter {
               DefferedLoader(deliveryServices.loadLibrary)
             ]),
       ] +
+      RentalRoutes().routes +
       LaundryRoutes().routes +
       RestaurantRoutes().routes +
       CustomerRoutes().routes +

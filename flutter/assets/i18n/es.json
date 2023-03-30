@@ -473,6 +473,21 @@
         "services": "Servicios",
         "deliveries": "Entregas",
         "rentals": "Alquileres",
+        "rental": {
+          "title": "Alquilere",
+          "surf": {
+            "title": "Surf",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "motorcycle": {
+            "title": "Motorcycle",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          },
+          "homes": {
+            "title": "Homes",
+            "description": "Obtain delivery of anything you desire to your location."
+          }
+        },
         "classes": "Clases",
         "wellness": "Bienestar",
         "events": "Eventos",

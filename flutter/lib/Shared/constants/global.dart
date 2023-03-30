@@ -140,6 +140,9 @@ const String aDiscoBall = "assets/images/customer/discoBall.png";
 const String aRentals = "assets/images/customer/rentals.png";
 const String aVolunteering = "assets/images/customer/volunteering.png";
 const String aYoga = "assets/images/customer/yoga.png";
+const String aHomes = "assets/images/customer/rental/homes.png";
+const String aMotocycle = "assets/images/customer/rental/motorcycle.png";
+const String aSurf = "assets/images/customer/rental/surf.png";
 
 const String _imgs_path = "assets/images/customer/taxi/";
 const String header_asset = "${_imgs_path}header.png";

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustCardsListView/CustCardsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustSavedLocations/CustSavedLocationsView.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartNative.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
@@ -12,10 +13,6 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 
 class AllServiceListView extends StatefulWidget {
   const AllServiceListView({super.key});
-
-  static Future<void> navigate() {
-    return MezRouter.toPath(XRouter.deliveryServicesRoute);
-  }
 
   @override
   State<AllServiceListView> createState() => _AllServiceListViewState();
@@ -35,6 +32,16 @@ class _AllServiceListViewState extends State<AllServiceListView> {
   void dispose() {
     super.dispose();
     cServiceController.dispose();
+  }
+
+  void navigateToServices(int idx) {
+    if (idx == 0) {
+      DeliveryServiceView.navigate();
+    } else if (idx == 1) {
+      RentalView.navigate();
+    } else {
+      RentalView.navigate();
+    }
   }
 
   @override
@@ -57,7 +64,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
               onClick: () {
-                DeliveryServiceView.navigate();
+                navigateToServices(index);
               },
               content: Column(
                 children: [

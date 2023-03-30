@@ -471,6 +471,21 @@
         "services": "Services",
         "deliveries": "Deliveries",
         "rentals": "Rentals",
+        "rental": {
+          "title": "Rental",
+          "surf": {
+            "title": "Surf",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "motorcycle": {
+            "title": "Motorcycle",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          },
+          "homes": {
+            "title": "Homes",
+            "description": "Obtain delivery of anything you desire to your location."
+          }
+        },
         "classes": "Classes",
         "wellness": "Wellness",
         "events": "Events",

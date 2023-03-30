@@ -1,10 +1,10 @@
 import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart'
     deferred as customerReviewListView;
-import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustCardsListView/CustCardsListView.dart'
     deferred as savedCard;
-import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustOrderListView/CustomerOrdersListView.dart'
     deferred as customerOrders;
-import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustSavedLocations/CustSavedLocationsView.dart'
     deferred as savedLocation;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
