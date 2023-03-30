@@ -1,0 +1,43 @@
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+
+class AllServiceListViewController {
+  late RxList<Map<String, String>> _deliveryServiceListData;
+  RxList<Map<String, String>> get deliveryServiceListData =>
+      _deliveryServiceListData;
+
+  void init() {
+    _deliveryServiceListData = RxList<Map<String, String>>([
+      {
+        "icon": aDelivery,
+        "title": "deliveries",
+      },
+      {
+        "icon": aRentals,
+        "title": "rentals",
+      },
+      {
+        "icon": aChakras,
+        "title": "classes",
+      },
+      {
+        "icon": aYoga,
+        "title": "wellness",
+      },
+      {
+        "icon": aDiscoBall,
+        "title": "events",
+      },
+      {
+        "icon": aVolunteering,
+        "title": "volunteer",
+      },
+      {
+        "icon": aAdventure,
+        "title": "adventure",
+      },
+    ]);
+  }
+
+  void dispose() {}
+}

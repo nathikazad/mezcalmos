@@ -90,7 +90,7 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
           });
         });
       }
-      PageStorage.of(context)?.writeState(context, _isExpanded);
+      PageStorage.of(context).writeState(context, _isExpanded);
     });
     widget.onExpansionChanged?.call(_isExpanded);
   }

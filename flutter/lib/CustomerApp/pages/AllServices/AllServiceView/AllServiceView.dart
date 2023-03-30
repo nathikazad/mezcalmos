@@ -7,34 +7,26 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/CustomerApp/router/router.dart';
-import 'package:mezcalmos/CustomerApp/pages/Delivery/DeliveryServiceListView/DeliveryServiceListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/AllServiceListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
 
-class DeliveryServiceView extends StatefulWidget {
-  const DeliveryServiceView({super.key});
+class AllServiceView extends StatefulWidget {
+  const AllServiceView({super.key});
 
   @override
-  State<DeliveryServiceView> createState() => _CustHomePageWrapperState();
-
-  static Future<void> navigate() {
-    return MezRouter.toPath(XRouter.deliveryServicesRoute);
-  }
+  State<AllServiceView> createState() => _AllServiceViewState();
 }
 
-class _CustHomePageWrapperState extends State<DeliveryServiceView> {
+class _AllServiceViewState extends State<AllServiceView> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -84,7 +76,7 @@ class _CustHomePageWrapperState extends State<DeliveryServiceView> {
                     ),
                   ),
                 )),
-            DeliveryServiceListView(),
+            AllServiceListView(),
           ],
         ),
       ),

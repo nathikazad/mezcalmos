@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/Delivery/DeliveryServiceListView/controllers/DeliveryServiceListViewController.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/DeliveryServiceView.dart';
 
-class DeliveryServiceListView extends StatefulWidget {
-  const DeliveryServiceListView({super.key});
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustHomeWrapper'];
+
+class AllServiceListView extends StatefulWidget {
+  const AllServiceListView({super.key});
 
   static Future<void> navigate() {
     return MezRouter.toPath(XRouter.deliveryServicesRoute);
   }
 
   @override
-  State<DeliveryServiceListView> createState() => _CustServiceListViewState();
+  State<AllServiceListView> createState() => _AllServiceListViewState();
 }
 
-class _CustServiceListViewState extends State<DeliveryServiceListView> {
-  DeliveryServiceListViewController cServiceController =
-      DeliveryServiceListViewController();
+class _AllServiceListViewState extends State<AllServiceListView> {
+  AllServiceListViewController cServiceController =
+      AllServiceListViewController();
 
   @override
   void initState() {
@@ -33,7 +39,7 @@ class _CustServiceListViewState extends State<DeliveryServiceListView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> serviceListData =
+    final RxList<Map<String, String>> serviceListData =
         cServiceController.deliveryServiceListData;
     final TextTheme txt = Theme.of(context).textTheme;
 
@@ -50,7 +56,9 @@ class _CustServiceListViewState extends State<DeliveryServiceListView> {
           itemCount: serviceListData.length,
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
-              onClick: () {},
+              onClick: () {
+                DeliveryServiceView.navigate();
+              },
               content: Column(
                 children: [
                   Image.asset(
@@ -60,9 +68,11 @@ class _CustServiceListViewState extends State<DeliveryServiceListView> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      serviceListData[index]["title"].toString(),
-                      style: txt.headlineSmall,
+                    child: Obx(
+                      () => Text(
+                        _i18n()[serviceListData[index]["title"]].toString(),
+                        style: txt.headlineSmall,
+                      ),
                     ),
                   ),
                 ],

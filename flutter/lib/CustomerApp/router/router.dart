@@ -1,6 +1,6 @@
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart'
     deferred as customerWrapper;
-import 'package:mezcalmos/CustomerApp/pages/Delivery/DeliveryServiceView/DeliveryServiceView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/DeliveryServiceView.dart'
     deferred as deliveryServices;
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';

@@ -1,147 +1,84 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
-import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/deepLinkHandler.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
-import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
-    as MezNotification;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/CustomerApp/router/router.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
 
-class CustomerWrapper extends StatefulWidget {
+class DeliveryServiceView extends StatefulWidget {
+  const DeliveryServiceView({super.key});
+
   @override
-  _CustomerWrapperState createState() => _CustomerWrapperState();
+  State<DeliveryServiceView> createState() => _DeliveryServiceViewState();
+
+  static Future<void> navigate() {
+    return MezRouter.toPath(XRouter.deliveryServicesRoute);
+  }
 }
 
-class _CustomerWrapperState extends State<CustomerWrapper> {
+class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   AuthController authController = Get.find<AuthController>();
-  CustomerAuthController? customerAuthController;
 
   CustomerOrderController? _orderController;
-
-  AppLifeCycleController appLifeCycleController =
-      Get.find<AppLifeCycleController>();
-
-  DateTime? appClosedTime;
-
-  StreamSubscription<MezNotification.Notification>?
-      _notificationsStreamListener;
-
-  RxInt numberOfCurrentOrders = RxInt(0);
-
-  StreamSubscription<dynamic>? _orderCountListener;
-
-  StreamSubscription<dynamic>? _authStateChnagesListener;
 
   @override
   void initState() {
     super.initState();
-
     if (authController.fireAuthUser != null) {
       _orderController = Get.find<CustomerOrderController>();
-      customerAuthController = Get.find<CustomerAuthController>();
-
-      _doIfFireAuthUserIsNotNull();
     }
-    startAuthListener();
-    DeepLinkHandler.startDynamicLinkCheckRoutine(
-        CustomerDeepLinkHandler.handleDeepLink);
   }
 
   @override
   void dispose() {
-    _orderCountListener?.cancel();
-    _orderCountListener = null;
-    _authStateChnagesListener?.cancel();
-    _authStateChnagesListener = null;
     super.dispose();
-  }
-
-  void appReturnFromBackground() {
-    final DateTime? lastTimeAppReturnedFromBackground =
-        Get.find<AppLifeCycleController>().lastTimeAppReturnedFromBackground;
-    if (lastTimeAppReturnedFromBackground != null &&
-        DateTime.now().difference(lastTimeAppReturnedFromBackground) >
-            Duration(seconds: 1)) if (appClosedTime != null &&
-        DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
-        !MezRouter.isCurrentRoute(SharedRoutes.kLocationPermissionPage)) {
-      _navigateToOrdersIfNecessary();
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: AllServiceView(),
+    return Scaffold(
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
+      appBar: CustomerAppBar(
+        leftBtnType: AppBarLeftButtonType.Back,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            const SizedBox(height: 10),
+            mezWelcomeContainer(
+              Theme.of(context).textTheme.displayMedium!,
+            ),
+            mezDescription(txt.titleMedium!),
+            const SizedBox(height: 10),
+            mezServiceTitle(txt.displayMedium!),
+            mezListOfServices(),
+          ],
+        ),
+      ),
     );
-  }
-
-  void startAuthListener() {
-    _authStateChnagesListener?.cancel();
-    _authStateChnagesListener = null;
-    _authStateChnagesListener =
-        authController.authStateStream.listen((User? fireUser) {
-      if (fireUser != null) {
-        _doIfFireAuthUserIsNotNull();
-      } else {
-        _orderCountListener?.cancel();
-        _orderCountListener = null;
-        _notificationsStreamListener?.cancel();
-        _notificationsStreamListener = null;
-        appLifeCycleController.cleanAllCallbacks();
-      }
-    });
-  }
-
-  Future<void> _doIfFireAuthUserIsNotNull() async {
-    final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = initializeShowNotificationsListener();
-
-    Get.find<ForegroundNotificationsController>()
-        .startListeningForNotificationsFromFirebase(
-            customerNotificationsNode(userId!), customerNotificationHandler);
-    if (MezRouter.isCurrentRoute(SharedRoutes.kHomeRoute)) {
-      await Future.microtask(() async {
-        await customerAuthController?.awaitInitialization();
-        // ignore: unawaited_futures
-        _navigateToOrdersIfNecessary();
-      });
-    }
-    appLifeCycleController.attachCallback(
-        AppLifecycleState.resumed, appReturnFromBackground);
-    appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
-      appClosedTime = DateTime.now();
-    });
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
