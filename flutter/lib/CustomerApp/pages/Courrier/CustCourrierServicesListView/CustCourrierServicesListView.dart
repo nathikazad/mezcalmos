@@ -55,8 +55,8 @@ class _CustCourierServicesListViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
+      appBar: MezcalmosAppBar(
+          title: 'Courier', AppBarLeftButtonType.Back, onClick: MezRouter.back),
       body: Obx(
         () {
           if (companies.value != null) {
@@ -134,7 +134,7 @@ class _CustCourierServicesListViewState
               style: context.txt.bodyLarge,
             ),
             SizedBox(
-              height: 5,
+              height: 7.5,
             ),
             _detailsRow(company, context)
           ],
@@ -153,7 +153,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
             Icon(
               Icons.delivery_dining,
               color: Colors.black,
-              size: 22,
+              size: 25,
             ),
             SizedBox(
               width: 5,
@@ -162,7 +162,9 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               shippingCost: 50,
               showPerKm: true,
               alignment: MainAxisAlignment.start,
-              textStyle: context.txt.bodyMedium,
+              textStyle: context.txt.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ],
         ),
@@ -177,7 +179,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               Padding(
                 padding: EdgeInsets.only(left: 2.w),
                 child: Icon(
-                  Icons.payments_outlined,
+                  Icons.payments,
                   color: Colors.black,
                   size: 22,
                 ),
@@ -208,7 +210,9 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               ),
               Text(
                 0.toString(),
-                style: context.txt.bodyMedium,
+                style: context.txt.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               )
             ],
           ),

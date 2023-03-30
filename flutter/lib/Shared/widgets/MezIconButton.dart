@@ -12,11 +12,13 @@ class MezIconButton extends StatelessWidget {
       this.shape,
       this.borderRadius,
       this.iconColor,
-      this.iconSize});
+      this.iconSize,
+      this.elevation});
   final Function()? onTap;
   final Widget? child;
   final IconData? icon;
   final double? iconSize;
+  final double? elevation;
   final Color? backgroundColor;
   final Color? iconColor;
   final BoxShape? shape;
@@ -26,7 +28,7 @@ class MezIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 1,
+      elevation: elevation ?? 1,
       borderRadius: borderRadius,
       shape: shape == null ? CircleBorder() : null,
       child: InkWell(

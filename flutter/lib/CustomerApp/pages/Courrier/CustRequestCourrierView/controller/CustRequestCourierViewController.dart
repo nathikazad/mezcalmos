@@ -91,6 +91,10 @@ class CustRequestCourierViewController {
     itemsNotes.removeAt(index);
   }
 
+  void removeItemImage(int index) {
+    imagesFiles[index] = File("");
+  }
+
   void handleBack() {
     if (currentPage == 0) {
       MezRouter.back();
@@ -146,7 +150,6 @@ class CustRequestCourierViewController {
         tripDistance: routeInfo?.distance.distanceInMeters,
         tripDuration: routeInfo?.duration.seconds,
         tripPolyline: routeInfo?.polyline,
-        
       );
       if (res.success == true) {
         MezRouter.popEverythingTillBeforeHome().then((_) =>

@@ -72,8 +72,8 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Delivery company",
-                          style: context.txt.bodyMedium,
+                          'Delivery company',
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 5,
@@ -87,7 +87,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                                 style: context.txt.bodyLarge,
                               )),
                         SizedBox(
-                          height: 15,
+                          height: 5,
                         ),
                         DeliveryTimePicker(
                           fixed7days: true,
@@ -104,6 +104,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           periodOfTime: null,
                           schedule: viewController.company.value!.schedule,
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        // Text(
+                        //   'Payment method',
+                        //   style: context.txt.bodyLarge,
+                        // ),
                         OrderSummaryCard(
                             costs: OrderCosts(
                                 deliveryCost: viewController.shippingCost.value,
@@ -163,6 +170,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               height: 5,
             ),
             DropDownLocationList(
+              elevation: 0,
               onValueChangeCallback: ({MezLocation? location}) {
                 if (location != null && location.isValidLocation()) {
                   viewController.setToLocation(location);
@@ -196,7 +204,6 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             Flexible(
               fit: FlexFit.tight,
               child: Material(
-                elevation: 0.5,
                 borderRadius: BorderRadius.circular(10),
                 child: TextFormField(
                     style: context.txt.bodyLarge,
@@ -210,7 +217,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                             width: 0,
                             style: BorderStyle.none,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5),
                           gapPadding: 0),
                     )),
               ),
@@ -219,9 +226,10 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               width: 5,
             ),
             MezIconButton(
+              elevation: 0,
               icon: Icons.place,
               iconColor: Colors.black,
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(15),
               backgroundColor: Colors.white,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(5),
@@ -279,7 +287,8 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             Text(
               "This field can be empty",
-              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge
+                  ?.copyWith(color: primaryBlueColor, fontSize: 12.5),
             )
           ],
         )

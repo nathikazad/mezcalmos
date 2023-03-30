@@ -26,6 +26,7 @@ class DropDownLocationList extends StatefulWidget {
     this.checkDistance = false,
     this.serviceProviderLocation,
     this.bgColor = Colors.transparent,
+    this.elevation,
     Key? key,
   }) : super(key: key);
 
@@ -35,6 +36,7 @@ class DropDownLocationList extends StatefulWidget {
   locModel.MezLocation? serviceProviderLocation;
   bool checkDistance;
   final Color bgColor;
+  final double? elevation;
 
   @override
   _DropDownLocationListState createState() => _DropDownLocationListState();
@@ -117,6 +119,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     return Column(
       children: [
         Card(
+          elevation: widget.elevation,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             decoration: BoxDecoration(

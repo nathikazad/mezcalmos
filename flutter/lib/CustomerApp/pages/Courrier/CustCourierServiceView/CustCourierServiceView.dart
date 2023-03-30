@@ -108,6 +108,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               .company.info.description?[userLanguage] !=
                           null)
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 10,
@@ -223,15 +224,16 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
       children: [
         Flexible(
           child: MezButton(
-            label: '${_i18n()["chatWithUs"]}',
-            height: 32.5,
-            backgroundColor: Colors.white,
-            textColor: primaryBlueColor,
-            onClick: () async {},
-            icon: Icons.message,
-            borderRadius: 20,
-            border: Border.all(width: 1, color: primaryBlueColor),
-          ),
+              label: '${_i18n()["chatWithUs"]}',
+              height: 32.5,
+              backgroundColor: Colors.white,
+              textColor: primaryBlueColor,
+              onClick: () async {},
+              icon: Icons.message,
+              borderRadius: 20,
+              border: Border.all(width: 1, color: primaryBlueColor),
+              textStyle: TextStyle(
+                  color: primaryBlueColor, fontWeight: FontWeight.bold)),
         ),
         SizedBox(
           width: 15,

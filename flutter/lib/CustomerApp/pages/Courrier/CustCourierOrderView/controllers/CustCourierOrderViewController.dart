@@ -91,7 +91,7 @@ class CustCourierOrderViewController {
           return AlertDialog(
             scrollable: false,
             contentPadding:
-                const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+                const EdgeInsets.only(bottom: 0, top: 16, left: 16, right: 16),
             insetPadding:
                 const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
             // contentPadding:
@@ -103,7 +103,7 @@ class CustCourierOrderViewController {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: secondaryLightBlueColor, shape: BoxShape.circle),
+                        color: Color(0xFFECEEFF), shape: BoxShape.circle),
                     padding: const EdgeInsets.all(16),
                     child: Icon(
                       Icons.price_change_rounded,
@@ -124,26 +124,29 @@ class CustCourierOrderViewController {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "New price",
-                        style: context.textTheme.bodyLarge,
-                      ),
+                      Text("New price",
+                          style: context.textTheme.displaySmall
+                              ?.copyWith(fontSize: 20)),
                       SizedBox(
                         height: 5,
                       ),
-                      Text(order.changePriceRequest?.newPrice.toPriceString() ??
-                          "20"),
+                      Text(
+                          order.changePriceRequest?.newPrice.toPriceString() ??
+                              "20",
+                          style: context.textTheme.displaySmall
+                              ?.copyWith(fontSize: 17.5)),
                       Divider(
                         height: 20,
                       ),
-                      Text(
-                        "Reason",
-                        style: context.textTheme.bodyLarge,
-                      ),
+                      Text("Reason",
+                          style: context.textTheme.displaySmall
+                              ?.copyWith(fontSize: 20)),
                       SizedBox(
                         height: 5,
                       ),
-                      Text(order.changePriceRequest?.reason ?? "reason"),
+                      Text(order.changePriceRequest?.reason ?? "reason",
+                          style: context.textTheme.displaySmall
+                              ?.copyWith(fontSize: 17.5)),
                       SizedBox(
                         height: 8,
                       ),
@@ -157,7 +160,7 @@ class CustCourierOrderViewController {
                     },
                   ),
                   MezButton(
-                    label: "Cancel",
+                    label: "Cancel order",
                     height: 50,
                     backgroundColor: Colors.transparent,
                     textColor: Colors.grey.shade900,
