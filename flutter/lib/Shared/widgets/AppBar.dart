@@ -20,7 +20,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     VoidCallback? onClick,
     String? title,
     bool showLeftBtn = true,
-    bool showUserIcon = false,
+    bool showUserIcon = true,
     Widget? titleWidget,
     bool showNotifications = true,
     String? ordersRoute,
@@ -31,37 +31,116 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   Widget? _getRightLeading() {
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
-        return _BackButtonAppBar(
+        return _backButton(
           click: autoBack ? (onClick ?? () => MezRouter.back()) : onClick,
         );
       case AppBarLeftButtonType.Menu:
       default:
-        return _MenuButtonAppBar();
+        return _menuButton();
     }
   }
 
   Widget _ordersAppBarIcon() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3),
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: () {
-          if (ordersRoute != null) {
-            MezRouter.toNamed(ordersRoute);
-          }
-        },
-        child: Ink(
-          padding: const EdgeInsets.all(7),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: secondaryLightBlueColor,
+    return ordersRoute != null
+        ? Padding(
+            padding: const EdgeInsets.only(left: 3, right: 3),
+            child: InkWell(
+              customBorder: CircleBorder(),
+              onTap: () {
+                MezRouter.toNamed(ordersRoute);
+              },
+              child: Ink(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: secondaryLightBlueColor,
+                ),
+                child: Icon(
+                  Icons.watch_later,
+                  size: 18,
+                  color: primaryBlueColor,
+                ),
+              ),
+            ),
+          )
+        : SizedBox();
+  }
+
+  Widget _noUserButton() {
+    return (showUserIcon)
+        ? Container(
+            // padding: const EdgeInsets.only(left: 3, right: 16),
+            child: InkWell(
+              customBorder: CircleBorder(),
+              onTap: () {
+                SignInView.navigateAtOrderTime();
+              },
+              child: Ink(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: secondaryLightBlueColor,
+                ),
+                child: Icon(
+                  Icons.person,
+                  size: 20,
+                  color: primaryBlueColor,
+                ),
+              ),
+            ),
+          )
+        : SizedBox();
+  }
+
+  Widget _notificationAppBarIcon() {
+    return showNotifications &&
+            Get.find<ForegroundNotificationsController>()
+                .notifications
+                .isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.only(left: 3, right: 3),
+            child: InkWell(
+              customBorder: CircleBorder(),
+              onTap: () {
+                MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
+              },
+              child: badge.Badge(
+                badgeColor: Colors.red,
+                showBadge: true,
+                position: badge.BadgePosition.topEnd(top: 8, end: 0),
+                child: Ink(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: secondaryLightBlueColor,
+                  ),
+                  child: Icon(
+                    Icons.notifications,
+                    color: primaryBlueColor,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+          )
+        : Container();
+  }
+
+  Widget _appbarButtons() {
+    return Obx(
+      () => Row(
+        children: [
+          SizedBox(
+            width: 5,
           ),
-          child: Icon(
-            Icons.watch_later,
-            size: 18,
-            color: primaryBlueColor,
+          if (Get.find<AuthController>().user == null) _noUserButton(),
+          if (Get.find<AuthController>().user != null)
+            _notificationAppBarIcon(),
+          if (Get.find<AuthController>().user != null) _ordersAppBarIcon(),
+          SizedBox(
+            width: 5,
           ),
-        ),
+        ],
       ),
     );
   }
@@ -72,16 +151,11 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       automaticallyImplyLeading: false,
       leading: (showLeftBtn) ? _getRightLeading() : null,
       actions: [
-        if (showUserIcon && !Get.find<AuthController>().isUserSignedIn)
-          _noUserButton(),
-        if (showNotifications && Get.find<AuthController>().isUserSignedIn)
-          _notificationAppBarIcon(),
-        if (ordersRoute != null && Get.find<AuthController>().isUserSignedIn)
-          _ordersAppBarIcon(),
+        _appbarButtons(),
         for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
           actionIcons[i]
         ],
-        if (leftBtnType == AppBarLeftButtonType.Lang) _LangSwitcherBtn(),
+        if (leftBtnType == AppBarLeftButtonType.Lang) _langSwitcherBtn(),
         SizedBox(
           width: 8,
         )
@@ -107,31 +181,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                 ));
 }
 
-Widget _noUserButton() {
-  return Container(
-    // padding: const EdgeInsets.only(left: 3, right: 16),
-    child: InkWell(
-      customBorder: CircleBorder(),
-      onTap: () {
-        SignInView.navigateAtOrderTime();
-      },
-      child: Ink(
-        padding: const EdgeInsets.all(7),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: secondaryLightBlueColor,
-        ),
-        child: Icon(
-          Icons.person,
-          size: 20,
-          color: primaryBlueColor,
-        ),
-      ),
-    ),
-  );
-}
-
-Widget _BackButtonAppBar({required VoidCallback? click}) {
+Widget _backButton({required VoidCallback? click}) {
   return Transform.scale(
     scale: 0.6,
     child: InkWell(
@@ -164,7 +214,7 @@ Widget _BackButtonAppBar({required VoidCallback? click}) {
   );
 }
 
-Widget _LangSwitcherBtn() {
+Widget _langSwitcherBtn() {
   return Obx(
     () => Container(
       padding: const EdgeInsets.all(5),
@@ -187,7 +237,7 @@ Widget _LangSwitcherBtn() {
   );
 }
 
-Widget _MenuButtonAppBar() {
+Widget _menuButton() {
   return Transform.scale(
     scale: 0.6,
     child: InkWell(
@@ -217,36 +267,4 @@ Widget _MenuButtonAppBar() {
       ),
     ),
   );
-}
-
-Widget _notificationAppBarIcon() {
-  return Obx(() =>
-      Get.find<ForegroundNotificationsController>().notifications.isNotEmpty
-          ? Padding(
-              padding: const EdgeInsets.only(left: 3, right: 3),
-              child: InkWell(
-                customBorder: CircleBorder(),
-                onTap: () {
-                  MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
-                },
-                child: badge.Badge(
-                  badgeColor: Colors.red,
-                  showBadge: true,
-                  position: badge.BadgePosition.topEnd(top: 8, end: 0),
-                  child: Ink(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: secondaryLightBlueColor,
-                    ),
-                    child: Icon(
-                      Icons.notifications,
-                      color: primaryBlueColor,
-                      size: 20,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : Container());
 }

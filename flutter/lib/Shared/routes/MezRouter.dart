@@ -105,7 +105,7 @@ class MezRouter {
       _navigationStack.removeLast();
     }
     _backResult = backResult;
-    mezDbgPrint("Trynig to go back");
+    mezDbgPrint("Trynig to go back ${QR.currentPath}");
     return QR.back();
   }
 

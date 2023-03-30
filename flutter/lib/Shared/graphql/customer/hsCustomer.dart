@@ -212,7 +212,6 @@ Stream<List<MinimalOrder>?> listen_on_customer_orders(
       .map<List<MinimalOrder>?>(
           (QueryResult<Subscription$listen_on_customer_orders> event) {
     if (event.parsedData?.customer_minimal_orders != null) {
-      mezDbgPrint("Event ....🥹========>${event.data}");
       final List<MinimalOrder> minOrders = event
           .parsedData!.customer_minimal_orders
           .map((Subscription$listen_on_customer_orders$customer_minimal_orders

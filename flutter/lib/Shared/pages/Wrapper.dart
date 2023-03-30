@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
@@ -122,13 +121,13 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("current route ======>>>>${MezRouter.currentRoute().name}");
         mezDbgPrint("[777] app = customerApp .. routing to home!");
         await MezRouter.popEverythingTillBeforeWrapper();
-        await MezRouter.toNamed(SharedRoutes.kHomeRoute);
+        await MezRouter.toPath(SharedRoutes.kHomeRoute);
       } else {
         mezDbgPrint(
             "😌😌😌😌😌😌 user is not signed to use the app user should sign in 😌😌😌😌");
 
         await MezRouter.popEverythingTillBeforeWrapper();
-        await MezRouter.toNamed(SharedRoutes.kSignInRoute);
+        await MezRouter.toPath(SharedRoutes.kSignInRoute);
       }
     } else {
       mezDbgPrint("[777] user != null");
