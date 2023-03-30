@@ -4,11 +4,9 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-//ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
   OrderReceived,
   Preparing,
@@ -42,7 +40,6 @@ class RestaurantOrder extends DeliverableOrder {
   RestaurantOrderStatus status;
   ServiceInfo get restaurant => serviceProvider as ServiceInfo;
 
-  Review? review;
   SelfDeliveryDetails? selfDeliveryDetails;
 
   RestaurantOrder(
@@ -59,7 +56,7 @@ class RestaurantOrder extends DeliverableOrder {
       required super.dropOffLocation,
       super.estimatedPackageReadyTime,
       super.driverInfo,
-      this.review,
+      super.review,
       required super.deliveryProviderType,
       super.estimatedArrivalAtPickup,
       super.estimatedArrivalAtDropoff,
@@ -74,104 +71,8 @@ class RestaurantOrder extends DeliverableOrder {
       required super.driverLocation,
       required super.serviceProviderDriverChatId,
       required super.customerDriverChatId,
-      required super.deliveryOrderId, required super.pickupLocation});
-
-  //ignore_for_file:avoid_annotating_with_dynamic
-  // factory RestaurantOrder.fromData(
-  //   dynamic id,
-  //   dynamic data,
-  // ) {
-  //   if (data?["to"]?["lat"] == null) {
-  //     mezDbgPrint("to nul =================>>>>>>>>>>>>>>$data");
-  //     mezDbgPrint("to nul =================>>>>>>>>>>>>>>$id");
-  //   }
-  //   final RestaurantOrder restaurantOrder = RestaurantOrder(
-  //       orderId: id,
-  //       deliveryProviderType: ServiceProviderType.Restaurant,
-  //       chatId: 1,
-  //       status: data["status"].toString().toRestaurantOrderStatus(),
-  //       quantity: data["quantity"],
-  //       serviceProviderId: data["serviceProviderId"],
-  //       paymentType: data["paymentType"].toString().toPaymentType(),
-  //       orderTime: DateTime.parse(data["orderTime"]),
-  //       deliveryMode: data?["deliveryMode"]?.toString().toDeliveryMode() ??
-  //           DeliveryMode.None,
-  //       estimatedFoodReadyTime: (data["estimatedFoodReadyTime"] != null)
-  //           ? DateTime.parse(data["estimatedFoodReadyTime"])
-  //           : null,
-  //       estimatedPickupFromServiceProviderTime:
-  //           (data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"] != null)
-  //               ? DateTime.parse(
-  //                   data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
-  //               : null,
-  //       estimatedDropoffAtCustomerTime:
-  //           (data["estimatedDeliveryTimes"]?["dropoff"]?["dropoff"] != null)
-  //               ? DateTime.parse(
-  //                   data["estimatedDeliveryTimes"]["dropoff"]["dropoff"])
-  //               : null,
-  //       costs: data["cost"],
-  //       notes: data["notes"],
-  //       deliveryTime: (data["deliveryTime"] != null)
-  //           ? DateTime.tryParse(data["deliveryTime"])
-  //           : null,
-  //       to: data['to'] == null
-  //           ? MezLocation.fromFirebaseData(
-  //               {
-  //                 "address": "---------",
-  //                 "lat": 15.871937999999997,
-  //                 "lng": -97.091954
-  //               },
-  //             )
-  //           : MezLocation.fromFirebaseData(data['to']),
-  //       restaurant: ServiceInfo.fromData(data["restaurant"]),
-  //       // TODO:544D-HASURA
-  //       customer: UserInfo(
-  //           hasuraId: 1, firebaseId: "firebaseId", name: null, image: null),
-  //       // customer: UserInfo.fromData(data["customer"]),
-  //       itemsCost: data['itemsCost'],
-  //       // selfDelivery: data['selfDelivery'] ?? false,
-  //       shippingCost: data["shippingCost"] ?? 0,
-  //       selfDeliveryDetails: (data["selfDeliveryDetails"] != null)
-  //           ? SelfDeliveryDetails.fromMap(data["selfDeliveryDetails"])
-  //           : null,
-  //       dropoffDriver: (data["dropoffDriver"] != null)
-  //           ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
-  //           : null,
-  //       dropOffDriverChatId: data['secondaryChats']
-  //           ?['serviceProviderDropOffDriver'],
-  //       customerDropOffDriverChatId: data['secondaryChats']
-  //           ?['customerDropOffDriver'],
-  //       notifiedAdmin: data['notified']?['admin'] ?? false,
-  //       notifiedOperator: data['notified']?['operator'] ?? false);
-  //   // if (data["review"] != null) {
-  //   //   restaurantOrder.review = Review.fromMap(null, data["review"]);
-  //   //   // data["reviews"]?.forEach((key, review) {
-  //   //   //   mezDbgPrint("ADD REVIEW ON ORDER===============");
-  //   //   //   restaurantOrder.reviews.add(Review.fromMap(key, review));
-  //   //   // });
-  //   // }
-  //   if (data["routeInformation"] != null) {
-  //     restaurantOrder.routeInformation = RouteInformation(
-  //       polyline: data["routeInformation"]["polyline"],
-  //       distance: RideDistance.fromJson(data["routeInformation"]["distance"]),
-  //       duration: RideDuration.fromJson(
-  //         data["routeInformation"]["duration"],
-  //       ),
-  //     );
-  //   }
-
-  //   if (data["stripePaymentInfo"] != null) {
-  //     restaurantOrder.stripePaymentInfo =
-  //         StripeOrderPaymentInfo.fromJson(data["stripePaymentInfo"]);
-  //   }
-
-  //   data["items"]?.forEach((dynamic itemId, dynamic itemData) {
-  //     final RestaurantOrderItem restaurantOrderItem =
-  //         RestaurantOrderItem.fromData(itemId, itemData);
-  //     restaurantOrder.items.add(restaurantOrderItem);
-  //   });
-  //   return restaurantOrder;
-  // }
+      required super.deliveryOrderId,
+      required super.pickupLocation});
 
   int get restaurantId => serviceProviderId!;
 
@@ -181,17 +82,13 @@ class RestaurantOrder extends DeliverableOrder {
         status == RestaurantOrderStatus.CancelledByAdmin;
   }
 
-  //   String getRightChatId() {
-  //   if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
-  //       customerPickupDriverChatId != null) {
-  //     return customerPickupDriverChatId;
-  //   } else if (customerDropOffDriverChatId != null) {
-  //     return customerDropOffDriverChatId;
-  //   }
-  //   return null;
-  // }
   bool get isFinished {
     return isCanceled() || status == RestaurantOrderStatus.Delivered;
+  }
+
+  bool get canAddReview {
+    return true;
+    //return review == null && status == RestaurantOrderStatus.Delivered;
   }
 
   @override
@@ -209,13 +106,6 @@ class RestaurantOrder extends DeliverableOrder {
   bool inDeliveryPhase() {
     return status == RestaurantOrderStatus.OnTheWay;
   }
-
-  // bool inSelfDelivery() {
-  //   return (status == RestaurantOrderStatus.Ready ||
-  //           status == RestaurantOrderStatus.OnTheWay) &&
-  //       (deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
-  //           deliveryMode == DeliveryMode.SelfDeliveryByRestaurant);
-  // }
 
   bool get showItemsImages {
     return items.firstWhereOrNull(
@@ -248,8 +138,7 @@ class RestaurantOrder extends DeliverableOrder {
 
     text += "${customer.name}\n";
     text += "${dropOffLocation.address}\n";
-    text +=
-        "https://www.google.com/maps/dir/?api=1&destination=${dropOffLocation.latitude},${dropOffLocation.longitude}";
+    text += "https:";
 
     return text;
   }
@@ -265,9 +154,9 @@ class RestaurantOrderItem {
   int quantity;
   String? notes;
   bool unavailable;
-  //optionId and list of choices for that option
+
   Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
-  //optionId and list of choices for that option
+
   Map<String, LanguageMap> optionNames = <String, LanguageMap>{};
   RestaurantOrderItem(
       {required this.costPerOne,
@@ -280,7 +169,7 @@ class RestaurantOrderItem {
       this.notes,
       this.unavailable = false});
 
-  factory RestaurantOrderItem.fromData(dynamic itemId, dynamic itemData) {
+  factory RestaurantOrderItem.fromData(itemId, itemData) {
     final RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
         costPerOne: itemData["costPerOne"],
         totalCost: itemData["totalCost"],

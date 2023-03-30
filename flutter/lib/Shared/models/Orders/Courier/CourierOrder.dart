@@ -40,6 +40,11 @@ class CourierOrder extends DeliveryOrder {
       required super.customerDriverChatId,
       required super.driverLocation,
       required super.pickupLocation});
+
+  bool get canAddReview {
+    return true;
+    //return review == null && status == RestaurantOrderStatus.Delivered;
+  }
 }
 
 class ChangePriceRequest {
@@ -75,6 +80,7 @@ class ChangePriceRequest {
       'reason': reason,
     };
   }
+
 
   factory ChangePriceRequest.fromMap(Map<String, dynamic> map) {
     return ChangePriceRequest(

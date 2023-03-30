@@ -10,10 +10,12 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 abstract class Order {
   int orderId;
+  Review? review;
   OrderType orderType;
   int? serviceProviderId;
   PaymentType paymentType;
@@ -36,6 +38,7 @@ abstract class Order {
     required this.orderId,
     required this.orderType,
     this.notes,
+    this.review,
     this.serviceProviderId,
     required this.paymentType,
     required this.orderTime,
@@ -169,6 +172,7 @@ abstract class DeliverableOrder extends Order {
     required this.driverLocation,
     required this.deliveryDirection,
     super.notes,
+    super.review,
     required this.deliveryCompany,
     super.serviceProviderId,
     required super.paymentType,
@@ -252,6 +256,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required super.deliveryDirection,
       required super.deliveryOrderId,
       super.notes,
+      super.review,
       required super.driverLocation,
       required super.serviceProvider,
       required super.customer,

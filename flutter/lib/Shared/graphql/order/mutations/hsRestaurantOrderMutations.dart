@@ -23,18 +23,4 @@ Future<void> set_food_est_ready_time(
   }
 }
 
-Future<int?> insertRestaurantOrderReview(
-    {required int orderId, required int reviewId}) async {
-  final QueryResult<Mutation$assignRestaurantOrderReview> response =
-      await _hasuraDb.graphQLClient.mutate$assignRestaurantOrderReview(
-    Options$Mutation$assignRestaurantOrderReview(
-      variables: Variables$Mutation$assignRestaurantOrderReview(
-          orderId: orderId, reviewId: reviewId),
-    ),
-  );
-  if (response.parsedData?.update_restaurant_order_by_pk == null) {
-    throw Exception(
-        "🚨set restuarnt review exceptions => ${response.exception}");
-  }
-  return response.parsedData!.update_restaurant_order_by_pk?.review_id;
-}
+

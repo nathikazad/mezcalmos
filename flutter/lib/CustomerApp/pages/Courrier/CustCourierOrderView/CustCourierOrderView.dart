@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -71,6 +73,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           titleWidget: Obx(() => viewController.hasData
               ? Text(viewController.order.deliveryCompany?.name ?? "")
               : SizedBox())),
+      bottomNavigationBar: _addReviewButton(context),
       body: Obx(
         () {
           if (viewController.hasData) {
@@ -174,9 +177,26 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       viewController.order.items[index].name,
                       style: context.txt.bodyLarge,
                     ),
-                    Text(
-                      "${(viewController.order.items[index].actualCost ?? viewController.order.items[index].estCost)?.toPriceString() ?? "-"}",
-                      style: context.txt.bodyLarge,
+                    Row(
+                      children: [
+                        Text(
+                          "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
+                          style: context.txt.bodyLarge?.copyWith(
+                              decoration: viewController
+                                          .order.items[index].actualCost !=
+                                      null
+                                  ? TextDecoration.lineThrough
+                                  : null),
+                        ),
+                        if (viewController.order.items[index].actualCost !=
+                            null)
+                          Icon(Icons.arrow_forward_rounded),
+                        if (viewController.order.items[index].actualCost !=
+                            null)
+                          Text(
+                              "${viewController.order.items[index].actualCost!.toPriceString()}",
+                              style: context.txt.bodyLarge)
+                      ],
                     ),
                   ],
                 ),
@@ -251,5 +271,19 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
         ),
       ),
     );
+  }
+
+  Widget _addReviewButton(BuildContext context) {
+    return Obx(() {
+      if (viewController.hasData && viewController.order.canAddReview == true) {
+        return customerAddReviewButton(context,
+            orderId: viewController.order.orderId,
+            serviceProviderId: viewController.order.serviceProvider.hasuraId,
+            serviceProviderType: ServiceProviderType.DeliveryCompany,
+            orderType: OrderType.Courier);
+      } else {
+        return SizedBox();
+      }
+    });
   }
 }

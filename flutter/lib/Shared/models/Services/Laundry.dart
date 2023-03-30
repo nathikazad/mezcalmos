@@ -18,6 +18,8 @@ class Laundry extends Service {
     required Schedule? schedule,
     required PaymentInfo paymentInfo,
     required ServiceState laundryState,
+    super.rate,
+    super.reviews,
     required super.deliveryCost,
     required this.deliveryDetailsId,
     this.averageNumberOfDays = 2,

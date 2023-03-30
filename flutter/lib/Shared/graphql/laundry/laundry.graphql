@@ -1,6 +1,13 @@
 query getLaundries {
   laundry_store(where: {details: {open_status: {_neq: "closed_indefinitely"}}}) {
     id
+      reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+      }
+    }
     minimum_cost
     delivery_details_id
     normal_delivery_time

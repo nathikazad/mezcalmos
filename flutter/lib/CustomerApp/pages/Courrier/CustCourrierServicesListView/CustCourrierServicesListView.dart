@@ -199,24 +199,25 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
         SizedBox(
           width: 8,
         ),
-        Flexible(
-          child: Row(
-            children: [
-              Icon(
-                Icons.star,
-                size: 22,
-                color: Color(0xFF6779FE),
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              Text(
-                0.toString(),
-                style: context.txt.bodyMedium,
-              )
-            ],
+        if (company.rate != null && company.rate != 0)
+          Flexible(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  size: 22,
+                  color: Color(0xFF6779FE),
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Text(
+                  company.rate.toString(),
+                  style: context.txt.bodyMedium,
+                )
+              ],
+            ),
           ),
-        ),
       ],
     ),
   );

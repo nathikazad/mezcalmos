@@ -324,21 +324,4 @@ mutation setRestaurantOrderEstFoodReadyTime(
     estimated_package_ready_time
   }
 }
-mutation assignRestaurantOrderReview($orderId: Int!, $reviewId: Int!) {
-  update_restaurant_order_by_pk(
-    pk_columns: { id: $orderId }
-    _set: { review_id: $reviewId }
-  ) {
-    review_id
-    review {
-      created_at
-      from_entity_id
-      from_entity_type
-      id
-      note
-      rating
-      to_entity_id
-      to_entity_type
-    }
-  }
-}
+

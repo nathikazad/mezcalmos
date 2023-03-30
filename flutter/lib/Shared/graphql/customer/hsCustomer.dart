@@ -253,3 +253,44 @@ MinimalOrderStatus _getStatus(
       return status.toRestaurantOrderStatus().toMinimalOrderStatus();
   }
 }
+
+Future<int?> addRestaurantOrderReviewId(
+    {required int orderId, required int reviewId}) async {
+  QueryResult<Mutation$updateRestaurantOrderReviewId> res =
+      await _graphClient.mutate$updateRestaurantOrderReviewId(
+          Options$Mutation$updateRestaurantOrderReviewId(
+              variables: Variables$Mutation$updateRestaurantOrderReviewId(
+                  orderId: orderId, reviewId: reviewId)));
+  if (res.parsedData?.update_restaurant_order_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.update_restaurant_order_by_pk?.review_id;
+}
+
+Future<int?> addLaundryOrderReviewId(
+    {required int orderId, required int reviewId}) async {
+  mezDbgPrint("Order id ====================>$orderId");
+  QueryResult<Mutation$updateLaundryOrderReviewId> res =
+      await _graphClient.mutate$updateLaundryOrderReviewId(
+          Options$Mutation$updateLaundryOrderReviewId(
+              variables: Variables$Mutation$updateLaundryOrderReviewId(
+                  orderId: orderId, reviewId: reviewId)));
+  if (res.parsedData?.update_laundry_order_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.update_laundry_order_by_pk?.review_id;
+}
+
+Future<int?> addDriverOrderReviewId(
+    {required int orderId, required int reviewId}) async {
+  QueryResult<Mutation$updateDriverOrderReviewId> res =
+      await _graphClient.mutate$updateDriverOrderReviewId(
+          Options$Mutation$updateDriverOrderReviewId(
+              variables: Variables$Mutation$updateDriverOrderReviewId(
+                  orderId: orderId, reviewId: reviewId)));
+  if (res.parsedData?.update_delivery_order_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res
+      .parsedData?.update_delivery_order_by_pk?.driver_review_by_customer_id;
+}
