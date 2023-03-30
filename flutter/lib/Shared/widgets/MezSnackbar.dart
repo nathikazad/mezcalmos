@@ -5,12 +5,37 @@ import 'package:sizer/sizer.dart';
 void MezSnackbar(String title, String? msg,
     {Alignment position = Alignment.topCenter,
     Color backgorundColor = Colors.black,
-    duration = const Duration(seconds: 3)}) {
-  BotToast.showSimpleNotification(
+    EdgeInsetsGeometry padding = const EdgeInsets.all(8),
+    Color textColor = Colors.white,
+    duration = const Duration(seconds: 1)}) {
+  BotToast.showNotification(
     align: position,
     duration: duration,
-    title: title,
-    subTitle: msg,
+    contentPadding: padding,
+    borderRadius: 0,
+    title: (cancelFunc) => Text(
+      title,
+      style: TextStyle(
+        fontFamily: "Montserrat",
+        fontWeight: FontWeight.w600,
+        fontSize: 12.sp,
+        color: textColor,
+      ),
+    ),
+    subtitle: (msg != null)
+        ? (cancelFunc) => Padding(
+              padding: const EdgeInsets.only(top: 3.0),
+              child: Text(
+                msg,
+                style: TextStyle(
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10.sp,
+                  color: textColor,
+                ),
+              ),
+            )
+        : null,
     backgroundColor: backgorundColor,
   );
 }
