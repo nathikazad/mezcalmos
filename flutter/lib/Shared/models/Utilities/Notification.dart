@@ -33,7 +33,8 @@ extension ParseStringToNotificationType on String {
 enum NotificationAction {
   ShowPopUp,
   ShowSnackBarAlways,
-  ShowSnackbarOnlyIfNotOnPage
+  ShowSnackbarOnlyIfNotOnPage,
+  NavigteToLinkUrl
 }
 
 extension ParseNotificationActionToString on NotificationAction {

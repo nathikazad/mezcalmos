@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -31,9 +32,13 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
 
 Future<void> _displayNotification(notifs.Notification notification) async {
   await Get.find<SettingsController>().playNotificationSound();
-  // mezDbgPrint(notification.imgUrl);
+  mezDbgPrint("🩳 notificationAction ${notification.notificationAction}");
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
     await decideWhichButtonDialogToUse(notification);
+  } else if (notification.notificationAction ==
+      notifs.NotificationAction.NavigteToLinkUrl) {
+    if (!MezRouter.isCurrentRoute(notification.linkUrl))
+      MezRouter.toPath(notification.linkUrl);
   } else {
     notificationSnackBar(notification);
   }
@@ -41,27 +46,22 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
-  if (Get.context != null) {
-    if (MezRouter.isCurrentRoute(notification.linkUrl)) {
-      await showStatusInfoDialog(Get.context!,
-          status: notification.title,
-          description: notification.body,
-          primaryIcon: notification.icon,
-          bottomRightIcon: notification.secondaryIcon,
-          showSmallIcon: notification.secondaryIcon != null);
-    } else
-      await showStatusInfoDialog(
-        Get.context!,
-        status: notification.title,
-        primaryIcon: notification.icon,
-        description: notification.body,
-        showSmallIcon: notification.secondaryIcon != null,
-        bottomRightIcon: notification.secondaryIcon,
-        primaryCallBack: () {
-          MezRouter.back();
-        },
-        secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
-      );
+  if (QR.context != null) {
+    await showStatusInfoDialog(
+      QR.context!,
+      status: notification.title,
+      primaryIcon: notification.icon,
+      description: notification.body,
+      showSmallIcon: notification.secondaryIcon != null,
+      bottomRightIcon: notification.secondaryIcon,
+      primaryCallBack: (MezRouter.isCurrentRoute(notification.linkUrl))
+          ? null
+          : () => MezRouter.back(),
+      secondaryCallBack: (MezRouter.isCurrentRoute(notification.linkUrl))
+          ? null
+          : () => MezRouter.back()
+              .then((_) => MezRouter.toPath(notification.linkUrl)),
+    );
   }
 }
 

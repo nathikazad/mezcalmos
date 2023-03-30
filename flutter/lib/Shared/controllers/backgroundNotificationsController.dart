@@ -115,7 +115,7 @@ class BackgroundNotificationsController extends GetxController {
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),
-        () => MezRouter.toNamed(message.data["linkUrl"]),
+        () => MezRouter.toPath(message.data["linkUrl"]),
       );
   }
 

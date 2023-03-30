@@ -159,7 +159,7 @@
           "components": {
             "DeliveryTimePicker": {
               "dvTime": "El tiempo de entrega",
-              "restClosed": "El restaurante está cerrado ahora",
+              "restClosed": "El servicio está cerrado ahora, pero puedes programar su pedido para más adelante.",
               "pickTime": "Elige tu tiempo",
               "now": "Ahora",
               "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido"
