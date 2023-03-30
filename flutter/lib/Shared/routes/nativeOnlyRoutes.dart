@@ -1,6 +1,8 @@
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/NativeMessagingScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -26,15 +28,9 @@ class NativeOnlyRoutes {
       path: kAppNeedsUpdateRoute,
       builder: () => AppNeedsUpdateScreen(),
     ),
-
-    /*   GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
-    GetPage(
-      name: SharedRoutes.kMessagesRoute,
-      page: () => NativeMessagingScreen(),
-      transition: Transition.rightToLeftWithFade,
-      transitionDuration: Duration(milliseconds: 500),
-      // customTransition:
-    ),
-    GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdateScreen()),*/
+    QRoute(
+        path: SharedRoutes.kUserNewProfile,
+        name: SharedRoutes.kUserNewProfile,
+        builder: () => UserProfileView()),
   ];
 }

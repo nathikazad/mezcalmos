@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:image_picker/image_picker.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -207,6 +208,61 @@ class AuthController extends GetxController {
     }
 
     return _uploadedImgUrl;
+  }
+
+  Future<String> uploadUserImgToFbStorageForWeb({
+    required XFile pikedFile,
+    required Uint8List uint8list,
+    bool isCompressed = false,
+  }) async {
+    String? _uploadedImgUrl;
+
+    mezDbgPrint("::::: log {{{{ ${pikedFile.path}  }}}}}");
+    final List<String> splitted = pikedFile.path.split('.');
+    final String imgPath =
+        "users/$hasuraUserId/avatar/$hasuraUserId/${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+    mezDbgPrint("::::: log {{{{ ${imgPath}  }}}}}");
+    try {
+      // await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
+      //     await pikedFile.readAsBytes(),
+      //     SettableMetadata(
+      //       cacheControl: "public,max-age=300",
+      //       contentType: "image/jpeg",
+      //     )
+      //     // metadata: SettableMetadata()
+      //     );
+      String fileResult = await pikedFile.readAsString();
+      mezDbgPrint("inside the uploade function ${fileResult}");
+      await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
+            uint8list,
+            // SettableMetadata(
+            //   cacheControl: "public,max-age=300",
+            //   contentType: "image/jpeg",
+            // )
+            // metadata: SettableMetadata()
+          );
+
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .getDownloadURL()
+          .then((value) {
+        mezDbgPrint("ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ the url is value ${value}");
+        return value;
+      });
+    } catch (e, s) {
+      mezDbgPrint(
+          "this an error happen in :::uploadUserImgToFbStorageForWeb:: function ${e.toString()}");
+    }
+
+    //       .catchError((e) {
+
+    //   }).whenComplete(() async {
+
+    // } on firebase_core.FirebaseException catch (e) {
+    //   mezDbgPrint(e.message.toString());
+    // }
+
+    return _uploadedImgUrl!;
   }
 
   /// this is for setting the Original size of the image that was picked by the user,
