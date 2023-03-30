@@ -13,6 +13,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { isMezAdmin } from "../shared/helper";
 import { MezError } from "../shared/models/Generic/Generic";
+import { cancelCourierFromDelivery } from "../shared/graphql/delivery/courier/updateCourier";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
@@ -24,7 +25,7 @@ let statusArrayInSeq: Array<DeliveryOrderStatus> = [
 ]
 
 function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
-  if(newStatus == DeliveryOrderStatus.CancelledByAdmin) {
+  if(newStatus == (DeliveryOrderStatus.CancelledByAdmin || DeliveryOrderStatus.CancelledByDeliverer)) {
     if(!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
       throw new MezError(ChangeDeliveryStatusError.OrderNotInProcess);
     }
@@ -67,7 +68,8 @@ enum ChangeDeliveryStatusError {
   LaundryStoreNotfound = "laundryStoreNotfound",
   OrderCreationError = "orderCreationError",
   NoDeliveryChatWithStoreId = " noDeliveryChatWithStoreId",
-  DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound"
+  DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+  CannotCancelByDriver = "cannotCancelByDriver"
 }
 
 export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails): Promise<ChangeDeliveryStatusResponse> {
@@ -92,6 +94,9 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
         break;
       case OrderType.Courier:
         notifyCourierStatusChange(deliveryOrder, customer);
+        if(deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer) {
+          cancelCourierFromDelivery(deliveryOrder.deliveryId)
+        }
       default:
         break;
     }
@@ -129,10 +134,12 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStat
   )) {
     throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
   }
-  if (userId != deliveryOrder.deliveryDriver.userId && !(await isMezAdmin(userId))) {
-    throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
+  if (!(await isMezAdmin(userId))) {
+    if(userId != deliveryOrder.deliveryDriver.userId)
+      throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
+    else if(newStatus == DeliveryOrderStatus.CancelledByDeliverer && deliveryOrder.orderType != OrderType.Courier)
+      throw new MezError(ChangeDeliveryStatusError.CannotCancelByDriver);
   }
-
 }
 
 function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
