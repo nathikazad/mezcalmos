@@ -17,8 +17,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl:
-              RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
+          linkUrl: RestaurantAppRoutes.getROpOrderRoute(value["orderId"]),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
               'assets/images/shared/notifications/readyOrderNotificationIcon.png',
@@ -77,8 +76,7 @@ Notification _restaurantOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl:
-          RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
+      linkUrl: RestaurantAppRoutes.getROpOrderRoute(value["orderId"]),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
       body: dynamicFields?["body"],

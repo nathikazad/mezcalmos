@@ -6,10 +6,31 @@ object_relationships:
     using:
       foreign_key_constraint_on: details_id
 array_relationships:
+  - name: classes
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: class
+          schema: business
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: event
+          schema: business
   - name: operators
     using:
       foreign_key_constraint_on:
         column: business_id
         table:
           name: operator
+          schema: business
+  - name: rentals
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: rental
           schema: business

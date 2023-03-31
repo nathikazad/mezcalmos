@@ -10,6 +10,7 @@ export interface BusinessOrder extends Order {
     items: BusinessOrderRequestItem[];
     estimatedCost: number;
     finalCost?: number;
+    commenceTime?: string;
 }
 
 export interface BusinessOrderRequestItem {

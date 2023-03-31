@@ -14,24 +14,45 @@ export interface BusinessService {
     businessId: number;
     available: boolean;
     image: string;
-    cost: number;
+    cost: BusinessServiceCost;
+    additionalParameters?: Record<string, any>
 }
-export interface Rental extends BusinessService {
-    rentalCategory1: RentalCategory1
+export interface BusinessServiceCost {
+    perHour: number;
+    perDay: number;
 }
-export interface Class extends BusinessService {
+
+export interface Rental {
+    category1: RentalCategory1;
+    details: BusinessService;
+}
+export interface Class {
+    category1: ClassCategory1;
     scheduleType: ScheduleType;
     schedule?: any;
+    details: BusinessService;
+
 }
-export interface Event extends BusinessService {
+export interface Event {
+    category1: EventCategory1;
     scheduleType: ScheduleType;
     schedule?: any;
+    details: BusinessService;
 }
 export enum RentalCategory1 {
-    Surf,
-    Motorcycle,
-    Home,
-    x
+    Surf = "surf",
+    Motorcycle = "motorcycle",
+    Home = "home",
+    Uncategorized = "uncategorized"
+}
+export enum ClassCategory1 {
+    Yoga = "yoga",
+    MartialArt = "martialArt"
+}
+export enum EventCategory1 {
+    Party = "party",
+    Dance = "dance",
+    GetTogether = "getTogether"
 }
 export enum ServiceType {
     Rental = "rental",
@@ -45,6 +66,11 @@ export enum ScheduleType {
 export enum BusinessProfile {
     SurfShop = "surfShop",
     VehicleRental = "vehicleRental",
+    HomeRental = "homeRental",
+    WellnessClass = "wellnessClass",
+    Party = "party",
+    Volunteer = "volunteer",
+    TourAgency = "tourAgency"
 }
 
 export interface NewBusinessNotification extends ForegroundNotification {

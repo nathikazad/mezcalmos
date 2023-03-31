@@ -32,9 +32,81 @@ input Boolean_comparison_exp {
 columns and relationships of "business.business"
 """
 type business_business {
+  """An array relationship"""
+  classes(
+    """distinct select on columns"""
+    distinct_on: [business_class_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_class_order_by!]
+
+    """filter the rows returned"""
+    where: business_class_bool_exp
+  ): [business_class!]!
+
+  """An aggregate relationship"""
+  classes_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_class_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_class_order_by!]
+
+    """filter the rows returned"""
+    where: business_class_bool_exp
+  ): business_class_aggregate!
+
   """An object relationship"""
   details: service_provider_details!
   details_id: Int!
+
+  """An array relationship"""
+  events(
+    """distinct select on columns"""
+    distinct_on: [business_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_event_order_by!]
+
+    """filter the rows returned"""
+    where: business_event_bool_exp
+  ): [business_event!]!
+
+  """An aggregate relationship"""
+  events_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_event_order_by!]
+
+    """filter the rows returned"""
+    where: business_event_bool_exp
+  ): business_event_aggregate!
   id: Int!
 
   """An array relationship"""
@@ -73,6 +145,42 @@ type business_business {
     where: business_operator_bool_exp
   ): business_operator_aggregate!
   profile: String!
+
+  """An array relationship"""
+  rentals(
+    """distinct select on columns"""
+    distinct_on: [business_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_rental_bool_exp
+  ): [business_rental!]!
+
+  """An aggregate relationship"""
+  rentals_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_rental_bool_exp
+  ): business_rental_aggregate!
   service_provider_type: String!
 }
 
@@ -114,12 +222,18 @@ input business_business_bool_exp {
   _and: [business_business_bool_exp!]
   _not: business_business_bool_exp
   _or: [business_business_bool_exp!]
+  classes: business_class_bool_exp
+  classes_aggregate: business_class_aggregate_bool_exp
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
+  events: business_event_bool_exp
+  events_aggregate: business_event_aggregate_bool_exp
   id: Int_comparison_exp
   operators: business_operator_bool_exp
   operators_aggregate: business_operator_aggregate_bool_exp
   profile: String_comparison_exp
+  rentals: business_rental_bool_exp
+  rentals_aggregate: business_rental_aggregate_bool_exp
   service_provider_type: String_comparison_exp
 }
 
@@ -150,11 +264,14 @@ input business_business_inc_input {
 input type for inserting data into table "business.business"
 """
 input business_business_insert_input {
+  classes: business_class_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
+  events: business_event_arr_rel_insert_input
   id: Int
   operators: business_operator_arr_rel_insert_input
   profile: String
+  rentals: business_rental_arr_rel_insert_input
   service_provider_type: String
 }
 
@@ -206,11 +323,14 @@ input business_business_on_conflict {
 
 """Ordering options when selecting data from "business.business"."""
 input business_business_order_by {
+  classes_aggregate: business_class_aggregate_order_by
   details: service_provider_details_order_by
   details_id: order_by
+  events_aggregate: business_event_aggregate_order_by
   id: order_by
   operators_aggregate: business_operator_aggregate_order_by
   profile: order_by
+  rentals_aggregate: business_rental_aggregate_order_by
   service_provider_type: order_by
 }
 
@@ -1115,6 +1235,33 @@ type business_class_aggregate {
   nodes: [business_class!]!
 }
 
+input business_class_aggregate_bool_exp {
+  bool_and: business_class_aggregate_bool_exp_bool_and
+  bool_or: business_class_aggregate_bool_exp_bool_or
+  count: business_class_aggregate_bool_exp_count
+}
+
+input business_class_aggregate_bool_exp_bool_and {
+  arguments: business_class_select_column_business_class_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: business_class_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input business_class_aggregate_bool_exp_bool_or {
+  arguments: business_class_select_column_business_class_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: business_class_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input business_class_aggregate_bool_exp_count {
+  arguments: [business_class_select_column!]
+  distinct: Boolean
+  filter: business_class_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "business.class"
 """
@@ -1132,12 +1279,39 @@ type business_class_aggregate_fields {
   variance: business_class_variance_fields
 }
 
+"""
+order by aggregate values of table "business.class"
+"""
+input business_class_aggregate_order_by {
+  avg: business_class_avg_order_by
+  count: order_by
+  max: business_class_max_order_by
+  min: business_class_min_order_by
+  stddev: business_class_stddev_order_by
+  stddev_pop: business_class_stddev_pop_order_by
+  stddev_samp: business_class_stddev_samp_order_by
+  sum: business_class_sum_order_by
+  var_pop: business_class_var_pop_order_by
+  var_samp: business_class_var_samp_order_by
+  variance: business_class_variance_order_by
+}
+
 """append existing jsonb value of filtered columns with new jsonb value"""
 input business_class_append_input {
   additional_parameters: jsonb
   cost: jsonb
   image: jsonb
   schedule: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "business.class"
+"""
+input business_class_arr_rel_insert_input {
+  data: [business_class_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: business_class_on_conflict
 }
 
 """aggregate avg on columns"""
@@ -1147,6 +1321,17 @@ type business_class_avg_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by avg() on columns of table "business.class"
+"""
+input business_class_avg_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -1255,6 +1440,21 @@ type business_class_max_fields {
   schedule_type: String
 }
 
+"""
+order by max() on columns of table "business.class"
+"""
+input business_class_max_order_by {
+  business_id: order_by
+  category1: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+
+  """scheduled or onDemand"""
+  schedule_type: order_by
+}
+
 """aggregate min on columns"""
 type business_class_min_fields {
   business_id: Int
@@ -1266,6 +1466,21 @@ type business_class_min_fields {
 
   """scheduled or onDemand"""
   schedule_type: String
+}
+
+"""
+order by min() on columns of table "business.class"
+"""
+input business_class_min_order_by {
+  business_id: order_by
+  category1: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+
+  """scheduled or onDemand"""
+  schedule_type: order_by
 }
 
 """
@@ -1359,6 +1574,22 @@ enum business_class_select_column {
 }
 
 """
+select "business_class_aggregate_bool_exp_bool_and_arguments_columns" columns of table "business.class"
+"""
+enum business_class_select_column_business_class_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  available
+}
+
+"""
+select "business_class_aggregate_bool_exp_bool_or_arguments_columns" columns of table "business.class"
+"""
+enum business_class_select_column_business_class_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  available
+}
+
+"""
 input type for updating data in table "business.class"
 """
 input business_class_set_input {
@@ -1387,6 +1618,17 @@ type business_class_stddev_fields {
   position: Float
 }
 
+"""
+order by stddev() on columns of table "business.class"
+"""
+input business_class_stddev_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type business_class_stddev_pop_fields {
   business_id: Float
@@ -1396,6 +1638,17 @@ type business_class_stddev_pop_fields {
   position: Float
 }
 
+"""
+order by stddev_pop() on columns of table "business.class"
+"""
+input business_class_stddev_pop_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type business_class_stddev_samp_fields {
   business_id: Float
@@ -1403,6 +1656,17 @@ type business_class_stddev_samp_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by stddev_samp() on columns of table "business.class"
+"""
+input business_class_stddev_samp_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -1441,6 +1705,17 @@ type business_class_sum_fields {
   id: Int
   name_id: Int
   position: Int
+}
+
+"""
+order by sum() on columns of table "business.class"
+"""
+input business_class_sum_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -1524,6 +1799,17 @@ type business_class_var_pop_fields {
   position: Float
 }
 
+"""
+order by var_pop() on columns of table "business.class"
+"""
+input business_class_var_pop_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate var_samp on columns"""
 type business_class_var_samp_fields {
   business_id: Float
@@ -1533,6 +1819,17 @@ type business_class_var_samp_fields {
   position: Float
 }
 
+"""
+order by var_samp() on columns of table "business.class"
+"""
+input business_class_var_samp_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate variance on columns"""
 type business_class_variance_fields {
   business_id: Float
@@ -1540,6 +1837,17 @@ type business_class_variance_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by variance() on columns of table "business.class"
+"""
+input business_class_variance_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -1582,6 +1890,33 @@ type business_event_aggregate {
   nodes: [business_event!]!
 }
 
+input business_event_aggregate_bool_exp {
+  bool_and: business_event_aggregate_bool_exp_bool_and
+  bool_or: business_event_aggregate_bool_exp_bool_or
+  count: business_event_aggregate_bool_exp_count
+}
+
+input business_event_aggregate_bool_exp_bool_and {
+  arguments: business_event_select_column_business_event_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: business_event_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input business_event_aggregate_bool_exp_bool_or {
+  arguments: business_event_select_column_business_event_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: business_event_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input business_event_aggregate_bool_exp_count {
+  arguments: [business_event_select_column!]
+  distinct: Boolean
+  filter: business_event_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "business.event"
 """
@@ -1599,12 +1934,39 @@ type business_event_aggregate_fields {
   variance: business_event_variance_fields
 }
 
+"""
+order by aggregate values of table "business.event"
+"""
+input business_event_aggregate_order_by {
+  avg: business_event_avg_order_by
+  count: order_by
+  max: business_event_max_order_by
+  min: business_event_min_order_by
+  stddev: business_event_stddev_order_by
+  stddev_pop: business_event_stddev_pop_order_by
+  stddev_samp: business_event_stddev_samp_order_by
+  sum: business_event_sum_order_by
+  var_pop: business_event_var_pop_order_by
+  var_samp: business_event_var_samp_order_by
+  variance: business_event_variance_order_by
+}
+
 """append existing jsonb value of filtered columns with new jsonb value"""
 input business_event_append_input {
   additional_parameters: jsonb
   cost: jsonb
   image: jsonb
   schedule: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "business.event"
+"""
+input business_event_arr_rel_insert_input {
+  data: [business_event_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: business_event_on_conflict
 }
 
 """aggregate avg on columns"""
@@ -1614,6 +1976,17 @@ type business_event_avg_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by avg() on columns of table "business.event"
+"""
+input business_event_avg_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -1722,6 +2095,21 @@ type business_event_max_fields {
   schedule_type: String
 }
 
+"""
+order by max() on columns of table "business.event"
+"""
+input business_event_max_order_by {
+  business_id: order_by
+  category1: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+
+  """scheduled or OnDemand"""
+  schedule_type: order_by
+}
+
 """aggregate min on columns"""
 type business_event_min_fields {
   business_id: Int
@@ -1733,6 +2121,21 @@ type business_event_min_fields {
 
   """scheduled or OnDemand"""
   schedule_type: String
+}
+
+"""
+order by min() on columns of table "business.event"
+"""
+input business_event_min_order_by {
+  business_id: order_by
+  category1: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+
+  """scheduled or OnDemand"""
+  schedule_type: order_by
 }
 
 """
@@ -1826,6 +2229,22 @@ enum business_event_select_column {
 }
 
 """
+select "business_event_aggregate_bool_exp_bool_and_arguments_columns" columns of table "business.event"
+"""
+enum business_event_select_column_business_event_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  available
+}
+
+"""
+select "business_event_aggregate_bool_exp_bool_or_arguments_columns" columns of table "business.event"
+"""
+enum business_event_select_column_business_event_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  available
+}
+
+"""
 input type for updating data in table "business.event"
 """
 input business_event_set_input {
@@ -1854,6 +2273,17 @@ type business_event_stddev_fields {
   position: Float
 }
 
+"""
+order by stddev() on columns of table "business.event"
+"""
+input business_event_stddev_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type business_event_stddev_pop_fields {
   business_id: Float
@@ -1863,6 +2293,17 @@ type business_event_stddev_pop_fields {
   position: Float
 }
 
+"""
+order by stddev_pop() on columns of table "business.event"
+"""
+input business_event_stddev_pop_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type business_event_stddev_samp_fields {
   business_id: Float
@@ -1870,6 +2311,17 @@ type business_event_stddev_samp_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by stddev_samp() on columns of table "business.event"
+"""
+input business_event_stddev_samp_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -1908,6 +2360,17 @@ type business_event_sum_fields {
   id: Int
   name_id: Int
   position: Int
+}
+
+"""
+order by sum() on columns of table "business.event"
+"""
+input business_event_sum_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -1991,6 +2454,17 @@ type business_event_var_pop_fields {
   position: Float
 }
 
+"""
+order by var_pop() on columns of table "business.event"
+"""
+input business_event_var_pop_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate var_samp on columns"""
 type business_event_var_samp_fields {
   business_id: Float
@@ -2000,6 +2474,17 @@ type business_event_var_samp_fields {
   position: Float
 }
 
+"""
+order by var_samp() on columns of table "business.event"
+"""
+input business_event_var_samp_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate variance on columns"""
 type business_event_variance_fields {
   business_id: Float
@@ -2007,6 +2492,17 @@ type business_event_variance_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by variance() on columns of table "business.event"
+"""
+input business_event_variance_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -3415,6 +3911,33 @@ type business_rental_aggregate {
   nodes: [business_rental!]!
 }
 
+input business_rental_aggregate_bool_exp {
+  bool_and: business_rental_aggregate_bool_exp_bool_and
+  bool_or: business_rental_aggregate_bool_exp_bool_or
+  count: business_rental_aggregate_bool_exp_count
+}
+
+input business_rental_aggregate_bool_exp_bool_and {
+  arguments: business_rental_select_column_business_rental_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: business_rental_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input business_rental_aggregate_bool_exp_bool_or {
+  arguments: business_rental_select_column_business_rental_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: business_rental_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input business_rental_aggregate_bool_exp_count {
+  arguments: [business_rental_select_column!]
+  distinct: Boolean
+  filter: business_rental_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "business.rental"
 """
@@ -3432,11 +3955,38 @@ type business_rental_aggregate_fields {
   variance: business_rental_variance_fields
 }
 
+"""
+order by aggregate values of table "business.rental"
+"""
+input business_rental_aggregate_order_by {
+  avg: business_rental_avg_order_by
+  count: order_by
+  max: business_rental_max_order_by
+  min: business_rental_min_order_by
+  stddev: business_rental_stddev_order_by
+  stddev_pop: business_rental_stddev_pop_order_by
+  stddev_samp: business_rental_stddev_samp_order_by
+  sum: business_rental_sum_order_by
+  var_pop: business_rental_var_pop_order_by
+  var_samp: business_rental_var_samp_order_by
+  variance: business_rental_variance_order_by
+}
+
 """append existing jsonb value of filtered columns with new jsonb value"""
 input business_rental_append_input {
   additional_parameters: jsonb
   cost: jsonb
   image: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "business.rental"
+"""
+input business_rental_arr_rel_insert_input {
+  data: [business_rental_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: business_rental_on_conflict
 }
 
 """aggregate avg on columns"""
@@ -3446,6 +3996,17 @@ type business_rental_avg_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by avg() on columns of table "business.rental"
+"""
+input business_rental_avg_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -3548,6 +4109,18 @@ type business_rental_max_fields {
   position: Int
 }
 
+"""
+order by max() on columns of table "business.rental"
+"""
+input business_rental_max_order_by {
+  business_id: order_by
+  category1: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate min on columns"""
 type business_rental_min_fields {
   business_id: Int
@@ -3556,6 +4129,18 @@ type business_rental_min_fields {
   id: Int
   name_id: Int
   position: Int
+}
+
+"""
+order by min() on columns of table "business.rental"
+"""
+input business_rental_min_order_by {
+  business_id: order_by
+  category1: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -3643,6 +4228,22 @@ enum business_rental_select_column {
 }
 
 """
+select "business_rental_aggregate_bool_exp_bool_and_arguments_columns" columns of table "business.rental"
+"""
+enum business_rental_select_column_business_rental_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  available
+}
+
+"""
+select "business_rental_aggregate_bool_exp_bool_or_arguments_columns" columns of table "business.rental"
+"""
+enum business_rental_select_column_business_rental_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  available
+}
+
+"""
 input type for updating data in table "business.rental"
 """
 input business_rental_set_input {
@@ -3667,6 +4268,17 @@ type business_rental_stddev_fields {
   position: Float
 }
 
+"""
+order by stddev() on columns of table "business.rental"
+"""
+input business_rental_stddev_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type business_rental_stddev_pop_fields {
   business_id: Float
@@ -3676,6 +4288,17 @@ type business_rental_stddev_pop_fields {
   position: Float
 }
 
+"""
+order by stddev_pop() on columns of table "business.rental"
+"""
+input business_rental_stddev_pop_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type business_rental_stddev_samp_fields {
   business_id: Float
@@ -3683,6 +4306,17 @@ type business_rental_stddev_samp_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by stddev_samp() on columns of table "business.rental"
+"""
+input business_rental_stddev_samp_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -3717,6 +4351,17 @@ type business_rental_sum_fields {
   id: Int
   name_id: Int
   position: Int
+}
+
+"""
+order by sum() on columns of table "business.rental"
+"""
+input business_rental_sum_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -3794,6 +4439,17 @@ type business_rental_var_pop_fields {
   position: Float
 }
 
+"""
+order by var_pop() on columns of table "business.rental"
+"""
+input business_rental_var_pop_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate var_samp on columns"""
 type business_rental_var_samp_fields {
   business_id: Float
@@ -3803,6 +4459,17 @@ type business_rental_var_samp_fields {
   position: Float
 }
 
+"""
+order by var_samp() on columns of table "business.rental"
+"""
+input business_rental_var_samp_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+}
+
 """aggregate variance on columns"""
 type business_rental_variance_fields {
   business_id: Float
@@ -3810,6 +4477,17 @@ type business_rental_variance_fields {
   id: Float
   name_id: Float
   position: Float
+}
+
+"""
+order by variance() on columns of table "business.rental"
+"""
+input business_rental_variance_order_by {
+  business_id: order_by
+  description_id: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
 }
 
 """
@@ -24497,7 +25175,6 @@ type restaurant_cart {
   """An object relationship"""
   customer: customer_customer!
   customer_id: Int!
-  discount_value: money!
 
   """An array relationship"""
   items(
@@ -24568,7 +25245,6 @@ type restaurant_cart_aggregate_fields {
 """aggregate avg on columns"""
 type restaurant_cart_avg_fields {
   customer_id: Float
-  discount_value: Float
   restaurant_id: Float
 }
 
@@ -24582,7 +25258,6 @@ input restaurant_cart_bool_exp {
   cost: money_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
-  discount_value: money_comparison_exp
   items: restaurant_cart_item_bool_exp
   items_aggregate: restaurant_cart_item_aggregate_bool_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -24604,7 +25279,6 @@ input type for incrementing numeric columns in table "restaurant.cart"
 """
 input restaurant_cart_inc_input {
   customer_id: Int
-  discount_value: money
   restaurant_id: Int
 }
 
@@ -24614,7 +25288,6 @@ input type for inserting data into table "restaurant.cart"
 input restaurant_cart_insert_input {
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
-  discount_value: money
   items: restaurant_cart_item_arr_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
   restaurant_id: Int
@@ -25113,14 +25786,12 @@ input restaurant_cart_item_variance_order_by {
 """aggregate max on columns"""
 type restaurant_cart_max_fields {
   customer_id: Int
-  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate min on columns"""
 type restaurant_cart_min_fields {
   customer_id: Int
-  discount_value: money
   restaurant_id: Int
 }
 
@@ -25159,7 +25830,6 @@ input restaurant_cart_order_by {
   cost: order_by
   customer: customer_customer_order_by
   customer_id: order_by
-  discount_value: order_by
   items_aggregate: restaurant_cart_item_aggregate_order_by
   restaurant: restaurant_restaurant_order_by
   restaurant_id: order_by
@@ -25178,9 +25848,6 @@ enum restaurant_cart_select_column {
   customer_id
 
   """column name"""
-  discount_value
-
-  """column name"""
   restaurant_id
 }
 
@@ -25189,28 +25856,24 @@ input type for updating data in table "restaurant.cart"
 """
 input restaurant_cart_set_input {
   customer_id: Int
-  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate stddev on columns"""
 type restaurant_cart_stddev_fields {
   customer_id: Float
-  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_cart_stddev_pop_fields {
   customer_id: Float
-  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_cart_stddev_samp_fields {
   customer_id: Float
-  discount_value: Float
   restaurant_id: Float
 }
 
@@ -25228,14 +25891,12 @@ input restaurant_cart_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input restaurant_cart_stream_cursor_value_input {
   customer_id: Int
-  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate sum on columns"""
 type restaurant_cart_sum_fields {
   customer_id: Int
-  discount_value: money
   restaurant_id: Int
 }
 
@@ -25245,9 +25906,6 @@ update columns of table "restaurant.cart"
 enum restaurant_cart_update_column {
   """column name"""
   customer_id
-
-  """column name"""
-  discount_value
 
   """column name"""
   restaurant_id
@@ -25265,21 +25923,18 @@ input restaurant_cart_updates {
 """aggregate var_pop on columns"""
 type restaurant_cart_var_pop_fields {
   customer_id: Float
-  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_cart_var_samp_fields {
   customer_id: Float
-  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_cart_variance_fields {
   customer_id: Float
-  discount_value: Float
   restaurant_id: Float
 }
 
@@ -29043,7 +29698,6 @@ type restaurant_order {
   delivery_cost: money!
   delivery_id: Int
   delivery_type: String!
-  discount_value: money!
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int!
@@ -29213,7 +29867,6 @@ type restaurant_order_avg_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
-  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -29230,7 +29883,6 @@ input restaurant_order_avg_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -29257,7 +29909,6 @@ input restaurant_order_bool_exp {
   delivery_cost: money_comparison_exp
   delivery_id: Int_comparison_exp
   delivery_type: String_comparison_exp
-  discount_value: money_comparison_exp
   estimated_food_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
@@ -29351,7 +30002,6 @@ input restaurant_order_inc_input {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
-  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -29375,7 +30025,6 @@ input restaurant_order_insert_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
-  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -29970,7 +30619,6 @@ type restaurant_order_max_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
-  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -30003,7 +30651,6 @@ input restaurant_order_max_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
-  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -30034,7 +30681,6 @@ type restaurant_order_min_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
-  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -30067,7 +30713,6 @@ input restaurant_order_min_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
-  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -30131,7 +30776,6 @@ input restaurant_order_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
-  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -30487,9 +31131,6 @@ enum restaurant_order_select_column {
   delivery_type
 
   """column name"""
-  discount_value
-
-  """column name"""
   estimated_food_ready_time
 
   """column name"""
@@ -30550,7 +31191,6 @@ input restaurant_order_set_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
-  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -30586,7 +31226,6 @@ type restaurant_order_stddev_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
-  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -30603,7 +31242,6 @@ input restaurant_order_stddev_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -30618,7 +31256,6 @@ type restaurant_order_stddev_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
-  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -30635,7 +31272,6 @@ input restaurant_order_stddev_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -30650,7 +31286,6 @@ type restaurant_order_stddev_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
-  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -30667,7 +31302,6 @@ input restaurant_order_stddev_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -30697,7 +31331,6 @@ input restaurant_order_stream_cursor_value_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
-  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -30733,7 +31366,6 @@ type restaurant_order_sum_fields {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
-  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -30750,7 +31382,6 @@ input restaurant_order_sum_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -30786,9 +31417,6 @@ enum restaurant_order_update_column {
 
   """column name"""
   delivery_type
-
-  """column name"""
-  discount_value
 
   """column name"""
   estimated_food_ready_time
@@ -30876,7 +31504,6 @@ type restaurant_order_var_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
-  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -30893,7 +31520,6 @@ input restaurant_order_var_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -30908,7 +31534,6 @@ type restaurant_order_var_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
-  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -30925,7 +31550,6 @@ input restaurant_order_var_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -30940,7 +31564,6 @@ type restaurant_order_variance_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
-  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -30957,7 +31580,6 @@ input restaurant_order_variance_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
-  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -33885,7 +34507,6 @@ type service_provider_post {
     """JSON select path"""
     path: String
   ): jsonb
-  link: String
   message: String!
   posted_on: timestamptz!
 
@@ -33946,7 +34567,6 @@ input service_provider_post_bool_exp {
   id: Int_comparison_exp
   image: String_comparison_exp
   likes: jsonb_comparison_exp
-  link: String_comparison_exp
   message: String_comparison_exp
   posted_on: timestamptz_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -34017,7 +34637,6 @@ input service_provider_post_insert_input {
 
   """Array of customerIds"""
   likes: jsonb
-  link: String
   message: String
   posted_on: timestamptz
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -34029,7 +34648,6 @@ input service_provider_post_insert_input {
 type service_provider_post_max_fields {
   id: Int
   image: String
-  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -34040,7 +34658,6 @@ type service_provider_post_max_fields {
 type service_provider_post_min_fields {
   id: Int
   image: String
-  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -34073,7 +34690,6 @@ input service_provider_post_order_by {
   id: order_by
   image: order_by
   likes: order_by
-  link: order_by
   message: order_by
   posted_on: order_by
   restaurant: restaurant_restaurant_order_by
@@ -34112,9 +34728,6 @@ enum service_provider_post_select_column {
   likes
 
   """column name"""
-  link
-
-  """column name"""
   message
 
   """column name"""
@@ -34138,7 +34751,6 @@ input service_provider_post_set_input {
 
   """Array of customerIds"""
   likes: jsonb
-  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -34183,7 +34795,6 @@ input service_provider_post_stream_cursor_value_input {
 
   """Array of customerIds"""
   likes: jsonb
-  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -34211,9 +34822,6 @@ enum service_provider_post_update_column {
 
   """column name"""
   likes
-
-  """column name"""
-  link
 
   """column name"""
   message

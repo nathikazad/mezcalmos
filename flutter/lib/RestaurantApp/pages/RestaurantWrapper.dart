@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/restaurantDeepLinkHandler.dart';
-import 'package:mezcalmos/Shared/DeepLinkHandler.dart';
+import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';

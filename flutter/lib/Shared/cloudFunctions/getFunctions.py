@@ -307,7 +307,7 @@ def printDartFormatFunction(key, value):
           print("=>")
           print(value["arguments"][v1])
           if len(matches) >= 1:
-            p2 = p2+'''.fold<List<dynamic>>([],
+            p2 = p2+'''?.fold<List<dynamic>>([],
               (List<dynamic> value, '''+ matches[0] +''' element) {
             value.add(element.toFirebaseFormattedJson());
             return value;
@@ -329,10 +329,12 @@ def printDartFormatFunction(key, value):
             value.add(element.toFirebaseFormattedJson());
             return value;
           }),\n        '''
+            if v1[-1] == "?":
+              p2 = p2.replace(".fold","?.fold")
         else:
           p2 = p2+".toFirebaseFormattedJson(),"+"\n"+"        "
-        if v1[-1] == "?":
-          p2 = p2.replace(".toFir","?.toFir")
+          if v1[-1] == "?":
+            p2 = p2.replace(".toFir","?.toFir")
         params += p2
       # elif value["arguments"][v1] == "JSON":
       #   params += "\""+v+"\""+":json.encode("+v+"),"+"\n"+"        "
@@ -427,6 +429,8 @@ if __name__ == "__main__":
   uniqueTypes["ServerResponseStatus"] = True
   uniqueTypes["ServiceType"] = True
   uniqueTypes["BusinessService"] = True
+  uniqueTypes["Rental"] = True
+
 
   for key in uniqueTypes:
     # print(key)

@@ -11,8 +11,7 @@ class RestaurantAppRoutes {
   static const String tabsRoute = '/tabsView';
   static const String opUnauthRoute = '/unauth';
 
-  static String getROpOrderRoute(String orderId) =>
-      '/restaurantOrders/$orderId';
+  static String getROpOrderRoute(int orderId) => '/restaurantOrders/$orderId';
 
   static List<QRoute> mainRoutes = [
         QRoute(

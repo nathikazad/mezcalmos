@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/MezAdminApp/router/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -148,9 +150,9 @@ mat.Widget _getRestaurantOrderIcon(value) {
 String getLinkUrl(OrderType orderType, int orderId) {
   switch (orderType) {
     case OrderType.Laundry:
-      return DeliveryAppRoutes.getLaundryOrderRoute(orderId);
+      return LaundryAppRoutes.getLaundryOpOrderRoute(orderId);
     case OrderType.Restaurant:
-      return DeliveryAppRoutes.getRestaurantOrderRoute(orderId);
+      return RestaurantAppRoutes.getROpOrderRoute(orderId);
     default:
       return SharedRoutes.kHomeRoute;
   }
