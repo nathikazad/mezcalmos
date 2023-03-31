@@ -4,10 +4,15 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustRequestCourierView"]["CustRequestCourierItems"];
 
 class CustRequestCourierItems extends StatelessWidget {
   const CustRequestCourierItems({super.key, required this.viewController});
@@ -58,7 +63,7 @@ class CustRequestCourierItems extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Item ${index + 1}",
+                  '${_i18n()["item"]} ${index + 1}',
                   style:
                       context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
@@ -75,9 +80,9 @@ class CustRequestCourierItems extends StatelessWidget {
                           color: redAccentColor,
                         ),
                         Text(
-                          'Remove',
-                          style: context.txt.bodyLarge
-                              ?.copyWith(color: redAccentColor),
+                          '${_i18n()["remove"]}',
+                          style: context.txt.bodyLarge?.copyWith(
+                              color: redAccentColor, fontSize: 11.sp),
                         )
                       ],
                     ),
@@ -88,7 +93,7 @@ class CustRequestCourierItems extends StatelessWidget {
               height: 5,
             ),
             Text(
-              "What can we get you?",
+              '${_i18n()["whatCanWeGetYou"]}',
               style: context.txt.bodyMedium?.copyWith(),
             ),
             SizedBox(
@@ -99,11 +104,11 @@ class CustRequestCourierItems extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: _textInput(
-                      hint: "Name",
+                      hint: '${_i18n()["name"]}',
                       context: context,
                       validator: (String? p0) {
                         if (p0 == null || p0.isEmpty) {
-                          return "Required";
+                          return '${_i18n()["required"]}';
                         }
                         return null;
                       },
@@ -138,10 +143,8 @@ class CustRequestCourierItems extends StatelessWidget {
                       child: (viewController.imagesFiles[index].path.isNotEmpty)
                           ? Align(
                               alignment: Alignment.topRight,
-                              child: Icon(
-                                Icons.cancel_rounded,
-                                color: offLightShadeGreyColor,
-                              ),
+                              child: Icon(Icons.cancel_rounded,
+                                  color: offLightShadeGreyColor, size: 12.5.sp),
                             )
                           : Center(
                               child: (viewController.imagesLoading
@@ -169,15 +172,15 @@ class CustRequestCourierItems extends StatelessWidget {
           height: 10,
         ),
         _textInput(
-            hint: "Notes",
-            textStyle: context.txt.bodyMedium,
+            hint: '${_i18n()["notes"]}',
             controller: viewController.itemsNotes[index],
             context: context),
         SizedBox(
           height: 10,
         ),
         _textInput(
-            hint: "Estimated cost",
+            isPrice: true,
+            hint: '${_i18n()["estimatedCost"]}',
             context: context,
             suffix: Icons.attach_money,
             controller: viewController.itemsEstCosts[index]),

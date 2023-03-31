@@ -69,8 +69,9 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
     await assignDeliveryDriver(assignDriverDetails, deliveryDriver.userId);
 
     setDeliveryChatInfo(deliveryOrder, deliveryDriver, deliveryOrder.orderType);
-      
-    sendNotificationToDriver(deliveryDriver, deliveryOrder);
+    
+    if( deliveryDriver.userId != userId)
+      sendNotificationToDriver(deliveryDriver, deliveryOrder);
     return {
       success: true
     }

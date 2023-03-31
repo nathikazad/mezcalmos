@@ -105,8 +105,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (viewController.currentOrders.isNotEmpty)
-                                Divider(),
                               Container(
                                 padding: const EdgeInsets.all(5),
                                 child: Text(

@@ -24,8 +24,6 @@ class DvOrderView extends StatefulWidget {
   const DvOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-   
-   
     return MezRouter.toPath(DeliveryAppRoutes.kDvOrderView
         .replaceAll(":orderId", orderId.toString()));
   }
@@ -87,67 +85,75 @@ class _DvOrderViewState extends State<DvOrderView> {
                     padding: _mapPadding,
                   ),
                   Positioned(
-                    bottom: _recenterBtnBottomPadding,
-                    right: 12,
-                    child: InkWell(
-                      onTap: () async {
-                        final LatLng _destination = LatLng(
-                            viewController.order.dropOffLocation.latitude,
-                            viewController.order.dropOffLocation.longitude);
-
-                        final String url =
-                            "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
-
-                        try {
-                          await launchUrlString(url);
-                        } catch (e) {
-                          await launchUrlString(url);
-                        }
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(.5),
-                                offset: Offset(-1, 0),
-                                spreadRadius: 1,
-                                blurRadius: 10)
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Icon(
-                          Icons.navigation_rounded,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
                     bottom: 2,
                     left: 5,
                     right: 4,
-                    child: Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: DvOrderBottomCard(
-                          viewcontroller: viewController,
-                          onCardStateChange: (OrderInfoCardState state) {
-                            setState(() {
-                              if (state == OrderInfoCardState.Maximized) {
-                                _recenterBtnBottomPadding = 315;
-                                _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 220);
-                              } else {
-                                _recenterBtnBottomPadding = 180;
-                                _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 120);
-                              }
-                            });
-                          },
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10, bottom: 10),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () async {
+                                final LatLng _destination = LatLng(
+                                    viewController
+                                        .order.dropOffLocation.latitude,
+                                    viewController
+                                        .order.dropOffLocation.longitude);
+
+                                final String url =
+                                    "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
+
+                                try {
+                                  await launchUrlString(url);
+                                } catch (e) {
+                                  await launchUrlString(url);
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(.5),
+                                        offset: Offset(-1, 0),
+                                        spreadRadius: 1,
+                                        blurRadius: 10)
+                                  ],
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  Icons.navigation_rounded,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        Card(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            child: DvOrderBottomCard(
+                              viewcontroller: viewController,
+                              onCardStateChange: (OrderInfoCardState state) {
+                                setState(() {
+                                  if (state == OrderInfoCardState.Maximized) {
+                                    _recenterBtnBottomPadding = 315;
+                                    _mapPadding =
+                                        EdgeInsets.only(top: 10, bottom: 220);
+                                  } else {
+                                    _recenterBtnBottomPadding = 180;
+                                    _mapPadding =
+                                        EdgeInsets.only(top: 10, bottom: 120);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 ],
