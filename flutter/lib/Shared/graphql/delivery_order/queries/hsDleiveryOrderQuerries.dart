@@ -450,6 +450,7 @@ ServiceInfo? _getServiceInfo(
     case OrderType.Laundry:
       dynamic laundryOrder =
           orderData.laundry_pickup_order ?? orderData.laundry_delivery_order;
+      mezDbgPrint("laundry order =============>$laundryOrder");
       return ServiceInfo(
           location: MezLocation.fromHasura(
               laundryOrder.store.details.location.gps,

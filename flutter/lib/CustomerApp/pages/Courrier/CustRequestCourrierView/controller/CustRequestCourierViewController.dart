@@ -148,6 +148,13 @@ class CustRequestCourierViewController {
               ),
             )
             .toList(),
+        fromLocationText: (fromLoc.value == null) ? fromLocText.text : null,
+        fromLocationGps: (fromLoc.value != null)
+            ? cModel.Location(
+                lat: fromLoc.value!.position.latitude!,
+                lng: fromLoc.value!.position.latitude!,
+                address: fromLoc.value!.address)
+            : null,
         deliveryCompanyId: company.value!.info.hasuraId,
         deliveryCost: shippingCost.value,
         scheduledTime: deliveryTime.value?.toUtc().toString(),

@@ -135,7 +135,10 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       margin: const EdgeInsets.only(top: 15),
                     ),
                   if (viewController.order.review != null)
-                    ReviewCard(review: viewController.order.review!),
+                    ReviewCard(
+                      review: viewController.order.review!,
+                      showReviewTitle: true,
+                    ),
                   OrderNoteCard(
                       margin: const EdgeInsets.only(top: 15),
                       note: viewController.order.notes),

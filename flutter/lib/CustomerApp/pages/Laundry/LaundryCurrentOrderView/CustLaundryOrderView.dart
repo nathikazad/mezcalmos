@@ -154,6 +154,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             if (viewController.order.value!.review != null)
                               ReviewCard(
                                   margin: const EdgeInsets.only(top: 15),
+                                  showReviewTitle: true,
                                   review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 margin: const EdgeInsets.only(top: 15),

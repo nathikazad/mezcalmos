@@ -726,7 +726,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
-        "writeReview" :"Write review",
+        "writeReview": "Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",
         "no": "No",
@@ -1086,8 +1086,8 @@
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
       },
-      "ReviewCard" : {
-        "review" :"Review"
+      "ReviewCard": {
+        "review": "Review"
       },
       "MezDateTimePicker": {
         "cancel": "Cancel",
@@ -1815,6 +1815,8 @@
               "wrongTime": "You picked a wrong time",
               "noPickupTimeTitle": "No pickup time",
               "noPickupTimeBody": "Please set pickup time first",
+              "setDvCostTitle": "No delivery cost",
+              "setDvCostBody": "Please set the delivery cost first inside order details",
               "noDeliveryTimeTitle": "No dropoff time",
               "noDeliveryTimeBody": "Please set dropoff time first",
               "orderStatus": {
@@ -2104,6 +2106,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
+        "review" : "Review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",

@@ -150,6 +150,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ),
                             if (viewController.order.value!.review != null)
                               ReviewCard(
+                                  showReviewTitle: true,
                                   review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 note: viewController.order.value!.notes),
