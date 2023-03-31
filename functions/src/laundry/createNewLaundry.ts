@@ -100,7 +100,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
         body: `There is a new Laundry Store`
       }
     },
-    linkUrl: laundryUrl(laundryStore.id!)
+    linkUrl: laundryUrl(laundryStore.id)
   };
   mezAdmins.forEach((m) => {
     pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

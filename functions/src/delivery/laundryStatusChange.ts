@@ -3,7 +3,7 @@ import { LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification 
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
-import { NotificationType, NotificationAction, Notification, OrderNotification } from "../shared/models/Notification";
+import { NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
 import { Operator, ServiceProvider } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -15,8 +15,7 @@ import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaund
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 import { createLaundryToCustomerDeliveryOrder } from "../shared/graphql/delivery/createDelivery";
 import { setLaundryToCustomerDeliveryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
-import { deliveryNewOrderMessage } from "./bgNotificationMessages";
-import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
+import { notifyDeliveryCompany } from "../shared/helper";
 
 
 export async function changeLaundryOrderStatus(
@@ -44,7 +43,7 @@ export async function changeLaundryOrderStatus(
           setLaundryToCustomerDeliveryOrderChatInfo(laundryOrder, laundryStore, toCustomerDeliveryOrder, customer);
 
           if(laundryStore.deliveryDetails.selfDelivery == false)
-            notifyDeliveryOperators(laundryOrder, laundryStore);
+            notifyDeliveryCompany(toCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry);
           break;
         default:
           break;
@@ -97,7 +96,7 @@ function notify(laundryOrder: LaundryOrder, deliveryOrder: DeliveryOrder, laundr
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: LaundryOrderStatusChangeMessages[laundryOrder.status],
-    linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
+    linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId)
   };
 
   switch (laundryOrder.status) {
@@ -128,22 +127,4 @@ function notify(laundryOrder: LaundryOrder, deliveryOrder: DeliveryOrder, laundr
     default:
       break;
   }
-}
-async function notifyDeliveryOperators(laundryOrder: LaundryOrder, laundryStore: ServiceProvider) {
-  let deliveryOperators = await getDeliveryOperators(laundryStore.deliveryPartnerId!);
-
-  let toCustomerNotification: Notification = {
-    foreground: <OrderNotification>{
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
-        orderType: OrderType.Laundry,
-        notificationAction: NotificationAction.ShowPopUp,
-        orderId: laundryOrder.toCustomerDeliveryId
-    },
-    background: deliveryNewOrderMessage,
-    linkUrl: `/orders/${laundryOrder.toCustomerDeliveryId}`
-  }
-  deliveryOperators.forEach((d) => {
-    pushNotification(d.user?.firebaseId!, toCustomerNotification, d.notificationInfo, ParticipantType.DeliveryOperator);
-  });
 }

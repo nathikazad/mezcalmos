@@ -31,7 +31,7 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder, delive
         orderId: deliveryOrder.deliveryId
       },
       background: deliveryNewOrderMessage,
-      linkUrl: `/orders/${deliveryOrder.deliveryId}`
+      linkUrl: `/deliveryOrders/${deliveryOrder.deliveryId}`
     }
   
     deliveryOperators.forEach((d) => {
@@ -71,6 +71,7 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder, delive
       }
     }
     deliveryDrivers = deliveryDrivers.slice(0, 10);
+    notification.linkUrl = `/`
     deliveryDrivers.forEach((d) => {
       pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver);
     });
