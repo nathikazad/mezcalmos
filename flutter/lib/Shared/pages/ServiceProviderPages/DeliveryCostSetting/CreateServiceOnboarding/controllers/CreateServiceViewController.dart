@@ -58,7 +58,7 @@ class CreateServiceViewController {
   // info inputs //
 
   final Rxn<MezLocation> newLocation = Rxn();
-  final Rxn<File> newImageFile = Rxn();
+  final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
 
@@ -74,7 +74,7 @@ class CreateServiceViewController {
 
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
-      return FileImage(newImageFile.value!);
+      return FileImage(File(newImageFile.value!.path));
     } else if (newImageUrl.value != null) {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
@@ -88,8 +88,9 @@ class CreateServiceViewController {
 
   Future<void> _setImage() async {
     if (newImageFile.value != null) {
-      newImageUrl.value = await uploadServiceImgToFbStorage(
-          imageFile: newImageFile.value!, isCompressed: false);
+      newImageUrl.value = await uploadImgToFbStorage(
+          imageFile: newImageFile.value!,
+          pathPrefix: "restaurants/$serviceName/avatar/");
     }
   }
 
@@ -104,7 +105,7 @@ class CreateServiceViewController {
 
       try {
         if (_res != null) {
-          newImageFile.value = File(_res.path);
+          newImageFile.value = _res;
         }
         imageLoading.value = false;
       } catch (e) {
@@ -351,37 +352,37 @@ class CreateServiceViewController {
     };
   }
 
-  Future<String> uploadServiceImgToFbStorage({
-    required File imageFile,
-    bool isCompressed = false,
-  }) async {
-    File compressedFile = imageFile;
-    if (isCompressed == false) {
-      // this holds userImgBytes of the original
-      final Uint8List originalBytes = await imageFile.readAsBytes();
-      // this is the bytes of our compressed image .
-      final Uint8List _compressedVersion =
-          await compressImageBytes(originalBytes);
-      // Get the actual File compressed
-      compressedFile = await writeFileFromBytesAndReturnIt(
-          filePath: imageFile.path, imgBytes: _compressedVersion);
-    }
-    String _uploadedImgUrl;
-    final List<String> splitted = imageFile.path.split('.');
-    final String imgPath =
-        "restaurants/$serviceName/avatar/$serviceName.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
-    try {
-      await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .putFile(compressedFile);
-    } on firebase_core.FirebaseException catch (e) {
-      mezDbgPrint(e.message.toString());
-    } finally {
-      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .getDownloadURL();
-    }
+  // Future<String> uploadServiceImgToFbStorage({
+  //   required File imageFile,
+  //   bool isCompressed = false,
+  // }) async {
+  //   File compressedFile = imageFile;
+  //   if (isCompressed == false) {
+  //     // this holds userImgBytes of the original
+  //     final Uint8List originalBytes = await imageFile.readAsBytes();
+  //     // this is the bytes of our compressed image .
+  //     final Uint8List _compressedVersion =
+  //         await compressImageBytes(originalBytes);
+  //     // Get the actual File compressed
+  //     compressedFile = await writeFileFromBytesAndReturnIt(
+  //         filePath: imageFile.path, imgBytes: _compressedVersion);
+  //   }
+  //   String _uploadedImgUrl;
+  //   final List<String> splitted = imageFile.path.split('.');
+  //   final String imgPath =
+  //       "restaurants/$serviceName/avatar/$serviceName.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+  //   try {
+  //     await firebase_storage.FirebaseStorage.instance
+  //         .ref(imgPath)
+  //         .putFile(compressedFile);
+  //   } on firebase_core.FirebaseException catch (e) {
+  //     mezDbgPrint(e.message.toString());
+  //   } finally {
+  //     _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+  //         .ref(imgPath)
+  //         .getDownloadURL();
+  //   }
 
-    return _uploadedImgUrl;
-  }
+  //   return _uploadedImgUrl;
+  // }
 }

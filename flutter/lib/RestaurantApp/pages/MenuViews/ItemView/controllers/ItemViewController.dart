@@ -51,7 +51,7 @@ class ROpItemViewController {
   final Rxn<Category> currentCategory = Rxn();
   Rx<LanguageType> prLang = Rx(LanguageType.ES);
   Rx<LanguageType> scLang = Rx(LanguageType.ES);
-  final Rxn<File> newImageFile = Rxn();
+  final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
   final RxList<Option> itemOptions = RxList([]);
@@ -172,9 +172,9 @@ class ROpItemViewController {
           "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
     }
     if (newImageFile.value != null) {
-      newImageUrl.value = await Get.find<AuthController>().uploadImgToFbStorage(
+      newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          path: "/restaurants/$restaurantId/items/images");
+          pathPrefix: "/restaurants/$restaurantId/items/images");
     }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(
@@ -267,7 +267,7 @@ class ROpItemViewController {
 
       try {
         if (_res != null) {
-          newImageFile.value = File(_res.path);
+          newImageFile.value = _res;
         }
         imageLoading.value = false;
       } catch (e) {
@@ -286,7 +286,7 @@ class ROpItemViewController {
 
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
-      return FileImage(newImageFile.value!);
+      return FileImage(File(newImageFile.value!.path));
     } else if (newImageUrl.value != null) {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else

@@ -15,8 +15,6 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreenWeb.dart'
-    deferred as userProfileScreen;
 
 Function signInCallback = CustomerAuthHooksBase.onSignInHook;
 Function signOutCallback = CustomerAuthHooksBase.onSignOutHook;
@@ -29,14 +27,7 @@ List<QRoute> routes = XRouter.mainRoutes +
           builder: () => baseMessagingScreen.BaseMessagingScreen(),
           middleware: <QMiddleware>[
             DefferedLoader(baseMessagingScreen.loadLibrary)
-          ]),
-      QRoute(
-          path: SharedRoutes.kUserNewProfile,
-          name: SharedRoutes.kUserNewProfile,
-          builder: () => userProfileScreen.UserProfile(),
-          middleware: <QMiddleware>[
-            DefferedLoader(userProfileScreen.loadLibrary)
-          ]),
+          ])
     ];
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(

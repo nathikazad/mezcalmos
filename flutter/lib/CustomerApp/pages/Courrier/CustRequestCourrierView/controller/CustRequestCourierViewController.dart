@@ -39,7 +39,7 @@ class CustRequestCourierViewController {
   RxList<int> imagesLoading = RxList.empty();
   TextEditingController fromLocText = TextEditingController();
   Rxn<MezLocation> fromLoc = Rxn();
-  RxMap<int, File> newImages = RxMap({});
+  RxMap<int, imPicker.XFile> newImages = RxMap({});
   Rxn<MezLocation> toLoc = Rxn();
   Rxn<DateTime> deliveryTime = Rxn();
   Rxn<DeliveryCompany> company = Rxn();
@@ -168,10 +168,10 @@ class CustRequestCourierViewController {
 
   Future<void> _uploadItemsImages() async {
     await Future.forEach(newImages.keys, (int key) async {
-      await Get.find<AuthController>()
-          .uploadImgToFbStorage(
+      await uploadImgToFbStorage(
               imageFile: newImages[key]!,
-              path: "/Courier/items/${DateTime.now().toIso8601String()}")
+              pathPrefix:
+                  "${Get.find<AuthController>().hasuraUserId!}/Courier/items/${DateTime.now().toIso8601String()}")
           .then((String url) => items[key].image = url);
     });
   }
@@ -231,7 +231,7 @@ class CustRequestCourierViewController {
       try {
         if (_res != null) {
           imagesFiles[itemIndex] = File(_res.path);
-          newImages.addAll({itemIndex: File(_res.path)});
+          newImages.addAll({itemIndex: _res});
         }
         imagesLoading.remove(itemIndex);
       } catch (e) {
