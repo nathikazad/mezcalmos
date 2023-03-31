@@ -162,6 +162,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               ),
               if (widget.viewcontroller.order.inProcess())
                 MezIconButton(
+                  backgroundColor: backgroundShadeColor,
+                  iconColor: offShadeGreyColor,
                   onTap: () async {
                     DateTime? newTime = await _pickDateAndTime(
                         context: context,
@@ -172,9 +174,9 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                           .setPickupTime(newTime.toLocal());
                     }
                   },
-                  icon: Icons.edit_rounded,
+                  icon: Icons.edit_outlined,
                   padding: EdgeInsets.all(3),
-                  iconSize: 20,
+                  iconSize: 19,
                 )
             ],
           )
@@ -191,6 +193,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               ),
               if (widget.viewcontroller.order.inProcess())
                 MezIconButton(
+                  backgroundColor: backgroundShadeColor,
+                  iconColor: offShadeGreyColor,
                   onTap: () async {
                     mezDbgPrint(widget.viewcontroller.inPickupPhase);
                     if (widget.viewcontroller.pickuSetted ||
@@ -209,9 +213,9 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                           errorText: "${_i18n()['noPickupTimeBody']}");
                     }
                   },
-                  icon: Icons.edit_rounded,
+                  icon: Icons.edit_outlined,
                   padding: EdgeInsets.all(3),
-                  iconSize: 20,
+                  iconSize: 19,
                 )
             ],
           )

@@ -350,7 +350,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
             ],
           ),
-         
         ],
       ),
     );
@@ -387,7 +386,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Icon(
           Icons.delivery_dining,
@@ -411,7 +410,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         Icon(
           Icons.route_outlined,
           color: Color.fromRGBO(73, 73, 73, 1),
-          size: 18,
+          size: 17,
         ),
         SizedBox(width: 3),
         Flexible(
