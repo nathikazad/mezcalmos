@@ -101,6 +101,11 @@ class SharedRoutes {
         middleware: <QMiddleware>[
           DefferedLoader(otpConfirmationScreen.loadLibrary)
         ]),
+    QRoute(
+        path: SharedRoutes.kUserNewProfile,
+        name: SharedRoutes.kUserNewProfile,
+        builder: () => userProfileView.UserProfileView(),
+        middleware: <QMiddleware>[DefferedLoader(userProfileView.loadLibrary)]),
     // QRoute(
     //     path: kPickLocationEdit,
     //     name: kPickLocationEdit,

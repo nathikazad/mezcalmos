@@ -27,10 +27,6 @@ class NativeOnlyRoutes {
       name: kAppNeedsUpdateRoute,
       path: kAppNeedsUpdateRoute,
       builder: () => AppNeedsUpdateScreen(),
-    ),
-    QRoute(
-        path: SharedRoutes.kUserNewProfile,
-        name: SharedRoutes.kUserNewProfile,
-        builder: () => UserProfileView()),
+    )
   ];
 }

@@ -21,7 +21,7 @@ class UserProfileViewController {
   RxString name = RxString("");
 
 // Obs //
-  final Rxn<File> newImageFile = Rxn();
+  final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
   Rx<UserProfileViewMode> mode = Rx(UserProfileViewMode.None);
@@ -41,7 +41,7 @@ class UserProfileViewController {
 
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
-      return FileImage(newImageFile.value!);
+      return FileImage(File(newImageFile.value!.path));
     } else if (newImageUrl.value != null) {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
@@ -80,8 +80,7 @@ class UserProfileViewController {
     if (newImageFile.value != null) {
       newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          isCompressed: false,
-          hasuraUserId: _authController.hasuraUserId!);
+          pathPrefix: "users/${_authController.hasuraUserId!}/avatar/");
     }
   }
 
@@ -96,7 +95,8 @@ class UserProfileViewController {
 
       try {
         if (_res != null) {
-          newImageFile.value = File(_res.path);
+          newImageFile.value = _res;
+          // newImageFile.value = File(_res.path);
         }
         imageLoading.value = false;
       } catch (e) {
