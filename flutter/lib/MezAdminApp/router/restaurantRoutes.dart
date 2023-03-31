@@ -3,62 +3,50 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MezAdminRestaurantRoutes {
-  static const String menuViewRoute = '/menu/:restaurantId';
-  static const String categoryViewRoute = '/categoryScreen/:restaurantId';
-  static const String editCategoryScreenRoute =
-      '/categoryScreen/:categoryId/:restaurantId';
-  static const String addItemViewRoute = '/itemView/:restaurantId';
-  static const String editItemViewRoute =
-      '/itemView/:restaurantId/:itemId/:categoryId';
-  static const String restaurantOrderViewRoute = '/restaurantOrders/:orderId';
-  static const String restaurantOptionRoute =
-      "/optionView/:restaurantId/:itemId/:optionId";
-  static const String restaurantChoiceView =
-      "/Choice/:restaurantId:/:optionId/:choiceId";
-
   static final List<QRoute> mainRoutes = <QRoute>[
     QRoute(
-      path: menuViewRoute,
-      name: menuViewRoute,
+      path: RestaurantRouter.menuViewRoute,
+      name: RestaurantRouter.menuViewRoute,
       builder: () => ROpMenuView(),
     ),
     QRoute(
-      path: categoryViewRoute,
-      name: categoryViewRoute,
+      path: RestaurantRouter.restaurantCategoryRoute,
+      name: RestaurantRouter.restaurantCategoryRoute,
       builder: () => ROpCategoryView(),
     ),
     QRoute(
-      path: editCategoryScreenRoute,
-      name: editCategoryScreenRoute,
+      path: RestaurantRouter.restaurantEditCategoryRoute,
+      name: RestaurantRouter.restaurantEditCategoryRoute,
       builder: () => ROpCategoryView(),
     ),
     QRoute(
-      path: addItemViewRoute,
-      name: addItemViewRoute,
+      path: RestaurantRouter.restaurantItemRoute,
+      name: RestaurantRouter.restaurantItemRoute,
       builder: () => ROpItemView(),
     ),
     QRoute(
-      path: editItemViewRoute,
-      name: editItemViewRoute,
+      path: RestaurantRouter.restaurantItemRoute,
+      name: RestaurantRouter.restaurantItemRoute,
       builder: () => ROpItemView(),
     ),
     QRoute(
-      path: restaurantOrderViewRoute,
-      name: restaurantOrderViewRoute,
+      path: RestaurantRouter.restaurantOrderRoute,
+      name: RestaurantRouter.restaurantOrderRoute,
       builder: () => RestaurantOrderView(),
     ),
     QRoute(
-      path: restaurantOptionRoute,
-      name: restaurantOptionRoute,
+      path: RestaurantRouter.restaurantOptionRoute,
+      name: RestaurantRouter.restaurantOptionRoute,
       builder: () => ROpOptionView(),
     ),
     QRoute(
-      path: restaurantChoiceView,
-      name: restaurantChoiceView,
+      path: RestaurantRouter.restaurantChoiceRoute,
+      name: RestaurantRouter.restaurantChoiceRoute,
       builder: () => ROpChoiceView(),
     ),
   ];

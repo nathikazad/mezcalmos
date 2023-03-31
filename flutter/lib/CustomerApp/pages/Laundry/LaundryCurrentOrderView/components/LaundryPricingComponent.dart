@@ -30,7 +30,7 @@ class LaundryPricingCompnent extends StatelessWidget {
           children: <Widget>[
             Text(
               _i18n()['laundryPricing'],
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -52,11 +52,11 @@ class LaundryPricingCompnent extends StatelessWidget {
                       children: [
                         Text(
                           '${_i18n()["total"]}',
-                          style: context.txt.bodyText1,
+                          style: context.txt.bodyLarge,
                         ),
                         Text(
                           order.costsByType!.weighedCost.toPriceString(),
-                          style: context.txt.bodyText1,
+                          style: context.txt.bodyLarge,
                         )
                       ],
                     ),

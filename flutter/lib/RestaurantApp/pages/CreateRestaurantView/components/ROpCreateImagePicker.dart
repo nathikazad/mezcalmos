@@ -36,7 +36,7 @@ class ROpCreateRestaurantImage extends StatelessWidget {
                           ? Center(
                               child: Text(
                                 'Add image',
-                                style: context.txt.bodyText1,
+                                style: context.txt.bodyLarge,
                                 textAlign: TextAlign.center,
                               ),
                             )

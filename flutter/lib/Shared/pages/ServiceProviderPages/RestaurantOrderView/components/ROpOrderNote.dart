@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -28,7 +28,7 @@ class ROpOrderNote extends StatelessWidget {
             children: <Widget>[
               Text(
                 '${_i18n()["notes"]} ',
-                style: context.txt.bodyText1,
+                style: context.txt.bodyLarge,
                 textAlign: TextAlign.left,
               ),
               const SizedBox(height: 10),

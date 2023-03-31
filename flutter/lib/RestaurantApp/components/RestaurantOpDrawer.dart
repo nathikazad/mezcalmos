@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
@@ -91,7 +91,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       icon: Icons.alternate_email,
                       titleWidget: Text(
                         '${_i18n()["contact"]}',
-                        style: context.txt.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                     _languageSwitcher(),
@@ -105,7 +105,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       titleWidget: Text(
                         '${_i18n()["logout"]}',
                         style:
-                            context.txt.bodyText1?.copyWith(color: Colors.red),
+                            context.txt.bodyLarge?.copyWith(color: Colors.red),
                       ),
                     ),
                   ],
@@ -134,7 +134,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
           children: [
             Text(
               "${_i18n()["language"]}",
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
@@ -178,7 +178,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
             icon: Icons.notifications,
             titleWidget: Text(
               "${_i18n()["notifications"]}",
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             )),
       ],
     );

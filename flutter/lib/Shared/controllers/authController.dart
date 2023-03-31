@@ -27,6 +27,7 @@ class AuthController extends GetxController {
 
   RxnInt _hasuraUserId = RxnInt();
   int? get hasuraUserId => _hasuraUserId.value;
+  RxBool isUserSetted = RxBool(false);
 
   Rxn<UserInfo> _userInfo = Rxn();
   UserInfo? get user => _userInfo.value;

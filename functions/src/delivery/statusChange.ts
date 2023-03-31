@@ -6,13 +6,16 @@ import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { OrderType } from "../shared/models/Generic/Order";
 import { changeRestaurantOrderStatus } from "./restaurantStatusChange";
 import { changeLaundryOrderStatus } from "./laundryStatusChange";
-import { CourierOrderStatusChangeNotification } from "../shared/models/Services/Courier/Courier";
+import { CourierOrder, CourierOrderStatusChangeNotification } from "../shared/models/Services/Courier/Courier";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { isMezAdmin } from "../shared/helper";
 import { MezError } from "../shared/models/Generic/Generic";
+import { cancelCourierFromDelivery } from "../shared/graphql/delivery/courier/updateCourier";
+import { deliveryOrderUrl, orderUrl } from "../utilities/senders/appRoutes";
+import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
@@ -24,10 +27,11 @@ let statusArrayInSeq: Array<DeliveryOrderStatus> = [
 ]
 
 function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
-  if(newStatus == DeliveryOrderStatus.CancelledByAdmin) {
+  if(newStatus == DeliveryOrderStatus.CancelledByAdmin || newStatus == DeliveryOrderStatus.CancelledByDeliverer) {
     if(!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
       throw new MezError(ChangeDeliveryStatusError.OrderNotInProcess);
     }
+
     return;
   }
   if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
@@ -55,7 +59,7 @@ enum ChangeDeliveryStatusError {
   OrderNotFound = "orderNotFound",
   DriverNotAssigned = "driverNotAssigned",
   OrderNotInProcess = "orderNotInProcess",
-  UnAuthorizedAccess = "unAuthorizedAccess",
+  UnauthorizedAccess = "unauthorizedAccess",
   OrderDriverMismatch = "orderDriverMismatch",
   CustomerNotFound = "customerNotFound",
   InvalidStatus = "invalidStatus",
@@ -67,7 +71,8 @@ enum ChangeDeliveryStatusError {
   LaundryStoreNotfound = "laundryStoreNotfound",
   OrderCreationError = "orderCreationError",
   NoDeliveryChatWithStoreId = " noDeliveryChatWithStoreId",
-  DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound"
+  DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+  CannotCancelByDriver = "cannotCancelByDriver"
 }
 
 export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails): Promise<ChangeDeliveryStatusResponse> {
@@ -92,6 +97,9 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
         break;
       case OrderType.Courier:
         notifyCourierStatusChange(deliveryOrder, customer);
+        if(deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer) {
+          cancelCourierFromDelivery(deliveryOrder.deliveryId)
+        }
       default:
         break;
     }
@@ -122,21 +130,23 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStat
   if (deliveryOrder.deliveryDriver == null) {
     throw new MezError(ChangeDeliveryStatusError.DriverNotAssigned);
   }
-  if (deliveryOrder.status == (DeliveryOrderStatus.Delivered
-    || DeliveryOrderStatus.CancelledByCustomer
-    || DeliveryOrderStatus.CancelledByDeliverer
-    || DeliveryOrderStatus.CancelledByServiceProvider
-  )) {
-    throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
+  if (deliveryOrder.status == DeliveryOrderStatus.Delivered
+    || deliveryOrder.status == DeliveryOrderStatus.CancelledByCustomer
+    || deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer
+    || deliveryOrder.status == DeliveryOrderStatus.CancelledByServiceProvider
+  ) {
+    throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
   }
-  if (userId != deliveryOrder.deliveryDriver.userId && !(await isMezAdmin(userId))) {
-    throw new MezError(ChangeDeliveryStatusError.UnAuthorizedAccess);
+  if (!(await isMezAdmin(userId))) {
+    if(userId != deliveryOrder.deliveryDriver.userId)
+      throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
+    else if(newStatus == DeliveryOrderStatus.CancelledByDeliverer && deliveryOrder.orderType != OrderType.Courier)
+      throw new MezError(ChangeDeliveryStatusError.CannotCancelByDriver);
   }
-
 }
 
-function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
-
+async function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
+  let courierOrder: CourierOrder = await getCourierOrderFromDelivery(deliveryOrder)
   let notification: Notification = {
     foreground: <CourierOrderStatusChangeNotification>{
       status: deliveryOrder.status,
@@ -148,7 +158,7 @@ function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: Custo
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: deliveryOrderStatusChangeMessages[deliveryOrder.status],
-    linkUrl: '/'
+    linkUrl: orderUrl(OrderType.Courier, courierOrder.id)
   };
 
   pushNotification(
@@ -159,6 +169,7 @@ function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: Custo
     customer.language
   );
   if(deliveryOrder.status == DeliveryOrderStatus.CancelledByAdmin && deliveryOrder.deliveryDriver) {
+    notification.linkUrl = deliveryOrderUrl(deliveryOrder.deliveryId);
     pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!,
       notification,
       deliveryOrder.deliveryDriver.notificationInfo,

@@ -61,7 +61,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
                           _i18n()['newVersion'], //remoteVersion
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: 18,
                                     color: Colors.purple.shade900,
                                   ),
@@ -112,7 +112,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
               "v${_versionStatus?.storeVersion} ${_i18n()['news']}",
               textAlign: TextAlign.center,
               style:
-                  Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20),
+                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
             ),
             const SizedBox(height: 25),
             Text(

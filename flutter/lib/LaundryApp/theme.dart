@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
@@ -168,13 +167,13 @@ class LaundryAppTheme {
           fontSize: 14.sp,
           color: Colors.black,
         ),
-        bodyText1: TextStyle(
+        bodyLarge: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 12.sp,
           color: Colors.black,
         ),
-        bodyText2: TextStyle(
+        bodyMedium: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w500,
           height: 1.5,

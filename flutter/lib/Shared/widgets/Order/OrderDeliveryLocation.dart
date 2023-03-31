@@ -49,7 +49,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       address,
-                      style: context.txt.bodyText1?.copyWith(
+                      style: context.txt.bodyLarge?.copyWith(
                         fontSize: 12.sp,
                       ),
                       maxLines: 1,

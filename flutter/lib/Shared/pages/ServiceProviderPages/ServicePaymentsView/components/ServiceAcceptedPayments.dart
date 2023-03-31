@@ -84,7 +84,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //         fit: FlexFit.tight,
           //         child: Text(
           //           'Bank Transfer',
-          //           style: context.txt.bodyText1,
+          //           style: context.txt.bodyLarge,
           //         ),
           //       ),
           //       // SizedBox(
@@ -185,7 +185,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //           children: [
           //             Text(
           //               '${_i18n()["card"]}',
-          //               style: context.txt.bodyText1,
+          //               style: context.txt.bodyLarge,
           //             ),
           //             const SizedBox(
           //               width: 3,
@@ -231,7 +231,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                 ),
                 Text(
                   "Card fees",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 5),

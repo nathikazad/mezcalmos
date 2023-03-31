@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -89,7 +87,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
                 // enabled: (widget.oppositeLanguageValue != null &&
                 //     widget.oppositeLanguageValue!.value != value),
                 child: Text(value.name![userLanguage] ?? "error",
-                    style: context.txt.bodyText2?.copyWith(
+                    style: context.txt.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                     )));
           }).toList(),

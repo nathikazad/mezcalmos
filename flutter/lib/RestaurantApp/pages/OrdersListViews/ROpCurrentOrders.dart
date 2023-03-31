@@ -138,7 +138,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                     textColor: primaryBlueColor,
                     height: 32,
                     width: 35.w,
-                    textStyle: Get.textTheme.bodyLarge
+                    textStyle: context.txt.bodyLarge
                         ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
                     // width: ,
                     borderRadius: 35,

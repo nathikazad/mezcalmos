@@ -34,7 +34,7 @@ class OrderLaundryCard extends StatelessWidget {
                   children: [
                     Text(
                       order.serviceProvider.name,
-                      style: context.txt.bodyText1,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 5,

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 
 //
@@ -60,7 +60,7 @@ class DriverSelectCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     driver.driverInfo.name,
-                    style: context.txt.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   const SizedBox(height: 5),
                   (driver.deliveryDriverState.online)
@@ -74,7 +74,7 @@ class DriverSelectCard extends StatelessWidget {
                             const SizedBox(width: 5),
                             Text(
                               '${_i18n()["available"]}',
-                              style: context.txt.bodyText2,
+                              style: context.txt.bodyMedium,
                             )
                           ],
                         )
@@ -88,7 +88,7 @@ class DriverSelectCard extends StatelessWidget {
                             const SizedBox(width: 5),
                             Text(
                               '${_i18n()["unavailable"]}',
-                              style: context.txt.bodyText2,
+                              style: context.txt.bodyMedium,
                             )
                           ],
                         )
@@ -97,7 +97,7 @@ class DriverSelectCard extends StatelessWidget {
             ),
             Text(
               '${_i18n()["assign"]}',
-              style: context.txt.bodyText1?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
             ),
             const SizedBox(
               width: 5,

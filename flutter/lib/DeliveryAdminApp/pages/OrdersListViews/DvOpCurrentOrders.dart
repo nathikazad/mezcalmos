@@ -104,7 +104,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: context.txt.bodyText1)),
+                        style: context.txt.bodyLarge)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,

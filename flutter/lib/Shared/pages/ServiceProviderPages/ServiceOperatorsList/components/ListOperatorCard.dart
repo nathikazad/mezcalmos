@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
@@ -71,7 +71,7 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                       children: <Widget>[
                         Text(
                           widget.operator.info.name,
-                          style: context.txt.bodyText1,
+                          style: context.txt.bodyLarge,
                         ),
                         const SizedBox(height: 5),
                         Row(

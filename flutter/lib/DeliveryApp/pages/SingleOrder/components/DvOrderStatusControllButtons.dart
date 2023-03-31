@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
@@ -7,6 +6,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -84,25 +84,31 @@ class _DvOrderStatusControllButtonsState
       label: _getBtnTitle(),
       borderRadius: 0,
       onClick: () async {
-        switch (widget.viewController.order.status) {
-          case DeliveryOrderStatus.OrderReceived:
-            await widget.viewController.startPickup();
-            break;
-          case DeliveryOrderStatus.OnTheWayToPickup:
-            await widget.viewController.atPickup();
+        if (widget.viewController.order.isTimeSetted) {
+          switch (widget.viewController.order.status) {
+            case DeliveryOrderStatus.OrderReceived:
+              await widget.viewController.startPickup();
+              break;
+            case DeliveryOrderStatus.OnTheWayToPickup:
+              await widget.viewController.atPickup();
 
-            break;
-          case DeliveryOrderStatus.AtPickup:
-            await widget.viewController.startDropoff();
-            break;
-          case DeliveryOrderStatus.OnTheWayToDropoff:
-            await widget.viewController.atDropoff();
-            break;
-          case DeliveryOrderStatus.AtDropoff:
-            await widget.viewController.finishDelivery();
-            break;
+              break;
+            case DeliveryOrderStatus.AtPickup:
+              await widget.viewController.startDropoff();
+              break;
+            case DeliveryOrderStatus.OnTheWayToDropoff:
+              await widget.viewController.atDropoff();
+              break;
+            case DeliveryOrderStatus.AtDropoff:
+              await widget.viewController.finishDelivery();
+              break;
 
-          default:
+            default:
+          }
+        } else {
+          showErrorSnackBar(
+              errorText:
+                  "Please set estimated times before starting the delivery");
         }
       },
     );
@@ -280,5 +286,4 @@ class _DvOrderStatusControllButtonsState
         return "";
     }
   }
-
 }

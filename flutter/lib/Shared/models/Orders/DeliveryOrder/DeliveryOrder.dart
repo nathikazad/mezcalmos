@@ -44,7 +44,10 @@ class DeliveryOrder extends DeliverableOrder {
   bool get isDropOffTimeSetted => estimatedArrivalAtDropoff != null;
 
   bool get isDriverAssigned => driverInfo != null;
-  bool get isTimeSetted => isPickUpTimeSetted && isDropOffTimeSetted;
+  bool get isCourier => orderType == OrderType.Courier;
+  bool get isTimeSetted => isCourier
+      ? isDropOffTimeSetted
+      : (isPickUpTimeSetted && isDropOffTimeSetted);
   bool get inPickUpPhase =>
       status == DeliveryOrderStatus.OrderReceived ||
       status == DeliveryOrderStatus.OnTheWayToPickup ||

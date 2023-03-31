@@ -28,17 +28,41 @@ class RestaurantRouter {
   static const String restaurantChoiceRoute =
       "/Choice/:restaurantId/:optionId/:choiceId";
 
-  final List<QRoute> routes = <QRoute>[
-    QRoute(
-      path: createRestaurantRoute,
-      name: createRestaurantRoute,
-      builder: () => ROpCreateRestuarantView(),
-    ),
-    QRoute(
-      path: unAuthorizedRoute,
-      name: unAuthorizedRoute,
-      builder: () => ROpUnauthorizedOpView(),
-    ),
+  static final List<QRoute> routes = <QRoute>[
+        QRoute(
+          path: createRestaurantRoute,
+          name: createRestaurantRoute,
+          builder: () => ROpCreateRestuarantView(),
+        ),
+        QRoute(
+          path: unAuthorizedRoute,
+          name: unAuthorizedRoute,
+          builder: () => ROpUnauthorizedOpView(),
+        ),
+        QRoute(
+          path: currentOrdersRoute,
+          name: currentOrdersRoute,
+          builder: () => ROpCurrentOrdersListView(),
+        ),
+        QRoute(
+          path: pastOrdersRoute,
+          name: pastOrdersRoute,
+          builder: () => ROpPastOrdersList(),
+        ),
+        QRoute(
+          path: restaurantOptionRoute,
+          name: restaurantOptionRoute,
+          builder: () => ROpOptionView(),
+        ),
+        QRoute(
+          path: restaurantChoiceRoute,
+          name: restaurantChoiceRoute,
+          builder: () => ROpChoiceView(),
+        ),
+      ] +
+      sharedWithAdminRoutes;
+
+  static final List<QRoute> sharedWithAdminRoutes = [
     QRoute(
       path: menuViewRoute,
       name: menuViewRoute,
@@ -63,26 +87,6 @@ class RestaurantRouter {
       path: restaurantOrderRoute,
       name: restaurantOrderRoute,
       builder: () => RestaurantOrderView(),
-    ),
-    QRoute(
-      path: currentOrdersRoute,
-      name: currentOrdersRoute,
-      builder: () => ROpCurrentOrdersListView(),
-    ),
-    QRoute(
-      path: pastOrdersRoute,
-      name: pastOrdersRoute,
-      builder: () => ROpPastOrdersList(),
-    ),
-    QRoute(
-      path: restaurantOptionRoute,
-      name: restaurantOptionRoute,
-      builder: () => ROpOptionView(),
-    ),
-    QRoute(
-      path: restaurantChoiceRoute,
-      name: restaurantChoiceRoute,
-      builder: () => ROpChoiceView(),
     ),
   ];
 }

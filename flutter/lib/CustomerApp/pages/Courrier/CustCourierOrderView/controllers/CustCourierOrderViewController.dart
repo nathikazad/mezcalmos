@@ -4,9 +4,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 
 class CustCourierOrderViewController {
   // instances //
@@ -130,23 +129,26 @@ class CustCourierOrderViewController {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
-                          order.changePriceRequest?.newPrice.toPriceString() ??
-                              "20",
-                          style: context.textTheme.displaySmall
-                              ?.copyWith(fontSize: 17.5)),
-                      Divider(
-                        height: 20,
-                      ),
-                      Text("Reason",
-                          style: context.textTheme.displaySmall
-                              ?.copyWith(fontSize: 20)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(order.changePriceRequest?.reason ?? "reason",
-                          style: context.textTheme.displaySmall
-                              ?.copyWith(fontSize: 17.5)),
+                      Text(order.changePriceRequest?.newPrice.toPriceString() ??
+                          "-"),
+                      if (order.changePriceRequest?.reason != null &&
+                          order.changePriceRequest!.reason.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(
+                              height: 20,
+                            ),
+                            Text(
+                              "Reason",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(order.changePriceRequest?.reason ?? "reason"),
+                          ],
+                        ),
                       SizedBox(
                         height: 8,
                       ),

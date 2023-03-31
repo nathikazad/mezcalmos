@@ -165,7 +165,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                 shape: BoxShape.circle),
                             child: Icon(
                               Icons.edit,
-                              size: 24,
+                              size: 20,
                               color: primaryBlueColor,
                             ),
                           ),
@@ -185,7 +185,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                   color: offRedColor, shape: BoxShape.circle),
                               child: Icon(
                                 Icons.close,
-                                size: 24,
+                                size: 20,
                                 color: redAccentColor,
                               ),
                             ),

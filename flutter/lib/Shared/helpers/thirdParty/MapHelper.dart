@@ -35,6 +35,11 @@ class RouteInformation {
       "polyline": polyline
     };
   }
+
+  bool get valid {
+   
+    return duration.seconds > 0;
+  }
 }
 
 class RideDistance {

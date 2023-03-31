@@ -88,14 +88,14 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                           children: <TextSpan>[
                             TextSpan(
                                 text: '${_i18n()['subTitle1']} ',
-                                style: context.txt.bodyText2),
+                                style: context.txt.bodyMedium),
                             TextSpan(
                                 text: '+52 954 118 4711',
-                                style: context.txt.bodyText1
+                                style: context.txt.bodyLarge
                                     ?.copyWith(color: primaryBlueColor)),
                             TextSpan(
                                 text: '${_i18n()['subTitle2']}',
-                                style: context.txt.bodyText2),
+                                style: context.txt.bodyMedium),
                           ],
                         ),
                       ),
