@@ -35,6 +35,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
   }
 
   void navigateToServices(int idx) {
+    // TODO: Enums and switch
     if (idx == 0) {
       DeliveryServiceView.navigate();
     } else if (idx == 1) {

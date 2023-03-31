@@ -27,6 +27,7 @@ class _RentalViewState extends State<RentalView> {
   RentalController rentalController = RentalController();
 
   void navigateTo(int idx) {
+    // TODO: enums
     if (idx == 0) {
       // TODO: Navigate to Surf
     } else if (idx == 1) {

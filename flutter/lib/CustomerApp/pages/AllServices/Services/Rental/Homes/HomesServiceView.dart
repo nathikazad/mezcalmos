@@ -8,6 +8,9 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
 import 'HomesServiceListView/HomesServiceListView.dart';
+import '../components/ButtonSwitcher.dart';
+import 'controller/HomesServiceController.dart';
+import './AgencyServiceListView/AgencyServiceListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -24,6 +27,14 @@ class HomesServiceView extends StatefulWidget {
 }
 
 class _HomesServiceViewState extends State<HomesServiceView> {
+  HomesServiceController homesServiceController = HomesServiceController();
+
+  @override
+  void dispose() {
+    homesServiceController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +96,31 @@ class _HomesServiceViewState extends State<HomesServiceView> {
               ],
             ),
           ),
-          HomesServiceListView(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Obx(
+              () => ButtonSwitcher(
+                lButtonText: "Home",
+                rButtonText: "Agency",
+                lIconButton: Icons.home,
+                rIconButton: Icons.settings_applications_rounded,
+                values: [
+                  HomeServiceView.Home,
+                  HomeServiceView.Agency,
+                ],
+                selectedValue: homesServiceController.currentSelectedView.value,
+                onClick: (Enum value) {
+                  homesServiceController.toggleView(value);
+                },
+              ),
+            ),
+          ),
+          Obx(
+            () => homesServiceController.currentSelectedView.value ==
+                    HomeServiceView.Home
+                ? HomesServiceListView()
+                : AgencyServiceListView(),
+          ),
         ],
       ),
     );
