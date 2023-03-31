@@ -1707,7 +1707,8 @@
         "customer": "Cliente",
         "restaurant": "Restaurante",
         "laundry": "Lavanderia",
-        "orders": "Pedidos"
+        "orders": "Pedidos",
+        "viewImage": "Ver imagen"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {

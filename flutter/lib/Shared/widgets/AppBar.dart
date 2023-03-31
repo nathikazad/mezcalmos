@@ -107,7 +107,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
               child: badge.Badge(
                 badgeColor: Colors.red,
                 showBadge: true,
-                position: badge.BadgePosition.topEnd(top: 8, end: 0),
+                position: badge.BadgePosition.topEnd(top: 0, end: 0),
                 child: Ink(
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(

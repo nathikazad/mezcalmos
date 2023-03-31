@@ -1713,7 +1713,8 @@
         "customer": "Customer",
         "restaurant": "Restaurant",
         "laundry": "Laundry",
-        "orders": "Orders"
+        "orders": "Orders",
+        "viewImage": "View image"
       },
       "RestaurantOrderView": {
         "components": {
