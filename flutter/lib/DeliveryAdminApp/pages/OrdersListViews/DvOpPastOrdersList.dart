@@ -52,7 +52,7 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
               children: <Widget>[
                 Text(
                   "${_i18n()["pastOrders"]}",
-                  style: textTheme.bodyText1,
+                  style: textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 5),
                 ListView.builder(

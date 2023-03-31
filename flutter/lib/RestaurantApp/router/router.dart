@@ -32,7 +32,7 @@ class RestaurantAppRoutes {
         ),
       ] +
       //  DeliveryRouter().routes +
-      RestaurantRouter().routes +
+      RestaurantRouter.routes +
       SharedRoutes.qRoutes +
       SharedServiceProviderRoutes.routes +
       NativeOnlyRoutes.routes;

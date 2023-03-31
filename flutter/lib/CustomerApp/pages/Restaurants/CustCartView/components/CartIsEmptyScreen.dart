@@ -30,7 +30,7 @@ class CartIsEmptyScreen extends StatelessWidget {
           Center(
             child: Text(
               "${_i18n()["title"]}",
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             ),
           ),
         ],

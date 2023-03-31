@@ -32,7 +32,7 @@ class ServiceNoReviewsComponent extends StatelessWidget {
           ),
           Text(
             '${_i18n()["noRevTitle"]}',
-            style: context.txt.bodyText1,
+            style: context.txt.bodyLarge,
           ),
           SizedBox(
             height: 5,

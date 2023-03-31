@@ -49,7 +49,7 @@ class ROpOrderCustomer extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       order.customer.name,
-                      style: Get.theme.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   MessageButton(

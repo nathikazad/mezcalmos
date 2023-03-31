@@ -53,7 +53,7 @@ class ContactUsPopUp extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '${_i18n()["contactEmail"]}',
-                      style: context.txt.bodyText1,
+                      style: context.txt.bodyLarge,
                       maxLines: 1,
                     ),
                   )
@@ -98,7 +98,7 @@ class ContactUsPopUp extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '${_i18n()["contactWhatsapp"]}',
-                      style: context.txt.bodyText1,
+                      style: context.txt.bodyLarge,
                       maxLines: 1,
                     ),
                   )

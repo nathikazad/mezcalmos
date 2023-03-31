@@ -21,13 +21,16 @@ class DeliveryAdminRoutes {
           name: kDeliveryOpHomeScreenRoute,
           builder: () => DvOpTabsView(),
         ),
-        QRoute(
-          path: kOrderViewRoute,
-          name: kOrderViewRoute,
-          builder: () => DvCompanyOrderView(),
-        ),
       ] +
+      sharedWitAdminRoutes +
       SharedRoutes.qRoutes +
       SharedServiceProviderRoutes.routes +
       NativeOnlyRoutes.routes;
+  static final List<QRoute> sharedWitAdminRoutes = [
+    QRoute(
+      path: kOrderViewRoute,
+      name: kOrderViewRoute,
+      builder: () => DvCompanyOrderView(),
+    ),
+  ];
 }

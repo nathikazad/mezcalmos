@@ -112,7 +112,7 @@
 //               isExpanded: true,
 //               hint: Center(
 //                 child: Text(_i18n()["pickLocation"],
-//                     style: Theme.of(context).textTheme.bodyText2),
+//                     style: Theme.of(context).textTheme.bodyMedium),
 //               ),
 //               icon: Icon(Icons.expand_more),
 //               items: listOfSavedLoacations

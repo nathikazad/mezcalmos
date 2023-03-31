@@ -108,7 +108,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               alignment: Alignment.center,
               child: Text(
                 "Some magic is happening ...",
-                style: Get.textTheme.bodyLarge?.copyWith(
+                style: context.txt.bodyLarge?.copyWith(
                     color: primaryBlueColor, fontStyle: FontStyle.italic),
               ),
             ));
@@ -175,7 +175,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               category.name?[userLanguage]?.inCaps ??
                   '${_i18n()["undefinedCategory"]}',
               style: category.name?[userLanguage] != null
-                  ? Get.theme.textTheme.headlineSmall
+                  ? context.txt.headlineSmall
                   : context.txt.bodyMedium?.copyWith(
                       color: Color(0xFF787878),
                     ),
@@ -214,7 +214,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             child: Text(
                 "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
                     .inCaps,
-                style: Get.theme.textTheme.headlineSmall),
+                style: context.txt.headlineSmall),
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],

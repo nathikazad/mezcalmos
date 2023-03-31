@@ -83,7 +83,7 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                   ),
                   Text(
                     "${_i18n()["nameTitle"]}",
-                    style: context.txt.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 8),
@@ -95,7 +95,7 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                         UpperCaseTextFormatter()
                       ],
                       style:
-                          context.txt.bodyText2?.copyWith(color: Colors.black),
+                          context.txt.bodyMedium?.copyWith(color: Colors.black),
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,

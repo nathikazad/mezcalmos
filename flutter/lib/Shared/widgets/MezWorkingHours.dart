@@ -32,7 +32,7 @@ class MezWorkingHours extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
       SizedBox(
@@ -90,7 +90,7 @@ Widget _workingHourCard(
                     ? "${_i18n()["workingHoursCard"]["open"]}"
                     : "${_i18n()["workingHoursCard"]["closed"]}",
                 textAlign: TextAlign.center,
-                style: context.txt.bodyText2?.copyWith(
+                style: context.txt.bodyMedium?.copyWith(
                     color: openHours.isOpen ? Colors.green : Colors.red),
               )),
             ),

@@ -45,7 +45,7 @@ class _CallToActionButtonState extends State<CallToActionButton> {
                           )
                         : Text(
                             widget.text,
-                            style: context.txt.bodyText1
+                            style: context.txt.bodyLarge
                                 ?.copyWith(color: Colors.white),
                           ))),
             onTap: widget.onTap != null

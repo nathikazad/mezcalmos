@@ -1,6 +1,6 @@
 // import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+
 // import 'package:get/get.dart';
 // import 'package:get_storage/get_storage.dart';
 // import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
@@ -106,7 +106,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 //                           icon: Icons.privacy_tip,
 //                           titleWidget: Text(
 //                             "${_i18n()["privacyPolicies"]}",
-//                             style: context.txt.bodyText1,
+//                             style: context.txt.bodyLarge,
 //                           )),
 //                       _navigationLink(
 //                           onClick: () async {
@@ -116,7 +116,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 //                           icon: Icons.logout,
 //                           titleWidget: Text(
 //                             "${_i18n()["logout"]}",
-//                             style: context.txt.bodyText1,
+//                             style: context.txt.bodyLarge,
 //                           )),
 //                     ],
 //                   ),
@@ -150,7 +150,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 //           children: [
 //             Text(
 //               "${_i18n()["language"]}",
-//               style: context.txt.bodyText1,
+//               style: context.txt.bodyLarge,
 //             ),
 //             SizedBox(
 //               height: 5,
@@ -194,7 +194,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 //             icon: Icons.person,
 //             titleWidget: Text(
 //               "${_i18n()["profile"]}",
-//               style: context.txt.bodyText1,
+//               style: context.txt.bodyLarge,
 //             )),
 //         _navigationLink(
 //             icon: Icons.settings,
@@ -205,7 +205,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 //             },
 //             titleWidget: Text(
 //               "${_i18n()["admin"]}",
-//               style: context.txt.bodyText1,
+//               style: context.txt.bodyLarge,
 //             )),
 //         _navigationLink(
 //             onClick: () {
@@ -214,7 +214,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 //             icon: Icons.notifications,
 //             titleWidget: Text(
 //               "${_i18n()["notifications"]}",
-//               style: context.txt.bodyText1,
+//               style: context.txt.bodyLarge,
 //             )),
 //         _navigationLink(
 //             onClick: () {
@@ -224,7 +224,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 //             icon: Icons.history,
 //             titleWidget: Text(
 //               "${_i18n()["pastOrders"]}",
-//               style: context.txt.bodyText1,
+//               style: context.txt.bodyLarge,
 //             )),
 //       ],
 //     );

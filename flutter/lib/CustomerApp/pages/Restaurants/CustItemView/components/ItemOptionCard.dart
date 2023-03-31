@@ -52,8 +52,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.option.name[userLanguage].toString().inCaps,
-                textAlign: TextAlign.left,
-                style: Get.theme.textTheme.bodyLarge),
+                textAlign: TextAlign.left, style: context.txt.bodyLarge),
             if (widget.option.optionType == OptionType.Custom)
               Container(
                 child: Text(
@@ -94,7 +93,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 children: [
                   Text(
                     choice.name[userLanguage].toString().inCaps,
-                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                    style: context.txt.bodyMedium?.copyWith(
                       color: (widget.cartItem.value!.chosenChoices[optionId]
                                   ?.contains(choice) ??
                               false)
@@ -114,7 +113,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   ),
                   Text(
                     (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
-                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                    style: context.txt.bodyMedium!.copyWith(
                       color: Get.theme.primaryColorLight,
                       fontWeight: (widget
                                   .cartItem.value!.chosenChoices[optionId]

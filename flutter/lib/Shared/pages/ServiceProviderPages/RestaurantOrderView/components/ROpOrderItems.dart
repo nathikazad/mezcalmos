@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandCard.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOrderView"]["components"]["ROpOrderItems"];
@@ -206,9 +205,6 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
     );
   }
 
-
-
-
   List<Widget> buildChoices(BuildContext context,
       Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {
     final List<Widget> viewWidgets = [];
@@ -254,14 +250,14 @@ Widget _itemChoiche(
                       Flexible(
                         child: Text(
                           choices[index].name[userLanguage] ?? "Error",
-                          style: Get.theme.textTheme.bodyMedium,
+                          style: context.txt.bodyMedium,
                           maxLines: 2,
                         ),
                       ),
                       if (choices[index].cost > 0)
                         Text(
                           "\$${choices[index].cost}",
-                          style: Get.theme.textTheme.bodyMedium!
+                          style: context.txt.bodyMedium!
                               .copyWith(color: Get.theme.primaryColorLight),
                         ),
                     ],

@@ -97,7 +97,7 @@ class _MezSwitchState extends State<MezSwitch> {
               ),
               child: Text(
                 widget.initialPosition ? widget.values[0] : widget.values[1],
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Colors.white,
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,

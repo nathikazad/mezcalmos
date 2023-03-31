@@ -216,7 +216,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   iconColor: Colors.red,
                                   labelWidget: Text(
                                     "${_i18n()['logout']}",
-                                    style: Get.textTheme.bodyLarge
+                                    style: context.txt.bodyLarge
                                         ?.copyWith(color: Colors.red),
                                   )),
                             ],

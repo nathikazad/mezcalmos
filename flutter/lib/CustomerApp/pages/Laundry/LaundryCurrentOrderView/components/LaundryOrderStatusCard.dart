@@ -45,7 +45,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           order.orderStatusTitleForCustomer(),
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

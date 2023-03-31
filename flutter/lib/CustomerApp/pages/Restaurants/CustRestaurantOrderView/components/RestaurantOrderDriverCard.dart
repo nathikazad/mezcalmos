@@ -31,7 +31,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             ),
           ),
           SizedBox(
@@ -80,7 +80,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     order.driverInfo!.name,
-                    style: context.txt.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 if (order.customerDriverChatId != null)
@@ -108,7 +108,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: context.txt.bodyText1,
+              style: context.txt.bodyLarge,
             ),
           ),
           SizedBox(
@@ -150,7 +150,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                     children: [
                       Text(
                         order.restaurant.name,
-                        style: context.txt.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                       const SizedBox(
                         height: 5,

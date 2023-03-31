@@ -36,7 +36,7 @@ class _ServiceReviewCardState extends State<ServiceReviewCard> {
                   children: [
                     Text(
                       widget.review.customer?.name ?? "",
-                      style: context.txt.bodyText1,
+                      style: context.txt.bodyLarge,
                     ),
                     Text(
                       widget.review.reviewTime.timeAgo().toLowerCase(),
@@ -47,7 +47,7 @@ class _ServiceReviewCardState extends State<ServiceReviewCard> {
                     ),
                     Text(
                       widget.review.comment ?? "",
-                      style: context.txt.bodyText2,
+                      style: context.txt.bodyMedium,
                     ),
                     const SizedBox(
                       height: 5,

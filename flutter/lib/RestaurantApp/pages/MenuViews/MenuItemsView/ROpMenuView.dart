@@ -51,7 +51,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
 
   @override
   void initState() {
-    restaurantID = widget.restID ?? int.parse(Get.parameters["restaurantId"]!);
+    restaurantID = widget.restID ??
+        int.parse(MezRouter.urlArguments['restaurantId'].toString());
 
     if (restaurantID != null) {
       _tabController = TabController(length: 2, vsync: this);
@@ -307,7 +308,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
             ),
             Text(
               '${_i18n()["noCategory"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,
