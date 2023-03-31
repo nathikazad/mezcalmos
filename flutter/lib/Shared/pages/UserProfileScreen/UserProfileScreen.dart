@@ -306,10 +306,10 @@ class _UserProfileState extends State<UserProfile>
               .addListener(ImageStreamListener((ImageInfo info, bool _) async {
             // ------------------- Original Version -----------------//
             // put the original file to firebaseStorage
-            final String _originalUrl =
-                await _authController.uploadImgToFbStorage(
-                    imageFile: io.File(
-                        widget.userProfileController.userImg.value!.path));
+            final String _originalUrl = await uploadImgToFbStorage(
+                hasuraUserId: _authController.hasuraUserId!,
+                imageFile:
+                    io.File(widget.userProfileController.userImg.value!.path));
             // we set our original FirebaseStorage Url in our controller.
             widget.userProfileController.originalImgUrl = _originalUrl;
             // Setting Original Image aka (bigImage)
@@ -317,9 +317,10 @@ class _UserProfileState extends State<UserProfile>
                 widget.userProfileController.originalImgUrl);
             // ------------------- Compressed Version -----------------//
             // put the compressed file to firebaseStorage
-            final String _compressedUrl =
-                await _authController.uploadImgToFbStorage(
-                    imageFile: compressedFile, isCompressed: true);
+            final String _compressedUrl = await uploadImgToFbStorage(
+                hasuraUserId: _authController.hasuraUserId!,
+                imageFile: compressedFile,
+                isCompressed: true);
             // we set our _compressed FirebaseStorage Url in our controller.
             widget.userProfileController.compressedImgUrl = _compressedUrl;
             // we right away set it in database

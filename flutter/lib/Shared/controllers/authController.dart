@@ -4,19 +4,15 @@ import 'dart:typed_data';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:image_picker/image_picker.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -170,99 +166,6 @@ class AuthController extends GetxController {
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
     }
-  }
-
-  /// This Functions takes a File (Image) and an optional [isCompressed]
-  ///
-  /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
-  Future<String> uploadImgToFbStorage({
-    required File imageFile,
-    String? path,
-    bool isCompressed = false,
-  }) async {
-    File compressedFile = imageFile;
-    if (isCompressed == false) {
-      // this holds userImgBytes of the original
-      final Uint8List originalBytes = await imageFile.readAsBytes();
-      // this is the bytes of our compressed image .
-      final Uint8List _compressedVersion =
-          await compressImageBytes(originalBytes);
-      // Get the actual File compressed
-      compressedFile = await writeFileFromBytesAndReturnIt(
-          filePath: imageFile.path, imgBytes: _compressedVersion);
-    }
-    String _uploadedImgUrl;
-    final List<String> splitted = imageFile.path.split('.');
-    final String imgPath = path ??
-        "users/$hasuraUserId/avatar/$hasuraUserId.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
-    try {
-      await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .putFile(compressedFile);
-    } on firebase_core.FirebaseException catch (e) {
-      mezDbgPrint(e.message.toString());
-    } finally {
-      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .getDownloadURL();
-    }
-
-    return _uploadedImgUrl;
-  }
-
-  Future<String> uploadUserImgToFbStorageForWeb({
-    required XFile pikedFile,
-    required Uint8List uint8list,
-    bool isCompressed = false,
-  }) async {
-    String? _uploadedImgUrl;
-
-    mezDbgPrint("::::: log {{{{ ${pikedFile.path}  }}}}}");
-    final List<String> splitted = pikedFile.path.split('.');
-    final String imgPath =
-        "users/$hasuraUserId/avatar/$hasuraUserId/${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
-    mezDbgPrint("::::: log {{{{ ${imgPath}  }}}}}");
-    try {
-      // await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
-      //     await pikedFile.readAsBytes(),
-      //     SettableMetadata(
-      //       cacheControl: "public,max-age=300",
-      //       contentType: "image/jpeg",
-      //     )
-      //     // metadata: SettableMetadata()
-      //     );
-      String fileResult = await pikedFile.readAsString();
-      mezDbgPrint("inside the uploade function ${fileResult}");
-      await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
-            uint8list,
-            // SettableMetadata(
-            //   cacheControl: "public,max-age=300",
-            //   contentType: "image/jpeg",
-            // )
-            // metadata: SettableMetadata()
-          );
-
-      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .getDownloadURL()
-          .then((value) {
-        mezDbgPrint("ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ℹ️ the url is value ${value}");
-        return value;
-      });
-    } catch (e, s) {
-      mezDbgPrint(
-          "this an error happen in :::uploadUserImgToFbStorageForWeb:: function ${e.toString()}");
-    }
-
-    //       .catchError((e) {
-
-    //   }).whenComplete(() async {
-
-    // } on firebase_core.FirebaseException catch (e) {
-    //   mezDbgPrint(e.message.toString());
-    // }
-
-    return _uploadedImgUrl!;
   }
 
   /// this is for setting the Original size of the image that was picked by the user,

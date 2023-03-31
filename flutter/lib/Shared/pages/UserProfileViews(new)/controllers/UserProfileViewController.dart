@@ -32,7 +32,7 @@ class UserProfileViewController {
   bool get showImageSetter =>
       mode == UserProfileViewMode.Editing ||
       mode == UserProfileViewMode.FirstTime;
-      
+
   bool get isInfoSet {
     return (newImageFile.value != null || newImageUrl.value != null) &&
         name.value.isNotEmpty &&
@@ -78,8 +78,10 @@ class UserProfileViewController {
 
   Future<void> _setImage() async {
     if (newImageFile.value != null) {
-      newImageUrl.value = await _authController.uploadImgToFbStorage(
-          imageFile: newImageFile.value!, isCompressed: false);
+      newImageUrl.value = await uploadImgToFbStorage(
+          imageFile: newImageFile.value!,
+          isCompressed: false,
+          hasuraUserId: _authController.hasuraUserId!);
     }
   }
 
