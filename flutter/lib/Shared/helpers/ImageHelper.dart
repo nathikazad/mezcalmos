@@ -18,6 +18,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
@@ -323,4 +325,43 @@ Future<List<int>> cropRonded(Uint8List bytes) async {
       await cropped.toByteData(format: ui.ImageByteFormat.png);
 
   return byteData!.buffer.asUint8List();
+}
+
+/// This Functions takes a File (Image) and an optional [isCompressed]
+///
+/// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
+Future<String> uploadImgToFbStorage({
+  required File imageFile,
+  required int hasuraUserId,
+  String? path,
+  bool isCompressed = false,
+}) async {
+  File compressedFile = imageFile;
+  if (isCompressed == false) {
+    // this holds userImgBytes of the original
+    final Uint8List originalBytes = await imageFile.readAsBytes();
+    // this is the bytes of our compressed image .
+    final Uint8List _compressedVersion =
+        await compressImageBytes(originalBytes);
+    // Get the actual File compressed
+    compressedFile = await writeFileFromBytesAndReturnIt(
+        filePath: imageFile.path, imgBytes: _compressedVersion);
+  }
+  String _uploadedImgUrl;
+  final List<String> splitted = imageFile.path.split('.');
+  final String imgPath = path ??
+      "users/$hasuraUserId/avatar/$hasuraUserId.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+  try {
+    await firebase_storage.FirebaseStorage.instance
+        .ref(imgPath)
+        .putFile(compressedFile);
+  } on firebase_core.FirebaseException catch (e) {
+    mezDbgPrint(e.message.toString());
+  } finally {
+    _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+        .ref(imgPath)
+        .getDownloadURL();
+  }
+
+  return _uploadedImgUrl;
 }

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as Path;
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelperWeb.dart';
@@ -295,7 +294,7 @@ class _UserProfileState extends State<UserProfile>
       // Image? fromPicker = await imPicker.ImagePickerWeb.getImageAsWidget();
       // to do make a new function for web wich will be seprate function
       final imPicker.ImageSource? _from =
-          await imagePickerChoiceDialog(context);
+          await imagePickerChoiceDialogWeb(context);
 
       if (_from != null) {
         widget.userProfileController.reset();
@@ -326,10 +325,10 @@ class _UserProfileState extends State<UserProfile>
                 ImageStreamListener((ImageInfo info, bool _) async {
               // ------------------- Original Version -----------------//
               // put the original file to firebaseStorage
-              final String _originalUrl =
-                  await _authController.uploadImgToFbStorage(
-                      imageFile: io.File(
-                          widget.userProfileController.userImg.value!.path));
+              final String _originalUrl = await uploadImgToFbStorage(
+                  hasuraUserId: _authController.hasuraUserId!,
+                  imageFile: io.File(
+                      widget.userProfileController.userImg.value!.path));
               // we set our original FirebaseStorage Url in our controller.
               widget.userProfileController.originalImgUrl = _originalUrl;
               // Setting Original Image aka (bigImage)
@@ -337,9 +336,10 @@ class _UserProfileState extends State<UserProfile>
                   widget.userProfileController.originalImgUrl);
               // ------------------- Compressed Version -----------------//
               // put the compressed file to firebaseStorage
-              final String _compressedUrl =
-                  await _authController.uploadImgToFbStorage(
-                      imageFile: compressedFile, isCompressed: true);
+              final String _compressedUrl = await uploadImgToFbStorage(
+                  hasuraUserId: _authController.hasuraUserId!,
+                  imageFile: compressedFile,
+                  isCompressed: true);
               // we set our _compressed FirebaseStorage Url in our controller.
               widget.userProfileController.compressedImgUrl = _compressedUrl;
               // we right away set it in database
@@ -411,10 +411,10 @@ class _UserProfileState extends State<UserProfile>
           mezDbgPrint("inside image streammer  !!!!!!");
           // ------------------- Original Version -----------------//
           // put the original file to firebaseStorage
-          final String _originalUrl =
-              await _authController.uploadUserImgToFbStorageForWeb(
-                  pikedFile: widget.userProfileController.userImg.value!,
-                  uint8list: await mediaData.readAsBytes());
+          final String _originalUrl = await uploadUserImgToFbStorageForWeb(
+              hasuraUserId: _authController.hasuraUserId!,
+              pikedFile: widget.userProfileController.userImg.value!,
+              uint8list: await mediaData.readAsBytes());
           // we set our original FirebaseStorage Url in our controller.
           widget.userProfileController.originalImgUrl = _originalUrl;
           // Setting Original Image aka (bigImage)
@@ -422,11 +422,11 @@ class _UserProfileState extends State<UserProfile>
               widget.userProfileController.originalImgUrl);
           // ------------------- Compressed Version ----------------- //
           // put the compressed file to firebaseStorage
-          final String _compressedUrl =
-              await _authController.uploadUserImgToFbStorageForWeb(
-                  pikedFile: widget.userProfileController.userImg.value!,
-                  uint8list: _compressedVersion,
-                  isCompressed: true);
+          final String _compressedUrl = await uploadUserImgToFbStorageForWeb(
+              hasuraUserId: _authController.hasuraUserId!,
+              pikedFile: widget.userProfileController.userImg.value!,
+              uint8list: _compressedVersion,
+              isCompressed: true);
           // we set our _compressed FirebaseStorage Url in our controller .
           widget.userProfileController.compressedImgUrl = _compressedUrl;
           // we right away set it in database
