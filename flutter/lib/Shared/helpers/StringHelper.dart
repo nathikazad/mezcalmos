@@ -50,3 +50,9 @@ String getRandomString(int length) {
   return String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }
+
+extension ToPlural on String {
+  String toPlural({required bool isPlural}) {
+    return this + (isPlural ? 's' : '');
+  }
+}

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceNoReviews.dart';
 import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceReviewCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceReviewsFilters.dart';
@@ -114,7 +115,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
             height: 10,
           ),
           Text(
-              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()[viewController.reviews.length == 1 ? "review" : "reviews"].toString().toLowerCase()}")
+              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()["review"].toPlural(isPlural: viewController.reviews.length == 1).toLowerCase()}")
         ],
       ),
     );

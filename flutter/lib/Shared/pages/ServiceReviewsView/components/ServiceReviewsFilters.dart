@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
@@ -27,7 +28,7 @@ class ServiceReviewsFilters extends StatelessWidget {
             children: List.generate(
                 viewController.filters.length,
                 (int index) => FilterChip(
-                    selectedColor: Color(0xFFE0E4FF),
+                    selectedColor: softPurple,
                     selected: viewController.filterBy.value ==
                         viewController.filters[index],
                     label: Text(

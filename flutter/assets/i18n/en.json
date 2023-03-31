@@ -1752,6 +1752,7 @@
               "oops": "Oops",
               "set": "Set",
               "time": "Time",
+              "lowerTime": "time",
               "dvTime": "Delivery time",
               "dropoff": "Delivery",
               "pickup": "Pickup",
@@ -2048,7 +2049,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
-        "review": "Review",
+        "review": "review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",

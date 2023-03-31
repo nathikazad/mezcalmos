@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
@@ -121,7 +122,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
             height: 4,
           ),
           Text(
-              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()[reviews.value?.length == 1 ? "review" : "reviews"].toString().toLowerCase()}")
+              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["review"].toPlural(isPlural: reviews.value?.length == 1)}")
         ],
       ),
     );

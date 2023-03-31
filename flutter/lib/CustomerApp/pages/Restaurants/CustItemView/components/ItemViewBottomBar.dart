@@ -10,6 +10,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
@@ -64,29 +66,14 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
             ),
           ),
           const Spacer(),
-          TextButton(
-            style: TextButton.styleFrom(
-              //fixedSize: Size(50, 100),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            onPressed: () async {
-              await _handleAddButton();
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                widget.viewController.currentMode ==
-                        ViewItemScreenMode.AddItemMode
-                    ? _i18n()['addToCart']
-                    : _i18n()['modifyItem'],
-                style: Get.textTheme.headlineLarge
-                    ?.copyWith(color: Colors.white, fontSize: 18),
-              ),
+          Flexible(
+            child: MezButton(
+              height: 32,
+              label: widget.viewController.currentMode ==
+                      ViewItemScreenMode.AddItemMode
+                  ? _i18n()['addToCart']
+                  : _i18n()['modifyItem'],
+              onClick: () => _handleAddButton(),
             ),
           ),
           SizedBox(

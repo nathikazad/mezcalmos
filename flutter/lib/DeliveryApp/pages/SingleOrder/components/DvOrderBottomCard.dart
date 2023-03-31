@@ -251,7 +251,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         child: (widget.viewcontroller.isSettingDropoffTime.isTrue)
             ? CircularProgressIndicator()
             : Text(
-                '${('${_i18n()['set']} ${_i18n()['dropoff']} ${_i18n()['time']}').capitalizeFirst!}',
+                '${('${_i18n()['set']} ${_i18n()['dropoff']} ${_i18n()['lowerTime']}')}',
                 style: Get.textTheme.bodyMedium?.copyWith(
                     color: primaryBlueColor, fontWeight: FontWeight.bold),
               ),
@@ -281,7 +281,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         child: (widget.viewcontroller.isSettingPickUpTime.isTrue)
             ? CircularProgressIndicator()
             : Text(
-                '${('${_i18n()['set']} ${_i18n()['pickup']} ${_i18n()['time']}').capitalizeFirst!}',
+                '${('${_i18n()['set']} ${_i18n()['pickup']} ${_i18n()['lowerTime']}')}',
                 style: Get.textTheme.bodyMedium?.copyWith(
                     color: primaryBlueColor, fontWeight: FontWeight.bold),
               ),

@@ -64,7 +64,10 @@ class OrderSummaryCard extends StatelessWidget {
                           '${_i18n()["orderCost"]}',
                           style: txt.bodyMedium,
                         ),
-                        Text(orderCost?.toPriceString() ?? "0",
+                        Text(
+                            orderCost == 0
+                                ? "-"
+                                : orderCost?.toPriceString() ?? "-",
                             style: txt.bodyMedium?.copyWith()),
                       ],
                     ),
