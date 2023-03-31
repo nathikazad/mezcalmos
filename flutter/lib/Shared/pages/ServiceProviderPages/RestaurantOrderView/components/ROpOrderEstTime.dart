@@ -69,7 +69,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
                 children: [
                   Text(
                     '${_i18n()["title"]}',
-                    style: Get.theme.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -77,7 +77,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
                   if (widget.order.estimatedPackageReadyTime != null)
                     Text(
                       "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.estimatedPackageReadyTime!.toLocal())}",
-                      style: Get.theme.textTheme.bodyMedium,
+                      style: context.txt.bodyMedium,
                     ),
                 ],
               ),
@@ -338,7 +338,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
     } else {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["minTimes"]}',
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     }
   }
 }

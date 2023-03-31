@@ -49,7 +49,7 @@ class HomeFooterButtons extends StatelessWidget {
                     const SizedBox(width: 10),
                     Text(
                       _languageController.oppositToLang,
-                      style: txt.bodyText2,
+                      style: txt.bodyMedium,
                     ),
                   ],
                 ),
@@ -78,7 +78,7 @@ class HomeFooterButtons extends StatelessWidget {
                       fit: FlexFit.loose,
                       child: Text(
                         _i18n()["privacyPolicy"],
-                        style: txt.bodyText2,
+                        style: txt.bodyMedium,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),

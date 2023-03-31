@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -13,12 +14,11 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -216,7 +216,7 @@ Future<void> showConfirmationDialog(
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 Text(
                   title ?? "${_i18n()["cancelOrder"]}",
                   textAlign: TextAlign.center,
@@ -229,7 +229,7 @@ Future<void> showConfirmationDialog(
                 helperText != ""
                     ? Column(
                         children: [
-                          SizedBox(height: 4),
+                          SizedBox(height: 5),
                           Text(
                             helperText ??
                                 '${_i18n()["cancelConfirmationText"]}',
@@ -243,12 +243,12 @@ Future<void> showConfirmationDialog(
                         ],
                       )
                     : SizedBox(),
-                SizedBox(height: 2),
+                SizedBox(height: 5),
                 Text('${_i18n()["subtitle"]}',
                     textAlign: TextAlign.center,
                     style: context.txt.headlineLarge
                         ?.copyWith(color: Color(0xFF494949))),
-                SizedBox(height: 4),
+                SizedBox(height: 12),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;
@@ -290,11 +290,11 @@ Future<void> showConfirmationDialog(
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    MezRouter.back();
+                    Navigator.pop(context);
                   },
                   child: Container(
                     width: double.infinity,
@@ -310,6 +310,66 @@ Future<void> showConfirmationDialog(
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+Future<void> showNormalDialog(
+  BuildContext context, {
+  IconData? icon,
+  required String title,
+  String? subtitle,
+}) async {
+  final RxBool _clickedYes = false.obs;
+  return showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(16),
+          content: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 55,
+                  width: 55,
+                  child: Icon(
+                    icon,
+                    color: Colors.orange.shade300,
+                    size: 33,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(252, 89, 99, 0.12),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                ),
+                SizedBox(height: 2),
+                if (subtitle != null)
+                  Text(subtitle,
+                      textAlign: TextAlign.center,
+                      style: context.txt.headlineLarge
+                          ?.copyWith(color: Color(0xFF494949))),
+                SizedBox(height: 4),
               ],
             ),
           ),
@@ -406,7 +466,7 @@ Future<void> showStatusInfoDialog(
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => MezRouter.back()
+                    ? () => Navigator.pop(context)
                     : primaryCallBack,
                 child: Container(
                   height: 44,
@@ -462,152 +522,165 @@ Future<void> showStatusInfoDialog(
       });
 }
 
-Future<int?> showReviewDialog(
+Widget customerAddReviewButton(
   BuildContext context, {
   required int orderId,
   required int serviceProviderId,
   required ServiceProviderType serviceProviderType,
   required OrderType orderType,
-}) async {
-  final TextEditingController controller = TextEditingController();
-  num rating = 3;
-  return await showDialog<int?>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          scrollable: true,
-          contentPadding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 18,
-            bottom: 10,
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: primaryBlueColor, shape: BoxShape.circle),
-                padding: const EdgeInsets.all(10),
-                child: Center(
-                    child: Icon(
-                  Icons.favorite,
-                  color: Colors.white,
-                )),
+}) {
+  return MezButton(
+    label: "${_i18n()['writeReview']}",
+    withGradient: true,
+    borderRadius: 0,
+    height: 80,
+    onClick: () async {
+      final TextEditingController controller = TextEditingController();
+      num rating = 3;
+      await showDialog<int?>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext ctx) {
+            return AlertDialog(
+              scrollable: true,
+              contentPadding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 18,
+                bottom: 10,
               ),
-              const SizedBox(height: 10),
-              Text(
-                "${_i18n()["review"]["title"]}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.sp,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "${_i18n()["review"]["subtitle"]}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12.sp,
-                ),
-              ),
-              RatingBar.builder(
-                unratedColor: unratedStarColor,
-                initialRating: 3,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                glow: false,
-                itemPadding:
-                    EdgeInsets.symmetric(horizontal: 4.0, vertical: 12),
-                itemBuilder: (BuildContext context, _) => Icon(
-                  Icons.star,
-                  color: primaryBlueColor,
-                ),
-                onRatingUpdate: (double newRate) {
-                  rating = newRate;
-                },
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                maxLines: 8,
-                minLines: 5,
-                controller: controller,
-                style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w600,
-                ),
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    fillColor: unratedStarColor,
-                    hintText: "${_i18n()["review"]["hintText"]}"),
-              ),
-              const SizedBox(height: 18),
-              MezButton(
-                textStyle: context.txt.headlineMedium?.copyWith(
-                  color: primaryBlueColor,
-                ),
-                label: "${_i18n()["review"]["send"]}",
-                height: 45,
-                textColor: primaryBlueColor,
-                backgroundColor: secondaryLightBlueColor,
-                onClick: () async {
-                  final Review review = Review(
-                      comment: controller.text,
-                      rating: rating,
-                      toEntityId: serviceProviderId,
-                      toEntityType: serviceProviderType,
-                      fromEntityId: Get.find<AuthController>().hasuraUserId!,
-                      fromEntityType: ServiceProviderType.Customer,
-                      reviewTime: DateTime.now().toUtc());
-
-                  final int? reviewId = await insert_review(review: review);
-                  if (reviewId != null) {
-                    customSnackBar(
-                      title: _i18n()["review"]["successTitle"],
-                      subTitle: _i18n()["review"]["successSubtitle"],
-                    );
-                  } else {
-                    customSnackBar(title: 'Error', subTitle: 'error');
-                  }
-                  MezRouter.back(backResult: reviewId);
-                },
-              ),
-              SizedBox(height: 10),
-              InkWell(
-                onTap: () {
-                  MezRouter.back();
-                },
-                child: Ink(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  width: double.infinity,
-                  child: Text(
-                    "${_i18n()["review"]["close"]}",
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        color: primaryBlueColor, shape: BoxShape.circle),
+                    padding: const EdgeInsets.all(10),
+                    child: Center(
+                        child: Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                    )),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "${_i18n()["review"]["title"]}",
                     textAlign: TextAlign.center,
-                    style: context.txt.headlineMedium?.copyWith(
-                      color: offShadeGreyColor,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.sp,
                     ),
                   ),
-                ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "${_i18n()["review"]["subtitle"]}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  RatingBar.builder(
+                    unratedColor: unratedStarColor,
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    glow: false,
+                    itemPadding:
+                        EdgeInsets.symmetric(horizontal: 4.0, vertical: 12),
+                    itemBuilder: (BuildContext context, _) => Icon(
+                      Icons.star,
+                      color: primaryBlueColor,
+                    ),
+                    onRatingUpdate: (double newRate) {
+                      rating = newRate;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    maxLines: 8,
+                    minLines: 5,
+                    controller: controller,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        fillColor: unratedStarColor,
+                        hintText: "${_i18n()["review"]["hintText"]}"),
+                  ),
+                  const SizedBox(height: 18),
+                  MezButton(
+                    textStyle: context.txt.headlineMedium?.copyWith(
+                      color: primaryBlueColor,
+                    ),
+                    label: "${_i18n()["review"]["send"]}",
+                    height: 45,
+                    textColor: primaryBlueColor,
+                    backgroundColor: secondaryLightBlueColor,
+                    onClick: () async {
+                      final Review review = Review(
+                          comment: controller.text,
+                          rating: rating,
+                          toEntityId: serviceProviderId,
+                          toEntityType: serviceProviderType,
+                          fromEntityId:
+                              Get.find<AuthController>().hasuraUserId!,
+                          fromEntityType: ServiceProviderType.Customer,
+                          reviewTime: DateTime.now().toUtc());
+
+                      final int? reviewId = await insert_review(review: review);
+                      if (reviewId != null) {
+                        await Get.find<CustomerAuthController>().setReviewId(
+                            reviewId: reviewId,
+                            orderId: orderId,
+                            entityType: serviceProviderType);
+                        customSnackBar(
+                          title: _i18n()["review"]["successTitle"],
+                          subTitle: _i18n()["review"]["successSubtitle"],
+                        );
+                      } else {
+                        customSnackBar(title: 'Error', subTitle: 'error');
+                      }
+                      Navigator.pop(context, reviewId);
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      width: double.infinity,
+                      child: Text(
+                        "${_i18n()["review"]["close"]}",
+                        textAlign: TextAlign.center,
+                        style: context.txt.headlineMedium?.copyWith(
+                          color: offShadeGreyColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
-      });
+            );
+          });
+    },
+  );
 }
 
 Widget radioCircleButton(
@@ -690,8 +763,28 @@ void showSavedSnackBar({String? title, String? subtitle}) {
       subTitle: _i18n()['savedTitle'],
       icon: Icon(
         Icons.check_circle,
+        size: 40,
         color: Colors.green,
       ));
+}
+
+void showSlowInternetSnackBar() {
+  return customSnackBar(
+      title: "Internet Slow",
+      duration: Duration(seconds: 1),
+      subTitle: "Your internet is currently slow",
+      backgroundColor: Colors.orange.shade100,
+      position: Alignment.topCenter,
+      textColor: Colors.orange.shade600,
+      icon: Icon(
+        Icons.info,
+        color: Colors.orange.shade600,
+        size: 35,
+      ));
+}
+
+void closeAllSnackbars({String? title, String? subtitle}) {
+  ScaffoldMessenger.of(QR.context!).clearSnackBars();
 }
 
 void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
@@ -700,6 +793,7 @@ void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
       subTitle: errorText,
       icon: Icon(
         Icons.cancel,
+        size: 40,
         color: Colors.redAccent,
       ));
 }

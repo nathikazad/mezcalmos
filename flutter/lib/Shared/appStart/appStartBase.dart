@@ -8,6 +8,7 @@
 
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -293,15 +294,19 @@ class StartingPointBaseState extends State<StartingPointBase> {
         useInheritedMediaQuery: true,
         locale:
             MezEnv.previewMode == true ? DevicePreview.locale(context) : null,
-        builder: MezEnv.previewMode == true ? DevicePreview.appBuilder : null,
+        builder: MezEnv.previewMode == true
+            ? DevicePreview.appBuilder
+            : BotToastInit(),
         debugShowCheckedModeBanner: false,
         // onInit: () async => _initializeConfig(),
         title: MezEnv.appType.toShortString(),
         theme: appTheme,
         color: Colors.white,
+        
         routerDelegate: QRouterDelegate(
           routes,
           observers: [
+            BotToastNavigatorObserver()
             // Add your observers to the main navigator
             // to watch for all routes in all navigators use [QR.observer]
           ],

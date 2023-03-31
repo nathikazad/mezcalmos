@@ -3,6 +3,9 @@ import { OrderType } from "../../shared/models/Generic/Order";
 export function orderUrl(orderType: OrderType, orderId: number): string {
   return `/${orderType}Orders/${orderId}`
 }
+export function deliveryOrderUrl(orderId: number): string {
+  return `/deliveryOrders/${orderId}`
+}
 
 export function restaurantUrl(restaurantId: number) {
   return `/Restaurants/${restaurantId}`

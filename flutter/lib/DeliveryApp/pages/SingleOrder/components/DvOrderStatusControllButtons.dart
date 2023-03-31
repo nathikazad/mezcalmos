@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
@@ -7,6 +6,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -84,25 +84,31 @@ class _DvOrderStatusControllButtonsState
       label: _getBtnTitle(),
       borderRadius: 0,
       onClick: () async {
-        switch (widget.viewController.order.status) {
-          case DeliveryOrderStatus.OrderReceived:
-            await widget.viewController.startPickup();
-            break;
-          case DeliveryOrderStatus.OnTheWayToPickup:
-            await widget.viewController.atPickup();
+        if (widget.viewController.order.isTimeSetted) {
+          switch (widget.viewController.order.status) {
+            case DeliveryOrderStatus.OrderReceived:
+              await widget.viewController.startPickup();
+              break;
+            case DeliveryOrderStatus.OnTheWayToPickup:
+              await widget.viewController.atPickup();
 
-            break;
-          case DeliveryOrderStatus.AtPickup:
-            await widget.viewController.startDropoff();
-            break;
-          case DeliveryOrderStatus.OnTheWayToDropoff:
-            await widget.viewController.atDropoff();
-            break;
-          case DeliveryOrderStatus.AtDropoff:
-            await widget.viewController.finishDelivery();
-            break;
+              break;
+            case DeliveryOrderStatus.AtPickup:
+              await widget.viewController.startDropoff();
+              break;
+            case DeliveryOrderStatus.OnTheWayToDropoff:
+              await widget.viewController.atDropoff();
+              break;
+            case DeliveryOrderStatus.AtDropoff:
+              await widget.viewController.finishDelivery();
+              break;
 
-          default:
+            default:
+          }
+        } else {
+          showErrorSnackBar(
+              errorText:
+                  "Please set estimated times before starting the delivery");
         }
       },
     );
@@ -279,89 +285,5 @@ class _DvOrderStatusControllButtonsState
       default:
         return "";
     }
-  }
-
-  Future<dynamic> _showPriceSheet(BuildContext context) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        )),
-        context: context,
-        builder: (BuildContext ctx) {
-          var openOrderPriceText;
-          return Padding(
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-            child: Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "${_i18n()['addTax']}",
-                        style: context.txt.bodyLarge,
-                      ),
-                    ),
-                    Divider(
-                      height: 25,
-                    ),
-                    TextFormField(
-                      controller: widget.viewController.openOrderPriceText,
-                      style: context.txt.bodyLarge,
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.attach_money_rounded),
-                      ),
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: MezButton(
-                            height: 45,
-                            label: "${_i18n()['cancel']}",
-                            backgroundColor: offRedColor,
-                            textColor: Colors.red,
-                            onClick: () async {
-                              // await MezRouter.back();
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                          child: MezButton(
-                            height: 45,
-                            label: "${_i18n()['save']}",
-                            onClick: () async {
-                              // await viewController.editTax();
-                              // await MezRouter.back();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                  ],
-                )),
-          );
-        });
   }
 }

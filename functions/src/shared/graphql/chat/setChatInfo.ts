@@ -68,7 +68,7 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
               chatImage: customer.image,
               phoneNumber: customer.phoneNumber,
               participantType: ParticipantType.Customer,
-              parentLink: `/Orders/${delivery.deliveryId}`
+              parentLink: `/orders/${delivery.deliveryId}`
             },
             [ChatInfoAppName.CustomerApp]: {
               parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
@@ -92,7 +92,7 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
               chatImage: restaurant.image,
               phoneNumber: restaurant.phoneNumber,
               participantType: ParticipantType.RestaurantOperator,
-              parentLink: `/Orders/${delivery.deliveryId}`
+              parentLink: `/orders/${delivery.deliveryId}`
             },
             [ChatInfoAppName.RestaurantApp]: {
               parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
@@ -163,7 +163,7 @@ export async function setLaundryOrderChatInfo(
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
-        parentLink: `/Orders/${fromCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${fromCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -190,7 +190,7 @@ export async function setLaundryOrderChatInfo(
         chatImage: laundryStore.image,
         phoneNumber: laundryStore.phoneNumber,
         participantType: ParticipantType.LaundryOperator,
-        parentLink: `/Orders/${fromCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${fromCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.LaundryApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -233,7 +233,7 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
-        parentLink: `/Orders/${toCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${toCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -260,7 +260,7 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
         chatImage: laundryStore.image,
         phoneNumber: laundryStore.phoneNumber,
         participantType: ParticipantType.LaundryOperator,
-        parentLink: `/Orders/${toCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${toCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.LaundryApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -388,7 +388,7 @@ export async function setCourierChatInfo(courierOrder: CourierOrder, customer: C
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
-            parentLink: `/Orders/${courierOrder.deliveryOrder.deliveryId}`
+            parentLink: `/orders/${courierOrder.deliveryOrder.deliveryId}`
           },
           [ChatInfoAppName.CustomerApp]: {
             parentLink: `/courierOrders/${courierOrder.id}`,

@@ -36473,10 +36473,9 @@ class _CopyWithStubImpl$Query$getCustomerDvOrdersCount$delivery_order_aggregate$
 }
 
 class Variables$Query$getRestaurantOrdersCount {
-  factory Variables$Query$getRestaurantOrdersCount(
-          {required int restuarantId}) =>
+  factory Variables$Query$getRestaurantOrdersCount({required int restId}) =>
       Variables$Query$getRestaurantOrdersCount._({
-        r'restuarantId': restuarantId,
+        r'restId': restId,
       });
 
   Variables$Query$getRestaurantOrdersCount._(this._$data);
@@ -36484,18 +36483,18 @@ class Variables$Query$getRestaurantOrdersCount {
   factory Variables$Query$getRestaurantOrdersCount.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$restuarantId = data['restuarantId'];
-    result$data['restuarantId'] = (l$restuarantId as int);
+    final l$restId = data['restId'];
+    result$data['restId'] = (l$restId as int);
     return Variables$Query$getRestaurantOrdersCount._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get restuarantId => (_$data['restuarantId'] as int);
+  int get restId => (_$data['restId'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$restuarantId = restuarantId;
-    result$data['restuarantId'] = l$restuarantId;
+    final l$restId = restId;
+    result$data['restId'] = l$restId;
     return result$data;
   }
 
@@ -36514,9 +36513,9 @@ class Variables$Query$getRestaurantOrdersCount {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$restuarantId = restuarantId;
-    final lOther$restuarantId = other.restuarantId;
-    if (l$restuarantId != lOther$restuarantId) {
+    final l$restId = restId;
+    final lOther$restId = other.restId;
+    if (l$restId != lOther$restId) {
       return false;
     }
     return true;
@@ -36524,8 +36523,8 @@ class Variables$Query$getRestaurantOrdersCount {
 
   @override
   int get hashCode {
-    final l$restuarantId = restuarantId;
-    return Object.hashAll([l$restuarantId]);
+    final l$restId = restId;
+    return Object.hashAll([l$restId]);
   }
 }
 
@@ -36538,7 +36537,7 @@ abstract class CopyWith$Variables$Query$getRestaurantOrdersCount<TRes> {
   factory CopyWith$Variables$Query$getRestaurantOrdersCount.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$getRestaurantOrdersCount;
 
-  TRes call({int? restuarantId});
+  TRes call({int? restId});
 }
 
 class _CopyWithImpl$Variables$Query$getRestaurantOrdersCount<TRes>
@@ -36554,11 +36553,10 @@ class _CopyWithImpl$Variables$Query$getRestaurantOrdersCount<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? restuarantId = _undefined}) =>
+  TRes call({Object? restId = _undefined}) =>
       _then(Variables$Query$getRestaurantOrdersCount._({
         ..._instance._$data,
-        if (restuarantId != _undefined && restuarantId != null)
-          'restuarantId': (restuarantId as int),
+        if (restId != _undefined && restId != null) 'restId': (restId as int),
       }));
 }
 
@@ -36568,7 +36566,7 @@ class _CopyWithStubImpl$Variables$Query$getRestaurantOrdersCount<TRes>
 
   TRes _res;
 
-  call({int? restuarantId}) => _res;
+  call({int? restId}) => _res;
 }
 
 class Query$getRestaurantOrdersCount {
@@ -36723,7 +36721,7 @@ const documentNodeQuerygetRestaurantOrdersCount = DocumentNode(definitions: [
     name: NameNode(value: 'getRestaurantOrdersCount'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'restuarantId')),
+        variable: VariableNode(name: NameNode(value: 'restId')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
@@ -36749,8 +36747,7 @@ const documentNodeQuerygetRestaurantOrdersCount = DocumentNode(definitions: [
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
                         name: NameNode(value: '_eq'),
-                        value:
-                            VariableNode(name: NameNode(value: 'restuarantId')),
+                        value: VariableNode(name: NameNode(value: 'restId')),
                       )
                     ]),
                   )
@@ -37930,6 +37927,731 @@ class _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$agg
         CopyWith$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate<
             TRes> {
   _CopyWithStubImpl$Query$getLaundryOrdersCount$delivery_order_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getCompanyOrdersCount {
+  factory Variables$Query$getCompanyOrdersCount({required int companyId}) =>
+      Variables$Query$getCompanyOrdersCount._({
+        r'companyId': companyId,
+      });
+
+  Variables$Query$getCompanyOrdersCount._(this._$data);
+
+  factory Variables$Query$getCompanyOrdersCount.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$companyId = data['companyId'];
+    result$data['companyId'] = (l$companyId as int);
+    return Variables$Query$getCompanyOrdersCount._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get companyId => (_$data['companyId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$companyId = companyId;
+    result$data['companyId'] = l$companyId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getCompanyOrdersCount<
+          Variables$Query$getCompanyOrdersCount>
+      get copyWith => CopyWith$Variables$Query$getCompanyOrdersCount(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getCompanyOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$companyId = companyId;
+    final lOther$companyId = other.companyId;
+    if (l$companyId != lOther$companyId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$companyId = companyId;
+    return Object.hashAll([l$companyId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getCompanyOrdersCount<TRes> {
+  factory CopyWith$Variables$Query$getCompanyOrdersCount(
+    Variables$Query$getCompanyOrdersCount instance,
+    TRes Function(Variables$Query$getCompanyOrdersCount) then,
+  ) = _CopyWithImpl$Variables$Query$getCompanyOrdersCount;
+
+  factory CopyWith$Variables$Query$getCompanyOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getCompanyOrdersCount;
+
+  TRes call({int? companyId});
+}
+
+class _CopyWithImpl$Variables$Query$getCompanyOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getCompanyOrdersCount<TRes> {
+  _CopyWithImpl$Variables$Query$getCompanyOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getCompanyOrdersCount _instance;
+
+  final TRes Function(Variables$Query$getCompanyOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? companyId = _undefined}) =>
+      _then(Variables$Query$getCompanyOrdersCount._({
+        ..._instance._$data,
+        if (companyId != _undefined && companyId != null)
+          'companyId': (companyId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getCompanyOrdersCount<TRes>
+    implements CopyWith$Variables$Query$getCompanyOrdersCount<TRes> {
+  _CopyWithStubImpl$Variables$Query$getCompanyOrdersCount(this._res);
+
+  TRes _res;
+
+  call({int? companyId}) => _res;
+}
+
+class Query$getCompanyOrdersCount {
+  Query$getCompanyOrdersCount({
+    required this.delivery_order_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOrdersCount.fromJson(Map<String, dynamic> json) {
+    final l$delivery_order_aggregate = json['delivery_order_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOrdersCount(
+      delivery_order_aggregate:
+          Query$getCompanyOrdersCount$delivery_order_aggregate.fromJson(
+              (l$delivery_order_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getCompanyOrdersCount$delivery_order_aggregate
+      delivery_order_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    _resultData['delivery_order_aggregate'] =
+        l$delivery_order_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCompanyOrdersCount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_aggregate = delivery_order_aggregate;
+    final lOther$delivery_order_aggregate = other.delivery_order_aggregate;
+    if (l$delivery_order_aggregate != lOther$delivery_order_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOrdersCount
+    on Query$getCompanyOrdersCount {
+  CopyWith$Query$getCompanyOrdersCount<Query$getCompanyOrdersCount>
+      get copyWith => CopyWith$Query$getCompanyOrdersCount(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCompanyOrdersCount<TRes> {
+  factory CopyWith$Query$getCompanyOrdersCount(
+    Query$getCompanyOrdersCount instance,
+    TRes Function(Query$getCompanyOrdersCount) then,
+  ) = _CopyWithImpl$Query$getCompanyOrdersCount;
+
+  factory CopyWith$Query$getCompanyOrdersCount.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOrdersCount;
+
+  TRes call({
+    Query$getCompanyOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate;
+}
+
+class _CopyWithImpl$Query$getCompanyOrdersCount<TRes>
+    implements CopyWith$Query$getCompanyOrdersCount<TRes> {
+  _CopyWithImpl$Query$getCompanyOrdersCount(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOrdersCount _instance;
+
+  final TRes Function(Query$getCompanyOrdersCount) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOrdersCount(
+        delivery_order_aggregate: delivery_order_aggregate == _undefined ||
+                delivery_order_aggregate == null
+            ? _instance.delivery_order_aggregate
+            : (delivery_order_aggregate
+                as Query$getCompanyOrdersCount$delivery_order_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate {
+    final local$delivery_order_aggregate = _instance.delivery_order_aggregate;
+    return CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate(
+        local$delivery_order_aggregate,
+        (e) => call(delivery_order_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCompanyOrdersCount<TRes>
+    implements CopyWith$Query$getCompanyOrdersCount<TRes> {
+  _CopyWithStubImpl$Query$getCompanyOrdersCount(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getCompanyOrdersCount$delivery_order_aggregate?
+        delivery_order_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate<TRes>
+      get delivery_order_aggregate =>
+          CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate.stub(
+              _res);
+}
+
+const documentNodeQuerygetCompanyOrdersCount = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getCompanyOrdersCount'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'companyId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'companyId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getCompanyOrdersCount _parserFn$Query$getCompanyOrdersCount(
+        Map<String, dynamic> data) =>
+    Query$getCompanyOrdersCount.fromJson(data);
+
+class Options$Query$getCompanyOrdersCount
+    extends graphql.QueryOptions<Query$getCompanyOrdersCount> {
+  Options$Query$getCompanyOrdersCount({
+    String? operationName,
+    required Variables$Query$getCompanyOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetCompanyOrdersCount,
+          parserFn: _parserFn$Query$getCompanyOrdersCount,
+        );
+}
+
+class WatchOptions$Query$getCompanyOrdersCount
+    extends graphql.WatchQueryOptions<Query$getCompanyOrdersCount> {
+  WatchOptions$Query$getCompanyOrdersCount({
+    String? operationName,
+    required Variables$Query$getCompanyOrdersCount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetCompanyOrdersCount,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getCompanyOrdersCount,
+        );
+}
+
+class FetchMoreOptions$Query$getCompanyOrdersCount
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getCompanyOrdersCount({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getCompanyOrdersCount variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetCompanyOrdersCount,
+        );
+}
+
+extension ClientExtension$Query$getCompanyOrdersCount on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getCompanyOrdersCount>>
+      query$getCompanyOrdersCount(
+              Options$Query$getCompanyOrdersCount options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getCompanyOrdersCount>
+      watchQuery$getCompanyOrdersCount(
+              WatchOptions$Query$getCompanyOrdersCount options) =>
+          this.watchQuery(options);
+  void writeQuery$getCompanyOrdersCount({
+    required Query$getCompanyOrdersCount data,
+    required Variables$Query$getCompanyOrdersCount variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetCompanyOrdersCount),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getCompanyOrdersCount? readQuery$getCompanyOrdersCount({
+    required Variables$Query$getCompanyOrdersCount variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetCompanyOrdersCount),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getCompanyOrdersCount.fromJson(result);
+  }
+}
+
+class Query$getCompanyOrdersCount$delivery_order_aggregate {
+  Query$getCompanyOrdersCount$delivery_order_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOrdersCount$delivery_order_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOrdersCount$delivery_order_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCompanyOrdersCount$delivery_order_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOrdersCount$delivery_order_aggregate
+    on Query$getCompanyOrdersCount$delivery_order_aggregate {
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate<
+          Query$getCompanyOrdersCount$delivery_order_aggregate>
+      get copyWith =>
+          CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate<
+    TRes> {
+  factory CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate(
+    Query$getCompanyOrdersCount$delivery_order_aggregate instance,
+    TRes Function(Query$getCompanyOrdersCount$delivery_order_aggregate) then,
+  ) = _CopyWithImpl$Query$getCompanyOrdersCount$delivery_order_aggregate;
+
+  factory CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOrdersCount$delivery_order_aggregate;
+
+  TRes call({
+    Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$getCompanyOrdersCount$delivery_order_aggregate<TRes>
+    implements
+        CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithImpl$Query$getCompanyOrdersCount$delivery_order_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOrdersCount$delivery_order_aggregate _instance;
+
+  final TRes Function(Query$getCompanyOrdersCount$delivery_order_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOrdersCount$delivery_order_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCompanyOrdersCount$delivery_order_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate<TRes> {
+  _CopyWithStubImpl$Query$getCompanyOrdersCount$delivery_order_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate {
+  Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate
+    on Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate {
+  CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<
+          Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate(
+    Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate instance,
+    TRes Function(
+            Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate;
+
+  factory CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+      Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getCompanyOrdersCount$delivery_order_aggregate$aggregate(
       this._res);
 
   TRes _res;

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -114,8 +113,8 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   }
 
   PreferredSizeWidget _addCategoryAppBar() {
-    return ROpAppBar(
-      leftBtnType: AppBarLeftButtonType.Back,
+    return MezcalmosAppBar(
+      AppBarLeftButtonType.Back,
       onClick: MezRouter.back,
       title: (_viewController.editMode.value)
           ? _viewController.category.value?.name![userLanguage]

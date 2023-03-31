@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -43,7 +43,7 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
       children: [
         Text(
           '${_i18n()["itemAv"]}',
-          style: context.txt.bodyText1,
+          style: context.txt.bodyLarge,
         ),
         const SizedBox(
           height: 10,
@@ -80,7 +80,7 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                               fit: FlexFit.tight,
                               child: Text(
                                 _getFormattedString(),
-                                style: context.txt.bodyText2
+                                style: context.txt.bodyMedium
                                     ?.copyWith(color: Colors.black),
                               ),
                             ),

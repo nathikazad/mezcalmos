@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
@@ -65,20 +65,22 @@ class ForegroundNotificationsController extends GetxController {
               }
               break;
             case NotificationAction.ShowSnackBarAlways:
+            case NotificationAction.NavigteToLinkUrl:
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              //   if (!alreadyOnLinkPage) {
-              _displayNotificationsStreamController.add(_notification);
-              //  }
+              if (!alreadyOnLinkPage) {
+                _displayNotificationsStreamController.add(_notification);
+              }
               break;
           }
-
-          // if (!alreadyOnLinkPage) {
-          notifications.add(_notification);
-          // } else {
-          //   removeNotification(_notification.id);
-          // }
+          if (!alreadyOnLinkPage &&
+              DateTime.now().difference(_notification.timestamp) <
+                  Duration(days: 5)) {
+            notifications.add(_notification);
+          } else {
+            removeNotification(_notification.id);
+          }
         } catch (e, stk) {
           mezDbgPrint("Invalid notification");
           mezDbgPrint(e);
@@ -126,6 +128,20 @@ class ForegroundNotificationsController extends GetxController {
     notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage)
+        .forEach((Notification element) {
+      removeNotification(element.id);
+    });
+  }
+
+  void clearAllOrderNotifications(
+      {required OrderType orderType, required num orderId}) {
+    mezDbgPrint(
+        "fbNotificationsController: Clearing All Messages Notifications");
+    notifications()
+        .where((Notification notification) =>
+            notification.orderId == orderId &&
+            notification.variableParams["orderType"] ==
+                orderType.toFirebaseFormatString())
         .forEach((Notification element) {
       removeNotification(element.id);
     });

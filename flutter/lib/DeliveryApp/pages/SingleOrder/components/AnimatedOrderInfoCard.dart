@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -81,7 +76,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         cardHeader(),
-        if (order.routeInformation != null) routeInformationWidget(),
+        if (order.routeInformation?.valid == true) routeInformationWidget(),
         Divider(),
         orderCardMainBody(context),
         AnimatedSize(
@@ -237,7 +232,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
           ],
         ),
-        if (order.isDriverAssigned)
+        if (order.isDriverAssigned && order.inProcess())
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -277,7 +272,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
           ],
         ),
-        if (order.isDriverAssigned)
+        if (order.isDriverAssigned && order.inProcess())
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -350,18 +345,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
             ],
           ),
-          if (viewController.showEditPrice)
-            Container(
-              margin: const EdgeInsets.only(left: 8),
-              child: MezIconButton(
-                onTap: () {
-                  _showPriceSheet(context);
-                },
-                icon: Icons.edit,
-                iconSize: 20,
-                padding: const EdgeInsets.all(3),
-              ),
-            )
         ],
       ),
     );
@@ -439,114 +422,5 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Future<dynamic> _showPriceSheet(BuildContext context) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        )),
-        context: context,
-        builder: (BuildContext ctx) {
-          return Padding(
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-            child: Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                child: Form(
-                  key: viewController.updatePriceFormKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${_i18n()['updateTitle']}",
-                          style: context.txt.bodyLarge,
-                        ),
-                      ),
-                      Divider(
-                        height: 25,
-                      ),
-                      Text("${_i18n()['updateReason']}"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: viewController.openOrderReasonText,
-                        style: context.txt.bodyLarge,
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text("${_i18n()['updatePrice']}"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: viewController.openOrderPriceText,
-                        style: context.txt.bodyLarge,
-                        textAlignVertical: TextAlignVertical.center,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.attach_money_rounded),
-                        ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-                        ],
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          } else if (double.tryParse(v) == null) {
-                            return "${_i18n()['notValid']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      MezButton(
-                        height: 50,
-                        label: "${_i18n()['save']}",
-                        onClick: () async {
-                          await viewController.requestPriceChange(ctx);
-                          // await viewController.editTax();
-                          // await MezRouter.back();
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      MezButton(
-                        height: 45,
-                        label: "${_i18n()['cancel']}",
-                        backgroundColor: offRedColor,
-                        textColor: Colors.red,
-                        onClick: () async {
-                          Navigator.pop(context);
-                          // await MezRouter.back();
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
-                )),
-          );
-        });
   }
 }

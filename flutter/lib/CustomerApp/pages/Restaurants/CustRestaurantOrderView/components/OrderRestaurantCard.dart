@@ -29,7 +29,7 @@ class OrderRestaurantCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 3),
           child: Text(
             '${_i18n()["restaurant"]}',
-            style: context.txt.bodyText1,
+            style: context.txt.bodyLarge,
           ),
         ),
         SizedBox(
@@ -79,7 +79,7 @@ class OrderRestaurantCard extends StatelessWidget {
                               fit: FlexFit.tight,
                               child: Text(
                                 order.restaurant.location.address,
-                                style: context.txt.bodyText2,
+                                style: context.txt.bodyMedium,
                                 overflow: TextOverflow.visible,
                                 maxLines: 1,
                               ),

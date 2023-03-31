@@ -67,7 +67,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
                 children: [
                   Text(
                     '${_i18n()["estLaundryFinish"]}',
-                    style: Get.theme.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -76,7 +76,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
                       null)
                     Text(
                       "${DateFormat("dd MMMM, hh:mm a ").format(widget.viewController.order.estimatedPackageReadyTime!.toLocal())}",
-                      style: Get.theme.textTheme.bodyMedium,
+                      style: context.txt.bodyMedium,
                     ),
                 ],
               ),
@@ -325,7 +325,7 @@ class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
     } else {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["minTimes"]}',
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     }
   }
 }

@@ -170,6 +170,13 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                     }
                   },
                   tfTextDecoration: InputDecoration(
+                      fillColor: widget.bgColor,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
                       contentPadding: widget.hintPadding,
                       hintText: _i18n()["address"],
                       hintStyle: TextStyle(

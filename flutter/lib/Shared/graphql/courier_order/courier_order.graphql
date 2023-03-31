@@ -40,6 +40,23 @@ query get_courier_order_by_id($orderId: Int!) {
         language_id
       }
     }
+     driver_review_by_customer {
+      created_at
+      from_entity_id
+      from_entity_type
+      id
+      note
+      rating
+      to_entity_id
+      to_entity_type
+      customer {
+        user {
+          image
+          name
+          id
+        }
+      }
+    }
       chat_with_customer_id
         chat_with_service_provider_id
        dropoff_address
@@ -127,6 +144,13 @@ query get_courier_order_items_by_id($orderId: Int!) {
     }
   
 }
+query get_courier_order_bill($orderId: Int!) {
+  delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}) {
+  bill_image
+    
+    }
+  
+}
 mutation updateCourierOrderItem($data: delivery_courier_order_item_set_input,$id: Int!) {
   update_delivery_courier_order_item_by_pk(pk_columns: {id: $id}, _set: $data) {
     actual_cost
@@ -182,6 +206,23 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
       unavailable
     }
     delivery_order {
+       driver_review_by_customer {
+      created_at
+      from_entity_id
+      from_entity_type
+      id
+      note
+      rating
+      to_entity_id
+      to_entity_type
+      customer {
+        user {
+          image
+          name
+          id
+        }
+      }
+    }
       change_price_request
       schedule_time
         customer {

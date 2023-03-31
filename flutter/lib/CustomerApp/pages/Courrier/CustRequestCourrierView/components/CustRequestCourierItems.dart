@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
@@ -62,18 +63,29 @@ class CustRequestCourierItems extends StatelessWidget {
                       context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
                 if (index != 0)
-                  MezIconButton(
-                      onTap: () {
-                        viewController.removeItem(index);
-                      },
-                      iconSize: 18,
-                      backgroundColor: offRedColor,
-                      iconColor: Colors.red,
-                      icon: Icons.close)
+                  InkWell(
+                    onTap: () {
+                      viewController.removeItem(index);
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.delete_outline_rounded,
+                          color: redAccentColor,
+                        ),
+                        Text(
+                          'Remove',
+                          style: context.txt.bodyLarge
+                              ?.copyWith(color: redAccentColor),
+                        )
+                      ],
+                    ),
+                  ),
               ],
             ),
             SizedBox(
-              height: 15,
+              height: 5,
             ),
             Text(
               "What can we get you?",
@@ -103,36 +115,40 @@ class CustRequestCourierItems extends StatelessWidget {
                 Obx(
                   () => InkWell(
                     onTap: () async {
-                      await viewController.addItemImage(
-                          itemIndex: index, context: context);
+                      if (viewController.imagesFiles[index].path.isEmpty) {
+                        await viewController.addItemImage(
+                            itemIndex: index, context: context);
+                      } else {
+                        viewController.removeItemImage(index);
+                      }
                     },
-                    child: Ink(
-                      padding: const EdgeInsets.all(12),
+                    child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        image:
-                            (viewController.imagesFiles[index].path.isNotEmpty)
-                                ? DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: FileImage(
-                                        viewController.imagesFiles[index]))
-                                : null,
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          image: (viewController
+                                  .imagesFiles[index].path.isNotEmpty)
+                              ? DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(
+                                      viewController.imagesFiles[index]))
+                              : null),
+                      width: 49,
+                      height: 49,
                       child: (viewController.imagesFiles[index].path.isNotEmpty)
-                          ? MezIconButton(
-                              onTap: () async {
-                                await viewController.addItemImage(
-                                    itemIndex: index, context: context);
-                              },
-                              iconSize: 12,
-                              icon: Icons.edit,
-                              backgroundColor:
-                                  secondaryLightBlueColor.withOpacity(0.5),
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(
+                                Icons.cancel_rounded,
+                                color: offLightShadeGreyColor,
+                              ),
                             )
-                          : (viewController.imagesLoading.contains(index))
-                              ? CircularProgressIndicator()
-                              : Icon(Icons.image),
+                          : Center(
+                              child: (viewController.imagesLoading
+                                      .contains(index))
+                                  ? CircularProgressIndicator()
+                                  : Icon(Icons.add_photo_alternate_outlined),
+                            ),
                     ),
                   ),
                 )
@@ -154,6 +170,7 @@ class CustRequestCourierItems extends StatelessWidget {
         ),
         _textInput(
             hint: "Notes",
+            textStyle: context.txt.bodyMedium,
             controller: viewController.itemsNotes[index],
             context: context),
         SizedBox(
@@ -171,6 +188,7 @@ class CustRequestCourierItems extends StatelessWidget {
   Widget _textInput(
       {required String hint,
       required TextEditingController controller,
+      TextStyle? textStyle,
       required BuildContext context,
       IconData? suffix,
       bool isPrice = false,
@@ -185,11 +203,16 @@ class CustRequestCourierItems extends StatelessWidget {
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ]
             : [],
-        style: context.txt.bodyLarge,
+        style: textStyle ?? context.txt.bodyLarge,
         decoration: InputDecoration(
             fillColor: Colors.white,
             hintText: hint,
             suffixIconColor: Colors.grey.shade600,
-            suffixIcon: (suffix != null) ? Icon(suffix) : null));
+            suffixIcon: (suffix != null)
+                ? Icon(
+                    suffix,
+                    color: Colors.black,
+                  )
+                : null));
   }
 }

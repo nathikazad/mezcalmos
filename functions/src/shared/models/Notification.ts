@@ -23,7 +23,8 @@ export enum NotificationType {
 export enum NotificationAction {
   ShowPopUp = "showPopUp",
   ShowSnackBarAlways = "showSnackbarAlways",
-  ShowSnackbarOnlyIfNotOnPage = "showSnackbarOnlyIfNotOnPage"
+  ShowSnackbarOnlyIfNotOnPage = "showSnackbarOnlyIfNotOnPage",
+  NavigteToLinkUrl = "navigteToLinkUrl"
 }
 
 export interface Notification {

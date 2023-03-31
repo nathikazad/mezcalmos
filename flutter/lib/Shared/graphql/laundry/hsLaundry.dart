@@ -350,6 +350,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
 
     return Laundry(
         languages: convertToLanguages(data.details!.language),
+        rate: data.reviews_aggregate.aggregate?.avg?.rating,
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(

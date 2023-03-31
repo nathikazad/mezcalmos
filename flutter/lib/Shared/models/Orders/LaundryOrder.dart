@@ -66,6 +66,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.toCustomerDeliveryId,
       required this.shippingCost,
       this.costsByType,
+      super.review,
       super.stripePaymentInfo,
       super.scheduleTime,
       super.serviceProviderId,
@@ -192,6 +193,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     // all of them are in /past node
     return status == LaundryOrderStatus.CancelledByCustomer ||
         status == LaundryOrderStatus.CancelledByAdmin;
+  }
+
+  bool get canAddReview {
+    return review == null && status == LaundryOrderStatus.Delivered;
   }
 
   bool afterAtLaundry() {

@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -20,10 +19,13 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
+Future<DeliveryOrder?> get_driver_order_by_id(
+    {required int orderId, bool withCache = true}) async {
   final QueryResult<Query$get_driver_order> response =
       await _hasuraDb.graphQLClient.query$get_driver_order(
     Options$Query$get_driver_order(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
       variables: Variables$Query$get_driver_order(orderId: orderId),
     ),
   );
@@ -467,4 +469,80 @@ ServiceInfo? _getServiceInfo(
     default:
   }
   return null;
+}
+
+Future<num?> fetch_delivery_orders_count(
+    {required ServiceProviderType serviceProviderType,
+    required int entityId}) async {
+  num? count;
+  switch (serviceProviderType) {
+    case ServiceProviderType.Laundry:
+      QueryResult<Query$getLaundryOrdersCount> res = await _hasuraDb
+          .graphQLClient
+          .query$getLaundryOrdersCount(Options$Query$getLaundryOrdersCount(
+              variables:
+                  Variables$Query$getLaundryOrdersCount(laundryId: entityId)));
+      if (res.parsedData?.delivery_order_aggregate == null) {
+        throwError(res.exception);
+      } else {
+        count = res.parsedData?.delivery_order_aggregate.aggregate?.count;
+      }
+
+      break;
+    case ServiceProviderType.Restaurant:
+      QueryResult<Query$getRestaurantOrdersCount> res =
+          await _hasuraDb.graphQLClient.query$getRestaurantOrdersCount(
+              Options$Query$getRestaurantOrdersCount(
+                  variables: Variables$Query$getRestaurantOrdersCount(
+                      restId: entityId)));
+      if (res.parsedData?.delivery_order_aggregate == null) {
+        throwError(res.exception);
+      } else {
+        count = res.parsedData?.delivery_order_aggregate.aggregate?.count;
+      }
+
+      break;
+    case ServiceProviderType.Customer:
+      QueryResult<Query$getCustomerDvOrdersCount> res =
+          await _hasuraDb.graphQLClient.query$getCustomerDvOrdersCount(
+              Options$Query$getCustomerDvOrdersCount(
+                  variables:
+                      Variables$Query$getCustomerDvOrdersCount(id: entityId)));
+      if (res.parsedData?.delivery_order_aggregate == null) {
+        throwError(res.exception);
+      } else {
+        count = res.parsedData?.delivery_order_aggregate.aggregate?.count;
+      }
+
+      break;
+    case ServiceProviderType.DeliveryCompany:
+      QueryResult<Query$getCompanyOrdersCount> res = await _hasuraDb
+          .graphQLClient
+          .query$getCompanyOrdersCount(Options$Query$getCompanyOrdersCount(
+              variables:
+                  Variables$Query$getCompanyOrdersCount(companyId: entityId)));
+      if (res.parsedData?.delivery_order_aggregate == null) {
+        throwError(res.exception);
+      } else {
+        count = res.parsedData?.delivery_order_aggregate.aggregate?.count;
+      }
+
+      break;
+    case ServiceProviderType.Customer:
+      QueryResult<Query$getCustomerDvOrdersCount> res =
+          await _hasuraDb.graphQLClient.query$getCustomerDvOrdersCount(
+              Options$Query$getCustomerDvOrdersCount(
+                  variables:
+                      Variables$Query$getCustomerDvOrdersCount(id: entityId)));
+      if (res.parsedData?.delivery_order_aggregate == null) {
+        throwError(res.exception);
+      } else {
+        count = res.parsedData?.delivery_order_aggregate.aggregate?.count;
+      }
+
+      break;
+    default:
+  }
+
+  return count;
 }

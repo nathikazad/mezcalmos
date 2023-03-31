@@ -2,23 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
 
@@ -72,8 +69,8 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Delivery company",
-                          style: context.txt.bodyMedium,
+                          'Delivery company',
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 5,
@@ -87,7 +84,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                                 style: context.txt.bodyLarge,
                               )),
                         SizedBox(
-                          height: 15,
+                          height: 5,
                         ),
                         DeliveryTimePicker(
                           fixed7days: true,
@@ -104,6 +101,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           periodOfTime: null,
                           schedule: viewController.company.value!.schedule,
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        // Text(
+                        //   'Payment method',
+                        //   style: context.txt.bodyLarge,
+                        // ),
                         OrderSummaryCard(
                             costs: OrderCosts(
                                 deliveryCost: viewController.shippingCost.value,
@@ -124,14 +128,16 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             );
         },
       ),
-      bottomSheet: MezButton(
-        label: "Next",
-        withGradient: true,
-        height: 75,
-        onClick: () async {
-          await viewController.handleNext();
-        },
-        borderRadius: 0,
+      bottomSheet: Obx(
+        () => MezButton(
+          label: viewController.currentPage.value == 0 ? "Next" : "Order now",
+          withGradient: true,
+          height: 75,
+          onClick: () async {
+            await viewController.handleNext();
+          },
+          borderRadius: 0,
+        ),
       ),
     );
   }
@@ -163,6 +169,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               height: 5,
             ),
             DropDownLocationList(
+              elevation: 0,
               onValueChangeCallback: ({MezLocation? location}) {
                 if (location != null && location.isValidLocation()) {
                   viewController.setToLocation(location);
@@ -191,81 +198,27 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   Widget _fromFeild() {
     return Column(
       children: [
-        Row(
-          children: [
-            Flexible(
-              fit: FlexFit.tight,
-              child: Material(
-                elevation: 0.5,
-                borderRadius: BorderRadius.circular(10),
-                child: TextFormField(
-                    style: context.txt.bodyLarge,
-                    controller: viewController.fromLocText,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      fillColor: Colors.white,
-                      hintText: "Enter location",
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                          gapPadding: 0),
-                    )),
-              ),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            MezIconButton(
-              icon: Icons.place,
-              iconColor: Colors.black,
-              padding: const EdgeInsets.all(12),
-              backgroundColor: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(5),
-              onTap: () async {
-                SavedLocation? newSavedLoc;
-                MezLocation? newLoc = await PickLocationView.navigate(
-                  initialLocation: null,
-                  onSaveLocation: ({MezLocation? location}) async {
-                    newSavedLoc = await savedLocationDailog(
-                        context: context, loc: location!);
-                  },
-                );
-                if (newSavedLoc != null) {
-                  viewController.addFromLoc(
-                      location: newSavedLoc!.location,
-                      address: newSavedLoc!.name);
-                } else if (newLoc != null) {
-                  viewController.addFromLoc(location: newLoc);
-                }
-
-                //         final locModel.MezLocation? newLoc = await PickLocationView.navigate(
-                // initialLocation: null,
-                // onSaveLocation: ({locModel.MezLocation? location}) async {
-                //   SavedLocation? newSavedLoc;
-
-                //   newSavedLoc =
-                //       await savedLocationDailog(context: context, loc: location!);
-
-                //   if (newSavedLoc != null) {
-                //     setState(() {
-                //       listOfSavedLoacations.add(newSavedLoc!);
-                //       dropDownListValue =
-                //           listOfSavedLoacations[listOfSavedLoacations.length - 1];
-                //     });
-                //     mezDbgPrint(
-                //         " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
-                //     await _verifyDistanceAndSetLocation(newSavedLoc);
-                //   }}
-              },
-            )
-          ],
+        Obx(
+          () => Material(
+            elevation: 0.5,
+            child: LocationSearchComponent(
+                hintPadding: EdgeInsets.only(left: 10),
+                suffixPadding: EdgeInsets.only(right: 10),
+                showSearchIcon: true,
+                bgColor: Colors.white,
+                text: viewController.fromLoc.value?.address,
+                onClear: () {
+                  viewController.fromLoc.value = null;
+                },
+                notifyParent: (MezLocation? location) {
+                  setState(() {
+                    viewController.addFromLoc(location: location!);
+                  });
+                }),
+          ),
         ),
         SizedBox(
-          height: 8,
+          height: 7,
         ),
         Row(
           children: [
@@ -279,7 +232,8 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             Text(
               "This field can be empty",
-              style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
+              style: context.txt.bodyLarge
+                  ?.copyWith(color: primaryBlueColor, fontSize: 12.5),
             )
           ],
         )

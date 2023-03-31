@@ -113,7 +113,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                       children: [
                         Text(
                           "${_i18n()['restaurant']}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                         SizedBox(
                           height: 5,
@@ -125,7 +125,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                               viewController.order.value!.restaurant.image),
                           content: Text(
                             viewController.order.value!.restaurant.name,
-                            style: Get.textTheme.bodyLarge,
+                            style: context.txt.bodyLarge,
                           ),
                           //   action: MessageButton(chatId: viewController.order.value.c),
                         ),
@@ -138,7 +138,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                     child: Text(
                       '${_i18n()["deliveryDet"]}',
                       textAlign: TextAlign.center,
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   OrderScheduledTimeCard(
@@ -212,7 +212,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         Clipboard.setData(ClipboardData(
                 text: viewController.order.value?.clipBoardText(userLanguage)))
             .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
-                position: SnackPosition.TOP));
+                position: Alignment.topCenter));
       },
       tooltip: 'Copy',
       child: new Icon(Icons.copy),
@@ -288,7 +288,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                 children: [
                   Text(
                     '${_i18n()["schTitle"]}',
-                    style: Get.theme.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -296,7 +296,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   if (viewController.order.value?.scheduleTime != null)
                     Text(
                       "${DateFormat("dd MMMM, hh:mm a ").format(viewController.order.value!.scheduleTime!.toLocal())}",
-                      style: Get.theme.textTheme.bodyMedium,
+                      style: context.txt.bodyMedium,
                     ),
                 ],
               ),

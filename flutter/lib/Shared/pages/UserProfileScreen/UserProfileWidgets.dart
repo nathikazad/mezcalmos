@@ -170,7 +170,7 @@ class UserProfileWidgetsClass {
           MezSnackbar(
             "Oops",
             _i18n()["UserProfileScreen"]['mustSetUserNameError'],
-            position: SnackPosition.TOP,
+            position: Alignment.topCenter,
           );
 
           mezDbgPrint(_i18n()["UserProfileScreen"]['mustSetUserNameError']);
@@ -441,7 +441,7 @@ class UserProfileWidgetsClass {
           : () {
               MezSnackbar(
                   "Oops", _i18n()["UserProfileWidgets"]['noChangesToApply'],
-                  position: SnackPosition.TOP);
+                  position: Alignment.topCenter);
             },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 22),

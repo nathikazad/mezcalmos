@@ -26,7 +26,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
           children: [
             Text(
               '${_i18n()["title"]}',
-              style: context.txt.headline6,
+              style: context.txt.titleLarge,
             ),
             const SizedBox(
               height: 4,
@@ -49,7 +49,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
                       fit: FlexFit.tight,
                       child: Text(
                         time!.getOrderTime(),
-                        style: context.txt.bodyText1,
+                        style: context.txt.bodyLarge,
                         maxLines: 1,
                       ),
                     ),

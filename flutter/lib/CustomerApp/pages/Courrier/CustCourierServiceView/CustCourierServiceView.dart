@@ -7,11 +7,13 @@ import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/Cus
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
@@ -59,8 +61,12 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
         height: 75,
         label: '${_i18n()["orderNow"]}',
         onClick: () async {
-          await CustRequestCourierView.navigate(
-              _viewController.company.info.hasuraId);
+          if (Get.find<AuthController>().isUserSignedIn) {
+            await CustRequestCourierView.navigate(
+                _viewController.company.info.hasuraId);
+          } else {
+            dialogRequiredSignIn();
+          }
         },
       ),
       body: Obx(() {
@@ -75,14 +81,11 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      __headerButtons(),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      //  __headerButtons(),
                       Row(
                         children: [
                           RawChip(
@@ -108,6 +111,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               .company.info.description?[userLanguage] !=
                           null)
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 10,
@@ -219,36 +223,39 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   }
 
   Widget __headerButtons() {
-    return Row(
-      children: [
-        Flexible(
-          child: MezButton(
-            label: '${_i18n()["chatWithUs"]}',
-            height: 32.5,
-            backgroundColor: Colors.white,
-            textColor: primaryBlueColor,
-            onClick: () async {},
-            icon: Icons.message,
-            borderRadius: 20,
-            border: Border.all(width: 1, color: primaryBlueColor),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Flexible(
+            child: MezButton(
+              label: '${_i18n()["chatWithUs"]}',
+              height: 32.5,
+              backgroundColor: Colors.white,
+              textColor: primaryBlueColor,
+              onClick: () async {},
+              icon: Icons.message,
+              borderRadius: 20,
+              border: Border.all(width: 1, color: primaryBlueColor),
+            ),
           ),
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Flexible(
-          child: MezButton(
-            label: '${_i18n()["contactUs"]}',
-            height: 32.5,
-            onClick: () async {},
-            backgroundColor: Colors.white,
-            textColor: primaryBlueColor,
-            icon: Icons.phone,
-            borderRadius: 20,
-            border: Border.all(width: 1, color: primaryBlueColor),
+          SizedBox(
+            width: 15,
           ),
-        ),
-      ],
+          Flexible(
+            child: MezButton(
+              label: '${_i18n()["contactUs"]}',
+              height: 32.5,
+              onClick: () async {},
+              backgroundColor: Colors.white,
+              textColor: primaryBlueColor,
+              icon: Icons.phone,
+              borderRadius: 20,
+              border: Border.all(width: 1, color: primaryBlueColor),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

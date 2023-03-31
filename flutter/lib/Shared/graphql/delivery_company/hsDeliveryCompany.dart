@@ -174,6 +174,7 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
       dataList.map((Query$getDeliveryCompanies$delivery_company data) {
     return DeliveryCompany(
       schedule: Schedule.fromData(data.details!.schedule),
+      rate: data.reviews_aggregate.aggregate?.avg?.rating,
       deliveryCost: DeliveryCost(
         id: data.delivery_details.id,
         selfDelivery: data.delivery_details.self_delivery,

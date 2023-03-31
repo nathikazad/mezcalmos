@@ -1,7 +1,10 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/MezAdminApp/MezAdminWrapper.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/AdminTabsView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
+import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -9,7 +12,6 @@ import 'package:qlevar_router/qlevar_router.dart';
 class MezAdminRoutes {
   static const String kTabsViewRoute = '/deliveryOpHomeScreen';
   static const String kServiceOrdersRoute = '/serviceOrders/:serviceProviderId';
-  static const String kDeliveryCostSetter = "/deliveryCostSetter";
 
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(
@@ -29,7 +31,9 @@ class MezAdminRoutes {
         ),
       ] +
       SharedRoutes.qRoutes +
-      SharedServiceProviderRoutes.routes;
-//  +
-// NativeOnlyRoutes.routes;
+      RestaurantRouter.sharedWithAdminRoutes +
+      LaundryAppRoutes.sharedWithAdminRoutes +
+      DeliveryAdminRoutes.sharedWitAdminRoutes +
+      SharedServiceProviderRoutes.routes +
+      NativeOnlyRoutes.routes;
 }

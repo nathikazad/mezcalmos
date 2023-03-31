@@ -25,7 +25,7 @@ class CreditCardInfo extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 '${_i18n()["creditCardInfo"]}',
-                style: txt.bodyText1,
+                style: txt.bodyLarge,
               ),
             ),
             Container(
@@ -41,13 +41,13 @@ class CreditCardInfo extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             '${_i18n()["cardType"]}',
-                            style: txt.bodyText2,
+                            style: txt.bodyMedium,
                           ),
                           Text(
                               paymentInfo.brand!
                                   .toFirebaseFormatString()
                                   .inCaps,
-                              style: txt.bodyText1),
+                              style: txt.bodyLarge),
                         ],
                       ),
                     ),
@@ -58,10 +58,10 @@ class CreditCardInfo extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             '${_i18n()["last4"]}',
-                            style: txt.bodyText2,
+                            style: txt.bodyMedium,
                           ),
                           Text(paymentInfo.last4.toString(),
-                              style: txt.bodyText1),
+                              style: txt.bodyLarge),
                         ],
                       ),
                     ),

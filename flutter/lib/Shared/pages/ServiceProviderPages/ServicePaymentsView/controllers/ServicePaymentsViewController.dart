@@ -177,19 +177,6 @@ class ServicePaymentsViewController {
     setupClicked.value = true;
 
     await _setupService();
-
-    // onboardServiceProvider(
-    //     serviceProviderId, serviceProviderType, paymentInfo!.acceptedPayments);
-
-    // if (value.success) {
-    //   mezDbgPrint("response ============> $value");
-    //   stripeUrl = value.data["url"];
-    //   showStripe.value = true;
-    //   initWebView();
-    // } else {
-    //   Get.snackbar("Error", value.errorMessage ?? "Error");
-    // }
-    // setupClicked.value = false;
   }
 
   Future<void> _setupService() async {

@@ -48,10 +48,12 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
           viewController: widget.viewcontroller,
           // customer
           customerImage: widget.viewcontroller.order.customer.image,
-          subtitle: (_showFoodReadyTime())
+          subtitle: (_showReadyTime())
               ? "${_i18n()["packageReady"]} ${widget.viewcontroller.order.estimatedPackageReadyTime!.getEstimatedTime()}"
-              : null,
-          secondSubtitle: _getDeliveryTime(),
+              : (widget.viewcontroller.order.scheduleTime != null)
+                  ? "${widget.viewcontroller.order.scheduleTime!.getOrderTime()}"
+                  : null,
+
           customerName: widget.viewcontroller.order.customer.name,
           enableExpand: (widget.viewcontroller.order.inProcess())
               ? _isTimesSetted()
@@ -100,14 +102,6 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     );
   }
 
-  String? _getDeliveryTime() {
-    if (widget.viewcontroller.order.isScheduled) {
-      // todo @m66are fix this
-      //  return "${_i18n()["dvTime"]}: ${widget.viewcontroller.order.deliveryTime!.toLocal().toDayName()}, ${DateFormat("hh:mm a").format(widget.viewcontroller.order.deliveryTime!.toLocal())}";
-    }
-    return null;
-  }
-
   bool _isTimesSetted() {
     return widget.viewcontroller.order.estimatedArrivalAtPickup != null &&
         widget.viewcontroller.order.estimatedArrivalAtDropoff != null;
@@ -145,7 +139,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     }
   }
 
-  bool _showFoodReadyTime() {
+  bool _showReadyTime() {
     return widget.viewcontroller.order.estimatedPackageReadyTime != null &&
         (widget.viewcontroller.order.status ==
                 DeliveryOrderStatus.OrderReceived ||
@@ -193,7 +187,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                 MezIconButton(
                   onTap: () async {
                     mezDbgPrint(widget.viewcontroller.inPickupPhase);
-                    if (widget.viewcontroller.pickuSetted) {
+                    if (widget.viewcontroller.pickuSetted ||
+                        widget.viewcontroller.isCourier) {
                       DateTime? newTime = await _pickDateAndTime(
                           context: context,
                           firstDate: widget
@@ -221,7 +216,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     return InkWell(
       onTap: () async {
         mezDbgPrint(widget.viewcontroller.pickuSetted);
-        if (widget.viewcontroller.pickuSetted) {
+        if (widget.viewcontroller.pickuSetted ||
+            widget.viewcontroller.isCourier) {
           DateTime? newTime = await _pickDateAndTime(
               context: context,
               initalDate: widget.viewcontroller.pickupTime?.toLocal(),
@@ -231,8 +227,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
           }
         } else {
           showErrorSnackBar(
-              errorTitle: "${_i18n()['noDeliveryTimeTitle']}",
-              errorText: "${_i18n()['noDeliveryTimeBody']}");
+              errorTitle: "${_i18n()['noPickupTimeTitle']}",
+              errorText: "${_i18n()['noPickupTimeBody']}");
         }
       },
       borderRadius: BorderRadius.circular(5),

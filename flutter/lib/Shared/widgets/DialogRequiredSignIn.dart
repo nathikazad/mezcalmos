@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+        ["Restaurants"]["ViewItemScreen"]["components"]["DialogRequiredSignIn"];
 void dialogRequiredSignIn() {
-  dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-          ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
-      ["DialogRequiredSignIn"];
   // Get.dialog<void>(
   showDialog(
     context: QR.context!,
@@ -30,7 +29,6 @@ void dialogRequiredSignIn() {
                 child: IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {
-                    mezDbgPrint("Clicked back");
                     MezRouter.back();
                   },
                 ),
@@ -61,7 +59,7 @@ void dialogRequiredSignIn() {
                   MezButton(
                     onClick: () async {
                       // to remove the SignIn popUp first!
-                      await MezRouter.back();
+                      Navigator.pop(context);
                       // then head to kSignInRoute.
 
                       // ignore: unawaited_futures

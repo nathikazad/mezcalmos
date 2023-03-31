@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryA
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -40,6 +41,32 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
     return CourierOrder(
       orderType: OrderType.Courier,
       orderId: orderData.id,
+      review: (orderData.delivery_order.driver_review_by_customer != null)
+          ? Review(
+              comment: orderData.delivery_order.driver_review_by_customer!.note,
+              rating:
+                  orderData.delivery_order.driver_review_by_customer!.rating,
+              toEntityId: orderData
+                  .delivery_order.driver_review_by_customer!.to_entity_id,
+              customer: UserInfo(
+                name: orderData.delivery_order.driver_review_by_customer
+                    ?.customer?.user.name,
+                image: orderData.delivery_order.driver_review_by_customer
+                    ?.customer?.user.image,
+                hasuraId: orderData.delivery_order.driver_review_by_customer!
+                    .customer!.user.id,
+              ),
+              toEntityType: orderData
+                  .delivery_order.driver_review_by_customer!.to_entity_type
+                  .toServiceProviderType(),
+              fromEntityId: orderData
+                  .delivery_order.driver_review_by_customer!.from_entity_id,
+              fromEntityType: orderData
+                  .delivery_order.driver_review_by_customer!.from_entity_type
+                  .toServiceProviderType(),
+              reviewTime: DateTime.parse(orderData
+                  .delivery_order.driver_review_by_customer!.created_at))
+          : null,
       scheduleTime: (orderData.delivery_order.schedule_time != null)
           ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
           : null,
@@ -181,6 +208,33 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
             : null,
         billImage: orderData.bill_image,
+        review: (orderData.delivery_order.driver_review_by_customer != null)
+            ? Review(
+                comment:
+                    orderData.delivery_order.driver_review_by_customer!.note,
+                rating:
+                    orderData.delivery_order.driver_review_by_customer!.rating,
+                toEntityId: orderData
+                    .delivery_order.driver_review_by_customer!.to_entity_id,
+                customer: UserInfo(
+                  name: orderData.delivery_order.driver_review_by_customer
+                      ?.customer?.user.name,
+                  image: orderData.delivery_order.driver_review_by_customer
+                      ?.customer?.user.image,
+                  hasuraId: orderData.delivery_order.driver_review_by_customer!
+                      .customer!.user.id,
+                ),
+                toEntityType: orderData
+                    .delivery_order.driver_review_by_customer!.to_entity_type
+                    .toServiceProviderType(),
+                fromEntityId: orderData
+                    .delivery_order.driver_review_by_customer!.from_entity_id,
+                fromEntityType: orderData
+                    .delivery_order.driver_review_by_customer!.from_entity_type
+                    .toServiceProviderType(),
+                reviewTime: DateTime.parse(orderData
+                    .delivery_order.driver_review_by_customer!.created_at))
+            : null,
         deliveryDirection:
             orderData.delivery_order.direction.toDeliveryDirection(),
         customer: UserInfo(
@@ -322,6 +376,7 @@ Stream<OrderCosts?> listen_on_courier_order_costs({required orderId}) {
 
 Future<List<CourierOrdeItem>?> get_courier_order_items(
     {required int orderId, bool withCache = true}) async {
+  mezDbgPrint("getting courier order items of order ===============>$orderId");
   QueryResult<Query$get_courier_order_items_by_id> res =
       await _hasuraDb.graphQLClient.query$get_courier_order_items_by_id(
           Options$Query$get_courier_order_items_by_id(
@@ -329,6 +384,7 @@ Future<List<CourierOrdeItem>?> get_courier_order_items(
                   withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
               variables: Variables$Query$get_courier_order_items_by_id(
                   orderId: orderId)));
+
   if (res.parsedData?.delivery_courier_order == null ||
       res.parsedData!.delivery_courier_order.isEmpty) {
     throwError(res.exception);
@@ -347,6 +403,23 @@ Future<List<CourierOrdeItem>?> get_courier_order_items(
                     notes: item.notes,
                     estCost: item.estimated_cost))
         .toList();
+  }
+  return null;
+}
+
+Future<String?> get_courier_bill_order_image(
+    {required int orderId, bool withCache = true}) async {
+  QueryResult<Query$get_courier_order_bill> res = await _hasuraDb.graphQLClient
+      .query$get_courier_order_bill(Options$Query$get_courier_order_bill(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables: Variables$Query$get_courier_order_bill(orderId: orderId)));
+
+  if (res.parsedData?.delivery_courier_order == null ||
+      res.parsedData!.delivery_courier_order.isEmpty) {
+    throwError(res.exception);
+  } else {
+    return res.parsedData!.delivery_courier_order.first.bill_image;
   }
   return null;
 }
@@ -382,6 +455,7 @@ Future<CourierOrdeItem?> update_courier_order_item(
 
 Future<double?> update_courier_order_tax(
     {required int orderId, required num tax}) async {
+  mezDbgPrint("order id ===========>$orderId");
   QueryResult<Mutation$updateCourierOrder> res =
       await _hasuraDb.graphQLClient.mutate$updateCourierOrder(
     Options$Mutation$updateCourierOrder(

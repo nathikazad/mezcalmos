@@ -48,7 +48,7 @@ class _MezExpandableCardState extends State<MezExpandableCard> {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
-        childrenPadding: const EdgeInsets.all(8),
+        childrenPadding: const EdgeInsets.all(5),
         collapsedIconColor: primaryBlueColor,
         textColor: primaryBlueColor,
 
@@ -96,6 +96,7 @@ class _MezExpandableCardState extends State<MezExpandableCard> {
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             width: 8,

@@ -42,7 +42,7 @@ class _LaundryStepsComponentState extends State<LaundryStepsComponent> {
                 getDescription(index),
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .bodyLarge!
                     .copyWith(height: 1.5),
               ),
             ),

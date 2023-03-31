@@ -16,6 +16,10 @@ class DeliveryAppRoutes {
   static const String kPastOrdersViewRoute = "/pastOrders";
   static const String kDriverUnAuthRoute = "/driverUnauth";
 
+  static String getDvOrderRoute(int orderId) {
+    return kDvOrderView.replaceFirst(":orderId", "$orderId");
+  }
+
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(
           path: kCurrentOrdersListRoute,

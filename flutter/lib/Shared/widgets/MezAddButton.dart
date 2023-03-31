@@ -46,7 +46,7 @@ class MezAddButton extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 12),
                   child: Text(
                     title!,
-                    style: context.txt.bodyText1?.copyWith(color: primaryColor),
+                    style: context.txt.bodyLarge?.copyWith(color: primaryColor),
                   ),
                 )
             ],

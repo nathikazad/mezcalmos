@@ -66,7 +66,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                 children: [
                   Text(
                     '${_i18n()["deliveryTitle"]}',
-                    style: Get.theme.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -74,7 +74,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
                   if (widget.order.selfDeliveryDetails?.estDeliveryTime != null)
                     Text(
                       "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.selfDeliveryDetails!.estDeliveryTime!.toLocal())}",
-                      style: Get.theme.textTheme.bodyMedium,
+                      style: context.txt.bodyMedium,
                     ),
                 ],
               ),
@@ -337,14 +337,14 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
     if (value
-            .difference(
-                widget.order.estimatedPackageReadyTime ?? widget.order.orderTime)
+            .difference(widget.order.estimatedPackageReadyTime ??
+                widget.order.orderTime)
             .inDays
             .abs() >
         0) {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["deliveryMinTimes"]}',
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     } else if (value
                 .difference(widget.order.estimatedPackageReadyTime ??
                     widget.order.orderTime)
@@ -370,7 +370,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
     } else {
       isClicked.value = false;
       MezSnackbar('${_i18n()["error"]}', '${_i18n()["deliveryMinTimes"]}',
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     }
   }
 

@@ -206,6 +206,7 @@ select_permissions:
                   drivers:
                     user_id:
                       _eq: X-Hasura-User-Id
+      allow_aggregations: true
   - role: delivery_operator
     permission:
       columns:
@@ -403,6 +404,16 @@ select_permissions:
               user_id:
                 _eq: X-Hasura-User-Id
 update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - driver_review_by_customer_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
   - role: delivery_driver
     permission:
       columns:

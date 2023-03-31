@@ -158,7 +158,7 @@
           "components": {
             "DeliveryTimePicker": {
               "dvTime": "Delivery time",
-              "restClosed": "Restaurant is closed now",
+              "restClosed": "Service is closed now, but you can schedule your order for later.",
               "pickTime": "Pick your time",
               "now": "Now",
               "timeError": "Picked delivery time is passed, please pick a valid time"
@@ -484,6 +484,10 @@
           "subtitle": "Get your clothes cleaned by your nearest laundry service",
           "title": "Laundry"
         },
+        "courier": {
+          "title": "Courier",
+          "subtitle": "Obtain delivery of anything you desire to your location."
+        },
         "comingSoon": "Coming soon ...",
         "supportText": "Need help ? contact our support team"
       },
@@ -678,6 +682,8 @@
       "courier": {
         "atPickupTitle": "At pickup",
         "atPickupBody": "Driver reached order pickup location",
+        "atDropoffTitle": "At dropoff",
+        "atDropoffBody": "Driver reached order dropoff location",
         "onTheWayPickupTitle": "Pickup on the way",
         "onTheWayPickupBody": "Driver is on his way to pickup your order",
         "onTheWayDropoffTitle": "Delivery on the way",
@@ -697,9 +703,9 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
-          "delivered": "Order Delivered",
-          "received": "Order Received",
-          "canceled": "Order Cancelled",
+          "delivered": "Order delivered",
+          "received": "Order received",
+          "canceled": "Order cancelled",
           "atDropOff": "At dropoff"
         }
       },
@@ -720,6 +726,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
+        "writeReview" :"Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",
         "no": "No",
@@ -1078,6 +1085,9 @@
     "widgets": {
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
+      },
+      "ReviewCard" : {
+        "review" :"Review"
       },
       "MezDateTimePicker": {
         "cancel": "Cancel",
@@ -1647,10 +1657,14 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
+        "service": "Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
         "schTime": "Scheduled time",
         "orderDetails": "Order details",
+        "updateTitle": "Update Price",
+        "updateReason": "Reason for price change",
+        "updatePrice": "New price",
         "orderItems": "Order Items",
         "addCost": "Add cost",
         "save": "Save",
@@ -2461,6 +2475,7 @@
     "noRoute": "No route found. please enter a valid destination",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "minutes": "minutes"
+    "minutes": "minutes",
+    "slowInternet": "Slow internet"
   }
 }

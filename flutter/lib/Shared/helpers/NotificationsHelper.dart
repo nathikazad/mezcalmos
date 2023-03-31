@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -11,6 +12,8 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -31,9 +34,13 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
 
 Future<void> _displayNotification(notifs.Notification notification) async {
   await Get.find<SettingsController>().playNotificationSound();
-  // mezDbgPrint(notification.imgUrl);
+  mezDbgPrint("🩳 notificationAction ${notification.notificationAction}");
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
     await decideWhichButtonDialogToUse(notification);
+  } else if (notification.notificationAction ==
+      notifs.NotificationAction.NavigteToLinkUrl) {
+    if (!MezRouter.isCurrentRoute(notification.linkUrl))
+      MezRouter.toPath(notification.linkUrl);
   } else {
     notificationSnackBar(notification);
   }
@@ -41,45 +48,38 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
-  if (Get.context != null) {
-    if (MezRouter.isCurrentRoute(notification.linkUrl)) {
-      await showStatusInfoDialog(Get.context!,
-          status: notification.title,
-          description: notification.body,
-          primaryIcon: notification.icon,
-          bottomRightIcon: notification.secondaryIcon,
-          showSmallIcon: notification.secondaryIcon != null);
-    } else
-      await showStatusInfoDialog(
-        Get.context!,
-        status: notification.title,
-        primaryIcon: notification.icon,
-        description: notification.body,
-        showSmallIcon: notification.secondaryIcon != null,
-        bottomRightIcon: notification.secondaryIcon,
-        primaryCallBack: () {
-          MezRouter.back();
-        },
-        secondaryCallBack: () => MezRouter.toNamed(notification.linkUrl),
-      );
+  if (QR.context != null) {
+    await showStatusInfoDialog(
+      QR.context!,
+      status: notification.title,
+      primaryIcon: notification.icon,
+      description: notification.body,
+      showSmallIcon: notification.secondaryIcon != null,
+      bottomRightIcon: notification.secondaryIcon,
+      primaryCallBack: (MezRouter.isCurrentRoute(notification.linkUrl))
+          ? null
+          : () => MezRouter.back(),
+      secondaryCallBack: (MezRouter.isCurrentRoute(notification.linkUrl))
+          ? null
+          : () => MezRouter.back()
+              .then((_) => MezRouter.toPath(notification.linkUrl)),
+    );
   }
 }
 
 void notificationSnackBar(notifs.Notification notification) {
-  Get.rawSnackbar(
-    onTap: (_) async {
-      mezDbgPrint("ONTAP ====> $_");
-
-      await MezRouter.toNamed(notification.linkUrl);
+  customSnackBar(
+    onTap: () {
+      MezRouter.toPath(notification.linkUrl);
     },
-    maxWidth: Get.width,
-    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+    title: notification.title,
+    subTitle: notification.body,
     duration: Duration(milliseconds: 5000),
     icon: (notification.notifWidget != null)
         ? notification.notifWidget
         : Container(
             height: 50,
-            width: 10,
+            width: 50,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -90,56 +90,18 @@ void notificationSnackBar(notifs.Notification notification) {
                 style: BorderStyle.solid,
               ),
             ),
-            child: notification.imgUrl!.startsWith("http")
+            child: notification.imgUrl?.startsWith("http") == true
                 ? Image.network(
                     notification.imgUrl!,
                     fit: BoxFit.cover,
                     height: 50,
                     width: 10,
                   )
-                : Image.asset(notification.imgUrl!),
+                : notification.imgUrl != null
+                    ? Image.asset(notification.imgUrl!)
+                    : (notification.icon != null)
+                        ? Icon(notification.icon, color: primaryBlueColor)
+                        : null,
           ),
-    backgroundColor: Colors.black,
-    borderWidth: 1,
-    borderColor: Colors.black,
-    borderRadius: 12,
-    messageText: Text(
-      notification.body,
-      style: TextStyle(
-        fontFamily: "Nunito",
-        fontWeight: FontWeight.w400,
-        fontSize: 15,
-        color: Colors.white,
-      ),
-    ),
-    titleText: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Flexible(
-          child: Text(
-            notification.title,
-            style: TextStyle(
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Text(
-          notification.formattedTime,
-          style: TextStyle(
-            fontFamily: "Nunito",
-            fontWeight: FontWeight.w400,
-            fontSize: 15,
-            color: Color(0xFFC4C4C4),
-          ),
-        ),
-      ],
-    ),
-    padding: EdgeInsets.all(25),
-    snackPosition: SnackPosition.TOP,
-    snackStyle: SnackStyle.FLOATING,
   );
 }

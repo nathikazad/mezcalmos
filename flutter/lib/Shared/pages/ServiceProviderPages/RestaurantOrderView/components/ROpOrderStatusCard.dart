@@ -48,7 +48,7 @@ class ROpOrderStatusCard extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           order.getOrderStatus(),
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

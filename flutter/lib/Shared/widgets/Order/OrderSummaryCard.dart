@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
@@ -19,6 +18,7 @@ class OrderSummaryCard extends StatelessWidget {
     required this.costs,
     this.divideDeliveryCost = false,
     this.setTaxCallBack,
+    this.setDeliveryCallBack,
     this.showNullValues = true,
     required this.stripeOrderPaymentInfo,
   }) : super(key: key);
@@ -29,6 +29,7 @@ class OrderSummaryCard extends StatelessWidget {
   final bool divideDeliveryCost;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
   final Function()? setTaxCallBack;
+  final Function()? setDeliveryCallBack;
 
   final EdgeInsets? margin;
 
@@ -97,12 +98,23 @@ class OrderSummaryCard extends StatelessWidget {
                           '${_i18n()["deliveryCost"]}',
                           style: txt.bodyMedium,
                         ),
-                        ShippingCostComponent(
-                          shippingCost: costs.deliveryCost,
-                          formattedShippingCost: (divideDeliveryCost)
-                              ? "${(costs.deliveryCost! / 2).toPriceString()} x 2 "
-                              : null,
-                        )
+                        Row(
+                          children: [
+                            if (setDeliveryCallBack != null)
+                              MezIconButton(
+                                icon:
+                                    costs.tax != null ? Icons.edit : Icons.add,
+                                iconSize: 17,
+                                padding: const EdgeInsets.all(3),
+                                onTap: setDeliveryCallBack,
+                              ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 3),
+                              child: Text(
+                                  "${(divideDeliveryCost) ? "${(costs.deliveryCost ?? 0 / 2).toPriceString()} x 2 " : "${(costs.deliveryCost?.toPriceString() ?? "-")}"}"),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

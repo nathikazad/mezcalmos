@@ -94,7 +94,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromCamera"]}",
-                                style: context.txt.bodyText1),
+                                style: context.txt.bodyLarge),
                           ),
                         ],
                       ),
@@ -117,7 +117,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromGallery"]}",
-                                style: context.txt.bodyText1),
+                                style: context.txt.bodyLarge),
                           ),
                         ],
                       ),
@@ -191,17 +191,19 @@ Future<imPicker.XFile?> imagePicker(
     if (exception.code == 'camera_access_denied') {
       MezSnackbar(
           _i18n()['cameraAccessOffTitle'], _i18n()['cameraAccessOffBody'],
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(_i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
-          position: SnackPosition.TOP);
-    } else {
-      return await picker.pickImage(
-        source: source,
-        preferredCameraDevice: imPicker.CameraDevice.front,
-        imageQuality: nQualityCompressionOfUserImage,
-      );
+          position: Alignment.topCenter);
     }
+    //else {
+    //   return await picker.pickImage(
+    //     source: source,
+    //     preferredCameraDevice: imPicker.CameraDevice.front,
+    //     imageQuality: nQualityCompressionOfUserImage,
+    //     requestFullMetadata: true,
+    //   );
+    // }
     return null;
   }
 }
@@ -211,7 +213,7 @@ Image mLoadImage({
   Uint8List? memoryImage,
   double? height,
   double? width,
-  fit: BoxFit.cover,
+  fit = BoxFit.cover,
   String assetInCaseFailed = aNoImgAsset,
 }) {
   Image _img;

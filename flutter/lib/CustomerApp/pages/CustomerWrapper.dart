@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -16,6 +15,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/CustLaundriesL
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -25,7 +25,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -66,9 +65,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     super.initState();
 
     if (authController.fireAuthUser != null) {
-      _orderController = Get.find<CustomerOrderController>();
       customerAuthController = Get.find<CustomerAuthController>();
-
+      _orderController = Get.find<CustomerOrderController>();
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
@@ -106,9 +104,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       child: Scaffold(
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
-        appBar: CustomerAppBar(
-          leftBtnType: AppBarLeftButtonType.Menu,
-        ),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
+            showUserIcon: true,
+            showNotifications: true,
+            ordersRoute: CustomerRoutes.customerOrdersRoute),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -205,10 +204,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   }
 
   Widget mezListOfServices() {
-    return Column(
-      children: [
-        Obx(
-          () => ServicesCard(
+    return Obx(
+      () => Column(
+        children: [
+          ServicesCard(
             title: "${_i18n()['food']["title"]}",
             url: "assets/images/customer/foodService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
@@ -221,9 +220,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   });
             },
           ),
-        ),
-        Obx(
-          () => ServicesCard(
+          ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
             subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
@@ -236,21 +233,21 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   });
             },
           ),
-        ),
-        ServicesCard(
-          title: "Courier",
-          url: "assets/images/customer/courrierService.png",
-          subtitle: "Obtain delivery of anything you desire to your location.",
-          onTap: () {
-            getServiceRoute(
-                orderType: OrderType.Courier,
-                serviceRoute: CustCourierServicesListView.navigate,
-                singleOrderRoute: (int orderId) {
-                  CustCourierOrderView.navigate(orderId: orderId);
-                });
-          },
-        ),
-      ],
+          ServicesCard(
+            title: "${_i18n()['courier']["title"]}",
+            subtitle: "${_i18n()['courier']["subtitle"]}",
+            url: "assets/images/customer/courrierService.png",
+            onTap: () {
+              getServiceRoute(
+                  orderType: OrderType.Courier,
+                  serviceRoute: CustCourierServicesListView.navigate,
+                  singleOrderRoute: (int orderId) {
+                    CustCourierOrderView.navigate(orderId: orderId);
+                  });
+            },
+          ),
+        ],
+      ),
     );
   }
 

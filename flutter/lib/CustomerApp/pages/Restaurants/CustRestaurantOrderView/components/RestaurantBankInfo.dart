@@ -138,19 +138,6 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
   }
 
   void _copiedSnackBar() {
-    return customSnackBar(
-      titleWidget: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(Icons.check_circle),
-          const SizedBox(width: 5),
-          Text(
-            "Copied",
-            style: context.txt.bodyLarge,
-          ),
-        ],
-      ),
-    );
+    return customSnackBar(title: "Copied");
   }
 }

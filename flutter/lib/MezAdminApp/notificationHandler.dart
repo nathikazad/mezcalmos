@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/MezAdminApp/router/router.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 
 //
 dynamic _i18n() =>
@@ -23,8 +17,6 @@ dynamic _i18n() =>
 Notification mezAdminNotificationHandler(String key, value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
-
-  mezDbgPrint("👋 new notification 👋\n ${value['orderType']}");
 
   switch (notificationType) {
     case NotificationType.NewMessage:
