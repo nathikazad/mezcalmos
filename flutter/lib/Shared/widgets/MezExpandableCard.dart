@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 class MezExpandableCard extends StatefulWidget {
   const MezExpandableCard(
@@ -11,8 +12,10 @@ class MezExpandableCard extends StatefulWidget {
       this.marging = const EdgeInsets.only(bottom: 15),
       required this.title,
       this.imageShape = BoxShape.rectangle,
-      required this.expandableWidget});
+      required this.expandableWidget,
+      this.onTapHeaderImage});
   final bool showImage;
+  final Function()? onTapHeaderImage;
   final EdgeInsets marging;
 
   final String? imageUrl;
@@ -116,6 +119,16 @@ class _MezExpandableCardState extends State<MezExpandableCard> {
                         ? CachedNetworkImageProvider(widget.imageUrl!)
                         : AssetImage(aNoImage) as ImageProvider<Object>,
                   )),
+              child: widget.onTapHeaderImage == null
+                  ? null
+                  : MezIconButton(
+                      elevation: 0,
+                      materialColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      icon: Icons.zoom_in_outlined,
+                      iconColor: Colors.white,
+                      onTap: widget.onTapHeaderImage,
+                    ),
             ),
           SizedBox(
             width: 10,
