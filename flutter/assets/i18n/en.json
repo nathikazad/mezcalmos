@@ -55,8 +55,33 @@
           "description": "Description",
           "reviews": "Reviews",
           "viewAll": "View All"
+        },
+        "CustRequestCourierView": {
+          "title": "Courier",
+          "from": "From",
+          "to": "To",
+          "thisFieldCanBeEmpty": "This field can be empty",
+          "next": "Next",
+          "orderNow": "Order now",
+          "deliveryCompany": "Delivery company",
+          "CustRequestCourierItems": {
+            "item": "Item",
+            "remove": "Remove",
+            "whatCanWeGetYou": "What can we get you?",
+            "name": "Name",
+            "notes": "Notes",
+            "estimatedCost": "Estimated cost",
+            "required": "Required"
+          }
+        },
+        "CustCourierOrderView": {
+          "cancelOrder": "Cancel order",
+          "note": "Note",
+          "delivery": "Delivery",
+          "noDriverAssignedYet": "No driver assigned yet"
         }
       },
+      
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
