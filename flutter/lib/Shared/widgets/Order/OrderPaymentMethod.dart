@@ -17,8 +17,8 @@ class OrderPaymentMethod extends StatelessWidget {
       {super.key,
       required this.paymentType,
       required this.stripeOrderPaymentInfo,
-      this.titleStyle,
-      this.margin});
+      this.margin = const EdgeInsets.only(top: 15),
+      this.titleStyle});
   final PaymentType paymentType;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
   final EdgeInsets? margin;
@@ -26,7 +26,7 @@ class OrderPaymentMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

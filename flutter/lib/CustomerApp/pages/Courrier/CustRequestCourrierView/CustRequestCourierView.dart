@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -18,6 +19,9 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustRequestCourierView"];
 
 class CustRequestCourierView extends StatefulWidget {
   static Future<void> navigate(
@@ -53,7 +57,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
         AppBarLeftButtonType.Back,
         ordersRoute: CustomerRoutes.customerOrdersRoute,
         onClick: viewController.handleBack,
-        title: "Courier",
+        title: '${_i18n()["title"]}',
       ),
       body: Obx(
         () {
@@ -74,7 +78,9 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
       ),
       bottomSheet: Obx(
         () => MezButton(
-          label: viewController.currentPage.value == 0 ? "Next" : "Order now",
+          label: viewController.currentPage.value == 0
+              ? '${_i18n()["next"]}'
+              : '${_i18n()["orderNow"]}',
           withGradient: true,
           height: 75,
           onClick: () async {
@@ -154,7 +160,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "From",
+              '${_i18n()["from"]}',
               style: context.txt.bodyLarge,
             ),
             SizedBox(
@@ -165,7 +171,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               height: 15,
             ),
             Text(
-              "To",
+              '${_i18n()["to"]}',
               style: context.txt.bodyLarge,
             ),
             SizedBox(
@@ -203,7 +209,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
       children: [
         Obx(
           () => Material(
-            elevation: 0.5,
+            elevation: 0,
             child: LocationSearchComponent(
                 hintPadding: EdgeInsets.only(left: 10),
                 suffixPadding: EdgeInsets.only(right: 10),
@@ -237,7 +243,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               width: 3,
             ),
             Text(
-              "This field can be empty",
+              '${_i18n()["thisFieldCanBeEmpty"]}',
               style: context.txt.bodyLarge
                   ?.copyWith(color: primaryBlueColor, fontSize: 12.5),
             )

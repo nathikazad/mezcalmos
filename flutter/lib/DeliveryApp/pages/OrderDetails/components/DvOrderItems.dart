@@ -40,7 +40,6 @@ class DvOrderItems extends StatelessWidget {
                         viewController.items.value!.length,
                         (int index) => MezExpandableCard(
                                 title: _itemHeader(index, context),
-                              
                                 imageUrl:
                                     viewController.items.value![index].image,
                                 expandableWidget: [
@@ -48,11 +47,11 @@ class DvOrderItems extends StatelessWidget {
                                     "${_i18n()['estCost']}",
                                     style: context.txt.bodyLarge,
                                   ),
+                                  Text(
+                                      "${viewController.items.value![index].estCost?.toPriceString() ?? "_"}"),
                                   SizedBox(
                                     height: 8,
                                   ),
-                                  Text(
-                                      "${viewController.items.value![index].estCost?.toPriceString() ?? "_"}"),
                                   if (viewController.items.value![index].notes
                                           ?.isNotEmpty ==
                                       true)
@@ -132,7 +131,7 @@ class DvOrderItems extends StatelessWidget {
                   },
                 )
               : Container(
-                  margin: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.only(right: 5, bottom: 5, top: 5),
                   child: Row(
                     children: [
                       Text(
@@ -153,6 +152,8 @@ class DvOrderItems extends StatelessWidget {
                       if (!viewController.items.value![index].unavailable &&
                           viewController.order.value?.isDriverAssigned == true)
                         MezIconButton(
+                            backgroundColor: backgroundShadeColor,
+                            iconColor: offShadeGreyColor,
                             iconSize: 18,
                             padding: EdgeInsets.all(3),
                             onTap: () async {

@@ -55,6 +55,30 @@
           "description": "Descripción",
           "reviews": "Reseñas",
           "viewAll": "Ver todo"
+        },
+        "CustRequestCourierView": {
+          "title": "Mensajera",
+          "from": "De",
+          "to": "A",
+          "thisFieldCanBeEmpty": "Este campo puede estar vacío",
+          "next": "Próxima",
+          "orderNow": "Ordenar ahora",
+          "deliveryCompany": "Compañía de entrega",
+          "CustRequestCourierItems": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "whatCanWeGetYou": "¿Qué podemos conseguirte?",
+            "name": "Nombre",
+            "notes": "Notas",
+            "estimatedCost": "Costo estimado",
+            "required": "Requerida"
+          }
+        },
+        "CustCourierOrderView": {
+          "cancelOrder": "Cancelar orden",
+          "note": "Nota",
+          "delivery": "Entrega",
+          "noDriverAssignedYet": "No hay controlador asignado todavía"
         }
       },
       "ListOrdersScreen": {
@@ -728,9 +752,9 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Guardado",
-        "writeReview" :"Escribir un comentario",
+        "writeReview": "Escribir un comentario",
         "savedTitle": "tu información ha sido guardada",
-        "yesCancel": "Sí, Cancelar pedido",
+        "yesCancel": "Sí, cancelar pedido",
         "no": "No",
         "cancelOrder": "Cancelar orden",
         "cancelConfirmationText": "¿Estás seguro de que te gustaría cancelar?",
@@ -754,7 +778,7 @@
         "today": "Hoy",
         "tomorrow": "mañana",
         "on": "el",
-        "in": "en",
+        "in": "En",
         "at": "a",
         "weekAgo": "Hace una semana",
         "lastWeek": "La semana pasada",
@@ -1092,8 +1116,8 @@
       }
     },
     "widgets": {
-      "ReviewCard" : {
-        "review" :"Revisar"
+      "ReviewCard": {
+        "review": "Revisar"
       },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "El tiempo de entrega"
@@ -1682,7 +1706,8 @@
         "deliveryCost": "Coste de envío",
         "customer": "Cliente",
         "restaurant": "Restaurante",
-        "laundry": "Lavanderia"
+        "laundry": "Lavanderia",
+        "orders": "Pedidos"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
@@ -1744,7 +1769,7 @@
                 "readyForDelivery": "Listo para entregar",
                 "deliveryOtw": "Entrega en el camino",
                 "delivered": "Orden Entregado",
-                "canceled": "Orden Cancelada"
+                "canceled": "Orden cancelada"
               },
               "oops": "Ups",
               "set": "Establecer",
@@ -1801,7 +1826,7 @@
                 "justReady": "Listo para la entrega",
                 "scheduled": "Pedido programado",
                 "delivered": "Orden Entregado",
-                "canceled": "Orden Cancelada",
+                "canceled": "Orden cancelada",
                 "received": "Orden recibida"
               },
               "RestaurantControllButtons": {
@@ -1834,7 +1859,7 @@
               "readyForPickup": "Listo para recojer",
               "deliveryOtw": "Entrega en el camino",
               "delivered": "Orden Entregado",
-              "canceled": "Orden Cancelada"
+              "canceled": "Orden cancelada"
             },
             "RestaurantControllButtons": {
               "confirmPickup": "Confirmar la recogida",
@@ -1853,7 +1878,7 @@
       "preparingOrderBody": "Se está preparando tu pedido",
       "readyForPickupTitle": "Listo Para Recoger",
       "readyForPickupBody": "Tu pedido está listo para ser recogido",
-      "cancelledTitle": "Orden Cancelada",
+      "cancelledTitle": "Orden cancelada",
       "cancelledBody": "Tu pedido ha sido cancelado",
       "laundryOtwPickupTitle": "Recogida en el camino",
       "laundryOtwPickupBody": " En el camino para recoger el pedido.",
@@ -1997,7 +2022,7 @@
         "Components": {
           "LaundryOpOrderStatusCard": {
             "status": {
-              "canceled": "Orden Cancelada",
+              "canceled": "Orden cancelada",
               "orderReceived": "Orden Recibida",
               "otwPickUp": "Recoger en el camino",
               "pickedUp": "pedidoRecogido",
@@ -2473,6 +2498,7 @@
     "error": "error",
     "noRoute": "No se encontró ruta.Ingrese un destino válido",
     "minutes": "minutos",
-    "slowInternet": "Internet lento"
+    "slowInternet": "Internet lento",
+    "min": "min"
   }
 }

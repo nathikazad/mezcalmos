@@ -62,6 +62,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
+        title: '${_i18n()['orderDetails']}',
         AppBarLeftButtonType.Back,
         autoBack: true,
       ),
@@ -97,11 +98,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 "${_i18n()["schTime"]}",
                                 style: context.txt.bodyLarge,
                               ),
-                              Container(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text(viewController
-                                      .order.value!.scheduleTime!
-                                      .getOrderTime())),
+                              Text(viewController.order.value!.scheduleTime!
+                                  .getOrderTime()),
                               SizedBox(
                                 height: 20,
                               ),
@@ -115,11 +113,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 "${_i18n()["from"]}",
                                 style: context.txt.bodyLarge,
                               ),
-                              Container(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text(viewController.order.value
-                                          ?.pickupLocation?.address ??
-                                      "")),
+                              Text(viewController
+                                      .order.value?.pickupLocation?.address ??
+                                  ""),
                               SizedBox(
                                 height: 20,
                               ),
@@ -129,9 +125,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           "${_i18n()["deliveredTo"]}",
                           style: context.txt.bodyLarge,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
                         Text(
                             "${viewController.order.value!.dropOffLocation.address}"),
                         SizedBox(
@@ -140,9 +133,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         Text(
                           "${_i18n()["paymentMethod"]}",
                           style: context.txt.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: 10,
                         ),
                         Text(
                             "${_i18n()[viewController.order.value!.paymentType.toNormalString().toLowerCase()]}"),
@@ -176,7 +166,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   viewController: viewController,
                 ),
                 if (viewController.order.value?.isDriverAssigned == true)
-                  _billCard(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: _billCard(context),
+                  ),
                 if (viewController.orderCosts != null)
                   OrderSummaryCard(
                     costs: viewController.orderCosts!,
@@ -336,14 +329,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     children: [
                       Icon(
                         Icons.watch_later,
-                        color: primaryBlueColor,
+                        color: Colors.black,
                         size: 18.sp,
                       ),
                       SizedBox(
                         width: 2,
                       ),
                       Text(
-                        "${viewController.customerOrdersCount.value?.toString() ?? "-"} Orders",
+                        '${viewController.customerOrdersCount.value?.toString() ?? '-'} ${_i18n()['orders']}',
                         style: context.txt.bodyMedium,
                       ),
                       SizedBox(
@@ -351,7 +344,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.amber,
+                        color: primaryBlueColor,
                         size: 18.sp,
                       ),
                       SizedBox(
@@ -410,14 +403,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     children: [
                       Icon(
                         Icons.watch_later,
-                        color: primaryBlueColor,
+                        color: Colors.black,
                         size: 18.sp,
                       ),
                       SizedBox(
                         width: 2,
                       ),
                       Text(
-                        "${viewController.serviceOrdersCount.value?.toString() ?? "-"} Orders",
+                        "${viewController.serviceOrdersCount.value?.toString() ?? "-"} ${_i18n()['orders']}",
                         style: context.txt.bodyMedium,
                       ),
                       SizedBox(
@@ -425,7 +418,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.amber,
+                        color: primaryBlueColor,
                         size: 18.sp,
                       ),
                       SizedBox(
@@ -496,7 +489,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         style: context.txt.bodyLarge,
                       ),
                     ),
-                    Divider(
+                    SizedBox(
                       height: 25,
                     ),
                     TextFormField(
@@ -504,7 +497,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       style: context.txt.bodyLarge,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.attach_money_rounded),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.transparent), //<-- SEE HERE
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.attach_money_rounded,
+                          color: Colors.black,
+                        ),
                       ),
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),

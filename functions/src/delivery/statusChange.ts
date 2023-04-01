@@ -14,7 +14,7 @@ import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { isMezAdmin } from "../shared/helper";
 import { MezError } from "../shared/models/Generic/Generic";
 import { cancelCourierFromDelivery } from "../shared/graphql/delivery/courier/updateCourier";
-import { deliveryOrderUrl, orderUrl } from "../utilities/senders/appRoutes";
+import { orderUrl } from "../utilities/senders/appRoutes";
 import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
@@ -169,7 +169,7 @@ async function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer:
     customer.language
   );
   if(deliveryOrder.status == DeliveryOrderStatus.CancelledByAdmin && deliveryOrder.deliveryDriver) {
-    notification.linkUrl = deliveryOrderUrl(deliveryOrder.deliveryId);
+    notification.linkUrl = `/orders/${deliveryOrder.deliveryId}`;
     pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!,
       notification,
       deliveryOrder.deliveryDriver.notificationInfo,

@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -28,6 +29,9 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustCourierOrderView"];
 
 class CustCourierOrderView extends StatefulWidget {
   static Future<void> navigate({
@@ -100,6 +104,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   if (viewController.order.estimatedArrivalAtDropoff != null)
                     _estTime(),
                   _driverCard(),
+                  SizedBox(
+                    height: 15,
+                  ),
                   if (viewController.order.inDeliveryPhase &&
                       viewController.order.deliveryOrderId != null)
                     OrderMapWidget(
@@ -125,9 +132,15 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     margin: const EdgeInsets.only(top: 8),
                   ),
                   OrderPaymentMethod(
+                    margin: EdgeInsets.only(top: 15),
                     stripeOrderPaymentInfo:
                         viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
+                  ),
+                  OrderDeliveryLocation(
+                    address: viewController.order.dropOffLocation.address,
+                    margin: const EdgeInsets.only(top: 15),
+                    titleTextStyle: context.txt.bodyText1,
                   ),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
@@ -153,7 +166,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   ),
                   if (viewController.order.inProcess())
                     MezButton(
-                      label: "Cancel order",
+                      label: '${_i18n()["cancelOrder"]}',
                       onClick: () async {
                         await showConfirmationDialog(context,
                             onYesClick: () async {
@@ -182,11 +195,12 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
 
   Widget _items() {
     return Container(
-      margin: const EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 5),
       child: Column(
         children: List.generate(
             viewController.order.items.length,
             (int index) => MezExpandableCard(
+                marging: EdgeInsets.only(bottom: 5),
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -223,8 +237,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                             true)
                         ? [
                             Text(
-                              'Note',
-                              style: context.txt.bodyLarge,
+                              '${_i18n()["note"]}',
+                              style: context.txt.bodyText1,
                             ),
                             Text(
                               viewController.order.items[index].notes!,
@@ -248,7 +262,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Delivery",
+              '${_i18n()["delivery"]}',
               style: context.txt.bodyLarge,
             ),
             SizedBox(
@@ -263,7 +277,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
   Widget _driverCard() {
     return Obx(
       () => MezCard(
-        margin: const EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 15),
         contentPadding: const EdgeInsets.all(8),
         secondAvatarIcon: Icons.delivery_dining,
         secondAvatarIconColor: Colors.white,
@@ -274,7 +288,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             : CachedNetworkImageProvider(
                 viewController.order.driverInfo!.image),
         content: Text(
-          viewController.order.driverInfo?.name ?? "No driver assigned yet",
+          viewController.order.driverInfo?.name ??
+              '${_i18n()["noDriverAssignedYet"]}',
           style: context.txt.bodyLarge,
         ),
         action: Row(
