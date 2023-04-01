@@ -94,6 +94,8 @@ async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrde
         );
     });
     notification.foreground.linkUrl = `/orderDetails/${deliveryId}`
+    let n:CourierOrderStatusChangeNotification = notification.foreground as CourierOrderStatusChangeNotification;
+    n.orderId = deliveryId;
     if (courierOrder.deliveryOrder.deliveryDriver) {
         pushNotification(courierOrder.deliveryOrder.deliveryDriver.user?.firebaseId!,
             notification,

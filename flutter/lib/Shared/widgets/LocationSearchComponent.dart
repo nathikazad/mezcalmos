@@ -25,6 +25,7 @@ class LocationSearchComponent extends StatefulWidget {
   final EdgeInsets suffixPadding;
   final Color bgColor;
   final TextStyle labelStyle;
+  final TextStyle? textStyle;
   final Function? onFocus;
   final Function? onFocusLost;
   final TextFieldGotUpdated? onTextChange;
@@ -49,6 +50,7 @@ class LocationSearchComponent extends StatefulWidget {
     this.leftBotRaduis = 6,
     this.rightTopRaduis = 6,
     this.rightBotRaduis = 6,
+    this.textStyle,
     this.bgColor = const Color(0xfff8f8f8),
     this.labelStyle = const TextStyle(
       fontWeight: FontWeight.w800,
@@ -132,12 +134,13 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   dropDownWidth: widget.dropDownWidth,
                   tfInitialText: widget.text,
                   tfCursorColor: Colors.black,
-                  tfStyle: widget.labelStyle.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  tfStyle: widget.textStyle ??
+                      widget.labelStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                   controller: _controller,
                   suggestionsApiFetchDelay: 1,
                   getSuggestionsMethod: MapHelper.getLocationsSuggestions,
@@ -217,9 +220,9 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
         child: GestureDetector(
             onTap: () async {
               setState(() {
-                widget.onClear();
                 _showClearBtn = false;
                 _controller.clear();
+                widget.onClear();
               });
             },
             child: Icon(Icons.cancel, size: 20, color: Colors.grey.shade700)),

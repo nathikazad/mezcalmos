@@ -120,7 +120,7 @@ export async function cancelOrderFromCustomer(userId: number, data: CancelOrderD
       deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
       updateDeliveryOrderStatus(deliveryOrder);
       if(deliveryOrder.deliveryDriver != undefined) {
-        notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
+        notification.linkUrl = `/orders/${order.deliveryId}`;
         pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!, 
           notification, 
           deliveryOrder.deliveryDriver.notificationInfo,

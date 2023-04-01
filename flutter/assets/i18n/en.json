@@ -1841,6 +1841,8 @@
               "wrongTime": "You picked a wrong time",
               "noPickupTimeTitle": "No pickup time",
               "noPickupTimeBody": "Please set pickup time first",
+              "setDvCostTitle": "No delivery cost",
+              "setDvCostBody": "Please set the delivery cost first inside order details",
               "noDeliveryTimeTitle": "No dropoff time",
               "noDeliveryTimeBody": "Please set dropoff time first",
               "orderStatus": {
@@ -2130,6 +2132,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
+        "review" : "Review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",

@@ -18,9 +18,11 @@ class ReviewCard extends StatefulWidget {
       {super.key,
       required this.review,
       this.showUserImage = true,
+      this.showReviewTitle = false,
       this.margin = const EdgeInsets.only(bottom: 15)});
   final Review review;
   final bool showUserImage;
+  final bool showReviewTitle;
   final EdgeInsets margin;
 
   @override
@@ -40,13 +42,15 @@ class _ReviewCardState extends State<ReviewCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "${_i18n()['review']}",
-            style: context.textTheme.bodyLarge,
-          ),
-          SizedBox(
-            height: 8,
-          ),
+          if (widget.showReviewTitle)
+            Text(
+              "${_i18n()['review']}",
+              style: context.textTheme.bodyLarge,
+            ),
+          if (widget.showReviewTitle)
+            SizedBox(
+              height: 8,
+            ),
           Card(
             elevation: 0.5,
             margin: EdgeInsets.zero,

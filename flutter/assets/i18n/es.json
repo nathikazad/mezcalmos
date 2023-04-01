@@ -1809,6 +1809,13 @@
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
+            
+              "noPickupTimeTitle": "Sin tiempo de recogida",
+              "noPickupTimeBody": "Por favor, establezca la hora de recogida primero",
+              "setDvCostTitle": "Sin costo de entrega",
+              "setDvCostBody": "Establezca el costo de entrega primero detalles de pedido interno",
+              "noDeliveryTimeTitle": "Sin tiempo de caída",
+              "noDeliveryTimeBody": "Establezca el tiempo de entrega primero",
               "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de entregada.",
               "wrongTime": "Elegiste un momento equivocado",
               "orderStatus": {

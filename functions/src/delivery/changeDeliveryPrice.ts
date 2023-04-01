@@ -236,7 +236,7 @@ async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
             let courierOrder: CourierOrder = await getCourierOrderFromDelivery(deliveryOrder);
             orderId = courierOrder.id;
             linkUrlForCustomer = `/courierOrders/${orderId}`;
-            linkUrlForOperator = `/orders/${deliveryOrder.deliveryId}`;
+            linkUrlForOperator = `/deliveryOrders/${deliveryOrder.deliveryId}`;
             break;
     }
     let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
