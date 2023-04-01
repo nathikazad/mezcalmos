@@ -137,12 +137,16 @@ const String aAdventure = "assets/images/customer/adventure.png";
 const String aChakras = "assets/images/customer/chakras.png";
 const String aDelivery = "assets/images/customer/delivery.png";
 const String aDiscoBall = "assets/images/customer/discoBall.png";
-const String aRentals = "assets/images/customer/rentals.png";
 const String aVolunteering = "assets/images/customer/volunteering.png";
 const String aYoga = "assets/images/customer/yoga.png";
+// Rental Images, Icons
+const String aRentals = "assets/images/customer/rentals.png";
 const String aHomes = "assets/images/customer/rental/homes.png";
 const String aMotocycle = "assets/images/customer/rental/motorcycle.png";
 const String aSurf = "assets/images/customer/rental/surf.png";
+const String aHouseSliding = "assets/images/customer/rental/housesliding.png";
+const String aPriceCheck = "assets/images/customer/rental/pricecheck.png";
+const String aSingleBed = "assets/images/customer/rental/singlebed.png";
 
 const String _imgs_path = "assets/images/customer/taxi/";
 const String header_asset = "${_imgs_path}header.png";

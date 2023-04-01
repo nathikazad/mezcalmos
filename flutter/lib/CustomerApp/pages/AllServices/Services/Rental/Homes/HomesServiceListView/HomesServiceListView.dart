@@ -25,11 +25,23 @@ class _HomesServiceListViewState extends State<HomesServiceListView> {
                 title: "House for rent in Puerto Escondido",
                 image: AssetImage(aRentals),
                 lBottomText: "Company Name",
+                rBottomText: "Company Name 2",
                 subtitleWidget: Text("Hello"),
                 needBottomTitleText: false,
                 needDivider: false,
                 needLeadingImage: true,
                 needTrailingImage: false,
+                needCustomSubtitle: true,
+                subtitleIconData: [
+                  aPriceCheck,
+                  aSingleBed,
+                  aHouseSliding,
+                ],
+                subtitleIconString: [
+                  "\$234/day",
+                  "3 bedrooms",
+                  "330m²",
+                ],
               ),
             );
           },
@@ -44,13 +56,16 @@ class RentalServiceCardView extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitleWidget,
-    required this.lBottomText,
     required this.image,
+    this.lBottomText = "",
     this.rBottomText = "",
     this.needDivider = true,
     this.needBottomTitleText = true,
     this.needLeadingImage = false,
     this.needTrailingImage = true,
+    this.needCustomSubtitle = true,
+    this.subtitleIconData = const <String>[],
+    this.subtitleIconString = const <String>[],
   });
 
   final String title;
@@ -62,6 +77,9 @@ class RentalServiceCardView extends StatelessWidget {
   final bool needBottomTitleText;
   final bool needLeadingImage;
   final bool needTrailingImage;
+  final List<String> subtitleIconData;
+  final List<String> subtitleIconString;
+  final bool needCustomSubtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -80,41 +98,70 @@ class RentalServiceCardView extends StatelessWidget {
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: style.headlineMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitleWidget,
-                  ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: style.headlineMedium,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      needCustomSubtitle
+                          ? subtitleWidget
+                          : Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  for (int index = 0;
+                                      index < subtitleIconData.length;
+                                      index++)
+                                    Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                            subtitleIconData[index],
+                                          ),
+                                        ),
+                                        Text(
+                                          subtitleIconString[index],
+                                          style: style.bodyMedium,
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            ),
+                    ],
+                  ),
                 ),
-              ),
-              needTrailingImage
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: ColoredBox(
-                        color: Colors.grey.withOpacity(0.1),
-                        child: SizedBox(
-                          height: 64,
-                          width: 64,
-                          child: Image(
+                needTrailingImage
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: ColoredBox(
+                          color: Colors.grey.withOpacity(0.1),
+                          child: SizedBox(
                             height: 64,
                             width: 64,
-                            image: AssetImage(
-                              aHomes,
+                            child: Image(
+                              height: 64,
+                              width: 64,
+                              image: AssetImage(
+                                aHomes,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  : const Offstage(),
-            ],
+                      )
+                    : const Offstage(),
+              ],
+            ),
           ),
           needDivider ? const Divider() : const Offstage(),
           needBottomTitleText
