@@ -3,16 +3,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
+import 'package:mezcalmos/DeliveryAdminApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -56,17 +60,18 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
   }
 
   void _setupNotifications() {
-    // if (Get.find<AuthController>().isUserSignedIn) {
-    //   mezDbgPrint("Setup notifs listener 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ");
-    //   _notificationsStreamListener?.cancel();
-    //   _notificationsStreamListener = initializeShowNotificationsListener();
-    //   Get.find<ForegroundNotificationsController>()
-    //       .startListeningForNotificationsFromFirebase(
-    //           operatorNotificationsNode(
-    //               uid: Get.find<AuthController>().fireAuthUser!.uid,
-    //               operatorType: OperatorType.Restaurant),
-    //           );
-    // }
+    if (Get.find<AuthController>().isUserSignedIn) {
+      mezDbgPrint("Setup notifs listener 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ");
+      _notificationsStreamListener?.cancel();
+      _notificationsStreamListener = initializeShowNotificationsListener();
+      Get.find<ForegroundNotificationsController>()
+          .startListeningForNotificationsFromFirebase(
+        operatorNotificationsNode(
+            uid: Get.find<AuthController>().fireAuthUser!.uid,
+            operatorType: OperatorType.Restaurant),
+        deliveryAdminNotificationHandler,
+      );
+    }
   }
 
   @override

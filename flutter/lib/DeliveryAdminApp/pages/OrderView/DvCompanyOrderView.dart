@@ -78,10 +78,12 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        viewController.order.value!.getOrderStatusWidget(),
+                        viewController.order.value!.status.widget(
+                            packageReady:
+                                viewController.order.value!.packageReady),
                         Expanded(
                           child: Text(
-                            viewController.order.value!.orderStatusTitle(),
+                            viewController.order.value!.status.title,
                             style: Theme.of(context).textTheme.displaySmall,
                             textAlign: TextAlign.center,
                             maxLines: 1,

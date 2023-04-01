@@ -3,18 +3,16 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:rive/rive.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["DeliveryOrderHelper"];
 
-extension DeliveryOrderHelper on DeliveryOrder {
+extension DeliveryOrderHelper on DeliveryOrderStatus {
 // getting the order status string
 
-  String orderStatusTitle() {
-    switch (status) {
+  String get title {
+    switch (this) {
       case DeliveryOrderStatus.CancelledByServiceProvider:
       case DeliveryOrderStatus.CancelledByCustomer:
       case DeliveryOrderStatus.CancelledByDeliverer:
@@ -39,8 +37,8 @@ extension DeliveryOrderHelper on DeliveryOrder {
 
   // getting icons widgets reperesent the current status
 
-  Widget getOrderStatusWidget() {
-    switch (status) {
+  Widget widget({required bool packageReady}) {
+    switch (this) {
       case DeliveryOrderStatus.CancelledByDeliverer:
       case DeliveryOrderStatus.CancelledByServiceProvider:
       case DeliveryOrderStatus.CancelledByCustomer:

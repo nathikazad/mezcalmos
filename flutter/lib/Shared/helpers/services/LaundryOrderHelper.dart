@@ -18,11 +18,11 @@ Widget atLaundryIcon = Container(
   ),
 );
 
-extension LaundryOrderWidgets on LaundryOrder {
+extension LaundryOrderWidgets on LaundryOrderStatus {
 // getting the order status string
 
-  String orderStatusTitleForCustomer() {
-    switch (status) {
+  String get titleForCustomer {
+    switch (this) {
       case LaundryOrderStatus.CancelledByAdmin:
       case LaundryOrderStatus.CancelledByCustomer:
         return _i18n()['canceled'];
@@ -47,8 +47,8 @@ extension LaundryOrderWidgets on LaundryOrder {
     }
   }
 
-  String orderStatusTitle() {
-    switch (status) {
+  String get title {
+    switch (this) {
       case LaundryOrderStatus.CancelledByAdmin:
       case LaundryOrderStatus.CancelledByCustomer:
         return _i18n()['canceled'];
@@ -75,7 +75,35 @@ extension LaundryOrderWidgets on LaundryOrder {
     }
   }
 
-  Future<Widget?> geAtLaundrytWidget() async {
+  // getting icons widgets reperesent the current status
+  Widget get widget {
+    switch (this) {
+      case LaundryOrderStatus.AtLaundry:
+        return FutureBuilder<Widget?>(
+            future: _geAtLaundrytWidget(),
+            builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
+              return Container(
+                child: snapshot.data,
+              );
+            });
+
+      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+      case LaundryOrderStatus.PickedUpFromLaundry:
+      case LaundryOrderStatus.PickedUpFromCustomer:
+        return FutureBuilder<Widget?>(
+            future: _getScooterWidget(),
+            builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
+              return Container(
+                child: snapshot.data,
+              );
+            });
+      default:
+        return _getStaticOrderWidget();
+    }
+  }
+
+  Future<Widget?> _geAtLaundrytWidget() async {
     final Rx<Widget> icon = Rx<Widget>(Container());
     final Rx<RiveAnimation> animation = Rx<RiveAnimation>(aDriverAnimation);
 
@@ -87,7 +115,7 @@ extension LaundryOrderWidgets on LaundryOrder {
     return Container(height: 50, width: 50, child: icon.value);
   }
 
-  Future<Widget?> getScooterWidget() async {
+  Future<Widget?> _getScooterWidget() async {
     final Rx<Widget> icon = Rx<Widget>(Container());
     final Rx<RiveAnimation> animation = Rx<RiveAnimation>(aWashingAnimation);
 
@@ -99,38 +127,10 @@ extension LaundryOrderWidgets on LaundryOrder {
     return Container(height: 50, width: 50, child: icon.value);
   }
 
-  // getting icons widgets reperesent the current status
-  Widget getOrderWidget() {
-    switch (status) {
-      case LaundryOrderStatus.AtLaundry:
-        return FutureBuilder<Widget?>(
-            future: geAtLaundrytWidget(),
-            builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
-              return Container(
-                child: snapshot.data,
-              );
-            });
-        break;
-      case LaundryOrderStatus.OtwPickupFromCustomer:
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-      case LaundryOrderStatus.PickedUpFromLaundry:
-      case LaundryOrderStatus.PickedUpFromCustomer:
-        return FutureBuilder<Widget?>(
-            future: getScooterWidget(),
-            builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
-              return Container(
-                child: snapshot.data,
-              );
-            });
-      default:
-        return getStaticOrderWidget();
-    }
-  }
-
-  Widget getStaticOrderWidget() {
+  Widget _getStaticOrderWidget() {
     Widget orderWidget = Container();
 
-    switch (status) {
+    switch (this) {
       case LaundryOrderStatus.CancelledByCustomer:
       case LaundryOrderStatus.CancelledByAdmin:
         orderWidget = Container(

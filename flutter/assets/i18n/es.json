@@ -1391,11 +1391,20 @@
       "dashboard": "Tablero"
     },
     "notificationHandler": {
-      "restaurantTitle": "Nuevo pedido de restaurante",
-      "laundryTitle": "Nuevo pedido de lavandería",
-      "laundryBody": "Nuevo pedido de lavandería",
-      "taxiTitle": "Nueva orden de taxi",
-      "taxiBody": "Nuevo pedido de taxi"
+      "newOrderTitle": "Orden recibida",
+      "newOrderBody": "Tienes un nuevo pedido",
+      "atPickupTitle": "En la recogida",
+      "atPickupBody": "Lugar de recogida de pedido de controlador",
+      "atDropoffTitle": "En la caída",
+      "atDropoffBody": "Lugar de caída de pedido al controlador",
+      "onTheWayPickupTitle": "Recogida en el camino",
+      "onTheWayPickupBody": "El conductor está en camino de recoger su pedido",
+      "onTheWayDropoffTitle": "Entrega en camino",
+      "onTheWayDropoffBody": "El conductor está en camino a cumplir su pedido",
+      "deliveredTitle": "Entregada",
+      "deliveredBody": "Su pedido ha sido entregado",
+      "cancelledTitle": "Orden cancelada",
+      "cancelledBody": "Su pedido ha sido cancelado"
     },
     "components": {
       "buildWidgetOnOrderStatus": {
@@ -2105,8 +2114,20 @@
     "notificationHandler": {
       "newOrderTitle": "Orden recibida",
       "newOrderBody": "Tienes un nuevo pedido",
-      "canceledOrderTitle": "Orden cancelada",
-      "canceledOrderBody": "Su pedido ha sido cancelado"
+      "laundryOtwPickupTitle": "Conductor en el camino",
+      "laundryOtwPickupBody": "Conductor en la camina de recoger su pedido.",
+      "laundryPickedTitle": "Pedido recogido",
+      "laundryPickedBody": "El orden es recogido con éxito",
+      "laundryAtLaundryTitle": "En la lavandería",
+      "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
+      "laundryReadyForDeliveryTitle": "Listo para entregar",
+      "laundryReadyForDeliveryBody": "Tu orden está listo para la entrega",
+      "laundryOtwDeliveryTitle": "Entrega en el camino",
+      "laundryOtwDeliveryBody": "Tu orden está en camino",
+      "laundryDeliveredTitle": "Entregada",
+      "LaundryDeliveredBody": "Su pedido ha sido entregado",
+      "LaundryCancelledTitle": "Orden cancelada",
+      "LaundryCancelledBody": "Su pedido ha sido cancelado"
     }
   },
   "RestaurantApp": {

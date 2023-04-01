@@ -55,30 +55,6 @@
           "description": "Description",
           "reviews": "Reviews",
           "viewAll": "View All"
-        },
-        "CustRequestCourierView": {
-          "title": "Courier",
-          "from": "From",
-          "to": "To",
-          "thisFieldCanBeEmpty": "This field can be empty",
-          "next": "Next",
-          "orderNow": "Order now",
-          "deliveryCompany": "Delivery company",
-          "CustRequestCourierItems": {
-            "item": "Item",
-            "remove": "Remove",
-            "whatCanWeGetYou": "What can we get you?",
-            "name": "Name",
-            "notes": "Notes",
-            "estimatedCost": "Estimated cost",
-            "required": "Required"
-          }
-        },
-        "CustCourierOrderView": {
-          "cancelOrder": "Cancel order",
-          "note": "Note",
-          "delivery": "Delivery",
-          "noDriverAssignedYet": "No driver assigned yet"
         }
       },
       "ListOrdersScreen": {
@@ -1313,7 +1289,7 @@
       }
     },
     "notificationHandler": {
-      "cancelledTitle": "Order cancelled",
+      "cancelledTitle": "Order Cancelled",
       "cancelledBody": "Your order has been cancelled"
     }
   },
@@ -1383,11 +1359,20 @@
       "dashboard": "Dashboard"
     },
     "notificationHandler": {
-      "restaurantTitle": "New restaurant order",
-      "laundryTitle": "New laundry order",
-      "laundryBody": "New order from laundry",
-      "taxiTitle": "New taxi order",
-      "taxiBody": "New order from taxi"
+      "newOrderTitle": "Order received",
+      "newOrderBody": "You got a new order",
+      "atPickupTitle": "At pickup",
+      "atPickupBody": "Driver reached order pickup location",
+      "atDropoffTitle": "At dropoff",
+      "atDropoffBody": "Driver reached order dropoff location",
+      "onTheWayPickupTitle": "Pickup on the way",
+      "onTheWayPickupBody": "Driver is on his way to pickup your order",
+      "onTheWayDropoffTitle": "Delivery on the way",
+      "onTheWayDropoffBody": "Driver is on the way to deliver you order",
+      "deliveredTitle": "Delivered",
+      "deliveredBody": "Your order has been delivered",
+      "cancelledTitle": "Order cancelled",
+      "cancelledBody": "Your order has been cancelled"
     },
     "components": {
       "buildWidgetOnOrderStatus": {
@@ -1612,8 +1597,8 @@
               "free": "Free"
             },
             "PastOrderInfo": {
-              "canceledByAdmin": "Order cancelled",
-              "canceledByCustomer": "Order cancelled",
+              "canceledByAdmin": "Order Cancelled",
+              "canceledByCustomer": "Order Cancelled",
               "received": "Order Received",
               "preparing": "Preparing the order",
               "onTheWay": "On The Way",
@@ -1712,8 +1697,7 @@
         "deliveryCost": "Delivery Cost",
         "customer": "Customer",
         "restaurant": "Restaurant",
-        "laundry": "Laundry",
-        "orders": "Orders"
+        "laundry": "Laundry"
       },
       "RestaurantOrderView": {
         "components": {
@@ -1727,7 +1711,7 @@
               "readyForPickup": "Ready for pickup",
               "deliveryOtw": "Delivery on the way",
               "delivered": "Order Delivered",
-              "canceled": "Order cancelled"
+              "canceled": "Order Cancelled"
             },
             "RestaurantControllButtons": {
               "confirmPickup": "Confirm Order Pickup",
@@ -1804,7 +1788,7 @@
                 "readyForDelivery": "Ready for Delivery",
                 "deliveryOtw": "Delivery on the way",
                 "delivered": "Order Delivered",
-                "canceled": "Order cancelled"
+                "canceled": "Order Cancelled"
               },
               "laundeyOrderHeader": {
                 "laundryOrder": "Laundry Order"
@@ -1854,7 +1838,7 @@
                 "pickupOtw": "Pickup on the way",
                 "delivered": "Order Delivered",
                 "received": "Order Received",
-                "canceled": "Order cancelled"
+                "canceled": "Order Cancelled"
               },
               "RestaurantControllButtons": {
                 "confirmPickup": "Confirm Order Pickup",
@@ -1879,7 +1863,7 @@
       "preparingOrderBody": "Your order is being prepared",
       "readyForPickupTitle": "Ready For Pickup",
       "readyForPickupBody": "Your order is ready for pickup",
-      "cancelledTitle": "Order cancelled",
+      "cancelledTitle": "Order Cancelled",
       "cancelledBody": "Your order has been cancelled",
       "laundryOtwPickupTitle": "Pickup on the way",
       "laundryOtwPickupBody": " on the way to pick up the order",
@@ -2025,7 +2009,7 @@
         "Components": {
           "LaundryOpOrderStatusCard": {
             "status": {
-              "canceled": "Order cancelled",
+              "canceled": "Order Cancelled",
               "orderReceived": "Order Received",
               "otwPickUp": "Pickup on the way",
               "pickedUp": "Order Picked up",
@@ -2108,8 +2092,20 @@
     "notificationHandler": {
       "newOrderTitle": "Order received",
       "newOrderBody": "You got a new order",
-      "canceledOrderTitle": "Order cancelled",
-      "canceledOrderBody": "Your order has been cancelled"
+      "laundryOtwPickupTitle": "Conductor en el camino",
+      "laundryOtwPickupBody": "Conductor en la camina de recoger su pedido.",
+      "laundryPickedTitle": "Pedido recogido",
+      "laundryPickedBody": "El orden es recogido con éxito",
+      "laundryAtLaundryTitle": "En la lavandería",
+      "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
+      "laundryReadyForDeliveryTitle": "Listo para entregar",
+      "laundryReadyForDeliveryBody": "Tu orden está listo para la entrega",
+      "laundryOtwDeliveryTitle": "Entrega en el camino",
+      "laundryOtwDeliveryBody": "Tu orden está en camino",
+      "laundryDeliveredTitle": "Entregada",
+      "LaundryDeliveredBody": "Su pedido ha sido entregado",
+      "LaundryCancelledTitle": "Orden cancelada",
+      "LaundryCancelledBody": "Su pedido ha sido cancelado"
     }
   },
   "RestaurantApp": {
@@ -2504,7 +2500,6 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "minutes": "minutes",
-    "slowInternet": "Slow internet",
-    "min": "min"
+    "slowInternet": "Slow internet"
   }
 }

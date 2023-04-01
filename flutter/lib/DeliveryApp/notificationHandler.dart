@@ -168,8 +168,8 @@ Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
 }
 
 Map<String, dynamic>? _getCourierOrderStatusFields(
-    DeliveryOrderStatus restaurantOrderStatus) {
-  switch (restaurantOrderStatus) {
+    DeliveryOrderStatus courierOrderStatus) {
+  switch (courierOrderStatus) {
     case DeliveryOrderStatus.CancelledByAdmin:
     case DeliveryOrderStatus.CancelledByCustomer:
     case DeliveryOrderStatus.CancelledByDeliverer:

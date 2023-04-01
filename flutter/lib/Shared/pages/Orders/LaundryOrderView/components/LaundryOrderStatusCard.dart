@@ -27,7 +27,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            order.getOrderWidget(),
+            order.status.widget,
             Spacer(),
             _orderStatusText(context),
             Spacer(
@@ -46,9 +46,11 @@ class LaundryOrderStatusCard extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         child: Text(
-          order.orderStatusTitle(),
-          style:
-              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          order.status.title,
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall
+              ?.copyWith(fontSize: 14.sp),
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

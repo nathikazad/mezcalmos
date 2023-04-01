@@ -29,7 +29,7 @@ class OrderStatusCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            order.orderStatusImage(),
+            order.status.widget,
             _orderStatusText(context),
             Spacer(
               flex: 1,
@@ -49,10 +49,10 @@ class OrderStatusCard extends StatelessWidget {
         children: [
           Container(
             child: Text(
-              order.getOrderStatus(),
+              order.status.title,
               style: Theme.of(context)
                   .textTheme
-                  .headline3
+                  .displaySmall
                   ?.copyWith(fontSize: 14.sp),
               textAlign: TextAlign.center,
               maxLines: 1,
