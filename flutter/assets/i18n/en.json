@@ -1108,6 +1108,12 @@
       }
     },
     "widgets": {
+      "OrderMapWidget" : {
+        "mapWebText" : "Install Mezcalmos application to get live time order map tracking"
+      },
+      "MezcalmosAppBar" : {
+        "installApp" : "Install Mezcalmos App"
+      },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
       },
@@ -2528,5 +2534,6 @@
     "cancel": "Cancel",
     "minutes": "minutes",
     "slowInternet": "Slow internet"
+    
   }
 }

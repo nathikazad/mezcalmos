@@ -29,7 +29,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']

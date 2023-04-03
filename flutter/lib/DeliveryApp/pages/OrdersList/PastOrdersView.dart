@@ -5,7 +5,7 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]

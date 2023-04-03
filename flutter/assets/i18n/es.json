@@ -1116,6 +1116,12 @@
       }
     },
     "widgets": {
+      "OrderMapWidget" : {
+        "mapWebText" : "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
+      },
+      "MezcalmosAppBar" : {
+        "installApp" : "Instalar la aplicación Mezcalmos"
+      },
       "ReviewCard": {
         "review": "Revisar"
       },

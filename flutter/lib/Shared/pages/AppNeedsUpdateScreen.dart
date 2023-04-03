@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['AppNeedsUpdateScreen'];

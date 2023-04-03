@@ -16,7 +16,7 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
