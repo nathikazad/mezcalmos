@@ -152,7 +152,7 @@ class _DvOrderStatusControllButtonsState
                 style: Get.textTheme.bodyLarge,
               ),
               Text(
-                DateFormat('dd MMM yy h:m')
+                DateFormat('dd MMM, yy h:m a')
                     .format(widget.viewController.order.orderTime.toLocal()),
                 style: Get.textTheme.titleMedium,
               )

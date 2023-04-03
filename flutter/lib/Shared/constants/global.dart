@@ -208,6 +208,7 @@ const Color offShadeGreyColor = Color(0xFF494949);
 const Color offLightShadeGreyColor = Color(0xFF787878);
 const Color blackColor = Colors.black;
 const Color unratedStarColor = Color(0XFFF2F2F2);
+const Color softPurple = Color(0xFFE0E4FF);
 const LinearGradient bluePurpleGradient = LinearGradient(
   colors: [
     primaryBlueColor,

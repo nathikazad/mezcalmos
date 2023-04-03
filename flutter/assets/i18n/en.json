@@ -360,7 +360,8 @@
                 "thursday": "Thursday",
                 "friday": "Friday",
                 "saturday": "Saturday",
-                "sunday": "Sunday"
+                "sunday": "Sunday",
+                "viewAll": "View All"
               }
             },
             "workinHoursCart": {
@@ -488,9 +489,9 @@
         "LaundryCurrentOrderView": {
           "Components": {
             "CustomerLaundryOrderEst": {
-              "pickup": "Pickup time:",
-              "delivery": "Delivery time:",
-              "laundryReady": "Laundry ready time:",
+              "pickup": "Pickup time",
+              "delivery": "Delivery time",
+              "laundryReady": "Laundry ready time",
               "estTimes": "Estimated times"
             },
             "LaundryOrderDriverCard": {
@@ -591,6 +592,7 @@
           "minimumCost": "Minimum",
           "daysReturn": "days return",
           "day": "day",
+          "days": "days",
           "return" : "return",
           "description": "Description",
           "openHours": "openHours",
@@ -745,23 +747,22 @@
       }
     },
     "pages": {
-      "ServiceProfileView" : {
-        "profile" : "Profile",
-        "info" : "Information",
-        "operators" : "Operators",
-        "drivers" : "Drivers",
-        "schedule" :"Schedule",
-        "payments" :"Payments",
-        "delivery" :"Delivery",
-        "reviews" : "Reviews",
-        "share" : "Share",
+      "ServiceProfileView": {
+        "profile": "Profile",
+        "info": "Information",
+        "operators": "Operators",
+        "drivers": "Drivers",
+        "schedule": "Schedule",
+        "payments": "Payments",
+        "delivery": "Delivery",
+        "reviews": "Reviews",
+        "share": "Share",
         "privacyPolicies": "Privacy Policies",
-        "logout" : "Logout",
-        "openService" : "Open service",
-        "closeService" : "Close service",
-        "serviceClosed" : "Service is closed indefinitely",
-        "restaurantReview" : "Your restaurant is under review, you’ll be notifiedonce it’s approved."
-
+        "logout": "Logout",
+        "openService": "Open service",
+        "closeService": "Close service",
+        "serviceClosed": "Service is closed indefinitely",
+        "restaurantReview": "Your restaurant is under review, you’ll be notifiedonce it’s approved."
       },
       "CreateServiceView": {
         "pages": {
@@ -800,7 +801,7 @@
       "DeliveryCostSettingView": {
         "dvCost": "Delivery cost",
         "km": "Km",
-        "minCost": "Minimum Cost",
+        "minCost": "Minimum cost",
         "costPerKm": "Cost per km",
         "freeKmRange": "Free delivery range",
         "freeKmRangeText": "Within this distance, the customer won’t be charged for the delivery.",
@@ -824,7 +825,7 @@
             "notFoundTitle": "No delivery partners found",
             "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
             "joined": "Joined",
-            "errorText" :  "Please select a company or switch to self delivery time"
+            "errorText": "Please select a company or switch to self delivery time"
           }
         }
       },
@@ -871,7 +872,8 @@
         "copyLink": "Copy link",
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
-        "copiedText": "Link copied successfuly"
+        "copiedText": "Link copied successfuly",
+        "yourDriverList": "Your driver list"
       },
       "ServiceInfoEditView": {
         "name": "Name",
@@ -1424,7 +1426,7 @@
         "SingleLaundryScreen": {
           "startingFrom": "Starting from :",
           "daysReturn": "days return",
-          "minimumCost": "Minimum Cost",
+          "minimumCost": "Minimum cost",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1476,13 +1478,13 @@
               "customer": "Customer"
             },
             "LaundryOrderStatusCard": {
-              "orderReceived": "Order Received",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
-              "pickedUp": "Order Picked up",
+              "pickedUp": "Order picked up",
               "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "LaundryOrderSummary": {
               "orderSummary": "Summary",
@@ -1626,10 +1628,9 @@
   },
   "DeliveryApp": {
     "pages": {
-      "UnAuthorizedDriverView" : {
-        "title" : "Invitation needed",
-        "subtitle" : "You need an invitation to use our delivery app"
-
+      "UnAuthorizedDriverView": {
+        "title": "Invitation needed",
+        "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
         "cancelled": "Cancelled",
@@ -1650,7 +1651,7 @@
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
             "pickUpTimeError": "The Pickup time should be before the delivery time.",
-            "restaurantDelivery": "Restaurant Delivery",
+            "restaurantDelivery": "Restaurant delivery",
             "orderStatus": {
               "waiting": "Waiting for restaurant",
               "preparing": "Order is being prepared",
@@ -1666,14 +1667,14 @@
           }
         },
         "title": "Delivery",
-        "restaurant" : "Restaurant",
-        "laundry" : "Laundry",
-        "courier" : "Courier"
+        "restaurant": "Restaurant",
+        "laundry": "Laundry",
+        "courier": "Courier"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Current orders",
-          "pastOrders": "Past orders",
+          "pastOrders": "Today",
           "title": "Incoming  Orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",
@@ -1935,7 +1936,7 @@
             "days": "days"
           },
           "MinimumCostCard": {
-            "minCost": "Minimum Cost",
+            "minCost": "Minimum cost",
             "save": "Save minimum cost"
           }
         }
@@ -1944,14 +1945,14 @@
         "Components": {
           "LaundryOpOrderStatusCard": {
             "status": {
-              "canceled": "Order Cancelled",
-              "orderReceived": "Order Received",
+              "canceled": "Order cancelled",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
               "pickedUp": "Order Picked up",
-              "atLaundry": "At Laundry",
+              "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "estTimes": {
               "laundryArriving": "Laundry arriving",
@@ -1982,7 +1983,7 @@
             "deleteItem": "Delete item",
             "itemsWeights": "Items weights",
             "newItemsWeight": "New items weight",
-            "itemsCategory": "Items Category",
+            "itemsCategory": "Item categories",
             "itemsWeight": "Items weight",
             "total": "Total",
             "itemsWeightErrorText": "Please enter a valid weight",
@@ -2050,6 +2051,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
+        "review": "review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",
@@ -2065,9 +2067,9 @@
       },
       "ROpOrderView": {
         "schTitle": "Scheduled for",
-        "deliveryDet" :"Delivery details",
-        "review" : "Review",
-        "restaurant" : "Restaurant",
+        "deliveryDet": "Delivery details",
+        "review": "Review",
+        "restaurant": "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
         "components": {

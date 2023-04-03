@@ -28,7 +28,7 @@ class ROpItemImage extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.grey.shade300,
+                      backgroundColor: Color(0xFFEDEDED),
                       backgroundImage: viewController.getRightImage,
                       radius: 90,
                       child: (viewController.imageLoading.isTrue)

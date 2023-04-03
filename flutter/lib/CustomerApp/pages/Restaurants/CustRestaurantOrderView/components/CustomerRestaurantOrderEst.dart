@@ -162,7 +162,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 backgroundColor: secondaryLightBlueColor,
                 child: Icon(
                   Icons.watch_later,
-                  size: 30,
+                  size: 35,
                   color: primaryBlueColor,
                 ),
               ),

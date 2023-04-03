@@ -68,15 +68,17 @@ class SavedLocationComponent extends StatelessWidget {
                             ? primaryBlueColor
                             : backgroundShadeColor,
                         borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: Text(
-                      '${_i18n()["defaultAddressText"]}',
-                      style: TextStyle(
-                        fontFamily: "Montserrat",
-                        color: (savelocation.defaultLocation)
-                            ? Colors.white
-                            : Color(0xFF787878),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11.sp,
+                    child: Center(
+                      child: Text(
+                        '${_i18n()["defaultAddressText"]}',
+                        style: TextStyle(
+                          fontFamily: "Montserrat",
+                          color: (savelocation.defaultLocation)
+                              ? Colors.white
+                              : Color(0xFF787878),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11.sp,
+                        ),
                       ),
                     ),
                   ),

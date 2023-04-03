@@ -265,7 +265,7 @@ Future showConfirmationDialog(
                     textAlign: TextAlign.center,
                     style: Get.textTheme.headlineLarge
                         ?.copyWith(color: Color(0xFF494949))),
-                SizedBox(height: 8),
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;

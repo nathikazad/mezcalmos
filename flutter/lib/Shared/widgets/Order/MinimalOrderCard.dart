@@ -74,7 +74,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        widget.order.orderTime.toDayAmPm(),
+                        widget.order.orderTime.getOrderTime(),
                         style: Get.textTheme.bodyMedium?.copyWith(
                           color: blackColor,
                         ),

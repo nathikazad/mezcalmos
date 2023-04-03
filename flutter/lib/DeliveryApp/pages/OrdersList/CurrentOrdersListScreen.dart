@@ -131,7 +131,10 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         ],
       );
     } else {
-      return NoOrdersComponent();
+      return Padding(
+        padding: EdgeInsets.only(top: 12.5.h),
+        child: NoOrdersComponent(),
+      );
     }
   }
 }

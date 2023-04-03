@@ -182,7 +182,7 @@ class RestaurantInfoTab extends StatelessWidget {
                       color: Colors.transparent,
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "View all",
+                        '${_i18n()["viewAll"]}',
                         style: Get.textTheme.bodyText1
                             ?.copyWith(color: primaryBlueColor),
                       ),

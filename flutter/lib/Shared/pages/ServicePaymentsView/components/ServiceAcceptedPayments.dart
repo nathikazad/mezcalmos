@@ -34,6 +34,27 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (widget.viewController.cardChecked)
+            Container(
+              margin: const EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  Flexible(
+                      fit: FlexFit.tight,
+                      child: Text("${_i18n()["chargeCustomer"]}")),
+                  Obx(
+                    () => Switch(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      activeColor: primaryBlueColor,
+                      value: widget.viewController.getChargeFessOnCustomer(),
+                      onChanged: (bool v) {
+                        widget.viewController.switchChargeFees(v);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
           Text(
             '${_i18n()["acceptedPayments"]}',
             style: Get.textTheme.bodyMedium,

@@ -49,10 +49,11 @@ class ServiceEditLocationCard extends StatelessWidget {
                       editInfoController.newLocation.value?.address ?? '',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
+                      style: TextStyle(color: Colors.black),
                     )),
                 Spacer(),
                 Icon(
-                  Icons.arrow_forward_ios_rounded,
+                  Icons.keyboard_arrow_right_rounded,
                   color: Colors.black,
                 )
               ],

@@ -10,6 +10,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
@@ -78,29 +80,13 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           ),
           const Spacer(),
           Flexible(
-            flex: 6,
-            fit: FlexFit.tight,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              onPressed: () async {
-                await _handleAddButton();
-              },
-              child: Text(
-                widget.viewController.currentMode ==
-                        ViewItemScreenMode.AddItemMode
-                    ? _i18n()['addToCart']
-                    : _i18n()['modifyItem'],
-                textAlign: TextAlign.center,
-                style: Get.textTheme.headlineLarge
-                    ?.copyWith(color: Colors.white, fontSize: 18),
-              ),
+            child: MezButton(
+              height: 32,
+              label: widget.viewController.currentMode ==
+                      ViewItemScreenMode.AddItemMode
+                  ? _i18n()['addToCart']
+                  : _i18n()['modifyItem'],
+              onClick: () => _handleAddButton(),
             ),
           ),
           SizedBox(

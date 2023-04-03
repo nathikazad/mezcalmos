@@ -201,20 +201,19 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                 ),
               ],
             ),
-            InkWell(
-              onTap: () {
-                if (enableExpand) {
+            if (enableExpand)
+              InkWell(
+                onTap: () {
                   mezDbgPrint("log state ==> ${initialCardState.opposit()}");
                   onCardStateChange?.call(initialCardState.opposit());
-                }
-              },
-              child: Icon(
-                initialCardState == OrderInfoCardState.Minimized
-                    ? Icons.keyboard_arrow_up_rounded
-                    : Icons.keyboard_arrow_down_rounded,
-                color: Colors.black,
+                },
+                child: Icon(
+                  initialCardState == OrderInfoCardState.Minimized
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: Colors.black,
+                ),
               ),
-            ),
           ],
         )
       ],
@@ -232,7 +231,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row _serviceProviderAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -278,7 +277,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row _customerAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -338,18 +337,15 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           ),
         ),
         Flexible(
-          flex: 9,
-          child: Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                orderTimeWidget(),
-                SizedBox(height: 10),
-                routeInformationWidget(),
-              ],
-            ),
+          flex: 7,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              orderTimeWidget(),
+              SizedBox(height: 10),
+              routeInformationWidget(),
+            ],
           ),
         ),
         InkWell(

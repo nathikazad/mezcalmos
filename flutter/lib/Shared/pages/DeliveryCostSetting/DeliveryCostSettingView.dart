@@ -250,7 +250,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
               //  textAlign: TextAlign.center,
               decoration: InputDecoration(
                   suffixIconConstraints:
-                      BoxConstraints.tightFor(width: 50, height: 20),
+                      BoxConstraints.tightFor(width: 50, height: 10),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.only(right: 3),
                     child: Text(

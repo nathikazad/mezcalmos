@@ -108,9 +108,9 @@ extension parseDateTime on DateTime {
     final DateFormat formatDay = DateFormat.EEEE(userLangCode);
     final DateFormat formatMonth = DateFormat.MMMd(userLangCode);
     if (withDayName) {
-      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${formatMonth.format(toLocal()).replaceFirst(".", "")} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${formatMonth.format(toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${formatLongDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${formatDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     }
   }
 

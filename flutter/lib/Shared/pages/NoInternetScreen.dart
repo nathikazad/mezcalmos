@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/CustomFlatButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 class NoInternetScreen extends StatelessWidget {
@@ -42,28 +43,15 @@ class NoInternetScreen extends StatelessWidget {
           SizedBox(
             height: 2.h,
           ),
-          CustomButton(
-            buttonColor: <Color>[
-              AppColors.colorGradientPrimary,
-              AppColors.colorGradientSecondary,
-            ],
-            height: 10.h,
-            width: 50.w,
-            borderRadius: 20.0,
-            onTap: () {
-              ConnectivityHelper.instance.checkForInternet(null);
-            },
-            textAlignement: Alignment.center,
-            text: Text(
-              _i18n()['tryAgain'],
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ),
+          MezButton(
+              withGradient: true,
+              height: 10.h,
+              width: 50.w,
+              borderRadius: 20.0,
+              onClick: () async {
+                await ConnectivityHelper.instance.checkForInternet(null);
+              },
+              label: _i18n()['tryAgain']),
         ],
       ),
     );

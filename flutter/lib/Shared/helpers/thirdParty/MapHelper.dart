@@ -54,7 +54,7 @@ class RideDistance {
         distanceInMeters = data['value'];
 
   String toKmText() {
-    return "${(distanceInMeters / 1000).toStringAsFixed(1)} Km";
+    return "${(distanceInMeters / 1000).toStringAsFixed(1)}km";
   }
 }
 
@@ -81,7 +81,7 @@ class RideDuration {
   }
 
   String inMinutesText() {
-    return "${(seconds / 60).round()} m";
+    return "${(seconds / 60).round()}min";
   }
 
   RideDuration.fromJson(data)
