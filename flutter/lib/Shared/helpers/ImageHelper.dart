@@ -6,9 +6,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_compression_flutter/image_compression_flutter.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -18,18 +18,23 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
 
-/// this compresses the Original Image using jpeg format Since it's much ligher.
-///
-/// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
-Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
-  final Uint8List result = await FlutterImageCompress.compressWithList(
-      originalImg,
-      quality: nQualityCompressionOfUserImage);
-  return result;
+Future<Uint8List> compressImageBytes(Uint8List uint8list, String path) async {
+  Configuration config = Configuration(
+    outputType: ImageOutputType.jpg,
+    useJpgPngNativeCompressor: true,
+    quality: nQualityCompressionOfUserImage,
+  );
+  mezDbgPrint("🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path ${path}");
+  final ImageFileConfiguration param = ImageFileConfiguration(
+      input: ImageFile(filePath: path, rawBytes: uint8list), config: config);
+  final ImageFile output = await compressor.compress(param);
+  return output.rawBytes;
 }
 
 Future<File> writeFileFromBytesAndReturnIt(
@@ -323,4 +328,28 @@ Future<List<int>> cropRonded(Uint8List bytes) async {
       await cropped.toByteData(format: ui.ImageByteFormat.png);
 
   return byteData!.buffer.asUint8List();
+}
+
+Future<String> uploadImgToFbStorage(
+    {required XFile imageFile, required String pathPrefix}) async {
+  String? _uploadedImgUrl;
+
+  mezDbgPrint("::::: log {{{{ ${imageFile.path}  }}}}}");
+  final List<String> splitted = imageFile.path.split('.');
+  final String imgPath = "pathPrefix/${splitted[splitted.length - 1]}";
+  mezDbgPrint("::::: log {{{{ $imgPath  }}}}}");
+  final Uint8List uint8list =
+      await compressImageBytes(await imageFile.readAsBytes(), imageFile.path);
+  try {
+    await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
+          uint8list,
+        );
+  } on firebase_core.FirebaseException catch (e) {
+    mezDbgPrint(e.message.toString());
+  } finally {
+    _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+        .ref(imgPath)
+        .getDownloadURL();
+  }
+  return _uploadedImgUrl;
 }

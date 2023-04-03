@@ -20,7 +20,7 @@ import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROp
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';

@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart' as badge;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -9,8 +10,15 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
+    ["MezcalmosAppBar"];
+//
 
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
@@ -147,7 +155,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
 
   return AppBar(
       elevation: 0,
-      bottom: tabBar,
+      bottom: (showIntallAppBtn) ? _installAppButton() : tabBar,
       automaticallyImplyLeading: false,
       leading: (showLeftBtn) ? _getRightLeading() : null,
       actions: [
@@ -180,6 +188,35 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                       showLogo: (Get.width > 320) ? true : false),
                 ));
 }
+
+PreferredSize _installAppButton() {
+  return PreferredSize(
+      preferredSize: Size.fromHeight(kToolbarHeight),
+      child: MezButton(
+          label: "${_i18n()['installApp']}",
+          borderRadius: 0,
+          onClick: _launchURL));
+}
+
+Future<void> _launchURL() async {
+  switch (defaultTargetPlatform) {
+    case TargetPlatform.android:
+      await launchUrl(Uri.parse(
+          "https://play.google.com/store/apps/details?id=com.mezcalmos.customer"));
+      break;
+    case TargetPlatform.iOS:
+      await launchUrl(
+          Uri.parse("https://apps.apple.com/us/app/mezcalmos/id1595882320"));
+      break;
+    default:
+  }
+  //
+}
+
+bool get showIntallAppBtn =>
+    kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS);
 
 Widget _backButton({required VoidCallback? click}) {
   return Transform.scale(
