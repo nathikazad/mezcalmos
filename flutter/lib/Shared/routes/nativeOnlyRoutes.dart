@@ -1,8 +1,7 @@
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/NativeMessagingScreen.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 

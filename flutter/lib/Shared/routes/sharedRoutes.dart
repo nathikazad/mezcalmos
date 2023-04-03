@@ -20,9 +20,9 @@ import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart'
     deferred as somethingWentWrong;
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart'
     deferred as splashScreen;
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart'
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart'
     deferred as userProfileView;
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart'
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserWelcomeView.dart'
     deferred as UserWelcomeView;
 import 'package:mezcalmos/Shared/pages/Wrapper.dart' deferred as wrapper;
 import 'package:qlevar_router/qlevar_router.dart';
