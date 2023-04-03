@@ -96,8 +96,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
                   RestaurantOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: getLinkUrl(
-          value['orderType'].toString().toOrderType(), value["orderId"]),
+      linkUrl: value["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -159,7 +158,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
                   LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: getDriverOrderRoute(value["orderId"]),
+      linkUrl: value["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
