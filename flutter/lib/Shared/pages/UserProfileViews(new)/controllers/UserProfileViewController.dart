@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -36,12 +37,15 @@ class UserProfileViewController {
   bool get isInfoSet {
     return (newImageFile.value != null || newImageUrl.value != null) &&
         name.value.isNotEmpty &&
-        name.value.length > 4;
+        name.value.length > 2;
   }
 
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
-      return FileImage(File(newImageFile.value!.path));
+      if (kIsWeb)
+        return CachedNetworkImageProvider(newImageFile.value!.path);
+      else
+        return FileImage(File(newImageFile.value!.path));
     } else if (newImageUrl.value != null) {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
