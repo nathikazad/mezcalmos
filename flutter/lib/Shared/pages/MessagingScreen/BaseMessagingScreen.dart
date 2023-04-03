@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -173,7 +174,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
           },
         ),
         actions: <Widget>[
-          _callButton(context),
+          if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
+            _callButton(context),
 
           // )
         ],
@@ -257,7 +259,14 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
       child: InkWell(
         onTap: () {
           if (controller.chat.value?.chatInfo.phoneNumber != null) {
-            _callBottomSheet(context);
+            if (kIsWeb) {
+              final Uri launchUri = Uri(
+                scheme: 'tel',
+                path: controller.chat.value?.chatInfo.phoneNumber,
+              );
+              launchUrl(launchUri);
+            } else
+              _callBottomSheet(context);
           } else {
             callAgora();
           }

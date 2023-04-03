@@ -34,8 +34,6 @@ Future<Uint8List> compressImageBytes(Uint8List uint8list, String path) async {
   final ImageFileConfiguration param = ImageFileConfiguration(
       input: ImageFile(filePath: path, rawBytes: uint8list), config: config);
   final ImageFile output = await compressor.compress(param);
-  mezDbgPrint(
-      "🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path ${output.rawBytes}");
   return output.rawBytes;
 }
 
