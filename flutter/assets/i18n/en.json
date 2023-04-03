@@ -224,6 +224,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
+              "rmItemTitle" : "Remove item",
+              "rmItemHelper" : "Are you sure you want to remove this item from cart",
+              "rmItemButton" : "Yes, remove item",
               "notAvailable": "This restaurant is closed",
               "title": "Warning",
               "leftBtn": "Checkout first",

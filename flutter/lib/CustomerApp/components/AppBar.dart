@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
@@ -38,7 +37,7 @@ class CustomerAppBar extends GetWidget<AuthController>
               fit: BoxFit.fitWidth,
               child: Text(
                 title!,
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.displaySmall,
                 textAlign: TextAlign.center,
               ),
             )
@@ -211,8 +210,6 @@ class CustomerAppBar extends GetWidget<AuthController>
   }
 
   Widget getAppbarIconsButton() {
-    mezDbgPrint(
-        "👋👋👋👋👋 No user icon state =======>>>>>> ${Get.find<AuthController>().isUserSignedIn}");
     return Obx(
       () => Row(
         children: [

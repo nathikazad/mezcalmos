@@ -199,6 +199,7 @@ Future showConfirmationDialog(
   void Function()? onNoClick,
   String? title,
   String? helperText,
+  bool autoClose = false,
   String? primaryButtonText,
   String? secondaryButtonText,
 }) async {
@@ -232,7 +233,7 @@ Future showConfirmationDialog(
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 10),
                 Text(
                   title ?? "${_i18n()["cancelOrder"]}",
                   textAlign: TextAlign.center,
@@ -245,7 +246,7 @@ Future showConfirmationDialog(
                 helperText != ""
                     ? Column(
                         children: [
-                          SizedBox(height: 4),
+                          SizedBox(height: 8),
                           Text(
                             helperText ??
                                 '${_i18n()["cancelConfirmationText"]}',
@@ -259,17 +260,20 @@ Future showConfirmationDialog(
                         ],
                       )
                     : SizedBox(),
-                SizedBox(height: 2),
+                SizedBox(height: 5),
                 Text('${_i18n()["subtitle"]}',
                     textAlign: TextAlign.center,
                     style: Get.textTheme.headlineLarge
                         ?.copyWith(color: Color(0xFF494949))),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;
                     onYesClick.call().whenComplete(() {
                       _clickedYes.value = false;
+                      if (autoClose) {
+                        Navigator.pop(context);
+                      }
                     });
                   },
                   child: Container(
@@ -306,10 +310,11 @@ Future showConfirmationDialog(
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
+
                     MezRouter.back<void>(closeOverlays: true);
                   },
                   child: Container(

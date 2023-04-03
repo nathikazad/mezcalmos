@@ -225,6 +225,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
+              "rmItemTitle" : "Remover el artículo",
+              "rmItemHelper" : "¿Estás seguro de que quieres eliminar este artículo del carrito?",
+              "rmItemButton" : "Sí, elimine el artículo",
               "notAvailable": "Su restaurante está cerrado",
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
