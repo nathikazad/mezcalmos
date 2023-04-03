@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -24,6 +25,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env_example.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"];
 
 class ROpItemViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -184,6 +188,9 @@ class ROpItemViewController {
       if (newItemId != null) {
         mezDbgPrint(
             "👌🏻👌🏻👌🏻 Item added successfuly id : $newItemId 👌🏻👌🏻👌🏻");
+        showSavedSnackBar(
+            title: "${_i18n()['added']}",
+            subtitle: "${_i18n()['addedSubtitle']}");
 
         editableItem.value = await get_one_item_by_id(newItemId);
         editMode.value = true;
@@ -198,13 +205,7 @@ class ROpItemViewController {
       final bool result = await update_item_by_id(
           itemId: editableItem.value!.id!, item: _contructItem());
       if (result) {
-        customSnackBar(
-            title: 'Saved',
-            subTitle: 'Item saved successfuly',
-            icon: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ));
+        showSavedSnackBar();
         needToRefetch.value = true;
       }
     }

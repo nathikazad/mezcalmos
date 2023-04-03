@@ -231,8 +231,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                             ? "${_i18n()['openService']}"
                             : "${_i18n()['closeService']}",
                         icon: _viewController.service.state.isClosedIndef
-                            ? Icons.lock_open
-                            : Icons.lock,
+                            ? Icons.lock_open_outlined
+                            : Icons.lock_outline,
                         textColor: !_viewController.service.state.isClosedIndef
                             ? Colors.red
                             : null,

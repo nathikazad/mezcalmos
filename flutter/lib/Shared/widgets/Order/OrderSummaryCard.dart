@@ -170,8 +170,10 @@ class OrderSummaryCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('${_i18n()["totalCost"]}',
-                            style: txt.headlineMedium),
+                        Text(
+                          '${_i18n()["totalCost"]}',
+                          style: txt.bodyLarge,
+                        ),
                         Text(
                             (costs.orderItemsCost != 0)
                                 ? costs.totalCost?.toPriceString() ?? "-"

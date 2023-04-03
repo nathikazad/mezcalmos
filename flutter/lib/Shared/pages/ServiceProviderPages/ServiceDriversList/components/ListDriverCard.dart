@@ -51,10 +51,14 @@ class _ListDriverCardState extends State<ListDriverCard> {
                         right: -35,
                         child: CircleAvatar(
                           radius: 23,
-                          child: Icon(
-                            Icons.delivery_dining,
-                            size: 30,
-                            color: Colors.white,
+                          backgroundColor: Colors.white,
+                          child: CircleAvatar(
+                            radius: 22,
+                            child: Icon(
+                              Icons.delivery_dining,
+                              size: 30,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       )
@@ -73,7 +77,7 @@ class _ListDriverCardState extends State<ListDriverCard> {
                           widget.driver.driverInfo.name,
                           style: context.txt.bodyLarge,
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 10),
                         Row(
                           children: [
                             Icon(

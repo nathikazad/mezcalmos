@@ -193,7 +193,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             enabled: viewController.canOrder,
             withGradient: true,
             borderRadius: 0,
-            height: 75,
+            height: 50,
             onClick: !viewController.canOrder
                 ? null
                 : () async {

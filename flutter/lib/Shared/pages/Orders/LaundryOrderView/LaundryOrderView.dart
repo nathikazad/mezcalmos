@@ -91,7 +91,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                             : viewController.order.laundryLocation,
                         to: viewController.order.dropOffLocation),
                   MezCard(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const EdgeInsets.only(bottom: 10),
                     contentPadding: EdgeInsets.all(12),
                     action: MessageButton(
                         chatId: viewController.order.chatId,

@@ -58,7 +58,7 @@ class RideDistance {
         distanceInMeters = data['value'];
 
   String toKmText() {
-    return "${(distanceInMeters / 1000).toStringAsFixed(1)} km";
+    return "${(distanceInMeters / 1000).toStringAsFixed(1)}km";
   }
 }
 

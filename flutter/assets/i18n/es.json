@@ -260,6 +260,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
+              "rmItemTitle" : "Remover el artículo",
+              "rmItemHelper" : "¿Estás seguro de que quieres eliminar este artículo del carrito?",
+              "rmItemButton" : "Sí, elimine el artículo",
               "notAvailable": "Su restaurante está cerrado",
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
@@ -394,7 +397,8 @@
                 "thursday": "Jue",
                 "friday": "Vie",
                 "saturday": "Sáb",
-                "sunday": "Dom"
+                "sunday": "Dom",
+                "viewAll": "Ver Todo"
               }
             },
             "workinHoursCart": {
@@ -611,7 +615,9 @@
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
-          "daysReturn": "Días de regreso",
+          "day": "día",
+          "return" : "devolver",
+          "daysReturn" : "Días de regreso",
           "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
@@ -920,7 +926,8 @@
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
-        "copiedText": "Enlace copiado con éxito"
+        "copiedText": "Enlace copiado con éxito",
+        "yourDriverList": "Su lista de conducir"
       },
       "ServiceInfoEditView": {
         "name": "Nombre",
@@ -1535,13 +1542,13 @@
               "customer": "Cliente"
             },
             "LaundryOrderStatusCard": {
-              "orderReceived": "Orden Recibida",
+              "orderReceived": "Orden recibida",
               "otwPickUp": "Recoger en el camino",
               "pickedUp": "Pedido recogido",
               "atLaundry": "En la lavandería",
               "readyForDelivery": "Listo para entregar",
               "otwDelivery": "Entrega en el camino",
-              "delivered": "Orden Entregado"
+              "delivered": "Orden entregado"
             },
             "LaundryOrderSummary": {
               "orderSummary": "Resumen de la orden",
@@ -1731,7 +1738,7 @@
           "openOrders": "Ordenes abiertas",
           "offlineTitle": "Estas desconectado",
           "offlineBody": "Enciende para ver las órdenes entrantes",
-          "pastOrders": "Órdenes Pasadas",
+          "pastOrders": "Hoy",
           "title": "Órdenes  Entrantes",
           "Components": {
             "DriverNoOrdersComponent": {
@@ -2045,7 +2052,7 @@
               "atLaundry": "En la lavandería",
               "readyForDelivery": "Listo para entregar",
               "otwDelivery": "Entrega en el camino",
-              "delivered": "Orden Entregado"
+              "delivered": "Orden entregado"
             },
             "estTimes": {
               "laundryArriving": "Lavandería que llega",
@@ -2077,7 +2084,7 @@
             "total": "Total",
             "itemsWeights": "Artículos pesos",
             "newItemsWeight": "Nuevos artículos de peso",
-            "itemsCategory": "Categoría de artículos",
+            "itemsCategory": "Categorías de artículos",
             "itemsWeight": "Artículos de peso",
             "itemsWeightErrorText": "Por favor ingrese un peso válido",
             "saveItemsWeight": "Guardar artículos de peso",
@@ -2156,6 +2163,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reseñas",
+        "review": "Revisar",
         "base": "Basada en",
         "perfomTitle": "Su rendimiento de revisión es",
         "excellent": "Excelente",
@@ -2185,6 +2193,8 @@
         "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
         "deleteTitle": "Eliminar este artículo",
         "deleteItem": "Eliminar elemento",
+        "added" : "Agregada",
+        "addedSubtitle" : "Artículo agregado con éxito",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Porfavor seleccione una categoría",
@@ -2303,7 +2313,7 @@
           "ROpOrderCard": {
             "date": "Fecha :",
             "totalCost": "Coste total",
-            "waiting": "en proceso",
+            "waiting": "En proceso",
             "delivered": "Entregada",
             "canceled": "Cancelada"
           }

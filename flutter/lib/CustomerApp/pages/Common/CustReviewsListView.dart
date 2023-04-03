@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -111,7 +112,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
           RatingBarIndicator(
             rating: rating.value!.toDouble(),
             itemBuilder: (BuildContext context, int index) => Icon(
-              Icons.star_rate_rounded,
+              Icons.star_rate,
               color: primaryBlueColor,
             ),
             itemCount: 5,
@@ -122,7 +123,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
             height: 4,
           ),
           Text(
-              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["reviews"].toString().toLowerCase()}")
+              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["review"].toPlural(isPlural: reviews.value?.length == 1)}")
         ],
       ),
     );

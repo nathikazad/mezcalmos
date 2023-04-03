@@ -260,6 +260,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
+              "rmItemTitle" : "Remove item",
+              "rmItemHelper" : "Are you sure you want to remove this item from cart",
+              "rmItemButton" : "Yes, remove item",
               "notAvailable": "This restaurant is closed",
               "title": "Warning",
               "leftBtn": "Checkout first",
@@ -393,7 +396,8 @@
                 "thursday": "Thursday",
                 "friday": "Friday",
                 "saturday": "Saturday",
-                "sunday": "Sunday"
+                "sunday": "Sunday",
+                "viewAll": "View All"
               }
             },
             "workinHoursCart": {
@@ -525,9 +529,9 @@
         "LaundryCurrentOrderView": {
           "Components": {
             "CustomerLaundryOrderEst": {
-              "pickup": "Pickup time:",
-              "delivery": "Delivery time:",
-              "laundryReady": "Laundry ready time:",
+              "pickup": "Pickup time",
+              "delivery": "Delivery time",
+              "laundryReady": "Laundry ready time",
               "estTimes": "Estimated times"
             },
             "LaundryOrderDriverCard": {
@@ -627,6 +631,9 @@
           "startingFrom": "Starting from ",
           "minimumCost": "Minimum",
           "daysReturn": "days return",
+          "day": "day",
+          "days": "days",
+          "return" : "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -847,7 +854,7 @@
       "DeliveryCostSettingView": {
         "dvCost": "Delivery cost",
         "km": "Km",
-        "minCost": "Minimum Cost",
+        "minCost": "Minimum cost",
         "costPerKm": "Cost per km",
         "freeKmRange": "Free delivery range",
         "freeKmRangeText": "Within this distance, the customer won’t be charged for the delivery.",
@@ -918,7 +925,8 @@
         "copyLink": "Copy link",
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
-        "copiedText": "Link copied successfuly"
+        "copiedText": "Link copied successfuly",
+        "yourDriverList": "Your driver list"
       },
       "ServiceInfoEditView": {
         "name": "Name",
@@ -1490,7 +1498,7 @@
         "SingleLaundryScreen": {
           "startingFrom": "Starting from :",
           "daysReturn": "days return",
-          "minimumCost": "Minimum Cost",
+          "minimumCost": "Minimum cost",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1542,13 +1550,13 @@
               "customer": "Customer"
             },
             "LaundryOrderStatusCard": {
-              "orderReceived": "Order Received",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
-              "pickedUp": "Order Picked up",
+              "pickedUp": "Order picked up",
               "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "LaundryOrderSummary": {
               "orderSummary": "Summary",
@@ -1737,7 +1745,7 @@
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
             "pickUpTimeError": "The Pickup time should be before the delivery time.",
-            "restaurantDelivery": "Restaurant Delivery",
+            "restaurantDelivery": "Restaurant delivery",
             "orderStatus": {
               "waiting": "Waiting for restaurant",
               "preparing": "Order is being prepared",
@@ -2033,7 +2041,7 @@
             "days": "days"
           },
           "MinimumCostCard": {
-            "minCost": "Minimum Cost",
+            "minCost": "Minimum cost",
             "save": "Save minimum cost"
           }
         }
@@ -2042,14 +2050,14 @@
         "Components": {
           "LaundryOpOrderStatusCard": {
             "status": {
-              "canceled": "Order Cancelled",
-              "orderReceived": "Order Received",
+              "canceled": "Order cancelled",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
               "pickedUp": "Order Picked up",
-              "atLaundry": "At Laundry",
+              "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "estTimes": {
               "laundryArriving": "Laundry arriving",
@@ -2080,7 +2088,7 @@
             "deleteItem": "Delete item",
             "itemsWeights": "Items weights",
             "newItemsWeight": "New items weight",
-            "itemsCategory": "Items Category",
+            "itemsCategory": "Item categories",
             "itemsWeight": "Items weight",
             "total": "Total",
             "itemsWeightErrorText": "Please enter a valid weight",
@@ -2258,6 +2266,8 @@
         "deleteHelper": "Are you sure you want to delete this item",
         "deleteTitle": "Delete this item",
         "deleteItem": "Delete item",
+        "added": "Added",
+        "addedSubtitle": "Item added successfully",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Please select a category",

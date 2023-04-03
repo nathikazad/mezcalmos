@@ -148,12 +148,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               paymentType:
                                   viewController.order.value!.paymentType,
                             ),
+                            OrderNoteCard(
+                                note: viewController.order.value!.notes),
                             if (viewController.order.value!.review != null)
                               ReviewCard(
                                   showReviewTitle: true,
                                   review: viewController.order.value!.review!),
-                            OrderNoteCard(
-                                note: viewController.order.value!.notes),
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
                               costs: viewController.order.value!.costs,

@@ -122,8 +122,30 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
+                        '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}',
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _prdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}',
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _scdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
                         "${_i18n()['phoneNumber']}",
-                        style: context.txt.bodyLarge,
+                        style: context.textTheme.bodyLarge,
                       ),
                       SizedBox(
                         height: 5,
@@ -145,30 +167,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                        '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}',
-                        style: context.txt.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _prdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}',
-                        style: context.txt.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _scdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
                         "${_i18n()['location']}",
-                        style: context.txt.bodyLarge,
+                        style: context.textTheme.bodyLarge,
                       ),
                       SizedBox(
                         height: 5,

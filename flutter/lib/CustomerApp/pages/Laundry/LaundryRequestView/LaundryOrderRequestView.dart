@@ -101,7 +101,8 @@ class _CustLaundryOrderRequestViewState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 3),
+                                alignment: Alignment.topCenter,
+                                margin: const EdgeInsets.only(top: .5),
                                 child: Icon(
                                   Icons.place,
                                   size: 18,
@@ -313,9 +314,9 @@ class _CustLaundryOrderRequestViewState
     return Obx(
       () => MezButton(
         borderRadius: 0,
-        height: 75,
+        height: 50,
         label: viewController.isUserSignedIn
-            ? "Order now"
+            ? '${_i18n()["orderNow"]}'
             : "${_i18n()["signInToMakeOrder"]}",
         enabled: viewController.isUserSignedIn ? viewController.canOrder : true,
         onClick: () async {

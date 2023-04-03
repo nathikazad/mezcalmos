@@ -177,12 +177,13 @@ Future<TimeOfDay?> getTimePicker(
       });
 }
 
-Future<void> showConfirmationDialog(
+Future showConfirmationDialog(
   BuildContext context, {
   required Future<dynamic> Function() onYesClick,
   void Function()? onNoClick,
   String? title,
   String? helperText,
+  bool autoClose = false,
   String? primaryButtonText,
   String? secondaryButtonText,
 }) async {
@@ -216,7 +217,7 @@ Future<void> showConfirmationDialog(
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 10),
                 Text(
                   title ?? "${_i18n()["cancelOrder"]}",
                   textAlign: TextAlign.center,
@@ -229,7 +230,7 @@ Future<void> showConfirmationDialog(
                 helperText != ""
                     ? Column(
                         children: [
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Text(
                             helperText ??
                                 '${_i18n()["cancelConfirmationText"]}',
@@ -254,6 +255,9 @@ Future<void> showConfirmationDialog(
                     _clickedYes.value = true;
                     onYesClick.call().whenComplete(() {
                       _clickedYes.value = false;
+                      if (autoClose) {
+                        Navigator.pop(context);
+                      }
                     });
                   },
                   child: Container(

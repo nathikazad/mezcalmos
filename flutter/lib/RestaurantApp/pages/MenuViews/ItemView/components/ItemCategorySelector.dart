@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -87,8 +86,9 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
                 // enabled: (widget.oppositeLanguageValue != null &&
                 //     widget.oppositeLanguageValue!.value != value),
                 child: Text(value.name![userLanguage] ?? "error",
-                    style: context.txt.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
                     )));
           }).toList(),
         ),

@@ -171,11 +171,11 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               .deleteCategory(categoryId: widget.category.id!)
                               .then((bool value) {
                             if (value) {
-                              MezRouter.popTillExclusive(
-                                  ROpMenuView.constructPath(
-                                      restaurantId: widget.restaurantId));
+                              Navigator.pop(context, true);
                             }
                           });
+                        }).whenComplete(() {
+                          Navigator.pop(context);
                         });
                       },
                       child: Container(

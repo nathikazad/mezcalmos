@@ -95,7 +95,10 @@ android {
         disable 'InvalidPackage'
         checkReleaseBuilds false
     }
+
+    ndkVersion "25.1.8937393"
     
+    ndkVersion "25.1.8937393"
 }
 
 flutter {

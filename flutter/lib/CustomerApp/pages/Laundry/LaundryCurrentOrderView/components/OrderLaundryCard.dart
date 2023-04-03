@@ -7,15 +7,23 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 class OrderLaundryCard extends StatelessWidget {
-  const OrderLaundryCard({Key? key, required this.order}) : super(key: key);
+  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry contentPadding;
+  const OrderLaundryCard(
+      {Key? key,
+      required this.order,
+      this.margin = const EdgeInsets.only(top: 15),
+      this.contentPadding =
+          const EdgeInsets.symmetric(vertical: 12, horizontal: 5)})
+      : super(key: key);
   final LaundryOrder order;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(top: 15),
+      margin: margin,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
+        padding: contentPadding,
         child: Row(
           children: [
             CircleAvatar(

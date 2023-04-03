@@ -94,8 +94,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
                   RestaurantOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: DeliveryAppRoutes.kDvOrderView
-          .replaceFirst(":orderId", value["orderId"].toString()),
+      linkUrl: value["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -199,8 +198,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
                   LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: DeliveryAppRoutes.kDvOrderView
-          .replaceFirst(":orderId", value["orderId"].toString()),
+      linkUrl: value["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

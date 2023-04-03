@@ -197,14 +197,13 @@ class DeliverySettingsViewController {
 
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
-      id: null,
-      selfDelivery: deliveryType.value == ServiceDeliveryType.Self_delivery,
-      minimumCost: double.parse(_minCost.text),
-      freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
-      costPerKm: double.parse(_costPerKm.text),
-      radius: double.parse(radius.text) * 1000,
-      costPerKmFromBase: double.tryParse(costPerKmFromBase.text),
-    );
+        id: null,
+        selfDelivery: deliveryType.value == ServiceDeliveryType.Self_delivery,
+        minimumCost: double.parse(_minCost.text),
+        freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
+        costPerKm: double.parse(_costPerKm.text),
+        radius: double.parse(radius.text) * 1000,
+        costPerKmFromBase: double.tryParse(costPerKmFromBase.text));
   }
 
   bool get isCreatingNewService => createServiceViewController != null;
