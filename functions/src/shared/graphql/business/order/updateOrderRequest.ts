@@ -19,7 +19,7 @@ export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
                 }]
             },
             _set: {
-                final_cost_per_one: i.finalCostPerOne ?? 0
+                cost: JSON.stringify(i.cost)
             }
         }
     })
@@ -29,7 +29,8 @@ export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
                 id: order.orderId
             },
             _set: {
-                status: order.status
+                status: order.status,
+                final_cost: order.finalCost
             }
         }, {
             status: true

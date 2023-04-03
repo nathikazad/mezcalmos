@@ -8,7 +8,8 @@ import { Language, MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { BusinessOrder, BusinessOrderRequestItem, BusinessOrderRequestStatus, BusinessStatusChangeNotification } from "../shared/models/Services/Business/BusinessOrder";
+import { TimeUnit } from "../shared/models/Services/Business/Business";
+import { BusinessOrder, BusinessOrderRequestStatus, BusinessStatusChangeNotification } from "../shared/models/Services/Business/BusinessOrder";
 import { Operator } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -16,7 +17,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 export interface HandleRequestDetails {
     orderRequestId: number,
     requestConfirmed: boolean,
-    items?: Array<BusinessOrderRequestItem>;
+    itemIdToFinalCostPerOne?: Record<number, number>;
 }
 export interface HandleRequestResponse {
     success: boolean,
@@ -31,7 +32,8 @@ enum HandleRequestError {
     BusinessOperatorNotFound = "businessOperatorNotFound",
     IncorrectOrderRequestId = "incorrectOrderRequestId",
     RequestAlreadyConfirmedOrCancelled = "requestAlreadyConfirmedOrCancelled",
-    UpdateStatusError = "updateStatusError"
+    UpdateStatusError = "updateStatusError",
+    FinalCostsNotSet = "finalCostsNotSet"
 }
 
 export async function handleOrderRequestByAdmin(userId: number, handleRequestDetails: HandleRequestDetails): Promise<HandleRequestResponse> {
@@ -44,11 +46,26 @@ export async function handleOrderRequestByAdmin(userId: number, handleRequestDet
         if(handleRequestDetails.requestConfirmed) {
             
             order.status = BusinessOrderRequestStatus.ApprovedByBusiness;
-
-            handleRequestDetails.items?.forEach((i) => {
-                let itemIdx = order.items.findIndex((j) => (i.serviceId == j.serviceId && i.serviceType == j.serviceType));
-                order.items[itemIdx].finalCostPerOne = i.finalCostPerOne;
+            let finalCost = 0;
+            order.items.forEach((i) => {
+                i.cost.finalCostPerOne = handleRequestDetails.itemIdToFinalCostPerOne![i.id];
+                switch (i.cost.timeUnit) {
+                    case TimeUnit.PerHour:
+                        finalCost += (i.cost.finalCostPerOne 
+                                    * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60)) 
+                                    * i.cost.quantity);
+                        break;
+                    case TimeUnit.PerDay:
+                        finalCost += (i.cost.finalCostPerOne 
+                                    * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60 * 24)) 
+                                    * i.cost.quantity);
+                        break;
+                    default:
+                        finalCost += i.cost.finalCostPerOne * i.cost.quantity;
+                        break;
+                }
             });
+            order.finalCost = finalCost;
             confirmBusinessOrderFromOperator(order);
         } else {
             order.status = BusinessOrderRequestStatus.CancelledByBusiness;
@@ -133,6 +150,9 @@ async function errorChecks(userId: number, order: BusinessOrder, handleRequestDe
     if(handleRequestDetails.requestConfirmed) {
         if (order.status != BusinessOrderRequestStatus.RequestReceived) {
             throw new MezError(HandleRequestError.RequestAlreadyConfirmedOrCancelled);
-        } 
+        }
+        if(handleRequestDetails.itemIdToFinalCostPerOne == null) {
+            throw new MezError(HandleRequestError.FinalCostsNotSet);
+        }
     }
 }

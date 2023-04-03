@@ -18,10 +18,13 @@ export interface BusinessService {
     additionalParameters?: Record<string, any>
 }
 export interface BusinessServiceCost {
-    perHour: number;
-    perDay: number;
+    [TimeUnit.PerHour]?: number;
+    [TimeUnit.PerDay]?: number;
 }
-
+export enum TimeUnit {
+    PerHour = "perHour",
+    PerDay = "perDay"
+}
 export interface Rental {
     category1: RentalCategory1;
     details: BusinessService;

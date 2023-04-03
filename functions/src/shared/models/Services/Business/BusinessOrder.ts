@@ -1,6 +1,6 @@
 import { Order } from "../../Generic/Order";
 import { OrderNotification } from "../../Notification";
-import { Business, BusinessService, ServiceType } from "./Business";
+import { Business, BusinessService, ServiceType, TimeUnit } from "./Business";
 
 export interface BusinessOrder extends Order {
     businessId: number;
@@ -16,13 +16,19 @@ export interface BusinessOrder extends Order {
 export interface BusinessOrderRequestItem {
     serviceId: number;
     serviceType: ServiceType;
-    quantity: number;
-    id?: number;
+    id: number;
     available?: boolean;
-    finalCostPerOne?: number;
     service?: BusinessService;
+    cost: BusinessItemCost;
 }
-
+export interface BusinessItemCost {
+    estimatedCostPerOne: number;
+    finalCostPerOne?: number;
+    timeUnit?: TimeUnit;
+    fromTime: string;
+    toTime: string;
+    quantity: number;
+}
 export enum BusinessOrderRequestStatus {
     RequestReceived = "requestReceived",
     ApprovedByBusiness = "approvedByBusiness",

@@ -5,9 +5,6 @@ object_relationships:
   - name: business
     using:
       foreign_key_constraint_on: business_id
-  - name: description
+  - name: service
     using:
-      foreign_key_constraint_on: description_id
-  - name: name
-    using:
-      foreign_key_constraint_on: name_id
+      foreign_key_constraint_on: service_id

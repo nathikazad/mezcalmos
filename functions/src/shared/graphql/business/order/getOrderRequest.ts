@@ -2,7 +2,7 @@ import { getHasura } from "../../../../utilities/hasura";
 import { CustomerAppType, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { ServiceType } from "../../../models/Services/Business/Business";
-import { BusinessOrder, BusinessOrderRequestItem, BusinessOrderRequestStatus } from "../../../models/Services/Business/BusinessOrder";
+import { BusinessItemCost, BusinessOrder, BusinessOrderRequestItem, BusinessOrderRequestStatus } from "../../../models/Services/Business/BusinessOrder";
 
 export async function getBusinessOrderRequest(orderId: number): Promise<BusinessOrder> {
     let chain = getHasura();
@@ -21,12 +21,13 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
             final_cost: true,
             notes: true,
             items: [{}, {
+                commence_time: true,
+                cost: [{}, true],
                 id: true,
                 service_id: true,
                 service_type: true,
-                quantity: true,
                 available: true,
-                final_cost_per_one: true,
+            //     final_cost_per_one: true,
             }],
             business: {
                 details_id: true,
@@ -42,9 +43,8 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
             id: i.id,
             serviceId: i.service_id,
             serviceType: i.service_type as ServiceType,
-            quantity: i.quantity,
+            cost: JSON.parse(i.cost) as BusinessItemCost,
             available: i.available,
-            finalCostPerOne: i.final_cost_per_one,
         }
     })
     let businessOrder: BusinessOrder = {

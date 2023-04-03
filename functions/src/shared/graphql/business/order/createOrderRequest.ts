@@ -33,7 +33,8 @@ export async function createOrderRequest(
         return {
             service_id: i.serviceId,
             service_type: i.serviceType,
-            quantity: i.quantity,
+            commence_time: i.cost.fromTime,
+            cost: JSON.stringify(i.cost),
         }
     })
     let response = await chain.mutation({
@@ -44,6 +45,7 @@ export async function createOrderRequest(
                 status: BusinessOrderRequestStatus.RequestReceived,
                 customer_app_type: orderRequestDetails.customerAppType,
                 notes: orderRequestDetails.notes,
+                estimated_cost: cart.cost,
                 items: {
                     data: items
                 },
@@ -64,12 +66,16 @@ export async function createOrderRequest(
             id: true,
             chat_id: true,
             order_time: true,
+            items: [{}, {
+                id: true
+            }]
         }],
     })
 
     if(response.insert_business_order_request_one == null) {
         throw new MezError("orderCreationError");
     }
+
     let businessOrder: BusinessOrder = {
         orderId: response.insert_business_order_request_one.id,
         customerId,
@@ -83,7 +89,12 @@ export async function createOrderRequest(
         status: BusinessOrderRequestStatus.RequestReceived,
         chatId: response.insert_business_order_request_one.chat_id,
         estimatedCost: cart.cost,
-        items: cart.items
+        items: cart.items.map((i) => {
+            return {
+                id: 0,
+                ...i
+            }
+        })
     }
     return businessOrder
 }

@@ -7,6 +7,7 @@
 - "!include business_order_request.yaml"
 - "!include business_order_request_item.yaml"
 - "!include business_rental.yaml"
+- "!include business_service.yaml"
 - "!include customer_customer.yaml"
 - "!include customer_favourited_item.yaml"
 - "!include customer_minimal_order.yaml"

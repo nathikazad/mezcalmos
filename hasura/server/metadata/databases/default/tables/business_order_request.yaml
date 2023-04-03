@@ -16,14 +16,3 @@ array_relationships:
         table:
           name: order_request_item
           schema: business
-computed_fields:
-  - name: estimated_cost
-    definition:
-      function:
-        name: estordercost
-        schema: business
-  - name: final_cost
-    definition:
-      function:
-        name: finalordercost
-        schema: business
