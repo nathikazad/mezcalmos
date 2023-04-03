@@ -71,18 +71,6 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         } else if (viewController.savedLocs.value!.isNotEmpty) {
           return SingleChildScrollView(
               child: Column(children: <Widget>[
-            SizedBox(height: 12),
-            Container(
-              margin: EdgeInsets.only(right: 16, bottom: 8.sp, left: 16),
-              child: Text(
-                "${_i18n()["location"] + 's'}",
-                style: txt.displaySmall!.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            //   SizedBox(height: 0.1.h),
             Column(
               children: List.generate(
                   viewController.savedLocs.value!.length,
