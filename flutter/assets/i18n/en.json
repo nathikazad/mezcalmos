@@ -590,6 +590,8 @@
           "startingFrom": "Starting from ",
           "minimumCost": "Minimum",
           "daysReturn": "days return",
+          "day": "day",
+          "return" : "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
