@@ -255,3 +255,6 @@ const String mezPackageMarker =
     "assets/images/shared/markers/packageMarker.png";
 const String mezDestinationMarker =
     "assets/images/shared/markers/destinationMarker.png";
+
+const String customImageUrl =
+    "https://villaexperience.com/wp-content/uploads/2019/09/zacilna-rivieramaya-1-3.jpg";

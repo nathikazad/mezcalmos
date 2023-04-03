@@ -2,61 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-class HomesServiceListView extends StatefulWidget {
-  const HomesServiceListView({super.key});
-
-  @override
-  State<HomesServiceListView> createState() => _HomesServiceListViewState();
-}
-
-class _HomesServiceListViewState extends State<HomesServiceListView> {
-  @override
-  Widget build(BuildContext context) {
-    var txt = Theme.of(context).textTheme;
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: RentalServiceCardView(
-                title: "House for rent in Puerto Escondido",
-                image: AssetImage(aRentals),
-                lBottomText: "Company Name",
-                rBottomText: "Company Name 2",
-                subtitleWidget: Text("Hello"),
-                needBottomTitleText: false,
-                needDivider: false,
-                needLeadingImage: true,
-                needTrailingImage: false,
-                needCustomSubtitle: true,
-                subtitleIconData: [
-                  aPriceCheck,
-                  aSingleBed,
-                  aHouseSliding,
-                ],
-                subtitleIconString: [
-                  "\$234/day",
-                  "3 bedrooms",
-                  "330m²",
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class RentalServiceCardView extends StatelessWidget {
-  const RentalServiceCardView({
+class AssetCard extends StatelessWidget {
+  const AssetCard({
     super.key,
     required this.title,
-    required this.subtitleWidget,
+    this.subtitleWidget = const Offstage(),
     required this.image,
+    required this.onClick,
     this.lBottomText = "",
     this.rBottomText = "",
     this.needDivider = true,
@@ -69,10 +21,11 @@ class RentalServiceCardView extends StatelessWidget {
   });
 
   final String title;
+  final Function onClick;
   final Widget subtitleWidget;
   final String lBottomText;
   final String rBottomText;
-  final AssetImage image;
+  final NetworkImage image;
   final bool needDivider;
   final bool needBottomTitleText;
   final bool needLeadingImage;
@@ -85,6 +38,9 @@ class RentalServiceCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
     return MezCard(
+      onClick: () {
+        onClick();
+      },
       contentPadding: EdgeInsets.symmetric(
         vertical: 12,
         horizontal: 6,
@@ -152,9 +108,8 @@ class RentalServiceCardView extends StatelessWidget {
                             child: Image(
                               height: 64,
                               width: 64,
-                              image: AssetImage(
-                                aHomes,
-                              ),
+                              image: image,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),

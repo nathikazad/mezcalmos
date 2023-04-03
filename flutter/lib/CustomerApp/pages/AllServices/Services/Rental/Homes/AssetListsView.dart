@@ -7,10 +7,10 @@ import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
-import 'HomesServiceListView/HomesServiceListView.dart';
+import 'HomesListView/HomesListView.dart';
 import '../components/ButtonSwitcher.dart';
 import 'controller/HomesServiceController.dart';
-import './AgencyServiceListView/AgencyServiceListView.dart';
+import 'AgencyListView/AgencyListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -22,7 +22,7 @@ class HomesServiceView extends StatefulWidget {
   State<HomesServiceView> createState() => _HomesServiceViewState();
 
   static Future<void> navigate() {
-    return MezRouter.toPath(RentalRoutes.homeServiceRoute);
+    return MezRouter.toPath(RentalRoutes.rentalServiceRoute);
   }
 }
 
@@ -105,8 +105,8 @@ class _HomesServiceViewState extends State<HomesServiceView> {
                 lIconButton: Icons.home,
                 rIconButton: Icons.settings_applications_rounded,
                 values: [
-                  HomeServiceView.Home,
-                  HomeServiceView.Agency,
+                  HomeServiceViewEnum.Home,
+                  HomeServiceViewEnum.Agency,
                 ],
                 selectedValue: homesServiceController.currentSelectedView.value,
                 onClick: (Enum value) {
@@ -117,9 +117,9 @@ class _HomesServiceViewState extends State<HomesServiceView> {
           ),
           Obx(
             () => homesServiceController.currentSelectedView.value ==
-                    HomeServiceView.Home
-                ? HomesServiceListView()
-                : AgencyServiceListView(),
+                    HomeServiceViewEnum.Home
+                ? HomeListView()
+                : AgencyListView(),
           ),
         ],
       ),
