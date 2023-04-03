@@ -137,10 +137,11 @@ class _RestaurantCardState extends State<RestaurantCard> {
                             child: Row(
                               children: [
                                 SizedBox(
-                                  width:
-                                      widget.restaurant.paymentInfo!.acceptCard
-                                          ? 8
-                                          : 0,
+                                  width: widget.restaurant.paymentInfo
+                                              ?.acceptCard ==
+                                          true
+                                      ? 8
+                                      : 0,
                                 ),
                                 if (widget.restaurant.rate != null)
                                   Icon(

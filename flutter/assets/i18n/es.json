@@ -1722,7 +1722,6 @@
               "dvTime": "El tiempo de entrega",
               "set": "Establecer",
               "time": "Tiempo",
-              "lowerTime": "tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
               "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de entregada.",
