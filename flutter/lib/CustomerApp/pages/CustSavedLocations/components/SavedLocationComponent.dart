@@ -30,11 +30,12 @@ class SavedLocationComponent extends StatelessWidget {
       elevation: 1.0,
       margin: const EdgeInsets.all(8),
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.only(top: 12, bottom: 5, left: 12, right: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.place,
@@ -141,21 +142,14 @@ class SavedLocationComponent extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 4,
+              height: 9,
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(top: 5),
-              child: Text(
-                savelocation.location.address,
-                style: Get.textTheme.titleMedium?.copyWith(
-                  color: offShadeGreyColor,
-                  fontWeight: FontWeight.w600,
-                ),
+            Text(
+              savelocation.location.address,
+              style: Get.textTheme.titleMedium?.copyWith(
+                color: offShadeGreyColor,
+                fontWeight: FontWeight.w600,
               ),
-            ),
-            SizedBox(
-              height: 4,
             ),
           ],
         ),

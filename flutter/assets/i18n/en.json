@@ -2149,8 +2149,8 @@
         "deleteHelper": "Are you sure you want to delete this item",
         "deleteTitle": "Delete this item",
         "deleteItem": "Delete item",
-        "added" : "Added",
-        "addedSubtitle" : "Item added successfully",
+        "added": "Added",
+        "addedSubtitle": "Item added successfully",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Please select a category",
