@@ -119,6 +119,9 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
 
                             if (viewController.order.value!.laundry != null)
                               OrderLaundryCard(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 12),
+                                  margin: EdgeInsets.only(top: 12.5),
                                   order: viewController.order.value!),
 
                             LaundryOrderPricingComponent(

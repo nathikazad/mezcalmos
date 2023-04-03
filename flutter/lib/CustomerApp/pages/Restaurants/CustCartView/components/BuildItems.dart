@@ -41,6 +41,8 @@ class CartItemsBuilder extends StatelessWidget {
               children.add(Container(
                 margin: const EdgeInsets.symmetric(vertical: 5),
                 child: MyExpansionPanelComponent(
+                  showExpandButton: cartItem.chosenChoices.isNotEmpty ||
+                      (cartItem.notes != null && cartItem.notes != ""),
                   child: Flexible(
                       child: ItemInformationCart(
                     item: cartItem,
