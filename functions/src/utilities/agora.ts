@@ -1,7 +1,7 @@
 
 
 import { Keys } from "../shared/models/Generic/Keys";
-import * as agora from 'agora-access-token';
+import * as agora from 'agora-token';
 import * as fcm from "../utilities/senders/fcm";
 import { EndCallBackgroundNotification, NewCallBackgroundNotification, NotificationType } from "../shared/models/Notification";
 import { chatUrl } from "./senders/appRoutes";
@@ -145,6 +145,7 @@ function getAgoraDetails(chatId: number, userId: number): ParticipantAgoraDetail
     chatId.toString(),
     userId,
     agora.RtcRole.PUBLISHER,
+    0,
     0
   );
   console.log(token)
