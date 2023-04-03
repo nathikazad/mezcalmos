@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -195,22 +194,7 @@ PreferredSize _installAppButton() {
       child: MezButton(
           label: "${_i18n()['installApp']}",
           borderRadius: 0,
-          onClick: _launchURL));
-}
-
-Future<void> _launchURL() async {
-  switch (defaultTargetPlatform) {
-    case TargetPlatform.android:
-      await launchUrl(Uri.parse(
-          "https://play.google.com/store/apps/details?id=com.mezcalmos.customer"));
-      break;
-    case TargetPlatform.iOS:
-      await launchUrl(
-          Uri.parse("https://apps.apple.com/us/app/mezcalmos/id1595882320"));
-      break;
-    default:
-  }
-  //
+          onClick: launchAppStoreLink));
 }
 
 bool get showIntallAppBtn =>

@@ -37,7 +37,6 @@ class RouteInformation {
   }
 
   bool get valid {
-   
     return duration.seconds > 0;
   }
 }
@@ -144,7 +143,6 @@ Future<Map<String, String>> getLocationsSuggestions(String search) async {
 
   if (respJson["status"] == "OK") {
     respJson["predictions"].forEach((pred) {
-      mezDbgPrint("===> autocomplete : $pred");
       if (pred["description"].toLowerCase().contains(search.toLowerCase())) {
         _returnedPredictions[pred["place_id"]] = pred["description"];
       }

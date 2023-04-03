@@ -20,8 +20,8 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
@@ -121,6 +121,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                 order: viewController.order.value!),
                             if (viewController.order.value!.inDeliveryPhase())
                               OrderMapWidget(
+                                  margin: const EdgeInsets.only(top: 15),
                                   deliveryOrderId: viewController
                                       .order.value!.deliveryOrderId,
                                   updateDriver: viewController.order.value!

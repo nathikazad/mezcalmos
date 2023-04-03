@@ -102,8 +102,9 @@ class OrderSummaryCard extends StatelessWidget {
                           children: [
                             if (setDeliveryCallBack != null)
                               MezIconButton(
-                                icon:
-                                    costs.tax != null ? Icons.edit : Icons.add,
+                                icon: costs.deliveryCost != null
+                                    ? Icons.edit
+                                    : Icons.add,
                                 iconSize: 17,
                                 padding: const EdgeInsets.all(3),
                                 onTap: setDeliveryCallBack,

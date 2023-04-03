@@ -349,6 +349,8 @@ select_permissions:
       computed_fields:
         - in_process
         - notification_token
+        - package_cost_comp
+        - total_cost
       filter:
         _exists:
           _table:

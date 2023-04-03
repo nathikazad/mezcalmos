@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -163,6 +164,8 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                     }
                   },
                   onTapCallback: (String placeId, String name) async {
+                    mezDbgPrint(
+                        "place id =============================>$placeId");
                     final MezLocation? _loc =
                         await MapHelper.getLocationFromPlaceId(placeId);
                     if (_loc != null) {

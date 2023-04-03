@@ -96,6 +96,16 @@ select_permissions:
               delivery_driver:
                 user_id:
                   _eq: X-Hasura-User-Id
+          - from_customer_delivery:
+              delivery_company:
+                drivers:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - to_customer_delivery:
+              delivery_company:
+                drivers:
+                  user_id:
+                    _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:
