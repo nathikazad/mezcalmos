@@ -49,7 +49,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     fit: FlexFit.tight,
                     child: Text(
                       widget.category.name?[userLanguage] ?? "",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                   ),
                   (widget.viewController.reOrderMode.isTrue)
@@ -62,7 +62,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
                     widget.category.dialog![userLanguage]!,
-                    style: Get.textTheme.bodyText2,
+                    style: Get.textTheme.bodyMedium,
                   ),
                 ),
               if (widget.category.items.isEmpty)
@@ -153,7 +153,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                           alignment: Alignment.center,
                           child: Text(
                             '${_i18n()["editCatgeory"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: Get.textTheme.bodyLarge,
                           )),
                     ),
                     Divider(),
@@ -169,12 +169,11 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               .deleteCategory(categoryId: widget.category.id!)
                               .then((bool value) {
                             if (value) {
-                              MezRouter.untill((Route route) =>
-                                  route.settings.name ==
-                                  getROpMenuRoute(
-                                      restaurantId: widget.restaurantId));
+                              Navigator.pop(context, true);
                             }
                           });
+                        }).whenComplete(() {
+                          Navigator.pop(context);
                         });
                       },
                       child: Container(
@@ -183,7 +182,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               vertical: 12, horizontal: 5),
                           child: Text(
                             '${_i18n()["deleteCatgeory"]}',
-                            style: Get.textTheme.bodyText1
+                            style: Get.textTheme.bodyLarge
                                 ?.copyWith(color: Colors.red),
                           )),
                     ),

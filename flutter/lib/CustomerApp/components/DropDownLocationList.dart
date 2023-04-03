@@ -88,17 +88,13 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   Future<void> validateFirstDistance() async {
     if (await _lessThanDistance(dropDownListValue!.location) == false) {
-      mezDbgPrint("[cc]  _lessThanDistance ==> True");
       showError.value = true;
-    } else
-      mezDbgPrint("[cc]  _lessThanDistance ==> False");
+    }
   }
 
   void getSavedLocation() {
     customerAuthController.customer?.savedLocations.forEach(
       (SavedLocation element) {
-        mezDbgPrint(
-            "Getting Saved location elmemmemememmet ✅🛑======>${element.defaultLocation}");
         listOfSavedLoacations.add(element);
       },
     );
@@ -141,7 +137,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               ),
               hint: Text(
                 '${_i18n()["chooseLoc"]}',
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               items: listOfSavedLoacations
                   .map<DropdownMenuItem<SavedLocation>>(

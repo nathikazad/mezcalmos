@@ -20,7 +20,7 @@ import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/s
 import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
 import { deliveryNewOrderMessage } from '../delivery/bgNotificationMessages';
 import { getDeliveryOperators } from '../shared/graphql/delivery/operator/getDeliveryOperator';
-import { ServiceProvider } from '../shared/models/Services/Service';
+import { OpenStatus, ServiceProvider } from '../shared/models/Services/Service';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
@@ -106,7 +106,7 @@ function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutReque
       "Restaurant is not approved and taking orders right now"
     );
   }
-  if(restaurant.openStatus != "open") {
+  if(restaurant.openStatus != OpenStatus.Open && checkoutRequest.scheduledTime == null) {
     throw new HttpsError(
       "internal",
       "Restaurant is closed"

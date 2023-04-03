@@ -46,13 +46,26 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
             btnColors: primaryBlueColor,
             onMinValueBtnColor: Colors.grey.shade300,
             incrementCallback: () async {
-              widget.viewController.cartItem.value!.quantity++;
-              widget.viewController.cartItem.refresh();
+              widget.viewController.updateItemQuantity(inc: true);
             },
             decrementCallback: () async {
-              widget.viewController.cartItem.value!.quantity--;
-              widget.viewController.cartItem.refresh();
+              widget.viewController.updateItemQuantity(inc: false);
             },
+            onChangedToZero: !widget.viewController.isAdding
+                ? () async {
+                    await showConfirmationDialog(context,
+                        title: "${_i18n()['rmItemTitle']}",
+                        helperText: "${_i18n()['rmItemHelper']}",
+                        primaryButtonText: "${_i18n()['rmItemButton']}",
+                        onYesClick: () async {
+                      bool res = await widget.viewController.removeItem();
+                      if (res) {
+                        MezRouter.untill(
+                            (Route p0) => Get.currentRoute == kCartRoute);
+                      }
+                    });
+                  }
+                : null,
             minVal: 1,
             value: widget.viewController.cartItem.value!.quantity,
           ),

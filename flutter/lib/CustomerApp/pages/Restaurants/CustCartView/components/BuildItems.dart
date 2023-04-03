@@ -10,7 +10,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 
@@ -67,8 +66,6 @@ class CartItemsBuilder extends StatelessWidget {
                     ),
                   ],
                   onEdit: () {
-                    mezDbgPrint(
-                        " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
                     if (cartItem.idInCart != null)
                       MezRouter.toNamed(editCartItemRoute(cartItem.idInCart!));
                   },
@@ -114,8 +111,6 @@ class CartItemsBuilder extends StatelessWidget {
   List<Widget> buildChoices(CartItem cartItem) {
     final List<Widget> viewWidgets = [];
     cartItem.chosenChoices.forEach((String key, List<Choice> value) {
-      mezDbgPrint(
-          "From get option names 📥📥📥📥📥 ======>${int.parse(key)} \n ${cartItem.item.findOption(int.parse(key))?.name} ");
       viewWidgets.add(ItemChosenChoiceComponent(
           choices: value,
           optionName: cartItem.item.getOptionName(int.parse(key))));

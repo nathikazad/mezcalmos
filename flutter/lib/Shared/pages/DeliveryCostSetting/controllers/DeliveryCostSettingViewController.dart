@@ -43,8 +43,7 @@ class DeliveryCostSettingViewController {
       radius.text = (deliveryCost.value?.radius != null)
           ? (deliveryCost.value!.radius! / 1000).toString()
           : "";
-      costPerKmFromBase.text =
-          deliveryCost.value!.costPerKmFromBase.toString() ?? "";
+      costPerKmFromBase.text = deliveryCost.value!.costPerKmFromBase.toString();
       freeKmRange.text =
           deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "";
       minCost.text = deliveryCost.value!.minimumCost.toString();

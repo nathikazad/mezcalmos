@@ -95,25 +95,10 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                           ),
                 userInfo: ServiceInfo(
                   hasuraId: cartData.restaurant!.id,
-                  description: (cartData.restaurant?.details!.description
-                                  ?.translations !=
-                              null &&
-                          cartData.restaurant?.details!.description
-                                  ?.translations.isNotEmpty ==
-                              true)
-                      ? {
-                          cartData.restaurant!.details!.description!
-                                  .translations.first.language_id
-                                  .toLanguageType():
-                              cartData.restaurant!.details!.description!
-                                  .translations.first.value,
-                          cartData.restaurant!.details!.description!
-                                  .translations[1].language_id
-                                  .toLanguageType():
-                              cartData.restaurant!.details!.description!
-                                  .translations[1].value,
-                        }
-                      : null,
+                  description: toLanguageMap(
+                      translations: cartData
+                              .restaurant?.details?.description?.translations ??
+                          []),
                   image: cartData.restaurant?.details!.image,
                   firebaseId: cartData.restaurant?.details?.firebase_id,
                   name: cartData.restaurant?.details!.name,
@@ -340,17 +325,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             image: _res.details!.image,
             firebaseId: _res.details!.firebase_id,
             name: _res.details!.name,
-            description: (_res.details?.description?.translations != null &&
-                    _res.details!.description!.translations.isNotEmpty)
-                ? {
-                    _res.details!.description!.translations.first.language_id
-                            .toLanguageType():
-                        _res.details!.description!.translations.first.value,
-                    _res.details!.description!.translations[1].language_id
-                            .toLanguageType():
-                        _res.details!.description!.translations[1].value,
-                  }
-                : null,
+            description: toLanguageMap(
+                translations: _res.details?.description?.translations ?? []),
             descriptionId: _res.details!.description_id,
             //   descriptionId: data.d,
             location: MezLocation.fromHasura(

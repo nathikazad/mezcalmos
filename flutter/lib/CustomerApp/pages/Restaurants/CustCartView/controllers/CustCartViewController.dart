@@ -115,7 +115,6 @@ class CustCartViewController {
     // TODO: hasura-ch
     final List<CreditCard> data = await get_customer_cards(
         customerId: Get.find<AuthController>().hasuraUserId!, withCache: false);
-    mezDbgPrint("Data from controller ==========>>> 😛${data.length}");
     _cards.value = data;
 
     if (_cards.value?.isEmpty == true) {
@@ -147,8 +146,6 @@ class CustCartViewController {
 
   void switchPaymentMedthod(
       {required PaymentType paymentType, CreditCard? card}) {
-    mezDbgPrint(
-        "Switching on restControlller =========>>>>>${paymentType.toNormalString()}");
     _cartRxn.value?.paymentType = paymentType;
     _cartRxn.refresh();
   }
@@ -177,8 +174,7 @@ class CustCartViewController {
         if (newCardId != null) {
           await getCustomerCards();
           _updateListWithNewCard();
-          mezDbgPrint(
-              "Before first wheeeeereeee =========>${customerCards?.length}");
+
           final CreditCard? newCard = customerCards
               ?.firstWhere((CreditCard element) => element.cardId == newCardId);
 
@@ -237,7 +233,6 @@ class CustCartViewController {
   /// returns stripePaymentId
   Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
     String? stripePaymentId;
-    mezDbgPrint("Look here ============>${cart.restaurant!.serviceDetailsId}");
     //viewCartController.getCardChoice
     if (cart.paymentType == PaymentType.Card) {
       switch (choice) {
@@ -306,8 +301,6 @@ class CustCartViewController {
   }
 
   bool get canOrder {
-    mezDbgPrint(
-        "From can order====================>>>>${cart.toFirebaseFormattedJson()}");
     return cart.toLocation != null &&
         _orderDistanceInKm <= 10 &&
         isShippingSet.isTrue &&
@@ -346,15 +339,10 @@ class CustCartViewController {
 
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
-        mezDbgPrint("🤣  ${routeInfo.distance.distanceInMeters}");
         if (_orderDistanceInKm <= 15) {
           final num shippingCost =
               deliveryCost!.costPerKm * (_orderDistanceInKm);
-          mezDbgPrint(
-              "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
           if (shippingCost < deliveryCost!.minimumCost) {
-            mezDbgPrint(
-                "LESS THAN MINIMUM COST ===================== $shippingCost << ${deliveryCost!.minimumCost}");
             cart.shippingCost = deliveryCost!.minimumCost.ceil();
             _cartRxn.refresh();
           } else {
@@ -398,7 +386,6 @@ class CustCartViewController {
       required int quantity,
       bool saveToDb = false}) async {
     final CartItem? _item = cart.incrementItem(itemId, quantity);
-    mezDbgPrint("[bb] Item -==> $_item");
     if (_item != null && saveToDb == true) {
       await cartController.updateCartItem(_item);
       return _item;

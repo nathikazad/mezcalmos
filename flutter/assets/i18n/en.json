@@ -224,6 +224,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
+              "rmItemTitle" : "Remove item",
+              "rmItemHelper" : "Are you sure you want to remove this item from cart",
+              "rmItemButton" : "Yes, remove item",
               "notAvailable": "This restaurant is closed",
               "title": "Warning",
               "leftBtn": "Checkout first",
@@ -590,7 +593,7 @@
           "daysReturn": "days return",
           "day": "day",
           "days": "days",
-          "return": "return",
+          "return" : "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1010,7 +1013,7 @@
         "alertClearNotificationTitle": "Clear All Notifications"
       },
       "LocationPermissionScreen": {
-        "permissionBtn": "GIVE PERMISSION",
+        "permissionBtn": "Continue",
         "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",
         "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
         "locationPermissionDeniedForever": "Location permissions are denied forever! Please change that.",
@@ -2146,6 +2149,8 @@
         "deleteHelper": "Are you sure you want to delete this item",
         "deleteTitle": "Delete this item",
         "deleteItem": "Delete item",
+        "added" : "Added",
+        "addedSubtitle" : "Item added successfully",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Please select a category",

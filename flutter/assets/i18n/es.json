@@ -225,6 +225,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
+              "rmItemTitle" : "Remover el artículo",
+              "rmItemHelper" : "¿Estás seguro de que quieres eliminar este artículo del carrito?",
+              "rmItemButton" : "Sí, elimine el artículo",
               "notAvailable": "Su restaurante está cerrado",
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
@@ -573,7 +576,9 @@
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
-          "daysReturn": "Días de regreso",
+          "day": "día",
+          "return" : "devolver",
+          "daysReturn" : "Días de regreso",
           "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
@@ -744,15 +749,15 @@
     },
     "pages": {
       "ServiceProfileView": {
-        "profile": "Perfil",
-        "info": "Información",
-        "operators": "Operadoras",
-        "drivers": "Conductoras",
-        "schedule": "Cronograma",
         "payments": "Pagos",
         "delivery": "Entrega",
         "reviews": "Reseñas",
         "share": "Compartir",
+        "profile" : "Perfil",
+        "info" : "Información",
+        "operators" : "Operadoras",
+        "drivers" : "Conductoras",
+        "schedule" :"Horarios",
         "privacyPolicies": "Políticas de privacidad",
         "logout": "Cerrar sesión",
         "openService": "Servicio abierto",
@@ -1016,7 +1021,7 @@
         "alertClearNotificationTitle": "Eliminar todas las notificaciones"
       },
       "LocationPermissionScreen": {
-        "permissionBtn": "ACTIVAR AHORA",
+        "permissionBtn": "Continuar",
         "askForNotif": "La aplicación recopila los datos de su ubicación para emparejarlo con los mejores viajes y compartir su ubicación con los clientes, incluso cuando la aplicación está en segundo plano.",
         "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
         "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
@@ -2067,6 +2072,8 @@
         "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
         "deleteTitle": "Eliminar este artículo",
         "deleteItem": "Eliminar elemento",
+        "added" : "Agregada",
+        "addedSubtitle" : "Artículo agregado con éxito",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Porfavor seleccione una categoría",
