@@ -56,8 +56,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   RxInt numberOfCurrentOrders = RxInt(0);
 
-  StreamSubscription<dynamic>? _orderCountListener;
-
   StreamSubscription<dynamic>? _authStateChnagesListener;
 
   @override
@@ -76,8 +74,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   @override
   void dispose() {
-    _orderCountListener?.cancel();
-    _orderCountListener = null;
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
     super.dispose();
@@ -136,8 +132,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       if (fireUser != null) {
         _doIfFireAuthUserIsNotNull();
       } else {
-        _orderCountListener?.cancel();
-        _orderCountListener = null;
         _notificationsStreamListener?.cancel();
         _notificationsStreamListener = null;
         appLifeCycleController.cleanAllCallbacks();
