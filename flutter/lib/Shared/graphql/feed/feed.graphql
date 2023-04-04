@@ -18,11 +18,12 @@ query getFeed($_in: [Int!]) {
     comments
     likes
     message
-    link
     posted_on
     restaurant {
-      name
-      image
+      details {
+        name
+        image
+      }
     }
   }
 }
@@ -31,7 +32,10 @@ query getSubscribedRestaurants($_eq: Int) {
   service_provider_subscriber(where: {service_provider_type: {_eq: "restaurant"}, _and: {customer_id: {_eq: $_eq}}}) {
     id
     restaurant {
-      name
+      details {
+        name
+        image
+      }
     }
   }
 }
