@@ -164,30 +164,30 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
                                   return ListTile(
                                     minLeadingWidth: 10,
                                     leading: Icon(Icons.search_rounded),
-                                    title: Text("data"
-                                        // suggestionShowList[index],
-                                        // style: widget.suggestionStyle,
-                                        // textAlign: widget.suggestionTextAlign,
-                                        ),
+                                    title: Text(
+                                      suggestionShowList[index],
+                                      style: widget.suggestionStyle,
+                                      textAlign: widget.suggestionTextAlign,
+                                    ),
                                     onTap: () {
                                       mezDbgPrint(
                                           "Card clicked =============== oooooooooooooooo");
-                                      // isSearching = false;
-                                      // widget.controller.text =
-                                      //     suggestionShowList[index];
+                                      isSearching = false;
+                                      widget.controller.text =
+                                          suggestionShowList[index];
 
-                                      // final String placeId = idWithDescription
-                                      //     .keys
-                                      //     .firstWhere((String placeId) {
-                                      //   return idWithDescription[placeId] ==
-                                      //       suggestionShowList[index];
-                                      // });
+                                      final String placeId = idWithDescription
+                                          .keys
+                                          .firstWhere((String placeId) {
+                                        return idWithDescription[placeId] ==
+                                            suggestionShowList[index];
+                                      });
 
-                                      // suggestionsStreamController.sink.add([]);
-                                      // // placeId along with name.
-                                      // getActiveFocusNode().unfocus();
-                                      // widget.onTapCallback(
-                                      //     placeId, widget.controller.text);
+                                      suggestionsStreamController.sink.add([]);
+                                      // placeId along with name.
+                                      getActiveFocusNode().unfocus();
+                                      widget.onTapCallback(
+                                          placeId, widget.controller.text);
                                     },
                                   );
                                 }),

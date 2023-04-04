@@ -81,6 +81,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           ),
           const Spacer(),
           Flexible(
+            flex: 7,
             child: MezButton(
               height: 32,
               label: widget.viewController.currentMode ==
