@@ -150,6 +150,7 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
       }
     });
   }
+  mezDbgPrint("Returned Auto Complete ====> $_returnedPredictions");
 
   return _returnedPredictions;
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -78,6 +77,7 @@ class LocationSearchComponent extends StatefulWidget {
 
 class LocationSearchComponentState extends State<LocationSearchComponent> {
   TextEditingController _controller = TextEditingController();
+  FocusNode? _focusNode;
 
   @override
   void dispose() {
@@ -113,9 +113,10 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
       fieldViewBuilder: (BuildContext context,
           TextEditingController textEditingController,
           FocusNode focusNode,
-          onFieldSubmitted) {
+          Function()? onFieldSubmitted) {
         _controller = textEditingController;
-        return TextField(
+        _focusNode = focusNode;
+        return TextFormField(
           controller: textEditingController,
           focusNode: focusNode,
           decoration: _inputDecoration(),
@@ -129,23 +130,24 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
         );
       },
       optionsBuilder: (TextEditingValue textEditingValue) async {
-        if (textEditingValue.text.isEmpty) {
-          return [];
-        } else {
+        if (textEditingValue.text.length > 3 &&
+            textEditingValue.text.length.isEven) {
           List<MapHelper.AutoCompleteResult> data =
               await MapHelper.getLocationsSuggestions(textEditingValue.text);
-          mezDbgPrint(data);
+
           data.retainWhere((MapHelper.AutoCompleteResult element) => element
               .description
               .toLowerCase()
               .contains(textEditingValue.text.toLowerCase()));
 
           return data;
+        } else {
+          return [];
         }
       },
       onSelected: (MapHelper.AutoCompleteResult selection) {
         _controller.text = selection.description;
-
+        _focusNode?.unfocus();
         MapHelper.getLocationFromPlaceId(selection.placeId)
             .then((MezLocation? value) {
           if (value != null) {
