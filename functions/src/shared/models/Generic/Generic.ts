@@ -52,17 +52,6 @@ export enum TokenType {
   DeviceNotificationToken = "deviceNotificationToken",
 }
 
-// export interface Operator {
-//   info: UserInfo,
-//   versionNumber: string,
-//   notificationInfo: NotificationInfo
-// }
-// export interface LaundryOperator extends Operator {
-//   state: {
-//     laundryId: string
-//   }
-// }
-
 export interface ServerResponse {
   status: ServerResponseStatus
   errorMessage?: string
@@ -70,11 +59,11 @@ export interface ServerResponse {
   [key: string]: any;
 }
 
-export interface ValidationPass {
-  ok: boolean,
-  error?: ServerResponse,
-  [key: string]: any;
-}
+// export interface ValidationPass {
+//   ok: boolean,
+//   error?: ServerResponse,
+//   [key: string]: any;
+// }
 
 export enum ServerResponseStatus {
   Success = "Success",
@@ -86,9 +75,4 @@ export enum AuthorizationStatus {
   Authorized = "authorized",
   Unauthorized = "unauthorized",
   AwaitingApproval = "awaitingApproval"
-}
-
-export enum OperatorType {
-  Delivery = "delivery",
-  Restaurant = "restaurant",
 }

@@ -16,7 +16,7 @@ export async function createOrderRequest(
 ): Promise<BusinessOrder> {
     let chain = getHasura();
 
-    let businessOperatorsDetails = business.operators?.map((v) => {
+    let businessOperatorsDetails = business.details.operators?.map((v) => {
         return {
             participant_id: v.userId,
             app_type_id: AppType.Business
@@ -77,17 +77,20 @@ export async function createOrderRequest(
     }
 
     let businessOrder: BusinessOrder = {
-        orderId: response.insert_business_order_request_one.id,
-        customerId,
+        orderDetails: {
+            orderId: response.insert_business_order_request_one.id,
+            customerId,
+            spDetailsId: business.details.serviceProviderDetailsId,
+            paymentType: PaymentType.Cash,
+            deliveryType: DeliveryType.Pickup,
+            customerAppType: orderRequestDetails.customerAppType,
+            deliveryCost: 0,
+            notes: orderRequestDetails.notes,
+            chatId: response.insert_business_order_request_one.chat_id,
+        },
         businessId: orderRequestDetails.businessId,
-        spDetailsId: business.serviceProviderDetailsId,
-        paymentType: PaymentType.Cash,
-        deliveryType: DeliveryType.Pickup,
-        customerAppType: orderRequestDetails.customerAppType,
-        notes: orderRequestDetails.notes,
-        deliveryCost: 0,
+        
         status: BusinessOrderRequestStatus.RequestReceived,
-        chatId: response.insert_business_order_request_one.chat_id,
         estimatedCost: cart.cost,
         items: cart.items.map((i) => {
             return {

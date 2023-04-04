@@ -49,7 +49,10 @@ export async function getCart(customerId: number): Promise<Cart> {
             costPerOne: i.cost_per_one,
             quantity: i.quantity,
             itemId: i.restaurant_item_id,
-            name : i.restaurant_item.name,
+            name : i.restaurant_item.name.translations.reduce((prev:Record<any, any>, current) => {
+                prev[current.language_id] = current.value;
+                return prev;
+            }, {}),
             image : i.restaurant_item.image,
             note: i.note
         }

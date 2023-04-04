@@ -56,26 +56,28 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
         throw new MezError(BusinessError.BusinessCreationError);
     }
     let business: Business = {
-        id: response.insert_business_business_one.id,
-        serviceProviderDetailsId: response.insert_business_business_one.details_id,
-        name: businessDetails.name,
-        image: businessDetails.image,
-        location: businessDetails.location,
-        deliveryDetails: {
-            customerPickup: false,
-            deliveryAvailable: false,
-            selfDelivery: false
-        },
-        language: businessDetails.language,
         profile: businessDetails.profile,
-        serviceProviderType: ServiceProviderType.Business
+        details: {
+            id: response.insert_business_business_one.id,
+            serviceProviderDetailsId: response.insert_business_business_one.details_id,
+            name: businessDetails.name,
+            image: businessDetails.image,
+            location: businessDetails.location,
+            deliveryDetails: {
+                customerPickup: false,
+                deliveryAvailable: false,
+                selfDelivery: false
+            },
+            language: businessDetails.language,
+            serviceProviderType: ServiceProviderType.Business
+        }
     }
     if(businessDetails.businessOperatorNotificationToken) {
         chain.mutation({
             insert_notification_info_one: [{
                 object: {
                     user_id: businessOperatorUserId,
-                    app_type_id: AppType.Laundry,
+                    app_type_id: AppType.Business,
                     token: businessDetails.businessOperatorNotificationToken
                 }
             }, {

@@ -77,7 +77,7 @@ export async function handleOrderRequestFromCustomer(userId: number, handleReque
 }
 
 function errorChecks(order: BusinessOrder, userId: number, handleRequestDetails: CustomerHandleRequestDetails) {
-    if (order.customerId != userId) {
+    if (order.orderDetails.customerId != userId) {
         throw new MezError(CustomerHandleRequestError.IncorrectOrderRequestId);
     }
     if (handleRequestDetails.requestConfirmed && order.status != BusinessOrderRequestStatus.ApprovedByBusiness) {
@@ -93,7 +93,7 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
             notificationType: NotificationType.OrderStatusChange,
             orderType: OrderType.Business,
             notificationAction: NotificationAction.ShowPopUp,
-            orderId: order.orderId
+            orderId: order.orderDetails.orderId
       },
         background: order.status == BusinessOrderRequestStatus.ConfirmedByCustomer ? {
             [Language.ES]: {
@@ -114,7 +114,7 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
                 body: `Order request has been cancelled by the customer`
             }
         },
-        linkUrl: orderUrl(OrderType.Business, order.orderId)
+        linkUrl: orderUrl(OrderType.Business, order.orderDetails.orderId)
     };
     mezAdmins.forEach((m) => {
         pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

@@ -421,30 +421,30 @@ export async function setBusinessOrderRequestChatInfo(
   chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
-        id: order.chatId!,
+        id: order.orderDetails.chatId!,
       },
       _set: {
         chat_info: JSON.stringify({
           CustomerApp: {
-            chatTitle: business.name,
-            chatImage: business.image,
-            phoneNumber: business.phoneNumber,
+            chatTitle: business.details.name,
+            chatImage: business.details.image,
+            phoneNumber: business.details.phoneNumber,
             participantType: ParticipantType.BusinessOperator,
-            parentLink: `/laundryOrders/${order.orderId}`,
+            parentLink: `/laundryOrders/${order.orderDetails.orderId}`,
           },
           LaundryApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
-            parentLink: `/laundryOrders/${order.orderId}`,
+            parentLink: `/laundryOrders/${order.orderDetails.orderId}`,
           },
           MezAdminApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
-            parentLink: `/laundryOrders/${order.orderId}`
+            parentLink: `/laundryOrders/${order.orderDetails.orderId}`
           }
         }),
       }

@@ -63,7 +63,7 @@ export async function requestOrder(customerId: number, orderRequestDetails: Orde
     
     return {
       success: true,
-      orderId: order.orderId
+      orderId: order.orderDetails.orderId
     }
   } catch (e: any) {
     if (e instanceof MezError) {
@@ -86,10 +86,10 @@ export async function requestOrder(customerId: number, orderRequestDetails: Orde
 }
 
 function errorChecks(business: Business, cart: BusinessCart) {
-  if(business.approved == false) {
+  if(business.details.approved == false) {
     throw new MezError(OrderReqError.BusinessNotApproved);
   }
-  if(business.openStatus != "open") {
+  if(business.details.openStatus != "open") {
     throw new MezError(OrderReqError.BusinessClosed);
   }
   if((cart.items.length ?? 0) == 0) {
@@ -104,12 +104,12 @@ async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAd
             time: (new Date()).toISOString(),
             notificationType: NotificationType.NewOrder,
             orderType: OrderType.Business,
-            orderId: order.orderId,
+            orderId: order.orderDetails.orderId,
             notificationAction: NotificationAction.ShowSnackBarAlways,
             business: {
-                name: business.name,
-                image: business.image,
-                id: business.id
+                name: business.details.name,
+                image: business.details.image,
+                id: business.details.id
             }
         },
         background: {
@@ -122,13 +122,13 @@ async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAd
                 body: `There is a new business order`
             }
         },
-        linkUrl: orderUrl(OrderType.Business, order.orderId)
+        linkUrl: orderUrl(OrderType.Business, order.orderDetails.orderId)
     }
     mezAdmins.forEach((m) => {
         pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
     });
-    if(business.operators != undefined) {
-        business.operators.forEach((l) => {
+    if(business.details.operators != undefined) {
+        business.details.operators.forEach((l) => {
           if(l.user) {
             pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.BusinessOperator);
           }

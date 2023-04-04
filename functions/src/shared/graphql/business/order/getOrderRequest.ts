@@ -48,18 +48,21 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
         }
     })
     let businessOrder: BusinessOrder = {
-        orderId,
-        customerId: response.business_order_request_by_pk.customer_id,
+        orderDetails: {
+            orderId,
+            customerId: response.business_order_request_by_pk.customer_id,
+            spDetailsId: response.business_order_request_by_pk.business.details_id,
+            customerAppType: response.business_order_request_by_pk.customer_app_type as CustomerAppType,
+            paymentType: PaymentType.Cash,
+            deliveryType: DeliveryType.Pickup,
+            deliveryCost: 0,
+        },
         businessId: response.business_order_request_by_pk.business_id,
         status: response.business_order_request_by_pk.status as BusinessOrderRequestStatus,
-        spDetailsId: response.business_order_request_by_pk.business.details_id,
-        customerAppType: response.business_order_request_by_pk.customer_app_type as CustomerAppType,
         items,
-        paymentType: PaymentType.Cash,
         estimatedCost: response.business_order_request_by_pk.estimated_cost,
         finalCost: response.business_order_request_by_pk.final_cost,
-        deliveryType: DeliveryType.Pickup,
-        deliveryCost: 0
+        
     }
     return businessOrder;
 }

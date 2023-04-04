@@ -2,8 +2,9 @@ import { Language } from "../../Generic/Generic";
 import { ForegroundNotification } from "../../Notification";
 import { ServiceProvider } from "../Service";
 
-export interface Business extends ServiceProvider {
+export interface Business {
     profile: BusinessProfile;
+    details: ServiceProvider
 }
 
 export interface BusinessService {
@@ -18,12 +19,16 @@ export interface BusinessService {
     additionalParameters?: Record<string, any>
 }
 export interface BusinessServiceCost {
-    [TimeUnit.PerHour]?: number;
-    [TimeUnit.PerDay]?: number;
+    perHour?: number;
+    perDay?: number;
+    perWeek?: number;
+    perMonth?: number;
 }
 export enum TimeUnit {
     PerHour = "perHour",
-    PerDay = "perDay"
+    PerDay = "perDay",
+    PerWeek = "perWeek",
+    PerMonth = "perMonth",
 }
 export interface Rental {
     category1: RentalCategory1;

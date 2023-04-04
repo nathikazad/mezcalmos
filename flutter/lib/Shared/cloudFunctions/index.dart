@@ -276,6 +276,62 @@ class CloudFunctions {
       }));
   }
 
+  static Future<BusinessResponse> business_createBusiness(
+      {required String name,
+      required String image,
+      required BusinessProfile profile,
+      required Location location,
+      String? businessOperatorNotificationToken,
+      required Map<String,bool> language}  ) async {
+    return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "business-createBusiness",
+      parameters: <String, dynamic>{
+        "name": name,
+        "image": image,
+        "profile":profile.toFirebaseFormatString(),
+        "location":location.toFirebaseFormattedJson(),
+        "businessOperatorNotificationToken": businessOperatorNotificationToken,
+        "language": language,
+      }));
+  }
+
+  static Future<OrderReqResponse> business_requestOrder(
+      {required num businessId,
+      required CustomerAppType customerAppType,
+      String? notes}  ) async {
+    return OrderReqResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "business-requestOrder",
+      parameters: <String, dynamic>{
+        "businessId": businessId,
+        "customerAppType":customerAppType.toFirebaseFormatString(),
+        "notes": notes,
+      }));
+  }
+
+  static Future<HandleRequestResponse> business_handleOrderRequestByAdmin(
+      {required num orderRequestId,
+      required bool requestConfirmed,
+      Map<num,num>? itemIdToFinalCostPerOne}  ) async {
+    return HandleRequestResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "business-handleOrderRequestByAdmin",
+      parameters: <String, dynamic>{
+        "orderRequestId": orderRequestId,
+        "requestConfirmed": requestConfirmed,
+        "itemIdToFinalCostPerOne": itemIdToFinalCostPerOne,
+      }));
+  }
+
+  static Future<CustomerHandleRequestResponse> business_handleOrderRequestFromCustomer(
+      {required num orderRequestId,
+      required bool requestConfirmed}  ) async {
+    return CustomerHandleRequestResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "business-handleOrderRequestFromCustomer",
+      parameters: <String, dynamic>{
+        "orderRequestId": orderRequestId,
+        "requestConfirmed": requestConfirmed,
+      }));
+  }
+
   static Future<LaundryResponse> laundry2_createLaundry(
       {required String name,
       required String image,

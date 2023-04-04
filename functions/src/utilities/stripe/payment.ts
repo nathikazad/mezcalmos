@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
-import { OrderStripeInfo, StripePaymentStatus, StripeStatus } from './model';
+import { OrderStripeInfo, StripePaymentStatus, StripeStatus } from '../../shared/models/stripe';
 import { verifyCustomerIdForServiceAccount } from './serviceProvider';
 import { HttpsError } from 'firebase-functions/v1/auth';
 import { verifyCustomerStripeInfo } from './card';

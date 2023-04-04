@@ -1,4 +1,4 @@
-import { OrderStripeInfo } from "../../../utilities/stripe/model";
+import { OrderStripeInfo } from "../stripe";
 import { CustomerAppType } from "./Generic";
 import { UserInfo } from "./User";
 
@@ -30,10 +30,10 @@ export enum DeliveryType {
   Delivery = "delivery",
 }
 
-export enum DeliveryAction {
-  Pickup = "pickup",
-  DropOff = "dropoff",
-}
+// export enum DeliveryAction {
+//   Pickup = "pickup",
+//   DropOff = "dropoff",
+// }
 
 export enum OrderType {
   Taxi = "taxi",
@@ -69,12 +69,12 @@ export enum PaymentType {
   BankTransfer = "bankTransfer"
 }
 
-export enum SecondaryChat {
-  ServiceProviderDropOffDriverChat = "serviceProviderDropOffDriver",
-  ServiceProviderPickupDriverChat = "serviceProviderPickupDriver",
-  CustomerDropOffDriverChat = "customerDropOffDriver",
-  CustomerPickupDriverChat = "customerPickupDriver"
-}
+// export enum SecondaryChat {
+//   ServiceProviderDropOffDriverChat = "serviceProviderDropOffDriver",
+//   ServiceProviderPickupDriverChat = "serviceProviderPickupDriver",
+//   CustomerDropOffDriverChat = "customerDropOffDriver",
+//   CustomerPickupDriverChat = "customerPickupDriver"
+// }
 
 export interface DeliverableOrder extends Order {
   dropoffDriver?: DeliveryDriverInfo;

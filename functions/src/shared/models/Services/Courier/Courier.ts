@@ -1,4 +1,4 @@
-import { OrderStripeInfo } from "../../../../utilities/stripe/model";
+import { OrderStripeInfo } from "../../stripe";
 import { DeliveryOrder, DeliveryOrderStatus } from "../../Generic/Delivery";
 import { Location } from "../../Generic/Generic";
 import { PaymentType } from "../../Generic/Order";
@@ -14,7 +14,7 @@ export interface CourierOrder {
     customerId: number;
     orderTime: string;
     stripeInfo?: OrderStripeInfo;
-    PaymentType: PaymentType;
+    paymentType: PaymentType;
     tax?: number;
     stripeFees?: number;
     discountValue?: number;

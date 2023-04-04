@@ -39,7 +39,7 @@ enum HandleRequestError {
 export async function handleOrderRequestByAdmin(userId: number, handleRequestDetails: HandleRequestDetails): Promise<HandleRequestResponse> {
     try {
         let order: BusinessOrder = await getBusinessOrderRequest(handleRequestDetails.orderRequestId);
-        let customer: CustomerInfo = await getCustomer(order.customerId);
+        let customer: CustomerInfo = await getCustomer(order.orderDetails.customerId);
 
         await errorChecks(userId, order, handleRequestDetails);
 
@@ -105,7 +105,7 @@ function notifyCustomer(order: BusinessOrder, customer: CustomerInfo) {
             orderType: OrderType.Business,
             notificationAction: order.status != BusinessOrderRequestStatus.CancelledByBusiness
                 ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-            orderId: order.orderId,
+            orderId: order.orderDetails.orderId,
         },
         background: order.status == BusinessOrderRequestStatus.ApprovedByBusiness ? {
             [Language.ES]: {
@@ -126,7 +126,7 @@ function notifyCustomer(order: BusinessOrder, customer: CustomerInfo) {
                 body: `Your order request has been cancelled`
             }
         },
-        linkUrl: orderUrl(OrderType.Business, order.orderId)
+        linkUrl: orderUrl(OrderType.Business, order.orderDetails.orderId)
     };
 
     pushNotification(

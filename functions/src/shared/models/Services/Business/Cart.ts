@@ -1,3 +1,4 @@
+import { Language } from "../../Generic/Generic";
 import { ServiceType } from "./Business";
 import { BusinessItemCost } from "./BusinessOrder";
 
@@ -15,7 +16,6 @@ export interface BusinessCartItem {
   serviceType: ServiceType,
   customerId: number;
   cost: BusinessItemCost;
-  // notes?: string;
-  name?:any;
+  name?: Record<Language, string>;
   image?:string;
 }

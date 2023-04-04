@@ -1,4 +1,4 @@
-import { ServiceProviderStripeInfo } from "../../../utilities/stripe/model";
+import { ServiceProviderStripeInfo } from "../stripe";
 import { ParticipantType } from "../Generic/Chat";
 import { DeliveryDetails } from "../Generic/Delivery";
 import { AuthorizationStatus, Language, Location, NotificationInfo } from "../Generic/Generic";
@@ -25,7 +25,7 @@ export interface ServiceProvider {
   schedule?: any;
   deliveryPartnerId?: number;
   deliveryDetails: DeliveryDetails;
-  operators?: Operator[];
+  operators?: Array<Operator>;
   serviceProviderType: ServiceProviderType;
   uniqueId?: string;
 }
@@ -50,27 +50,27 @@ export enum OpenStatus {
   ClosedIndefinitely = "closedIndefinitely",
 }
 
-export interface State {
-  authorizationStatus: AuthorizationStatus;
-  open: boolean;
-}
+// export interface State {
+//   authorizationStatus: AuthorizationStatus;
+//   open: boolean;
+// }
 
-export interface Details {
-  description: Record<Language, string>;
-  languages: Language[];
-  paymentInfo: PaymentInfo;
-}
+// export interface Details {
+//   description: Record<Language, string>;
+//   languages: Language[];
+//   paymentInfo: PaymentInfo;
+// }
 
-export interface Service {
-  state: State;
-  info: UserInfo;
-  details: Details
-}
+// export interface Service {
+//   state: State;
+//   info: UserInfo;
+//   details: Details
+// }
 
-export interface PaymentInfo {
-  stripe: ServiceProviderStripeInfo;
-  acceptedPayments: Record<PaymentType, boolean>;
-}
+// export interface PaymentInfo {
+//   stripe: ServiceProviderStripeInfo;
+//   acceptedPayments: Record<PaymentType, boolean>;
+// }
 export interface ServiceLink{
   id?: number;
   serviceProviderId: number;

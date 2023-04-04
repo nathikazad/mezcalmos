@@ -2,15 +2,15 @@ import { Order } from "../../Generic/Order";
 import { OrderNotification } from "../../Notification";
 import { Business, BusinessService, ServiceType, TimeUnit } from "./Business";
 
-export interface BusinessOrder extends Order {
+export interface BusinessOrder {
     businessId: number;
     status: BusinessOrderRequestStatus;
-    // categories?: Array<OrderCategory>;
     business?: Business;
-    items: BusinessOrderRequestItem[];
+    items: Array<BusinessOrderRequestItem>;
     estimatedCost: number;
     finalCost?: number;
     commenceTime?: string;
+    orderDetails: Order;
 }
 
 export interface BusinessOrderRequestItem {

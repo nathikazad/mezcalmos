@@ -3,7 +3,7 @@
 
 export interface CustomerStripe {
   id: string,
-  idsWithServiceProvider: Record<number, string>, // Record<OrderType, Record<number, string>>,
+  idsWithServiceProvider: Record<number, string>,
   cards: Record<string, CustomerCard>
 }
 // export const emptyIdsWithServiceProvider: Record<OrderType, Record<number, string>> = {
@@ -18,7 +18,7 @@ export interface CustomerCard {
   brand?: string,
   expMonth?: number,
   expYear?: number,
-  idsWithServiceProvider: Record<number, string>, // Record<OrderType, Record<number, string>>,
+  idsWithServiceProvider: Record<number, string>, 
 }
 
 // **** Order Models ****

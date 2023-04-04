@@ -68,9 +68,9 @@ function notifyAdmins(business: Business, mezAdmins: MezAdmin[]) {
         time: (new Date()).toISOString(),
         notificationType: NotificationType.NewBusiness,
         notificationAction: NotificationAction.ShowSnackBarAlways,
-        name: business.name,
-        image: business.image,
-        id: business.id
+        name: business.details.name,
+        image: business.details.image,
+        id: business.details.id
       },
       background: {
         [Language.ES]: {
@@ -82,7 +82,7 @@ function notifyAdmins(business: Business, mezAdmins: MezAdmin[]) {
           body: `Thers is a new business`
         }
       },
-      linkUrl: businessUrl(business.id)
+      linkUrl: businessUrl(business.details.id)
     };
     mezAdmins.forEach((m) => {
       pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

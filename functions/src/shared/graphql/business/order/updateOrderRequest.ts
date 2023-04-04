@@ -26,7 +26,7 @@ export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
     let response = await chain.mutation({
         update_business_order_request_by_pk: [{
             pk_columns: {
-                id: order.orderId
+                id: order.orderDetails.orderId
             },
             _set: {
                 status: order.status,
@@ -52,7 +52,7 @@ export async function updateBusinessOrderRequest(order: BusinessOrder) {
     let response = await chain.mutation({
         update_business_order_request_by_pk: [{
             pk_columns: {
-                id: order.orderId
+                id: order.orderDetails.orderId
             },
             _set: {
                 status: order.status
