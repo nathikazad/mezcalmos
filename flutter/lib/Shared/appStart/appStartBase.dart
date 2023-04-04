@@ -87,7 +87,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
+        String.fromEnvironment('LMODE', defaultValue: "stage");
     _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
@@ -302,7 +302,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
         title: MezEnv.appType.toShortString(),
         theme: appTheme,
         color: Colors.white,
-        
+
         routerDelegate: QRouterDelegate(
           routes,
           observers: [

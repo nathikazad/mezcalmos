@@ -23,18 +23,19 @@ class LaundryOpPastOrdersList extends StatefulWidget {
 }
 
 class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
-  LaundryOpPastOrdersController viewController =
+  LaundryOpPastOrdersController _viewController =
       LaundryOpPastOrdersController();
 
   @override
   void initState() {
-    viewController.init();
+    _viewController.init();
 
     super.initState();
   }
 
   @override
   void dispose() {
+    _viewController.dispose();
     super.dispose();
   }
 
@@ -58,16 +59,17 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
                 ),
                 const SizedBox(height: 5),
                 ListView.builder(
+                  controller: _viewController.scrollController,
                   shrinkWrap: true,
                   reverse: true,
-                  itemCount: viewController.pastOrders.length,
+                  itemCount: _viewController.pastOrders.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, int index) {
                     return MinimalOrderCard(
-                      order: viewController.pastOrders[index],
+                      order: _viewController.pastOrders[index],
                       onTap: () {
                         LaundryOrderView.navigate(
-                            orderId: viewController.pastOrders[index].id);
+                            orderId: _viewController.pastOrders[index].id);
                       },
                     );
                   },

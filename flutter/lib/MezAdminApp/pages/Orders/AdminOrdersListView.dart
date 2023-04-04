@@ -32,7 +32,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
     viewController.scrollController.onBottomReach(() {
       //   mezDbgPrint("Bottom reached 🥹");
       viewController.fetchServicePastOrders();
-    }, sensitivity: 500, throttleDuration: Duration(seconds: 1));
+    }, sensitivity: 200);
 
     super.initState();
   }

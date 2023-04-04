@@ -53,13 +53,19 @@ Stream<List<MinimalOrder>?> listen_on_laundry_orders(
 }
 
 Future<List<MinimalOrder>?> get_laundry_orders(
-    {required int laundryStoreID, required bool inProcess}) async {
+    {required int laundryStoreID,
+    required bool inProcess,
+    int? offset,
+    int? limit}) async {
   final QueryResult<Query$get_laundry_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_laundry_orders(
     Options$Query$get_laundry_orders(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Query$get_laundry_orders(
-          laundryStoreId: laundryStoreID, inProcess: inProcess),
+          laundryStoreId: laundryStoreID,
+          inProcess: inProcess,
+          offset: offset,
+          limit: limit),
     ),
   );
   if (queryResult.parsedData?.laundry_order != null) {
