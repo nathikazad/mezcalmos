@@ -18,11 +18,12 @@ query getFeed($_in: [Int!]) {
     comments
     likes
     message
-    
     posted_on
     restaurant {
-     details{ name
-      image}
+      details {
+        name
+        image
+      }
     }
   }
 }
