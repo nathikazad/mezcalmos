@@ -9,7 +9,7 @@ import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
-import 'HomesListView/HomesListView.dart';
+import 'AssetListView/AssetListView.dart';
 import '../components/ButtonSwitcher.dart';
 import 'controller/AssetController.dart';
 import 'AgencyListView/AgencyListView.dart';
