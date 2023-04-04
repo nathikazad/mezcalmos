@@ -324,6 +324,7 @@ class LocationPickerState extends State<LocationPicker> {
             ) ??
             widget.locationPickerMapController.location.value!.address;
       }
+      mezDbgPrint("Formatted final address 🥹============>$formattedAddress");
 
       finalResult = MezLocation(formattedAddress, _newLocationData);
 

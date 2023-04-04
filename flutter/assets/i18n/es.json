@@ -57,7 +57,7 @@
           "viewAll": "Ver todo"
         },
         "CustRequestCourierView": {
-          "title": "Mensajera",
+          "title": "Mandaditos",
           "from": "De",
           "to": "A",
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
@@ -515,7 +515,7 @@
           "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
         },
         "courier": {
-          "title": "Mensajera",
+          "title": "Mandaditos",
           "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
         },
         "comingSoon": "Próximamente...",
@@ -1893,7 +1893,7 @@
         "title": "Entrega",
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
-        "courier": "Mensajera"
+        "courier": "Mandaditos"
       }
     },
     "notificationHandler": {

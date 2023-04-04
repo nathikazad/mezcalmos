@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -60,9 +61,9 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                         onYesClick: () async {
                       bool res = await widget.viewController.removeItem();
                       if (res) {
-                        // todo @m66are fix
-                        // MezRouter.untill(
-                        //     (Route p0) => Get.currentRoute == kCartRoute);
+                        Navigator.pop(context);
+                        await MezRouter.popTillExclusive(
+                            RestaurantRoutes.cartRoute);
                       }
                     });
                   }
