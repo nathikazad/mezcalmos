@@ -12,6 +12,8 @@ targets:
           scalars:
             timestamptz:
               type: String
+            timestamp:
+              type: String
             json:
               type: dynamic
               fromJsonFunctionName: mapFromJson
