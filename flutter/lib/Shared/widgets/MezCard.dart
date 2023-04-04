@@ -15,6 +15,7 @@ class MezCard extends StatelessWidget {
       this.firstAvatarIconColor,
       this.secondAvatarBgColor,
       this.secondAvatarBgImage,
+      this.borderRadius = 10,
       this.secondAvatarIcon,
       this.secondAvatarIconColor,
       this.leading});
@@ -33,13 +34,16 @@ class MezCard extends StatelessWidget {
   final Widget content;
   final Widget? action;
   final Widget? leading;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: margin,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius)),
       child: InkWell(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(borderRadius),
         onTap: onClick,
         child: Container(
           padding: contentPadding,
@@ -57,13 +61,13 @@ class MezCard extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 20,
+                      radius: raidus,
                       backgroundColor: firstAvatarBgColor,
                       backgroundImage: firstAvatarBgImage,
                       child: Icon(
                         firstAvatarIcon,
                         color: firstAvatarIconColor,
-                        size: 25,
+                        size: raidus + 3,
                       ),
                     ),
                     if (secondAvatarBgImage != null ||
@@ -73,14 +77,14 @@ class MezCard extends StatelessWidget {
                         right: -35,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
-                          radius: 22,
+                          radius: raidus + 2,
                           child: CircleAvatar(
-                            radius: 20,
+                            radius: raidus,
                             backgroundColor: secondAvatarBgColor,
                             backgroundImage: secondAvatarBgImage,
                             child: Icon(
                               secondAvatarIcon,
-                              size: 25,
+                              size: raidus + 3,
                               color: secondAvatarIconColor,
                             ),
                           ),
