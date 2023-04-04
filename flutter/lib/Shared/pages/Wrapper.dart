@@ -35,6 +35,11 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
     // this will execute first and much faster since it's a microtask.
+    MezRouter.registerReturnToViewCallback(SharedRoutes.kWrapperRoute, () {
+      mezDbgPrint("back in wrapper");
+      authController.userRedirectFinish = false;
+      handleAuthStateChange(authController.fireAuthUser);
+    });
     Future<void>.microtask(() {
       mezDbgPrint(authController.fireAuthUser);
       mezDbgPrint("NOOOOOT stream auth state ======== ");
