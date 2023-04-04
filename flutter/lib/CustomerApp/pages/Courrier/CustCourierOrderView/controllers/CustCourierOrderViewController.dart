@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 class CustCourierOrderViewController {
@@ -39,8 +41,11 @@ class CustCourierOrderViewController {
   Future<void> init(
       {required int orderId, required BuildContext context}) async {
     this.context = context;
-    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
-        orderType: OrderType.Courier, orderId: orderId);
+    MezRouter.registerReturnToViewCallback(
+        CustCourierOrderView.constructPath(orderId), () {
+      clearNotifications(orderId);
+    });
+    clearNotifications(orderId);
     try {
       _order.value = await get_courier_order_by_id(
         orderId: orderId,
@@ -79,6 +84,11 @@ class CustCourierOrderViewController {
         orderStream = null;
       });
     }
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Courier, orderId: orderId);
   }
 
   void showPriceReqDialog() {

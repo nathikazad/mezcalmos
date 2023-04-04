@@ -33,6 +33,7 @@ import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env.dart';
@@ -284,7 +285,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     _initializeConfig();
 
     final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-
+    MezRouter.setupQR();
     return DevicePreview(
       enabled: MezEnv.previewMode == true ? true : false,
       builder: (BuildContext context) => MaterialApp.router(
@@ -302,7 +303,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
         title: MezEnv.appType.toShortString(),
         theme: appTheme,
         color: Colors.white,
-        
+
         routerDelegate: QRouterDelegate(
           routes,
           observers: [

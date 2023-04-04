@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -9,7 +10,7 @@ class MRoute {
 
   Completer<void> completer;
   Map<String, dynamic>? arguments;
-
+  Function? returnToViewCallback;
   MRoute({required this.name, this.arguments, required this.completer});
 }
 
@@ -98,15 +99,38 @@ class MezRouter {
     return null;
   }
 
-  static Future<void> back({backResult = null}) {
-    if (QR.currentPath == _navigationStack.last.name ||
-        QR.currentRoute.name == _navigationStack.last.name) {
-      _navigationStack.last.completer.complete();
-      _navigationStack.removeLast();
-    }
-    _backResult = backResult;
+  static Future<bool> back({backResult = null}) async {
     mezDbgPrint("Trynig to go back ${QR.currentPath}");
-    return QR.back();
+    final PopResult popResult = await QR.back();
+    if (popResult != PopResult.Popped) {
+      return false;
+    } else {
+      _backResult = backResult;
+      return true;
+    }
+  }
+
+  static void registerReturnToViewCallback(
+      String routeName, Function callback) {
+    _navigationStack
+        .firstWhereOrNull(
+            (MRoute routeInstance) => routeInstance.name == routeName)
+        ?.returnToViewCallback = callback;
+  }
+
+  static void backCallback() {
+    final String? routeToSearchFor =
+        isRouteInStack(QR.currentPath) ? QR.currentPath : QR.currentRoute.name;
+    mezDbgPrint("👫👫👫👫👫👫👫👫 backcallback for $routeToSearchFor");
+    if (routeToSearchFor != null && isRouteInStack(routeToSearchFor)) {
+      while (_navigationStack.last.name != routeToSearchFor) {
+        mezDbgPrint("Popped ${_navigationStack.last.name}");
+        _navigationStack.last.completer.complete();
+        _navigationStack.removeLast();
+        Future.delayed(
+            Duration.zero, _navigationStack.last.returnToViewCallback?.call());
+      }
+    }
   }
 
   static Future<void> popEverythingTillBeforeHome() async {
@@ -120,8 +144,11 @@ class MezRouter {
   static Future<void> popTillExclusive(String routeName) async {
     if (_navigationStack.isNotEmpty && isRouteInStack(routeName)) {
       while (!isCurrentRoute(routeName) &&
-          !isCurrentRoute(SharedRoutes.kWrapperRoute)) {
-        await back();
+          !isCurrentRoute(SharedRoutes.kHomeRoute)) {
+        final bool backSuccesful = await back();
+        if (!backSuccesful) {
+          break;
+        }
         mezDbgPrint("Popped ${_navigationStack.last.name} ");
       }
     }
@@ -131,53 +158,50 @@ class MezRouter {
   static Future<void> popTillInclusive(String routeName) async {
     if (_navigationStack.isNotEmpty) {
       while (isRouteInStack(routeName) &&
-          !isCurrentRoute(SharedRoutes.kWrapperRoute)) {
-        await back();
+          !isCurrentRoute(SharedRoutes.kHomeRoute)) {
+        final bool backSuccesful = await back();
+        if (!backSuccesful) {
+          break;
+        }
         mezDbgPrint("Popped ${_navigationStack.last.name} ");
       }
     }
   }
 
-  // static Future<void> popTillBefore(String routeName) async {
-  //   if (_navigationStack.isNotEmpty && isRouteInStack(routeName)) {
-  //     mezDbgPrint("Start popping till before ====> $routeName");
-  //     while (!isCurrentRoute(routeName)) {
-  //       await back();
-  //       mezDbgPrint("Popped ${_navigationStack.last.name} ");
-  //       _navigationStack.removeLast();
-  //     }
-  //   }
-  // }
+  static void setupQR() {
+    // enable debug logging for all routes
+    QR.settings.enableDebugLog = true;
 
-  // static Future<void> popEverythingUntil(String route) async {
-  //   await QR.navigator.popUntilOrPushName(route);
-  //   printRoutes();
-  // }
+    // you can set your own logger
+    QR.settings.logger = (String message) {
+      mezDbgPrint(message);
+    };
 
-  // static Future<void> offAndToNamed(
-  //   String page, {
-  //   Map<String, String>? arguments,
-  // }) async {
-  //   await back();
-  //   return toNamed(page, arguments: arguments);
-  // }
+    // Set up the not found route in your app.
+    // this route (path and view) will be used when the user navigates to a
+    // route that does not exist.
+    // QR.settings.notFoundPage = QRoute(
+    //   path: '/404',
+    //   builder: () => UnfoundPageScreen(),
+    // );
+    // QR.settings.initPage = const Material(child: MezLoaderWidget());
 
-  // @override
-  // void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-  //   super.didPop(route, previousRoute);
-  //   final MRoute? _rCurrent = currentRoute();
-  //   _navigationStack.forEach((MRoute element) {
-  //     mezDbgPrint("---> ${element.name}");
-  //   });
-  //   if (previousRoute is PageRoute && route is PageRoute && _rCurrent != null) {
-  //     if (_rCurrent.name == route.settings.name) {
-  //       mezDbgPrint(
-  //           "[+] MissMatch on NavStack :: current [MezStack](${_rCurrent.name}) | [Material](${route.settings.name})  :: resolving ... done!");
-  //       if (_navigationStack.isNotEmpty) {
-  //         _navigationStack.removeLast();
-  //       }
-  //       printRoutes();
-  //     }
-  //   }
-  // }
+    // add observers to the app
+    // this observer will be called when the user navigates to new route
+    QR.observer.onNavigate.add((path, route) async {
+      mezDbgPrint('Observer: Navigating to $path');
+    });
+
+    // to support android and browser back button
+    QR.observer.onPop.add((path, route) async {
+      backCallback();
+    });
+
+    // create initial route that will be used when the app is started
+    // or when route is waiting for response
+    //QR.settings.iniPage = InitPage();
+
+    // Change the page transition for all routes in your app.
+    QR.settings.pagesType = QFadePage();
+  }
 }

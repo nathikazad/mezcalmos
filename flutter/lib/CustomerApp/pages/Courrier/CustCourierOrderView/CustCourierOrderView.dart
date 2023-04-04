@@ -37,8 +37,12 @@ class CustCourierOrderView extends StatefulWidget {
   static Future<void> navigate({
     required int orderId,
   }) {
-    return MezRouter.toPath(CourierRoutes.kCourierOrderView
-        .replaceFirst(":orderId", orderId.toString()));
+    return MezRouter.toPath(constructPath(orderId));
+  }
+
+  static String constructPath(int orderId) {
+    return CourierRoutes.kCourierOrderView
+        .replaceFirst(":orderId", orderId.toString());
   }
 
   const CustCourierOrderView({super.key});
