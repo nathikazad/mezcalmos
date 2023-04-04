@@ -59,7 +59,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
 
   @override
   void initState() {
-    mezDbgPrint(Get.parameters);
+    mezDbgPrint(MezRouter.urlArguments);
     _assignVars();
     if (serviceDetailsId != null &&
         serviceId != null &&

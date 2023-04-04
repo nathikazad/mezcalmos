@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/NearByOnlineTaxiDriversWidget.dart';
@@ -8,14 +7,15 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/ViewTa
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewTaxiOrderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -48,12 +48,12 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
-    if (Get.parameters['orderId'] == null) {
+    if (MezRouter.urlArguments['orderId'] == null) {
       mezDbgPrint("Order id null from the parameters ######");
       MezRouter.back();
     }
     viewController
-        .init(int.parse(Get.parameters['orderId']!))
+        .init(int.parse(MezRouter.urlArguments['orderId']!))
         .then((bool initSuccess) {
       if (!initSuccess) {
         MezRouter.back();

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/DeliverySettingCostComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/DeliverySettingsCompaniesList.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/ServiceDeliveryTypePicker.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -57,7 +55,6 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
 
   @override
   void initState() {
-  
     _settingVariables();
     viewController.init(
         createServiceViewController: widget.createServiceViewController,
@@ -69,13 +66,16 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
   }
 
   void _settingVariables() {
-    if (Get.parameters["serviceProviderId"] != null &&
+    if (MezRouter.urlArguments["serviceProviderId"] != null &&
         Get.arguments?["serviceProviderType"] != null &&
-        Get.parameters["deliveryDetailsId"] != null &&
-        Get.parameters["detailsId"] != null) {
-      serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
-      serviceDetailsId = int.tryParse(Get.parameters["detailsId"]!);
-      deliveryDetailsId = int.tryParse(Get.parameters["deliveryDetailsId"]!);
+        MezRouter.urlArguments["deliveryDetailsId"] != null &&
+        MezRouter.urlArguments["detailsId"] != null) {
+      serviceProviderId =
+          int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
+      serviceDetailsId =
+          int.tryParse(MezRouter.urlArguments["detailsId"].toString());
+      deliveryDetailsId =
+          int.tryParse(MezRouter.urlArguments["deliveryDetailsId"].toString());
 
       serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
           .toString() as ServiceProviderType;

@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 
 class DvOpPastOrdersController {
   //instances
-  RestaurantOpAuthController opAuthController =
-      Get.find<RestaurantOpAuthController>();
-
+  DeliveryOpAuthController opAuthController =
+      Get.find<DeliveryOpAuthController>();
   // vars
 
   RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
@@ -20,7 +19,7 @@ class DvOpPastOrdersController {
 // getters
 
   Future<void> init() async {
-    companyId = opAuthController.restaurantId!;
+    companyId = opAuthController.companyId!;
     mezDbgPrint("INIT PAST ORDERS 👋👋👋👋👋👋 Company id $companyId");
     try {
       await _initOrders();

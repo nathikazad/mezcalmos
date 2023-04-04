@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -29,7 +28,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
   bool get hasData => rating.value != null && reviews.value != null;
   @override
   void initState() {
-    serviceId = int.tryParse(Get.parameters["serviceId"] ?? "");
+    serviceId = int.tryParse(MezRouter.urlArguments["serviceId"].toString());
     if (serviceId != null) {
       fetchReviews();
     } else

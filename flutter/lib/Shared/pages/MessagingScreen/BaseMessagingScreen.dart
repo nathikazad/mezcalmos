@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -68,7 +68,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
           .toParticipantType();
     }
     controller.clearMessageNotifications(chatId: chatId);
-    // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
+    // mezDbgPrint("@AYROUT ===> ${MezRouter.urlArguments} | orderLink ==> $orderLink");
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     setState(() {
       isChatLoaded = true;
