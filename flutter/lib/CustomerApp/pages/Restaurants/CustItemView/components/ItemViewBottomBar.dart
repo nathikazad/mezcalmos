@@ -61,6 +61,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                         onYesClick: () async {
                       bool res = await widget.viewController.removeItem();
                       if (res) {
+                        Navigator.pop(context);
                         await MezRouter.popTillExclusive(
                             RestaurantRoutes.cartRoute);
                       }
