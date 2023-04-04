@@ -118,7 +118,7 @@ class MezRouter {
         ?.returnToViewCallback = callback;
   }
 
-  static void backCallback() {
+  static void onPoppedCallback() {
     final String? routeToSearchFor =
         isRouteInStack(QR.currentPath) ? QR.currentPath : QR.currentRoute.name;
     mezDbgPrint("👫👫👫👫👫👫👫👫 backcallback for $routeToSearchFor");
@@ -194,7 +194,7 @@ class MezRouter {
 
     // to support android and browser back button
     QR.observer.onPop.add((path, route) async {
-      backCallback();
+      onPoppedCallback();
     });
 
     // create initial route that will be used when the app is started
