@@ -117,7 +117,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
         _controller = textEditingController;
         _focusNode = focusNode;
         return TextFormField(
-          controller: textEditingController,
+          controller: _controller,
           focusNode: focusNode,
           decoration: _inputDecoration(),
           style: widget.textStyle ??
