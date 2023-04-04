@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/HomeServiceView/HomeServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart';
 
-class HomeListView extends StatefulWidget {
-  const HomeListView({super.key});
+class AssetListView extends StatefulWidget {
+  const AssetListView({super.key});
 
   @override
-  State<HomeListView> createState() => _HomeListViewState();
+  State<AssetListView> createState() => _AssetListViewState();
 }
 
-class _HomeListViewState extends State<HomeListView> {
+class _AssetListViewState extends State<AssetListView> {
   @override
   Widget build(BuildContext context) {
     var txt = Theme.of(context).textTheme;
@@ -25,7 +25,7 @@ class _HomeListViewState extends State<HomeListView> {
               child: AssetCard(
                 title: "House for rent in Puerto Escondido",
                 onClick: () {
-                  HomeServiceView.navigate();
+                  AssetServiceView.navigate();
                 },
                 image: NetworkImage(customImageUrl),
                 lBottomText: "Company Name",

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -9,29 +11,42 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
 import 'HomesListView/HomesListView.dart';
 import '../components/ButtonSwitcher.dart';
-import 'controller/HomesServiceController.dart';
+import 'controller/AssetController.dart';
 import 'AgencyListView/AgencyListView.dart';
+import 'dart:developer';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
 
-class HomesServiceView extends StatefulWidget {
-  const HomesServiceView({super.key});
+class AssetListsView extends StatefulWidget {
+  const AssetListsView({super.key});
 
   @override
-  State<HomesServiceView> createState() => _HomesServiceViewState();
+  State<AssetListsView> createState() => _AssetListsViewState();
 
-  static Future<void> navigate() {
-    return MezRouter.toPath(RentalRoutes.rentalServiceRoute);
+  static Future<void> navigate({required RentalViewEnum viewEnum}) {
+    return MezRouter.toPath(RentalRoutes.rentalServiceRoute, arguments: {
+      "viewEnum": viewEnum,
+    });
   }
 }
 
-class _HomesServiceViewState extends State<HomesServiceView> {
-  HomesServiceController homesServiceController = HomesServiceController();
+class _AssetListsViewState extends State<AssetListsView> {
+  late AssetController assetController;
+
+  @override
+  void initState() {
+    super.initState();
+    final RentalViewEnum viewName =
+        MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
+    log("viewName $viewName ${viewName.runtimeType}");
+    assetController = AssetController();
+    assetController.init(viewEnum: viewName);
+  }
 
   @override
   void dispose() {
-    homesServiceController.dispose();
+    assetController.dispose();
     super.dispose();
   }
 
@@ -41,7 +56,8 @@ class _HomesServiceViewState extends State<HomesServiceView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(_i18n()['rental']["homes"]["title"].toString()),
+        titleWidget: Text(
+            _i18n()['rental'][assetController.viewName]["title"].toString()),
         actionIcons: <Widget>[
           AppBarActionButton(
             icon: Icons.notifications,
@@ -100,25 +116,27 @@ class _HomesServiceViewState extends State<HomesServiceView> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Obx(
               () => ButtonSwitcher(
-                lButtonText: "Home",
-                rButtonText: "Agency",
-                lIconButton: Icons.home,
-                rIconButton: Icons.settings_applications_rounded,
-                values: [
-                  HomeServiceViewEnum.Home,
-                  HomeServiceViewEnum.Agency,
-                ],
-                selectedValue: homesServiceController.currentSelectedView.value,
+                lButtonText: _i18n()['rental'][assetController.viewName][
+                        assetController.currentSelectedViewName.first
+                            .toLowerCase()]
+                    .toString(),
+                rButtonText: _i18n()['rental'][assetController.viewName][
+                        assetController.currentSelectedViewName.last
+                            .toLowerCase()]
+                    .toString(),
+                iconList: assetController.iconList,
+                values: assetController.currentSelectedViewList,
+                selectedValue: assetController.currentSelectedView.value,
                 onClick: (Enum value) {
-                  homesServiceController.toggleView(value);
+                  assetController.toggleView(value);
                 },
               ),
             ),
           ),
           Obx(
-            () => homesServiceController.currentSelectedView.value ==
-                    HomeServiceViewEnum.Home
-                ? HomeListView()
+            () => assetController.currentSelectedView.value ==
+                    assetController.currentSelectedViewList.first
+                ? AssetListView()
                 : AgencyListView(),
           ),
         ],

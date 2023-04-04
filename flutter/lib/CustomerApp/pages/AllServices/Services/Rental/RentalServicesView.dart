@@ -30,10 +30,12 @@ class _RentalViewState extends State<RentalView> {
     // TODO: enums
     if (idx == 0) {
       // TODO: Navigate to Surf
+      AssetListsView.navigate(viewEnum: RentalViewEnum.Surf);
     } else if (idx == 1) {
       // TODO: Navigate to Motorcycle
+      AssetListsView.navigate(viewEnum: RentalViewEnum.MotorCycle);
     } else if (idx == 2) {
-      HomesServiceView.navigate();
+      AssetListsView.navigate(viewEnum: RentalViewEnum.Homes);
     } else {}
   }
 

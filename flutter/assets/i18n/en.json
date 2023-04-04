@@ -475,15 +475,21 @@
           "title": "Rental",
           "surf": {
             "title": "Surf",
-            "description": "Discover most delicious dishes from the nearest restaurants."
+            "description": "Discover most delicious dishes from the nearest restaurants.",
+            "board": "Board",
+            "store": "Store"
           },
           "motorcycle": {
             "title": "Motorcycle",
-            "description": "Get your clothes cleaned by your nearest laundry service."
+            "description": "Get your clothes cleaned by your nearest laundry service.",
+            "vehicle": "Vehicle",
+            "store": "Store"
           },
           "homes": {
             "title": "Homes",
-            "description": "Obtain delivery of anything you desire to your location."
+            "description": "Obtain delivery of anything you desire to your location.",
+            "home": "Home",
+            "agency": "Agency"
           }
         },
         "classes": "Classes",

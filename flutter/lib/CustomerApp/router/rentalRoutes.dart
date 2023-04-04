@@ -4,13 +4,17 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalSe
     deferred as rentalView;
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetListsView.dart'
     deferred as rentalServiceView;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/HomeServiceView/HomeServiceView.dart'
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AgencyServiceView/AgencyServiceView.dart'
     deferred as homeServiceView;
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart'
+    deferred as assetService;
 
 class RentalRoutes {
   static String rentalViewRoute = "/rental";
   static String rentalServiceRoute = "/rentalServiceView";
   static String homeServiceRoute = "/homeServiceView";
+  static String assetServiceRoute = "/assetServiceView";
+
   final List<QRoute> routes = [
     QRoute(
         name: rentalViewRoute,
@@ -22,16 +26,23 @@ class RentalRoutes {
     QRoute(
         name: rentalServiceRoute,
         path: rentalServiceRoute,
-        builder: () => rentalServiceView.HomesServiceView(),
+        builder: () => rentalServiceView.AssetListsView(),
         middleware: <QMiddleware>[
           DefferedLoader(rentalServiceView.loadLibrary),
         ]),
     QRoute(
         name: homeServiceRoute,
         path: homeServiceRoute,
-        builder: () => homeServiceView.HomeServiceView(),
+        builder: () => homeServiceView.AgencyServiceView(),
         middleware: <QMiddleware>[
           DefferedLoader(homeServiceView.loadLibrary),
+        ]),
+    QRoute(
+        name: assetServiceRoute,
+        path: assetServiceRoute,
+        builder: () => assetService.AssetServiceView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(assetService.loadLibrary),
         ]),
   ];
 }

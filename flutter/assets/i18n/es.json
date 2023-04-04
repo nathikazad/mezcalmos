@@ -477,15 +477,21 @@
           "title": "Alquilere",
           "surf": {
             "title": "Surf",
-            "description": "Discover most delicious dishes from the nearest restaurants."
+            "description": "Discover most delicious dishes from the nearest restaurants.",
+            "board": "Tablero",
+            "store": "Tienda"
           },
           "motorcycle": {
-            "title": "Motorcycle",
-            "description": "Get your clothes cleaned by your nearest laundry service."
+            "title": "Motocicleta",
+            "description": "Get your clothes cleaned by your nearest laundry service.",
+            "vehicle": "Vehículo",
+            "store": "Tienda"
           },
           "homes": {
-            "title": "Homes",
-            "description": "Obtain delivery of anything you desire to your location."
+            "title": "Viviendas",
+            "description": "Obtain delivery of anything you desire to your location.",
+            "home": "Vivienda",
+            "agency": "Agencia"
           }
         },
         "classes": "Clases",

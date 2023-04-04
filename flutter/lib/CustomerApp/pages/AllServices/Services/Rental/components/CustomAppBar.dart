@@ -6,95 +6,18 @@ import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../components/AssetCard.dart';
 
-class HomeServiceView extends StatefulWidget {
-  const HomeServiceView({super.key});
+class CustomAppBar extends StatefulWidget {
+  const CustomAppBar({super.key});
 
   @override
-  State<HomeServiceView> createState() => _HomeServiceViewState();
-
-  static Future<void> navigate() {
-    return MezRouter.toPath(RentalRoutes.homeServiceRoute);
-  }
+  State<CustomAppBar> createState() => _CustomAppBarState();
 }
 
-class _HomeServiceViewState extends State<HomeServiceView>
-    with SingleTickerProviderStateMixin {
-  late TabController tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  final List<IconData> tabs = [
-    Icons.store,
-    Icons.article_outlined,
-    Icons.info_outline,
-  ];
+class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme;
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              customAppBar(),
-            ];
-          },
-          body: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 0),
-                child: TabBar(
-                  tabs: [
-                    for (int index = 0; index < tabs.length; index++)
-                      Tab(
-                        icon: Icon(tabs[index]),
-                      ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    CompanyDataList(),
-                    CustomScrollView(
-                      slivers: [
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return Text("Tab 2 Data");
-                            },
-                            childCount: 5,
-                          ),
-                        )
-                      ],
-                    ),
-                    Text("Tab 3 Data"),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget customAppBar() {
-    final style = Theme.of(context).textTheme;
+    var style = Theme.of(context).textTheme;
     return SliverAppBar(
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
@@ -230,54 +153,6 @@ class _HomeServiceViewState extends State<HomeServiceView>
           ),
         ),
       ),
-    );
-  }
-}
-
-class CompanyDataList extends StatelessWidget {
-  const CompanyDataList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      shrinkWrap: true,
-      slivers: <Widget>[
-        SliverPadding(
-          padding: const EdgeInsets.all(8.0),
-          sliver: SliverToBoxAdapter(
-            child: Column(
-              children: [
-                for (int index = 0; index < 5; index++)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AssetCard(
-                      title: "Home for rent in Av Juan Pablo II, Pu..",
-                      image: NetworkImage(customImageUrl),
-                      onClick: () {},
-                      needCustomSubtitle: false,
-                      needLeadingImage: true,
-                      needTrailingImage: false,
-                      needDivider: false,
-                      needBottomTitleText: false,
-                      subtitleIconData: [
-                        aPriceCheck,
-                        aSingleBed,
-                        aHouseSliding,
-                      ],
-                      subtitleIconString: [
-                        "\$234/day",
-                        "3 bedrooms",
-                        "330m²",
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

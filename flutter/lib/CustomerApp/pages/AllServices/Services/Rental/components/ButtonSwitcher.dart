@@ -6,8 +6,7 @@ class ButtonSwitcher extends StatefulWidget {
     super.key,
     required this.lButtonText,
     required this.rButtonText,
-    required this.lIconButton,
-    required this.rIconButton,
+    required this.iconList,
     required this.values,
     required this.selectedValue,
     required this.onClick,
@@ -15,8 +14,7 @@ class ButtonSwitcher extends StatefulWidget {
 
   final String lButtonText;
   final String rButtonText;
-  final IconData lIconButton;
-  final IconData rIconButton;
+  final List<IconData> iconList;
   final List<Enum> values;
   final Enum selectedValue;
   final void Function(Enum) onClick;
@@ -50,7 +48,7 @@ class _ButtonSwitcherState extends State<ButtonSwitcher> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.flatware,
+                      widget.iconList.first,
                       color: (widget.values[0] == widget.selectedValue)
                           ? Colors.white
                           : Colors.grey.shade700,
@@ -97,7 +95,7 @@ class _ButtonSwitcherState extends State<ButtonSwitcher> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.fastfood,
+                      widget.iconList.last,
                       color: (widget.values[1] == widget.selectedValue)
                           ? Colors.white
                           : Colors.grey.shade700,
