@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TextInputHelper.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/components/UserProfileImage.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/controllers/UserProfileViewController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/components/UserProfileImage.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -64,7 +64,7 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                 children: [
                   Text(
                     "${_i18n()["title"]}",
-                    style: context.txt.headline3,
+                    style: context.txt.displaySmall,
                   ),
                   SizedBox(
                     height: 10,

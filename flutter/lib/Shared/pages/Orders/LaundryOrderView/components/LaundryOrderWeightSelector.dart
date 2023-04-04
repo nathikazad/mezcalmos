@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:sizer/sizer.dart';
 
 class LaundryOrderWeightSelector extends StatefulWidget {

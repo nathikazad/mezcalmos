@@ -4,11 +4,12 @@
 
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rive/rive.dart' as rive;
+import 'package:url_launcher/url_launcher.dart';
 
 // this is my user that i create in prod for the prod deployement testing.
 const String testUserIdInProd = "BUhQ74BrbBNeYZz60fK4ocrgpqz1";
@@ -227,6 +228,7 @@ const Color offShadeGreyColor = Color(0xFF494949);
 const Color offLightShadeGreyColor = Color(0xFF787878);
 const Color blackColor = Colors.black;
 const Color unratedStarColor = Color(0XFFF2F2F2);
+const Color softPurple = Color(0xFFE0E4FF);
 const LinearGradient bluePurpleGradient = LinearGradient(
   colors: [
     primaryBlueColor,
@@ -240,3 +242,20 @@ const String mezPackageMarker =
     "assets/images/shared/markers/packageMarker.png";
 const String mezDestinationMarker =
     "assets/images/shared/markers/destinationMarker.png";
+
+Future<void> launchAppStoreLink() async {
+  if (kIsWeb) {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        await launchUrl(Uri.parse(
+            "https://play.google.com/store/apps/details?id=com.mezcalmos.customer"));
+        break;
+      case TargetPlatform.iOS:
+        await launchUrl(
+            Uri.parse("https://apps.apple.com/us/app/mezcalmos/id1595882320"));
+        break;
+      default:
+    }
+  }
+  //
+}

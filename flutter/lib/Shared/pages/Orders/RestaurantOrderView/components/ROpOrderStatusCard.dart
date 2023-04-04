@@ -26,7 +26,7 @@ class ROpOrderStatusCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                order.orderStatusImage(),
+                order.status.widget,
                 Spacer(),
                 _orderStatusText(context),
                 Spacer(
@@ -47,7 +47,7 @@ class ROpOrderStatusCard extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         child: Text(
-          order.getOrderStatus(),
+          order.status.title,
           style: Theme.of(context).textTheme.bodyLarge,
           textAlign: TextAlign.center,
           maxLines: 2,

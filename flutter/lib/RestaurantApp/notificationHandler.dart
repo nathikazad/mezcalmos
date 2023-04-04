@@ -51,7 +51,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
-      return _restaurantOpOrderChangesNotifier(key, value);
+      return restaurantOpOrderChangesNotifier(key, value);
     default:
       throw StateError("Invalid Notification Type $value");
   }
@@ -68,7 +68,7 @@ Notification restaurantNotificationHandler(String key, value) {
 //   }
 // }
 
-Notification _restaurantOpOrderChangesNotifier(String key, value) {
+Notification restaurantOpOrderChangesNotifier(String key, value) {
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic>? dynamicFields =
@@ -96,8 +96,7 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["canceledOrderTitle"]}",
         "body": "${_i18n()["canceledOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/cancel.png",
       };
     // case RestaurantOrderStatus.Preparing:
     //   return <String, dynamic>{

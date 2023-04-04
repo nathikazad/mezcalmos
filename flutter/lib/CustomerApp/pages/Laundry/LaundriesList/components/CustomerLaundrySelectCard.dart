@@ -28,6 +28,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+        margin: EdgeInsets.only(bottom: 10),
         elevation: 1,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),

@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
@@ -148,11 +148,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               paymentType:
                                   viewController.order.value!.paymentType,
                             ),
-                            if (viewController.order.value!.review != null)
-                              ReviewCard(
-                                  review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 note: viewController.order.value!.notes),
+                            if (viewController.order.value!.review != null)
+                              ReviewCard(
+                                  showReviewTitle: true,
+                                  review: viewController.order.value!.review!),
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
                               costs: viewController.order.value!.costs,

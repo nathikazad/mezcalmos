@@ -32,11 +32,12 @@ class SavedLocationComponent extends StatelessWidget {
       elevation: 1.0,
       margin: const EdgeInsets.all(8),
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.only(top: 12, bottom: 5, left: 12, right: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.place,
@@ -70,15 +71,17 @@ class SavedLocationComponent extends StatelessWidget {
                             ? primaryBlueColor
                             : backgroundShadeColor,
                         borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: Text(
-                      '${_i18n()["defaultAddressText"]}',
-                      style: TextStyle(
-                        fontFamily: "Montserrat",
-                        color: (savelocation.defaultLocation)
-                            ? Colors.white
-                            : Color(0xFF787878),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11.sp,
+                    child: Center(
+                      child: Text(
+                        '${_i18n()["defaultAddressText"]}',
+                        style: TextStyle(
+                          fontFamily: "Montserrat",
+                          color: (savelocation.defaultLocation)
+                              ? Colors.white
+                              : Color(0xFF787878),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11.sp,
+                        ),
                       ),
                     ),
                   ),
@@ -145,11 +148,9 @@ class SavedLocationComponent extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 4,
+              height: 9,
             ),
             Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(top: 5),
               child: Text(
                 savelocation.location.address,
                 style: context.txt.titleMedium?.copyWith(
@@ -157,9 +158,6 @@ class SavedLocationComponent extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            ),
-            SizedBox(
-              height: 4,
             ),
           ],
         ),

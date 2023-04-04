@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +18,7 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart'
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -224,10 +226,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          showDialog(
+                      MezButton(
+                        height: 5.h,
+                        width: 25.w,
+                        textStyle:
+                            context.txt.bodyLarge?.copyWith(fontSize: 10.sp),
+                        onClick: () async {
+                          unawaited(showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
@@ -243,25 +250,20 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     ),
                                   ),
                                 );
-                              });
+                              }));
                         },
-                        child: CachedNetworkImage(
-                          imageUrl: viewController.newBillUrl.value!,
-                          fit: BoxFit.contain,
-                          width: 70,
-                          height: 50,
-
-                          //  style: context.txt.titleSmall,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
+                        textColor: offShadeGreyColor,
+                        label: '${_i18n()['viewImage']}',
+                        backgroundColor: Colors.transparent,
                       ),
                       MezIconButton(
-                          onTap: () async {
-                            await viewController.editImage(context);
-                          },
-                          icon: Icons.edit_rounded)
+                        onTap: () async {
+                          await viewController.editImage(context);
+                        },
+                        backgroundColor: Colors.transparent,
+                        icon: Icons.delete_outlined,
+                        iconColor: redAccentColor,
+                      )
                     ],
                   ),
         // CachedNetworkImage(

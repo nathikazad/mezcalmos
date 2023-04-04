@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -67,61 +67,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                 controller: viewController.pageController,
                 children: [
                   _itemsPage(),
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${_i18n()["deliveryCompany"]}',
-                          style: context.txt.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        if (viewController.company.value != null)
-                          MezCard(
-                              firstAvatarBgImage: CachedNetworkImageProvider(
-                                  viewController.company.value!.info.image),
-                              content: Text(
-                                viewController.company.value!.info.name,
-                                style: context.txt.bodyLarge,
-                              )),
-
-                        DeliveryTimePicker(
-                          fixed7days: true,
-                          deliveryTime: viewController.deliveryTime.value,
-                          isServiceOpen:
-                              viewController.company.value?.isOpen() ?? true,
-                          numberOfDays: 7,
-                          onValue: (DateTime? value) {
-                            viewController.deliveryTime.value = value;
-                          },
-                          onClear: () {
-                            viewController.deliveryTime.value = null;
-                          },
-                          periodOfTime: null,
-                          schedule: viewController.company.value!.schedule,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        // Text(
-                        //   'Payment method',
-                        //   style: context.txt.bodyLarge,
-                        // ),
-                        OrderSummaryCard(
-                            costs: OrderCosts(
-                                deliveryCost: viewController.shippingCost.value,
-                                refundAmmount: null,
-                                tax: null,
-                                orderItemsCost: null,
-                                totalCost: null),
-                            showNullValues: true,
-                            stripeOrderPaymentInfo: null)
-                      ],
-                    ),
-                  ),
+                  _deliveryPage(context),
                 ]);
           } else
             return Container(
@@ -146,7 +92,66 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
     );
   }
 
-  SingleChildScrollView _itemsPage() {
+  Widget _deliveryPage(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Delivery company',
+            style: context.txt.bodyLarge,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          if (viewController.company.value != null)
+            MezCard(
+                firstAvatarBgImage: CachedNetworkImageProvider(
+                    viewController.company.value!.info.image),
+                content: Text(
+                  viewController.company.value!.info.name,
+                  style: context.txt.bodyLarge,
+                )),
+          SizedBox(
+            height: 5,
+          ),
+          DeliveryTimePicker(
+            fixed7days: true,
+            deliveryTime: viewController.deliveryTime.value,
+            isServiceOpen: viewController.company.value?.isOpen() ?? true,
+            numberOfDays: 7,
+            onValue: (DateTime? value) {
+              viewController.deliveryTime.value = value;
+            },
+            onClear: () {
+              viewController.deliveryTime.value = null;
+            },
+            periodOfTime: null,
+            schedule: viewController.company.value!.schedule,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          // Text(
+          //   'Payment method',
+          //   style: context.txt.bodyLarge,
+          // ),
+          OrderSummaryCard(
+              costs: OrderCosts(
+                  deliveryCost: viewController.shippingCost.value,
+                  refundAmmount: null,
+                  tax: null,
+                  orderItemsCost: null,
+                  totalCost: null),
+              showNullValues: true,
+              stripeOrderPaymentInfo: null)
+        ],
+      ),
+    );
+  }
+
+  Widget _itemsPage() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Form(
@@ -208,12 +213,15 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             child: LocationSearchComponent(
                 hintPadding: EdgeInsets.only(left: 10),
                 suffixPadding: EdgeInsets.only(right: 10),
-                showSearchIcon: true,
+                leftBotRaduis: 15,
+                rightBotRaduis: 15,
+                rightTopRaduis: 15,
+                leftTopRadius: 15,
+                showSearchIcon: false,
+                textStyle: context.textTheme.bodyLarge,
                 bgColor: Colors.white,
                 text: viewController.fromLoc.value?.address,
-                onClear: () {
-                  viewController.fromLoc.value = null;
-                },
+                onClear: () {},
                 notifyParent: (MezLocation? location) {
                   setState(() {
                     viewController.addFromLoc(location: location!);

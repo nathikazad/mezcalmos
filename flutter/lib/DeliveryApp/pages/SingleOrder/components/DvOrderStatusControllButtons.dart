@@ -38,7 +38,8 @@ class _DvOrderStatusControllButtonsState
 
     return Container(
       height: 70,
-      child: (!widget.viewController.order.isDriverAssigned)
+      child: (!widget.viewController.order.isDriverAssigned &&
+              widget.viewController.order.inProcess())
           ? MezButton(
               label: "${_i18n()['acceptOrder']}",
               backgroundColor: Colors.green.shade600,
@@ -84,7 +85,8 @@ class _DvOrderStatusControllButtonsState
       label: _getBtnTitle(),
       borderRadius: 0,
       onClick: () async {
-        if (widget.viewController.order.isTimeSetted) {
+        if (widget.viewController.order.isTimeSetted &&
+            widget.viewController.order.isDeliveryCostSetted) {
           switch (widget.viewController.order.status) {
             case DeliveryOrderStatus.OrderReceived:
               await widget.viewController.startPickup();
@@ -105,10 +107,22 @@ class _DvOrderStatusControllButtonsState
 
             default:
           }
-        } else {
+        } else if (!widget.viewController.order.isTimeSetted) {
+          widget.viewController.order.isCourier
+              ? showErrorSnackBar(
+                  errorTitle: "${_i18n()["noDeliveryTimeTitle"]}",
+                  errorText: "${_i18n()["noDeliveryTimeBody"]}")
+              : showErrorSnackBar(
+                  errorTitle: (widget.viewController.pickuSetted)
+                      ? "${_i18n()["noDeliveryTimeTitle"]}"
+                      : "${_i18n()["noPickupTimeTitle"]}",
+                  errorText: (widget.viewController.pickuSetted)
+                      ? "${_i18n()["noDeliveryTimeBody"]}"
+                      : "${_i18n()["noPickupTimeBody"]}");
+        } else if (!widget.viewController.order.isDeliveryCostSetted) {
           showErrorSnackBar(
-              errorText:
-                  "Please set estimated times before starting the delivery");
+              errorTitle: "${_i18n()["setDvCostTitle"]}",
+              errorText: "${_i18n()["setDvCostBody"]}");
         }
       },
     );
@@ -157,7 +171,7 @@ class _DvOrderStatusControllButtonsState
                 style: context.txt.bodyLarge,
               ),
               Text(
-                DateFormat('dd MMM yy h:m')
+                DateFormat('dd MMM, yy h:m a')
                     .format(widget.viewController.order.orderTime.toLocal()),
                 style: context.txt.titleMedium,
               )

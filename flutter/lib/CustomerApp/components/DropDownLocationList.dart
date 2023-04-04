@@ -97,15 +97,12 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         widget.serviceProviderLocation != null) {
       mezDbgPrint("[cc]  _lessThanDistance ==> True");
       showError.value = true;
-    } else
-      mezDbgPrint("[cc]  _lessThanDistance ==> False");
+    }
   }
 
   void getSavedLocation() {
     customerAuthController.customer?.savedLocations.forEach(
       (SavedLocation element) {
-        mezDbgPrint(
-            "Getting Saved location elmemmemememmet ✅🛑======>${element.defaultLocation}");
         listOfSavedLoacations.add(element);
       },
     );

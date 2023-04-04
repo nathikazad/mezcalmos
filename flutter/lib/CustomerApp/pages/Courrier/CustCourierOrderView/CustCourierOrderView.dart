@@ -16,7 +16,7 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -94,9 +94,10 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 children: [
                   MezCard(
                     contentPadding: const EdgeInsets.all(12),
-                    leading: viewController.order.getOrderStatusWidget(),
+                    leading: viewController.order.status.widget(
+                        packageReady: viewController.order.packageReady),
                     content: Text(
-                      viewController.order.orderStatusTitle().inCaps,
+                      viewController.order.status.title.inCaps,
                       style: context.txt.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
@@ -140,7 +141,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   OrderDeliveryLocation(
                     address: viewController.order.dropOffLocation.address,
                     margin: const EdgeInsets.only(top: 15),
-                    titleTextStyle: context.txt.bodyText1,
+                    titleTextStyle: context.txt.bodyLarge,
                   ),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
@@ -148,7 +149,10 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       margin: const EdgeInsets.only(top: 15),
                     ),
                   if (viewController.order.review != null)
-                    ReviewCard(review: viewController.order.review!),
+                    ReviewCard(
+                      review: viewController.order.review!,
+                      showReviewTitle: true,
+                    ),
                   OrderNoteCard(
                       margin: const EdgeInsets.only(top: 15),
                       note: viewController.order.notes),
@@ -235,7 +239,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         ? [
                             Text(
                               '${_i18n()["note"]}',
-                              style: context.txt.bodyText1,
+                              style: context.txt.bodyLarge,
                             ),
                             Text(
                               viewController.order.items[index].notes!,

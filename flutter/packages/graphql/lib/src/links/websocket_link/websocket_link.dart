@@ -1,5 +1,6 @@
 import 'package:gql_link/gql_link.dart';
 import 'package:gql_exec/gql_exec.dart';
+import 'package:graphql/client.dart';
 
 import './websocket_client.dart';
 
@@ -23,6 +24,8 @@ class WebSocketLink extends Link {
 
   // cannot be final because we're changing the instance upon a header change.
   SocketClient? _socketClient;
+
+  SocketClient? get client => _socketClient;
 
   @override
   Stream<Response> request(Request request, [forward]) async* {

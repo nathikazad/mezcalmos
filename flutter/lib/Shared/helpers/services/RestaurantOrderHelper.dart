@@ -5,13 +5,13 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:rive/rive.dart';
 
-extension RestaurantOrderHelper on RestaurantOrder {
+extension RestaurantOrderHelper on RestaurantOrderStatus {
   dynamic _i18n() =>
       Get.find<LanguageController>().strings["CustomerApp"]["pages"]
           ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
 
-  String getOrderStatus() {
-    switch (status) {
+  String get title {
+    switch (this) {
       case RestaurantOrderStatus.CancelledByAdmin:
         return '${_i18n()["canceledByAdmin"]}';
       case RestaurantOrderStatus.CancelledByCustomer:
@@ -33,8 +33,8 @@ extension RestaurantOrderHelper on RestaurantOrder {
   }
   // order status image/icon
 
-  Widget orderStatusImage() {
-    switch (status) {
+  Widget get widget {
+    switch (this) {
       case RestaurantOrderStatus.CancelledByAdmin:
 
       case RestaurantOrderStatus.CancelledByCustomer:

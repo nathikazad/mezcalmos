@@ -6,15 +6,15 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderDriverCard.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderStatusCard.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderTimes.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundrySetCategoryComponent.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/OrderEstimatedTimeComponent.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderDriverCard.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderStatusCard.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderTimes.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundrySetCategoryComponent.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/OrderEstimatedTimeComponent.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -91,7 +91,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                             : viewController.order.laundryLocation,
                         to: viewController.order.dropOffLocation),
                   MezCard(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const EdgeInsets.only(bottom: 10),
                     contentPadding: EdgeInsets.all(12),
                     action: MessageButton(
                         chatId: viewController.order.chatId,

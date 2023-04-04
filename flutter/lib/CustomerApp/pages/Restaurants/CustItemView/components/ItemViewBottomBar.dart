@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
-import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -10,7 +10,9 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
@@ -45,13 +47,27 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
             btnColors: primaryBlueColor,
             onMinValueBtnColor: Colors.grey.shade300,
             incrementCallback: () async {
-              widget.viewController.cartItem.value!.quantity++;
-              widget.viewController.cartItem.refresh();
+              widget.viewController.updateItemQuantity(inc: true);
             },
             decrementCallback: () async {
-              widget.viewController.cartItem.value!.quantity--;
-              widget.viewController.cartItem.refresh();
+              widget.viewController.updateItemQuantity(inc: false);
             },
+            onChangedToZero: !widget.viewController.isAdding
+                ? () async {
+                    await showConfirmationDialog(context,
+                        title: "${_i18n()['rmItemTitle']}",
+                        helperText: "${_i18n()['rmItemHelper']}",
+                        primaryButtonText: "${_i18n()['rmItemButton']}",
+                        onYesClick: () async {
+                      bool res = await widget.viewController.removeItem();
+                      if (res) {
+                        Navigator.pop(context);
+                        await MezRouter.popTillExclusive(
+                            RestaurantRoutes.cartRoute);
+                      }
+                    });
+                  }
+                : null,
             minVal: 1,
             value: widget.viewController.cartItem.value!.quantity,
           ),
@@ -66,29 +82,14 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           ),
           const Spacer(),
           Flexible(
-            flex: 6,
-            fit: FlexFit.tight,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              onPressed: () async {
-                await _handleAddButton();
-              },
-              child: Text(
-                widget.viewController.currentMode ==
-                        ViewItemScreenMode.AddItemMode
-                    ? _i18n()['addToCart']
-                    : _i18n()['modifyItem'],
-                textAlign: TextAlign.center,
-                style: context.txt.headlineLarge
-                    ?.copyWith(color: Colors.white, fontSize: 18),
-              ),
+            flex: 7,
+            child: MezButton(
+              height: 32,
+              label: widget.viewController.currentMode ==
+                      ViewItemScreenMode.AddItemMode
+                  ? _i18n()['addToCart']
+                  : _i18n()['modifyItem'],
+              onClick: () => _handleAddButton(),
             ),
           ),
           SizedBox(

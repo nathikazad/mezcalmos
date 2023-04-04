@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
+import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']

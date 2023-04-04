@@ -20,14 +20,14 @@ class LaundryOrderStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: const EdgeInsets.only(bottom: 20, top: 20),
+      margin: const EdgeInsets.only(bottom: 10, top: 20),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            order.getOrderWidget(),
+            order.status.widget,
             Spacer(),
             _orderStatusText(context),
             Spacer(
@@ -46,9 +46,11 @@ class LaundryOrderStatusCard extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         child: Text(
-          order.orderStatusTitle(),
-          style:
-              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          order.status.title,
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall
+              ?.copyWith(fontSize: 14.sp),
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

@@ -14,10 +14,14 @@ import 'package:mezcalmos/env.dart';
 
 void mezDbgPrint(log, {bool showMilliSeconds = false}) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
-  String caller = StackTrace.current.toString().split('\n').lastWhere(
-        (String element) => element.contains(':mezcalmos/'),
+  String caller = StackTrace.current
+      .toString()
+      .split('\n')
+      .lastWhere(
+        (String element) => element.contains('mezcalmos/'),
         orElse: () => '',
-      );
+      )
+      .split("                           ")[0];
 
   if (caller.isNotEmpty) caller = caller.split('/').last.replaceAll(')', '');
 

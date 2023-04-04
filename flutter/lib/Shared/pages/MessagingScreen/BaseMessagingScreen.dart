@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -60,12 +61,13 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
     }
 
     chatId = int.parse(MezRouter.urlArguments['chatId'].toString());
-  
-     if (MezRouter.urlArguments['recipientType'] != null) {
+
+    if (MezRouter.urlArguments['recipientType'] != null) {
       recipientType = MezRouter.urlArguments['recipientType']!
           .toString()
-          .toParticipantType(); }
-    controller.clearMessageNotifications(chatId: chatId); 
+          .toParticipantType();
+    }
+    controller.clearMessageNotifications(chatId: chatId);
     // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     setState(() {
@@ -74,7 +76,6 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
     super.initState();
   }
-  
 
   @override
   void dispose() {
@@ -172,11 +173,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                   );
           },
         ),
-        // actions: <Widget>[
-        //   _callButton(context),
+        actions: <Widget>[
+          if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
+            _callButton(context),
 
-        //   // )
-        // ],
+          // )
+        ],
       ),
       body: isChatLoaded
           ? Container(
@@ -257,7 +259,14 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
       child: InkWell(
         onTap: () {
           if (controller.chat.value?.chatInfo.phoneNumber != null) {
-            _callBottomSheet(context);
+            if (kIsWeb) {
+              final Uri launchUri = Uri(
+                scheme: 'tel',
+                path: controller.chat.value?.chatInfo.phoneNumber,
+              );
+              launchUrl(launchUri);
+            } else
+              _callBottomSheet(context);
           } else {
             callAgora();
           }

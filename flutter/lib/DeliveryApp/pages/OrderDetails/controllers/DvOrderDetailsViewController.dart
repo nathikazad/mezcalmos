@@ -37,7 +37,7 @@ class DvOrderDetailsViewController {
   late int orderId;
   Rxn<DeliveryOrder> order = Rxn();
   RxnNum tax = RxnNum();
-  final Rxn<File> newBillFile = Rxn();
+  final Rxn<imPicker.XFile> newBillFile = Rxn();
   final Rxn<String> newBillUrl = Rxn();
   final RxBool billLoading = RxBool(false);
   Rxn<OrderCosts> _orderCosts = Rxn();
@@ -149,13 +149,11 @@ class DvOrderDetailsViewController {
 
         try {
           if (_res != null) {
-            newBillFile.value = File(_res.path);
+            newBillFile.value = _res;
             if (newBillFile.value != null) {
-              String imageUrl = await Get.find<AuthController>()
-                  .uploadImgToFbStorage(
-                      imageFile: newBillFile.value!,
-                      isCompressed: false,
-                      path: "bills/delivery/$orderId");
+              String imageUrl = await uploadImgToFbStorage(
+                  imageFile: newBillFile.value!,
+                  pathPrefix: "bills/delivery/$orderId");
               newBillUrl.value = await update_courier_order_bill(
                   orderId: orderId, imageUrl: imageUrl);
             }

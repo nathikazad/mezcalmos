@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width ?? Get.width,
-        height: 48,
+        height: height,
         decoration: BoxDecoration(
           color: buttonColor.length == 1 ? buttonColor.first : null,
           borderRadius: BorderRadius.circular(borderRadius),
@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
               ? LinearGradient(colors: buttonColor)
               : null,
         ),
-        child: Align(alignment: textAlignement, child: text),
+        child: Center(child: text),
       ),
     );
   }

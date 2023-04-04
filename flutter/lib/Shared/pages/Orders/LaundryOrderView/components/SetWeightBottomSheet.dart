@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderWeightSelector.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderWeightSelector.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -54,7 +54,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                 child: Text(
                   (widget.viewController.isEditingCategory)
                       ? widget.viewController.editableCategory.value!
-                          .name[userLanguage]!
+                          .name[userLanguage]!.capitalizeFirst!
                       : "${_i18n()["newItemsWeight"]}",
                   style: Theme.of(context).textTheme.displaySmall,
                   maxLines: 2,
@@ -141,7 +141,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               decoration: InputDecoration(
                   isDense: true,
                   suffix: Container(
-                      padding: const EdgeInsets.all(1), child: Text("KG")),
+                      padding: const EdgeInsets.all(1), child: Text("kg")),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   alignLabelWithHint: false,
                   border: OutlineInputBorder(

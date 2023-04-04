@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -231,8 +231,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                             ? "${_i18n()['openService']}"
                             : "${_i18n()['closeService']}",
                         icon: _viewController.service.state.isClosedIndef
-                            ? Icons.lock_open
-                            : Icons.lock,
+                            ? Icons.lock_open_outlined
+                            : Icons.lock_outline,
                         textColor: !_viewController.service.state.isClosedIndef
                             ? Colors.red
                             : null,

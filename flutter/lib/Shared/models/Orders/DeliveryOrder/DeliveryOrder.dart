@@ -44,6 +44,10 @@ class DeliveryOrder extends DeliverableOrder {
   bool get isDropOffTimeSetted => estimatedArrivalAtDropoff != null;
 
   bool get isDriverAssigned => driverInfo != null;
+  bool get isDeliveryCostSetted =>
+      driverInfo != null &&
+      costs.deliveryCost != null &&
+      costs.deliveryCost! > 0;
   bool get isCourier => orderType == OrderType.Courier;
   bool get isTimeSetted => isCourier
       ? isDropOffTimeSetted

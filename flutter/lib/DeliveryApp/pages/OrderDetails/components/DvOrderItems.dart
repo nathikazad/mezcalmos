@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,6 +13,8 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["pages"]["OrderDetailsScreen"];
@@ -39,6 +44,27 @@ class DvOrderItems extends StatelessWidget {
                     children: List.generate(
                         viewController.items.value!.length,
                         (int index) => MezExpandableCard(
+                                onTapHeaderImage: () async {
+                                  unawaited(showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          contentPadding: EdgeInsets.zero,
+                                          content: Container(
+                                            width: 70.w,
+                                            height: 60.h,
+                                            child: PhotoView(
+                                              imageProvider:
+                                                  CachedNetworkImageProvider(
+                                                viewController
+                                                    .items.value![index].image!,
+                                                //  style: context.txt.titleSmall,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }));
+                                },
                                 title: _itemHeader(index, context),
                                 imageUrl:
                                     viewController.items.value![index].image,

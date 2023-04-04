@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -21,7 +22,7 @@ class UserProfileViewController {
   RxString name = RxString("");
 
 // Obs //
-  final Rxn<File> newImageFile = Rxn();
+  final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
   Rx<UserProfileViewMode> mode = Rx(UserProfileViewMode.None);
@@ -32,16 +33,19 @@ class UserProfileViewController {
   bool get showImageSetter =>
       mode == UserProfileViewMode.Editing ||
       mode == UserProfileViewMode.FirstTime;
-      
+
   bool get isInfoSet {
     return (newImageFile.value != null || newImageUrl.value != null) &&
         name.value.isNotEmpty &&
-        name.value.length > 4;
+        name.value.length > 2;
   }
 
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
-      return FileImage(newImageFile.value!);
+      if (kIsWeb)
+        return CachedNetworkImageProvider(newImageFile.value!.path);
+      else
+        return FileImage(File(newImageFile.value!.path));
     } else if (newImageUrl.value != null) {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
@@ -78,8 +82,9 @@ class UserProfileViewController {
 
   Future<void> _setImage() async {
     if (newImageFile.value != null) {
-      newImageUrl.value = await _authController.uploadImgToFbStorage(
-          imageFile: newImageFile.value!, isCompressed: false);
+      newImageUrl.value = await uploadImgToFbStorage(
+          imageFile: newImageFile.value!,
+          pathPrefix: "users/${_authController.hasuraUserId!}/avatar/");
     }
   }
 
@@ -94,7 +99,8 @@ class UserProfileViewController {
 
       try {
         if (_res != null) {
-          newImageFile.value = File(_res.path);
+          newImageFile.value = _res;
+          // newImageFile.value = File(_res.path);
         }
         imageLoading.value = false;
       } catch (e) {

@@ -41,6 +41,8 @@ class CartItemsBuilder extends StatelessWidget {
               children.add(Container(
                 margin: const EdgeInsets.symmetric(vertical: 5),
                 child: MyExpansionPanelComponent(
+                  showExpandButton: cartItem.chosenChoices.isNotEmpty ||
+                      (cartItem.notes != null && cartItem.notes != ""),
                   child: Flexible(
                       child: ItemInformationCart(
                     item: cartItem,
@@ -67,8 +69,6 @@ class CartItemsBuilder extends StatelessWidget {
                     ),
                   ],
                   onEdit: () {
-                    mezDbgPrint(
-                        " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
                     if (cartItem.idInCart != null)
                       CustItemView.navigateToCartItem(
                           cartItemId: cartItem.idInCart!);
@@ -115,8 +115,6 @@ class CartItemsBuilder extends StatelessWidget {
   List<Widget> buildChoices(CartItem cartItem) {
     final List<Widget> viewWidgets = [];
     cartItem.chosenChoices.forEach((String key, List<Choice> value) {
-      mezDbgPrint(
-          "From get option names 📥📥📥📥📥 ======>${int.parse(key)} \n ${cartItem.item.findOption(int.parse(key))?.name} ");
       viewWidgets.add(ItemChosenChoiceComponent(
           choices: value,
           optionName: cartItem.item.getOptionName(int.parse(key))));

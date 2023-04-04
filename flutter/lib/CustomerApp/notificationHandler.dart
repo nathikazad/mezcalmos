@@ -99,7 +99,7 @@ Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toDeliveryOrderStatus();
   mezDbgPrint(newOrdersStatus);
   final Map<String, dynamic> dynamicFields =
-      _getCourierOrderStatusFields(newOrdersStatus)!;
+      _getCourierOrderStatusFields(newOrdersStatus);
   mezDbgPrint(dynamicFields);
   return Notification(
     id: key,
@@ -191,7 +191,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
   return null;
 }
 
-Map<String, dynamic>? _getCourierOrderStatusFields(DeliveryOrderStatus status) {
+Map<String, dynamic> _getCourierOrderStatusFields(DeliveryOrderStatus status) {
   switch (status) {
     case DeliveryOrderStatus.AtPickup:
       return <String, dynamic>{
@@ -216,7 +216,7 @@ Map<String, dynamic>? _getCourierOrderStatusFields(DeliveryOrderStatus status) {
       return <String, dynamic>{
         "title": "${_i18n()["courier"]["atDropoffTitle"]}",
         "body": "${_i18n()["courier"]["atDropoffBody"]}",
-        "imgUrl": "assets/images/shared/notifications/laundry/onTheWay.png",
+        "imgUrl": "assets/images/shared/notifications/packageChecked.png",
       };
 
     case DeliveryOrderStatus.Delivered:
@@ -233,8 +233,8 @@ Map<String, dynamic>? _getCourierOrderStatusFields(DeliveryOrderStatus status) {
         "imgUrl": "assets/images/shared/notifications/laundry/canceled.png",
       };
     default:
+      throw StateError("Unhandled Courier Order Status");
   }
-  return null;
 }
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(

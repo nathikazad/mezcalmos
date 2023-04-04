@@ -38,7 +38,7 @@ class CustItemViewController {
 
   bool get isAdding =>
       currentMode == ViewItemScreenMode.AddItemMode &&
-      _cartContainCurrentItem() == false;
+      cartContainCurrentItem == false;
   bool get itemHasDescription {
     return getItem!.description?[userLanguage] != null &&
         getItem!.description![userLanguage]!
@@ -165,7 +165,7 @@ class CustItemViewController {
         cart.value!.restaurant?.restaurantId != itemRestaurantId;
   }
 
-  bool _cartContainCurrentItem() {
+  bool get cartContainCurrentItem {
     return cart.value?.cartItems.firstWhereOrNull(
             (CartItem element) => element.item.id == currentItemId) !=
         null;
@@ -173,4 +173,20 @@ class CustItemViewController {
 
   // important //
   void dipose() {}
+
+  void updateItemQuantity({required bool inc}) {
+    if (inc) {
+      cartItem.value!.quantity++;
+    } else {
+      if (cartItem.value!.quantity > 1) {
+        cartItem.value!.quantity--;
+      }
+    }
+    cartItem.refresh();
+  }
+
+  Future<bool> removeItem() async {
+    bool? res = await cartController?.deleteCartItem(cartItem.value!.idInCart!);
+    return res == true;
+  }
 }

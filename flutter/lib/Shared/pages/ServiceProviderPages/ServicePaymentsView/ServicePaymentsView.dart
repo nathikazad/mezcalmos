@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/components/ServiceStripePaymentSetup.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['ServicePaymentsView'];

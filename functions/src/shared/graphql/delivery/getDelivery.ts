@@ -161,10 +161,10 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
     let delivery: DeliveryOrder = {
       packageReady: d.package_ready,
       deliveryId: d.id,
-      pickupLocation: {
-        lat: d.pickup_gps.coordinates[1],
-        lng: d.pickup_gps.coordinates[0],
-      },
+      // pickupLocation: {
+      //   lat: d.pickup_gps.coordinates[1],
+      //   lng: d.pickup_gps.coordinates[0],
+      // },
       dropoffLocation: {
         lat: d.dropoff_gps.coordinates[1],
         lng: d.dropoff_gps.coordinates[0],

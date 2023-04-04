@@ -1,7 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/controllers/OrderMapWidgetController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
+    ["OrderMapWidget"];
 
 class OrderMapWidget extends StatefulWidget {
   const OrderMapWidget(
@@ -10,12 +19,14 @@ class OrderMapWidget extends StatefulWidget {
       required this.updateDriver,
       required this.polyline,
       required this.from,
+      this.margin,
       required this.to});
   final int deliveryOrderId;
   final bool updateDriver;
   final String? polyline;
   final MezLocation? from;
   final MezLocation to;
+  final EdgeInsets? margin;
 
   @override
   State<OrderMapWidget> createState() => _OrderMapWidgetState();
@@ -43,12 +54,28 @@ class _OrderMapWidgetState extends State<OrderMapWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 350,
-      child: MGoogleMap(
-        padding: EdgeInsets.zero,
-        mGoogleMapController: viewController.mGoogleMapController,
-        recenterBtnBottomPadding: 20,
-      ),
+      margin: widget.margin,
+      height: kIsWeb ? null : 350,
+      child: (kIsWeb)
+          ? MezCard(
+              contentPadding: const EdgeInsets.all(12),
+              onClick: launchAppStoreLink,
+              firstAvatarIcon: Icons.map_rounded,
+              firstAvatarIconColor: primaryBlueColor,
+              firstAvatarBgColor: secondaryLightBlueColor,
+              action: Icon(
+                Icons.keyboard_arrow_right_rounded,
+                color: primaryBlueColor,
+              ),
+              content: Text(
+                "${_i18n()['mapWebText']}",
+                style: context.txt.bodyMedium,
+              ))
+          : MGoogleMap(
+              padding: EdgeInsets.zero,
+              mGoogleMapController: viewController.mGoogleMapController,
+              recenterBtnBottomPadding: 20,
+            ),
     );
   }
 }

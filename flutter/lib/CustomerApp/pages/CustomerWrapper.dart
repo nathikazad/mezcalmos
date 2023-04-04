@@ -29,7 +29,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -56,8 +56,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   RxInt numberOfCurrentOrders = RxInt(0);
 
-  StreamSubscription<dynamic>? _orderCountListener;
-
   StreamSubscription<dynamic>? _authStateChnagesListener;
 
   @override
@@ -76,8 +74,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   @override
   void dispose() {
-    _orderCountListener?.cancel();
-    _orderCountListener = null;
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
     super.dispose();
@@ -136,8 +132,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       if (fireUser != null) {
         _doIfFireAuthUserIsNotNull();
       } else {
-        _orderCountListener?.cancel();
-        _orderCountListener = null;
         _notificationsStreamListener?.cancel();
         _notificationsStreamListener = null;
         appLifeCycleController.cleanAllCallbacks();

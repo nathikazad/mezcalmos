@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -86,30 +86,15 @@ class _SavedLocationViewState extends State<SavedLocationView> {
           );
         } else if (viewController.savedLocs.value!.isNotEmpty) {
           return SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                SizedBox(height: 12),
-                Container(
-                  margin: EdgeInsets.only(right: 16, bottom: 8.sp, left: 16),
-                  child: Text(
-                    "${_i18n()["location"] + 's'}",
-                    style: txt.displaySmall!.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                //   SizedBox(height: 0.1.h),
-                Column(
-                  children: List.generate(
-                      viewController.savedLocs.value!.length,
-                      (int index) => SavedLocationComponent(
-                            savelocation:
-                                viewController.savedLocs.value![index],
-                          )),
-                ),
-              ]));
+              child: Column(children: <Widget>[
+            Column(
+              children: List.generate(
+                  viewController.savedLocs.value!.length,
+                  (int index) => SavedLocationComponent(
+                        savelocation: viewController.savedLocs.value![index],
+                      )),
+            ),
+          ]));
         } else {
           return SavedLocationISEmpty();
         }
