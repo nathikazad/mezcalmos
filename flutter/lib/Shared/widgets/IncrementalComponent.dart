@@ -47,7 +47,11 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: (isLoading) ? Colors.grey.shade300 : widget.btnColors,
+                  color: (isLoading ||
+                          (widget.value == widget.minVal &&
+                              widget.onChangedToZero == null))
+                      ? Colors.grey.shade300
+                      : widget.btnColors,
                 ),
                 child: Icon(
                   Icons.remove,
@@ -57,10 +61,10 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
             onTap: (isLoading)
                 ? null
                 : () async {
-                    setState(() {
-                      isLoading = true;
-                    });
                     if (widget.value > widget.minVal) {
+                      setState(() {
+                        isLoading = true;
+                      });
                       await widget.decrementCallback().whenComplete(() {
                         setState(() {
                           isLoading = false;

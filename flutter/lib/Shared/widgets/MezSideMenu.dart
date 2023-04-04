@@ -12,7 +12,8 @@ import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
@@ -95,7 +96,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              CustomerOrdersListView.navigate();
+              MezRouter.toPath(_drawerController.pastOrdersRoute!);
             },
           ),
         SideMenuItem(

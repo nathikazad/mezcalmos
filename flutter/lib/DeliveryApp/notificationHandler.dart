@@ -4,7 +4,6 @@ import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
@@ -16,8 +15,6 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 Notification deliveryDriverNotificationHandler(String key, value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
-
-  mezDbgPrint("👋 new notification 👋\n $value");
 
   switch (notificationType) {
     case NotificationType.NewOrder:
@@ -97,8 +94,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
                   RestaurantOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: DeliveryAppRoutes.kDvOrderView
-          .replaceFirst(":orderId", value["orderId"].toString()),
+      linkUrl: value["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -159,8 +155,7 @@ Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
               newOrdersStatus == DeliveryOrderStatus.CancelledByCustomer)
           ? mat.Icons.close
           : null,
-      linkUrl: DeliveryAppRoutes.kDvOrderView
-          .replaceFirst(":orderId", value["orderId"].toString()),
+      linkUrl: value["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -172,8 +167,8 @@ Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
 }
 
 Map<String, dynamic>? _getCourierOrderStatusFields(
-    DeliveryOrderStatus restaurantOrderStatus) {
-  switch (restaurantOrderStatus) {
+    DeliveryOrderStatus courierOrderStatus) {
+  switch (courierOrderStatus) {
     case DeliveryOrderStatus.CancelledByAdmin:
     case DeliveryOrderStatus.CancelledByCustomer:
     case DeliveryOrderStatus.CancelledByDeliverer:
@@ -203,8 +198,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
                   LaundryOrderStatus.CancelledByAdmin)
           ? mat.Icons.close
           : null,
-      linkUrl: DeliveryAppRoutes.kDvOrderView
-          .replaceFirst(":orderId", value["orderId"].toString()),
+      linkUrl: value["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

@@ -41,7 +41,7 @@ export async function changeRestaurantOrderStatus(
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: restaurantOrderStatusChangeMessages[restaurantOrder.status],
-    linkUrl: orderUrl(OrderType.Restaurant, restaurantOrder.orderId!)
+    linkUrl: orderUrl(OrderType.Restaurant, restaurantOrder.orderId)
   }
 
   if (deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff

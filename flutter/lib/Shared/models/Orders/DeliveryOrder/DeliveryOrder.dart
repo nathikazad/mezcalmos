@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -31,6 +32,7 @@ class DeliveryOrder extends DeliverableOrder {
       required super.routeInformation,
       required super.orderId,
       required super.chatId,
+      super.review,
       required super.customer,
       required super.dropOffLocation,
       required super.serviceProviderDriverChatId,
@@ -42,7 +44,14 @@ class DeliveryOrder extends DeliverableOrder {
   bool get isDropOffTimeSetted => estimatedArrivalAtDropoff != null;
 
   bool get isDriverAssigned => driverInfo != null;
-  bool get isTimeSetted => isPickUpTimeSetted && isDropOffTimeSetted;
+  bool get isDeliveryCostSetted =>
+      driverInfo != null &&
+      costs.deliveryCost != null &&
+      costs.deliveryCost! > 0;
+  bool get isCourier => orderType == OrderType.Courier;
+  bool get isTimeSetted => isCourier
+      ? isDropOffTimeSetted
+      : (isPickUpTimeSetted && isDropOffTimeSetted);
   bool get inPickUpPhase =>
       status == DeliveryOrderStatus.OrderReceived ||
       status == DeliveryOrderStatus.OnTheWayToPickup ||
@@ -84,4 +93,16 @@ class DeliveryOrder extends DeliverableOrder {
         status == DeliveryOrderStatus.AtDropoff ||
         status == DeliveryOrderStatus.AtPickup;
   }
+
+  // static void copyTo(DeliveryOrder from, DeliveryOrder to) {
+  //   to.driverInfo = from.driverInfo;
+  //   to.costs = from.costs;
+  //   to.status = from.status;
+  //   to.estimatedArrivalAtDropoff = ;
+  //   to.estimatedArrivalAtDropoff = ;
+  //   to.estimatedArrivalAtDropoff = ;
+  // }
+
+  @override
+  String toString() => super.toString();
 }

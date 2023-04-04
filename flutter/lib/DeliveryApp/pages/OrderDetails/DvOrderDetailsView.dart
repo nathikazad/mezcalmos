@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +18,7 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart'
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -62,6 +64,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
+        title: '${_i18n()['orderDetails']}',
         AppBarLeftButtonType.Back,
         autoBack: true,
       ),
@@ -97,11 +100,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 "${_i18n()["schTime"]}",
                                 style: context.txt.bodyLarge,
                               ),
-                              Container(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text(viewController
-                                      .order.value!.scheduleTime!
-                                      .getOrderTime())),
+                              Text(viewController.order.value!.scheduleTime!
+                                  .getOrderTime()),
                               SizedBox(
                                 height: 20,
                               ),
@@ -115,11 +115,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 "${_i18n()["from"]}",
                                 style: context.txt.bodyLarge,
                               ),
-                              Container(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text(viewController.order.value
-                                          ?.pickupLocation?.address ??
-                                      "")),
+                              Text(viewController
+                                      .order.value?.pickupLocation?.address ??
+                                  ""),
                               SizedBox(
                                 height: 20,
                               ),
@@ -129,9 +127,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           "${_i18n()["deliveredTo"]}",
                           style: context.txt.bodyLarge,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
                         Text(
                             "${viewController.order.value!.dropOffLocation.address}"),
                         SizedBox(
@@ -140,9 +135,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         Text(
                           "${_i18n()["paymentMethod"]}",
                           style: context.txt.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: 10,
                         ),
                         Text(
                             "${_i18n()[viewController.order.value!.paymentType.toNormalString().toLowerCase()]}"),
@@ -176,7 +168,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   viewController: viewController,
                 ),
                 if (viewController.order.value?.isDriverAssigned == true)
-                  _billCard(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: _billCard(context),
+                  ),
                 if (viewController.orderCosts != null)
                   OrderSummaryCard(
                     costs: viewController.orderCosts!,
@@ -231,10 +226,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          showDialog(
+                      MezButton(
+                        height: 5.h,
+                        width: 25.w,
+                        textStyle:
+                            context.txt.bodyLarge?.copyWith(fontSize: 10.sp),
+                        onClick: () async {
+                          unawaited(showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
@@ -250,25 +250,20 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     ),
                                   ),
                                 );
-                              });
+                              }));
                         },
-                        child: CachedNetworkImage(
-                          imageUrl: viewController.newBillUrl.value!,
-                          fit: BoxFit.contain,
-                          width: 70,
-                          height: 50,
-
-                          //  style: context.txt.titleSmall,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
+                        textColor: offShadeGreyColor,
+                        label: '${_i18n()['viewImage']}',
+                        backgroundColor: Colors.transparent,
                       ),
                       MezIconButton(
-                          onTap: () async {
-                            await viewController.editImage(context);
-                          },
-                          icon: Icons.edit_rounded)
+                        onTap: () async {
+                          await viewController.editImage(context);
+                        },
+                        backgroundColor: Colors.transparent,
+                        icon: Icons.delete_outlined,
+                        iconColor: redAccentColor,
+                      )
                     ],
                   ),
         // CachedNetworkImage(
@@ -336,14 +331,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     children: [
                       Icon(
                         Icons.watch_later,
-                        color: primaryBlueColor,
+                        color: Colors.black,
                         size: 18.sp,
                       ),
                       SizedBox(
                         width: 2,
                       ),
                       Text(
-                        "${viewController.customerOrdersCount.value?.toString() ?? "-"} Orders",
+                        '${viewController.customerOrdersCount.value?.toString() ?? '-'} ${_i18n()['orders']}',
                         style: context.txt.bodyMedium,
                       ),
                       SizedBox(
@@ -351,7 +346,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.amber,
+                        color: primaryBlueColor,
                         size: 18.sp,
                       ),
                       SizedBox(
@@ -410,14 +405,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     children: [
                       Icon(
                         Icons.watch_later,
-                        color: primaryBlueColor,
+                        color: Colors.black,
                         size: 18.sp,
                       ),
                       SizedBox(
                         width: 2,
                       ),
                       Text(
-                        "${viewController.serviceOrdersCount.value?.toString() ?? "-"} Orders",
+                        "${viewController.serviceOrdersCount.value?.toString() ?? "-"} ${_i18n()['orders']}",
                         style: context.txt.bodyMedium,
                       ),
                       SizedBox(
@@ -425,7 +420,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ),
                       Icon(
                         Icons.star,
-                        color: Colors.amber,
+                        color: primaryBlueColor,
                         size: 18.sp,
                       ),
                       SizedBox(
@@ -496,7 +491,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         style: context.txt.bodyLarge,
                       ),
                     ),
-                    Divider(
+                    SizedBox(
                       height: 25,
                     ),
                     TextFormField(
@@ -504,7 +499,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       style: context.txt.bodyLarge,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.attach_money_rounded),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.transparent), //<-- SEE HERE
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.attach_money_rounded,
+                          color: Colors.black,
+                        ),
                       ),
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
@@ -584,23 +587,29 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       Divider(
                         height: 25,
                       ),
-                      Text("${_i18n()['updateReason']}"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: viewController.openOrderReasonText,
-                        style: context.txt.bodyLarge,
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      if (viewController.orderCosts?.deliveryCost != 0)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${_i18n()['updateReason']}"),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                              controller: viewController.openOrderReasonText,
+                              style: context.txt.bodyLarge,
+                              validator: (String? v) {
+                                if (v == null || v.isEmpty) {
+                                  return "${_i18n()['required']}";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
                       Text("${_i18n()['updatePrice']}"),
                       SizedBox(
                         height: 10,

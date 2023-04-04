@@ -1,6 +1,6 @@
 import { getHasura } from "../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../utilities/links/deeplink";
-import { ServiceProviderStripeInfo } from "../../utilities/stripe/model";
+import { ServiceProviderStripeInfo } from "../models/stripe";
 import { SetupStripeError, UpdateStripeError } from "../../utilities/stripe/serviceProvider";
 import { ChangeUniqueIdError } from "../changeUniqueId";
 import { AppType, MezError } from "../models/Generic/Generic";

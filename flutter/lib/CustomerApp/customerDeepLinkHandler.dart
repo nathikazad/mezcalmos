@@ -8,6 +8,6 @@ class CustomerDeepLinkHandler {
     final String serviceProviderUniqueId = deepLink.path.replaceAll("/", "");
 
     String? linkUrl = await get_service_link(uniqueId: serviceProviderUniqueId);
-    if (linkUrl != null) unawaited(MezRouter.toNamed(linkUrl));
+    if (linkUrl != null) unawaited(MezRouter.toPath(linkUrl));
   }
 }

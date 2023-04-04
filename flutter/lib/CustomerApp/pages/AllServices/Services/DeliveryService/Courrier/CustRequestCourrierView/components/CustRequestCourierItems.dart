@@ -4,9 +4,15 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustRequestCourierView"]["CustRequestCourierItems"];
 
 class CustRequestCourierItems extends StatelessWidget {
   const CustRequestCourierItems({super.key, required this.viewController});
@@ -57,26 +63,37 @@ class CustRequestCourierItems extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Item ${index + 1}",
+                  '${_i18n()["item"]} ${index + 1}',
                   style:
                       context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
                 if (index != 0)
-                  MezIconButton(
-                      onTap: () {
-                        viewController.removeItem(index);
-                      },
-                      iconSize: 18,
-                      backgroundColor: offRedColor,
-                      iconColor: Colors.red,
-                      icon: Icons.close)
+                  InkWell(
+                    onTap: () {
+                      viewController.removeItem(index);
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.delete_outline_rounded,
+                          color: redAccentColor,
+                        ),
+                        Text(
+                          '${_i18n()["remove"]}',
+                          style: context.txt.bodyLarge?.copyWith(
+                              color: redAccentColor, fontSize: 11.sp),
+                        )
+                      ],
+                    ),
+                  ),
               ],
             ),
             SizedBox(
-              height: 15,
+              height: 5,
             ),
             Text(
-              "What can we get you?",
+              '${_i18n()["whatCanWeGetYou"]}',
               style: context.txt.bodyMedium?.copyWith(),
             ),
             SizedBox(
@@ -87,11 +104,11 @@ class CustRequestCourierItems extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: _textInput(
-                      hint: "Name",
+                      hint: '${_i18n()["name"]}',
                       context: context,
                       validator: (String? p0) {
                         if (p0 == null || p0.isEmpty) {
-                          return "Required";
+                          return '${_i18n()["required"]}';
                         }
                         return null;
                       },
@@ -103,36 +120,38 @@ class CustRequestCourierItems extends StatelessWidget {
                 Obx(
                   () => InkWell(
                     onTap: () async {
-                      await viewController.addItemImage(
-                          itemIndex: index, context: context);
+                      if (viewController.imagesFiles[index].path.isEmpty) {
+                        await viewController.addItemImage(
+                            itemIndex: index, context: context);
+                      } else {
+                        viewController.removeItemImage(index);
+                      }
                     },
-                    child: Ink(
-                      padding: const EdgeInsets.all(12),
+                    child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        image:
-                            (viewController.imagesFiles[index].path.isNotEmpty)
-                                ? DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: FileImage(
-                                        viewController.imagesFiles[index]))
-                                : null,
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          image: (viewController
+                                  .imagesFiles[index].path.isNotEmpty)
+                              ? DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(
+                                      viewController.imagesFiles[index]))
+                              : null),
+                      width: 49,
+                      height: 49,
                       child: (viewController.imagesFiles[index].path.isNotEmpty)
-                          ? MezIconButton(
-                              onTap: () async {
-                                await viewController.addItemImage(
-                                    itemIndex: index, context: context);
-                              },
-                              iconSize: 12,
-                              icon: Icons.edit,
-                              backgroundColor:
-                                  secondaryLightBlueColor.withOpacity(0.5),
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(Icons.cancel_rounded,
+                                  color: offLightShadeGreyColor, size: 12.5.sp),
                             )
-                          : (viewController.imagesLoading.contains(index))
-                              ? CircularProgressIndicator()
-                              : Icon(Icons.image),
+                          : Center(
+                              child: (viewController.imagesLoading
+                                      .contains(index))
+                                  ? CircularProgressIndicator()
+                                  : Icon(Icons.add_photo_alternate_outlined),
+                            ),
                     ),
                   ),
                 )
@@ -153,14 +172,15 @@ class CustRequestCourierItems extends StatelessWidget {
           height: 10,
         ),
         _textInput(
-            hint: "Notes",
+            hint: '${_i18n()["notes"]}',
             controller: viewController.itemsNotes[index],
             context: context),
         SizedBox(
           height: 10,
         ),
         _textInput(
-            hint: "Estimated cost",
+            isPrice: true,
+            hint: '${_i18n()["estimatedCost"]}',
             context: context,
             suffix: Icons.attach_money,
             controller: viewController.itemsEstCosts[index]),
@@ -171,6 +191,7 @@ class CustRequestCourierItems extends StatelessWidget {
   Widget _textInput(
       {required String hint,
       required TextEditingController controller,
+      TextStyle? textStyle,
       required BuildContext context,
       IconData? suffix,
       bool isPrice = false,
@@ -185,11 +206,16 @@ class CustRequestCourierItems extends StatelessWidget {
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ]
             : [],
-        style: context.txt.bodyLarge,
+        style: textStyle ?? context.txt.bodyLarge,
         decoration: InputDecoration(
             fillColor: Colors.white,
             hintText: hint,
             suffixIconColor: Colors.grey.shade600,
-            suffixIcon: (suffix != null) ? Icon(suffix) : null));
+            suffixIcon: (suffix != null)
+                ? Icon(
+                    suffix,
+                    color: Colors.black,
+                  )
+                : null));
   }
 }

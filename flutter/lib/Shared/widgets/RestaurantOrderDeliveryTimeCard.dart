@@ -51,7 +51,7 @@
 //                     Flexible(
 //                       child: Text(
 //                         "${DateFormat.MMMEd(userLangCode).format(order.deliveryTime!).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(order.deliveryTime!.toLocal())}",
-//                         style: context.txt.bodyText1,
+//                         style: context.txt.bodyLarge,
 //                       ),
 //                     ),
 //                   ],

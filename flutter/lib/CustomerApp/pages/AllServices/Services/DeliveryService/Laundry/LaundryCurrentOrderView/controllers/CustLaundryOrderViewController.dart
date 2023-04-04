@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -35,6 +36,8 @@ class CustLaundryOrderViewController {
 
   // init
   Future<void> init({required int orderId}) async {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Laundry, orderId: orderId);
     try {
       order.value =
           await get_laundry_order_by_id(orderId: orderId, withCache: false);

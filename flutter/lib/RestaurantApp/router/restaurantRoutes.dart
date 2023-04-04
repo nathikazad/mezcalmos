@@ -7,7 +7,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRouter {
@@ -28,17 +28,41 @@ class RestaurantRouter {
   static const String restaurantChoiceRoute =
       "/Choice/:restaurantId/:optionId/:choiceId";
 
-  final List<QRoute> routes = <QRoute>[
-    QRoute(
-      path: createRestaurantRoute,
-      name: createRestaurantRoute,
-      builder: () => ROpCreateRestuarantView(),
-    ),
-    QRoute(
-      path: unAuthorizedRoute,
-      name: unAuthorizedRoute,
-      builder: () => ROpUnauthorizedOpView(),
-    ),
+  static final List<QRoute> routes = <QRoute>[
+        QRoute(
+          path: createRestaurantRoute,
+          name: createRestaurantRoute,
+          builder: () => ROpCreateRestuarantView(),
+        ),
+        QRoute(
+          path: unAuthorizedRoute,
+          name: unAuthorizedRoute,
+          builder: () => ROpUnauthorizedOpView(),
+        ),
+        QRoute(
+          path: currentOrdersRoute,
+          name: currentOrdersRoute,
+          builder: () => ROpCurrentOrdersListView(),
+        ),
+        QRoute(
+          path: pastOrdersRoute,
+          name: pastOrdersRoute,
+          builder: () => ROpPastOrdersList(),
+        ),
+        QRoute(
+          path: restaurantOptionRoute,
+          name: restaurantOptionRoute,
+          builder: () => ROpOptionView(),
+        ),
+        QRoute(
+          path: restaurantChoiceRoute,
+          name: restaurantChoiceRoute,
+          builder: () => ROpChoiceView(),
+        ),
+      ] +
+      sharedWithAdminRoutes;
+
+  static final List<QRoute> sharedWithAdminRoutes = [
     QRoute(
       path: menuViewRoute,
       name: menuViewRoute,
@@ -63,26 +87,6 @@ class RestaurantRouter {
       path: restaurantOrderRoute,
       name: restaurantOrderRoute,
       builder: () => RestaurantOrderView(),
-    ),
-    QRoute(
-      path: currentOrdersRoute,
-      name: currentOrdersRoute,
-      builder: () => ROpCurrentOrdersListView(),
-    ),
-    QRoute(
-      path: pastOrdersRoute,
-      name: pastOrdersRoute,
-      builder: () => ROpPastOrdersList(),
-    ),
-    QRoute(
-      path: restaurantOptionRoute,
-      name: restaurantOptionRoute,
-      builder: () => ROpOptionView(),
-    ),
-    QRoute(
-      path: restaurantChoiceRoute,
-      name: restaurantChoiceRoute,
-      builder: () => ROpChoiceView(),
     ),
   ];
 }

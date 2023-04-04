@@ -44,6 +44,7 @@ class OrderBillImage extends StatelessWidget {
                               width: 70.w,
                               height: 60.h,
                               child: PhotoView(
+                                minScale: PhotoViewComputedScale.contained,
                                 imageProvider: CachedNetworkImageProvider(
                                   billImage!,
                                   //  style: context.txt.titleSmall,

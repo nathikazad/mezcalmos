@@ -29,7 +29,7 @@ class ROpItemImage extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.grey.shade300,
+                      backgroundColor: Color(0xFFEDEDED),
                       backgroundImage: viewController.getRightImage,
                       radius: 90,
                       child: (viewController.imageLoading.isTrue)
@@ -41,7 +41,7 @@ class ROpItemImage extends StatelessWidget {
                               ? Center(
                                   child: Text(
                                     '${_i18n()["addImage"]}',
-                                    style: context.txt.bodyText1,
+                                    style: context.txt.bodyLarge,
                                     textAlign: TextAlign.center,
                                   ),
                                 )

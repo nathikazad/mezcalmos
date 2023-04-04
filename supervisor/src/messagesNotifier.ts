@@ -7,7 +7,7 @@ import { NewMessageNotification, Notification, NotificationAction, NotificationT
 // import { CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import { notifyCallerOfEndCall } from "../../functions/src/utilities/agora";
 
-import { Keys } from "../../functions/src/shared/models/Generic/Keys";
+
 import { 
   AuthorizeOperatorNotificationForQueue, 
   NewRestaurantNotification, 
@@ -23,7 +23,7 @@ import { getChat } from "../../functions/src/shared/graphql/chat/getChat"
 
 import { HttpsError } from "firebase-functions/v1/auth";
 
-export function startWatchingMessageNotificationQueue(keys: Keys) {
+export function startWatchingMessageNotificationQueue() {
   console.log("starting watching message notifications")
   rootNodes.notificationsQueueNode().on('child_added', function (snap) {
     let notification: NotificationForQueue = snap.val();

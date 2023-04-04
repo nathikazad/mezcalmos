@@ -45,7 +45,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
               children: [
                 Text(
                   '${_i18n()["paymentMethod"]}',
-                  style: context.txt.bodyText1,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 9,
@@ -112,7 +112,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                   //           PickerChoice.SavedCard)
                                   //       ? value.entries.first.value!.brand.name
                                   //       : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
-                                  //   style: context.txt.bodyText1?.copyWith(
+                                  //   style: context.txt.bodyLarge?.copyWith(
                                   //     fontSize: 12.sp,
                                   //   ),
                                   // ),

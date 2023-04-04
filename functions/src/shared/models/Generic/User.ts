@@ -1,4 +1,4 @@
-import { CustomerStripe } from "../../../utilities/stripe/model";
+import { CustomerStripe } from "../stripe";
 import { Language, NotificationInfo } from "./Generic";
 
 export interface UserInfo {

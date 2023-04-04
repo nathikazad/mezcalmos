@@ -10,15 +10,16 @@ class MyExpansionPanelComponent extends StatefulWidget {
   final bool initiallyExpanded;
   final bool maintainState;
   final GestureTapCallback? onEdit;
+  final bool showExpandButton;
 
-  const MyExpansionPanelComponent({
-    required this.child,
-    this.onExpansionChanged,
-    required this.children,
-    this.initiallyExpanded = false,
-    this.maintainState = false,
-    this.onEdit,
-  });
+  const MyExpansionPanelComponent(
+      {required this.child,
+      this.onExpansionChanged,
+      required this.children,
+      this.initiallyExpanded = false,
+      this.maintainState = false,
+      this.onEdit,
+      this.showExpandButton = false});
 
   @override
   _MyExpansionPanelComponentState createState() =>
@@ -140,24 +141,26 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                             ),
                             onTap: widget.onEdit,
                           ),
-                          const SizedBox(width: 10),
-                          InkWell(
-                            child: Container(
-                              width: 25,
-                              height: 25,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(64)),
-                                color: secondaryLightBlueColor,
+                          if (widget.showExpandButton)
+                            const SizedBox(width: 10),
+                          if (widget.showExpandButton)
+                            InkWell(
+                              child: Container(
+                                width: 25,
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(64)),
+                                  color: secondaryLightBlueColor,
+                                ),
+                                child: RotationTransition(
+                                  turns: _iconTurns,
+                                  child: const Icon(Icons.expand_more,
+                                      color: primaryBlueColor),
+                                ),
                               ),
-                              child: RotationTransition(
-                                turns: _iconTurns,
-                                child: const Icon(Icons.expand_more,
-                                    color: primaryBlueColor),
-                              ),
+                              onTap: _handleTap,
                             ),
-                            onTap: _handleTap,
-                          ),
                           const SizedBox(width: 10),
                         ],
                       ),

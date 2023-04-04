@@ -166,7 +166,7 @@ factory UpdateStripeResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum ParticipantType { Customer, Taxi, DeliveryOperator, DeliveryDriver, LaundryOperator, RestaurantOperator, MezAdmin }
+enum ParticipantType { Customer, Taxi, DeliveryOperator, DeliveryDriver, LaundryOperator, RestaurantOperator, MezAdmin, BusinessOperator }
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -455,6 +455,94 @@ factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
+enum BusinessProfile { SurfShop, VehicleRental, HomeRental, WellnessClass, Party, Volunteer, TourAgency }
+extension ParseBusinessProfileToString on BusinessProfile {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToBusinessProfile on String {
+  BusinessProfile toBusinessProfile() {
+    return BusinessProfile.values.firstWhere(
+        (BusinessProfile businessProfile) =>
+            businessProfile.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class BusinessResponse {
+  bool success;
+  BusinessError? error;
+  String? unhandledError;
+  BusinessResponse(this.success, this.error, this.unhandledError);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+factory BusinessResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return BusinessResponse(json["success"], json["error"]?.toString().toBusinessError(), json["unhandledError"]);
+  }
+}
+
+class OrderReqResponse {
+  bool success;
+  OrderReqError? error;
+  String? unhandledError;
+  num? orderId;
+  OrderReqResponse(this.success, this.error, this.unhandledError, this.orderId);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+      "orderId": orderId,
+    };
+  }
+factory OrderReqResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return OrderReqResponse(json["success"], json["error"]?.toString().toOrderReqError(), json["unhandledError"], json["orderId"]);
+  }
+}
+
+class HandleRequestResponse {
+  bool success;
+  HandleRequestError? error;
+  String? unhandledError;
+  num? orderId;
+  HandleRequestResponse(this.success, this.error, this.unhandledError, this.orderId);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+      "orderId": orderId,
+    };
+  }
+factory HandleRequestResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return HandleRequestResponse(json["success"], json["error"]?.toString().toHandleRequestError(), json["unhandledError"], json["orderId"]);
+  }
+}
+
+class CustomerHandleRequestResponse {
+  bool success;
+  CustomerHandleRequestError? error;
+  String? unhandledError;
+  CustomerHandleRequestResponse(this.success, this.error, this.unhandledError);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+factory CustomerHandleRequestResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CustomerHandleRequestResponse(json["success"], json["error"]?.toString().toCustomerHandleRequestError(), json["unhandledError"]);
+  }
+}
+
 class LaundryResponse {
   bool success;
   LaundryError? error;
@@ -637,7 +725,7 @@ factory ChangePriceReqResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum OrderType { Taxi, Restaurant, Laundry, Courier, Water }
+enum OrderType { Taxi, Restaurant, Laundry, Courier, Business, Water }
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -645,7 +733,6 @@ extension ParseOrderTypeToString on OrderType {
   }
 }
 extension ParseStringToOrderType on String {
-
   OrderType toOrderType() {
     return OrderType.values.firstWhere(
         (OrderType orderType) =>
@@ -688,21 +775,21 @@ factory CancelCourierResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum AppType { Customer, Restaurant, Delivery, DeliveryAdmin, MezAdmin, Laundry }
-extension ParseAppTypeToString on AppType {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
+class NotificationInfo {
+  String token;
+  bool turnOffNotifications;
+  AppType appType;
+  NotificationInfo({
+    required this.token, required this.turnOffNotifications, required this.appType});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "token": token,
+      "turnOffNotifications": turnOffNotifications,
+      "appType": appType,
+    };
   }
-}
-extension ParseStringToAppType on String {
-  AppType toAppType() {
-    return AppType.values.firstWhere(
-        (AppType appType) =>
-            appType.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
 
+}
 
 enum Language { EN, ES }
 extension ParseLanguageToString on Language {
@@ -720,18 +807,1330 @@ extension ParseStringToLanguage on String {
 }
 
 
-enum ServerResponseStatus { Success, Error }
-extension ParseServerResponseStatusToString on ServerResponseStatus {
+class CustomerStripe {
+  String id;
+  Map<num, String> idsWithServiceProvider;
+  Map<String, CustomerCard> cards;
+  CustomerStripe({
+    required this.id, required this.idsWithServiceProvider, required this.cards});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "idsWithServiceProvider": idsWithServiceProvider,
+      "cards": cards,
+    };
+  }
+
+}
+
+class CustomerCard {
+  String cardId;
+  String? last4;
+  String? brand;
+  num? expMonth;
+  num? expYear;
+  Map<num, String> idsWithServiceProvider;
+  CustomerCard({
+    required this.cardId, this.last4, this.brand, this.expMonth, this.expYear, required this.idsWithServiceProvider});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "cardId": cardId,
+      "last4": last4,
+      "brand": brand,
+      "expMonth": expMonth,
+      "expYear": expYear,
+      "idsWithServiceProvider": idsWithServiceProvider,
+    };
+  }
+
+}
+
+enum StripePaymentStatus { Authorized, Captured, Cancelled }
+extension ParseStripePaymentStatusToString on StripePaymentStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
-extension ParseStringToServerResponseStatus on String {
-  ServerResponseStatus toServerResponseStatus() {
-    return ServerResponseStatus.values.firstWhere(
-        (ServerResponseStatus serverResponseStatus) =>
-            serverResponseStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+extension ParseStringToStripePaymentStatus on String {
+  StripePaymentStatus toStripePaymentStatus() {
+    return StripePaymentStatus.values.firstWhere(
+        (StripePaymentStatus stripePaymentStatus) =>
+            stripePaymentStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class OrderStripeInfo {
+  String id;
+  num stripeFees;
+  num amountCharged;
+  num amountRefunded;
+  bool? chargeFeesOnCustomer;
+  String? brand;
+  num? expMonth;
+  num? expYear;
+  String? last4;
+  StripePaymentStatus status;
+  String serviceProviderAccount;
+  OrderStripeInfo({
+    required this.id, required this.stripeFees, required this.amountCharged, required this.amountRefunded, required this.chargeFeesOnCustomer, this.brand, this.expMonth, this.expYear, this.last4, required this.status, required this.serviceProviderAccount});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "stripeFees": stripeFees,
+      "amountCharged": amountCharged,
+      "amountRefunded": amountRefunded,
+      "chargeFeesOnCustomer": chargeFeesOnCustomer,
+      "brand": brand,
+      "expMonth": expMonth,
+      "expYear": expYear,
+      "last4": last4,
+      "status": status,
+      "serviceProviderAccount": serviceProviderAccount,
+    };
+  }
+
+}
+
+enum StripeStatus { InProcess, IsWorking, Inactive }
+extension ParseStripeStatusToString on StripeStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToStripeStatus on String {
+  StripeStatus toStripeStatus() {
+    return StripeStatus.values.firstWhere(
+        (StripeStatus stripeStatus) =>
+            stripeStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class ServiceProviderStripeInfo {
+  String id;
+  String status;
+  bool? chargeFeesOnCustomer;
+  bool chargesEnabled;
+  bool payoutsEnabled;
+  bool detailsSubmitted;
+  List<String>? requirements;
+  String? email;
+  ServiceProviderStripeInfo({
+    required this.id, required this.status, required this.chargeFeesOnCustomer, required this.chargesEnabled, required this.payoutsEnabled, required this.detailsSubmitted, this.requirements, required this.email});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "status": status,
+      "chargeFeesOnCustomer": chargeFeesOnCustomer,
+      "chargesEnabled": chargesEnabled,
+      "payoutsEnabled": payoutsEnabled,
+      "detailsSubmitted": detailsSubmitted,
+      "requirements": requirements,
+      "email": email,
+    };
+  }
+
+}
+
+class DeliveryOrder {
+  num deliveryId;
+  Location? pickupLocation;
+  String? pickupLocationText;
+  Location dropoffLocation;
+  num? deliveryDriverId;
+  num? chatWithServiceProviderId;
+  bool packageReady;
+  num chatWithCustomerId;
+  PaymentType paymentType;
+  num? stripePaymentId;
+  String? estimatedPackageReadyTime;
+  String? actualPackageReadyTime;
+  String? estimatedArrivalAtPickupTime;
+  String? actualArrivalAtPickupTime;
+  String? estimatedArrivalAtDropoffTime;
+  String? actualArrivalAtDropoffTime;
+  String? actualDeliveredTime;
+  DeliveryOrderStatus status;
+  num? driverReviewByServiceProviderId;
+  num? driverReviewByCustomerId;
+  num? serviceProviderReviewBydriverId;
+  num? customerReviewByDriverId;
+  num customerId;
+  num serviceProviderId;
+  DeliveryServiceProviderType serviceProviderType;
+  String? tripPolyline;
+  num deliveryCost;
+  num? packageCost;
+  Location? currentGps;
+  num? tripDistance;
+  num? tripDuration;
+  String orderTime;
+  String? cancellationTime;
+  DeliveryDriver? deliveryDriver;
+  OrderType orderType;
+  DeliveryDirection direction;
+  num? distanceFromBase;
+  DeliveryChangePriceRequest? changePriceRequest;
+  DeliveryOrder({
+    required this.deliveryId, this.pickupLocation, this.pickupLocationText, required this.dropoffLocation, this.deliveryDriverId, this.chatWithServiceProviderId, required this.packageReady, required this.chatWithCustomerId, required this.paymentType, this.stripePaymentId, this.estimatedPackageReadyTime, this.actualPackageReadyTime, this.estimatedArrivalAtPickupTime, this.actualArrivalAtPickupTime, this.estimatedArrivalAtDropoffTime, this.actualArrivalAtDropoffTime, this.actualDeliveredTime, required this.status, this.driverReviewByServiceProviderId, this.driverReviewByCustomerId, this.serviceProviderReviewBydriverId, this.customerReviewByDriverId, required this.customerId, required this.serviceProviderId, required this.serviceProviderType, this.tripPolyline, required this.deliveryCost, this.packageCost, this.currentGps, this.tripDistance, this.tripDuration, required this.orderTime, this.cancellationTime, this.deliveryDriver, required this.orderType, required this.direction, this.distanceFromBase, this.changePriceRequest});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "deliveryId": deliveryId,
+      "pickupLocation": pickupLocation,
+      "pickupLocationText": pickupLocationText,
+      "dropoffLocation": dropoffLocation,
+      "deliveryDriverId": deliveryDriverId,
+      "chatWithServiceProviderId": chatWithServiceProviderId,
+      "packageReady": packageReady,
+      "chatWithCustomerId": chatWithCustomerId,
+      "paymentType": paymentType,
+      "stripePaymentId": stripePaymentId,
+      "estimatedPackageReadyTime": estimatedPackageReadyTime,
+      "actualPackageReadyTime": actualPackageReadyTime,
+      "estimatedArrivalAtPickupTime": estimatedArrivalAtPickupTime,
+      "actualArrivalAtPickupTime": actualArrivalAtPickupTime,
+      "estimatedArrivalAtDropoffTime": estimatedArrivalAtDropoffTime,
+      "actualArrivalAtDropoffTime": actualArrivalAtDropoffTime,
+      "actualDeliveredTime": actualDeliveredTime,
+      "status": status,
+      "driverReviewByServiceProviderId": driverReviewByServiceProviderId,
+      "driverReviewByCustomerId": driverReviewByCustomerId,
+      "serviceProviderReviewBydriverId": serviceProviderReviewBydriverId,
+      "customerReviewByDriverId": customerReviewByDriverId,
+      "customerId": customerId,
+      "serviceProviderId": serviceProviderId,
+      "serviceProviderType": serviceProviderType,
+      "tripPolyline": tripPolyline,
+      "deliveryCost": deliveryCost,
+      "packageCost": packageCost,
+      "currentGps": currentGps,
+      "tripDistance": tripDistance,
+      "tripDuration": tripDuration,
+      "orderTime": orderTime,
+      "cancellationTime": cancellationTime,
+      "deliveryDriver": deliveryDriver,
+      "orderType": orderType,
+      "direction": direction,
+      "distanceFromBase": distanceFromBase,
+      "changePriceRequest": changePriceRequest,
+    };
+  }
+
+}
+
+enum DeliveryDirection { FromCustomer, ToCustomer }
+extension ParseDeliveryDirectionToString on DeliveryDirection {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToDeliveryDirection on String {
+  DeliveryDirection toDeliveryDirection() {
+    return DeliveryDirection.values.firstWhere(
+        (DeliveryDirection deliveryDirection) =>
+            deliveryDirection.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class DeliveryDriver {
+  num id;
+  num userId;
+  DeliveryServiceProviderType? deliveryCompanyType;
+  num? deliveryCompanyId;
+  AuthorizationStatus status;
+  String? appVersion;
+  Location? currentLocation;
+  UserInfo? user;
+  bool? online;
+  NotificationInfo? notificationInfo;
+  DeliveryDriver({
+    required this.id, required this.userId, this.deliveryCompanyType, this.deliveryCompanyId, required this.status, this.appVersion, this.currentLocation, this.user, this.online, this.notificationInfo});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "userId": userId,
+      "deliveryCompanyType": deliveryCompanyType,
+      "deliveryCompanyId": deliveryCompanyId,
+      "status": status,
+      "appVersion": appVersion,
+      "currentLocation": currentLocation,
+      "user": user,
+      "online": online,
+      "notificationInfo": notificationInfo,
+    };
+  }
+
+}
+
+class DeliveryOperator {
+  num id;
+  num userId;
+  num operatorDetailsId;
+  num deliveryCompanyId;
+  AuthorizationStatus status;
+  bool owner;
+  String? appVersion;
+  bool online;
+  NotificationInfo? notificationInfo;
+  UserInfo? user;
+  DeliveryOperator({
+    required this.id, required this.userId, required this.operatorDetailsId, required this.deliveryCompanyId, required this.status, required this.owner, this.appVersion, required this.online, this.notificationInfo, this.user});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "userId": userId,
+      "operatorDetailsId": operatorDetailsId,
+      "deliveryCompanyId": deliveryCompanyId,
+      "status": status,
+      "owner": owner,
+      "appVersion": appVersion,
+      "online": online,
+      "notificationInfo": notificationInfo,
+      "user": user,
+    };
+  }
+
+}
+
+class DeliveryChangePriceRequest {
+  ChangePriceStatus status;
+  num newPrice;
+  num oldPrice;
+  String reason;
+  DeliveryChangePriceRequest({
+    required this.status, required this.newPrice, required this.oldPrice, required this.reason});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "status": status,
+      "newPrice": newPrice,
+      "oldPrice": oldPrice,
+      "reason": reason,
+    };
+  }
+
+}
+
+enum ChangePriceStatus { Requested, Accepted, Rejected }
+extension ParseChangePriceStatusToString on ChangePriceStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToChangePriceStatus on String {
+  ChangePriceStatus toChangePriceStatus() {
+    return ChangePriceStatus.values.firstWhere(
+        (ChangePriceStatus changePriceStatus) =>
+            changePriceStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class DeliveryAdmin {
+  bool authorized;
+  String versionNumber;
+  NotificationInfo notificationInfo;
+  DeliveryAdmin({
+    required this.authorized, required this.versionNumber, required this.notificationInfo});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "authorized": authorized,
+      "versionNumber": versionNumber,
+      "notificationInfo": notificationInfo,
+    };
+  }
+
+}
+
+class Review {
+  num rating;
+  num fromEntityId;
+  String fromEntityType;
+  num toEntityId;
+  String toEntityType;
+  Review({
+    required this.rating, required this.fromEntityId, required this.fromEntityType, required this.toEntityId, required this.toEntityType});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "rating": rating,
+      "fromEntityId": fromEntityId,
+      "fromEntityType": fromEntityType,
+      "toEntityId": toEntityId,
+      "toEntityType": toEntityType,
+    };
+  }
+
+}
+
+enum AppType { Customer, Restaurant, Delivery, DeliveryAdmin, MezAdmin, Business, Laundry }
+extension ParseAppTypeToString on AppType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToAppType on String {
+  AppType toAppType() {
+    return AppType.values.firstWhere(
+        (AppType appType) =>
+            appType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum TokenType { DeviceNotificationToken }
+extension ParseTokenTypeToString on TokenType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToTokenType on String {
+  TokenType toTokenType() {
+    return TokenType.values.firstWhere(
+        (TokenType tokenType) =>
+            tokenType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum AuthorizationStatus { InReview, Authorized, Unauthorized, AwaitingApproval }
+extension ParseAuthorizationStatusToString on AuthorizationStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToAuthorizationStatus on String {
+  AuthorizationStatus toAuthorizationStatus() {
+    return AuthorizationStatus.values.firstWhere(
+        (AuthorizationStatus authorizationStatus) =>
+            authorizationStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class Order {
+  num businessId;
+  CustomerAppType customerAppType;
+  String? notes;
+  Order({
+    required this.businessId, required this.customerAppType, this.notes});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "businessId": businessId,
+      "customerAppType": customerAppType,
+      "notes": notes,
+    };
+  }
+
+}
+
+class UserInfo {
+  num id;
+  String? image;
+  String firebaseId;
+  String? name;
+  Language language;
+  String? email;
+  String? phoneNumber;
+  bool? deleted;
+  UserInfo({
+    required this.id, this.image, required this.firebaseId, this.name, required this.language, this.email, this.phoneNumber, this.deleted});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "image": image,
+      "firebaseId": firebaseId,
+      "name": name,
+      "language": language,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "deleted": deleted,
+    };
+  }
+
+}
+
+class ServiceProvider {
+  num serviceProviderId;
+  ServiceProviderType serviceProviderType;
+  ServiceProvider({
+    required this.serviceProviderId, required this.serviceProviderType});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "serviceProviderId": serviceProviderId,
+      "serviceProviderType": serviceProviderType,
+    };
+  }
+
+}
+
+class Operator {
+  num id;
+  num detailsId;
+  num serviceProviderId;
+  num userId;
+  AuthorizationStatus status;
+  bool online;
+  bool? owner;
+  String? appVersion;
+  Location? currentGps;
+  NotificationInfo? notificationInfo;
+  UserInfo? user;
+  Operator({
+    required this.id, required this.detailsId, required this.serviceProviderId, required this.userId, required this.status, required this.online, this.owner, this.appVersion, this.currentGps, this.notificationInfo, this.user});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "detailsId": detailsId,
+      "serviceProviderId": serviceProviderId,
+      "userId": userId,
+      "status": status,
+      "online": online,
+      "owner": owner,
+      "appVersion": appVersion,
+      "currentGps": currentGps,
+      "notificationInfo": notificationInfo,
+      "user": user,
+    };
+  }
+
+}
+
+enum OpenStatus { Open, ClosedTemporarily, ClosedIndefinitely }
+extension ParseOpenStatusToString on OpenStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToOpenStatus on String {
+  OpenStatus toOpenStatus() {
+    return OpenStatus.values.firstWhere(
+        (OpenStatus openStatus) =>
+            openStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class ServiceLink {
+  num? id;
+  num serviceProviderId;
+  ServiceProviderType serviceProviderType;
+  String? operatorDeepLink;
+  String? operatorQrImageLink;
+  String? driverDeepLink;
+  String? driverQrImageLink;
+  ServiceLink({
+    this.id, required this.serviceProviderId, required this.serviceProviderType, this.operatorDeepLink, this.operatorQrImageLink, this.driverDeepLink, this.driverQrImageLink});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "serviceProviderId": serviceProviderId,
+      "serviceProviderType": serviceProviderType,
+      "operatorDeepLink": operatorDeepLink,
+      "operatorQrImageLink": operatorQrImageLink,
+      "driverDeepLink": driverDeepLink,
+      "driverQrImageLink": driverQrImageLink,
+    };
+  }
+
+}
+
+enum ServiceProviderType { Restaurant, Laundry, Taxi, Business, Delivery }
+extension ParseServiceProviderTypeToString on ServiceProviderType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToServiceProviderType on String {
+  ServiceProviderType toServiceProviderType() {
+    return ServiceProviderType.values.firstWhere(
+        (ServiceProviderType serviceProviderType) =>
+            serviceProviderType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class Business {
+  String name;
+  String image;
+  BusinessProfile profile;
+  Location location;
+  String? businessOperatorNotificationToken;
+  Map<Language, bool> language;
+  Business({
+    required this.name, required this.image, required this.profile, required this.location, this.businessOperatorNotificationToken, required this.language});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "name": name,
+      "image": image,
+      "profile": profile,
+      "location": location,
+      "businessOperatorNotificationToken": businessOperatorNotificationToken,
+      "language": language,
+    };
+  }
+
+}
+
+class BusinessService {
+  num id;
+  Map<Language, String> name;
+  Map<Language, String>? description;
+  num position;
+  num businessId;
+  bool available;
+  String image;
+  BusinessServiceCost cost;
+  Map<String, dynamic>? additionalParameters;
+  BusinessService({
+    required this.id, required this.name, this.description, required this.position, required this.businessId, required this.available, required this.image, required this.cost, this.additionalParameters});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "name": name,
+      "description": description,
+      "position": position,
+      "businessId": businessId,
+      "available": available,
+      "image": image,
+      "cost": cost,
+      "additionalParameters": additionalParameters,
+    };
+  }
+
+}
+
+class BusinessServiceCost {
+  num? perHour;
+  num? perDay;
+  num? perWeek;
+  num? perMonth;
+  BusinessServiceCost({
+    this.perHour, this.perDay, this.perWeek, this.perMonth});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "perHour": perHour,
+      "perDay": perDay,
+      "perWeek": perWeek,
+      "perMonth": perMonth,
+    };
+  }
+
+}
+
+enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth }
+extension ParseTimeUnitToString on TimeUnit {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToTimeUnit on String {
+  TimeUnit toTimeUnit() {
+    return TimeUnit.values.firstWhere(
+        (TimeUnit timeUnit) =>
+            timeUnit.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class Rental {
+  RentalCategory1 category1;
+  BusinessService details;
+  Rental({
+    required this.category1, required this.details});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "category1": category1,
+      "details": details,
+    };
+  }
+
+}
+
+class Class {
+  ClassCategory1 category1;
+  ScheduleType scheduleType;
+  dynamic? schedule;
+  BusinessService details;
+  Class({
+    required this.category1, required this.scheduleType, this.schedule, required this.details});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "category1": category1,
+      "scheduleType": scheduleType,
+      "schedule": schedule,
+      "details": details,
+    };
+  }
+
+}
+
+class Event {
+  EventCategory1 category1;
+  ScheduleType scheduleType;
+  dynamic? schedule;
+  BusinessService details;
+  Event({
+    required this.category1, required this.scheduleType, this.schedule, required this.details});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "category1": category1,
+      "scheduleType": scheduleType,
+      "schedule": schedule,
+      "details": details,
+    };
+  }
+
+}
+
+enum RentalCategory1 { Surf, Motorcycle, Home, Uncategorized }
+extension ParseRentalCategory1ToString on RentalCategory1 {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToRentalCategory1 on String {
+  RentalCategory1 toRentalCategory1() {
+    return RentalCategory1.values.firstWhere(
+        (RentalCategory1 rentalCategory1) =>
+            rentalCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum ClassCategory1 { Yoga, MartialArt }
+extension ParseClassCategory1ToString on ClassCategory1 {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToClassCategory1 on String {
+  ClassCategory1 toClassCategory1() {
+    return ClassCategory1.values.firstWhere(
+        (ClassCategory1 classCategory1) =>
+            classCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum EventCategory1 { Party, Dance, GetTogether }
+extension ParseEventCategory1ToString on EventCategory1 {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToEventCategory1 on String {
+  EventCategory1 toEventCategory1() {
+    return EventCategory1.values.firstWhere(
+        (EventCategory1 eventCategory1) =>
+            eventCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum ServiceType { Rental, Class, Event }
+extension ParseServiceTypeToString on ServiceType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToServiceType on String {
+  ServiceType toServiceType() {
+    return ServiceType.values.firstWhere(
+        (ServiceType serviceType) =>
+            serviceType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum ScheduleType { Scheduled, OnDemand }
+extension ParseScheduleTypeToString on ScheduleType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToScheduleType on String {
+  ScheduleType toScheduleType() {
+    return ScheduleType.values.firstWhere(
+        (ScheduleType scheduleType) =>
+            scheduleType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class BusinessOrder {
+  num businessId;
+  BusinessOrderRequestStatus status;
+  Business? business;
+  List<BusinessOrderRequestItem> items;
+  num estimatedCost;
+  num? finalCost;
+  String? commenceTime;
+  Order orderDetails;
+  BusinessOrder({
+    required this.businessId, required this.status, this.business, required this.items, required this.estimatedCost, this.finalCost, this.commenceTime, required this.orderDetails});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "businessId": businessId,
+      "status": status,
+      "business": business,
+      "items": items,
+      "estimatedCost": estimatedCost,
+      "finalCost": finalCost,
+      "commenceTime": commenceTime,
+      "orderDetails": orderDetails,
+    };
+  }
+
+}
+
+class BusinessOrderRequestItem {
+  num serviceId;
+  ServiceType serviceType;
+  num id;
+  bool? available;
+  BusinessService? service;
+  BusinessItemCost cost;
+  BusinessOrderRequestItem({
+    required this.serviceId, required this.serviceType, required this.id, this.available, this.service, required this.cost});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "serviceId": serviceId,
+      "serviceType": serviceType,
+      "id": id,
+      "available": available,
+      "service": service,
+      "cost": cost,
+    };
+  }
+
+}
+
+class BusinessItemCost {
+  num estimatedCostPerOne;
+  num? finalCostPerOne;
+  TimeUnit? timeUnit;
+  String fromTime;
+  String toTime;
+  num quantity;
+  BusinessItemCost({
+    required this.estimatedCostPerOne, this.finalCostPerOne, this.timeUnit, required this.fromTime, required this.toTime, required this.quantity});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "estimatedCostPerOne": estimatedCostPerOne,
+      "finalCostPerOne": finalCostPerOne,
+      "timeUnit": timeUnit,
+      "fromTime": fromTime,
+      "toTime": toTime,
+      "quantity": quantity,
+    };
+  }
+
+}
+
+enum BusinessOrderRequestStatus { RequestReceived, ApprovedByBusiness, CancelledByBusiness, ConfirmedByCustomer, CancelledByCustomer, InProgress, Completed }
+extension ParseBusinessOrderRequestStatusToString on BusinessOrderRequestStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToBusinessOrderRequestStatus on String {
+  BusinessOrderRequestStatus toBusinessOrderRequestStatus() {
+    return BusinessOrderRequestStatus.values.firstWhere(
+        (BusinessOrderRequestStatus businessOrderRequestStatus) =>
+            businessOrderRequestStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class BusinessCart {
+  num customerId;
+  num businessId;
+  num cost;
+  List<BusinessCartItem> items;
+  num? discountValue;
+  BusinessCart({
+    required this.customerId, required this.businessId, required this.cost, required this.items, this.discountValue});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "customerId": customerId,
+      "businessId": businessId,
+      "cost": cost,
+      "items": items,
+      "discountValue": discountValue,
+    };
+  }
+
+}
+
+class BusinessCartItem {
+  num cartItemId;
+  num serviceId;
+  ServiceType serviceType;
+  num customerId;
+  BusinessItemCost cost;
+  Map<Language, String>? name;
+  String? image;
+  BusinessCartItem({
+    required this.cartItemId, required this.serviceId, required this.serviceType, required this.customerId, required this.cost, this.name, this.image});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "cartItemId": cartItemId,
+      "serviceId": serviceId,
+      "serviceType": serviceType,
+      "customerId": customerId,
+      "cost": cost,
+      "name": name,
+      "image": image,
+    };
+  }
+
+}
+
+class CourierOrder {
+  num id;
+  Location? fromLocationGps;
+  String? fromLocationText;
+  Location toLocation;
+  DeliveryOrder deliveryOrder;
+  List<CourierItem> items;
+  num customerId;
+  String orderTime;
+  OrderStripeInfo? stripeInfo;
+  PaymentType paymentType;
+  num? tax;
+  num? stripeFees;
+  num? discountValue;
+  CourierOrder({
+    required this.id, this.fromLocationGps, this.fromLocationText, required this.toLocation, required this.deliveryOrder, required this.items, required this.customerId, required this.orderTime, this.stripeInfo, required this.paymentType, this.tax, this.stripeFees, this.discountValue});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "fromLocationGps": fromLocationGps,
+      "fromLocationText": fromLocationText,
+      "toLocation": toLocation,
+      "deliveryOrder": deliveryOrder,
+      "items": items,
+      "customerId": customerId,
+      "orderTime": orderTime,
+      "stripeInfo": stripeInfo,
+      "paymentType": paymentType,
+      "tax": tax,
+      "stripeFees": stripeFees,
+      "discountValue": discountValue,
+    };
+  }
+
+}
+
+class LaundryCategory {
+  num categoryid;
+  Map<Language, String>? name;
+  num storeId;
+  num costByKilo;
+  num position;
+  LaundryCategory({
+    required this.categoryid, this.name, required this.storeId, required this.costByKilo, required this.position});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "categoryid": categoryid,
+      "name": name,
+      "storeId": storeId,
+      "costByKilo": costByKilo,
+      "position": position,
+    };
+  }
+
+}
+
+class LaundryOrder {
+  num storeId;
+  Location customerLocation;
+  String? estimatedReadyTime;
+  String? actualReadyTime;
+  num? fromCustomerDeliveryId;
+  num? toCustomerDeliveryId;
+  LaundryOrderStatus status;
+  List<OrderCategory>? categories;
+  ServiceProvider? laundryStore;
+  num orderId;
+  num spDetailsId;
+  num customerId;
+  PaymentType paymentType;
+  num? refundAmount;
+  num? reviewId;
+  DeliveryType deliveryType;
+  String? orderTime;
+  String? firebaseId;
+  CustomerAppType customerAppType;
+  String? notes;
+  num? tax;
+  num deliveryCost;
+  num? chatId;
+  String? scheduledTime;
+  OrderStripeInfo? stripeInfo;
+  num? stripeFees;
+  String? cancellationTime;
+  num? discountValue;
+  num? totalCost;
+  num? itemsCost;
+  LaundryOrder({
+    required this.storeId, required this.customerLocation, this.estimatedReadyTime, this.actualReadyTime, this.fromCustomerDeliveryId, this.toCustomerDeliveryId, required this.status, this.categories, this.laundryStore, required this.orderId, required this.spDetailsId, required this.customerId, required this.paymentType, this.refundAmount, this.reviewId, required this.deliveryType, this.orderTime, this.firebaseId, required this.customerAppType, this.notes, this.tax, required this.deliveryCost, this.chatId, this.scheduledTime, this.stripeInfo, this.stripeFees, this.cancellationTime, this.discountValue, this.totalCost, this.itemsCost});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "storeId": storeId,
+      "customerLocation": customerLocation,
+      "estimatedReadyTime": estimatedReadyTime,
+      "actualReadyTime": actualReadyTime,
+      "fromCustomerDeliveryId": fromCustomerDeliveryId,
+      "toCustomerDeliveryId": toCustomerDeliveryId,
+      "status": status,
+      "categories": categories,
+      "laundryStore": laundryStore,
+      "orderId": orderId,
+      "spDetailsId": spDetailsId,
+      "customerId": customerId,
+      "paymentType": paymentType,
+      "refundAmount": refundAmount,
+      "reviewId": reviewId,
+      "deliveryType": deliveryType,
+      "orderTime": orderTime,
+      "firebaseId": firebaseId,
+      "customerAppType": customerAppType,
+      "notes": notes,
+      "tax": tax,
+      "deliveryCost": deliveryCost,
+      "chatId": chatId,
+      "scheduledTime": scheduledTime,
+      "stripeInfo": stripeInfo,
+      "stripeFees": stripeFees,
+      "cancellationTime": cancellationTime,
+      "discountValue": discountValue,
+      "totalCost": totalCost,
+      "itemsCost": itemsCost,
+    };
+  }
+
+}
+
+class OrderCategory {
+  num? orderCategoryId;
+  num categoryId;
+  num? orderId;
+  num? weightInKilo;
+  num? costByKilo;
+  OrderCategory({
+    this.orderCategoryId, required this.categoryId, this.orderId, this.weightInKilo, this.costByKilo});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "orderCategoryId": orderCategoryId,
+      "categoryId": categoryId,
+      "orderId": orderId,
+      "weightInKilo": weightInKilo,
+      "costByKilo": costByKilo,
+    };
+  }
+
+}
+
+class CostsByType {
+  dynamic byType;
+  num weighedCost;
+  CostsByType({
+    required this.byType, required this.weighedCost});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "byType": byType,
+      "weighedCost": weighedCost,
+    };
+  }
+
+}
+
+enum LaundryOrderStatus { OrderReceived, OtwPickupFromCustomer, PickedUpFromCustomer, AtLaundry, ReadyForDelivery, OtwPickupFromLaundry, PickedUpFromLaundry, Delivered, CancelledByAdmin, CancelledByCustomer }
+extension ParseLaundryOrderStatusToString on LaundryOrderStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToLaundryOrderStatus on String {
+  LaundryOrderStatus toLaundryOrderStatus() {
+    return LaundryOrderStatus.values.firstWhere(
+        (LaundryOrderStatus laundryOrderStatus) =>
+            laundryOrderStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class Cart {
+  num customerId;
+  num? restaurantId;
+  num cost;
+  List<CartItem> items;
+  Cart({
+    required this.customerId, this.restaurantId, required this.cost, required this.items});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "customerId": customerId,
+      "restaurantId": restaurantId,
+      "cost": cost,
+      "items": items,
+    };
+  }
+
+}
+
+class CartItem {
+  num? cartItemId;
+  num itemId;
+  num customerId;
+  List<SelectedOption>? selectedOptions;
+  num quantity;
+  num costPerOne;
+  String? notes;
+  Map<Language, String> name;
+  String? image;
+  CartItem({
+    this.cartItemId, required this.itemId, required this.customerId, this.selectedOptions, required this.quantity, required this.costPerOne, this.notes, required this.name, this.image});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "cartItemId": cartItemId,
+      "itemId": itemId,
+      "customerId": customerId,
+      "selectedOptions": selectedOptions,
+      "quantity": quantity,
+      "costPerOne": costPerOne,
+      "notes": notes,
+      "name": name,
+      "image": image,
+    };
+  }
+
+}
+
+enum ItemType { Daily, Special }
+extension ParseItemTypeToString on ItemType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToItemType on String {
+  ItemType toItemType() {
+    return ItemType.values.firstWhere(
+        (ItemType itemType) =>
+            itemType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum Item { Daily, Special }
+extension ParseItemToString on Item {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToItem on String {
+  Item toItem() {
+    return Item.values.firstWhere(
+        (Item item) =>
+            item.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class Option {
+  num optionId;
+  Map<Language, String> optionNames;
+  List<Choice> choices;
+  num position;
+  String optionType;
+  num minimumChoice;
+  num maximumChoice;
+  num freeChoice;
+  num costPerExtra;
+  Option({
+    required this.optionId, required this.optionNames, required this.choices, required this.position, required this.optionType, required this.minimumChoice, required this.maximumChoice, required this.freeChoice, required this.costPerExtra});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "optionId": optionId,
+      "optionNames": optionNames,
+      "choices": choices,
+      "position": position,
+      "optionType": optionType,
+      "minimumChoice": minimumChoice,
+      "maximumChoice": maximumChoice,
+      "freeChoice": freeChoice,
+      "costPerExtra": costPerExtra,
+    };
+  }
+
+}
+
+class Choice {
+  num choiceId;
+  Map<Language, String> name;
+  bool available;
+  num cost;
+  Choice({
+    required this.choiceId, required this.name, required this.available, required this.cost});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "choiceId": choiceId,
+      "name": name,
+      "available": available,
+      "cost": cost,
+    };
+  }
+
+}
+
+class RestaurantOrder {
+  num restaurantId;
+  Location toLocation;
+  String? estimatedFoodReadyTime;
+  String? actualFoodReadyTime;
+  RestaurantOrderStatus status;
+  List<OrderItem> items;
+  ServiceProvider? restaurant;
+  num? deliveryId;
+  num orderId;
+  num spDetailsId;
+  num customerId;
+  PaymentType paymentType;
+  num? refundAmount;
+  num? reviewId;
+  DeliveryType deliveryType;
+  String? orderTime;
+  String? firebaseId;
+  CustomerAppType customerAppType;
+  String? notes;
+  num? tax;
+  num deliveryCost;
+  num? chatId;
+  String? scheduledTime;
+  OrderStripeInfo? stripeInfo;
+  num? stripeFees;
+  String? cancellationTime;
+  num? discountValue;
+  num? totalCost;
+  num? itemsCost;
+  RestaurantOrder({
+    required this.restaurantId, required this.toLocation, this.estimatedFoodReadyTime, this.actualFoodReadyTime, required this.status, required this.items, this.restaurant, this.deliveryId, required this.orderId, required this.spDetailsId, required this.customerId, required this.paymentType, this.refundAmount, this.reviewId, required this.deliveryType, this.orderTime, this.firebaseId, required this.customerAppType, this.notes, this.tax, required this.deliveryCost, this.chatId, this.scheduledTime, this.stripeInfo, this.stripeFees, this.cancellationTime, this.discountValue, this.totalCost, this.itemsCost});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "restaurantId": restaurantId,
+      "toLocation": toLocation,
+      "estimatedFoodReadyTime": estimatedFoodReadyTime,
+      "actualFoodReadyTime": actualFoodReadyTime,
+      "status": status,
+      "items": items,
+      "restaurant": restaurant,
+      "deliveryId": deliveryId,
+      "orderId": orderId,
+      "spDetailsId": spDetailsId,
+      "customerId": customerId,
+      "paymentType": paymentType,
+      "refundAmount": refundAmount,
+      "reviewId": reviewId,
+      "deliveryType": deliveryType,
+      "orderTime": orderTime,
+      "firebaseId": firebaseId,
+      "customerAppType": customerAppType,
+      "notes": notes,
+      "tax": tax,
+      "deliveryCost": deliveryCost,
+      "chatId": chatId,
+      "scheduledTime": scheduledTime,
+      "stripeInfo": stripeInfo,
+      "stripeFees": stripeFees,
+      "cancellationTime": cancellationTime,
+      "discountValue": discountValue,
+      "totalCost": totalCost,
+      "itemsCost": itemsCost,
+    };
+  }
+
+}
+
+class OrderItem {
+  num? orderItemId;
+  num itemId;
+  dynamic name;
+  String? image;
+  List<SelectedOption>? selectedOptions;
+  num? reviewId;
+  String? notes;
+  bool? unavailable;
+  num quantity;
+  num? orderId;
+  num costPerOne;
+  OrderItem({
+    this.orderItemId, required this.itemId, required this.name, this.image, this.selectedOptions, this.reviewId, this.notes, this.unavailable, required this.quantity, this.orderId, required this.costPerOne});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "orderItemId": orderItemId,
+      "itemId": itemId,
+      "name": name,
+      "image": image,
+      "selectedOptions": selectedOptions,
+      "reviewId": reviewId,
+      "notes": notes,
+      "unavailable": unavailable,
+      "quantity": quantity,
+      "orderId": orderId,
+      "costPerOne": costPerOne,
+    };
+  }
+
+}
+
+class SelectedOption {
+  num optionId;
+  Map<Language, String> optionNames;
+  Map<Language, List<String>> selectedChoices;
+  SelectedOption({
+    required this.optionId, required this.optionNames, required this.selectedChoices});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "optionId": optionId,
+      "optionNames": optionNames,
+      "selectedChoices": selectedChoices,
+    };
+  }
+
+}
+
+enum RestaurantOrderStatus { OrderReceived, PreparingOrder, ReadyForPickup, OnTheWay, Delivered, CancelledByAdmin, CancelledByCustomer }
+extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToRestaurantOrderStatus on String {
+  RestaurantOrderStatus toRestaurantOrderStatus() {
+    return RestaurantOrderStatus.values.firstWhere(
+        (RestaurantOrderStatus restaurantOrderStatus) =>
+            restaurantOrderStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -1008,6 +2407,70 @@ extension ParseStringToCancelOrderError on String {
 }
 
 
+enum BusinessError { UnhandledError, UserNotFound, BusinessCreationError }
+extension ParseBusinessErrorToString on BusinessError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToBusinessError on String {
+  BusinessError toBusinessError() {
+    return BusinessError.values.firstWhere(
+        (BusinessError businessError) =>
+            businessError.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum OrderReqError { UnhandledError, BusinessNotFound, CustomerNotFound, CartNotFound, BusinessNotApproved, BusinessClosed, EmptyCart, OrderCreationError }
+extension ParseOrderReqErrorToString on OrderReqError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToOrderReqError on String {
+  OrderReqError toOrderReqError() {
+    return OrderReqError.values.firstWhere(
+        (OrderReqError orderReqError) =>
+            orderReqError.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum HandleRequestError { UnhandledError, OrderRequestNotFound, CustomerNotFound, BusinessOperatorNotFound, IncorrectOrderRequestId, RequestAlreadyConfirmedOrCancelled, UpdateStatusError, FinalCostsNotSet }
+extension ParseHandleRequestErrorToString on HandleRequestError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToHandleRequestError on String {
+  HandleRequestError toHandleRequestError() {
+    return HandleRequestError.values.firstWhere(
+        (HandleRequestError handleRequestError) =>
+            handleRequestError.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum CustomerHandleRequestError { UnhandledError, OrderRequestNotFound, BusinessNotFound, IncorrectOrderRequestId, RequestAlreadyConfirmedOrCancelled, UpdateStatusError }
+extension ParseCustomerHandleRequestErrorToString on CustomerHandleRequestError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToCustomerHandleRequestError on String {
+  CustomerHandleRequestError toCustomerHandleRequestError() {
+    return CustomerHandleRequestError.values.firstWhere(
+        (CustomerHandleRequestError customerHandleRequestError) =>
+            customerHandleRequestError.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
 enum LaundryError { UnhandledError, DeliveryDetailsNotSet, NoDeliveryPartner, UserNotFound, DeepLinkError, QRGenerationError, LaundryCreationError }
 extension ParseLaundryErrorToString on LaundryError {
   String toFirebaseFormatString() {
@@ -1088,7 +2551,7 @@ extension ParseStringToAssignDriverError on String {
 }
 
 
-enum ChangeDeliveryStatusError { UnhandledError, OrderNotFound, DriverNotAssigned, OrderNotInProcess, UnAuthorizedAccess, OrderDriverMismatch, CustomerNotFound, InvalidStatus, RestaurantNotfound, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError, LaundryStoreNotfound, OrderCreationError, NoDeliveryChatWithStoreId, DeliveryCompanyOperatorsNotFound }
+enum ChangeDeliveryStatusError { UnhandledError, OrderNotFound, DriverNotAssigned, OrderNotInProcess, UnauthorizedAccess, OrderDriverMismatch, CustomerNotFound, InvalidStatus, RestaurantNotfound, ServiceProviderDetailsNotFound, OrderStripeInfoNotDefined, ServiceProviderStripeAccountDoesNotExist, UpdateOrderStripeError, LaundryStoreNotfound, OrderCreationError, NoDeliveryChatWithStoreId, DeliveryCompanyOperatorsNotFound, CannotCancelByDriver }
 extension ParseChangeDeliveryStatusErrorToString on ChangeDeliveryStatusError {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;

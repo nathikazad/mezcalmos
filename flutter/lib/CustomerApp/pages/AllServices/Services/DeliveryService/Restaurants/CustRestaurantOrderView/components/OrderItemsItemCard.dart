@@ -100,7 +100,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   Container(
                     child: Text(
                       "${_i18n()["itemNotes"]}",
-                      style: context.txt.bodyText1,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   SizedBox(
@@ -109,7 +109,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   Container(
                     child: Text(
                       widget.item.notes!,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                 ],
@@ -168,7 +168,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
                           text: widget.item.name[userLanguage]!,
-                          style: txt.bodyText1?.copyWith(
+                          style: txt.bodyLarge?.copyWith(
                               color: widget.item.unavailable
                                   ? Colors.black.withOpacity(0.5)
                                   : Colors.black,
@@ -178,7 +178,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                           children: <TextSpan>[
                             TextSpan(
                               text: " x${widget.item.quantity}",
-                              style: txt.bodyText1?.copyWith(
+                              style: txt.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w700,
                                   color: widget.item.unavailable
                                       ? Colors.black.withOpacity(0.5)
@@ -197,7 +197,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('\$' + widget.item.totalCost.toInt().toString(),
-                              style: txt.bodyText1?.copyWith(
+                              style: txt.bodyLarge?.copyWith(
                                   color: widget.item.unavailable
                                       ? Colors.black.withOpacity(0.5)
                                       : Colors.black,

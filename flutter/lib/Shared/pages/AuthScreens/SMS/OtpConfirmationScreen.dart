@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -202,7 +201,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                       response!.secondsLeft!.toDouble());
                                   MezSnackbar(
                                       "Error", response.error.toString(),
-                                      position: SnackPosition.TOP);
+                                      position: Alignment.topCenter);
                                 }
                               }
                             : null,

@@ -1,179 +1,32 @@
-// import { RestaurantOrderType } from './shared/models/Services/Restaurant/RestaurantOrder';
-// import { PaymentType } from "./shared/models/Generic/Order";
-// import { Location } from "./shared/models/Generic/Generic";
-// import * as firebase from "firebase-admin";
-// import { assignDriver } from "./delivery/assignDriver";
-// import { ChangeDeliveryStatusDetails, changeDeliveryStatus } from "./delivery/statusChange";
-// // import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
-// // import { AssignCompanyDetails, assignDeliveryCompany } from "./restaurant/assignDeliveryCompany";
-// // import { OperatorType } from "./shared/models/Generic/Generic";
-// // import { OrderType } from "./shared/models/Generic/Order";
-// // import { DeliveryDriverType } from "./shared/models/Services/Delivery/DeliveryOrder";
-// import { createNewRestaurant, RestaurantDetails } from "./restaurant/createNewRestaurant";
-// // import { readyForPickupOrder } from "./restaurant/adminStatusChanges"
-// // import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
-// import { AuthorizeDetails, authorizeOperator } from "./restaurant/authorizeOperator";
-// import { prepareOrder } from "./restaurant/adminStatusChanges"
-// import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
-// import { Restaurant } from './shared/models/Services/Restaurant/Restaurant';
-// import { getRestaurant } from './shared/graphql/restaurant/getRestaurant';
-
-// import { checkout, CheckoutRequest } from "./restaurant/checkoutCart";
-// import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
-import { ParticipantType as _ParticipantType } from "./shared/models/Generic/Chat"
-// import { DeliveryOrderStatus } from "./shared/models/Generic/Delivery";
-// import { OrderType } from "./shared/models/Generic/Order";
-// import { AppType } from "./shared/models/Generic/Generic";
-// import { PaymentType } from "./shared/models/Generic/Order";
-// import { DeliveryType } from "./shared/models/Services/Restaurant/RestaurantOrder";
-import { callUser as _callUser} from "./utilities/agora";
-// import { setupServiceProvider } from "./utilities/stripe/serviceProvider";
-// import { setupServiceProvider } from "./utilities/stripe/serviceProvider";
-
-// firebase.initializeApp({
-//   databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
-// });
-// process.env.FUNCTIONS_EMULATOR = "true"
-// const location:Location = {
-//   lat: 23,
-//   lng : 44,
-//   address: "Morocco, Agadir 77",
-// }
-
-// // let checkoutRequest: CheckoutRequest = {
-// //   customerAppType: AppType.CustomerMobile,
-// //   customerLocation: location,
-// //   deliveryCost: 15,
-// //   paymentType: PaymentType.Cash,
-// //   notes: "My notes",
-// //   restaurantId: 1,
-// //   restaurantOrderType: RestaurantOrderType.Delivery,
-// //   tripDistance: 0,
-// //   tripDuration: 0,
-// //   tripPolyline: "",
-// // }
-
-// let ch : CheckoutRequest = {
-//     deliveryType: DeliveryType.Delivery,
-//      tripDistance: 0, // this is null
-//       customerLocation: {
-//         address: 'Test _ Location ',
-//         lat: 15.872451864887513,
-//         lng: -97.0771243663329
-//       },
-//       customerAppType: AppType.Customer,
-//       notes: '',
-//       paymentType: PaymentType.Cash,
-//       restaurantId: 1,
-//       tripDuration: 0, // null
-//       deliveryCost: 20,
-//       tripPolyline: '' // null
-// }
 
 
-// // getRestaurant(checkoutRequest.restaurantId).then((restaurant: Restaurant) = {
-// //    console.log(restaurant);
-// // });
-// console.log("Calling make order ====================>>>>>>>>>>>>>>>>>",ch);
-// _callUser(2, {chatId: 28, callerParticipantType: _ParticipantType.Customer}).then((resp) => {
-//   console.log(resp);
-// });
+import { initEnv } from "../../supervisor/src/init"
+import { checkout } from "./restaurant/checkoutCart";
+import { DeliveryType, PaymentType } from "./shared/models/Generic/Order";
+import { CustomerAppType } from "./shared/models/Generic/Generic";
 
-// checkout(2, ch).then((resp) => {
-//   console.log(resp);
-// });
-// // let statusDetails = {
-  
-// //   orderId: 16,
-// //   fromRestaurantOperator: true
-// // }
-// // prepareOrder(2, statusDetails)
-
-// // cancelOrderFromCustomer(1, { orderId: 16 })
-
-// let restaurantDetails:RestaurantDetails = {
-//   name: "restaurant2",
-//   image: "abc",
-//   location: location,
-//   schedule: JSON.parse('{"monday":{"from":"8:0","to":"20:0","isOpen":true},"tuesday":{"from":"8:0","to":"20:0","isOpen":true},"wednesday":{"from":"8:0","to":"20:0","isOpen":true},"thursday":{"from":"8:0","to":"20:0","isOpen":true},"friday":{"from":"8:0","to":"20:0","isOpen":true},"saturday":{"from":"8:0","to":"19:0","isOpen":false},"sunday":{"from":"8:0","to":"16:0","isOpen":false}}'),
-//   customerPickup: false,
-//   delivery:true,
-//   restaurantOperatorNotificationToken: "aaa",
-//   firebaseId: "5",
-//   selfDelivery: true,
-//   deliveryDetails: {
-//     costPerKm: 2,
-//     minimumCost: 40,
-//     radius: 5000,
-//     freeDeliveryKmRange: 0,
-//     freeDeliveryMinimumCost: 100
-//   }
-// }
-
-// });
-
-// createNewRestaurant(4, restaurantDetails);
-
-// // let authorizeDetails: AuthorizeDetails = {
-// //   restaurantOwnerOperatorId: 3,
-// //   newOperatorUserId: 5,
-// //   newOperatorNotificationToken: "rty"
-// // }
-
-// // authorizeOperator(4, authorizeDetails);
-
-// // let assignDriverDetails: AssignDriverDetails = {
-// //   deliveryId: 1,
-// //   deliveryDriverId: 20,
-// //   orderType: OrderType.Restaurant,
-// //   orderId: 1,
-// //   deliveryDriverType: DeliveryDriverType.DeliveryDriver,
-// //   changeDriver: false,
-// //   operatorType: OperatorType.Restaurant,
-// //   deliveryCompanyId: 1
-// // }
-
-// // assignDriver(1, assignDriverDetails);
-
-// // let changeDeliveryStatusDetails: ChangeDeliveryStatusDetails = {
-// //   deliveryId: 22,
-// //   deliveryDriverId: 1,
-// //   deliveryDriverType: DeliveryDriverType.DeliveryDriver,
-// //   restaurantOrderId: 14,
-// // }
-// // deliveryDriverAtPickup(6, changeDeliveryStatusDetails)
-// // startDelivery(6, changeDeliveryStatusDetails)
-// // deliveryDriverAtDropoff(6, changeDeliveryStatusDetails)
-// // finishDelivery(6, changeDeliveryStatusDetails)
-
-// // let assignCompanyDetails: AssignCompanyDetails = {
-// //   deliveryCompanyId: 1,
-// //   restaurantOrderId: 1
-// // }
-// // assignDeliveryCompany(1, assignCompanyDetails)
-
-// setupServiceProvider(5, {
-//   serviceProviderId: 40,
-//   orderType: OrderType.Restaurant
-// }).then(() => {
-//   console.log("done")
-// })
-
-// setupServiceProvider(16541, {serviceProviderDetailsId: 16})
-// let c: ChangeDeliveryStatusDetails = {
-//   deliveryId: 328,
-//   newStatus: DeliveryOrderStatus.OnTheWayToPickup
-// }
-
-// changeDeliveryStatus(14, c).then(() => {
-//   console.log("error 500")
-// })
-
-// let a: AssignDriverDetails = {
-//   deliveryOrderId: 331,
-//   deliveryDriverId: 26,
-//   changeDriver: true,
-// }
-
-
-// assignDriver(25, a)
+initEnv();
+checkout(884, {
+  tripDistance: 1104,
+  deliveryType: DeliveryType.Delivery,
+  scheduledTime: '2023-03-30 20:00:00.000Z',
+  discountValue: undefined,
+  tax: undefined,
+  tripDuration: 270,
+  tripPolyline: 'wwz_BlxpoQYdAoAYd@cBk@MwA[w@QoBe@OKEOBW@O~@cCbCaGhDeJd@wBHWkAc@lBaH',
+  restaurantId: 60,
+  paymentType: PaymentType.Cash,
+  notes: '',
+  stripeFees: 0,
+  deliveryCost: 40,
+  customerAppType: CustomerAppType.Native,
+  customerLocation: {
+    lat: 15.870365967421352,
+    lng: -97.07725323736668,
+    address: 'Agua Marina 203, Agua Marina, 71984 Puerto Escondido, Oax., Mexico'
+  },
+  stripePaymentId: undefined
+}).then((resp) => {
+  console.log(resp);
+  console.log("done")
+});

@@ -84,7 +84,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
   let notification: Notification = {
     foreground: <NewLaundryNotification>{
       time: (new Date()).toISOString(),
-      notificationType: NotificationType.NewOrder,
+      notificationType: NotificationType.NewLaundry,
       notificationAction: NotificationAction.ShowSnackBarAlways,
       name: laundryStore.name,
       image: laundryStore.image,
@@ -100,7 +100,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
         body: `There is a new Laundry Store`
       }
     },
-    linkUrl: laundryUrl(laundryStore.id!)
+    linkUrl: laundryUrl(laundryStore.id)
   };
   mezAdmins.forEach((m) => {
     pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

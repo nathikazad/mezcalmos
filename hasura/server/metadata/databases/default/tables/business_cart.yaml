@@ -1,0 +1,13 @@
+table:
+  name: cart
+  schema: business
+array_relationships:
+  - name: items
+    using:
+      manual_configuration:
+        column_mapping:
+          customer_id: customer_id
+        insertion_order: null
+        remote_table:
+          name: cart_item
+          schema: business

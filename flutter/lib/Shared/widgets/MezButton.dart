@@ -66,7 +66,6 @@ class _MezButtonState extends State<MezButton> {
                             .whenComplete(() => isLoading.value = false)
                             .onError((Object? e, StackTrace stk) {
                           mezDbgPrint(stk);
-                          // Get.snackbar("Error", "", backgroundColor: Colors.black);
                         });
                       }
                     : null,
@@ -74,8 +73,11 @@ class _MezButtonState extends State<MezButton> {
               width: widget.width ?? double.infinity,
               height: widget.height,
               decoration: BoxDecoration(
-                  gradient: widget.withGradient ? bluePurpleGradient : null,
-                  border: widget.border,
+                  gradient: widget.withGradient &&
+                          widget.enabled &&
+                          widget.onClick != null
+                      ? bluePurpleGradient
+                      : null,
                   color: (widget.enabled && widget.onClick != null)
                       ? (widget.backgroundColor != null)
                           ? widget.backgroundColor

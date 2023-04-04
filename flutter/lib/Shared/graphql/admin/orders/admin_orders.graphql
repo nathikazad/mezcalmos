@@ -26,9 +26,10 @@ subscription admin_listen_on_dv_orders($inProccess: Boolean!) {
     service_provider_type
   }
 }
-query admin_get_dv_orders($inProccess: Boolean!,$limit: Int) {
+query admin_get_dv_orders($inProccess: Boolean!,$limit: Int,$offset: Int) {
   delivery_order(
-    limit: $limit
+    limit: $limit,
+    offset: $offset,
     where: {
       service_provider_type: { _eq: "deliveryCompany" }
       in_process: { _eq: $inProccess }
@@ -73,8 +74,10 @@ subscription admin_listen_on_restaurant_orders($inProccess: Boolean!) {
     }
   }
 }
-query admin_get_restaurant_orders($inProccess: Boolean!,$limit: Int) {
-  restaurant_order(limit: $limit,where: { in_process: { _eq: $inProccess } }) {
+query admin_get_restaurant_orders($inProccess: Boolean!,$limit: Int,$offset: Int) {
+  restaurant_order(limit: $limit,
+   offset: $offset,
+  ,where: { in_process: { _eq: $inProccess } }) {
     id
     restaurant_id
     order_time
@@ -119,8 +122,8 @@ subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
     }
   }
 }
-query admin_get_laundry_orders($inProccess: Boolean!,$limit: Int) {
-  laundry_order(limit: $limit,where: { in_process: { _eq: $inProccess } }) {
+query admin_get_laundry_orders($inProccess: Boolean!,$limit: Int,$offset: Int) {
+  laundry_order(limit: $limit, offset: $offset,,where: { in_process: { _eq: $inProccess } }) {
     id
     store_id
     order_time
@@ -149,7 +152,8 @@ query admin_get_service__orders(
   $serviceProviderType: String!
   $serviceProviderId: Int!
   $inProccess: Boolean!
-  $limit: Int!
+  $limit: Int!,
+  $offset: Int!,
 ) {
   delivery_order(
     where: {
@@ -157,7 +161,9 @@ query admin_get_service__orders(
       service_provider_id: { _eq: $serviceProviderId }
       in_process: { _eq: $inProccess }
     }
-    limit: $limit
+    limit: $limit,
+     offset: $offset,
+
   ) {
     id
     order_time

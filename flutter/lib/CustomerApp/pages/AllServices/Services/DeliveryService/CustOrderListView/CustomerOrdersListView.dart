@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustOrderListView/components/CustomerInprocessOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustOrderListView/components/CustomerPastOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
@@ -8,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -42,11 +42,10 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: CustomerAppBar(
-        title: '${_i18n()["title"]}',
-        showPastOrders: false,
-        autoBack: true,
-      ),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back,
+          title: '${_i18n()["title"]}',
+          ordersRoute: CustomerRoutes.customerOrdersRoute),
       body: Obx(
         () => viewController.hasOrders
             ? SingleChildScrollView(

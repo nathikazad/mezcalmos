@@ -5,7 +5,8 @@ import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:sizer/sizer.dart';
 
@@ -63,7 +64,7 @@ class _LaundryUnauthViewState extends State<LaundryUnauthView> {
                       alignment: Alignment.center,
                       child: Text(
                         "${_i18n()['title']}",
-                        style: Get.textTheme.displaySmall,
+                        style: context.txt.displaySmall,
                         textAlign: TextAlign.center,
                       ),
                     ),

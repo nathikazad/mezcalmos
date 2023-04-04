@@ -1,10 +1,11 @@
-import { Order } from '../../Generic/Order';
+import { DeliveryType, PaymentType } from '../../Generic/Order';
 import { OrderNotification } from '../../Notification';
-import { Language, Location } from '../../Generic/Generic';
+import { CustomerAppType, Language, Location } from '../../Generic/Generic';
 import { DeliveryOrderStatus } from '../../Generic/Delivery';
 import { ServiceProvider } from '../Service';
+import { OrderStripeInfo } from '../../stripe';
 
-export interface RestaurantOrder extends Order {
+export interface RestaurantOrder {
   restaurantId: number;
   toLocation: Location;
   estimatedFoodReadyTime?: string;
@@ -13,6 +14,27 @@ export interface RestaurantOrder extends Order {
   items: Array<OrderItem>;
   restaurant?: ServiceProvider;
   deliveryId?: number;
+  orderId: number;
+  spDetailsId: number;
+  customerId: number;
+  paymentType: PaymentType;
+  refundAmount?: number;
+  reviewId?: number;
+  deliveryType: DeliveryType;
+  orderTime?: string;
+  firebaseId?: string;
+  customerAppType: CustomerAppType;
+  notes?: string;
+  tax?: number;
+  deliveryCost: number;
+  chatId?: number;
+  scheduledTime?: string;
+  stripeInfo?: OrderStripeInfo;
+  stripeFees?: number;
+  cancellationTime?: string;
+  discountValue?: number;
+  totalCost?: number;
+  itemsCost?: number;
 }
 export interface OrderItem {
   orderItemId?: number;
@@ -31,7 +53,7 @@ export interface OrderItem {
 export interface SelectedOption {
   optionId: number;
   optionNames: Record<Language, string>;
-  selectedChoices: Record<Language, string[]>;
+  selectedChoices: Record<Language, Array<string>>;
   //TODO choice costs
 }
 
@@ -44,12 +66,12 @@ export enum RestaurantOrderStatus {
   CancelledByAdmin = "cancelledByAdmin",
   CancelledByCustomer = "cancelledByCustomer"
 }
-export enum DeliveryMode {
-  ForwardedToMezCalmos = "forwardedToMezCalmos",
-  SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",
-  SelfDeliveryByDriver = "SelfDeliveryByDriver",
-  None = "none",
-}
+// export enum DeliveryMode {
+//   ForwardedToMezCalmos = "forwardedToMezCalmos",
+//   SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",
+//   SelfDeliveryByDriver = "SelfDeliveryByDriver",
+//   None = "none",
+// }
 
 export function orderInProcess(status: RestaurantOrderStatus): boolean {
   return !(status == RestaurantOrderStatus.CancelledByAdmin ||

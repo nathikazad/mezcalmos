@@ -35,6 +35,10 @@ class RouteInformation {
       "polyline": polyline
     };
   }
+
+  bool get valid {
+    return duration.seconds > 0;
+  }
 }
 
 class RideDistance {
@@ -54,7 +58,7 @@ class RideDistance {
         distanceInMeters = data['value'];
 
   String toKmText() {
-    return "${(distanceInMeters / 1000).toStringAsFixed(1)} km";
+    return "${(distanceInMeters / 1000).toStringAsFixed(1)}km";
   }
 }
 
@@ -81,7 +85,7 @@ class RideDuration {
   }
 
   String inMinutesText() {
-    return "${(seconds / 60).round()} ${_i18n()["minutes"]}";
+    return "${(seconds / 60).round()} ${_i18n()["min"]}";
   }
 
   RideDuration.fromJson(data)
@@ -110,8 +114,9 @@ Future<LocModel.MezLocation> getCurrentLocation() async {
 }
 
 /// This is for AutoComplete location Search !
-Future<Map<String, String>> getLocationsSuggestions(String search) async {
-  final Map<String, String> _returnedPredictions = <String, String>{};
+Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
+  mezDbgPrint("Getting locations with querry =======>$search");
+  final List<AutoCompleteResult> _returnedPredictions = [];
 
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
@@ -139,12 +144,13 @@ Future<Map<String, String>> getLocationsSuggestions(String search) async {
 
   if (respJson["status"] == "OK") {
     respJson["predictions"].forEach((pred) {
-      mezDbgPrint("===> autocomplete : $pred");
       if (pred["description"].toLowerCase().contains(search.toLowerCase())) {
-        _returnedPredictions[pred["place_id"]] = pred["description"];
+        _returnedPredictions.add(AutoCompleteResult(
+            placeId: pred["place_id"], description: pred["description"]));
       }
     });
   }
+  mezDbgPrint("Returned Auto Complete ====> $_returnedPredictions");
 
   return _returnedPredictions;
 }
@@ -335,5 +341,28 @@ extension LocationDataConverter on LocationData {
       return LatLng(latitude!, longitude!);
     }
     return null;
+  }
+}
+
+class AutoCompleteResult {
+  String placeId;
+  String description;
+  AutoCompleteResult({
+    required this.placeId,
+    required this.description,
+  });
+
+  factory AutoCompleteResult.fromMap(Map<String, dynamic> map) {
+    return AutoCompleteResult(
+      placeId: map['placeId'] as String,
+      description: map['description'] as String,
+    );
+  }
+
+  @override
+  bool operator ==(covariant AutoCompleteResult other) {
+    if (identical(this, other)) return true;
+
+    return other.placeId == placeId && other.description == description;
   }
 }

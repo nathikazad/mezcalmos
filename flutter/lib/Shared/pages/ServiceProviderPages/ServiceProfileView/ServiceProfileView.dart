@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -216,7 +216,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   iconColor: Colors.red,
                                   labelWidget: Text(
                                     "${_i18n()['logout']}",
-                                    style: Get.textTheme.bodyLarge
+                                    style: context.txt.bodyLarge
                                         ?.copyWith(color: Colors.red),
                                   )),
                             ],
@@ -231,8 +231,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                             ? "${_i18n()['openService']}"
                             : "${_i18n()['closeService']}",
                         icon: _viewController.service.state.isClosedIndef
-                            ? Icons.lock_open
-                            : Icons.lock,
+                            ? Icons.lock_open_outlined
+                            : Icons.lock_outline,
                         textColor: !_viewController.service.state.isClosedIndef
                             ? Colors.red
                             : null,
@@ -285,65 +285,58 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
     );
   }
 
-  PreferredSize _getAppBar() {
-    return PreferredSize(
-      preferredSize: _viewController.hasData
-          ? Size.fromHeight(_viewController.getAppbarHeight)
-          : Size.fromHeight(kTextTabBarHeight),
-      child: Obx(
-        () => MezcalmosAppBar(
-          asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: (asTab) ? null : MezRouter.back,
-          showNotifications: true,
-          title: "${_i18n()['profile']}",
-          tabBar: (!_viewController.isApproved ||
-                  _viewController.service.state.isClosedIndef)
-              ? PreferredSize(
-                  preferredSize: Size(double.infinity, kToolbarHeight),
-                  child: Column(
-                    children: [
-                      if (_viewController.service.state.isClosedIndef)
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          width: double.infinity,
-                          color: offRedColor,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.lock,
-                                color: Colors.redAccent,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  "${_i18n()['serviceClosed']}",
-                                  textAlign: TextAlign.center,
-                                  style: context.txt.bodyLarge
-                                      ?.copyWith(color: Colors.redAccent),
-                                ),
-                              ),
-                            ],
+  AppBar _getAppBar() {
+    return MezcalmosAppBar(
+      asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+      onClick: (asTab) ? null : MezRouter.back,
+      tabbarHeight: _viewController.getAppbarHeight,
+      title: "Dashboard",
+      tabBar: (!_viewController.isApproved ||
+              _viewController.service.state.isClosedIndef)
+          ? PreferredSize(
+              preferredSize: Size(double.infinity, kToolbarHeight),
+              child: Column(
+                children: [
+                  if (_viewController.service.state.isClosedIndef)
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      width: double.infinity,
+                      color: offRedColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.lock,
+                            color: Colors.redAccent,
                           ),
-                        ),
-                      if (!_viewController.isApproved)
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          color: secondaryLightBlueColor,
-                          child: Text(
-                            "${_i18n()['restaurantReview']}",
-                            style: Get.textTheme.bodyLarge
-                                ?.copyWith(color: primaryBlueColor),
+                          SizedBox(
+                            width: 5,
                           ),
-                        ),
-                    ],
-                  ),
-                )
-              : null,
-        ),
-      ),
+                          Flexible(
+                            child: Text(
+                              "Service is closed indefinitely",
+                              textAlign: TextAlign.center,
+                              style: context.txt.bodyLarge
+                                  ?.copyWith(color: Colors.redAccent),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (!_viewController.isApproved)
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      color: secondaryLightBlueColor,
+                      child: Text(
+                        "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
+                        style: context.txt.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ),
+                ],
+              ),
+            )
+          : null,
     );
   }
 

@@ -1,0 +1,18 @@
+table:
+  name: order_request
+  schema: business
+object_relationships:
+  - name: business
+    using:
+      foreign_key_constraint_on: business_id
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+array_relationships:
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: order_request_id
+        table:
+          name: order_request_item
+          schema: business

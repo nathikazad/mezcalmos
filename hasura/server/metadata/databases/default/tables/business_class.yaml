@@ -1,0 +1,10 @@
+table:
+  name: class
+  schema: business
+object_relationships:
+  - name: business
+    using:
+      foreign_key_constraint_on: business_id
+  - name: service
+    using:
+      foreign_key_constraint_on: service_id

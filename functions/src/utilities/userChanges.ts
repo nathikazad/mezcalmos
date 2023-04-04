@@ -16,8 +16,7 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
           name: user.displayName,
           image: user.photoURL,
           firebase_id: user.uid,
-         
-        
+          phone: user.phoneNumber
         }
       }, {
         id: true

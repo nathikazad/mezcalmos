@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
@@ -42,8 +42,8 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   void initState() {
     laundryId = int.tryParse(MezRouter.urlArguments["laundryId"].toString());
     if (laundryId != null) {
-      Future(() async =>
-          laundry.value = await get_laundry_store_by_id(id: laundryId!));
+      get_laundry_store_by_id(id: laundryId!)
+          .then((Laundry? value) => laundry.value = value);
     } else {
       MezRouter.back();
     }
@@ -198,7 +198,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         Text(
           "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
           //maxLines: 1,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
           style: context.txt.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: primaryBlueColor,
@@ -213,7 +213,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
         ),
         Text(
-          "${laundry.value!.averageNumberOfDays} ${_i18n()["daysReturn"]}",
+          "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toPlural(isPlural: laundry.value!.averageNumberOfDays != 1)} ${_i18n()["return"]}",
           maxLines: 1,
           textAlign: TextAlign.center,
           style: context.txt.bodyMedium?.copyWith(

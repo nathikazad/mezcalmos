@@ -113,12 +113,12 @@ class TaxiAppTheme {
           fontSize: 16.sp,
           color: Colors.black,
         ),
-        bodyText1: TextStyle(
+        bodyLarge: TextStyle(
             fontFamily: "Montserrat",
             fontWeight: FontWeight.w400,
             fontSize: 14.sp,
             color: Colors.black),
-        bodyText2: TextStyle(
+        bodyMedium: TextStyle(
             fontFamily: "Nunito",
             fontWeight: FontWeight.w400,
             fontSize: 13.sp,

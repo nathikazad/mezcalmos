@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/components/ListDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/controllers/DriversViewController.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -110,6 +110,10 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
               SizedBox(
                 height: 25,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text('${_i18n()["yourDriverList"]}'),
+              ),
               Obx(
                 () => Column(
                   children: List.generate(
@@ -160,14 +164,14 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                     () => Container(
                       height: 25.h,
                       width: 25.h,
-                      child: viewController
-                                  .serviceLink.value?.driverQrImageLink !=
-                              null
-                          ? CachedNetworkImage(
-                              imageUrl: viewController
-                                  .serviceLink.value!.driverQrImageLink!,
-                            )
-                          : CircularProgressIndicator(),
+                      child:
+                          viewController.serviceLink.value?.driverQrImageLink !=
+                                  null
+                              ? CachedNetworkImage(
+                                  imageUrl: viewController
+                                      .serviceLink.value!.driverQrImageLink!,
+                                )
+                              : CircularProgressIndicator(),
                     ),
                   ),
                   const SizedBox(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/ServiceInput.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
 
@@ -45,7 +45,7 @@ class ServiceDeliveryTypePicker extends StatelessWidget {
                       child: (value.toNormalString() != null)
                           ? Text(
                               value.toNormalString(),
-                              style: context.txt.bodyText2?.copyWith(
+                              style: context.txt.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.w700,
                               ),
                             )

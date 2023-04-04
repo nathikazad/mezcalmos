@@ -31,7 +31,7 @@ class MezEditableWorkingHours extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
       SizedBox(
@@ -233,7 +233,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                           ":" +
                           schedule.value!.openHours[weekday]!.from[1]
                               .toString(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     )),
               ),
             ),
@@ -275,7 +275,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                       schedule.value!.openHours[weekday]!.to[0].toString() +
                           ":" +
                           schedule.value!.openHours[weekday]!.to[1].toString(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     )),
               ),
             ),

@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 //
@@ -110,8 +110,10 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       SizedBox(
                         height: 25,
                       ),
-                      Text("${_i18n()['name']}",
-                      style: Get.textTheme.bodyLarge,),
+                      Text(
+                        "${_i18n()['name']}",
+                        style: context.txt.bodyLarge,
+                      ),
                       SizedBox(
                         height: 5,
                       ),
@@ -119,7 +121,32 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       SizedBox(
                         height: 15,
                       ),
-                      Text("${_i18n()['phoneNumber']}", style: Get.textTheme.bodyLarge,),
+                      Text(
+                        '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}',
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _prdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}',
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _scdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "${_i18n()['phoneNumber']}",
+                        style: context.textTheme.bodyLarge,
+                      ),
                       SizedBox(
                         height: 5,
                       ),
@@ -140,24 +167,9 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                          '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}', style: Get.textTheme.bodyLarge,),
-                      SizedBox(
-                        height: 5,
+                        "${_i18n()['location']}",
+                        style: context.textTheme.bodyLarge,
                       ),
-                      _prdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                          '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}', style: Get.textTheme.bodyLarge,),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _scdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text("${_i18n()['location']}", style: Get.textTheme.bodyLarge,),
                       SizedBox(
                         height: 5,
                       ),

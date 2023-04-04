@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -257,7 +257,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
               //  textAlign: TextAlign.center,
               decoration: InputDecoration(
                   suffixIconConstraints:
-                      BoxConstraints.tightFor(width: 50, height: 20),
+                      BoxConstraints.tightFor(width: 50, height: 10),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.only(right: 3),
                     child: Text(

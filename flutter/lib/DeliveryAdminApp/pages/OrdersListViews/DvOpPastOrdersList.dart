@@ -6,7 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvO
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -52,7 +52,7 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
               children: <Widget>[
                 Text(
                   "${_i18n()["pastOrders"]}",
-                  style: textTheme.bodyText1,
+                  style: textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 5),
                 ListView.builder(

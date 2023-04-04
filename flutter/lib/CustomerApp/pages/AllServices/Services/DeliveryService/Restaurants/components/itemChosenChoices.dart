@@ -28,7 +28,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
         ),
         Text(
           optionName[userLanguage] ?? "OptionName",
-          style: context.txt.bodyText1,
+          style: context.txt.bodyLarge,
         ),
         SizedBox(
           height: 5,
@@ -45,14 +45,14 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                           flex: 3,
                           child: Text(
                             choices[index].name[userLanguage] ?? "choiceName",
-                            style: Get.theme.textTheme.bodyText2,
+                            style: context.txt.bodyMedium,
                             maxLines: 2,
                           ),
                         ),
                         if (choices[index].cost > 0)
                           Text(
                             "\$${choices[index].cost}",
-                            style: Get.theme.textTheme.bodyText2!
+                            style: context.txt.bodyMedium!
                                 .copyWith(color: Get.theme.primaryColorLight),
                           ),
                       ],

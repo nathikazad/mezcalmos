@@ -20,11 +20,9 @@ import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart'
     deferred as somethingWentWrong;
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart'
     deferred as splashScreen;
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart'
-    deferred as userProfileScreen;
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart'
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart'
     deferred as userProfileView;
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart'
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserWelcomeView.dart'
     deferred as UserWelcomeView;
 import 'package:mezcalmos/Shared/pages/Wrapper.dart' deferred as wrapper;
 import 'package:qlevar_router/qlevar_router.dart';
@@ -69,13 +67,6 @@ class SharedRoutes {
           DefferedLoader(somethingWentWrong.loadLibrary)
         ]),
     QRoute(
-        path: kUserProfile,
-        name: kUserProfile,
-        builder: () => userProfileScreen.UserProfile(),
-        middleware: <QMiddleware>[
-          DefferedLoader(userProfileScreen.loadLibrary)
-        ]),
-    QRoute(
         path: kWrapperRoute,
         name: kWrapperRoute,
         builder: () => wrapper.Wrapper(),
@@ -110,6 +101,11 @@ class SharedRoutes {
         middleware: <QMiddleware>[
           DefferedLoader(otpConfirmationScreen.loadLibrary)
         ]),
+    QRoute(
+        path: SharedRoutes.kUserNewProfile,
+        name: SharedRoutes.kUserNewProfile,
+        builder: () => userProfileView.UserProfileView(),
+        middleware: <QMiddleware>[DefferedLoader(userProfileView.loadLibrary)]),
     // QRoute(
     //     path: kPickLocationEdit,
     //     name: kPickLocationEdit,
@@ -165,11 +161,6 @@ class SharedRoutes {
         name: kUserWelcomeRoute,
         builder: () => UserWelcomeView.UserWelcomeView(),
         middleware: <QMiddleware>[DefferedLoader(UserWelcomeView.loadLibrary)]),
-    QRoute(
-        path: kUserNewProfile,
-        name: kUserNewProfile,
-        builder: () => userProfileView.UserProfileView(),
-        middleware: <QMiddleware>[DefferedLoader(userProfileView.loadLibrary)]),
     QRoute(
         path: kNoInternetRoute,
         name: kNoInternetRoute,

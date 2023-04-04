@@ -26,6 +26,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustRequestCourierViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+  AuthController _authController = Get.find<AuthController>();
 
   PageController pageController = PageController(initialPage: 0);
 
@@ -38,7 +39,7 @@ class CustRequestCourierViewController {
   RxList<int> imagesLoading = RxList.empty();
   TextEditingController fromLocText = TextEditingController();
   Rxn<MezLocation> fromLoc = Rxn();
-  RxMap<int, File> newImages = RxMap({});
+  RxMap<int, imPicker.XFile> newImages = RxMap({});
   Rxn<MezLocation> toLoc = Rxn();
   Rxn<DateTime> deliveryTime = Rxn();
   Rxn<DeliveryCompany> company = Rxn();
@@ -62,12 +63,14 @@ class CustRequestCourierViewController {
     unawaited(
         get_delivery_cost(deliveryDetailsId: company.value!.deliveryDetailsId!)
             .then((DeliveryCost? value) => deliveryCost = value));
-    toLoc.value = Get.find<CustomerAuthController>()
-        .customer
-        ?.savedLocations
-        .firstWhereOrNull(
-            (SavedLocation element) => element.defaultLocation == true)
-        ?.location;
+    if (_authController.isUserSignedIn) {
+      toLoc.value = Get.find<CustomerAuthController>()
+          .customer
+          ?.savedLocations
+          .firstWhereOrNull(
+              (SavedLocation element) => element.defaultLocation == true)
+          ?.location;
+    }
 
     addNewEmptyItem();
   }
@@ -89,6 +92,10 @@ class CustRequestCourierViewController {
     itemsNames.removeAt(index);
     itemsEstCosts.removeAt(index);
     itemsNotes.removeAt(index);
+  }
+
+  void removeItemImage(int index) {
+    imagesFiles[index] = File("");
   }
 
   void handleBack() {
@@ -115,6 +122,7 @@ class CustRequestCourierViewController {
       // call cloud func
       await _makeOrder();
     }
+
     return null;
   }
 
@@ -140,16 +148,23 @@ class CustRequestCourierViewController {
               ),
             )
             .toList(),
+        fromLocationText: (fromLoc.value == null) ? fromLocText.text : null,
+        fromLocationGps: (fromLoc.value != null)
+            ? cModel.Location(
+                lat: fromLoc.value!.position.latitude!,
+                lng: fromLoc.value!.position.latitude!,
+                address: fromLoc.value!.address)
+            : null,
         deliveryCompanyId: company.value!.info.hasuraId,
         deliveryCost: shippingCost.value,
+        scheduledTime: deliveryTime.value?.toUtc().toString(),
         customerAppType: cModel.CustomerAppType.Native,
         tripDistance: routeInfo?.distance.distanceInMeters,
         tripDuration: routeInfo?.duration.seconds,
         tripPolyline: routeInfo?.polyline,
-        
       );
       if (res.success == true) {
-        MezRouter.popEverythingTillBeforeHome().then((_) =>
+        await MezRouter.popEverythingTillBeforeHome().then((_) =>
             CustCourierOrderView.navigate(orderId: res.orderId!.toInt()));
       } else {
         showErrorSnackBar(errorText: res.error.toString());
@@ -165,10 +180,10 @@ class CustRequestCourierViewController {
 
   Future<void> _uploadItemsImages() async {
     await Future.forEach(newImages.keys, (int key) async {
-      await Get.find<AuthController>()
-          .uploadImgToFbStorage(
+      await uploadImgToFbStorage(
               imageFile: newImages[key]!,
-              path: "/Courier/items/${DateTime.now().toIso8601String()}")
+              pathPrefix:
+                  "${Get.find<AuthController>().hasuraUserId!}/Courier/items/${DateTime.now().toIso8601String()}")
           .then((String url) => items[key].image = url);
     });
   }
@@ -228,7 +243,7 @@ class CustRequestCourierViewController {
       try {
         if (_res != null) {
           imagesFiles[itemIndex] = File(_res.path);
-          newImages.addAll({itemIndex: File(_res.path)});
+          newImages.addAll({itemIndex: _res});
         }
         imagesLoading.remove(itemIndex);
       } catch (e) {

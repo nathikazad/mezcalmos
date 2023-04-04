@@ -4,6 +4,8 @@ import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
 import { MezError } from "../../models/Generic/Generic";
 import { DeliveryType, OrderType } from "../../models/Generic/Order";
 import { CustomerInfo } from "../../models/Generic/User";
+import { Business } from "../../models/Services/Business/Business";
+import { BusinessOrder } from "../../models/Services/Business/BusinessOrder";
 import { CourierOrder } from "../../models/Services/Courier/Courier";
 import { LaundryOrder } from "../../models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
@@ -66,7 +68,7 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
               chatImage: customer.image,
               phoneNumber: customer.phoneNumber,
               participantType: ParticipantType.Customer,
-              parentLink: `/Orders/${delivery.deliveryId}`
+              parentLink: `/orders/${delivery.deliveryId}`
             },
             [ChatInfoAppName.CustomerApp]: {
               parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
@@ -90,7 +92,7 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
               chatImage: restaurant.image,
               phoneNumber: restaurant.phoneNumber,
               participantType: ParticipantType.RestaurantOperator,
-              parentLink: `/Orders/${delivery.deliveryId}`
+              parentLink: `/orders/${delivery.deliveryId}`
             },
             [ChatInfoAppName.RestaurantApp]: {
               parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
@@ -161,7 +163,7 @@ export async function setLaundryOrderChatInfo(
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
-        parentLink: `/Orders/${fromCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${fromCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -188,7 +190,7 @@ export async function setLaundryOrderChatInfo(
         chatImage: laundryStore.image,
         phoneNumber: laundryStore.phoneNumber,
         participantType: ParticipantType.LaundryOperator,
-        parentLink: `/Orders/${fromCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${fromCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.LaundryApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -231,7 +233,7 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
-        parentLink: `/Orders/${toCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${toCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -258,7 +260,7 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
         chatImage: laundryStore.image,
         phoneNumber: laundryStore.phoneNumber,
         participantType: ParticipantType.LaundryOperator,
-        parentLink: `/Orders/${toCustomerDelivery.deliveryId}`
+        parentLink: `/orders/${toCustomerDelivery.deliveryId}`
       },
       [ChatInfoAppName.LaundryApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
@@ -386,7 +388,7 @@ export async function setCourierChatInfo(courierOrder: CourierOrder, customer: C
             chatImage: customer.image,
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
-            parentLink: `/Orders/${courierOrder.deliveryOrder.deliveryId}`
+            parentLink: `/orders/${courierOrder.deliveryOrder.deliveryId}`
           },
           [ChatInfoAppName.CustomerApp]: {
             parentLink: `/courierOrders/${courierOrder.id}`,
@@ -406,4 +408,48 @@ export async function setCourierChatInfo(courierOrder: CourierOrder, customer: C
     },]
   });
   
+}
+
+export async function setBusinessOrderRequestChatInfo(
+  order: BusinessOrder,
+  business: Business,
+  customer: CustomerInfo
+) {
+  
+  let chain = getHasura();
+  
+  chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: order.orderDetails.chatId!,
+      },
+      _set: {
+        chat_info: JSON.stringify({
+          CustomerApp: {
+            chatTitle: business.details.name,
+            chatImage: business.details.image,
+            phoneNumber: business.details.phoneNumber,
+            participantType: ParticipantType.BusinessOperator,
+            parentLink: `/laundryOrders/${order.orderDetails.orderId}`,
+          },
+          LaundryApp: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
+            parentLink: `/laundryOrders/${order.orderDetails.orderId}`,
+          },
+          MezAdminApp: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
+            parentLink: `/laundryOrders/${order.orderDetails.orderId}`
+          }
+        }),
+      }
+    }, {
+      id: true
+    }]
+  });
 }

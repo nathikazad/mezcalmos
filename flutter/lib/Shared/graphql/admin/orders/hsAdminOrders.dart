@@ -3,11 +3,9 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/orders/__generated/admin_orders.graphql.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -21,7 +19,9 @@ Future<List<MinimalOrder>?> get_admin_dv_orders(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables: Variables$Query$admin_get_dv_orders(
-              inProccess: inProcess, limit: limit)));
+              inProccess: inProcess,
+              limit: limit,
+              offset: limit != null ? limit - 10 : null)));
 
   if (queryResult.parsedData?.delivery_order != null) {
     final List<Query$admin_get_dv_orders$delivery_order> ordersData =
@@ -101,7 +101,10 @@ Future<List<MinimalOrder>?> get_admin_restaurant_orders(
               fetchPolicy:
                   withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
               variables: Variables$Query$admin_get_restaurant_orders(
-                  inProccess: inProcess, limit: limit)));
+                inProccess: inProcess,
+                limit: limit,
+                offset: limit != null ? limit - 10 : null,
+              )));
 
   if (queryResult.parsedData?.restaurant_order != null) {
     final List<Query$admin_get_restaurant_orders$restaurant_order> ordersData =
@@ -179,7 +182,9 @@ Future<List<MinimalOrder>?> get_admin_laundry_orders(
               fetchPolicy:
                   withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
               variables: Variables$Query$admin_get_laundry_orders(
-                  inProccess: inProcess, limit: limit)));
+                  inProccess: inProcess,
+                  limit: limit,
+                  offset: limit != null ? limit - 10 : null)));
 
   if (queryResult.parsedData?.laundry_order != null) {
     final List<Query$admin_get_laundry_orders$laundry_order> ordersData =
@@ -262,6 +267,7 @@ Future<List<MinimalOrder>?> get_admin_service__orders({
               variables: Variables$Query$admin_get_service__orders(
                   inProccess: inProcess,
                   limit: limit,
+                  offset: limit - 10,
                   serviceProviderId: serviceProviderId,
                   serviceProviderType:
                       serviceProviderType.toFirebaseFormatString())));
