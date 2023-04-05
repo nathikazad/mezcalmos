@@ -1,7 +1,19 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
+enum AllServiceViewEnum {
+  Delivery,
+  Rental,
+  Classes,
+  Wellness,
+  Events,
+  Volunteer,
+  Adventure,
+}
+
 class AllServiceListViewController {
+  late Rx<AllServiceViewEnum> currentSelectedService;
+
   late RxList<Map<String, String>> _deliveryServiceListData;
   RxList<Map<String, String>> get deliveryServiceListData =>
       _deliveryServiceListData;
@@ -37,6 +49,10 @@ class AllServiceListViewController {
         "title": "adventure",
       },
     ]);
+  }
+
+  void setCurrentSelectedService(AllServiceViewEnum serviceValue) {
+    currentSelectedService.value = serviceValue;
   }
 
   void dispose() {}

@@ -487,6 +487,12 @@
             "vehicle": "Vehículo",
             "store": "Tienda"
           },
+          "car": {
+            "title": "Coche",
+            "description": "Book and rent your car from local suppliers with affordable prices.",
+            "car": "Coche",
+            "store": "Tienda"
+          },
           "homes": {
             "title": "Viviendas",
             "description": "Obtain delivery of anything you desire to your location.",

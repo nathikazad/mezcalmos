@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/ClassesServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -19,12 +20,13 @@ class AllServiceListView extends StatefulWidget {
 }
 
 class _AllServiceListViewState extends State<AllServiceListView> {
-  AllServiceListViewController cServiceController =
-      AllServiceListViewController();
+  late AllServiceListViewController cServiceController;
 
   @override
   void initState() {
     super.initState();
+    Get.put(AllServiceListViewController());
+    cServiceController = Get.find<AllServiceListViewController>();
     cServiceController.init();
   }
 
@@ -34,14 +36,30 @@ class _AllServiceListViewState extends State<AllServiceListView> {
     cServiceController.dispose();
   }
 
-  void navigateToServices(int idx) {
-    // TODO: Enums and switch
-    if (idx == 0) {
-      DeliveryServiceView.navigate();
-    } else if (idx == 1) {
-      RentalView.navigate();
-    } else {
-      RentalView.navigate();
+  void navigateToServices(AllServiceViewEnum value) {
+    cServiceController.setCurrentSelectedService(value);
+    switch (value) {
+      case AllServiceViewEnum.Delivery:
+        DeliveryServiceView.navigate();
+        return;
+      case AllServiceViewEnum.Rental:
+        RentalView.navigate();
+        return;
+      case AllServiceViewEnum.Classes:
+        ClassesServiceView.navigate();
+        return;
+      case AllServiceViewEnum.Wellness:
+        // TODO: Handle this case.
+        return;
+      case AllServiceViewEnum.Events:
+        // TODO: Handle this case.
+        return;
+      case AllServiceViewEnum.Volunteer:
+        // TODO: Handle this case.
+        return;
+      case AllServiceViewEnum.Adventure:
+        // TODO: Handle this case.
+        return;
     }
   }
 
@@ -65,7 +83,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
               onClick: () {
-                navigateToServices(index);
+                navigateToServices(AllServiceViewEnum.values[index]);
               },
               content: Column(
                 children: [

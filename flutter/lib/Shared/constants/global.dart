@@ -143,6 +143,7 @@ const String aYoga = "assets/images/customer/yoga.png";
 const String aRentals = "assets/images/customer/rentals.png";
 const String aHomes = "assets/images/customer/rental/homes.png";
 const String aMotocycle = "assets/images/customer/rental/motorcycle.png";
+const String aCar = "assets/images/customer/rental/carRental.png";
 const String aSurf = "assets/images/customer/rental/surf.png";
 const String aHouseSliding = "assets/images/customer/rental/housesliding.png";
 const String aPriceCheck = "assets/images/customer/rental/pricecheck.png";

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyListTile.dart';
-import '../AgencyServiceView/AgencyServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AgencyServiceView/AgencyServiceView.dart';
 
 class AgencyListView extends StatefulWidget {
   const AgencyListView({super.key});

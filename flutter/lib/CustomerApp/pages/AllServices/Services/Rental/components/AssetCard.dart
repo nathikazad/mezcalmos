@@ -37,98 +37,104 @@ class AssetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
-    return MezCard(
-      onClick: () {
-        onClick();
-      },
-      contentPadding: EdgeInsets.symmetric(
-        vertical: 12,
-        horizontal: 6,
-      ),
-      leading: needLeadingImage
-          ? CircleAvatar(
-              radius: 20,
-              backgroundImage: image,
-            )
-          : const Offstage(),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: style.headlineMedium,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      needCustomSubtitle
-                          ? subtitleWidget
-                          : Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  for (int index = 0;
-                                      index < subtitleIconData.length;
-                                      index++)
-                                    Row(
-                                      children: [
-                                        Image(
-                                          image: AssetImage(
-                                            subtitleIconData[index],
-                                          ),
-                                        ),
-                                        Text(
-                                          subtitleIconString[index],
-                                          style: style.bodyMedium,
-                                        ),
-                                      ],
-                                    ),
-                                ],
-                              ),
-                            ),
-                    ],
-                  ),
-                ),
-                needTrailingImage
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: ColoredBox(
-                          color: Colors.grey.withOpacity(0.1),
-                          child: SizedBox(
-                            height: 64,
-                            width: 64,
-                            child: Image(
-                              height: 64,
-                              width: 64,
-                              image: image,
-                              fit: BoxFit.cover,
-                            ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: MezCard(
+        onClick: () {
+          onClick();
+        },
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 6,
+        ),
+        leading: needLeadingImage
+            ? CircleAvatar(
+                radius: 20,
+                backgroundImage: image,
+              )
+            : const Offstage(),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            title,
+                            style: style.headlineMedium,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      )
-                    : const Offstage(),
-              ],
+                        needCustomSubtitle
+                            ? subtitleWidget
+                            : Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    for (int index = 0;
+                                        index < subtitleIconData.length;
+                                        index++)
+                                      Row(
+                                        children: [
+                                          Image(
+                                            image: AssetImage(
+                                              subtitleIconData[index],
+                                            ),
+                                          ),
+                                          Text(
+                                            subtitleIconString[index],
+                                            style: style.bodyMedium,
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                  needTrailingImage
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: ColoredBox(
+                            color: Colors.grey.withOpacity(0.1),
+                            child: SizedBox(
+                              height: 64,
+                              width: 64,
+                              child: Image(
+                                height: 64,
+                                width: 64,
+                                image: image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const Offstage(),
+                ],
+              ),
             ),
-          ),
-          needDivider ? const Divider() : const Offstage(),
-          needBottomTitleText
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(lBottomText),
-                    Text(rBottomText),
-                  ],
-                )
-              : const Offstage(),
-        ],
+            needDivider ? const Divider() : const Offstage(),
+            needBottomTitleText
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(lBottomText),
+                      Text(rBottomText),
+                    ],
+                  )
+                : const Offstage(),
+          ],
+        ),
       ),
     );
   }

@@ -485,6 +485,12 @@
             "vehicle": "Vehicle",
             "store": "Store"
           },
+          "car": {
+            "title": "Car",
+            "description": "Book and rent your car from local suppliers with affordable prices.",
+            "car": "Car",
+            "store": "Store"
+          },
           "homes": {
             "title": "Homes",
             "description": "Obtain delivery of anything you desire to your location.",

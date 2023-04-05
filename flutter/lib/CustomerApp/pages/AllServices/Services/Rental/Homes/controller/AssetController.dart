@@ -18,6 +18,10 @@ Map<RentalViewEnum, Map<CurrentSelectedViewEnum, String>> vRentalViewValues = {
     CurrentSelectedViewEnum.Asset: "Vehicle",
     CurrentSelectedViewEnum.Agency: "Store",
   },
+  RentalViewEnum.Car: {
+    CurrentSelectedViewEnum.Asset: "Car",
+    CurrentSelectedViewEnum.Agency: "Store",
+  },
   RentalViewEnum.Homes: {
     CurrentSelectedViewEnum.Asset: "Home",
     CurrentSelectedViewEnum.Agency: "Agency",
@@ -25,13 +29,13 @@ Map<RentalViewEnum, Map<CurrentSelectedViewEnum, String>> vRentalViewValues = {
 };
 
 class AssetController {
-  late RentalViewEnum _viewName;
+  late RentalViewEnum viewName;
   late List<IconData> _iconList;
   late Rx<CurrentSelectedViewEnum> currentSelectedView;
   late List<CurrentSelectedViewEnum> currentSelectedViewList;
   late List<String> currentSelectedViewName;
 
-  String get viewName => _getViewString();
+  String get getViewNameString => _getViewString();
   List<IconData> get iconList => _getIconList();
 
   void init({
@@ -39,17 +43,22 @@ class AssetController {
   }) {
     switch (viewEnum) {
       case RentalViewEnum.Surf:
-        _viewName = RentalViewEnum.Surf;
+        viewName = RentalViewEnum.Surf;
         currentSelectedViewList =
             vRentalViewValues[RentalViewEnum.Surf]!.keys.toList();
         break;
       case RentalViewEnum.MotorCycle:
-        _viewName = RentalViewEnum.MotorCycle;
+        viewName = RentalViewEnum.MotorCycle;
         currentSelectedViewList =
             vRentalViewValues[RentalViewEnum.MotorCycle]!.keys.toList();
         break;
+      case RentalViewEnum.Car:
+        viewName = RentalViewEnum.Car;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Car]!.keys.toList();
+        break;
       case RentalViewEnum.Homes:
-        _viewName = RentalViewEnum.Homes;
+        viewName = RentalViewEnum.Homes;
         currentSelectedViewList =
             vRentalViewValues[RentalViewEnum.Homes]!.keys.toList();
         break;
@@ -60,25 +69,25 @@ class AssetController {
 
   void _generateEnumToString() {
     currentSelectedViewName = currentSelectedViewList
-        .map((e) => vRentalViewValues[_viewName]![e].toString())
+        .map((e) => vRentalViewValues[viewName]![e].toString())
         .toList();
   }
 
   String _getViewString() {
-    switch (_viewName) {
+    switch (viewName) {
       case RentalViewEnum.Surf:
         return "surf";
       case RentalViewEnum.MotorCycle:
         return "motorcycle";
+      case RentalViewEnum.Car:
+        return "car";
       case RentalViewEnum.Homes:
         return "homes";
-      default:
-        return "surf";
     }
   }
 
   List<IconData> _getIconList() {
-    switch (_viewName) {
+    switch (viewName) {
       case RentalViewEnum.Surf:
         return [
           Icons.surfing,
@@ -89,12 +98,12 @@ class AssetController {
           Icons.two_wheeler,
           Icons.store,
         ];
-      case RentalViewEnum.Homes:
+      case RentalViewEnum.Car:
         return [
-          Icons.home,
-          Icons.domain,
+          Icons.directions_car,
+          Icons.store,
         ];
-      default:
+      case RentalViewEnum.Homes:
         return [
           Icons.home,
           Icons.domain,

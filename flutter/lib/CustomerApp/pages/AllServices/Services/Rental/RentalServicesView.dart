@@ -26,19 +26,6 @@ class RentalView extends StatefulWidget {
 class _RentalViewState extends State<RentalView> {
   RentalController rentalController = RentalController();
 
-  void navigateTo(int idx) {
-    // TODO: enums
-    if (idx == 0) {
-      // TODO: Navigate to Surf
-      AssetListsView.navigate(viewEnum: RentalViewEnum.Surf);
-    } else if (idx == 1) {
-      // TODO: Navigate to Motorcycle
-      AssetListsView.navigate(viewEnum: RentalViewEnum.MotorCycle);
-    } else if (idx == 2) {
-      AssetListsView.navigate(viewEnum: RentalViewEnum.Homes);
-    } else {}
-  }
-
   @override
   Widget build(BuildContext context) {
     var txt = Theme.of(context).textTheme;
@@ -60,11 +47,13 @@ class _RentalViewState extends State<RentalView> {
         ],
       ),
       body: ListView.builder(
-        itemCount: rentalController.allRentalsData.length,
+        itemCount: rentalController.allRentalValues.length,
         itemBuilder: (BuildContext context, int index) {
           return MezCard(
             onClick: () {
-              navigateTo(index);
+              AssetListsView.navigate(
+                viewEnum: rentalController.allRentalValues[index]["value"],
+              );
             },
             content: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -74,15 +63,15 @@ class _RentalViewState extends State<RentalView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _i18n()[rentalController.allRentalsData[index]]
+                        _i18n()[rentalController.allRentalValues[index]["key"]]
                             ['title'],
                         style: txt.displayMedium,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
                         child: Text(
-                          _i18n()[rentalController.allRentalsData[index]]
-                              ['description'],
+                          _i18n()[rentalController.allRentalValues[index]
+                              ["key"]]['description'],
                           style: txt.labelLarge,
                         ),
                       ),
@@ -90,7 +79,7 @@ class _RentalViewState extends State<RentalView> {
                   ),
                 ),
                 Image.asset(
-                  rentalController.allRentalsDataIcons[index].toString(),
+                  rentalController.allRentalValues[index]["icon"].toString(),
                   height: 110,
                   width: 110,
                 ),
