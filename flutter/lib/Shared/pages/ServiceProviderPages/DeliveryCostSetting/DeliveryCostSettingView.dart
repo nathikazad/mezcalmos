@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -254,18 +254,21 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
               ],
-              //  textAlign: TextAlign.center,
               decoration: InputDecoration(
-                  suffixIconConstraints:
-                      BoxConstraints.tightFor(width: 50, height: 10),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(right: 3),
-                    child: Text(
-                      suffixTitle,
-                      textAlign: TextAlign.right,
-                      style: context.txt.bodyLarge,
-                    ),
-                  ),
+                  isDense: true,
+                  contentPadding: EdgeInsets.all(12),
+
+                  // suffixIconConstraints:
+                  //     BoxConstraints.loose(Size(width, height)),
+                  suffixText: suffixTitle,
+                  // suffix: Padding(
+                  //   padding: const EdgeInsets.only(right: 3),
+                  //   child: Text(
+                  //     suffixTitle,
+                  //     textAlign: TextAlign.right,
+                  //     style: context.txt.bodyLarge,
+                  //   ),
+                  // ),
                   fillColor: secondaryLightBlueColor),
             ))
       ],

@@ -60,7 +60,6 @@ class DeliveryOrder extends DeliverableOrder {
       status == DeliveryOrderStatus.OnTheWayToDropoff ||
       status == DeliveryOrderStatus.AtDropoff;
 
-
   @override
   bool operator ==(covariant DeliveryOrder other) {
     if (identical(this, other)) return true;
@@ -93,6 +92,12 @@ class DeliveryOrder extends DeliverableOrder {
         status == DeliveryOrderStatus.OnTheWayToPickup ||
         status == DeliveryOrderStatus.AtDropoff ||
         status == DeliveryOrderStatus.AtPickup;
+  }
+
+  bool get haveAtLeastOneEstTime {
+    return estimatedArrivalAtDropoff != null ||
+        estimatedArrivalAtPickup != null ||
+        estimatedPackageReadyTime != null;
   }
 
   // static void copyTo(DeliveryOrder from, DeliveryOrder to) {

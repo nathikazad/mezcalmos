@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpCategoryItems.dart';
@@ -17,6 +16,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -95,7 +95,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
             tabBar: (viewController.reOrderMode.isFalse) ? _tabBar() : null,
           ),
           key: Get.find<SideMenuDrawerController>().getNewKey(),
-          drawer: ROpDrawer(),
+          drawer: MezSideMenu(),
           body: Container(
               child: (viewController.pageLoaded.value)
                   ? _buildMenu()

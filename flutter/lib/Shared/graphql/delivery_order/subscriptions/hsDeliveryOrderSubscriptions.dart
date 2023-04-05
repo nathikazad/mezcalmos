@@ -106,6 +106,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           ? MezLocation(
               orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
           : null,
+          
       dropOffLocation: MezLocation(
           orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       customerDriverChatId: orderData.chat_with_customer_id,

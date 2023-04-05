@@ -31,7 +31,7 @@ class MGoogleMap extends StatefulWidget {
     Key? key,
     this.padding = const EdgeInsets.only(top: 80, bottom: 50),
     this.notifyParentOfNewLocation,
-    this.recenterBtnBottomPadding = 100,
+    this.recenterBtnBottomPadding = 10,
     this.debugString,
 
     // this.mGoogleMapController,

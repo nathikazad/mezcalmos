@@ -16,8 +16,8 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
@@ -303,7 +303,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 viewController.order.inProcess() &&
                 viewController.order.isDriverAssigned)
               MessageButton(
-                  chatId: 55,
+                  chatId: viewController.order.customerDriverChatId!,
                   onTap: () {
                     BaseMessagingScreen.navigate(
                         chatId: viewController.order.customerDriverChatId!);

@@ -735,6 +735,7 @@
           "ready": "Paquete listo",
           "atPickUp": "En la recogida",
           "otwDropOff": "En el camino de caída",
+          "otwPickup": "En el camino recogida",
           "delivered": "Orden entregada",
           "received": "orden recibida",
           "canceled": "Orden cancelada",
@@ -1431,6 +1432,19 @@
       }
     },
     "pages": {
+      "DvCompanyOrderView" : {
+        "order" : "Orden",
+        "customer" :"Información del cliente",
+        "estTimes" :"Tiempos estimados",
+        "deliveryDeatils" :"Detalles de la entrega",
+        "loading" : "Obteniendo su información de pedido ...",
+        "packageReady" :"Paquete listo:",
+        "arrivalAtPickup": "Llegada a la recogida :",
+        "arrivalAtDropoff": "Llegada a la caída :",
+        "noDriver" :"No hay controlador asignado todavía"
+
+
+      },
       "DvOpTabsView": {
         "orders": "Pedidos",
         "drivers": "Conductoras",

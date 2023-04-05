@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -14,6 +13,7 @@ import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ClosedServiceProviderWidget.dart';
@@ -60,7 +60,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
           showNotifications: true,
         ),
         key: Get.find<SideMenuDrawerController>().getNewKey(),
-        drawer: ROpDrawer(),
+        drawer: MezSideMenu(),
         body: Obx(() {
           if (viewController.initalized.isFalse) {
             return MezLogoAnimation(

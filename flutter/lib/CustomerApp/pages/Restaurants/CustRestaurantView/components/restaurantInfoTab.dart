@@ -185,7 +185,7 @@ class RestaurantInfoTab extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: Text(
                         '${_i18n()["viewAll"]}',
-                        style: Get.textTheme.bodyText1
+                        style: context.textTheme.bodyLarge
                             ?.copyWith(color: primaryBlueColor),
                       ),
                     ),

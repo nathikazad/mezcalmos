@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
@@ -114,10 +112,13 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                     textColor: primaryBlueColor,
                     height: 32,
                     width: 35.w,
+                    textStyle: context.txt.bodyLarge
+                        ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
+                    // width: ,
                     borderRadius: 35,
-                    label: '${_i18n()["pastButton"]}'.inCaps,
+                    label: '${_i18n()["pastOrders"]}'.inCaps,
                     onClick: () async {
-                      unawaited(DvOpPastOrdersView.navigate());
+                      await DvOpPastOrdersView.navigate();
                     },
                   ),
                 ),

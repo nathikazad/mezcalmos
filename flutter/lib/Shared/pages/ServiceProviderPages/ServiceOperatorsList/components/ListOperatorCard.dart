@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpDriversView']["components"]["ROpListDriverCard"];
@@ -69,7 +67,7 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                     fit: FlexFit.tight,
                     child: Text(
                       widget.operator.info.name,
-                      style: Get.textTheme.bodyText1,
+                      style: context.textTheme.bodyLarge,
                     ),
                   ),
                   const Spacer(),

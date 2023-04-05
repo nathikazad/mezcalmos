@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -66,7 +66,7 @@ class _CustCardsListViewState extends State<CustCardsListView> {
                   ),
                 MezAddButton(
                   onClick: () async {
-                    await addCardSheet()
+                    await addCardSheet(context)
                         .whenComplete(() => viewController.fetchCards());
                   },
                   btnColor: Colors.grey.shade200,

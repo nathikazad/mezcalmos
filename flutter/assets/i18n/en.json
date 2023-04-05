@@ -735,6 +735,7 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
+          "otwPickup": "On the way pickup",
           "delivered": "Order delivered",
           "received": "Order received",
           "canceled": "Order cancelled",
@@ -1425,6 +1426,19 @@
       }
     },
     "pages": {
+      "DvCompanyOrderView" : {
+        "order" : "Order",
+        "customer" :"Customer Info",
+        "estTimes" :"Estimated times",
+        "deliveryDeatils" :"Delivery details",
+        "loading" : "Getting you order info...",
+        "packageReady" :"Package ready :",
+        "arrivalAtPickup": "Arrival at pickup :",
+        "arrivalAtDropoff": "Arrival at dropoff :",
+        "noDriver" :"No driver assigned yet"
+
+
+      },
       "DvOpTabsView": {
         "orders": "Orders",
         "drivers": "Drivers",
