@@ -59,7 +59,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
 
   @override
   void initState() {
-    mezDbgPrint(Get.parameters);
+    mezDbgPrint(MezRouter.urlArguments);
     _assignVars();
     if (serviceDetailsId != null &&
         serviceId != null &&
@@ -107,13 +107,18 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                             children: [
                               _navigationLink(
                                   onClick: () async {
-                                    ServiceInfoEditView.navigate(
-                                        serviceDetailsId:
-                                            _viewController.detailsId,
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
+                                    bool? refetch =
+                                        await ServiceInfoEditView.navigate(
+                                            serviceDetailsId:
+                                                _viewController.detailsId,
+                                            serviceProviderId:
+                                                _viewController.serviceId,
+                                            serviceProviderType: _viewController
+                                                .service.serviceProviderType!);
+
+                                    if (refetch) {
+                                      _viewController.fetchService();
+                                    }
                                   },
                                   icon: Icons.person,
                                   label: "${_i18n()['info']}"),

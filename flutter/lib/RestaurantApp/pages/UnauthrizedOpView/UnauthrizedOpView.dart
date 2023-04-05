@@ -12,7 +12,7 @@ class ROpUnauthorizedOpView extends StatefulWidget {
   const ROpUnauthorizedOpView({super.key});
 
   static Future<void> navigate() {
-    return MezRouter.toPath(RestaurantAppRoutes.opUnauthRoute);
+    return MezRouter.toPath(RestaurantAppRoutes.unAuthorizedRoute);
   }
 
   @override

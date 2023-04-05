@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -20,8 +20,8 @@ import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROp
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -41,8 +41,8 @@ class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required String orderId}) {
-    return MezRouter.toPath(
-        RestaurantRouter.restaurantOrderRoute.replaceAll(":orderId", orderId));
+    return MezRouter.toPath(RestaurantAppRoutes.restaurantOrderRoute
+        .replaceAll(":orderId", orderId));
   }
 
   @override

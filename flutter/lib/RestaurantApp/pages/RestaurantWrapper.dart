@@ -3,15 +3,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/restaurantDeepLinkHandler.dart';
-import 'package:mezcalmos/Shared/DeepLinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
+import 'package:mezcalmos/RestaurantApp/restaurantDeepLinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/DeepLinkHandler.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -22,7 +19,8 @@ import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -64,9 +62,9 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
           serviceProviderType: ServiceProviderType.Restaurant);
     } else if (restaurantOpAuthController
         .operator.value!.isWaitingToBeApprovedByOwner) {
-      MezRouter.toNamed(RestaurantAppRoutes.opUnauthRoute);
+      MezRouter.toPath(RestaurantAppRoutes.unAuthorizedRoute);
     } else {
-      MezRouter.toNamed(RestaurantAppRoutes.tabsRoute);
+      MezRouter.toPath(RestaurantAppRoutes.tabsRoute);
     }
   }
 

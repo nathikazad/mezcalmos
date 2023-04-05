@@ -4,6 +4,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,8 +20,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
@@ -30,7 +30,7 @@ Future<Uint8List> compressImageBytes(Uint8List uint8list, String path) async {
     useJpgPngNativeCompressor: true,
     quality: nQualityCompressionOfUserImage,
   );
-  mezDbgPrint("🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path ${path}");
+  mezDbgPrint("🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path $path");
   final ImageFileConfiguration param = ImageFileConfiguration(
       input: ImageFile(filePath: path, rawBytes: uint8list), config: config);
   final ImageFile output = await compressor.compress(param);

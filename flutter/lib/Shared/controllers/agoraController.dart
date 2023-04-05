@@ -187,7 +187,6 @@ class Sagora extends GetxController {
   }
 
   void _startListeningOnCallEvents() {
-    mezDbgPrint("🤑🤑🤑🤑🤑🤑 Flutter listening");
     FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
       mezDbgPrint("CallEvent ===>  $event");
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/OrderFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
@@ -28,7 +28,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   @override
   void initState() {
     initializeLateControllers();
-    final String orderId = Get.parameters['orderId']!;
+    final String orderId = MezRouter.urlArguments['orderId']!;
     iOrderViewController.initController(
         orderId: orderId,
         onOrderNoMoreAvailable: () {

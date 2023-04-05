@@ -18,8 +18,8 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart'
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -52,7 +52,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void initState() {
     final String orderId = MezRouter.urlArguments['orderId'].toString();
-    mezDbgPrint("Get.parameters ===> $orderId");
+    mezDbgPrint("MezRouter.urlArguments ===> $orderId");
     if (int.tryParse(orderId) != null) {
       viewController.init(orderId: int.parse(orderId));
     }

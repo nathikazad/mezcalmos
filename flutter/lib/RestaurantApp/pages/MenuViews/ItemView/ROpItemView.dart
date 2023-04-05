@@ -8,7 +8,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ROpS
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -34,7 +34,7 @@ class ROpItemView extends StatefulWidget {
       required int? itemId,
       int? categoryId,
       required Map<String, dynamic> arguments}) async {
-    String route = RestaurantRouter.restaurantItemRoute
+    String route = RestaurantAppRoutes.restaurantItemRoute
         .replaceAll(":restaurantId", restaurantId.toString());
     if (categoryId != null) {
       route = route.replaceFirst(":categoryId", "$categoryId");

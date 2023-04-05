@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
@@ -20,17 +23,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
 class ServiceInfoEditView extends StatefulWidget {
   const ServiceInfoEditView({super.key});
 
-  static Future<void> navigate(
+  static Future<bool> navigate(
       {required int serviceDetailsId,
       required int serviceProviderId,
-      required ServiceProviderType serviceProviderType}) {
-    return MezRouter.toPath(
+      required ServiceProviderType serviceProviderType}) async {
+    await MezRouter.toPath(
         SharedServiceProviderRoutes.kserviceInfoEditRoute
             .replaceAll(":serviceDetailsId", serviceDetailsId.toString())
             .replaceAll(":serviceProviderId", serviceProviderId.toString()),
         arguments: <String, dynamic>{
           "serviceProviderType": serviceProviderType,
         });
+    mezDbgPrint("After await 😏==>${MezRouter.backResult}");
+    return MezRouter.backResult;
   }
 
   @override
@@ -80,6 +85,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
         onClick: () async {
           if (viewController.formKey.currentState?.validate() == true) {
             await viewController.saveInfo();
+            await MezRouter.back(backResult: true);
           }
         },
       ),

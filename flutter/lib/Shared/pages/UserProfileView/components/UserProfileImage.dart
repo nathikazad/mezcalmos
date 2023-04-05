@@ -46,7 +46,7 @@ class UserProfileImage extends StatelessWidget {
                             ? CircularProgressIndicator(
                                 color: primaryBlueColor,
                               )
-                            : (viewController.newImageFile.value == null &&
+                            : (viewController.newImageFile == null &&
                                     viewController.newImageUrl.value == null)
                                 ? Container(
                                     padding: const EdgeInsets.all(5),

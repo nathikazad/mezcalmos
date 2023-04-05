@@ -4,7 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionChoiceCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -13,8 +13,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -28,7 +28,7 @@ class ROpOptionView extends StatefulWidget {
       {required int restaurantId,
       required int? optionId,
       required int itemId}) async {
-    String route = RestaurantRouter.restaurantOptionRoute
+    String route = RestaurantAppRoutes.restaurantOptionRoute
         .replaceAll(":restaurantId", "$restaurantId")
         .replaceAll(":itemId", "$itemId");
     if (optionId != null) {
