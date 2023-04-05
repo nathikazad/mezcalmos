@@ -119,6 +119,7 @@ flutter:
     - assets/images/customer/restaurants/
     - assets/images/customer/taxi/
     - assets/images/customer/laundry/
+    - assets/images/customer/rental/
     - assets/fonts/
     - assets/i18n/
     - assets/animation/

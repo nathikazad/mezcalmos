@@ -260,9 +260,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
-              "rmItemTitle" : "Remover el artículo",
-              "rmItemHelper" : "¿Estás seguro de que quieres eliminar este artículo del carrito?",
-              "rmItemButton" : "Sí, elimine el artículo",
+              "rmItemTitle": "Remover el artículo",
+              "rmItemHelper": "¿Estás seguro de que quieres eliminar este artículo del carrito?",
+              "rmItemButton": "Sí, elimine el artículo",
               "notAvailable": "Su restaurante está cerrado",
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
@@ -529,6 +529,14 @@
           }
         },
         "classes": "Clases",
+        "class": {
+          "title": "Classes",
+          "classes":{
+            "title":"Clase",
+            "class":"Clase",
+            "studio":"Estudio"
+          }
+        },
         "wellness": "Bienestar",
         "events": "Eventos",
         "volunteer": "Voluntario",
@@ -656,8 +664,8 @@
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
           "day": "día",
-          "return" : "devolver",
-          "daysReturn" : "Días de regreso",
+          "return": "devolver",
+          "daysReturn": "Días de regreso",
           "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
@@ -1163,11 +1171,11 @@
       }
     },
     "widgets": {
-      "OrderMapWidget" : {
-        "mapWebText" : "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
+      "OrderMapWidget": {
+        "mapWebText": "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
       },
-      "MezcalmosAppBar" : {
-        "installApp" : "Instalar la aplicación Mezcalmos"
+      "MezcalmosAppBar": {
+        "installApp": "Instalar la aplicación Mezcalmos"
       },
       "ReviewCard": {
         "review": "Revisar"
@@ -1871,7 +1879,7 @@
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
-            
+
               "noPickupTimeTitle": "Sin tiempo de recogida",
               "noPickupTimeBody": "Por favor, establezca la hora de recogida primero",
               "setDvCostTitle": "Sin costo de entrega",
@@ -2233,8 +2241,8 @@
         "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
         "deleteTitle": "Eliminar este artículo",
         "deleteItem": "Eliminar elemento",
-        "added" : "Agregada",
-        "addedSubtitle" : "Artículo agregado con éxito",
+        "added": "Agregada",
+        "addedSubtitle": "Artículo agregado con éxito",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Porfavor seleccione una categoría",

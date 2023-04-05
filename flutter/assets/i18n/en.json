@@ -528,6 +528,14 @@
           }
         },
         "classes": "Classes",
+        "class": {
+          "title": "Classes",
+          "classes": {
+            "title": "Class",
+            "class": "Class",
+            "studio": "Studio"
+          }
+        },
         "wellness": "Wellness",
         "events": "Events",
         "volunteer": "Volunteer",

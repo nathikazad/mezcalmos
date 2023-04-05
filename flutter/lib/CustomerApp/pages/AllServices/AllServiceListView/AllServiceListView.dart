@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/ClassesServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetListsView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/DeliveryServiceView.dart';
 
@@ -45,8 +44,8 @@ class _AllServiceListViewState extends State<AllServiceListView> {
       case AllServiceViewEnum.Rental:
         RentalView.navigate();
         return;
-      case AllServiceViewEnum.Classes:
-        ClassesServiceView.navigate();
+      case AllServiceViewEnum.Class:
+        AssetListsView.navigate(viewEnum: RentalViewEnum.Classes);
         return;
       case AllServiceViewEnum.Wellness:
         // TODO: Handle this case.

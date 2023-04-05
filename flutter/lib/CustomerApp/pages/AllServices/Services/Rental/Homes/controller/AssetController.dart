@@ -26,6 +26,10 @@ Map<RentalViewEnum, Map<CurrentSelectedViewEnum, String>> vRentalViewValues = {
     CurrentSelectedViewEnum.Asset: "Home",
     CurrentSelectedViewEnum.Agency: "Agency",
   },
+  RentalViewEnum.Classes: {
+    CurrentSelectedViewEnum.Asset: "Class",
+    CurrentSelectedViewEnum.Agency: "Studio",
+  },
 };
 
 class AssetController {
@@ -62,6 +66,11 @@ class AssetController {
         currentSelectedViewList =
             vRentalViewValues[RentalViewEnum.Homes]!.keys.toList();
         break;
+      case RentalViewEnum.Classes:
+        viewName = RentalViewEnum.Classes;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Classes]!.keys.toList();
+        break;
     }
     currentSelectedView = currentSelectedViewList.first.obs;
     _generateEnumToString();
@@ -83,6 +92,8 @@ class AssetController {
         return "car";
       case RentalViewEnum.Homes:
         return "homes";
+      case RentalViewEnum.Classes:
+        return "classes";
     }
   }
 
@@ -107,6 +118,11 @@ class AssetController {
         return [
           Icons.home,
           Icons.domain,
+        ];
+      case RentalViewEnum.Classes:
+        return [
+          Icons.class_,
+          Icons.school,
         ];
     }
   }

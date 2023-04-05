@@ -71,6 +71,13 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                       price: 70,
                       unitTime: "day",
                     );
+                  case RentalViewEnum.Classes:
+                    return AgencyStoreTile(
+                      title: "6 days surf camp",
+                      image: NetworkImage(customImageUrl),
+                      price: 40,
+                      unitTime: "person",
+                    );
                 }
               },
               childCount: 10,

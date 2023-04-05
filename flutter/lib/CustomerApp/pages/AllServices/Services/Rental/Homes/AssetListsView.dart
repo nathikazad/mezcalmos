@@ -13,6 +13,7 @@ import 'AssetListView/AssetListView.dart';
 import '../components/ButtonSwitcher.dart';
 import 'controller/AssetController.dart';
 import 'AgencyListView/AgencyListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'dart:developer';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -33,6 +34,7 @@ class AssetListsView extends StatefulWidget {
 
 class _AssetListsViewState extends State<AssetListsView> {
   late AssetController assetController;
+  late AllServiceListViewController allServiceListViewController;
 
   @override
   void initState() {
@@ -41,6 +43,7 @@ class _AssetListsViewState extends State<AssetListsView> {
         MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
     log("viewName $viewName ${viewName.runtimeType}");
     Get.put(AssetController());
+    allServiceListViewController = Get.find<AllServiceListViewController>();
     assetController = Get.find<AssetController>();
     assetController.init(viewEnum: viewName);
   }
@@ -57,8 +60,9 @@ class _AssetListsViewState extends State<AssetListsView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(_i18n()['rental'][assetController.getViewNameString]
-                ["title"]
+        titleWidget: Text(_i18n()[allServiceListViewController
+                .currentSelectedService.value.name
+                .toLowerCase()][assetController.getViewNameString]["title"]
             .toString()),
         actionIcons: <Widget>[
           AppBarActionButton(
@@ -118,12 +122,16 @@ class _AssetListsViewState extends State<AssetListsView> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Obx(
               () => ButtonSwitcher(
-                lButtonText: _i18n()['rental']
+                lButtonText: _i18n()[allServiceListViewController
+                            .currentSelectedService.value.name
+                            .toLowerCase()]
                             [assetController.getViewNameString][
                         assetController.currentSelectedViewName.first
                             .toLowerCase()]
                     .toString(),
-                rButtonText: _i18n()['rental']
+                rButtonText: _i18n()[allServiceListViewController
+                            .currentSelectedService.value.name
+                            .toLowerCase()]
                             [assetController.getViewNameString][
                         assetController.currentSelectedViewName.last
                             .toLowerCase()]

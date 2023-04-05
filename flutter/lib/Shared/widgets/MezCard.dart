@@ -5,7 +5,7 @@ class MezCard extends StatelessWidget {
       {super.key,
       this.margin,
       this.onClick,
-      this.radius = 10,
+      this.radius = 25,
       this.contentPadding = const EdgeInsets.all(8),
       required this.content,
       this.action,
@@ -46,7 +46,7 @@ class MezCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius)),
       child: InkWell(
-        borderRadius: BorderRadius.circular(radius),
+        borderRadius: BorderRadius.circular(borderRadius),
         onTap: onClick,
         child: Container(
           padding: contentPadding,

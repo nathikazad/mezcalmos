@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/componen
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/HomeCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/VehicleCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/CarCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/components/ClassCard.dart';
 
 class AssetListView extends StatefulWidget {
   const AssetListView({super.key});
@@ -57,35 +58,16 @@ class _AssetListViewState extends State<AssetListView> {
                   roomSpace: 330,
                   totalRooms: 3,
                 );
+              case RentalViewEnum.Classes:
+                return ClassCard(
+                  title: "Fitness & group exercise",
+                  agencyName: "Pueto Fitness",
+                  image: NetworkImage(customImageUrl),
+                  groupName: "Group Name",
+                  price: 30,
+                  unitTime: "person",
+                );
             }
-            // return Padding(
-            //   padding: const EdgeInsets.only(bottom: 8.0),
-            //   child: AssetCard(
-            //     title: "House for rent in Puerto Escondido",
-            //     onClick: () {
-            //       AssetServiceView.navigate();
-            //     },
-            //     image: NetworkImage(customImageUrl),
-            //     lBottomText: "Company Name",
-            //     rBottomText: "Company Name 2",
-            //     subtitleWidget: Text("Hello"),
-            //     needBottomTitleText: true,
-            //     needDivider: true,
-            //     needLeadingImage: false,
-            //     needTrailingImage: true,
-            //     needCustomSubtitle: false,
-            //     subtitleIconData: [
-            //       aPriceCheck,
-            //       aSingleBed,
-            //       aHouseSliding,
-            //     ],
-            //     subtitleIconString: [
-            //       "\$234/day",
-            //       "3 bedrooms",
-            //       "330m²",
-            //     ],
-            //   ),
-            // );
           },
         ),
       ),
