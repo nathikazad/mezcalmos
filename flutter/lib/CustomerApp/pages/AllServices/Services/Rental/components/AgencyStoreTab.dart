@@ -78,6 +78,9 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                       price: 40,
                       unitTime: "person",
                     );
+                  case RentalViewEnum.Wellness:
+                    // Not going to navigate here thats why no UI needed
+                    return Offstage();
                 }
               },
               childCount: 10,

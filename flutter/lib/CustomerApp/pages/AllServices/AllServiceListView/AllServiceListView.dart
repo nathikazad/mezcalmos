@@ -48,7 +48,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         AssetListsView.navigate(viewEnum: RentalViewEnum.Classes);
         return;
       case AllServiceViewEnum.Wellness:
-        // TODO: Handle this case.
+        AssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
         return;
       case AllServiceViewEnum.Events:
         // TODO: Handle this case.
@@ -95,7 +95,11 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Obx(
                       () => Text(
-                        _i18n()[serviceListData[index]["title"]].toString(),
+                        AllServiceViewEnum.values[index] ==
+                                AllServiceViewEnum.Wellness
+                            ? _i18n()["wellness"]["title"].toString()
+                            : _i18n()[serviceListData[index]["title"]]
+                                .toString(),
                         style: txt.headlineSmall,
                       ),
                     ),

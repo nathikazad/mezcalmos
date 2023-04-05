@@ -537,7 +537,9 @@
             "studio":"Estudio"
           }
         },
-        "wellness": "Bienestar",
+        "wellness": {
+          "title":"Bienestar"
+        },
         "events": "Eventos",
         "volunteer": "Voluntario",
         "adventure": "Aventura",

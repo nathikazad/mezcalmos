@@ -60,10 +60,14 @@ class _AssetListsViewState extends State<AssetListsView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(_i18n()[allServiceListViewController
-                .currentSelectedService.value.name
-                .toLowerCase()][assetController.getViewNameString]["title"]
-            .toString()),
+        titleWidget: Text(allServiceListViewController
+                    .currentSelectedService.value.name ==
+                RentalViewEnum.Wellness.name
+            ? _i18n()["wellness"]["title"].toString()
+            : _i18n()[allServiceListViewController
+                    .currentSelectedService.value.name
+                    .toLowerCase()][assetController.getViewNameString]["title"]
+                .toString()),
         actionIcons: <Widget>[
           AppBarActionButton(
             icon: Icons.notifications,
@@ -118,33 +122,36 @@ class _AssetListsViewState extends State<AssetListsView> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Obx(
-              () => ButtonSwitcher(
-                lButtonText: _i18n()[allServiceListViewController
-                            .currentSelectedService.value.name
-                            .toLowerCase()]
-                            [assetController.getViewNameString][
-                        assetController.currentSelectedViewName.first
-                            .toLowerCase()]
-                    .toString(),
-                rButtonText: _i18n()[allServiceListViewController
-                            .currentSelectedService.value.name
-                            .toLowerCase()]
-                            [assetController.getViewNameString][
-                        assetController.currentSelectedViewName.last
-                            .toLowerCase()]
-                    .toString(),
-                iconList: assetController.iconList,
-                values: assetController.currentSelectedViewList,
-                selectedValue: assetController.currentSelectedView.value,
-                onClick: (Enum value) {
-                  assetController.toggleView(value);
-                },
-              ),
-            ),
-          ),
+          allServiceListViewController.currentSelectedService.value.name ==
+                  RentalViewEnum.Wellness.name
+              ? const Offstage()
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Obx(
+                    () => ButtonSwitcher(
+                      lButtonText: _i18n()[allServiceListViewController
+                                      .currentSelectedService.value.name
+                                      .toLowerCase()]
+                                  [assetController.getViewNameString][
+                              assetController.currentSelectedViewName.first
+                                  .toLowerCase()]
+                          .toString(),
+                      rButtonText: _i18n()[allServiceListViewController
+                                      .currentSelectedService.value.name
+                                      .toLowerCase()]
+                                  [assetController.getViewNameString][
+                              assetController.currentSelectedViewName.last
+                                  .toLowerCase()]
+                          .toString(),
+                      iconList: assetController.iconList,
+                      values: assetController.currentSelectedViewList,
+                      selectedValue: assetController.currentSelectedView.value,
+                      onClick: (Enum value) {
+                        assetController.toggleView(value);
+                      },
+                    ),
+                  ),
+                ),
           Obx(
             () => assetController.currentSelectedView.value ==
                     assetController.currentSelectedViewList.first

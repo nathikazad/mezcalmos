@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/componen
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/VehicleCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/CarCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/components/ClassCard.dart';
+import '../../../WellnessService/components/WellnessCard.dart';
 
 class AssetListView extends StatefulWidget {
   const AssetListView({super.key});
@@ -64,6 +65,15 @@ class _AssetListViewState extends State<AssetListView> {
                   agencyName: "Pueto Fitness",
                   image: NetworkImage(customImageUrl),
                   groupName: "Group Name",
+                  price: 30,
+                  unitTime: "person",
+                );
+              case RentalViewEnum.Wellness:
+                return WellnessCard(
+                  title: "Wellness",
+                  timeDuration: "2",
+                  timeDurationUnit: "Hours",
+                  image: NetworkImage(customImageUrl),
                   price: 30,
                   unitTime: "person",
                 );

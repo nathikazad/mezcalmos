@@ -7,6 +7,7 @@ enum RentalViewEnum {
   Car,
   Homes,
   Classes,
+  Wellness,
 }
 
 class RentalController {
