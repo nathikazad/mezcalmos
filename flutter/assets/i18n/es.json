@@ -531,17 +531,19 @@
         "classes": "Clases",
         "class": {
           "title": "Classes",
-          "classes":{
-            "title":"Clase",
-            "class":"Clase",
-            "studio":"Estudio"
+          "classes": {
+            "title": "Clase",
+            "class": "Clase",
+            "studio": "Estudio"
           }
         },
         "wellness": {
-          "title":"Bienestar"
+          "title": "Bienestar"
         },
         "events": "Eventos",
-        "volunteer": "Voluntario",
+        "volunteer": {
+          "title": "Voluntario"
+        },
         "adventure": "Aventura",
         "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",

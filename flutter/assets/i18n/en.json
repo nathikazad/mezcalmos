@@ -81,7 +81,7 @@
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },
-      
+
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -260,9 +260,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
-              "rmItemTitle" : "Remove item",
-              "rmItemHelper" : "Are you sure you want to remove this item from cart",
-              "rmItemButton" : "Yes, remove item",
+              "rmItemTitle": "Remove item",
+              "rmItemHelper": "Are you sure you want to remove this item from cart",
+              "rmItemButton": "Yes, remove item",
               "notAvailable": "This restaurant is closed",
               "title": "Warning",
               "leftBtn": "Checkout first",
@@ -536,11 +536,13 @@
             "studio": "Studio"
           }
         },
-         "wellness": {
-          "title":"Bienestar"
+        "wellness": {
+          "title": "Bienestar"
         },
         "events": "Events",
-        "volunteer": "Volunteer",
+        "volunteer": {
+          "title": "Voluntario"
+        },
         "adventure": "Adventure",
         "welcomeText": "Welcome to MEZKALA 👋",
         "search": "Search",
@@ -683,7 +685,7 @@
           "daysReturn": "days return",
           "day": "day",
           "days": "days",
-          "return" : "return",
+          "return": "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1166,11 +1168,11 @@
       }
     },
     "widgets": {
-      "OrderMapWidget" : {
-        "mapWebText" : "Install Mezcalmos application to get live time order map tracking"
+      "OrderMapWidget": {
+        "mapWebText": "Install Mezcalmos application to get live time order map tracking"
       },
-      "MezcalmosAppBar" : {
-        "installApp" : "Install Mezcalmos App"
+      "MezcalmosAppBar": {
+        "installApp": "Install Mezcalmos App"
       },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
@@ -2218,7 +2220,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
-        "review" : "Review",
+        "review": "Review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",
@@ -2594,6 +2596,5 @@
     "cancel": "Cancel",
     "minutes": "minutes",
     "slowInternet": "Slow internet"
-    
   }
 }

@@ -79,7 +79,10 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                       unitTime: "person",
                     );
                   case RentalViewEnum.Wellness:
-                    // Not going to navigate here thats why no UI needed
+                    // Wellness screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.Volunteer:
+                    // Volunteer screen not going to navigate here thats why no UI needed
                     return Offstage();
                 }
               },

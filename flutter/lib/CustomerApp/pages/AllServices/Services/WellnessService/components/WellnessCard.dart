@@ -34,8 +34,11 @@ class WellnessCard extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                Image(
-                  image: AssetImage(aPriceCheck),
+                Padding(
+                  padding: const EdgeInsets.only(right: 4.0),
+                  child: Image(
+                    image: AssetImage(aPriceCheck),
+                  ),
                 ),
                 Text("\$$price/$unitTime"),
               ],
@@ -43,9 +46,13 @@ class WellnessCard extends StatelessWidget {
           ),
           Expanded(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.access_time,
+                Padding(
+                  padding: const EdgeInsets.only(right: 4.0),
+                  child: Icon(
+                    Icons.access_time,
+                  ),
                 ),
                 Text("$timeDuration $timeDurationUnit"),
               ],

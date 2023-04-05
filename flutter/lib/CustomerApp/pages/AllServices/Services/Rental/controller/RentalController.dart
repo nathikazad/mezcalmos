@@ -8,6 +8,7 @@ enum RentalViewEnum {
   Homes,
   Classes,
   Wellness,
+  Volunteer,
 }
 
 class RentalController {

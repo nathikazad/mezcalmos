@@ -54,16 +54,27 @@ class _AssetListsViewState extends State<AssetListsView> {
     super.dispose();
   }
 
+  bool doesNeedButtonSwitcher() {
+    if (allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Wellness.name ||
+        allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Volunteer.name) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(allServiceListViewController
-                    .currentSelectedService.value.name ==
-                RentalViewEnum.Wellness.name
-            ? _i18n()["wellness"]["title"].toString()
+        titleWidget: Text(!doesNeedButtonSwitcher()
+            ? _i18n()[allServiceListViewController
+                    .currentSelectedService.value.name
+                    .toLowerCase()]["title"]
+                .toString()
             : _i18n()[allServiceListViewController
                     .currentSelectedService.value.name
                     .toLowerCase()][assetController.getViewNameString]["title"]
@@ -122,8 +133,7 @@ class _AssetListsViewState extends State<AssetListsView> {
               ],
             ),
           ),
-          allServiceListViewController.currentSelectedService.value.name ==
-                  RentalViewEnum.Wellness.name
+          !doesNeedButtonSwitcher()
               ? const Offstage()
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),

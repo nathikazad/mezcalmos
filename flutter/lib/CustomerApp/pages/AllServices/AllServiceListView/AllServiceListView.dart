@@ -54,12 +54,20 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         // TODO: Handle this case.
         return;
       case AllServiceViewEnum.Volunteer:
-        // TODO: Handle this case.
+        AssetListsView.navigate(viewEnum: RentalViewEnum.Volunteer);
         return;
       case AllServiceViewEnum.Adventure:
         // TODO: Handle this case.
         return;
     }
+  }
+
+  bool noTabsONNextScreen(int index) {
+    if (AllServiceViewEnum.values[index] == AllServiceViewEnum.Wellness ||
+        AllServiceViewEnum.values[index] == AllServiceViewEnum.Volunteer) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -95,9 +103,10 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Obx(
                       () => Text(
-                        AllServiceViewEnum.values[index] ==
-                                AllServiceViewEnum.Wellness
-                            ? _i18n()["wellness"]["title"].toString()
+                        noTabsONNextScreen(index)
+                            ? _i18n()[AllServiceViewEnum.values[index].name
+                                    .toLowerCase()]["title"]
+                                .toString()
                             : _i18n()[serviceListData[index]["title"]]
                                 .toString(),
                         style: txt.headlineSmall,
