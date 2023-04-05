@@ -8363,13 +8363,6 @@ const documentNodeSubscriptionlisten_on_driver_order =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                name: NameNode(value: 'current_location'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'user'),
                 alias: null,
                 arguments: [],
@@ -13970,28 +13963,21 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 
 class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
   Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver({
-    this.current_location,
     required this.user,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver.fromJson(
       Map<String, dynamic> json) {
-    final l$current_location = json['current_location'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver(
-      current_location: l$current_location == null
-          ? null
-          : geographyFromJson(l$current_location),
       user:
           Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
               .fromJson((l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final Geography? current_location;
 
   final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
       user;
@@ -14000,9 +13986,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$current_location = current_location;
-    _resultData['current_location'] =
-        l$current_location == null ? null : geographyToJson(l$current_location);
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
@@ -14012,11 +13995,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
 
   @override
   int get hashCode {
-    final l$current_location = current_location;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$current_location,
       l$user,
       l$$__typename,
     ]);
@@ -14030,11 +14011,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
     if (!(other
             is Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$current_location = current_location;
-    final lOther$current_location = other.current_location;
-    if (l$current_location != lOther$current_location) {
       return false;
     }
     final l$user = user;
@@ -14077,7 +14053,6 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
       _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver;
 
   TRes call({
-    Geography? current_location,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user?
         user,
     String? $__typename,
@@ -14106,15 +14081,11 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$del
   static const _undefined = {};
 
   TRes call({
-    Object? current_location = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver(
-        current_location: current_location == _undefined
-            ? _instance.current_location
-            : (current_location as Geography?),
         user: user == _undefined || user == null
             ? _instance.user
             : (user
@@ -14142,7 +14113,6 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
   TRes _res;
 
   call({
-    Geography? current_location,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user?
         user,
     String? $__typename,

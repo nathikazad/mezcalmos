@@ -2543,6 +2543,7 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "minutes": "minutes",
+    "min" : "Min",
     "slowInternet": "Slow internet"
     
   }

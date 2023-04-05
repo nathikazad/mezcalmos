@@ -134,7 +134,7 @@ class CustRequestCourierViewController {
           await CloudFunctions.delivery2_createCourierOrder(
         toLocation: cModel.Location(
             lat: toLoc.value!.position.latitude!,
-            lng: toLoc.value!.position.latitude!,
+            lng: toLoc.value!.position.longitude!,
             address: toLoc.value!.address),
         items: items
             .asMap()
@@ -148,11 +148,12 @@ class CustRequestCourierViewController {
               ),
             )
             .toList(),
-        fromLocationText: (fromLoc.value == null) ? fromLocText.text : null,
+        fromLocationText:
+            (fromLoc.value == null) ? fromLocText.text : fromLoc.value!.address,
         fromLocationGps: (fromLoc.value != null)
             ? cModel.Location(
                 lat: fromLoc.value!.position.latitude!,
-                lng: fromLoc.value!.position.latitude!,
+                lng: fromLoc.value!.position.longitude!,
                 address: fromLoc.value!.address)
             : null,
         deliveryCompanyId: company.value!.info.hasuraId,
@@ -195,12 +196,11 @@ class CustRequestCourierViewController {
   }
 
   Future<void> updateShippingPrice() async {
-    final MezLocation? loc = fromLoc.value;
     num? _orderDistanceInKm;
-    if (loc != null && toLoc.value != null) {
+    if (fromLoc.value != null && toLoc.value != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         toLoc.value!,
-        loc,
+        fromLoc.value!,
       );
 
       if (routeInfo != null) {

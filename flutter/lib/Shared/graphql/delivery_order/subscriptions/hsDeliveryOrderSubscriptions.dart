@@ -100,11 +100,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           orderData.service_provider_type.toServiceProviderType(),
       // deliveryCost: orderData.delivery_cost,
       // packageCost: orderData.package_cost_comp ?? 0,
-      driverLocation: (orderData.delivery_driver != null &&
-              orderData.delivery_driver?.current_location != null)
-          ? LatLng(orderData.delivery_driver!.current_location!.latitude,
-              orderData.delivery_driver!.current_location!.longitude)
-          : null,
+      driverLocation: null,
       pickupLocation: (orderData.pickup_address != null &&
               orderData.pickup_gps != null)
           ? MezLocation(
