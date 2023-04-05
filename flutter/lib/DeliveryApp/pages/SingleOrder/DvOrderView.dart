@@ -11,8 +11,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 //
@@ -54,8 +54,16 @@ class _DvOrderViewState extends State<DvOrderView> {
     super.dispose();
   }
 
-  double _recenterBtnBottomPadding = 315;
+  double _recenterBtnBottomPadding = 300;
   EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 220);
+  double get getRecenterBtnBottomPadding {
+    if (viewController.order.pickupLocation != null) {
+      return _recenterBtnBottomPadding;
+    } else if (viewController.order.scheduleTime != null) {
+      return 270;
+    } else
+      return 230;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +87,15 @@ class _DvOrderViewState extends State<DvOrderView> {
         () => viewController.hasData
             ? Stack(
                 children: [
-                  MGoogleMap(
-                    recenterBtnBottomPadding: _recenterBtnBottomPadding,
-                    mGoogleMapController: viewController.mapController,
-                    padding: _mapPadding,
-                  ),
+                  OrderMapWidget(
+                      mapPadding: _mapPadding,
+                      recenterBtnBottomPadding: getRecenterBtnBottomPadding,
+                      height: double.infinity,
+                      deliveryOrderId: viewController.order.orderId,
+                      updateDriver: true,
+                      polyline: viewController.order.routeInformation?.polyline,
+                      from: viewController.order.pickupLocation,
+                      to: viewController.order.dropOffLocation),
                   Positioned(
                     bottom: 2,
                     left: 5,
@@ -140,7 +152,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                               onCardStateChange: (OrderInfoCardState state) {
                                 setState(() {
                                   if (state == OrderInfoCardState.Maximized) {
-                                    _recenterBtnBottomPadding = 315;
+                                    _recenterBtnBottomPadding = 300;
                                     _mapPadding =
                                         EdgeInsets.only(top: 10, bottom: 220);
                                   } else {

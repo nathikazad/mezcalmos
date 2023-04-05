@@ -5,6 +5,7 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAva
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -74,6 +75,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         cardHeader(),
         if (order.routeInformation?.valid == true) routeInformationWidget(),
@@ -84,59 +86,73 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           curve: Curves.easeIn,
           child: initialCardState == OrderInfoCardState.Minimized
               ? null
-              : Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Divider(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6),
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                if (order.pickupLocation != null)
-                                  Container(
-                                    height: 18,
-                                    width: 18,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Color.fromRGBO(54, 54, 54, 1),
-                                        width: 5,
-                                      ),
-                                    ),
-                                  ),
-                                if (order.pickupLocation != null)
-                                  Container(
-                                    height: 50,
-                                    width: 1.5,
-                                    color: Color.fromRGBO(103, 121, 254, 1),
-                                  ),
-                                Icon(
-                                  Icons.location_on_rounded,
-                                  size: 22,
-                                  color: Color.fromRGBO(103, 121, 254, 1),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 10),
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: isCustomerRowFirst
-                                    ? mainAnimatedContainerItems
-                                    : mainAnimatedContainerItems.reversed
-                                        .toList(),
+              : Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Divider(),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    if (order.pickupLocation != null)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            height: 18,
+                            width: 18,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Color.fromRGBO(54, 54, 54, 1),
+                                width: 5,
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Flexible(
+                            child: isCustomerRowFirst
+                                ? _customerAnimatedRow()
+                                : _serviceProviderAnimatedRow(),
+                          )
+                        ],
                       ),
-                    ],
-                  ),
+                    if (order.pickupLocation != null)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                        ),
+                        child: CustomPaint(
+                            size: Size(1.5, 40),
+                            painter: DashedLineVerticalPainter()),
+                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Icon(
+                          Icons.location_on_rounded,
+                          size: 22,
+                          color: Color.fromRGBO(103, 121, 254, 1),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Flexible(
+                          child: !isCustomerRowFirst
+                              ? _customerAnimatedRow()
+                              : _serviceProviderAnimatedRow(),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
         )
       ],
@@ -195,15 +211,19 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         _customerAnimatedRow(),
         if (order.pickupLocation != null)
           SizedBox(
-            height: 38,
+            height: 35,
           ),
         if (order.pickupLocation != null) _serviceProviderAnimatedRow(),
+        // SizedBox(
+        //   height: 10,
+        // ),
       ];
 
   Row _serviceProviderAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -248,6 +268,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,

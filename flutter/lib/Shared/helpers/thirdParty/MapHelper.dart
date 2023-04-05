@@ -85,7 +85,7 @@ class RideDuration {
   }
 
   String inMinutesText() {
-    return "${(seconds / 60).round()} ${_i18n()["min"]}";
+    return "${(seconds / 60).round()} ${_i18n()["minutes"]}";
   }
 
   RideDuration.fromJson(data)

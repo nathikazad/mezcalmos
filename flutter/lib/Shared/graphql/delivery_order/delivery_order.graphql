@@ -335,8 +335,7 @@ subscription listen_on_driver_order($orderId: Int!) {
 
     service_provider_id
     delivery_driver {
-      current_location
-
+      
       user {
         name
         image

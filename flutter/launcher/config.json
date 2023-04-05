@@ -265,7 +265,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -363,7 +364,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -426,7 +428,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -480,6 +483,7 @@
                     "assets/images/customer/restaurants/",
                     "assets/images/customer/taxi/",
                     "assets/images/customer/laundry/",
+                    "assets/images/shared/markers/",
                     "assets/fonts/",
                     "assets/i18n/",
                     "assets/animation/",
@@ -577,7 +581,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -616,7 +621,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -667,7 +673,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         }

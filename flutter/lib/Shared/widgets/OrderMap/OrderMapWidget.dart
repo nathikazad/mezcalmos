@@ -19,6 +19,9 @@ class OrderMapWidget extends StatefulWidget {
       required this.updateDriver,
       required this.polyline,
       required this.from,
+      this.height = 350,
+      this.mapPadding = EdgeInsets.zero,
+      this.recenterBtnBottomPadding = 20,
       this.margin,
       required this.to});
   final int deliveryOrderId;
@@ -27,6 +30,9 @@ class OrderMapWidget extends StatefulWidget {
   final MezLocation? from;
   final MezLocation to;
   final EdgeInsets? margin;
+  final double? height;
+  final EdgeInsets mapPadding;
+  final double recenterBtnBottomPadding;
 
   @override
   State<OrderMapWidget> createState() => _OrderMapWidgetState();
@@ -55,7 +61,7 @@ class _OrderMapWidgetState extends State<OrderMapWidget> {
   Widget build(BuildContext context) {
     return Container(
       margin: widget.margin,
-      height: kIsWeb ? null : 350,
+      height: kIsWeb ? null : widget.height,
       child: (kIsWeb)
           ? MezCard(
               contentPadding: const EdgeInsets.all(12),
@@ -72,9 +78,9 @@ class _OrderMapWidgetState extends State<OrderMapWidget> {
                 style: context.txt.bodyMedium,
               ))
           : MGoogleMap(
-              padding: EdgeInsets.zero,
+              padding: widget.mapPadding,
               mGoogleMapController: viewController.mGoogleMapController,
-              recenterBtnBottomPadding: 20,
+              recenterBtnBottomPadding: widget.recenterBtnBottomPadding,
             ),
     );
   }
