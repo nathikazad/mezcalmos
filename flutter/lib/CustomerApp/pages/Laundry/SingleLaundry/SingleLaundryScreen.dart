@@ -213,7 +213,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
         ),
         Text(
-          "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toPlural(isPlural: laundry.value!.averageNumberOfDays != 1)} ${_i18n()["return"]}",
+          "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toString().toPlural(isPlural: laundry.value!.averageNumberOfDays != 1)} ${_i18n()["return"]}",
           maxLines: 1,
           textAlign: TextAlign.center,
           style: context.txt.bodyMedium?.copyWith(
