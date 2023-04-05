@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -39,7 +40,7 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
         RestaurantOrderStatus.OrderReceived) {
       await widget.viewController.prepareOrder();
     } else if (widget.viewController.orderStatus ==
-        RestaurantOrderStatus.Preparing) {
+        RestaurantOrderStatus.PreparingOrder) {
       await widget.viewController.setReadyForDelivery();
     }
   }
@@ -49,7 +50,7 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
         RestaurantOrderStatus.OrderReceived) {
       return '${_i18n()["prepareOrder"]}';
     } else if (widget.viewController.orderStatus ==
-        RestaurantOrderStatus.Preparing) {
+        RestaurantOrderStatus.PreparingOrder) {
       return '${_i18n()["orderReady"]}';
     }
     return null;
@@ -58,6 +59,7 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
   bool get _showBtn {
     return widget.viewController.orderStatus ==
             RestaurantOrderStatus.OrderReceived ||
-        widget.viewController.orderStatus == RestaurantOrderStatus.Preparing;
+        widget.viewController.orderStatus ==
+            RestaurantOrderStatus.PreparingOrder;
   }
 }

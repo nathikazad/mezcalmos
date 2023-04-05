@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -7,44 +7,44 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-enum RestaurantOrderStatus {
-  OrderReceived,
-  Preparing,
-  Ready,
-  OnTheWay,
-  Delivered,
-  CancelledByAdmin,
-  CancelledByCustomer,
-}
+// enum RestaurantOrderStatus {
+//   OrderReceived,
+//   Preparing,
+//   Ready,
+//   OnTheWay,
+//   Delivered,
+//   CancelledByAdmin,
+//   CancelledByCustomer,
+// }
 
-extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
+// extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
+//   String toFirebaseFormatString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toLowerCase() + str.substring(1);
+//   }
+// }
 
-extension ParseStringToRestaurantOrderStatus on String {
-  RestaurantOrderStatus toRestaurantOrderStatus() {
-    return RestaurantOrderStatus.values.firstWhere(
-      (RestaurantOrderStatus e) {
-        return e.toFirebaseFormatString() == this;
-      },
-    );
-  }
-}
+// extension ParseStringToRestaurantOrderStatus on String {
+//   RestaurantOrderStatus toRestaurantOrderStatus() {
+//     return RestaurantOrderStatus.values.firstWhere(
+//       (RestaurantOrderStatus e) {
+//         return e.toFirebaseFormatString() == this;
+//       },
+//     );
+//   }
+// }
 
 class RestaurantOrder extends DeliverableOrder {
   List<RestaurantOrderItem> items = <RestaurantOrderItem>[];
   String? notes;
-  RestaurantOrderStatus status;
+  cModels.RestaurantOrderStatus status;
   ServiceInfo get restaurant => serviceProvider as ServiceInfo;
 
   SelfDeliveryDetails? selfDeliveryDetails;
 
   RestaurantOrder(
       {required super.orderId,
-      super.orderType = OrderType.Restaurant,
+      super.orderType = cModels.OrderType.Restaurant,
       required this.status,
       required super.serviceProviderId,
       required super.paymentType,
@@ -78,32 +78,32 @@ class RestaurantOrder extends DeliverableOrder {
 
   @override
   bool isCanceled() {
-    return status == RestaurantOrderStatus.CancelledByCustomer ||
-        status == RestaurantOrderStatus.CancelledByAdmin;
+    return status == cModels.RestaurantOrderStatus.CancelledByCustomer ||
+        status == cModels.RestaurantOrderStatus.CancelledByAdmin;
   }
 
   bool get isFinished {
-    return isCanceled() || status == RestaurantOrderStatus.Delivered;
+    return isCanceled() || status == cModels.RestaurantOrderStatus.Delivered;
   }
 
   bool get canAddReview {
-    return review == null && status == RestaurantOrderStatus.Delivered;
+    return review == null && status == cModels.RestaurantOrderStatus.Delivered;
   }
 
   @override
   bool inProcess() {
-    return status == RestaurantOrderStatus.OrderReceived ||
-        status == RestaurantOrderStatus.Preparing ||
-        status == RestaurantOrderStatus.Ready ||
-        status == RestaurantOrderStatus.OnTheWay;
+    return status == cModels.RestaurantOrderStatus.OrderReceived ||
+        status == cModels.RestaurantOrderStatus.PreparingOrder ||
+        status == cModels.RestaurantOrderStatus.ReadyForPickup ||
+        status == cModels.RestaurantOrderStatus.OnTheWay;
   }
 
   bool isSelfDelivery() {
-    return deliveryProviderType == ServiceProviderType.Restaurant;
+    return deliveryProviderType == cModels.ServiceProviderType.Restaurant;
   }
 
   bool inDeliveryPhase() {
-    return status == RestaurantOrderStatus.OnTheWay;
+    return status == cModels.RestaurantOrderStatus.OnTheWay;
   }
 
   bool get showItemsImages {

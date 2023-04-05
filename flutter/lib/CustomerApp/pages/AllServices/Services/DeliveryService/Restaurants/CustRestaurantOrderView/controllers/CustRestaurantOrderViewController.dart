@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -20,9 +20,9 @@ class CustRestaurantOrderViewController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
 
   Rxn<RestaurantOrder> order = Rxn();
-  RestaurantOrderStatus? _statusSnapshot;
+  cModels.RestaurantOrderStatus? _statusSnapshot;
 
-  RestaurantOrderStatus get orderStatus {
+  cModels.RestaurantOrderStatus get orderStatus {
     return order.value!.status;
   }
 
@@ -33,7 +33,7 @@ class CustRestaurantOrderViewController {
     mezDbgPrint(
         '======================================================================> $orderId');
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
-        orderType: OrderType.Restaurant, orderId: orderId);
+        orderType: cModels.OrderType.Restaurant, orderId: orderId);
     try {
       order.value =
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
@@ -54,8 +54,8 @@ class CustRestaurantOrderViewController {
           if (event != null) {
             mezDbgPrint(
                 "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
-                
-                 order.value = null;
+
+            order.value = null;
             order.value = event;
           }
         });
@@ -70,7 +70,7 @@ class CustRestaurantOrderViewController {
     required int orderId,
     required int serviceId,
     required String comment,
-    required OrderType orderType,
+    required cModels.OrderType orderType,
     required num rate,
   }) async {
     final HttpsCallable cancelOrder =
@@ -95,7 +95,7 @@ class CustRestaurantOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      final CancelRestaurantOrderResponse res =
+      final cModels.CancelRestaurantOrderResponse res =
           await CloudFunctions.restaurant2_cancelOrderFromCustomer(
               orderId: order.value!.orderId);
       if (res.success == false) {

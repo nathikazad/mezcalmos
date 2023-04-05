@@ -6,8 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
@@ -33,28 +32,28 @@ class DvOrderViewcontroller {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   // vars //
   Rxn<DeliveryOrder> _order = Rxn();
-  DeliveryOrderStatus? _statusSnapshot;
+  cModels.DeliveryOrderStatus? _statusSnapshot;
   RxBool isSettingPickUpTime = false.obs;
   RxBool isSettingDropoffTime = false.obs;
 
   // getters //
-  DeliveryOrderStatus get orderStatus {
+  cModels.DeliveryOrderStatus get orderStatus {
     return _order.value!.status;
   }
 
   bool get isLaundryPickup {
-    return order.orderType == OrderType.Laundry &&
-        order.deliveryDirection == DeliveryDirection.FromCustomer;
+    return order.orderType == cModels.OrderType.Laundry &&
+        order.deliveryDirection == cModels.DeliveryDirection.FromCustomer;
   }
 
   bool get isCourier {
-    return order.orderType == OrderType.Courier;
+    return order.orderType == cModels.OrderType.Courier;
   }
 
   DeliveryOrder get order => _order.value!;
   bool get hasData => _order.value != null;
   bool get inPickupPhase =>
-      _order.value!.deliveryDirection == DeliveryDirection.FromCustomer;
+      _order.value!.deliveryDirection == cModels.DeliveryDirection.FromCustomer;
   bool get pickuSetted => _order.value?.estimatedArrivalAtPickup != null;
   bool get dropoffSetted => _order.value?.estimatedArrivalAtDropoff != null;
   DateTime? get pickupTime => _order.value?.estimatedArrivalAtPickup;
@@ -185,7 +184,7 @@ class DvOrderViewcontroller {
       //   _statusSnapshot = order.status;
       //   break;
 
-      case DeliveryOrderStatus.OnTheWayToDropoff:
+      case cModels.DeliveryOrderStatus.OnTheWayToDropoff:
         // only update once.
         if (_statusSnapshot != order.status) {
           // ignoring Restaurant's marker
@@ -217,39 +216,39 @@ class DvOrderViewcontroller {
 
   Future<void> startPickup() async {
     return _callRestaurantCloudFunction(
-      cModel.DeliveryOrderStatus.OnTheWayToPickup,
+      cModels.DeliveryOrderStatus.OnTheWayToPickup,
     );
   }
 
   Future<void> startDropoff() async {
     return _callRestaurantCloudFunction(
-      cModel.DeliveryOrderStatus.OnTheWayToDropoff,
+      cModels.DeliveryOrderStatus.OnTheWayToDropoff,
     );
   }
 
   Future<void> finishDelivery() async {
     return _callRestaurantCloudFunction(
-      cModel.DeliveryOrderStatus.Delivered,
+      cModels.DeliveryOrderStatus.Delivered,
     );
   }
 
   Future<void> atPickup() async {
     return _callRestaurantCloudFunction(
-      cModel.DeliveryOrderStatus.AtPickup,
+      cModels.DeliveryOrderStatus.AtPickup,
     );
   }
 
   Future<void> atDropoff() async {
     return _callRestaurantCloudFunction(
-      cModel.DeliveryOrderStatus.AtDropoff,
+      cModels.DeliveryOrderStatus.AtDropoff,
     );
   }
 
   Future<void> _callRestaurantCloudFunction(
-      cModel.DeliveryOrderStatus status) async {
+      cModels.DeliveryOrderStatus status) async {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
-      ChangeDeliveryStatusResponse res =
+      cModels.ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery2_changeStatus(
         deliveryId: order.orderId,
         newStatus: status,
@@ -303,10 +302,11 @@ class DvOrderViewcontroller {
 
   Future<void> acceptOpenOrder() async {
     try {
-      AssignDriverResponse res = await CloudFunctions.delivery2_assignDriver(
-          deliveryOrderId: order.orderId,
-          deliveryDriverId:
-              deliveryAuthAuthController.driver!.deliveryDriverId);
+      cModels.AssignDriverResponse res =
+          await CloudFunctions.delivery2_assignDriver(
+              deliveryOrderId: order.orderId,
+              deliveryDriverId:
+                  deliveryAuthAuthController.driver!.deliveryDriverId);
       if (res.success == false) {
         mezDbgPrint(res.error);
         showErrorSnackBar(errorText: res.error.toString());

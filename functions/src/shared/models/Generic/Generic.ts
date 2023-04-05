@@ -45,7 +45,9 @@ export enum CustomerAppType {
 export interface NotificationInfo {
   token: string;
   turnOffNotifications: boolean;
-  appType: AppType;
+  appType?: AppType;
+  id?: number;
+  userId?: number;
 }
 
 export enum TokenType {

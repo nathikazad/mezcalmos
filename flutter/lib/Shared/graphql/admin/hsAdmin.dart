@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/MezAdminApp/models/MezAdmin.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/__generated/admin.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';

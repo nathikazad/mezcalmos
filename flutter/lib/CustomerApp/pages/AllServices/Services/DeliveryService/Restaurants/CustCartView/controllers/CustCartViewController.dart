@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
@@ -155,7 +155,7 @@ class CustCartViewController {
   }
 
   void switchPaymentMedthod(
-      {required PaymentType paymentType, CreditCard? card}) {
+      {required cModels.PaymentType paymentType, CreditCard? card}) {
     _cartRxn.value?.paymentType = paymentType;
     _cartRxn.refresh();
   }
@@ -163,7 +163,7 @@ class CustCartViewController {
   // methods
   Future<void> switchPicker(PaymentOption value) async {
     if (value.keys.first == PickerChoice.Cash) {
-      switchPaymentMedthod(paymentType: PaymentType.Cash);
+      switchPaymentMedthod(paymentType: cModels.PaymentType.Cash);
     }
     // else if (value.keys.first == PickerChoice.BankTransfer) {
     //   switchPaymentMedthod(paymentType: PaymentType.BankTransfer);
@@ -248,7 +248,7 @@ class CustCartViewController {
   //   if (cart.paymentType == PaymentType.Card) {
   //     switch (choice) {
   //       case CardChoice.ApplePay:
-  //         cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+  //         cModels.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
   //             serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
   //             paymentAmount: cart.totalCost);
   //         if (paymentIntent != null) {
@@ -261,7 +261,7 @@ class CustCartViewController {
   //         }
   //         break;
   //       case CardChoice.GooglePay:
-  //         cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+  //         cModels.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
   //             serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
   //             paymentAmount: cart.totalCost);
   //         if (paymentIntent != null) {
@@ -295,15 +295,16 @@ class CustCartViewController {
   }
 
   bool get showPaymentPicker {
-    return cart.restaurant?.paymentInfo?.acceptedPayments[PaymentType.Card] ==
+    return cart.restaurant?.paymentInfo
+                ?.acceptedPayments[cModels.PaymentType.Card] ==
             true ||
         cart.restaurant?.paymentInfo
-                ?.acceptedPayments[PaymentType.BankTransfer] ==
+                ?.acceptedPayments[cModels.PaymentType.BankTransfer] ==
             true;
   }
 
   bool get showFees {
-    return cart.paymentType == PaymentType.Card &&
+    return cart.paymentType == cModels.PaymentType.Card &&
         (cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true);
   }
 

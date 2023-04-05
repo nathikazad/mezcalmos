@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+// import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ['AdminTabsView'];
@@ -15,7 +16,7 @@ class AdminTabsViewController {
   List<ServiceProviderType> serviceTypes = [
     ServiceProviderType.Restaurant,
     ServiceProviderType.Laundry,
-    ServiceProviderType.DeliveryCompany
+    ServiceProviderType.Delivery
   ];
   // obs //
   Rx<ServiceProviderType> selectedServiceProviderType =
@@ -35,7 +36,7 @@ class AdminTabsViewController {
       switch (type) {
         case ServiceProviderType.Restaurant:
           return restOrdersCount.value.toString();
-        case ServiceProviderType.DeliveryCompany:
+        case ServiceProviderType.Delivery:
           return dvOrdersCount.value.toString();
         case ServiceProviderType.Laundry:
           return laundryOrdersCount.value.toString();

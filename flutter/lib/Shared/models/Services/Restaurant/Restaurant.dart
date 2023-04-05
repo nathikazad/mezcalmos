@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
@@ -277,7 +277,7 @@ class Restaurant extends Service {
     return schedule != null && schedule!.openHours.isNotEmpty;
   }
 
-  bool acceptPayment(PaymentType p) {
+  bool acceptPayment(cModels.PaymentType p) {
     return paymentInfo?.acceptedPayments[p] == true;
   }
 

@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -288,13 +288,13 @@ class CreateServiceViewController {
           await CloudFunctions.restaurant2_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
         image: serviceInput.value.serviceInfo!.image,
-        location: cModel.Location(
+        location: cModels.Location(
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
             address: serviceInput.value.serviceInfo!.location.address),
         schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
         deliveryPartnerId: serviceInput.value.deliveryPartnerId,
-        deliveryDetails: cModel.DeliveryDetails(
+        deliveryDetails: cModels.DeliveryDetails(
           minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
           costPerKm: serviceInput.value.selfDeliveryCost?.costPerKm,
           radius: 10,

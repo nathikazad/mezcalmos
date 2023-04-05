@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/restaurantDeepLinkHandler.dart';
@@ -61,7 +62,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
 
     if (restaurantOpAuthController.operator.value == null) {
       CreateServiceView.navigate(
-          serviceProviderType: ServiceProviderType.Restaurant);
+          serviceProviderType: cModels.ServiceProviderType.Restaurant);
     } else if (restaurantOpAuthController
         .operator.value!.isWaitingToBeApprovedByOwner) {
       MezRouter.toNamed(RestaurantAppRoutes.opUnauthRoute);

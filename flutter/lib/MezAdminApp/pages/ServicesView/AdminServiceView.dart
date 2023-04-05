@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
@@ -62,44 +63,42 @@ class _AdminServicesViewState extends State<AdminServicesView> {
   }
 
   Widget _buildRestaurants() {
-    
-      viewController.scrollController.addListener(() {
-        if (viewController.scrollController.position.maxScrollExtent ==
-            viewController.scrollController.position.pixels) {
-          viewController.fetchCurrent(increaseLimit: 10);
-        }
-      });
-      return ListView.builder(
-          itemCount: viewController.getCurrentService!.length,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) => Container(
-                child: _getServiceCard(index),
-              ));
+    viewController.scrollController.addListener(() {
+      if (viewController.scrollController.position.maxScrollExtent ==
+          viewController.scrollController.position.pixels) {
+        viewController.fetchCurrent(increaseLimit: 10);
+      }
+    });
+    return ListView.builder(
+        itemCount: viewController.getCurrentService!.length,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) => Container(
+              child: _getServiceCard(index),
+            ));
 
-      // return Column(
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
-      //     Column(
-      //         children: List.generate(
-      //             viewController.restaurants!.length,
-      //             (int index) => AdminRestaurantServiceCard(
-      //                 viewController: viewController,
-      //                 restaurant: viewController.restaurants![index]))),
-      //     if (viewController.restaurants!.length ==
-      //         viewController.restLimit.value)
-      //       MezButton(
-      //         label: "View more",
-      //         backgroundColor: secondaryLightBlueColor,
-      //         textColor: primaryBlueColor,
-      //         onClick: () async {
-      //           viewController.restLimit.value += 5;
-      //           await viewController.fetchRestaurants();
-      //         },
-      //       )
-      //   ],
-      // );
-    
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     Column(
+    //         children: List.generate(
+    //             viewController.restaurants!.length,
+    //             (int index) => AdminRestaurantServiceCard(
+    //                 viewController: viewController,
+    //                 restaurant: viewController.restaurants![index]))),
+    //     if (viewController.restaurants!.length ==
+    //         viewController.restLimit.value)
+    //       MezButton(
+    //         label: "View more",
+    //         backgroundColor: secondaryLightBlueColor,
+    //         textColor: primaryBlueColor,
+    //         onClick: () async {
+    //           viewController.restLimit.value += 5;
+    //           await viewController.fetchRestaurants();
+    //         },
+    //       )
+    //   ],
+    // );
   }
 
   Widget _getServiceCard(int index) {
@@ -114,7 +113,7 @@ class _AdminServicesViewState extends State<AdminServicesView> {
             viewController: viewController,
             laundry: viewController.laundries![index]);
         {}
-      case ServiceProviderType.DeliveryCompany:
+      case ServiceProviderType.Delivery:
         return AdminDeliveryCompanyServiceCard(
             viewController: viewController,
             company: viewController.companies![index]);

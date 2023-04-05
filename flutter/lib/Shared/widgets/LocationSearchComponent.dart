@@ -99,7 +99,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   borderRadius: 1,
                   firstAvatarIcon: Icons.place,
                   firstAvatarBgColor: Colors.white,
-                  raidus: 15,
+                  radius: 15,
                   firstAvatarIconColor: Colors.black,
                   onClick: () {
                     onSelected.call(options.toList()[index]);

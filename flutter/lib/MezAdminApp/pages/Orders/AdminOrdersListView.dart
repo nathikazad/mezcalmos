@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
@@ -62,7 +63,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                     ServiceProviderType.Restaurant)
                   _buildRestuarntOrders(),
                 if (viewController.currentService ==
-                    ServiceProviderType.DeliveryCompany)
+                    ServiceProviderType.Delivery)
                   _buildDeliveryOrders(),
                 if (viewController.currentService ==
                     ServiceProviderType.Laundry)

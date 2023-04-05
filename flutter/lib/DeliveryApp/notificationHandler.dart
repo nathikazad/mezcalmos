@@ -4,8 +4,8 @@ import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+// import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+// import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
@@ -108,14 +108,14 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.Preparing:
+    case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
         "title": "${_i18n()["preparingOrderTitle"]}",
         "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
-    case RestaurantOrderStatus.Ready:
+    case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
         "title": "${_i18n()["readyForPickupTitle"]}",
         "body": "${_i18n()["readyForPickupBody"]}",

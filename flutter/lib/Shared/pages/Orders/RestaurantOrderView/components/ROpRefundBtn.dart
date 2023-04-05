@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -233,7 +233,7 @@ class _ROpRefundButtonState extends State<ROpRefundButton> {
   }
 
   bool showRefundBtn() {
-    if (widget.order.paymentType == PaymentType.Cash) {
+    if (widget.order.paymentType == cModels.PaymentType.Cash) {
       return widget.order.inProcess();
     } else {
       return true;

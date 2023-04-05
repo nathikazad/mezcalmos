@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -530,8 +529,8 @@ Widget customerAddReviewButton(
   BuildContext context, {
   required int orderId,
   required int serviceProviderId,
-  required ServiceProviderType serviceProviderType,
-  required OrderType orderType,
+  required cModels.ServiceProviderType serviceProviderType,
+  required cModels.OrderType orderType,
 }) {
   return MezButton(
     label: "${_i18n()['writeReview']}",
@@ -643,7 +642,7 @@ Widget customerAddReviewButton(
                           toEntityType: serviceProviderType,
                           fromEntityId:
                               Get.find<AuthController>().hasuraUserId!,
-                          fromEntityType: ServiceProviderType.Customer,
+                          fromEntityType: cModels.ServiceProviderType.Customer,
                           reviewTime: DateTime.now().toUtc());
 
                       final int? reviewId = await insert_review(review: review);

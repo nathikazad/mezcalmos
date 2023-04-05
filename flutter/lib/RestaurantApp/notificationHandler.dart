@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
@@ -105,7 +106,7 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
     //     "imgUrl":
     //         "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
     //   };
-    case RestaurantOrderStatus.Ready:
+    case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
         "title": "${_i18n()["atPickupTitle"]}",
         "body": "${_i18n()["atPickupBody"]}",

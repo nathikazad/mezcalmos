@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 
@@ -44,7 +44,7 @@ class CourierOrder extends DeliveryOrder {
       required super.pickupLocation});
 
   bool get canAddReview {
-    return review == null && status == DeliveryOrderStatus.Delivered;
+    return review == null && status == cModels.DeliveryOrderStatus.Delivered;
   }
 }
 

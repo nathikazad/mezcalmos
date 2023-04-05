@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -452,11 +452,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   String _getOrderType() {
     switch (viewController.order.value!.orderType) {
-      case OrderType.Restaurant:
+      case cModels.OrderType.Restaurant:
         return "${_i18n()["restaurant"]}";
-      case OrderType.Laundry:
+      case cModels.OrderType.Laundry:
         return "${_i18n()["laundry"]}";
-      case OrderType.Courier:
+      case cModels.OrderType.Courier:
         return "Courier";
 
       default:

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -315,7 +315,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
       response.parsedData!.delivery_order_by_pk!;
 
   return DeliveryOrder(
-      deliveryDirection: DeliveryDirection.FromCustomer,
+      deliveryDirection: cModels.DeliveryDirection.FromCustomer,
       packageReady: false,
       scheduleTime: null,
       orderId: orderData.id,
@@ -407,20 +407,20 @@ UserInfo? _getDeliveryCompany(
     Query$get_driver_order$delivery_order_by_pk orderData) {
   mezDbgPrint(
       "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.service_provider_type.toString()}");
-  final ServiceProviderType serviceProviderType =
+  final cModels.ServiceProviderType serviceProviderType =
       orderData.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
-    case ServiceProviderType.DeliveryCompany:
+    case cModels.ServiceProviderType.Delivery:
       return UserInfo(
           hasuraId: orderData.delivery_company!.id,
           name: orderData.delivery_company!.details!.name,
           image: orderData.delivery_company!.details!.image);
-    case ServiceProviderType.Restaurant:
+    case cModels.ServiceProviderType.Restaurant:
       return UserInfo(
           hasuraId: orderData.restaurant!.id,
           name: orderData.restaurant!.details!.name,
           image: orderData.restaurant!.details!.image);
-    case ServiceProviderType.Laundry:
+    case cModels.ServiceProviderType.Laundry:
       return UserInfo(
           hasuraId: orderData.laundry!.id,
           name: orderData.laundry!.details!.name,
@@ -433,12 +433,13 @@ UserInfo? _getDeliveryCompany(
 
 ServiceInfo? _getServiceInfo(
     Query$get_driver_order$delivery_order_by_pk orderData) {
-  final OrderType orderType = orderData.order_type.toString().toOrderType();
+  final cModels.OrderType orderType =
+      orderData.order_type.toString().toOrderType();
   mezDbgPrint("ORDER TYPE ======>${orderType.toString()}");
   mezDbgPrint(
       "ORDER RESTAURANT ======>${orderData.restaurant_order?.restaurant.toString()}");
   switch (orderType) {
-    case OrderType.Restaurant:
+    case cModels.OrderType.Restaurant:
       return ServiceInfo(
           location: MezLocation.fromHasura(
               orderData.restaurant_order!.restaurant.details!.location.gps,
@@ -447,7 +448,7 @@ ServiceInfo? _getServiceInfo(
           hasuraId: orderData.restaurant_order!.restaurant.id,
           image: orderData.restaurant_order!.restaurant.details!.image,
           name: orderData.restaurant_order!.restaurant.details!.name);
-    case OrderType.Laundry:
+    case cModels.OrderType.Laundry:
       dynamic laundryOrder =
           orderData.laundry_pickup_order ?? orderData.laundry_delivery_order;
       mezDbgPrint("laundry order =============>$laundryOrder");
@@ -458,7 +459,7 @@ ServiceInfo? _getServiceInfo(
           hasuraId: laundryOrder.store.id,
           image: laundryOrder.store.details.image,
           name: laundryOrder.store.details.name);
-    case OrderType.Courier:
+    case cModels.OrderType.Courier:
       return ServiceInfo(
           location: MezLocation.fromHasura(
               orderData.delivery_company!.details!.location.gps,
@@ -473,11 +474,11 @@ ServiceInfo? _getServiceInfo(
 }
 
 Future<num?> fetch_delivery_orders_count(
-    {required ServiceProviderType serviceProviderType,
+    {required cModels.ServiceProviderType serviceProviderType,
     required int entityId}) async {
   num? count;
   switch (serviceProviderType) {
-    case ServiceProviderType.Laundry:
+    case cModels.ServiceProviderType.Laundry:
       QueryResult<Query$getLaundryOrdersCount> res = await _hasuraDb
           .graphQLClient
           .query$getLaundryOrdersCount(Options$Query$getLaundryOrdersCount(
@@ -490,7 +491,7 @@ Future<num?> fetch_delivery_orders_count(
       }
 
       break;
-    case ServiceProviderType.Restaurant:
+    case cModels.ServiceProviderType.Restaurant:
       QueryResult<Query$getRestaurantOrdersCount> res =
           await _hasuraDb.graphQLClient.query$getRestaurantOrdersCount(
               Options$Query$getRestaurantOrdersCount(
@@ -503,7 +504,7 @@ Future<num?> fetch_delivery_orders_count(
       }
 
       break;
-    case ServiceProviderType.Customer:
+    case cModels.ServiceProviderType.Customer:
       QueryResult<Query$getCustomerDvOrdersCount> res =
           await _hasuraDb.graphQLClient.query$getCustomerDvOrdersCount(
               Options$Query$getCustomerDvOrdersCount(
@@ -516,7 +517,7 @@ Future<num?> fetch_delivery_orders_count(
       }
 
       break;
-    case ServiceProviderType.DeliveryCompany:
+    case cModels.ServiceProviderType.Delivery:
       QueryResult<Query$getCompanyOrdersCount> res = await _hasuraDb
           .graphQLClient
           .query$getCompanyOrdersCount(Options$Query$getCompanyOrdersCount(
@@ -529,7 +530,7 @@ Future<num?> fetch_delivery_orders_count(
       }
 
       break;
-    case ServiceProviderType.Customer:
+    case cModels.ServiceProviderType.Customer:
       QueryResult<Query$getCustomerDvOrdersCount> res =
           await _hasuraDb.graphQLClient.query$getCustomerDvOrdersCount(
               Options$Query$getCustomerDvOrdersCount(

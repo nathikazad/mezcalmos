@@ -725,7 +725,7 @@ factory ChangePriceReqResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum OrderType { Taxi, Restaurant, Laundry, Courier, Business, Water }
+enum OrderType { Taxi, Restaurant, Laundry, Courier, Business }
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -778,14 +778,18 @@ factory CancelCourierResponse.fromFirebaseFormattedJson(dynamic json) {
 class NotificationInfo {
   String token;
   bool turnOffNotifications;
-  AppType appType;
+  AppType? appType;
+  num? id;
+  num? userId;
   NotificationInfo({
-    required this.token, required this.turnOffNotifications, required this.appType});
+    required this.token, required this.turnOffNotifications, this.appType, this.id, this.userId});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "token": token,
       "turnOffNotifications": turnOffNotifications,
       "appType": appType,
+      "id": id,
+      "userId": userId,
     };
   }
 
@@ -1343,7 +1347,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
-enum ServiceProviderType { Restaurant, Laundry, Taxi, Business, Delivery }
+enum ServiceProviderType { Restaurant, Laundry, Taxi, Business, Delivery, Customer }
 extension ParseServiceProviderTypeToString on ServiceProviderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;

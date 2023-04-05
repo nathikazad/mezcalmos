@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -375,7 +376,7 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
   }
 
   bool get _showBtn {
-    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
-        widget.order.status == RestaurantOrderStatus.Preparing;
+    return widget.order.status == cModels.RestaurantOrderStatus.OrderReceived ||
+        widget.order.status == cModels.RestaurantOrderStatus.PreparingOrder;
   }
 }

@@ -318,7 +318,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
         return customerAddReviewButton(context,
             orderId: viewController.order.deliveryOrderId!,
             serviceProviderId: viewController.order.serviceProvider.hasuraId,
-            serviceProviderType: ServiceProviderType.DeliveryCompany,
+            serviceProviderType: ServiceProviderType.Delivery,
             orderType: OrderType.Courier);
       } else {
         return SizedBox();

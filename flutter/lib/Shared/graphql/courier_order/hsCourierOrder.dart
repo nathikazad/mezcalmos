@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/__generated/courier_order.graphql.dart';
@@ -39,7 +39,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
       _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
     }
     return CourierOrder(
-      orderType: OrderType.Courier,
+      orderType: cModels.OrderType.Courier,
       orderId: orderData.id,
       review: (orderData.delivery_order.driver_review_by_customer != null)
           ? Review(
@@ -202,7 +202,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
       }
       return CourierOrder(
-        orderType: OrderType.Courier,
+        orderType: cModels.OrderType.Courier,
         orderId: orderData.id,
         scheduleTime: (orderData.delivery_order.schedule_time != null)
             ? DateTime.tryParse(orderData.delivery_order.schedule_time!)

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -49,7 +50,7 @@ class ROpMenuViewController {
         await get_restaurant_categories_by_id(restaurnatId, withCache: false);
     noCategory.value.items.clear();
     noCategory.value.items = itemsWithNoCat
-        .where((Item element) => element.itemType != ItemType.Special)
+        .where((Item element) => element.itemType != cModels.ItemType.Special)
         .toList();
     noCategory.refresh();
     if (_categories != null) {

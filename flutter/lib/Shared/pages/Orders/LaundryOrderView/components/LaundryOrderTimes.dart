@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -78,25 +79,25 @@ class LaundryOrderTimes extends StatelessWidget {
 
   String? _getEstimatedText() {
     switch (order.status) {
-      case LaundryOrderStatus.OrderReceived:
+      case cModels.LaundryOrderStatus.OrderReceived:
 
-      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case cModels.LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedPickupFromCustomerTime != null) {
           return "${order.estimatedPickupFromCustomerTime!.getEstimatedTime()}";
         }
         break;
-      case LaundryOrderStatus.PickedUpFromCustomer:
+      case cModels.LaundryOrderStatus.PickedUpFromCustomer:
 
-      case LaundryOrderStatus.AtLaundry:
+      case cModels.LaundryOrderStatus.AtLaundry:
         if (order.estimatedPackageReadyTime != null) {
           return "${order.estimatedPackageReadyTime!.getEstimatedTime()}";
         }
 
         break;
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-      case LaundryOrderStatus.ReadyForDelivery:
+      case cModels.LaundryOrderStatus.OtwPickupFromLaundry:
+      case cModels.LaundryOrderStatus.ReadyForDelivery:
 
-      case LaundryOrderStatus.PickedUpFromLaundry:
+      case cModels.LaundryOrderStatus.PickedUpFromLaundry:
         if (order.estimatedArrivalAtDropoff != null) {
           return "${order.estimatedArrivalAtDropoff!.getEstimatedTime()}";
         }
@@ -110,25 +111,25 @@ class LaundryOrderTimes extends StatelessWidget {
 
   String? _getRightTitle() {
     switch (order.status) {
-      case LaundryOrderStatus.OrderReceived:
+      case cModels.LaundryOrderStatus.OrderReceived:
 
-      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case cModels.LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedPickupFromCustomerTime != null) {
           return "${_i18n()["pickup"]}";
         }
         break;
-      case LaundryOrderStatus.PickedUpFromCustomer:
+      case cModels.LaundryOrderStatus.PickedUpFromCustomer:
 
-      case LaundryOrderStatus.AtLaundry:
+      case cModels.LaundryOrderStatus.AtLaundry:
         if (order.estimatedPackageReadyTime != null) {
           return "${_i18n()["laundryReady"]}";
         }
 
         break;
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-      case LaundryOrderStatus.ReadyForDelivery:
+      case cModels.LaundryOrderStatus.OtwPickupFromLaundry:
+      case cModels.LaundryOrderStatus.ReadyForDelivery:
 
-      case LaundryOrderStatus.PickedUpFromLaundry:
+      case cModels.LaundryOrderStatus.PickedUpFromLaundry:
         if (order.estimatedArrivalAtDropoff != null) {
           return "${_i18n()["delivery"]}";
         }
@@ -142,17 +143,17 @@ class LaundryOrderTimes extends StatelessWidget {
 
   IconData _getIcon() {
     switch (order.status) {
-      case LaundryOrderStatus.OrderReceived:
+      case cModels.LaundryOrderStatus.OrderReceived:
 
-      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case cModels.LaundryOrderStatus.OtwPickupFromCustomer:
         return Icons.route;
 
-      case LaundryOrderStatus.PickedUpFromCustomer:
-      case LaundryOrderStatus.AtLaundry:
+      case cModels.LaundryOrderStatus.PickedUpFromCustomer:
+      case cModels.LaundryOrderStatus.AtLaundry:
         return Icons.local_laundry_service;
 
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-      case LaundryOrderStatus.PickedUpFromLaundry:
+      case cModels.LaundryOrderStatus.OtwPickupFromLaundry:
+      case cModels.LaundryOrderStatus.PickedUpFromLaundry:
         return Icons.delivery_dining;
 
       default:

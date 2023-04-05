@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
@@ -49,13 +49,13 @@ class DvOrderDetailsViewController {
 // getters //
 
   bool get showEditPrice {
-    return (order.value?.orderType == OrderType.Courier ||
-            order.value?.orderType == OrderType.Laundry) &&
+    return (order.value?.orderType == cModels.OrderType.Courier ||
+            order.value?.orderType == cModels.OrderType.Laundry) &&
         order.value?.isDriverAssigned == true &&
-        order.value?.status == DeliveryOrderStatus.OrderReceived;
+        order.value?.status == cModels.DeliveryOrderStatus.OrderReceived;
   }
 
-  bool get isCourier => order.value?.orderType == OrderType.Courier;
+  bool get isCourier => order.value?.orderType == cModels.OrderType.Courier;
 
   bool get taxSetted => _orderCosts.value?.tax != null;
   // methods //
@@ -66,7 +66,8 @@ class DvOrderDetailsViewController {
     if (order.value != null) {
       unawaited(_fetchOrdersCountAndReviews());
     }
-    if (order.value != null && order.value!.orderType == OrderType.Courier) {
+    if (order.value != null &&
+        order.value!.orderType == cModels.OrderType.Courier) {
       unawaited(_fetchOrderItems(orderId));
       unawaited(_fetchOrderBill(orderId));
 
@@ -104,7 +105,7 @@ class DvOrderDetailsViewController {
         serviceProviderType: order.value!.orderType.toServiceProviderType());
     customerOrdersCount.value = await fetch_delivery_orders_count(
         entityId: order.value!.customer.hasuraId,
-        serviceProviderType: ServiceProviderType.Customer);
+        serviceProviderType: cModels.ServiceProviderType.Customer);
   }
 
   Future<void> markItemAvailable(
@@ -171,7 +172,7 @@ class DvOrderDetailsViewController {
   Future<void> requestPriceChange(BuildContext context) async {
     if (updatePriceFormKey.currentState?.validate() == true) {
       try {
-        ChangePriceReqResponse res =
+        cModels.ChangePriceReqResponse res =
             await CloudFunctions.delivery2_changeDeliveryPrice(
                 deliveryOrderId: order.value!.orderId,
                 newPrice: double.parse(openOrderPriceText.text),

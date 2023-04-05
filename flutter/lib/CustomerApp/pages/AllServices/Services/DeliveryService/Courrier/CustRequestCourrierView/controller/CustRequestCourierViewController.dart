@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
@@ -130,9 +130,9 @@ class CustRequestCourierViewController {
     mezDbgPrint("Making a courier order ========> ${toLoc.value}");
     try {
       await _uploadItemsImages();
-      cModel.CreateCourierResponse res =
+      cModels.CreateCourierResponse res =
           await CloudFunctions.delivery2_createCourierOrder(
-        toLocation: cModel.Location(
+        toLocation: cModels.Location(
             lat: toLoc.value!.position.latitude!,
             lng: toLoc.value!.position.latitude!,
             address: toLoc.value!.address),
@@ -140,7 +140,7 @@ class CustRequestCourierViewController {
             .asMap()
             .entries
             .map(
-              (MapEntry<int, CourierItem> e) => cModel.CourierItem(
+              (MapEntry<int, CourierItem> e) => cModels.CourierItem(
                 name: itemsNames[e.key].text,
                 image: e.value.image,
                 estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
@@ -150,7 +150,7 @@ class CustRequestCourierViewController {
             .toList(),
         fromLocationText: (fromLoc.value == null) ? fromLocText.text : null,
         fromLocationGps: (fromLoc.value != null)
-            ? cModel.Location(
+            ? cModels.Location(
                 lat: fromLoc.value!.position.latitude!,
                 lng: fromLoc.value!.position.latitude!,
                 address: fromLoc.value!.address)
@@ -158,7 +158,7 @@ class CustRequestCourierViewController {
         deliveryCompanyId: company.value!.info.hasuraId,
         deliveryCost: shippingCost.value,
         scheduledTime: deliveryTime.value?.toUtc().toString(),
-        customerAppType: cModel.CustomerAppType.Native,
+        customerAppType: cModels.CustomerAppType.Native,
         tripDistance: routeInfo?.distance.distanceInMeters,
         tripDuration: routeInfo?.duration.seconds,
         tripPolyline: routeInfo?.polyline,

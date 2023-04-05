@@ -4,7 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -27,7 +27,7 @@ class CustCourierOrderViewController {
   // getters //
   bool get hasData => _order.value != null;
   CourierOrder get order => _order.value!;
-  DeliveryOrderStatus get orderStatus {
+  cModels.DeliveryOrderStatus get orderStatus {
     return _order.value!.status;
   }
 
@@ -40,7 +40,7 @@ class CustCourierOrderViewController {
       {required int orderId, required BuildContext context}) async {
     this.context = context;
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
-        orderType: OrderType.Courier, orderId: orderId);
+        orderType: cModels.OrderType.Courier, orderId: orderId);
     try {
       _order.value = await get_courier_order_by_id(
         orderId: orderId,
@@ -180,11 +180,11 @@ class CustCourierOrderViewController {
 
   Future<void> _priceChangeResponse({required bool accepted}) async {
     try {
-      ChangePriceResResponse res =
+      cModels.ChangePriceResResponse res =
           await CloudFunctions.delivery2_changeDeliveryPriceResponse(
               accepted: accepted,
               orderId: order.orderId,
-              orderType: OrderType.Courier);
+              orderType: cModels.OrderType.Courier);
       if (res.success == false) {
         mezDbgPrint(res.error);
         showErrorSnackBar(errorText: res.error.toString());

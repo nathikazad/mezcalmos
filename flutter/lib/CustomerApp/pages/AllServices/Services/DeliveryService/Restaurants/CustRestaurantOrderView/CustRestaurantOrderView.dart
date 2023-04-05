@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -93,7 +93,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               ordersStates: viewController.order.value!.status,
                             ),
                             if (viewController.order.value!.paymentType ==
-                                PaymentType.BankTransfer)
+                                cModels.PaymentType.BankTransfer)
                               RestaurantBankInfoCard(
                                   restaurantId:
                                       viewController.order.value!.restaurantId),
@@ -198,8 +198,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         return customerAddReviewButton(context,
             orderId: viewController.order.value!.orderId,
             serviceProviderId: viewController.order.value!.restaurantId,
-            serviceProviderType: ServiceProviderType.Restaurant,
-            orderType: OrderType.Restaurant);
+            serviceProviderType: cModels.ServiceProviderType.Restaurant,
+            orderType: cModels.OrderType.Restaurant);
       } else {
         return SizedBox();
       }
@@ -223,7 +223,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   bool showReviewBtn() {
     return viewController.order.value != null &&
-        viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
+        viewController.order.value!.status ==
+            cModels.RestaurantOrderStatus.Delivered &&
         viewController.order.value!.review == null;
   }
 }

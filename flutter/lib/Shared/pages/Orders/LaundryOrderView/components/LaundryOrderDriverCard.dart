@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -144,7 +145,8 @@ class LaundryOrderDriverCard extends StatelessWidget {
         viewController.order.estimatedPickupFromCustomerTime != null) {
       return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(viewController.order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(viewController.order.estimatedPickupFromCustomerTime!.toLocal())}";
     } else if (viewController.order.estimatedArrivalAtDropoff != null &&
-        viewController.order.status != LaundryOrderStatus.PickedUpFromLaundry) {
+        viewController.order.status !=
+            cModels.LaundryOrderStatus.PickedUpFromLaundry) {
       return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(viewController.order.estimatedArrivalAtDropoff!.toLocal())} ${DateFormat("hh:mm a").format(viewController.order.estimatedArrivalAtDropoff!.toLocal())}";
     } else {
       return null;

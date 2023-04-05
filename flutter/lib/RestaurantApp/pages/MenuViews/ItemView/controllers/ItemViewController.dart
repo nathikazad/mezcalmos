@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
@@ -133,7 +134,9 @@ class ROpItemViewController {
   Item _contructItem() {
     final Item newItem = Item(
       image: newImageUrl.value,
-      itemType: (specialMode.isTrue) ? ItemType.Special : ItemType.Daily,
+      itemType: (specialMode.isTrue)
+          ? cModels.ItemType.Special
+          : cModels.ItemType.Daily,
       id: editMode.value ? editableItem.value!.id : null,
       startsAt: specialMode.value ? periodOfTime.value?.start : null,
       endsAt: specialMode.value ? periodOfTime.value?.end : null,

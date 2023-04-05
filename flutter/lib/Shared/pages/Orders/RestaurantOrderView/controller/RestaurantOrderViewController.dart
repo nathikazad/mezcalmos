@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
@@ -17,10 +18,10 @@ class RestaurantOrderViewController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   // vars //
   Rxn<RestaurantOrder> order = Rxn();
-  RestaurantOrderStatus? _statusSnapshot;
+  cModels.RestaurantOrderStatus? _statusSnapshot;
 
   // getters //
-  RestaurantOrderStatus get orderStatus {
+  cModels.RestaurantOrderStatus get orderStatus {
     return order.value!.status;
   }
 

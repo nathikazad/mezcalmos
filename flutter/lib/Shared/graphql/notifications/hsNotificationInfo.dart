@@ -1,5 +1,6 @@
 import 'package:get/instance_manager.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/__generated/notification_info.graphql.dart';
@@ -34,7 +35,7 @@ Future<void> update_notif_info(
               notifData: Input$notification_info_set_input(
                 token: notificationInfo.token,
               ),
-              id: notificationInfo.id!)));
+              id: notificationInfo.id!.toInt())));
   if (res.parsedData?.update_notification_info_by_pk == null) {
     throw Exception(
         "🚨 update notif token ${notificationInfo.id} failed =>${res.parsedData?.toJson()}");
@@ -58,7 +59,7 @@ Future<NotificationInfo?> get_notif_info(
   if (data.isNotEmpty) {
     return NotificationInfo(
         userId: data.first.user_id,
-        appType: data.first.app_type_id,
+        appType: data.first.app_type_id.toAppType(),
         token: data.first.token,
         turnOffNotifications: data.first.turn_off_notifications,
         id: data.first.id);

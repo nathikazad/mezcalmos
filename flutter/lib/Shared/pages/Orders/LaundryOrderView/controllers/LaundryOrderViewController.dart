@@ -4,7 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -37,7 +37,7 @@ class LaundryOrderViewController {
   RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
   Rxn<LaundryOrderCostLineItem> editableCategory = Rxn();
   Rxn<LaundryCostLineItem> selectedCategory = Rxn();
-  RestaurantOrderStatus? _statusSnapshot;
+  cModels.RestaurantOrderStatus? _statusSnapshot;
   LaundryOrderPhase? _phaseSnapshot;
   late int laundryId;
 
@@ -48,7 +48,7 @@ class LaundryOrderViewController {
 
   LaundryOrder get order => _order.value!;
 
-  LaundryOrderStatus get orderStatus {
+  cModels.LaundryOrderStatus get orderStatus {
     return _order.value!.status;
   }
 
@@ -149,7 +149,7 @@ class LaundryOrderViewController {
     required int orderId,
     required int serviceId,
     required String comment,
-    required OrderType orderType,
+    required cModels.OrderType orderType,
     required num rate,
   }) async {
     final HttpsCallable cancelOrder =
@@ -174,7 +174,7 @@ class LaundryOrderViewController {
 
   Future<void> cancelOrder() async {
     try {
-      ChangeLaundryStatusResponse res =
+      cModels.ChangeLaundryStatusResponse res =
           await CloudFunctions.laundry2_cancelFromAdmin(orderId: order.orderId);
       showSavedSnackBar(
           title: "Cancelled", subtitle: "Order cancelled successfuly");
@@ -306,7 +306,7 @@ class LaundryOrderViewController {
 
   Future<void> sertOrderReady() async {
     try {
-      ChangeLaundryStatusResponse res =
+      cModels.ChangeLaundryStatusResponse res =
           await CloudFunctions.laundry2_readyForDeliveryOrder(
               orderId: _order.value!.orderId);
       if (res.success == false) {

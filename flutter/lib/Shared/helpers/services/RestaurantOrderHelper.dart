@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:rive/rive.dart';
 
 extension RestaurantOrderHelper on RestaurantOrderStatus {
@@ -18,11 +18,11 @@ extension RestaurantOrderHelper on RestaurantOrderStatus {
         return '${_i18n()["canceledByCustomer"]}';
       case RestaurantOrderStatus.OrderReceived:
         return '${_i18n()["received"]}';
-      case RestaurantOrderStatus.Preparing:
+      case RestaurantOrderStatus.PreparingOrder:
         return '${_i18n()["preparing"]}';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["onTheWay"]}';
-      case RestaurantOrderStatus.Ready:
+      case RestaurantOrderStatus.ReadyForPickup:
         return '${_i18n()["readyForPickUp"]}';
       case RestaurantOrderStatus.Delivered:
         return '${_i18n()["delivered"]}';
@@ -58,7 +58,7 @@ extension RestaurantOrderHelper on RestaurantOrderStatus {
             color: primaryBlueColor,
           ),
         );
-      case RestaurantOrderStatus.Preparing:
+      case RestaurantOrderStatus.PreparingOrder:
         return Container(
           height: 50,
           width: 50,
@@ -76,7 +76,7 @@ extension RestaurantOrderHelper on RestaurantOrderStatus {
             fit: BoxFit.cover,
           ),
         );
-      case RestaurantOrderStatus.Ready:
+      case RestaurantOrderStatus.ReadyForPickup:
         return Container(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(

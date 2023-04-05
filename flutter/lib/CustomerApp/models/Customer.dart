@@ -2,6 +2,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';

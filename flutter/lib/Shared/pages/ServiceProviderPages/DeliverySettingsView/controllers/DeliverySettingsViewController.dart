@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
@@ -45,7 +46,7 @@ class DeliverySettingsViewController {
   int? detailsID;
 
   bool get isDeliveryCompany =>
-      serviceProviderType == ServiceProviderType.DeliveryCompany;
+      serviceProviderType == ServiceProviderType.Delivery;
 
   Future<void> init({
     CreateServiceViewController? createServiceViewController,
@@ -77,7 +78,7 @@ class DeliverySettingsViewController {
 
   Future<void> _initEditMode(
       int serviceProviderId, ServiceProviderType serviceProviderType) async {
-    if (serviceProviderType != ServiceProviderType.DeliveryCompany) {
+    if (serviceProviderType != ServiceProviderType.Delivery) {
       selfDelivery.value = deliveryCost.value!.selfDelivery;
       deliveryType.value = selfDelivery.value!
           ? ServiceDeliveryType.Self_delivery

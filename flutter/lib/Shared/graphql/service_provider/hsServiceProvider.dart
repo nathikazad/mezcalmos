@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -297,14 +297,15 @@ Future<bool> update_service_state({
 }
 
 Future<bool> update_service_accepted_payments(
-    {required Map<PaymentType, bool> payments, required int detailsId}) async {
+    {required Map<cModels.PaymentType, bool> payments,
+    required int detailsId}) async {
   QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
         detailsId: detailsId,
         data: Input$service_provider_details_set_input(accepted_payments:
-            payments.map<String, bool>((PaymentType key, bool value) {
+            payments.map<String, bool>((cModels.PaymentType key, bool value) {
           return MapEntry(key.toFirebaseFormatString(), value);
         })),
       ),

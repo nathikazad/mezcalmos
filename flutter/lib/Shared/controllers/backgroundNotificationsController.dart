@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -143,7 +144,7 @@ class BackgroundNotificationsController extends GetxController {
     final String? deviceNotificationToken = await getToken();
     if (deviceNotificationToken != null) {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
-      final NotificationInfo? notifInfo = await get_notif_info(
+      final cModels.NotificationInfo? notifInfo = await get_notif_info(
           userId: authController.hasuraUserId!, appType: "customer");
 
       try {
@@ -152,11 +153,12 @@ class BackgroundNotificationsController extends GetxController {
         if (notifInfo != null && notifInfo.token != deviceNotificationToken) {
           // ignore: unawaited_futures
           update_notif_info(
-              notificationInfo: NotificationInfo(
+              notificationInfo: cModels.NotificationInfo(
                   userId: authController.hasuraUserId!,
-                  appType: MezEnv.appType.toNormalString().toLowerCase(),
+                  appType: MezEnv.appType,
                   id: notifInfo.id,
-                  token: deviceNotificationToken));
+                  token: deviceNotificationToken,
+                  turnOffNotifications: notifInfo.turnOffNotifications));
         } else if (notifInfo == null) {
           // ignore: unawaited_futures
           insert_notif_info(

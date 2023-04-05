@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -37,7 +37,7 @@ Stream<List<MinimalOrder>?> listen_on_laundry_orders(
           .map((Subscription$listen_on_laundry_orders$laundry_order orderData) {
         return MinimalOrder(
             id: orderData.id,
-            orderType: OrderType.Laundry,
+            orderType: cModels.OrderType.Laundry,
             toAdress: orderData.customer_address,
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
@@ -70,7 +70,7 @@ Future<List<MinimalOrder>?> get_laundry_orders(
         ordersData.map((Query$get_laundry_orders$laundry_order orderData) {
       return MinimalOrder(
           id: orderData.id,
-          orderType: OrderType.Laundry,
+          orderType: cModels.OrderType.Laundry,
           toAdress: orderData.customer_address,
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
@@ -204,8 +204,8 @@ Future<LaundryOrder?> get_laundry_order_by_id(
         totalCost: orderData.total_cost),
     deliveryCompany: null,
     deliveryDirection: orderData.to_customer_delivery != null
-        ? DeliveryDirection.ToCustomer
-        : DeliveryDirection.FromCustomer,
+        ? cModels.DeliveryDirection.ToCustomer
+        : cModels.DeliveryDirection.FromCustomer,
     deliveryOrderId: orderData.to_customer_delivery_id != null
         ? orderData.to_customer_delivery_id
         : orderData.from_customer_delivery_id,
@@ -348,8 +348,8 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
             totalCost: orderData.total_cost),
         deliveryCompany: null,
         deliveryDirection: orderData.to_customer_delivery != null
-            ? DeliveryDirection.ToCustomer
-            : DeliveryDirection.FromCustomer,
+            ? cModels.DeliveryDirection.ToCustomer
+            : cModels.DeliveryDirection.FromCustomer,
         deliveryOrderId: orderData.to_customer_delivery_id != null
             ? orderData.to_customer_delivery_id
             : orderData.from_customer_delivery_id,

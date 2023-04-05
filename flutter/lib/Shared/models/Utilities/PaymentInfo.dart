@@ -42,26 +42,26 @@ extension ParseStringToPaymentType on String {
   }
 }
 
-enum StripeStatus { InProcess, IsWorking, Inactive }
+// enum StripeStatus { InProcess, IsWorking, Inactive }
 
-extension ParseStripeStatusoString on StripeStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
+// extension ParseStripeStatusoString on StripeStatus {
+//   String toFirebaseFormatString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toLowerCase() + str.substring(1);
+//   }
 
-  String toNormalString() {
-    final String str = toString().split('.').last;
-    return str[0].toUpperCase() + str.substring(1);
-  }
-}
+//   String toNormalString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toUpperCase() + str.substring(1);
+//   }
+// }
 
-extension ParseStringToStripeStatus on String {
-  StripeStatus toStripeStatus() {
-    return StripeStatus.values.firstWhere((StripeStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
+// extension ParseStringToStripeStatus on String {
+//   StripeStatus toStripeStatus() {
+//     return StripeStatus.values.firstWhere((StripeStatus e) =>
+//         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+//   }
+// }
 
 class StripeInfo {
   StripeStatus status;

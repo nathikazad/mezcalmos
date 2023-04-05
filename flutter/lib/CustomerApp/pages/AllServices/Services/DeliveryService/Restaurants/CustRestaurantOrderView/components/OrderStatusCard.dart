@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/services/RestaurantOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -17,7 +18,7 @@ class OrderStatusCard extends StatelessWidget {
   }) : super(key: key);
 
   final RestaurantOrder order;
-  final RestaurantOrderStatus ordersStates;
+  final cModels.RestaurantOrderStatus ordersStates;
 
   @override
   Widget build(BuildContext context) {

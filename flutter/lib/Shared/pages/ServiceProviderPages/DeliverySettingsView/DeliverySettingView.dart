@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -57,7 +58,6 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
 
   @override
   void initState() {
-  
     _settingVariables();
     viewController.init(
         createServiceViewController: widget.createServiceViewController,
@@ -110,13 +110,12 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
                 SizedBox(
                   height: 10,
                 ),
-                if (serviceProviderType != ServiceProviderType.DeliveryCompany)
+                if (serviceProviderType != ServiceProviderType.Delivery)
                   ServiceDeliveryTypePicker(
                     viewController: viewController,
                   ),
                 (viewController.isSelfDelivery ||
-                        serviceProviderType ==
-                            ServiceProviderType.DeliveryCompany)
+                        serviceProviderType == ServiceProviderType.Delivery)
                     ? DeliverySettingCostComponent(
                         viewController: viewController)
                     : DeliverySettingsCompaniesList(

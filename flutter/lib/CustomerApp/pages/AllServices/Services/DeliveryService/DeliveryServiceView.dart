@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
@@ -17,7 +16,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 
@@ -59,8 +58,8 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
     return Scaffold(
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
-      appBar: CustomerAppBar(
-        leftBtnType: AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(
+        AppBarLeftButtonType.Back,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),

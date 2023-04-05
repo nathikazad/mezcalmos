@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
@@ -13,7 +14,7 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
-  
+
   bool _initialized = false;
   StreamController<bool> _cusAuthControllerInitializedStreamController =
       StreamController<bool>();
@@ -106,8 +107,7 @@ class CustomerAuthController extends GetxController {
           orderId: orderId,
           reviewId: reviewId,
         );
-      case ServiceProviderType.DeliveryCompany:
-      case ServiceProviderType.DeliveryDriver:
+      case ServiceProviderType.Delivery:
         return addDriverOrderReviewId(
           orderId: orderId,
           reviewId: reviewId,

@@ -86,6 +86,7 @@ export enum ServiceProviderType {
   Taxi = "taxi",
   Business = "business",
   Delivery = "delivery",
+  Customer = "customer"
 }
 
 export interface OperatorApprovedNotification extends ForegroundNotification {

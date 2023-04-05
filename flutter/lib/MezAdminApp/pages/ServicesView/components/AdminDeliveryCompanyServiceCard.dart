@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -60,7 +61,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         onChanged: (bool v) {
                           viewController.switchServiceStatus(
                               serviceDetailsId: company.serviceDetailsId,
-                              providerType: ServiceProviderType.DeliveryCompany,
+                              providerType: ServiceProviderType.Delivery,
                               value: v);
                         },
                         activeColor: primaryBlueColor,
@@ -100,7 +101,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                               serviceProviderId: company.info.hasuraId,
                               serviceName: company.info.name,
                               serviceProviderType:
-                                  ServiceProviderType.DeliveryCompany);
+                                  ServiceProviderType.Delivery);
                         }),
                     _smallBtn(
                         icon: Icons.person,

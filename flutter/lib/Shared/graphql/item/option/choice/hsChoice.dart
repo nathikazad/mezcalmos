@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/src/core/query_result.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -58,7 +58,7 @@ Future<int?> add_choice(
             data: Input$translation_insert_input(
               service_provider_id: restaurantId,
               service_provider_type:
-                  OrderType.Restaurant.toFirebaseFormatString(),
+                  cModels.OrderType.Restaurant.toFirebaseFormatString(),
               translations: Input$translation_value_arr_rel_insert_input(
                 data: [
                   Input$translation_value_insert_input(

@@ -10,7 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -217,8 +217,8 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
             orderId: viewController.order.value!.orderId,
             serviceProviderId:
                 viewController.order.value!.serviceProvider.hasuraId,
-            serviceProviderType: ServiceProviderType.Laundry,
-            orderType: OrderType.Laundry);
+            serviceProviderType: cModels.ServiceProviderType.Laundry,
+            orderType: cModels.OrderType.Laundry);
       } else {
         return SizedBox();
       }
