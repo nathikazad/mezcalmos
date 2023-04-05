@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpPastOrdersViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -18,7 +18,7 @@ class ROpPastOrdersList extends StatefulWidget {
   }) : super(key: key);
 
   static Future<void> navigate() {
-    return MezRouter.toPath(RestaurantRouter.pastOrdersRoute);
+    return MezRouter.toPath(RestaurantAppRoutes.pastOrdersRoute);
   }
 
   @override

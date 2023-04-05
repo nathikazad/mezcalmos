@@ -3,7 +3,7 @@ import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/MezAdminApp/MezAdminWrapper.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/AdminTabsView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -31,7 +31,7 @@ class MezAdminRoutes {
         ),
       ] +
       SharedRoutes.qRoutes +
-      RestaurantRouter.sharedWithAdminRoutes +
+      RestaurantAppRoutes.sharedWithAdminRoutes +
       LaundryAppRoutes.sharedWithAdminRoutes +
       DeliveryAdminRoutes.sharedWitAdminRoutes +
       SharedServiceProviderRoutes.routes +

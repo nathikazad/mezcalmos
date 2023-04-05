@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/controllers/addCategoryController.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -19,14 +19,14 @@ class ROpCategoryView extends StatefulWidget {
 
   static Future<void> navigate({required int restaurantId}) {
     return MezRouter.toPath(
-        RestaurantRouter.restaurantCategoryRoute
+        RestaurantAppRoutes.restaurantCategoryRoute
             .replaceAll(":restaurantId", restaurantId.toString()),
         arguments: <String, dynamic>{"shouldSave": false});
   }
 
   static Future<void> navigateWithCategory(
       {required int categoryId, required int restaurantId}) {
-    return MezRouter.toPath(RestaurantRouter.restaurantEditCategoryRoute
+    return MezRouter.toPath(RestaurantAppRoutes.restaurantEditCategoryRoute
         .replaceAll(":categoryId", categoryId.toString())
         .replaceAll(":restaurantId", restaurantId.toString()));
   }

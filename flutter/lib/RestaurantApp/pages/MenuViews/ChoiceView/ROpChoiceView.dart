@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/components/ROpChoiceAv.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/controllers/ROpChoiceViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -27,7 +27,7 @@ class ROpChoiceView extends StatefulWidget {
       {required int? choiceId,
       required String restaurantId,
       required int optionId}) {
-    String route = RestaurantRouter.restaurantChoiceRoute
+    String route = RestaurantAppRoutes.restaurantChoiceRoute
         .replaceAll(":restaurantId", restaurantId)
         .replaceAll(":optionId", optionId.toString());
 

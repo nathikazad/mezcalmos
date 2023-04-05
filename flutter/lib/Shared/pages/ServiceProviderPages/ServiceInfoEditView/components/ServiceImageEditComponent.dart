@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
 
@@ -23,7 +24,8 @@ class ServiceImageEditComponent extends StatelessWidget {
             CircleAvatar(
                 radius: 70,
                 backgroundImage: (editInfoController.newImageFile.value != null)
-                    ? FileImage(editInfoController.newImageFile.value!)
+                    ? FileImage(
+                        File(editInfoController.newImageFile.value!.path))
                     : CachedNetworkImageProvider(
                         editInfoController.newImageUrl.value!) as ImageProvider,
                 child: (editInfoController.imageLoading.value)
