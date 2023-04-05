@@ -49,9 +49,10 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
           MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
       body: Obx(
         () {
-          if (!_viewController.pastOrders.isNotEmpty) {
+          if (_viewController.pastOrders.isNotEmpty) {
             return Scrollbar(
               child: SingleChildScrollView(
+                controller: _viewController.scrollController,
                 padding: EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +64,6 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                     ),
                     const SizedBox(height: 5),
                     ListView.builder(
-                      controller: _viewController.scrollController,
                       shrinkWrap: true,
                       reverse: true,
                       itemCount: _viewController.pastOrders.length,
