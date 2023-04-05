@@ -8,7 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -164,7 +164,7 @@ class Sagora extends GetxController {
   }
 
   Future<DatabaseEvent> getAgoraToken(
-      int chatId, String userId, ParticipantType type) async {
+      int chatId, String userId, cModels.ParticipantType type) async {
     mezDbgPrint("Listening once on ${agoraChatNode(chatId, userId, type)}");
     final DatabaseEvent ev = await (FirebaseDatabase.instance
         .ref()

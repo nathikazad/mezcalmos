@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
@@ -7,6 +6,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -38,7 +38,8 @@ class _DvOrderStatusControllButtonsState
 
     return Container(
       height: 70,
-      child: (!widget.viewController.order.isDriverAssigned)
+      child: (!widget.viewController.order.isDriverAssigned &&
+              widget.viewController.order.inProcess())
           ? MezButton(
               label: "${_i18n()['acceptOrder']}",
               backgroundColor: Colors.green.shade600,
@@ -84,25 +85,44 @@ class _DvOrderStatusControllButtonsState
       label: _getBtnTitle(),
       borderRadius: 0,
       onClick: () async {
-        switch (widget.viewController.order.status) {
-          case DeliveryOrderStatus.OrderReceived:
-            await widget.viewController.startPickup();
-            break;
-          case DeliveryOrderStatus.OnTheWayToPickup:
-            await widget.viewController.atPickup();
+        if (widget.viewController.order.isTimeSetted &&
+            widget.viewController.order.isDeliveryCostSetted) {
+          switch (widget.viewController.order.status) {
+            case DeliveryOrderStatus.OrderReceived:
+              await widget.viewController.startPickup();
+              break;
+            case DeliveryOrderStatus.OnTheWayToPickup:
+              await widget.viewController.atPickup();
 
-            break;
-          case DeliveryOrderStatus.AtPickup:
-            await widget.viewController.startDropoff();
-            break;
-          case DeliveryOrderStatus.OnTheWayToDropoff:
-            await widget.viewController.atDropoff();
-            break;
-          case DeliveryOrderStatus.AtDropoff:
-            await widget.viewController.finishDelivery();
-            break;
+              break;
+            case DeliveryOrderStatus.AtPickup:
+              await widget.viewController.startDropoff();
+              break;
+            case DeliveryOrderStatus.OnTheWayToDropoff:
+              await widget.viewController.atDropoff();
+              break;
+            case DeliveryOrderStatus.AtDropoff:
+              await widget.viewController.finishDelivery();
+              break;
 
-          default:
+            default:
+          }
+        } else if (!widget.viewController.order.isTimeSetted) {
+          widget.viewController.order.isCourier
+              ? showErrorSnackBar(
+                  errorTitle: "${_i18n()["noDeliveryTimeTitle"]}",
+                  errorText: "${_i18n()["noDeliveryTimeBody"]}")
+              : showErrorSnackBar(
+                  errorTitle: (widget.viewController.pickuSetted)
+                      ? "${_i18n()["noDeliveryTimeTitle"]}"
+                      : "${_i18n()["noPickupTimeTitle"]}",
+                  errorText: (widget.viewController.pickuSetted)
+                      ? "${_i18n()["noDeliveryTimeBody"]}"
+                      : "${_i18n()["noPickupTimeBody"]}");
+        } else if (!widget.viewController.order.isDeliveryCostSetted) {
+          showErrorSnackBar(
+              errorTitle: "${_i18n()["setDvCostTitle"]}",
+              errorText: "${_i18n()["setDvCostBody"]}");
         }
       },
     );
@@ -151,7 +171,7 @@ class _DvOrderStatusControllButtonsState
                 style: context.txt.bodyLarge,
               ),
               Text(
-                DateFormat('dd MMM yy h:m')
+                DateFormat('dd MMM, yy h:m a')
                     .format(widget.viewController.order.orderTime.toLocal()),
                 style: context.txt.titleMedium,
               )
@@ -280,5 +300,4 @@ class _DvOrderStatusControllButtonsState
         return "";
     }
   }
-
 }

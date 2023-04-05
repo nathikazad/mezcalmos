@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
@@ -53,7 +54,7 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
       case 1:
         return ServiceDriversListView(
           serviceProviderId: Get.find<DeliveryOpAuthController>().companyId,
-          serviceProviderType: ServiceProviderType.DeliveryCompany,
+          serviceProviderType: ServiceProviderType.Delivery,
           serviceLinkId: opAuthController.operator.value!.state.serviceLinkId,
         );
       case 2:

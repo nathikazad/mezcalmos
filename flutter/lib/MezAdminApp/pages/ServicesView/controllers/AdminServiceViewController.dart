@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/hsAdminServiceProviders.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -80,7 +81,7 @@ class AdminServicesViewController {
         restLimit.value += increaseLimit ?? 0;
         unawaited(fetchRestaurants());
         break;
-      case ServiceProviderType.DeliveryCompany:
+      case ServiceProviderType.Delivery:
         dvLimit.value += increaseLimit ?? 0;
         unawaited(fetchCompanies());
         break;
@@ -94,7 +95,7 @@ class AdminServicesViewController {
         return _laundries.value;
       case ServiceProviderType.Restaurant:
         return _restaurants.value;
-      case ServiceProviderType.DeliveryCompany:
+      case ServiceProviderType.Delivery:
         return _dvCompanies.value;
       case ServiceProviderType.Customer:
         return null;

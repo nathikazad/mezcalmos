@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
@@ -17,8 +18,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl:
-              RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
+          linkUrl: RestaurantAppRoutes.getROpOrderRoute(value["orderId"]),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
               'assets/images/shared/notifications/readyOrderNotificationIcon.png',
@@ -52,7 +52,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
-      return _restaurantOpOrderChangesNotifier(key, value);
+      return restaurantOpOrderChangesNotifier(key, value);
     default:
       throw StateError("Invalid Notification Type $value");
   }
@@ -69,7 +69,7 @@ Notification restaurantNotificationHandler(String key, value) {
 //   }
 // }
 
-Notification _restaurantOpOrderChangesNotifier(String key, value) {
+Notification restaurantOpOrderChangesNotifier(String key, value) {
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic>? dynamicFields =
@@ -77,8 +77,7 @@ Notification _restaurantOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl:
-          RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
+      linkUrl: RestaurantAppRoutes.getROpOrderRoute(value["orderId"]),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
       body: dynamicFields?["body"],
@@ -98,8 +97,7 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["canceledOrderTitle"]}",
         "body": "${_i18n()["canceledOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/cancel.png",
       };
     // case RestaurantOrderStatus.Preparing:
     //   return <String, dynamic>{
@@ -108,7 +106,7 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
     //     "imgUrl":
     //         "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
     //   };
-    case RestaurantOrderStatus.Ready:
+    case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
         "title": "${_i18n()["atPickupTitle"]}",
         "body": "${_i18n()["atPickupBody"]}",

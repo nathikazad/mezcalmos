@@ -8,18 +8,18 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-enum LaundryOrderStatus {
-  OrderReceived,
-  OtwPickupFromCustomer,
-  PickedUpFromCustomer,
-  AtLaundry,
-  ReadyForDelivery,
-  OtwPickupFromLaundry,
-  PickedUpFromLaundry,
-  Delivered,
-  CancelledByAdmin,
-  CancelledByCustomer
-}
+// enum LaundryOrderStatus {
+//   OrderReceived,
+//   OtwPickupFromCustomer,
+//   PickedUpFromCustomer,
+//   AtLaundry,
+//   ReadyForDelivery,
+//   OtwPickupFromLaundry,
+//   PickedUpFromLaundry,
+//   Delivered,
+//   CancelledByAdmin,
+//   CancelledByCustomer
+// }
 
 enum LaundryOrderPhase {
   Pickup,
@@ -27,20 +27,20 @@ enum LaundryOrderPhase {
   Neither,
 }
 
-extension ParseOrderStatusToString on LaundryOrderStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
+// extension ParseOrderStatusToString on LaundryOrderStatus {
+//   String toFirebaseFormatString() {
+//     final String str = toString().split('.').last;
 
-    return str[0].toLowerCase() + str.substring(1).toLowerCase();
-  }
-}
+//     return str[0].toLowerCase() + str.substring(1).toLowerCase();
+//   }
+// }
 
-extension ParseStringToOrderStatus on String {
-  LaundryOrderStatus toLaundryOrderStatus() {
-    return LaundryOrderStatus.values.firstWhere((LaundryOrderStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
+// extension ParseStringToOrderStatus on String {
+//   LaundryOrderStatus toLaundryOrderStatus() {
+//     return LaundryOrderStatus.values.firstWhere((LaundryOrderStatus e) =>
+//         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+//   }
+// }
 
 class LaundryOrder extends TwoWayDeliverableOrder {
   LaundryOrderStatus status;
@@ -66,6 +66,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.toCustomerDeliveryId,
       required this.shippingCost,
       this.costsByType,
+      super.review,
       super.stripePaymentInfo,
       super.scheduleTime,
       super.serviceProviderId,
@@ -192,6 +193,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     // all of them are in /past node
     return status == LaundryOrderStatus.CancelledByCustomer ||
         status == LaundryOrderStatus.CancelledByAdmin;
+  }
+
+  bool get canAddReview {
+    return review == null && status == LaundryOrderStatus.Delivered;
   }
 
   bool afterAtLaundry() {

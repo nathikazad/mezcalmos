@@ -41,7 +41,7 @@ export async function cancelCourierFromCustomer(userId: number, cancelOrderDetai
         courierOrder.deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
         updateDeliveryOrderStatus(courierOrder.deliveryOrder);
 
-        notify(courierOrder, cancelOrderDetails);
+        notify(courierOrder, cancelOrderDetails, courierOrder.deliveryOrder.deliveryId);
         return {
             success: true,
         }
@@ -65,7 +65,7 @@ export async function cancelCourierFromCustomer(userId: number, cancelOrderDetai
     }
 }
 
-async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrderDetails) {
+async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrderDetails, deliveryId: number) {
     let promiseResponse = await Promise.all([getMezAdmins(), getDeliveryOperators(courierOrder.deliveryOrder.serviceProviderId)]);
     let mezAdmins: MezAdmin[] = promiseResponse[0];
     let deliveryOperators: DeliveryOperator[] = promiseResponse[1];
@@ -80,7 +80,7 @@ async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrde
             orderId: cancelOrderDetails.orderId
         },
         background: deliveryOrderStatusChangeMessages[courierOrder.deliveryOrder.status],
-        linkUrl: '/'
+        linkUrl: `/deliveryOrders/${deliveryId}`
     };
     mezAdmins.forEach((m) => {
         pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
@@ -93,6 +93,9 @@ async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrde
             d.user?.language
         );
     });
+    notification.foreground.linkUrl = `/orderDetails/${deliveryId}`
+    let n:CourierOrderStatusChangeNotification = notification.foreground as CourierOrderStatusChangeNotification;
+    n.orderId = deliveryId;
     if (courierOrder.deliveryOrder.deliveryDriver) {
         pushNotification(courierOrder.deliveryOrder.deliveryDriver.user?.firebaseId!,
             notification,

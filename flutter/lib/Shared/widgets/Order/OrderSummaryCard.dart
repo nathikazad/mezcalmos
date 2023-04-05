@@ -37,7 +37,7 @@ class OrderSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: const EdgeInsets.only(top: 15),
+      margin: margin,
       child: Column(
         children: <Widget>[
           Container(
@@ -102,8 +102,9 @@ class OrderSummaryCard extends StatelessWidget {
                           children: [
                             if (setDeliveryCallBack != null)
                               MezIconButton(
-                                icon:
-                                    costs.tax != null ? Icons.edit : Icons.add,
+                                icon: costs.deliveryCost != null
+                                    ? Icons.edit
+                                    : Icons.add,
                                 iconSize: 17,
                                 padding: const EdgeInsets.all(3),
                                 onTap: setDeliveryCallBack,
@@ -169,8 +170,10 @@ class OrderSummaryCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('${_i18n()["totalCost"]}',
-                            style: txt.headlineMedium),
+                        Text(
+                          '${_i18n()["totalCost"]}',
+                          style: txt.bodyLarge,
+                        ),
                         Text(
                             (costs.orderItemsCost != 0)
                                 ? costs.totalCost?.toPriceString() ?? "-"

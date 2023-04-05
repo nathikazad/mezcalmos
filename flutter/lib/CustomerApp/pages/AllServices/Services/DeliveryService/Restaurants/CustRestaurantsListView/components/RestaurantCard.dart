@@ -45,7 +45,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
         onTap: widget.onClick,
         child: Container(
           width: double.infinity,
-          height: 15.h,
+          height: 16.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,14 +59,17 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(widget.restaurant.info.name, style: txt.bodyLarge),
-                      SizedBox(height: 5),
+                      //  SizedBox(height: 5),
                       if (widget.restaurant.info.description?[userLanguage] !=
                           null)
-                        Text(
-                          widget.restaurant.info.description![userLanguage]!,
-                          style: txt.bodyMedium,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2.0),
+                          child: Text(
+                            widget.restaurant.info.description![userLanguage]!,
+                            style: txt.bodyMedium,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       if (widget.restaurant.info.description != null &&
                           widget.restaurant.info.description!.length > 1)
@@ -132,33 +135,34 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           // SizedBox(
                           //   width: 4.w,
                           // ),
-                          if (widget.restaurant.rate != null)
-                            Flexible(
-                              // flex: 4,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: widget.restaurant.paymentInfo
-                                                ?.acceptCard ==
-                                            true
-                                        ? 8
-                                        : 0,
-                                  ),
+                          Flexible(
+                            // flex: 4,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: widget.restaurant.paymentInfo
+                                              ?.acceptCard ==
+                                          true
+                                      ? 8
+                                      : 0,
+                                ),
+                                if (widget.restaurant.rate != null)
                                   Icon(
                                     Icons.star,
                                     //size: 18,
                                     color: primaryBlueColor,
                                   ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                if (widget.restaurant.rate != null)
                                   Text(
                                     widget.restaurant.rate!.toStringAsFixed(1),
                                     style: txt.bodySmall,
                                   )
-                                ],
-                              ),
+                              ],
                             ),
+                          ),
                         ],
                       )
                     ],

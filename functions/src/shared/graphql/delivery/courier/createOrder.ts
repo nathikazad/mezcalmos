@@ -120,7 +120,7 @@ export async function createNewCourierOrder(
         items: courierRequest.items,
         customerId,
         orderTime: response.insert_delivery_courier_order_one.order_time,
-        PaymentType: PaymentType.Cash,
+        paymentType: PaymentType.Cash,
         tax: courierRequest.tax,
         stripeFees: courierRequest.stripeFees,
         discountValue: courierRequest.discountValue,

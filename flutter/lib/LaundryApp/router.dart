@@ -4,8 +4,8 @@ import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart';
 import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -29,11 +29,6 @@ class LaundryAppRoutes {
 
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(
-          path: kAdminViewRoute,
-          name: kAdminViewRoute,
-          builder: () => LaundryOpAdminView(),
-        ),
-        QRoute(
           path: kLaundryTabsViewRoute,
           name: kLaundryTabsViewRoute,
           builder: () => LaundryTabsView(),
@@ -53,19 +48,27 @@ class LaundryAppRoutes {
           name: SharedRoutes.kHomeRoute,
           builder: () => LaundryWrapper(),
         ),
-        QRoute(
-          path: kCategoryViewRoute,
-          name: kCategoryViewRoute,
-          builder: () => LaundrOpCategoryView(),
-        ),
-        QRoute(
-          path: kOrderViewRoute,
-          name: kOrderViewRoute,
-          builder: () => LaundryOrderView(),
-        ),
       ] +
+      sharedWithAdminRoutes +
       SharedRoutes.qRoutes +
       SharedServiceProviderRoutes.routes;
+  static final List<QRoute> sharedWithAdminRoutes = [
+    QRoute(
+      path: kAdminViewRoute,
+      name: kAdminViewRoute,
+      builder: () => LaundryOpAdminView(),
+    ),
+    QRoute(
+      path: kOrderViewRoute,
+      name: kOrderViewRoute,
+      builder: () => LaundryOrderView(),
+    ),
+    QRoute(
+      path: kCategoryViewRoute,
+      name: kCategoryViewRoute,
+      builder: () => LaundrOpCategoryView(),
+    ),
+  ];
 
 //  +
 // NativeOnlyRoutes.routes;

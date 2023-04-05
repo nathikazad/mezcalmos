@@ -30,7 +30,7 @@ class ROpItemAvChips extends StatelessWidget {
                 children: [
                   Text(
                     '${_i18n()["available"]}',
-                    style: context.txt.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   radioCircleButton(
                       onTap: (bool? v) {
@@ -50,7 +50,7 @@ class ROpItemAvChips extends StatelessWidget {
                 children: [
                   Text(
                     "${_i18n()["unavailable"]}",
-                    style: context.txt.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   radioCircleButton(
                       onTap: (bool? v) {

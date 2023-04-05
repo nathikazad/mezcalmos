@@ -1,4 +1,4 @@
-import { OrderStripeInfo } from "../../../utilities/stripe/model";
+import { OrderStripeInfo } from "../stripe";
 import { CustomerAppType } from "./Generic";
 import { UserInfo } from "./User";
 
@@ -30,17 +30,17 @@ export enum DeliveryType {
   Delivery = "delivery",
 }
 
-export enum DeliveryAction {
-  Pickup = "pickup",
-  DropOff = "dropoff",
-}
+// export enum DeliveryAction {
+//   Pickup = "pickup",
+//   DropOff = "dropoff",
+// }
 
 export enum OrderType {
   Taxi = "taxi",
   Restaurant = "restaurant",
   Laundry = "laundry",
   Courier = "courier",
-  Water = "water"
+  Business = "business",
 }
 //TODO
 
@@ -54,9 +54,8 @@ export const pluralizeOrderType = function (orderType: OrderType): string {
       return "laundries";
     case OrderType.Courier:
       return "couriers";
-    case OrderType.Water:
-      return "waters";
-
+    case OrderType.Business:
+      return "businesses";
   }
 }
 
@@ -66,12 +65,12 @@ export enum PaymentType {
   BankTransfer = "bankTransfer"
 }
 
-export enum SecondaryChat {
-  ServiceProviderDropOffDriverChat = "serviceProviderDropOffDriver",
-  ServiceProviderPickupDriverChat = "serviceProviderPickupDriver",
-  CustomerDropOffDriverChat = "customerDropOffDriver",
-  CustomerPickupDriverChat = "customerPickupDriver"
-}
+// export enum SecondaryChat {
+//   ServiceProviderDropOffDriverChat = "serviceProviderDropOffDriver",
+//   ServiceProviderPickupDriverChat = "serviceProviderPickupDriver",
+//   CustomerDropOffDriverChat = "customerDropOffDriver",
+//   CustomerPickupDriverChat = "customerPickupDriver"
+// }
 
 export interface DeliverableOrder extends Order {
   dropoffDriver?: DeliveryDriverInfo;

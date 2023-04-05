@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/__generated/courier_order.graphql.dart';
@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryA
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -38,8 +39,34 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
       _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
     }
     return CourierOrder(
-      orderType: OrderType.Courier,
+      orderType: cModels.OrderType.Courier,
       orderId: orderData.id,
+      review: (orderData.delivery_order.driver_review_by_customer != null)
+          ? Review(
+              comment: orderData.delivery_order.driver_review_by_customer!.note,
+              rating:
+                  orderData.delivery_order.driver_review_by_customer!.rating,
+              toEntityId: orderData
+                  .delivery_order.driver_review_by_customer!.to_entity_id,
+              customer: UserInfo(
+                name: orderData.delivery_order.driver_review_by_customer
+                    ?.customer?.user.name,
+                image: orderData.delivery_order.driver_review_by_customer
+                    ?.customer?.user.image,
+                hasuraId: orderData.delivery_order.driver_review_by_customer!
+                    .customer!.user.id,
+              ),
+              toEntityType: orderData
+                  .delivery_order.driver_review_by_customer!.to_entity_type
+                  .toServiceProviderType(),
+              fromEntityId: orderData
+                  .delivery_order.driver_review_by_customer!.from_entity_id,
+              fromEntityType: orderData
+                  .delivery_order.driver_review_by_customer!.from_entity_type
+                  .toServiceProviderType(),
+              reviewTime: DateTime.parse(orderData
+                  .delivery_order.driver_review_by_customer!.created_at))
+          : null,
       scheduleTime: (orderData.delivery_order.schedule_time != null)
           ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
           : null,
@@ -175,12 +202,39 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
       }
       return CourierOrder(
-        orderType: OrderType.Courier,
+        orderType: cModels.OrderType.Courier,
         orderId: orderData.id,
         scheduleTime: (orderData.delivery_order.schedule_time != null)
             ? DateTime.tryParse(orderData.delivery_order.schedule_time!)
             : null,
         billImage: orderData.bill_image,
+        review: (orderData.delivery_order.driver_review_by_customer != null)
+            ? Review(
+                comment:
+                    orderData.delivery_order.driver_review_by_customer!.note,
+                rating:
+                    orderData.delivery_order.driver_review_by_customer!.rating,
+                toEntityId: orderData
+                    .delivery_order.driver_review_by_customer!.to_entity_id,
+                customer: UserInfo(
+                  name: orderData.delivery_order.driver_review_by_customer
+                      ?.customer?.user.name,
+                  image: orderData.delivery_order.driver_review_by_customer
+                      ?.customer?.user.image,
+                  hasuraId: orderData.delivery_order.driver_review_by_customer!
+                      .customer!.user.id,
+                ),
+                toEntityType: orderData
+                    .delivery_order.driver_review_by_customer!.to_entity_type
+                    .toServiceProviderType(),
+                fromEntityId: orderData
+                    .delivery_order.driver_review_by_customer!.from_entity_id,
+                fromEntityType: orderData
+                    .delivery_order.driver_review_by_customer!.from_entity_type
+                    .toServiceProviderType(),
+                reviewTime: DateTime.parse(orderData
+                    .delivery_order.driver_review_by_customer!.created_at))
+            : null,
         deliveryDirection:
             orderData.delivery_order.direction.toDeliveryDirection(),
         customer: UserInfo(
@@ -401,6 +455,7 @@ Future<CourierOrdeItem?> update_courier_order_item(
 
 Future<double?> update_courier_order_tax(
     {required int orderId, required num tax}) async {
+  mezDbgPrint("order id ===========>$orderId");
   QueryResult<Mutation$updateCourierOrder> res =
       await _hasuraDb.graphQLClient.mutate$updateCourierOrder(
     Options$Mutation$updateCourierOrder(

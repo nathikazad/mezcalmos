@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -350,6 +351,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
 
     return Laundry(
         languages: convertToLanguages(data.details!.language),
+        rate: data.reviews_aggregate.aggregate?.avg?.rating,
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(

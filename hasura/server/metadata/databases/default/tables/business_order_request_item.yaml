@@ -1,0 +1,9 @@
+table:
+  name: order_request_item
+  schema: business
+computed_fields:
+  - name: estimated_cost_per_one
+    definition:
+      function:
+        name: estcostperone
+        schema: business

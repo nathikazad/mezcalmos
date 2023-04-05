@@ -2310,6 +2310,58 @@ const documentNodeQuerygetDeliveryCompanies = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'reviews_aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'avg'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'rating'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_details'),
             alias: null,
             arguments: [],
@@ -2673,6 +2725,7 @@ extension ClientExtension$Query$getDeliveryCompanies on graphql.GraphQLClient {
 class Query$getDeliveryCompanies$delivery_company {
   Query$getDeliveryCompanies$delivery_company({
     required this.id,
+    required this.reviews_aggregate,
     required this.delivery_details,
     this.details,
     required this.$__typename,
@@ -2681,11 +2734,15 @@ class Query$getDeliveryCompanies$delivery_company {
   factory Query$getDeliveryCompanies$delivery_company.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$reviews_aggregate = json['reviews_aggregate'];
     final l$delivery_details = json['delivery_details'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getDeliveryCompanies$delivery_company(
       id: (l$id as int),
+      reviews_aggregate:
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate
+              .fromJson((l$reviews_aggregate as Map<String, dynamic>)),
       delivery_details:
           Query$getDeliveryCompanies$delivery_company$delivery_details.fromJson(
               (l$delivery_details as Map<String, dynamic>)),
@@ -2699,6 +2756,9 @@ class Query$getDeliveryCompanies$delivery_company {
 
   final int id;
 
+  final Query$getDeliveryCompanies$delivery_company$reviews_aggregate
+      reviews_aggregate;
+
   final Query$getDeliveryCompanies$delivery_company$delivery_details
       delivery_details;
 
@@ -2710,6 +2770,8 @@ class Query$getDeliveryCompanies$delivery_company {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$reviews_aggregate = reviews_aggregate;
+    _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
     final l$delivery_details = delivery_details;
     _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$details = details;
@@ -2722,11 +2784,13 @@ class Query$getDeliveryCompanies$delivery_company {
   @override
   int get hashCode {
     final l$id = id;
+    final l$reviews_aggregate = reviews_aggregate;
     final l$delivery_details = delivery_details;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$reviews_aggregate,
       l$delivery_details,
       l$details,
       l$$__typename,
@@ -2745,6 +2809,11 @@ class Query$getDeliveryCompanies$delivery_company {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$reviews_aggregate = reviews_aggregate;
+    final lOther$reviews_aggregate = other.reviews_aggregate;
+    if (l$reviews_aggregate != lOther$reviews_aggregate) {
       return false;
     }
     final l$delivery_details = delivery_details;
@@ -2787,11 +2856,15 @@ abstract class CopyWith$Query$getDeliveryCompanies$delivery_company<TRes> {
 
   TRes call({
     int? id,
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate?
+        reviews_aggregate,
     Query$getDeliveryCompanies$delivery_company$delivery_details?
         delivery_details,
     Query$getDeliveryCompanies$delivery_company$details? details,
     String? $__typename,
   });
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<TRes>
+      get reviews_aggregate;
   CopyWith$Query$getDeliveryCompanies$delivery_company$delivery_details<TRes>
       get delivery_details;
   CopyWith$Query$getDeliveryCompanies$delivery_company$details<TRes>
@@ -2813,12 +2886,18 @@ class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? reviews_aggregate = _undefined,
     Object? delivery_details = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getDeliveryCompanies$delivery_company(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        reviews_aggregate: reviews_aggregate == _undefined ||
+                reviews_aggregate == null
+            ? _instance.reviews_aggregate
+            : (reviews_aggregate
+                as Query$getDeliveryCompanies$delivery_company$reviews_aggregate),
         delivery_details: delivery_details == _undefined ||
                 delivery_details == null
             ? _instance.delivery_details
@@ -2831,6 +2910,13 @@ class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<TRes>
+      get reviews_aggregate {
+    final local$reviews_aggregate = _instance.reviews_aggregate;
+    return CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate(
+        local$reviews_aggregate, (e) => call(reviews_aggregate: e));
+  }
+
   CopyWith$Query$getDeliveryCompanies$delivery_company$delivery_details<TRes>
       get delivery_details {
     final local$delivery_details = _instance.delivery_details;
@@ -2857,12 +2943,18 @@ class _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company<TRes>
 
   call({
     int? id,
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate?
+        reviews_aggregate,
     Query$getDeliveryCompanies$delivery_company$delivery_details?
         delivery_details,
     Query$getDeliveryCompanies$delivery_company$details? details,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<TRes>
+      get reviews_aggregate =>
+          CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate
+              .stub(_res);
   CopyWith$Query$getDeliveryCompanies$delivery_company$delivery_details<TRes>
       get delivery_details =>
           CopyWith$Query$getDeliveryCompanies$delivery_company$delivery_details
@@ -2871,6 +2963,480 @@ class _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company<TRes>
       get details =>
           CopyWith$Query$getDeliveryCompanies$delivery_company$details.stub(
               _res);
+}
+
+class Query$getDeliveryCompanies$delivery_company$reviews_aggregate {
+  Query$getDeliveryCompanies$delivery_company$reviews_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getDeliveryCompanies$delivery_company$reviews_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getDeliveryCompanies$delivery_company$reviews_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getDeliveryCompanies$delivery_company$reviews_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDeliveryCompanies$delivery_company$reviews_aggregate
+    on Query$getDeliveryCompanies$delivery_company$reviews_aggregate {
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate>
+      get copyWith =>
+          CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<
+    TRes> {
+  factory CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate(
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate instance,
+    TRes Function(Query$getDeliveryCompanies$delivery_company$reviews_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate;
+
+  factory CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate;
+
+  TRes call({
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDeliveryCompanies$delivery_company$reviews_aggregate _instance;
+
+  final TRes Function(
+      Query$getDeliveryCompanies$delivery_company$reviews_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getDeliveryCompanies$delivery_company$reviews_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate {
+  Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate({
+    this.avg,
+    required this.$__typename,
+  });
+
+  factory Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$avg = json['avg'];
+    final l$$__typename = json['__typename'];
+    return Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate(
+      avg: l$avg == null
+          ? null
+          : Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg
+              .fromJson((l$avg as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg?
+      avg;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$avg = avg;
+    _resultData['avg'] = l$avg?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$avg = avg;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$avg,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$avg = avg;
+    final lOther$avg = other.avg;
+    if (l$avg != lOther$avg) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate
+    on Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate {
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate(
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate;
+
+  factory CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate;
+
+  TRes call({
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg?
+        avg,
+    String? $__typename,
+  });
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+      TRes> get avg;
+}
+
+class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? avg = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate(
+        avg: avg == _undefined
+            ? _instance.avg
+            : (avg
+                as Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+      TRes> get avg {
+    final local$avg = _instance.avg;
+    return local$avg == null
+        ? CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg
+            .stub(_then(_instance))
+        : CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg(
+            local$avg, (e) => call(avg: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg?
+        avg,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+          TRes>
+      get avg =>
+          CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg
+              .stub(_res);
+}
+
+class Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg {
+  Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg({
+    this.rating,
+    required this.$__typename,
+  });
+
+  factory Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg.fromJson(
+      Map<String, dynamic> json) {
+    final l$rating = json['rating'];
+    final l$$__typename = json['__typename'];
+    return Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg(
+      rating: (l$rating as num?)?.toDouble(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? rating;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$rating = rating;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$rating,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg
+    on Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg {
+  CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg>
+      get copyWith =>
+          CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+    TRes> {
+  factory CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg(
+    Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg
+        instance,
+    TRes Function(
+            Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg)
+        then,
+  ) = _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg;
+
+  factory CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg;
+
+  TRes call({
+    double? rating,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg
+      _instance;
+
+  final TRes Function(
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? rating = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg(
+        rating: rating == _undefined ? _instance.rating : (rating as double?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$reviews_aggregate$aggregate$avg(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? rating,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getDeliveryCompanies$delivery_company$delivery_details {

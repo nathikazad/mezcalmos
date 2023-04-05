@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -30,7 +29,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -57,8 +56,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   RxInt numberOfCurrentOrders = RxInt(0);
 
-  StreamSubscription<dynamic>? _orderCountListener;
-
   StreamSubscription<dynamic>? _authStateChnagesListener;
 
   @override
@@ -66,9 +63,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     super.initState();
 
     if (authController.fireAuthUser != null) {
-      _orderController = Get.find<CustomerOrderController>();
       customerAuthController = Get.find<CustomerAuthController>();
-
+      _orderController = Get.find<CustomerOrderController>();
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
@@ -78,8 +74,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   @override
   void dispose() {
-    _orderCountListener?.cancel();
-    _orderCountListener = null;
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
     super.dispose();
@@ -114,8 +108,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       if (fireUser != null) {
         _doIfFireAuthUserIsNotNull();
       } else {
-        _orderCountListener?.cancel();
-        _orderCountListener = null;
         _notificationsStreamListener?.cancel();
         _notificationsStreamListener = null;
         appLifeCycleController.cleanAllCallbacks();
@@ -182,10 +174,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   }
 
   Widget mezListOfServices() {
-    return Column(
-      children: [
-        Obx(
-          () => ServicesCard(
+    return Obx(
+      () => Column(
+        children: [
+          ServicesCard(
             title: "${_i18n()['food']["title"]}",
             url: "assets/images/customer/foodService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
@@ -198,9 +190,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   });
             },
           ),
-        ),
-        Obx(
-          () => ServicesCard(
+          ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
             subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
@@ -213,21 +203,21 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   });
             },
           ),
-        ),
-        ServicesCard(
-          title: "Courier",
-          url: "assets/images/customer/courrierService.png",
-          subtitle: "Obtain delivery of anything you desire to your location.",
-          onTap: () {
-            getServiceRoute(
-                orderType: OrderType.Courier,
-                serviceRoute: CustCourierServicesListView.navigate,
-                singleOrderRoute: (int orderId) {
-                  CustCourierOrderView.navigate(orderId: orderId);
-                });
-          },
-        ),
-      ],
+          ServicesCard(
+            title: "${_i18n()['courier']["title"]}",
+            subtitle: "${_i18n()['courier']["subtitle"]}",
+            url: "assets/images/customer/courrierService.png",
+            onTap: () {
+              getServiceRoute(
+                  orderType: OrderType.Courier,
+                  serviceRoute: CustCourierServicesListView.navigate,
+                  singleOrderRoute: (int orderId) {
+                    CustCourierOrderView.navigate(orderId: orderId);
+                  });
+            },
+          ),
+        ],
+      ),
     );
   }
 

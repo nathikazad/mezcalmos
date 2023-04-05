@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -146,8 +147,8 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
   }
 
   bool _showFoodReadyTime() {
-    return (order.status == RestaurantOrderStatus.OrderReceived ||
-            order.status == RestaurantOrderStatus.Preparing) &&
+    return (order.status == cModels.RestaurantOrderStatus.OrderReceived ||
+            order.status == cModels.RestaurantOrderStatus.PreparingOrder) &&
         _getFoodReadyTime() != null;
   }
 
@@ -164,7 +165,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 backgroundColor: secondaryLightBlueColor,
                 child: Icon(
                   Icons.watch_later,
-                  size: 30,
+                  size: 35,
                   color: primaryBlueColor,
                 ),
               ),

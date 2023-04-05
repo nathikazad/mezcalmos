@@ -1,5 +1,5 @@
 import { getHasura } from "../../../../utilities/hasura";
-import { CustomerCard } from "../../../../utilities/stripe/model";
+import { CustomerCard } from "../../../models/stripe";
 import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { CustomerInfo } from "../../../models/Generic/User";
 

@@ -1,3 +1,4 @@
+import { Language } from "../../Generic/Generic";
 import { SelectedOption } from "./RestaurantOrder";
 
 export interface Cart {
@@ -15,6 +16,6 @@ export interface CartItem {
   quantity: number;
   costPerOne: number;
   notes?: string;
-  name:any;
+  name: Record<Language, string>;
   image?:string;
 }

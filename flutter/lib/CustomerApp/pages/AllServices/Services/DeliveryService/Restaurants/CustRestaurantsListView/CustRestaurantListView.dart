@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantsListView/components/RestaurantCard.dart';
@@ -12,7 +11,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -57,9 +58,10 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
       //   title: "${_i18n()['restaurants']}",
       // ),
 
-      appBar: CustomerAppBar(
-        title: "${_i18n()['restaurants']}",
-        autoBack: true,
+      appBar: MezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: MezRouter.back,
+        title: "${_i18n()['restaurants']}"
       ),
       floatingActionButton: FloatingCartComponent(),
       body: SingleChildScrollView(

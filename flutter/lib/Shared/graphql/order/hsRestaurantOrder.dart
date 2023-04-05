@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
@@ -187,7 +187,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             orderItemsCost: orderData.items_cost,
             totalCost: orderData.total_cost),
         deliveryCompany: null, driverLocation: null,
-        deliveryDirection: DeliveryDirection.ToCustomer, pickupLocation: null,
+        deliveryDirection: cModels.DeliveryDirection.ToCustomer,
+        pickupLocation: null,
       );
 
       res.items = items;
@@ -361,7 +362,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
         orderItemsCost: orderData.items_cost,
         totalCost: orderData.total_cost),
     deliveryCompany: null, driverLocation: null,
-    deliveryDirection: DeliveryDirection.ToCustomer,
+    deliveryDirection: cModels.DeliveryDirection.ToCustomer,
   );
 
   res.items = items;
@@ -391,7 +392,7 @@ Stream<List<MinimalOrder>?> listen_on_current_restaurant_orders(
               orderData) {
         return MinimalOrder(
             id: orderData.id,
-            orderType: OrderType.Restaurant,
+            orderType: cModels.OrderType.Restaurant,
             toAdress: orderData.to_location_address,
             deliveryCost: orderData.delivery?.delivery_cost,
             orderTime: DateTime.parse(orderData.order_time),
@@ -426,7 +427,7 @@ Future<List<MinimalOrder>?> get_current_restaurant_orders(
         .map((Query$get_restaurant_current_orders$restaurant_order orderData) {
       return MinimalOrder(
           id: orderData.id,
-          orderType: OrderType.Restaurant,
+          orderType: cModels.OrderType.Restaurant,
           toAdress: orderData.to_location_address,
           deliveryCost: orderData.delivery?.delivery_cost,
           orderTime: DateTime.parse(orderData.order_time),
@@ -461,7 +462,7 @@ Future<List<MinimalOrder>?> get_past_restaurant_orders(
         .map((Query$get_restaurant_past_orders$restaurant_order orderData) {
       return MinimalOrder(
           id: orderData.id,
-          orderType: OrderType.Restaurant,
+          orderType: cModels.OrderType.Restaurant,
           toAdress: orderData.to_location_address,
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,

@@ -1,4 +1,3 @@
-// Example of the View
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -11,8 +10,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/controllers/PickLocationViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -72,40 +71,6 @@ class _PickLocationViewState extends State<PickLocationView> {
     );
   }
 
-  // ------------------------------------------- Functions -------------------------------------------
-
-  // ------------------------------------------- WIDGETS -------------------------------------------
-  // Widget pickButton() {
-  //   return showScreenLoading == false && locationPickerController.isMapReady
-  //       ? Container(
-  //           height: 50,
-  //           child: TextButton(
-  //             style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-  //             onPressed: () async => onPickButtonClick(context),
-  //             child: Center(
-  //                 child: Text(_i18n()["pickLocation"],
-  //                     style: Theme.of(context)
-  //                         .textTheme
-  //                         .displayMedium!
-  //                         .copyWith(color: Colors.white, fontSize: 12.sp))),
-  //           ),
-  //         )
-  //       : Container(
-  //           height: 50,
-  //           child: TextButton(
-  //             style:
-  //                 TextButton.styleFrom(backgroundColor: Colors.grey.shade400),
-  //             onPressed: null,
-  //             child: Center(
-  //               child: Center(
-  //                 child: CircularProgressIndicator(
-  //                     strokeWidth: 1, color: Colors.black),
-  //               ),
-  //             ),
-  //           ),
-  //         );
-  // }
-
   Container mezPickLocationViewBody() {
     return Container(
       child: Column(
@@ -119,7 +84,6 @@ class _PickLocationViewState extends State<PickLocationView> {
             margin: const EdgeInsets.all(8),
             child: Text(_i18n()["pickLabele"]),
           ),
-
           Obx(
             () => Container(
               margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -131,6 +95,8 @@ class _PickLocationViewState extends State<PickLocationView> {
                       .locationPickerController.location.value?.address,
                   onClear: () {},
                   notifyParent: (MezLocation? location) {
+                    mezDbgPrint(
+                        "Location =================================>$location");
                     setState(() {
                       viewController.locationPickerController
                           .setLocation(location!);
@@ -143,7 +109,6 @@ class _PickLocationViewState extends State<PickLocationView> {
           SizedBox(
             height: 10,
           ),
-          // stack
           Obx(
             () => Expanded(
                 child: Container(

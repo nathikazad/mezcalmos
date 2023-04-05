@@ -4,16 +4,15 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 class CustCourierOrderViewController {
@@ -28,7 +27,7 @@ class CustCourierOrderViewController {
   // getters //
   bool get hasData => _order.value != null;
   CourierOrder get order => _order.value!;
-  DeliveryOrderStatus get orderStatus {
+  cModels.DeliveryOrderStatus get orderStatus {
     return _order.value!.status;
   }
 
@@ -40,6 +39,8 @@ class CustCourierOrderViewController {
   Future<void> init(
       {required int orderId, required BuildContext context}) async {
     this.context = context;
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: cModels.OrderType.Courier, orderId: orderId);
     try {
       _order.value = await get_courier_order_by_id(
         orderId: orderId,
@@ -58,11 +59,9 @@ class CustCourierOrderViewController {
               "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.driverInfo}");
 
           if (event != null) {
+            _order.value = null;
             _order.value = event;
-            _order.value?.status = event.status;
-            _order.value?.driverInfo = event.driverInfo;
-            _order.value?.costs = event.costs;
-            _order.value?.billImage = event.billImage;
+
             mezDbgPrint(
                 "Order bill imaaaaaaaaggggggeeee======>${_order.value?.billImage}");
 
@@ -91,7 +90,7 @@ class CustCourierOrderViewController {
           return AlertDialog(
             scrollable: false,
             contentPadding:
-                const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+                const EdgeInsets.only(bottom: 0, top: 16, left: 16, right: 16),
             insetPadding:
                 const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
             // contentPadding:
@@ -103,7 +102,7 @@ class CustCourierOrderViewController {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: secondaryLightBlueColor, shape: BoxShape.circle),
+                        color: Color(0xFFECEEFF), shape: BoxShape.circle),
                     padding: const EdgeInsets.all(16),
                     child: Icon(
                       Icons.price_change_rounded,
@@ -124,26 +123,32 @@ class CustCourierOrderViewController {
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "New price",
-                        style: context.textTheme.bodyLarge,
-                      ),
+                      Text("New price",
+                          style: context.textTheme.displaySmall
+                              ?.copyWith(fontSize: 20)),
                       SizedBox(
                         height: 5,
                       ),
                       Text(order.changePriceRequest?.newPrice.toPriceString() ??
-                          "20"),
-                      Divider(
-                        height: 20,
-                      ),
-                      Text(
-                        "Reason",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(order.changePriceRequest?.reason ?? "reason"),
+                          "-"),
+                      if (order.changePriceRequest?.reason != null &&
+                          order.changePriceRequest!.reason.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(
+                              height: 20,
+                            ),
+                            Text(
+                              "Reason",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(order.changePriceRequest?.reason ?? "reason"),
+                          ],
+                        ),
                       SizedBox(
                         height: 8,
                       ),
@@ -157,7 +162,7 @@ class CustCourierOrderViewController {
                     },
                   ),
                   MezButton(
-                    label: "Cancel",
+                    label: "Cancel order",
                     height: 50,
                     backgroundColor: Colors.transparent,
                     textColor: Colors.grey.shade900,
@@ -175,11 +180,11 @@ class CustCourierOrderViewController {
 
   Future<void> _priceChangeResponse({required bool accepted}) async {
     try {
-      ChangePriceResResponse res =
+      cModels.ChangePriceResResponse res =
           await CloudFunctions.delivery2_changeDeliveryPriceResponse(
               accepted: accepted,
               orderId: order.orderId,
-              orderType: cm.OrderType.Courier);
+              orderType: cModels.OrderType.Courier);
       if (res.success == false) {
         mezDbgPrint(res.error);
         showErrorSnackBar(errorText: res.error.toString());
@@ -195,31 +200,11 @@ class CustCourierOrderViewController {
 
 // Order status change methods
 
-  Future<ServerResponse> addReview({
-    required int orderId,
-    required int serviceId,
+  Future<void> addReview({
     required String comment,
-    required OrderType orderType,
     required num rate,
   }) async {
-    final HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
-    try {
-      final HttpsCallableResult<dynamic> response =
-          await cancelOrder.call(<String, dynamic>{
-        "orderId": orderId,
-        "serviceProviderId": serviceId,
-        "rating": rate,
-        "comment": comment,
-        "orderType": orderType.toFirebaseFormatString(),
-      });
-      mezDbgPrint(response.toString());
-      print(response.data);
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
+    //CloudFunctions.res
   }
 
   Future<bool> cancelOrder() async {

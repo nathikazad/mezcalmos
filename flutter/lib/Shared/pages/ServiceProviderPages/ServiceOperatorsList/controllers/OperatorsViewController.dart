@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_operator/hsLaundryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
@@ -37,11 +36,11 @@ class OperatorsListViewController {
 
   late int serviceProviderId;
   late int serviceLinkId;
-  late ServiceProviderType serviceProviderType;
+  late cModels.ServiceProviderType serviceProviderType;
   Future<void> init({
     required int serviceProviderId,
     required int serviceLinkId,
-    required ServiceProviderType serviceProviderType,
+    required cModels.ServiceProviderType serviceProviderType,
   }) async {
     this.serviceProviderId = serviceProviderId;
     this.serviceLinkId = serviceLinkId;
@@ -63,19 +62,19 @@ class OperatorsListViewController {
 
   Future<void> fetchOperators() async {
     switch (serviceProviderType) {
-      case ServiceProviderType.DeliveryCompany:
+      case cModels.ServiceProviderType.Delivery:
         operators.value = await get_delivery_company_operators(
                 companyId: serviceProviderId, withCache: false) ??
             [];
 
         break;
-      case ServiceProviderType.Restaurant:
+      case cModels.ServiceProviderType.Restaurant:
         operators.value = await get_restaurant_operators(
                 restaurantId: serviceProviderId, withCache: false) ??
             [];
 
         break;
-      case ServiceProviderType.Laundry:
+      case cModels.ServiceProviderType.Laundry:
         operators.value = await get_laundry_operators(
                 laundryId: serviceProviderId, withCache: false) ??
             [];
@@ -88,7 +87,7 @@ class OperatorsListViewController {
   Future<void> approveOperator(
       {required bool approved, required int opId}) async {
     try {
-      final AuthOperatorResponse res =
+      final cModels.AuthOperatorResponse res =
           await CloudFunctions.serviceProvider_authorizeOperator(
               newOperatorId: opId,
               approved: approved,
@@ -108,19 +107,16 @@ class OperatorsListViewController {
     }
   }
 
-  cModel.ParticipantType get partType {
+  cModels.ParticipantType get partType {
     switch (serviceProviderType) {
-      case ServiceProviderType.Restaurant:
-        return cModel.ParticipantType.RestaurantOperator;
-        break;
-      case ServiceProviderType.Laundry:
-        return cModel.ParticipantType.LaundryOperator;
-        break;
-      case ServiceProviderType.DeliveryCompany:
-        return cModel.ParticipantType.DeliveryOperator;
-        break;
+      case cModels.ServiceProviderType.Restaurant:
+        return cModels.ParticipantType.RestaurantOperator;
+      case cModels.ServiceProviderType.Laundry:
+        return cModels.ParticipantType.LaundryOperator;
+      case cModels.ServiceProviderType.Delivery:
+        return cModels.ParticipantType.DeliveryOperator;
       default:
-        return cModel.ParticipantType.RestaurantOperator;
+        return cModels.ParticipantType.RestaurantOperator;
     }
   }
 }

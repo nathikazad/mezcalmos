@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -21,11 +22,11 @@ class CustLaundryOrderViewController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   // vars //
   Rxn<LaundryOrder> order = Rxn();
-  RestaurantOrderStatus? _statusSnapshot;
+  cModels.RestaurantOrderStatus? _statusSnapshot;
   LaundryOrderPhase? _phaseSnapshot;
 
   // getters //
-  LaundryOrderStatus get orderStatus {
+  cModels.LaundryOrderStatus get orderStatus {
     return order.value!.status;
   }
 
@@ -35,6 +36,8 @@ class CustLaundryOrderViewController {
 
   // init
   Future<void> init({required int orderId}) async {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: cModels.OrderType.Laundry, orderId: orderId);
     try {
       order.value =
           await get_laundry_order_by_id(orderId: orderId, withCache: false);
@@ -74,7 +77,7 @@ class CustLaundryOrderViewController {
     required int orderId,
     required int serviceId,
     required String comment,
-    required OrderType orderType,
+    required cModels.OrderType orderType,
     required num rate,
   }) async {
     final HttpsCallable cancelOrder =
@@ -99,7 +102,7 @@ class CustLaundryOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      CancelLaundryResponse res =
+      cModels.CancelLaundryResponse res =
           await CloudFunctions.laundry2_cancelFromCustomer(
               orderId: order.value!.orderId);
       if (res.success == false) {

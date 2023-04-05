@@ -1,18 +1,19 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/controllers/agoraController.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
-import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/env.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
@@ -82,7 +83,7 @@ class BackgroundNotificationsController extends GetxController {
     });
 
     if (authController.fireAuthUser != null) {
-      saveNotificationToken();
+      await saveNotificationToken();
     }
     authController.authStateStream.listen((User? fireUser) {
       if (fireUser != null) {
@@ -115,7 +116,7 @@ class BackgroundNotificationsController extends GetxController {
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),
-        () => MezRouter.toNamed(message.data["linkUrl"]),
+        () => MezRouter.toPath(message.data["linkUrl"]),
       );
   }
 
@@ -143,28 +144,27 @@ class BackgroundNotificationsController extends GetxController {
     final String? deviceNotificationToken = await getToken();
     if (deviceNotificationToken != null) {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
-      final NotificationInfo? notifInfo = await get_notif_info(
+      final cModels.NotificationInfo? notifInfo = await get_notif_info(
           userId: authController.hasuraUserId!, appType: "customer");
 
       try {
         SettingsController settingsController = Get.find<SettingsController>();
 
-        if (notifInfo != null &&
-            deviceNotificationToken != null &&
-            notifInfo.token != deviceNotificationToken) {
+        if (notifInfo != null && notifInfo.token != deviceNotificationToken) {
           // ignore: unawaited_futures
           update_notif_info(
-              notificationInfo: NotificationInfo(
+              notificationInfo: cModels.NotificationInfo(
                   userId: authController.hasuraUserId!,
-                  appType: MezEnv.appType.toNormalString(),
+                  appType: MezEnv.appType,
                   id: notifInfo.id,
-                  token: deviceNotificationToken));
-        } else if (deviceNotificationToken != null && notifInfo == null) {
+                  token: deviceNotificationToken,
+                  turnOffNotifications: notifInfo.turnOffNotifications));
+        } else if (notifInfo == null) {
           // ignore: unawaited_futures
           insert_notif_info(
               userId: authController.hasuraUserId!,
               token: deviceNotificationToken,
-              appType: "customer");
+              appType: MezEnv.appType.toNormalString().toLowerCase());
         }
       } catch (e, stk) {
         mezDbgPrint(e);

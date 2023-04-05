@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -34,6 +33,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           (QueryResult<Subscription$listen_on_driver_order> event) {
     final Subscription$listen_on_driver_order$delivery_order_by_pk orderData =
         event.parsedData!.delivery_order_by_pk!;
+
     StripeOrderPaymentInfo? _paymentInfo;
     if (orderData.restaurant_order?.stripe_info != null) {
       _paymentInfo = StripeOrderPaymentInfo.fromJson(
@@ -53,6 +53,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           ? DateTime.tryParse(orderData.schedule_time!)
           : null,
       packageReady: orderData.package_ready,
+
       orderType: orderData.order_type.toOrderType(),
       stripePaymentInfo: _paymentInfo,
       serviceOrderId: orderData.restaurant_order?.id,
@@ -85,6 +86,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
           (orderData.estimated_arrival_at_dropoff_time != null)
               ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
               : null,
+
       estimatedArrivalAtPickup:
           (orderData.estimated_arrival_at_pickup_time != null)
               ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
@@ -260,20 +262,20 @@ UserInfo? _getDeliveryCompany<T>(
     Subscription$listen_on_driver_order$delivery_order_by_pk orderData) {
   mezDbgPrint(
       "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.service_provider_type.toString()}");
-  final ServiceProviderType serviceProviderType =
+  final cModels.ServiceProviderType serviceProviderType =
       orderData.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
-    case ServiceProviderType.DeliveryCompany:
+    case cModels.ServiceProviderType.Delivery:
       return UserInfo(
           hasuraId: orderData.delivery_company!.id,
           name: orderData.delivery_company!.details!.name,
           image: orderData.delivery_company!.details!.image);
-    case ServiceProviderType.Restaurant:
+    case cModels.ServiceProviderType.Restaurant:
       return UserInfo(
           hasuraId: orderData.restaurant!.id,
           name: orderData.restaurant!.details!.name,
           image: orderData.restaurant!.details!.image);
-    case ServiceProviderType.Laundry:
+    case cModels.ServiceProviderType.Laundry:
       return UserInfo(
           hasuraId: orderData.laundry!.id,
           name: orderData.laundry!.details!.name,
@@ -285,9 +287,10 @@ UserInfo? _getDeliveryCompany<T>(
 }
 
 ServiceInfo? _getServiceInfo(orderData) {
-  final OrderType orderType = orderData.order_type.toString().toOrderType();
+  final cModels.OrderType orderType =
+      orderData.order_type.toString().toOrderType();
   switch (orderType) {
-    case OrderType.Restaurant:
+    case cModels.OrderType.Restaurant:
       return ServiceInfo(
           location: MezLocation.fromHasura(
               orderData.restaurant_order!.restaurant.details.location.gps,
@@ -296,7 +299,7 @@ ServiceInfo? _getServiceInfo(orderData) {
           hasuraId: orderData.restaurant_order!.restaurant.id,
           image: orderData.restaurant_order!.restaurant.details.image,
           name: orderData.restaurant_order!.restaurant.details.name);
-    case OrderType.Laundry:
+    case cModels.OrderType.Laundry:
       dynamic laundryOrder =
           orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
       return ServiceInfo(
@@ -306,7 +309,7 @@ ServiceInfo? _getServiceInfo(orderData) {
           hasuraId: laundryOrder.store.id,
           image: laundryOrder.store.details.image,
           name: laundryOrder.store.details.name);
-    case OrderType.Courier:
+    case cModels.OrderType.Courier:
       return ServiceInfo(
           location: MezLocation.fromHasura(
               orderData.delivery_company.details.location.gps,

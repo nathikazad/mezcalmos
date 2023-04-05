@@ -3,18 +3,16 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:rive/rive.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["DeliveryOrderHelper"];
 
-extension DeliveryOrderHelper on DeliveryOrder {
+extension DeliveryOrderHelper on DeliveryOrderStatus {
 // getting the order status string
 
-  String orderStatusTitle() {
-    switch (status) {
+  String get title {
+    switch (this) {
       case DeliveryOrderStatus.CancelledByServiceProvider:
       case DeliveryOrderStatus.CancelledByCustomer:
       case DeliveryOrderStatus.CancelledByDeliverer:
@@ -39,8 +37,8 @@ extension DeliveryOrderHelper on DeliveryOrder {
 
   // getting icons widgets reperesent the current status
 
-  Widget getOrderStatusWidget() {
-    switch (status) {
+  Widget widget({required bool packageReady}) {
+    switch (this) {
       case DeliveryOrderStatus.CancelledByDeliverer:
       case DeliveryOrderStatus.CancelledByServiceProvider:
       case DeliveryOrderStatus.CancelledByCustomer:
@@ -95,22 +93,26 @@ extension DeliveryOrderHelper on DeliveryOrder {
         );
       case DeliveryOrderStatus.AtDropoff:
         return Container(
-          // padding: const EdgeInsets.only(right: 10.0),
+          margin: const EdgeInsets.only(right: 14),
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
-            Icons.check_circle,
-            size: 35,
+            Icons.check_rounded,
             color: primaryBlueColor,
           ),
         );
 
       case DeliveryOrderStatus.Delivered:
         return Container(
-          padding: const EdgeInsets.all(5),
+          margin: const EdgeInsets.only(right: 14),
+          width: 25,
+          height: 25,
           decoration: BoxDecoration(
               color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
-            Icons.check,
-            size: 25,
+            Icons.check_rounded,
             color: primaryBlueColor,
           ),
         );

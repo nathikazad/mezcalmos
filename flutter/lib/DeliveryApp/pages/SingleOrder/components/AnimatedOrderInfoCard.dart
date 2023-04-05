@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -81,7 +76,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         cardHeader(),
-        if (order.routeInformation != null) routeInformationWidget(),
+        if (order.routeInformation?.valid == true) routeInformationWidget(),
         Divider(),
         orderCardMainBody(context),
         AnimatedSize(
@@ -237,7 +232,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
           ],
         ),
-        if (order.isDriverAssigned)
+        if (order.isDriverAssigned && order.inProcess())
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -277,7 +272,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ),
           ],
         ),
-        if (order.isDriverAssigned)
+        if (order.isDriverAssigned && order.inProcess())
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -350,7 +345,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
             ],
           ),
-         
         ],
       ),
     );
@@ -387,7 +381,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Icon(
           Icons.delivery_dining,
@@ -411,7 +405,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         Icon(
           Icons.route_outlined,
           color: Color.fromRGBO(73, 73, 73, 1),
-          size: 18,
+          size: 17,
         ),
         SizedBox(width: 3),
         Flexible(

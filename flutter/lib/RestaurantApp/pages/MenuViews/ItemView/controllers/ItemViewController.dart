@@ -6,7 +6,9 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -24,6 +26,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env_example.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"];
 
 class ROpItemViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -51,7 +56,7 @@ class ROpItemViewController {
   final Rxn<Category> currentCategory = Rxn();
   Rx<LanguageType> prLang = Rx(LanguageType.ES);
   Rx<LanguageType> scLang = Rx(LanguageType.ES);
-  final Rxn<File> newImageFile = Rxn();
+  final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
   final RxList<Option> itemOptions = RxList([]);
@@ -129,7 +134,9 @@ class ROpItemViewController {
   Item _contructItem() {
     final Item newItem = Item(
       image: newImageUrl.value,
-      itemType: (specialMode.isTrue) ? ItemType.Special : ItemType.Daily,
+      itemType: (specialMode.isTrue)
+          ? cModels.ItemType.Special
+          : cModels.ItemType.Daily,
       id: editMode.value ? editableItem.value!.id : null,
       startsAt: specialMode.value ? periodOfTime.value?.start : null,
       endsAt: specialMode.value ? periodOfTime.value?.end : null,
@@ -172,9 +179,9 @@ class ROpItemViewController {
           "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
     }
     if (newImageFile.value != null) {
-      newImageUrl.value = await Get.find<AuthController>().uploadImgToFbStorage(
+      newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          path: "/restaurants/$restaurantId/items/images");
+          pathPrefix: "/restaurants/$restaurantId/items/images");
     }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(
@@ -184,6 +191,9 @@ class ROpItemViewController {
       if (newItemId != null) {
         mezDbgPrint(
             "👌🏻👌🏻👌🏻 Item added successfuly id : $newItemId 👌🏻👌🏻👌🏻");
+        showSavedSnackBar(
+            title: "${_i18n()['added']}",
+            subtitle: "${_i18n()['addedSubtitle']}");
 
         editableItem.value = await get_one_item_by_id(newItemId);
         editMode.value = true;
@@ -198,13 +208,7 @@ class ROpItemViewController {
       final bool result = await update_item_by_id(
           itemId: editableItem.value!.id!, item: _contructItem());
       if (result) {
-        customSnackBar(
-            title: 'Saved',
-            subTitle: 'Item saved successfuly',
-            icon: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ));
+        showSavedSnackBar();
         needToRefetch.value = true;
       }
     }
@@ -267,7 +271,7 @@ class ROpItemViewController {
 
       try {
         if (_res != null) {
-          newImageFile.value = File(_res.path);
+          newImageFile.value = _res;
         }
         imageLoading.value = false;
       } catch (e) {
@@ -286,7 +290,7 @@ class ROpItemViewController {
 
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
-      return FileImage(newImageFile.value!);
+      return FileImage(File(newImageFile.value!.path));
     } else if (newImageUrl.value != null) {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else

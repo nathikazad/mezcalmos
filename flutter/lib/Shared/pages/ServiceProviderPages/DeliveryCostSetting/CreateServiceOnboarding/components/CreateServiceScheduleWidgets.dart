@@ -68,7 +68,7 @@ class CreateServiceScheduleWidgets {
               width: 15.w,
               child: Text(
                 "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                style: Get.textTheme.bodyLarge
+                style: context.txt.bodyLarge
                     ?.copyWith(fontWeight: FontWeight.w600, fontSize: 11.sp),
               ),
             ),
@@ -117,7 +117,7 @@ class CreateServiceScheduleWidgets {
                   viewController.newSchedule.value.openHours[weekday]!.isOpen
                       ? "${_i18n()["workingHoursCard"]["open"]}"
                       : "${_i18n()["workingHoursCard"]["closed"]}",
-                  style: Get.textTheme.bodyMedium?.copyWith(
+                  style: context.txt.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: viewController
                               .newSchedule.value.openHours[weekday]!.isOpen
@@ -178,7 +178,7 @@ class CreateServiceScheduleWidgets {
               padding: const EdgeInsets.all(8),
               child: Text(
                 "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                style: Get.theme.textTheme.displaySmall,
+                style: context.txt.displaySmall,
               ),
             ),
             SizedBox(

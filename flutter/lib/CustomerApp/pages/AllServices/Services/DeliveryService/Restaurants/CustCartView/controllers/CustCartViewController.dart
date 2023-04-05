@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
@@ -155,9 +155,7 @@ class CustCartViewController {
   }
 
   void switchPaymentMedthod(
-      {required PaymentType paymentType, CreditCard? card}) {
-    mezDbgPrint(
-        "Switching on restControlller =========>>>>>${paymentType.toNormalString()}");
+      {required cModels.PaymentType paymentType, CreditCard? card}) {
     _cartRxn.value?.paymentType = paymentType;
     _cartRxn.refresh();
   }
@@ -165,7 +163,7 @@ class CustCartViewController {
   // methods
   Future<void> switchPicker(PaymentOption value) async {
     if (value.keys.first == PickerChoice.Cash) {
-      switchPaymentMedthod(paymentType: PaymentType.Cash);
+      switchPaymentMedthod(paymentType: cModels.PaymentType.Cash);
     }
     // else if (value.keys.first == PickerChoice.BankTransfer) {
     //   switchPaymentMedthod(paymentType: PaymentType.BankTransfer);
@@ -250,7 +248,7 @@ class CustCartViewController {
   //   if (cart.paymentType == PaymentType.Card) {
   //     switch (choice) {
   //       case CardChoice.ApplePay:
-  //         cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+  //         cModels.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
   //             serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
   //             paymentAmount: cart.totalCost);
   //         if (paymentIntent != null) {
@@ -263,7 +261,7 @@ class CustCartViewController {
   //         }
   //         break;
   //       case CardChoice.GooglePay:
-  //         cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+  //         cModels.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
   //             serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
   //             paymentAmount: cart.totalCost);
   //         if (paymentIntent != null) {
@@ -297,15 +295,16 @@ class CustCartViewController {
   }
 
   bool get showPaymentPicker {
-    return cart.restaurant?.paymentInfo?.acceptedPayments[PaymentType.Card] ==
+    return cart.restaurant?.paymentInfo
+                ?.acceptedPayments[cModels.PaymentType.Card] ==
             true ||
         cart.restaurant?.paymentInfo
-                ?.acceptedPayments[PaymentType.BankTransfer] ==
+                ?.acceptedPayments[cModels.PaymentType.BankTransfer] ==
             true;
   }
 
   bool get showFees {
-    return cart.paymentType == PaymentType.Card &&
+    return cart.paymentType == cModels.PaymentType.Card &&
         (cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true);
   }
 
@@ -314,8 +313,6 @@ class CustCartViewController {
   }
 
   bool get canOrder {
-    mezDbgPrint(
-        "From can order====================>>>>${cart.toFirebaseFormattedJson()}");
     return cart.toLocation != null &&
         _orderDistanceInKm <= 10 &&
         isShippingSet.isTrue &&
@@ -354,15 +351,10 @@ class CustCartViewController {
 
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
-        mezDbgPrint("🤣  ${routeInfo.distance.distanceInMeters}");
         if (_orderDistanceInKm <= 15) {
           final num shippingCost =
               deliveryCost!.costPerKm * (_orderDistanceInKm);
-          mezDbgPrint(
-              "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
           if (shippingCost < deliveryCost!.minimumCost) {
-            mezDbgPrint(
-                "LESS THAN MINIMUM COST ===================== $shippingCost << ${deliveryCost!.minimumCost}");
             cart.shippingCost = deliveryCost!.minimumCost.ceil();
             _cartRxn.refresh();
           } else {
@@ -406,7 +398,6 @@ class CustCartViewController {
       required int quantity,
       bool saveToDb = false}) async {
     final CartItem? _item = cart.incrementItem(itemId, quantity);
-    mezDbgPrint("[bb] Item -==> $_item");
     if (_item != null && saveToDb == true) {
       await cartController.updateCartItem(_item);
       return _item;

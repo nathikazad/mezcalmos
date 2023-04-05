@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-enum ServiceProviderType { Customer, Restaurant, Laundry, DeliveryCompany }
+// enum ServiceProviderType {
+//   Customer,
+//   Restaurant,
+//   Laundry,
+//   DeliveryCompany,
+//   DeliveryDriver
+// }
+
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 extension ParseServiceProviderTypeToString on ServiceProviderType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
+//   String toFirebaseFormatString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toLowerCase() + str.substring(1);
+//   }
 
-  String toNormalString() {
-    String str = toString().split('.').last;
-    str = str[0].toUpperCase() + str.substring(1);
-    str = str.replaceFirst("_", " ");
-    return str;
-  }
+//   String toNormalString() {
+//     String str = toString().split('.').last;
+//     str = str[0].toUpperCase() + str.substring(1);
+//     str = str.replaceFirst("_", " ");
+//     return str;
+//   }
 
   IconData toIcon() {
     switch (this) {
       case ServiceProviderType.Restaurant:
         return Icons.food_bank;
-      case ServiceProviderType.DeliveryCompany:
+      case ServiceProviderType.Delivery:
         return Icons.delivery_dining;
       case ServiceProviderType.Laundry:
         return Icons.dry_cleaning;
@@ -32,9 +38,9 @@ extension ParseServiceProviderTypeToString on ServiceProviderType {
   }
 }
 
-extension ParseStringToServiceProviderType on String {
-  ServiceProviderType toServiceProviderType() {
-    return ServiceProviderType.values.firstWhere(
-        (ServiceProviderType e) => e.toFirebaseFormatString() == this);
-  }
-}
+// extension ParseStringToServiceProviderType on String {
+//   ServiceProviderType toServiceProviderType() {
+//     return ServiceProviderType.values.firstWhere(
+//         (ServiceProviderType e) => e.toFirebaseFormatString() == this);
+//   }
+// }

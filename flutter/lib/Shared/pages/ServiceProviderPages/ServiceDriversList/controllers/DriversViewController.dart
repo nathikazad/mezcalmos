@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -32,13 +31,13 @@ class DriversViewController {
   }
 
   // late variables //
-  late ServiceProviderType serviceProviderType;
+  late cModels.ServiceProviderType serviceProviderType;
   late int serviceProviderId;
   late int serviceLinkId;
   Future<void> init(
       {required int serviceProviderId,
       required int servLinkId,
-      required ServiceProviderType serviceProviderType}) async {
+      required cModels.ServiceProviderType serviceProviderType}) async {
     this.serviceProviderId = serviceProviderId;
     serviceLinkId = servLinkId;
     this.serviceProviderType = serviceProviderType;
@@ -72,7 +71,7 @@ class DriversViewController {
   Future<void> approveDriver(
       {required bool approved, required int driverId}) async {
     try {
-      final AuthorizeDriverResponse res =
+      final cModels.AuthorizeDriverResponse res =
           await CloudFunctions.serviceProvider_authorizeDriver(
         deliveryDriverId: driverId,
         approved: approved,
@@ -93,19 +92,19 @@ class DriversViewController {
     }
   }
 
-  cModel.DeliveryServiceProviderType get partType {
+  cModels.DeliveryServiceProviderType get partType {
     switch (serviceProviderType) {
-      case ServiceProviderType.Restaurant:
-        return cModel.DeliveryServiceProviderType.Restaurant;
+      case cModels.ServiceProviderType.Restaurant:
+        return cModels.DeliveryServiceProviderType.Restaurant;
         break;
-      case ServiceProviderType.Laundry:
-        return cModel.DeliveryServiceProviderType.Laundry;
+      case cModels.ServiceProviderType.Laundry:
+        return cModels.DeliveryServiceProviderType.Laundry;
         break;
-      case ServiceProviderType.DeliveryCompany:
-        return cModel.DeliveryServiceProviderType.DeliveryCompany;
+      case cModels.ServiceProviderType.Delivery:
+        return cModels.DeliveryServiceProviderType.DeliveryCompany;
         break;
       default:
-        return cModel.DeliveryServiceProviderType.DeliveryCompany;
+        return cModels.DeliveryServiceProviderType.DeliveryCompany;
     }
   }
 }

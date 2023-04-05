@@ -55,8 +55,33 @@
           "description": "Description",
           "reviews": "Reviews",
           "viewAll": "View All"
+        },
+        "CustRequestCourierView": {
+          "title": "Courier",
+          "from": "From",
+          "to": "To",
+          "thisFieldCanBeEmpty": "This field can be empty",
+          "next": "Next",
+          "orderNow": "Order now",
+          "deliveryCompany": "Delivery company",
+          "CustRequestCourierItems": {
+            "item": "Item",
+            "remove": "Remove",
+            "whatCanWeGetYou": "What can we get you?",
+            "name": "Name",
+            "notes": "Notes",
+            "estimatedCost": "Estimated cost",
+            "required": "Required"
+          }
+        },
+        "CustCourierOrderView": {
+          "cancelOrder": "Cancel order",
+          "note": "Note",
+          "delivery": "Delivery",
+          "noDriverAssignedYet": "No driver assigned yet"
         }
       },
+      
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -158,7 +183,7 @@
           "components": {
             "DeliveryTimePicker": {
               "dvTime": "Delivery time",
-              "restClosed": "Restaurant is closed now",
+              "restClosed": "Service is closed now, but you can schedule your order for later.",
               "pickTime": "Pick your time",
               "now": "Now",
               "timeError": "Picked delivery time is passed, please pick a valid time"
@@ -235,6 +260,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
+              "rmItemTitle" : "Remove item",
+              "rmItemHelper" : "Are you sure you want to remove this item from cart",
+              "rmItemButton" : "Yes, remove item",
               "notAvailable": "This restaurant is closed",
               "title": "Warning",
               "leftBtn": "Checkout first",
@@ -308,7 +336,7 @@
               "received": "Order received",
               "preparing": "Preparing the order",
               "onTheWay": "On the way",
-              "readyForPickUp": "Ready For pickup",
+              "readyForPickUp": "Ready for pickup",
               "delivered": "Delivered",
               "helperText-canceledByAdmin": "Your order has been cancelled by the restaurant",
               "helperText-canceledByCustomer": "Your order has been cancelled",
@@ -368,7 +396,8 @@
                 "thursday": "Thursday",
                 "friday": "Friday",
                 "saturday": "Saturday",
-                "sunday": "Sunday"
+                "sunday": "Sunday",
+                "viewAll": "View All"
               }
             },
             "workinHoursCart": {
@@ -524,6 +553,10 @@
           "subtitle": "Get your clothes cleaned by your nearest laundry service",
           "title": "Laundry"
         },
+        "courier": {
+          "title": "Courier",
+          "subtitle": "Obtain delivery of anything you desire to your location."
+        },
         "comingSoon": "Coming soon ...",
         "supportText": "Need help ? contact our support team"
       },
@@ -536,9 +569,9 @@
         "LaundryCurrentOrderView": {
           "Components": {
             "CustomerLaundryOrderEst": {
-              "pickup": "Pickup time:",
-              "delivery": "Delivery time:",
-              "laundryReady": "Laundry ready time:",
+              "pickup": "Pickup time",
+              "delivery": "Delivery time",
+              "laundryReady": "Laundry ready time",
               "estTimes": "Estimated times"
             },
             "LaundryOrderDriverCard": {
@@ -638,6 +671,9 @@
           "startingFrom": "Starting from ",
           "minimumCost": "Minimum",
           "daysReturn": "days return",
+          "day": "day",
+          "days": "days",
+          "return" : "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -673,7 +709,7 @@
       "viewOrder": "View order",
       "preparingOrderTitle": "Preparing order",
       "preparingOrderBody": "Your order is being prepared",
-      "readyForPickUpTitle": "Ready For pickup",
+      "readyForPickUpTitle": "Ready for pickup",
       "readyForPickUpBody": "Your order is ready for pickup",
       "onTheWayRestaurantTitle": "On the way",
       "onTheWayRestaurantBody": "Your order is on the way",
@@ -739,9 +775,9 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
-          "delivered": "Order Delivered",
-          "received": "Order Received",
-          "canceled": "Order Cancelled",
+          "delivered": "Order delivered",
+          "received": "Order received",
+          "canceled": "Order cancelled",
           "atDropOff": "At dropoff"
         }
       },
@@ -762,6 +798,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
+        "writeReview": "Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",
         "no": "No",
@@ -857,7 +894,7 @@
       "DeliveryCostSettingView": {
         "dvCost": "Delivery cost",
         "km": "Km",
-        "minCost": "Minimum Cost",
+        "minCost": "Minimum cost",
         "costPerKm": "Cost per km",
         "freeKmRange": "Free delivery range",
         "freeKmRangeText": "Within this distance, the customer won’t be charged for the delivery.",
@@ -928,7 +965,8 @@
         "copyLink": "Copy link",
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
-        "copiedText": "Link copied successfuly"
+        "copiedText": "Link copied successfuly",
+        "yourDriverList": "Your driver list"
       },
       "ServiceInfoEditView": {
         "name": "Name",
@@ -1118,8 +1156,17 @@
       }
     },
     "widgets": {
+      "OrderMapWidget" : {
+        "mapWebText" : "Install Mezcalmos application to get live time order map tracking"
+      },
+      "MezcalmosAppBar" : {
+        "installApp" : "Install Mezcalmos App"
+      },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
+      },
+      "ReviewCard": {
+        "review": "Review"
       },
       "MezDateTimePicker": {
         "cancel": "Cancel",
@@ -1391,11 +1438,20 @@
       "dashboard": "Dashboard"
     },
     "notificationHandler": {
-      "restaurantTitle": "New restaurant order",
-      "laundryTitle": "New laundry order",
-      "laundryBody": "New order from laundry",
-      "taxiTitle": "New taxi order",
-      "taxiBody": "New order from taxi"
+      "newOrderTitle": "Order received",
+      "newOrderBody": "You got a new order",
+      "atPickupTitle": "At pickup",
+      "atPickupBody": "Driver reached order pickup location",
+      "atDropoffTitle": "At dropoff",
+      "atDropoffBody": "Driver reached order dropoff location",
+      "onTheWayPickupTitle": "Pickup on the way",
+      "onTheWayPickupBody": "Driver is on his way to pickup your order",
+      "onTheWayDropoffTitle": "Delivery on the way",
+      "onTheWayDropoffBody": "Driver is on the way to deliver you order",
+      "deliveredTitle": "Delivered",
+      "deliveredBody": "Your order has been delivered",
+      "cancelledTitle": "Order cancelled",
+      "cancelledBody": "Your order has been cancelled"
     },
     "components": {
       "buildWidgetOnOrderStatus": {
@@ -1482,7 +1538,7 @@
         "SingleLaundryScreen": {
           "startingFrom": "Starting from :",
           "daysReturn": "days return",
-          "minimumCost": "Minimum Cost",
+          "minimumCost": "Minimum cost",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1534,13 +1590,13 @@
               "customer": "Customer"
             },
             "LaundryOrderStatusCard": {
-              "orderReceived": "Order Received",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
-              "pickedUp": "Order Picked up",
+              "pickedUp": "Order picked up",
               "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "LaundryOrderSummary": {
               "orderSummary": "Summary",
@@ -1625,7 +1681,7 @@
               "received": "Order Received",
               "preparing": "Preparing the order",
               "onTheWay": "On The Way",
-              "readyForPickUp": "Ready For Pickup",
+              "readyForPickUp": "Ready for Pickup",
               "delivered": "Order Delivered",
               "helperTextCanceledByAdmin": "Your order has been cancelled by the restaurant",
               "helperTextCanceledByCustomer": "Your order has been cancelled",
@@ -1720,14 +1776,16 @@
         "deliveryCost": "Delivery Cost",
         "customer": "Customer",
         "restaurant": "Restaurant",
-        "laundry": "Laundry"
+        "laundry": "Laundry",
+        "orders": "Orders",
+        "viewImage": "View image"
       },
       "RestaurantOrderView": {
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
             "pickUpTimeError": "The Pickup time should be before the delivery time.",
-            "restaurantDelivery": "Restaurant Delivery",
+            "restaurantDelivery": "Restaurant delivery",
             "orderStatus": {
               "waiting": "Waiting for restaurant",
               "preparing": "Order is being prepared",
@@ -1847,6 +1905,8 @@
               "wrongTime": "You picked a wrong time",
               "noPickupTimeTitle": "No pickup time",
               "noPickupTimeBody": "Please set pickup time first",
+              "setDvCostTitle": "No delivery cost",
+              "setDvCostBody": "Please set the delivery cost first inside order details",
               "noDeliveryTimeTitle": "No dropoff time",
               "noDeliveryTimeBody": "Please set dropoff time first",
               "orderStatus": {
@@ -1882,7 +1942,7 @@
     "notificationHandler": {
       "preparingOrderTitle": "Preparing Order",
       "preparingOrderBody": "Your order is being prepared",
-      "readyForPickupTitle": "Ready For Pickup",
+      "readyForPickupTitle": "Ready for Pickup",
       "readyForPickupBody": "Your order is ready for pickup",
       "cancelledTitle": "Order Cancelled",
       "cancelledBody": "Your order has been cancelled",
@@ -2021,7 +2081,7 @@
             "days": "days"
           },
           "MinimumCostCard": {
-            "minCost": "Minimum Cost",
+            "minCost": "Minimum cost",
             "save": "Save minimum cost"
           }
         }
@@ -2030,14 +2090,14 @@
         "Components": {
           "LaundryOpOrderStatusCard": {
             "status": {
-              "canceled": "Order Cancelled",
-              "orderReceived": "Order Received",
+              "canceled": "Order cancelled",
+              "orderReceived": "Order received",
               "otwPickUp": "Pickup on the way",
               "pickedUp": "Order Picked up",
-              "atLaundry": "At Laundry",
+              "atLaundry": "At laundry",
               "readyForDelivery": "Ready for Delivery",
               "otwDelivery": "Delivery on the way",
-              "delivered": "Order Delivered"
+              "delivered": "Order delivered"
             },
             "estTimes": {
               "laundryArriving": "Laundry arriving",
@@ -2068,7 +2128,7 @@
             "deleteItem": "Delete item",
             "itemsWeights": "Items weights",
             "newItemsWeight": "New items weight",
-            "itemsCategory": "Items Category",
+            "itemsCategory": "Item categories",
             "itemsWeight": "Items weight",
             "total": "Total",
             "itemsWeightErrorText": "Please enter a valid weight",
@@ -2113,8 +2173,20 @@
     "notificationHandler": {
       "newOrderTitle": "Order received",
       "newOrderBody": "You got a new order",
-      "canceledOrderTitle": "Order cancelled",
-      "canceledOrderBody": "Your order has been cancelled"
+      "laundryOtwPickupTitle": "Conductor en el camino",
+      "laundryOtwPickupBody": "Conductor en la camina de recoger su pedido.",
+      "laundryPickedTitle": "Pedido recogido",
+      "laundryPickedBody": "El orden es recogido con éxito",
+      "laundryAtLaundryTitle": "En la lavandería",
+      "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
+      "laundryReadyForDeliveryTitle": "Listo para entregar",
+      "laundryReadyForDeliveryBody": "Tu orden está listo para la entrega",
+      "laundryOtwDeliveryTitle": "Entrega en el camino",
+      "laundryOtwDeliveryBody": "Tu orden está en camino",
+      "laundryDeliveredTitle": "Entregada",
+      "LaundryDeliveredBody": "Su pedido ha sido entregado",
+      "LaundryCancelledTitle": "Orden cancelada",
+      "LaundryCancelledBody": "Su pedido ha sido cancelado"
     }
   },
   "RestaurantApp": {
@@ -2136,6 +2208,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
+        "review" : "Review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",
@@ -2233,6 +2306,8 @@
         "deleteHelper": "Are you sure you want to delete this item",
         "deleteTitle": "Delete this item",
         "deleteItem": "Delete item",
+        "added": "Added",
+        "addedSubtitle": "Item added successfully",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Please select a category",
@@ -2507,6 +2582,8 @@
     "noRoute": "No route found. please enter a valid destination",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "minutes": "minutes"
+    "minutes": "minutes",
+    "slowInternet": "Slow internet"
+    
   }
 }

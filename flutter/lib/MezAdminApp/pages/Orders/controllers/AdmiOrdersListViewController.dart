@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/orders/hsAdminOrders.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -38,7 +39,7 @@ class AdmiOrdersListViewController {
         return restaurantPastOrders.value ?? [];
       case ServiceProviderType.Laundry:
         return laundryPastOrders.value ?? [];
-      case ServiceProviderType.DeliveryCompany:
+      case ServiceProviderType.Delivery:
         return dvPastOrders.value ?? [];
 
       default:
@@ -104,20 +105,26 @@ class AdmiOrdersListViewController {
     switch (currentService) {
       case ServiceProviderType.Restaurant:
         restLimit += 10;
-        restaurantPastOrders.value = await get_admin_restaurant_orders(
-            inProcess: false, withCache: false, limit: restLimit);
+        restaurantPastOrders.value?.addAll((await get_admin_restaurant_orders(
+                    inProcess: false, withCache: false, limit: restLimit))
+                ?.toList() ??
+            []);
 
         break;
       case ServiceProviderType.Laundry:
         laundryLimit += 10;
-        laundryPastOrders.value = await get_admin_laundry_orders(
-            inProcess: false, withCache: false, limit: laundryLimit);
+        laundryPastOrders.value?.addAll((await get_admin_laundry_orders(
+                    inProcess: false, withCache: false, limit: laundryLimit))
+                ?.toList() ??
+            []);
 
         break;
-      case ServiceProviderType.DeliveryCompany:
+      case ServiceProviderType.Delivery:
         dvLimit += 10;
-        dvPastOrders.value = await get_admin_dv_orders(
-            inProcess: false, withCache: false, limit: dvLimit);
+        dvPastOrders.value?.addAll((await get_admin_dv_orders(
+                    inProcess: false, withCache: false, limit: dvLimit))
+                ?.toList() ??
+            []);
 
         break;
       default:

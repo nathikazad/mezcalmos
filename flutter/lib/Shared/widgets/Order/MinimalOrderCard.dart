@@ -16,14 +16,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList']["components"]["ROpOrderCard"];
 
 class MinimalOrderCard extends StatefulWidget {
-  const MinimalOrderCard({
-    Key? key,
-    required this.order,
-    required this.onTap,
-  }) : super(key: key);
+  const MinimalOrderCard(
+      {Key? key, required this.order, required this.onTap, this.borderRadius})
+      : super(key: key);
 
   final MinimalOrder order;
-
+  final BorderRadius? borderRadius;
   final Function()? onTap;
   @override
   State<MinimalOrderCard> createState() => _MinimalOrderCardState();
@@ -34,9 +32,12 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
+      ),
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
         onTap: widget.onTap,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -75,8 +76,8 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        widget.order.orderTime.toDayAmPm(),
-                        style: context.txt.bodyMedium?.copyWith(
+                        widget.order.orderTime.getOrderTime(),
+                        style: context.textTheme.bodyMedium?.copyWith(
                           color: blackColor,
                         ),
                       ),

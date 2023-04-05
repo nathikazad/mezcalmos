@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class Item {
@@ -14,7 +14,7 @@ class Item {
   int? categoryId;
   bool available;
   String? restaurantName;
-  ItemType itemType;
+  cModels.ItemType itemType;
   LanguageMap? description;
 
   String? image;
@@ -59,7 +59,7 @@ class Item {
     final Item item = Item(
         id: itemId,
         // TODO REMOVE THIS @m66are
-        itemType: ItemType.Daily,
+        itemType: cModels.ItemType.Daily,
         available: itemData?["available"] ?? false,
         description: itemData["description"] != null
             ? convertToLanguageMap(itemData["description"])

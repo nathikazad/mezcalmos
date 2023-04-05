@@ -7,6 +7,8 @@ class DeliveryCompany extends Service {
 
   DeliveryCompany(
       {this.deliveryDetailsId,
+      super.rate,
+      super.reviews,
       required super.info,
       required super.state,
       required super.serviceDetailsId,

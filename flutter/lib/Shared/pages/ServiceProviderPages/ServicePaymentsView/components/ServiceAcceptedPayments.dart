@@ -35,6 +35,27 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (widget.viewController.cardChecked)
+            Container(
+              margin: const EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  Flexible(
+                      fit: FlexFit.tight,
+                      child: Text("${_i18n()["chargeCustomer"]}")),
+                  Obx(
+                    () => Switch(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      activeColor: primaryBlueColor,
+                      value: widget.viewController.getChargeFessOnCustomer(),
+                      onChanged: (bool v) {
+                        widget.viewController.switchChargeFees(v);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
           Text(
             '${_i18n()["acceptedPayments"]}',
             style: context.txt.bodyMedium,
@@ -84,7 +105,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //         fit: FlexFit.tight,
           //         child: Text(
           //           'Bank Transfer',
-          //           style: context.txt.bodyText1,
+          //           style: context.txt.bodyLarge,
           //         ),
           //       ),
           //       // SizedBox(
@@ -185,7 +206,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //           children: [
           //             Text(
           //               '${_i18n()["card"]}',
-          //               style: context.txt.bodyText1,
+          //               style: context.txt.bodyLarge,
           //             ),
           //             const SizedBox(
           //               width: 3,
@@ -231,7 +252,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                 ),
                 Text(
                   "Card fees",
-                  style: Get.textTheme.bodyLarge,
+                  style: context.txt.bodyLarge,
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 5),

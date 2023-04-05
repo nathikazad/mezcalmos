@@ -16,7 +16,7 @@ class SearchField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(8),
       child: TextField(
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyMedium,
         decoration: InputDecoration(
           labelText: '${_i18n()["search"]}',
           floatingLabelBehavior: FloatingLabelBehavior.never,

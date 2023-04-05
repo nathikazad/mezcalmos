@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import { PaymentType } from '../../shared/models/Generic/Order';
-import { StripeStatus } from './model';
+import { StripeStatus } from '../../shared/models/stripe';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
 import { Operator, ServiceProvider } from '../../shared/models/Services/Service';

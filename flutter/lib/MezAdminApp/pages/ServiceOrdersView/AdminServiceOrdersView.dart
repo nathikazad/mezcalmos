@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminServiceOrdersViewController.dart';
 import 'package:mezcalmos/MezAdminApp/router/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -109,7 +110,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                           order: viewController.currentOrders.value![index],
                           onTap: () {
                             switch (viewController.providerType) {
-                              case ServiceProviderType.DeliveryCompany:
+                              case ServiceProviderType.Delivery:
                                 //   MezRouter.toNamed(getDvCompanyOrderRoute(
                                 //       viewController
                                 //           .currentOrders.value![index].id));

@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/__generated/laundry_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -15,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -37,7 +37,7 @@ Stream<List<MinimalOrder>?> listen_on_laundry_orders(
           .map((Subscription$listen_on_laundry_orders$laundry_order orderData) {
         return MinimalOrder(
             id: orderData.id,
-            orderType: OrderType.Laundry,
+            orderType: cModels.OrderType.Laundry,
             toAdress: orderData.customer_address,
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
@@ -70,7 +70,7 @@ Future<List<MinimalOrder>?> get_laundry_orders(
         ordersData.map((Query$get_laundry_orders$laundry_order orderData) {
       return MinimalOrder(
           id: orderData.id,
-          orderType: OrderType.Laundry,
+          orderType: cModels.OrderType.Laundry,
           toAdress: orderData.customer_address,
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
@@ -119,6 +119,23 @@ Future<LaundryOrder?> get_laundry_order_by_id(
         ? DateTime.parse(orderData.estimated_ready_time!)
         : null,
     orderId: orderData.id,
+    review: (orderData.review != null)
+        ? Review(
+            comment: orderData.review!.note,
+            rating: orderData.review!.rating,
+            toEntityId: orderData.review!.to_entity_id,
+            customer: UserInfo(
+              name: orderData.review?.customer?.user.name,
+              image: orderData.review?.customer?.user.image,
+              hasuraId: orderData.review!.customer!.user.id,
+            ),
+            toEntityType:
+                orderData.review!.to_entity_type.toServiceProviderType(),
+            fromEntityId: orderData.review!.from_entity_id,
+            fromEntityType:
+                orderData.review!.from_entity_type.toServiceProviderType(),
+            reviewTime: DateTime.parse(orderData.review!.created_at))
+        : null,
     notes: orderData.notes,
     customerPickupDriverChatId:
         orderData.from_customer_delivery?.chat_with_customer_id,
@@ -136,7 +153,6 @@ Future<LaundryOrder?> get_laundry_order_by_id(
         : null,
     pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
         ? UserInfo(
-          
             hasuraId:
                 orderData.from_customer_delivery!.delivery_driver!.user.id,
             name: orderData.from_customer_delivery!.delivery_driver!.user.name,
@@ -188,12 +204,13 @@ Future<LaundryOrder?> get_laundry_order_by_id(
         totalCost: orderData.total_cost),
     deliveryCompany: null,
     deliveryDirection: orderData.to_customer_delivery != null
-        ? DeliveryDirection.ToCustomer
-        : DeliveryDirection.FromCustomer,
+        ? cModels.DeliveryDirection.ToCustomer
+        : cModels.DeliveryDirection.FromCustomer,
     deliveryOrderId: orderData.to_customer_delivery_id != null
         ? orderData.to_customer_delivery_id
         : orderData.from_customer_delivery_id,
     driverLocation: null,
+
     dropOffLocation: orderData.to_customer_delivery != null
         ? MezLocation.fromHasura(
             orderData.customer_location_gps!, orderData.customer_address!)
@@ -239,6 +256,23 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
             ? DateTime.parse(orderData.estimated_ready_time!)
             : null,
         orderId: orderData.id,
+        review: (orderData.review != null)
+            ? Review(
+                comment: orderData.review!.note,
+                rating: orderData.review!.rating,
+                toEntityId: orderData.review!.to_entity_id,
+                customer: UserInfo(
+                  name: orderData.review?.customer?.user.name,
+                  image: orderData.review?.customer?.user.image,
+                  hasuraId: orderData.review!.customer!.user.id,
+                ),
+                toEntityType:
+                    orderData.review!.to_entity_type.toServiceProviderType(),
+                fromEntityId: orderData.review!.from_entity_id,
+                fromEntityType:
+                    orderData.review!.from_entity_type.toServiceProviderType(),
+                reviewTime: DateTime.parse(orderData.review!.created_at))
+            : null,
         notes: orderData.notes,
         customerPickupDriverChatId:
             orderData.from_customer_delivery?.chat_with_customer_id,
@@ -314,8 +348,8 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
             totalCost: orderData.total_cost),
         deliveryCompany: null,
         deliveryDirection: orderData.to_customer_delivery != null
-            ? DeliveryDirection.ToCustomer
-            : DeliveryDirection.FromCustomer,
+            ? cModels.DeliveryDirection.ToCustomer
+            : cModels.DeliveryDirection.FromCustomer,
         deliveryOrderId: orderData.to_customer_delivery_id != null
             ? orderData.to_customer_delivery_id
             : orderData.from_customer_delivery_id,

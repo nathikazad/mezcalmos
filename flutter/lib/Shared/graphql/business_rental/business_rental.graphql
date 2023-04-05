@@ -1,0 +1,28 @@
+query get_rental_by_category($category1: String, $distance: Float, $from: geography) {
+  business_rental(where: {category1: {_eq: $category1}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}) {
+    id
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    additional_parameters
+    available
+    category1
+    cost
+    image
+    position
+    business {
+      details {
+        name
+      }
+    }
+  }
+}

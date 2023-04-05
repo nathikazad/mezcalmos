@@ -1,5 +1,7 @@
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
+// import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+// import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
+
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 class MezAdmin {
   bool authorized = true;

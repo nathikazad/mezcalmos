@@ -93,7 +93,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
     let courierOrder: CourierOrder = {
         id: orderId,
         orderTime: response.delivery_courier_order_by_pk.order_time,
-        PaymentType: response.delivery_courier_order_by_pk.payment_type as PaymentType,
+        paymentType: response.delivery_courier_order_by_pk.payment_type as PaymentType,
         discountValue: response.delivery_courier_order_by_pk.discount_value,
         fromLocationGps: (response.delivery_courier_order_by_pk.from_location_gps) ? {
             lat: response.delivery_courier_order_by_pk.from_location_gps.coordinates[1],
@@ -214,7 +214,7 @@ export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder):
     let courierOrder: CourierOrder = {
         id: response.delivery_courier_order[0].id,
         orderTime: response.delivery_courier_order[0].order_time,
-        PaymentType: response.delivery_courier_order[0].payment_type as PaymentType,
+        paymentType: response.delivery_courier_order[0].payment_type as PaymentType,
         discountValue: response.delivery_courier_order[0].discount_value,
         fromLocationGps: (response.delivery_courier_order[0].from_location_gps) ? {
             lat: response.delivery_courier_order[0].from_location_gps.coordinates[1],

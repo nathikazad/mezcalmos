@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:rive/rive.dart';
 
-extension RestaurantOrderHelper on RestaurantOrder {
+extension RestaurantOrderHelper on RestaurantOrderStatus {
   dynamic _i18n() =>
       Get.find<LanguageController>().strings["CustomerApp"]["pages"]
           ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
 
-  String getOrderStatus() {
-    switch (status) {
+  String get title {
+    switch (this) {
       case RestaurantOrderStatus.CancelledByAdmin:
         return '${_i18n()["canceledByAdmin"]}';
       case RestaurantOrderStatus.CancelledByCustomer:
         return '${_i18n()["canceledByCustomer"]}';
       case RestaurantOrderStatus.OrderReceived:
         return '${_i18n()["received"]}';
-      case RestaurantOrderStatus.Preparing:
+      case RestaurantOrderStatus.PreparingOrder:
         return '${_i18n()["preparing"]}';
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["onTheWay"]}';
-      case RestaurantOrderStatus.Ready:
+      case RestaurantOrderStatus.ReadyForPickup:
         return '${_i18n()["readyForPickUp"]}';
       case RestaurantOrderStatus.Delivered:
         return '${_i18n()["delivered"]}';
@@ -33,8 +33,8 @@ extension RestaurantOrderHelper on RestaurantOrder {
   }
   // order status image/icon
 
-  Widget orderStatusImage() {
-    switch (status) {
+  Widget get widget {
+    switch (this) {
       case RestaurantOrderStatus.CancelledByAdmin:
 
       case RestaurantOrderStatus.CancelledByCustomer:
@@ -58,7 +58,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
             color: primaryBlueColor,
           ),
         );
-      case RestaurantOrderStatus.Preparing:
+      case RestaurantOrderStatus.PreparingOrder:
         return Container(
           height: 50,
           width: 50,
@@ -76,7 +76,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
             fit: BoxFit.cover,
           ),
         );
-      case RestaurantOrderStatus.Ready:
+      case RestaurantOrderStatus.ReadyForPickup:
         return Container(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(

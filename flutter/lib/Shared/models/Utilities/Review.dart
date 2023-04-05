@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -6,9 +7,9 @@ class Review {
   String? comment;
   num rating;
   int toEntityId;
-  ServiceProviderType toEntityType;
+  cModels.ServiceProviderType toEntityType;
   int fromEntityId;
-  ServiceProviderType fromEntityType;
+  cModels.ServiceProviderType fromEntityType;
   int? orderId;
   UserInfo? customer;
 
@@ -31,9 +32,9 @@ class Review {
     String? comment,
     num? rating,
     int? toEntityId,
-    ServiceProviderType? toEntityType,
+    cModels.ServiceProviderType? toEntityType,
     int? fromEntityId,
-    ServiceProviderType? fromEntityType,
+    cModels.ServiceProviderType? fromEntityType,
     int? orderId,
     DateTime? reviewTime,
   }) {

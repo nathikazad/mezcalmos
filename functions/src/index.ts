@@ -25,6 +25,10 @@ import { authorizeOperator } from "./shared/operator/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
 import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
+import { createNewBusiness } from "./business/createNewBusiness";
+import { requestOrder } from "./business/orderRequest";
+import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
+import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -75,7 +79,12 @@ export const restaurant2 = {
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
-
+export const business = {
+  createBusiness: authenticatedCall((userId, data) => createNewBusiness(userId, data)),
+  requestOrder: authenticatedCall((userId, data) => requestOrder(userId, data)),
+  handleOrderRequestByAdmin: authenticatedCall((userId, data) => handleOrderRequestByAdmin(userId, data)),
+  handleOrderRequestFromCustomer: authenticatedCall((userId, data) => handleOrderRequestFromCustomer(userId, data)),
+}
 
 
 export const laundry2 = {

@@ -142,7 +142,7 @@ class _AgoraCallState extends State<AgoraCall> {
         MezSnackbar(
           "Oops",
           "You have reached max time for your call!",
-          position: SnackPosition.TOP,
+          position: Alignment.topCenter,
         );
       } else if (callStatus == CallStatus.none) {
         _subTimer.cancel();
@@ -197,7 +197,7 @@ class _AgoraCallState extends State<AgoraCall> {
                     SizedBox(height: 20),
                     Text(
                       _getCallStatusText(),
-                      style: context.txt.bodyText1?.copyWith(
+                      style: context.txt.bodyLarge?.copyWith(
                         color: Colors.white,
                       ),
                     ),

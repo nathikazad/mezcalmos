@@ -4,11 +4,12 @@
 
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rive/rive.dart' as rive;
+import 'package:url_launcher/url_launcher.dart';
 
 // this is my user that i create in prod for the prod deployement testing.
 const String testUserIdInProd = "BUhQ74BrbBNeYZz60fK4ocrgpqz1";
@@ -189,6 +190,8 @@ extension ParseOrderTypeToString on AppType {
         return "LaundryApp";
       case AppType.Restaurant:
         return "RestaurantApp";
+      case AppType.Business:
+        return "BusinessApp";
     }
   }
 
@@ -206,6 +209,8 @@ extension ParseOrderTypeToString on AppType {
         return ParticipantType.LaundryOperator;
       case AppType.Restaurant:
         return ParticipantType.RestaurantOperator;
+      case AppType.Business:
+        return ParticipantType.BusinessOperator;
     }
   }
 
@@ -229,6 +234,7 @@ extension StringToParseOrderType on String {
 const Color purpleColor = Color(0xFFAC59FC);
 const Color primaryBlueColor = Color(0xFF6779FE);
 const Color redAccentColor = Color(0xFFE21233);
+const Color offOrangeColor = Color(0xFFFFF6E9);
 const Color cancelledBackgroundColor = Color(0XFFFDECEF);
 const Color deliveredBackgroundColor = Color(0xFFEAECFF);
 const Color pickLocationTextFieldColor = Color(0xFFF5F5F5);
@@ -243,6 +249,7 @@ const Color offShadeGreyColor = Color(0xFF494949);
 const Color offLightShadeGreyColor = Color(0xFF787878);
 const Color blackColor = Colors.black;
 const Color unratedStarColor = Color(0XFFF2F2F2);
+const Color softPurple = Color(0xFFE0E4FF);
 const LinearGradient bluePurpleGradient = LinearGradient(
   colors: [
     primaryBlueColor,
@@ -259,3 +266,19 @@ const String mezDestinationMarker =
 
 const String customImageUrl =
     "https://villaexperience.com/wp-content/uploads/2019/09/zacilna-rivieramaya-1-3.jpg";
+Future<void> launchAppStoreLink() async {
+  if (kIsWeb) {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        await launchUrl(Uri.parse(
+            "https://play.google.com/store/apps/details?id=com.mezcalmos.customer"));
+        break;
+      case TargetPlatform.iOS:
+        await launchUrl(
+            Uri.parse("https://apps.apple.com/us/app/mezcalmos/id1595882320"));
+        break;
+      default:
+    }
+  }
+  //
+}

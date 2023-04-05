@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -66,7 +67,8 @@ class CustomerRestaurantController {
         await get_restaurant_items_without_cat(restaurantId);
     noCategory.value.items = noCat
         .where((Item element) =>
-            element.available == true && element.itemType == ItemType.Daily)
+            element.available == true &&
+            element.itemType == cModels.ItemType.Daily)
         .toList();
 
     if (_cats != null) {

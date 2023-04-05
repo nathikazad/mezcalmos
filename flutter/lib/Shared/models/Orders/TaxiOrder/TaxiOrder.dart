@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
@@ -96,7 +96,7 @@ class TaxiOrder extends Order {
     required this.from,
     required MezLocation to,
     required DateTime orderTime,
-    required PaymentType paymentType,
+    required cModels.PaymentType paymentType,
     required RouteInformation routeInformation,
     TaxiUserInfo? driver,
     required this.acceptRideTime,
@@ -109,10 +109,10 @@ class TaxiOrder extends Order {
     required super.chatId,
   }) : super(
             orderTime: orderTime,
-            deliveryProviderType: ServiceProviderType.DeliveryCompany,
+            deliveryProviderType: cModels.ServiceProviderType.Delivery,
             orderId: orderId,
             paymentType: paymentType,
-            orderType: OrderType.Taxi,
+            orderType: cModels.OrderType.Taxi,
             costs: costs,
             customer: customer,
             serviceProvider: driver as UserInfo,

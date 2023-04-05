@@ -1,6 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart' as mat;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
@@ -9,14 +10,16 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 abstract class Order {
   int orderId;
-  OrderType orderType;
+  Review? review;
+  cModels.OrderType orderType;
   int? serviceProviderId;
-  PaymentType paymentType;
-  ServiceProviderType deliveryProviderType;
+  cModels.PaymentType paymentType;
+  cModels.ServiceProviderType deliveryProviderType;
   DateTime orderTime;
   UserInfo customer;
   UserInfo serviceProvider;
@@ -35,6 +38,7 @@ abstract class Order {
     required this.orderId,
     required this.orderType,
     this.notes,
+    this.review,
     this.serviceProviderId,
     required this.paymentType,
     required this.orderTime,
@@ -50,13 +54,13 @@ abstract class Order {
   });
   bool isIncoming() {
     switch (orderType) {
-      case OrderType.Restaurant:
+      case cModels.OrderType.Restaurant:
         return (this as RestaurantOrder).status ==
-            RestaurantOrderStatus.OrderReceived;
-      case OrderType.Laundry:
+            cModels.RestaurantOrderStatus.OrderReceived;
+      case cModels.OrderType.Laundry:
         return (this as LaundryOrder).status ==
-            LaundryOrderStatus.OrderReceived;
-      case OrderType.Taxi:
+            cModels.LaundryOrderStatus.OrderReceived;
+      case cModels.OrderType.Taxi:
         return (this as TaxiOrder).status == TaxiOrdersStatus.LookingForTaxi ||
             (this as TaxiOrder).status ==
                 TaxiOrdersStatus.LookingForTaxiScheduled;
@@ -76,7 +80,7 @@ abstract class Order {
 
   String driverDatabaseAddress() {
     switch (orderType) {
-      case OrderType.Laundry:
+      case cModels.OrderType.Laundry:
         switch ((this as LaundryOrder).getCurrentPhase()) {
           case LaundryOrderPhase.Dropoff:
             return "dropoffDriver";
@@ -85,7 +89,7 @@ abstract class Order {
           case LaundryOrderPhase.Neither:
             return "dropoffDriver";
         }
-      case OrderType.Restaurant:
+      case cModels.OrderType.Restaurant:
         return "dropoffDriver";
       default:
         return "driver";
@@ -95,53 +99,51 @@ abstract class Order {
 }
 
 // ignore: constant_identifier_names
-// enum OrderType { Taxi, Restaurant, Laundry, Water, Courier }
+// enum cModels.OrderType { Taxi, Restaurant, Laundry, Water, Courier }
 
-extension OrderTypeHelper on OrderType {
+extension OrderTypeHelper on cModels.OrderType {
   mat.IconData toIcon() {
     switch (this) {
-      case OrderType.Restaurant:
+      case cModels.OrderType.Restaurant:
         return mat.Icons.flatware;
-      case OrderType.Laundry:
+      case cModels.OrderType.Laundry:
         return mat.Icons.local_laundry_service;
-      case OrderType.Taxi:
+      case cModels.OrderType.Taxi:
         return mat.Icons.local_taxi;
-      case OrderType.Courier:
+      case cModels.OrderType.Courier:
         return mat.Icons.shopping_bag;
-
-        break;
-      default:
-        return mat.Icons.watch_later;
+      case cModels.OrderType.Business:
+        return mat.Icons.shopping_bag;
     }
   }
 
-  ServiceProviderType toServiceProviderType() {
+  cModels.ServiceProviderType toServiceProviderType() {
     switch (this) {
-      case OrderType.Restaurant:
-        return ServiceProviderType.Restaurant;
-      case OrderType.Laundry:
-        return ServiceProviderType.Laundry;
-      case OrderType.Courier:
-        return ServiceProviderType.DeliveryCompany;
-
-        break;
-      default:
-        return ServiceProviderType.DeliveryCompany;
+      case cModels.OrderType.Restaurant:
+        return cModels.ServiceProviderType.Restaurant;
+      case cModels.OrderType.Laundry:
+        return cModels.ServiceProviderType.Laundry;
+      case cModels.OrderType.Courier:
+        return cModels.ServiceProviderType.Delivery;
+      case cModels.OrderType.Business:
+        return cModels.ServiceProviderType.Business;
+      case cModels.OrderType.Taxi:
+        return cModels.ServiceProviderType.Taxi;
     }
   }
 
   String toPlural() {
     switch (this) {
-      case OrderType.Taxi:
+      case cModels.OrderType.Taxi:
         return "taxis";
-      case OrderType.Restaurant:
+      case cModels.OrderType.Restaurant:
         return "restaurants";
-      case OrderType.Laundry:
+      case cModels.OrderType.Laundry:
         return "laundries";
-      case OrderType.Water:
-        return "waters";
-      case OrderType.Courier:
+      case cModels.OrderType.Courier:
         return "couriers";
+      case cModels.OrderType.Business:
+        return "businesses";
     }
   }
 }
@@ -153,7 +155,7 @@ abstract class DeliverableOrder extends Order {
   int? deliveryOrderId;
 
   LatLng? driverLocation;
-  DeliveryDirection deliveryDirection;
+  cModels.DeliveryDirection deliveryDirection;
 
   int? serviceProviderDriverChatId;
   int? customerDriverChatId;
@@ -168,6 +170,7 @@ abstract class DeliverableOrder extends Order {
     required this.driverLocation,
     required this.deliveryDirection,
     super.notes,
+    super.review,
     required this.deliveryCompany,
     super.serviceProviderId,
     required super.paymentType,
@@ -191,6 +194,45 @@ abstract class DeliverableOrder extends Order {
     this.notifiedAdmin = false,
     this.notifiedOperator = false,
   });
+
+  @override
+  bool operator ==(covariant DeliverableOrder other) {
+    if (identical(this, other)) return true;
+
+    return other.driverInfo == driverInfo &&
+        other.deliveryCompany == deliveryCompany &&
+        other.pickupLocation == pickupLocation &&
+        other.deliveryOrderId == deliveryOrderId &&
+        other.driverLocation == driverLocation &&
+        other.deliveryDirection == deliveryDirection &&
+        other.serviceProviderDriverChatId == serviceProviderDriverChatId &&
+        other.customerDriverChatId == customerDriverChatId &&
+        other.estimatedArrivalAtPickup == estimatedArrivalAtPickup &&
+        other.estimatedArrivalAtDropoff == estimatedArrivalAtDropoff &&
+        other.notifiedOperator == notifiedOperator &&
+        other.notifiedAdmin == notifiedAdmin;
+  }
+
+  @override
+  int get hashCode {
+    return driverInfo.hashCode ^
+        deliveryCompany.hashCode ^
+        pickupLocation.hashCode ^
+        deliveryOrderId.hashCode ^
+        driverLocation.hashCode ^
+        deliveryDirection.hashCode ^
+        serviceProviderDriverChatId.hashCode ^
+        customerDriverChatId.hashCode ^
+        estimatedArrivalAtPickup.hashCode ^
+        estimatedArrivalAtDropoff.hashCode ^
+        notifiedOperator.hashCode ^
+        notifiedAdmin.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'DeliverableOrder(driverInfo: $driverInfo, deliveryCompany: $deliveryCompany, pickupLocation: $pickupLocation, deliveryOrderId: $deliveryOrderId, driverLocation: $driverLocation, deliveryDirection: $deliveryDirection, serviceProviderDriverChatId: $serviceProviderDriverChatId, customerDriverChatId: $customerDriverChatId, estimatedArrivalAtPickup: $estimatedArrivalAtPickup, estimatedArrivalAtDropoff: $estimatedArrivalAtDropoff, notifiedOperator: $notifiedOperator, notifiedAdmin: $notifiedAdmin)';
+  }
 }
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
@@ -212,6 +254,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required super.deliveryDirection,
       required super.deliveryOrderId,
       super.notes,
+      super.review,
       required super.driverLocation,
       required super.serviceProvider,
       required super.customer,
@@ -234,6 +277,29 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       super.notifiedOperator,
       required super.dropOffLocation,
       required super.pickupLocation});
+
+  @override
+  bool operator ==(covariant TwoWayDeliverableOrder other) {
+    if (identical(this, other)) return true;
+
+    return other.pickupDriver == pickupDriver &&
+        other.serviceProviderPickupDriverChatId ==
+            serviceProviderPickupDriverChatId &&
+        other.customerPickupDriverChatId == customerPickupDriverChatId &&
+        other.estimatedPickupFromCustomerTime ==
+            estimatedPickupFromCustomerTime &&
+        other.estimatedDropoffAtServiceProviderTime ==
+            estimatedDropoffAtServiceProviderTime;
+  }
+
+  @override
+  int get hashCode {
+    return pickupDriver.hashCode ^
+        serviceProviderPickupDriverChatId.hashCode ^
+        customerPickupDriverChatId.hashCode ^
+        estimatedPickupFromCustomerTime.hashCode ^
+        estimatedDropoffAtServiceProviderTime.hashCode;
+  }
 }
 
 class OrderCosts {

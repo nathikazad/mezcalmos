@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
+import 'package:mezcalmos/DeliveryApp/constants/assets.dart' as assets;
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -59,12 +60,12 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             showNotifications: true,
             ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Obx(
-              () => Column(
-                children: [
-                  TitleWithOnOffSwitcher(
+          child: Obx(
+            () => Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TitleWithOnOffSwitcher(
                       title: "${_i18n()["title"]}",
                       isLoading: viewController.onlineClicked.value,
                       onTurnedOn: () {
@@ -78,26 +79,29 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                         viewController.switchOnlineStatus(false);
                       },
                       initialSwitcherValue: viewController.isOnline),
-                  if (viewController.isOnline != true)
-                    Container(
-                      height: 60.h,
-                      child: IncomingOrdersStatus(
-                        childData: Padding(
-                          padding: const EdgeInsets.only(bottom: 17.0),
-                          child: Image.asset(
-                            turnOn_asset,
-                            fit: BoxFit.contain,
-                            width: 40.w,
-                            height: 25.h,
-                          ),
+                ),
+                if (!viewController.isOnline)
+                  Container(
+                    height: 60.h,
+                    child: IncomingOrdersStatus(
+                      childData: Padding(
+                        padding: const EdgeInsets.only(bottom: 17.0),
+                        child: Image.asset(
+                          assets.turnOn_asset,
+                          fit: BoxFit.contain,
+                          width: 40.w,
+                          height: 25.h,
                         ),
-                        errorText: '${_i18n()["offlineTitle"]}',
-                        secondLine: "${_i18n()["offlineBody"]}",
                       ),
-                    )
-                  else if (viewController.currentOrders.isNotEmpty ||
-                      viewController.openOrders.isNotEmpty)
-                    Column(
+                      errorText: '${_i18n()["offlineTitle"]}',
+                      secondLine: "${_i18n()["offlineBody"]}",
+                    ),
+                  )
+                else if (viewController.currentOrders.isNotEmpty ||
+                    viewController.openOrders.isNotEmpty)
+                  Container(
+                    color: Color(0xFFF4EAFF),
+                    child: Column(
                       children: [
                         if (viewController.currentOrders.isNotEmpty)
                           _incomingOrdersList(),
@@ -105,37 +109,50 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (viewController.currentOrders.isNotEmpty)
-                                Divider(),
                               Container(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  "${_i18n()["openOrders"]}",
-                                  style: Theme.of(context).textTheme.bodyLarge,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.hourglass_empty,
+                                        color: purpleColor),
+                                    Text(
+                                      "${_i18n()["openOrders"]}(${viewController.openOrders.length})",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(color: purpleColor),
+                                    ),
+                                  ],
                                 ),
                               ),
                               SizedBox(height: 5),
-                              Column(
-                                children: List.generate(
-                                    viewController.openOrders.length,
-                                    (int index) => MinimalOrderCard(
-                                          order:
-                                              viewController.openOrders[index],
-                                          onTap: () {
-                                            DvOrderView.navigate(
-                                                orderId: viewController
-                                                    .openOrders[index].id);
-                                          },
-                                        )).reversed.toList(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Column(
+                                  children: List.generate(
+                                      viewController.openOrders.length,
+                                      (int index) => MinimalOrderCard(
+                                            borderRadius: BorderRadius.zero,
+                                            order: viewController
+                                                .openOrders[index],
+                                            onTap: () {
+                                              DvOrderView.navigate(
+                                                  orderId: viewController
+                                                      .openOrders[index].id);
+                                            },
+                                          )).reversed.toList(),
+                                ),
                               ),
                             ],
                           ),
                       ],
-                    )
-                  else
-                    NoOrdersComponent(),
-                ],
-              ),
+                    ),
+                  )
+                else
+                  NoOrdersComponent(),
+              ],
             ),
           ),
         ),
@@ -144,29 +161,44 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   }
 
   Widget _incomingOrdersList() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            "${_i18n()["currentOrders"]}",
-            style: Theme.of(context).textTheme.bodyLarge,
+    return Container(
+      color: secondaryLightBlueColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            child: Row(
+              children: [
+                Icon(Icons.route, color: primaryBlueColor),
+                Text(
+                  "${_i18n()["currentOrders"]}(${viewController.currentOrders.length})",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(color: primaryBlueColor),
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 5),
-        Column(
-          children: List.generate(
-              viewController.currentOrders.length,
-              (int index) => MinimalOrderCard(
-                    order: viewController.currentOrders[index],
-                    onTap: () {
-                      DvOrderView.navigate(
-                          orderId: viewController.currentOrders[index].id);
-                    },
-                  )).reversed.toList(),
-        ),
-      ],
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: List.generate(
+                  viewController.currentOrders.length,
+                  (int index) => MinimalOrderCard(
+                        borderRadius: BorderRadius.zero,
+                        order: viewController.currentOrders[index],
+                        onTap: () {
+                          DvOrderView.navigate(
+                              orderId: viewController.currentOrders[index].id);
+                        },
+                      )).reversed.toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

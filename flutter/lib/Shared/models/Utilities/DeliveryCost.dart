@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 class DeliveryCost {
   int? id;

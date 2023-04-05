@@ -1,12 +1,12 @@
 
-import { Order, OrderType, PaymentType } from '../../Generic/Order';
-import { UserInfo } from '../../Generic/User';
+import { DeliveryType, PaymentType } from '../../Generic/Order';
 import { OrderNotification } from '../../Notification';
-import { Location } from "../../Generic/Generic";
-import { RouteInformation } from '../../Generic/RouteInformation';
+import { CustomerAppType, Location } from "../../Generic/Generic";
+// import { RouteInformation } from '../../Generic/RouteInformation';
 import { ServiceProvider } from '../Service';
+import { OrderStripeInfo } from '../../stripe';
 
-export interface LaundryOrder extends Order {
+export interface LaundryOrder {
   storeId: number;
   customerLocation: Location;
   estimatedReadyTime?: string;
@@ -16,8 +16,27 @@ export interface LaundryOrder extends Order {
   status: LaundryOrderStatus;
   categories?: Array<OrderCategory>;
   laundryStore?: ServiceProvider;
-  // routeInformation?: RouteInformation;
-  // costsByType?: CostsByType;
+  orderId: number;
+  spDetailsId: number;
+  customerId: number;
+  paymentType: PaymentType;
+  refundAmount?: number;
+  reviewId?: number;
+  deliveryType: DeliveryType;
+  orderTime?: string;
+  firebaseId?: string;
+  customerAppType: CustomerAppType;
+  notes?: string;
+  tax?: number;
+  deliveryCost: number;
+  chatId?: number;
+  scheduledTime?: string;
+  stripeInfo?: OrderStripeInfo;
+  stripeFees?: number | null;
+  cancellationTime?: string;
+  discountValue?: number;
+  totalCost?: number;
+  itemsCost?: number;
 }
 export interface OrderCategory {
   orderCategoryId?: number;
@@ -57,32 +76,32 @@ export const LaundryOrderStatusToHasura: Record<LaundryOrderStatus, string> = {
   [LaundryOrderStatus.CancelledByCustomer]: "cancelledByCustomer"
 } 
 
-export interface ConstructLaundryOrderParameters {
-  routeInformation?: RouteInformation,
-  notes?: string,
-  paymentType: PaymentType,
-  to: Location,
-  shippingCost : number
-}
+// export interface ConstructLaundryOrderParameters {
+//   routeInformation?: RouteInformation,
+//   notes?: string,
+//   paymentType: PaymentType,
+//   to: Location,
+//   shippingCost : number
+// }
 
-export function constructLaundryOrder(
-  params: ConstructLaundryOrderParameters, customer: UserInfo, laundry: UserInfo): LaundryOrder {
-  return <LaundryOrder><unknown>{
-    customer: customer,
-    orderType: OrderType.Laundry,
-    status: LaundryOrderStatus.OrderReceived,
-    orderTime: (new Date()).toISOString(),
-    notes: params.notes,
-    laundry: laundry,
-    serviceProviderId: laundry.id,
-    cost: 0,
-    paymentType: params.paymentType,
-    to: params.to,
-    shippingCost: params.shippingCost || 0,
-    costPerKilo: 20,
-    routeInformation: params.routeInformation
-  }
-}
+// export function constructLaundryOrder(
+//   params: ConstructLaundryOrderParameters, customer: UserInfo, laundry: UserInfo): LaundryOrder {
+//   return <LaundryOrder><unknown>{
+//     customer: customer,
+//     orderType: OrderType.Laundry,
+//     status: LaundryOrderStatus.OrderReceived,
+//     orderTime: (new Date()).toISOString(),
+//     notes: params.notes,
+//     laundry: laundry,
+//     serviceProviderId: laundry.id,
+//     cost: 0,
+//     paymentType: params.paymentType,
+//     to: params.to,
+//     shippingCost: params.shippingCost || 0,
+//     costPerKilo: 20,
+//     routeInformation: params.routeInformation
+//   }
+// }
 
 export function orderInProcess(status: LaundryOrderStatus): boolean {
   return !(status == LaundryOrderStatus.CancelledByAdmin ||

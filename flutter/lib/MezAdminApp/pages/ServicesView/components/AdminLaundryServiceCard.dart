@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
@@ -87,7 +88,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
                       children: [
                         _smallBtn(
                             icon: Icons.attach_money,
-                             context: context,
+                            context: context,
                             label: "${_i18n()['costs']}",
                             ontap: () {
                               LaundryOpAdminView.navigate(
@@ -95,7 +96,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             }),
                         _smallBtn(
                             icon: Icons.history,
-                             context: context,
+                            context: context,
                             label: "${_i18n()['orders']}",
                             ontap: () {
                               AdminServiceOrdersView.navigate(
@@ -158,7 +159,7 @@ class AdminLaundryServiceCard extends StatelessWidget {
   InkWell _smallBtn(
       {required IconData icon,
       required String label,
-        required BuildContext context,
+      required BuildContext context,
       required Function()? ontap}) {
     return InkWell(
       borderRadius: BorderRadius.circular(5),

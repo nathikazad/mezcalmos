@@ -96,6 +96,16 @@ select_permissions:
               delivery_driver:
                 user_id:
                   _eq: X-Hasura-User-Id
+          - from_customer_delivery:
+              delivery_company:
+                drivers:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - to_customer_delivery:
+              delivery_company:
+                drivers:
+                  user_id:
+                    _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:
@@ -221,6 +231,16 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - review_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
   - role: laundry_operator
     permission:
       columns:

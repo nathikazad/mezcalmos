@@ -73,7 +73,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
               ),
               Text(
                 "\$${widget.item.cost}",
-                style: context.txt.bodyText1,
+                style: context.txt.bodyLarge,
                 textAlign: TextAlign.center,
               ),
               SizedBox(

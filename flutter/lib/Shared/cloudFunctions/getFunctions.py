@@ -13,6 +13,31 @@ errors = {}
 
 types = {"number": "num", "string": "String", "boolean": "bool"}
 
+def getUniqueTypes():
+
+  for folder, dirs, files in os.walk("./shared/models"):
+    if "Taxi" in folder:
+      continue
+    for file in files:
+      if file == '.DS_Store' or "Keys" in file or "Chat" in file:
+        continue
+      # print(file)
+      fullpath = os.path.join(folder, file)
+      with open(fullpath, 'r') as f:
+        for line in f:
+          if "otification" in line or "extends" in line or "//" in line or "Server" in line:
+            continue
+          if "enum " in line:
+            typeName = line.split("enum ")[1].strip()[:-1].strip()
+            if typeName not in uniqueTypes:
+              # print("===", typeName)
+              uniqueTypes[typeName] = True
+          if "interface " in line:
+            typeName = line.split("interface ")[1].strip()[:-1].strip()
+            if typeName not in uniqueTypes:
+              # print("===", typeName)
+              uniqueTypes[typeName] = True
+
 def searchForModel(search):  
   
   typeDictionary = {"values":{}}
@@ -40,13 +65,15 @@ def searchForModel(search):
               v = line.split(":")
               typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace(";","") 
               if typeDictionary["values"][v[0].strip()] not in ["string", "number", "boolean", "JSON"]:
-                # print(typeDictionary["values"][v[0].strip()])
-                errors[typeDictionary["values"][v[0].strip()]] = True
+                # print("===", typeDictionary["values"][v[0].strip()])
+                if "Error" in typeDictionary["values"][v[0].strip()]:
+                  errors[typeDictionary["values"][v[0].strip()]] = True
             if "=" in line:
               v = line.split("=")
               typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace("\"","").replace(";","")                 
             if("}" in line):
-              models[search] = typeDictionary
+              # models[search] = typeDictionary
+              # print("==>", search1)
               models[search1] = typeDictionary
               return
   print("🚫🚫🚫🚫🚫 model not found")
@@ -199,6 +226,21 @@ def printDartFormatDeclaration(name, typ):
     prefix = prefix.strip()[:-9].strip()[:-1].strip()
   if prefix in types:
     prefix = types[prefix]
+  # if "Array" in prefix:
+  prefix = prefix.replace("Array", "List")
+  prefix = prefix.replace("Record", "Map")
+  prefix = prefix.replace("any", "dynamic")
+  if "<" in prefix:
+    prefix1 = prefix.split("<")[1].split(">")[0].strip()
+    if " " in prefix1:
+      if prefix1.split()[0] in types:
+        prefix = prefix.replace(prefix1.split()[0], types[prefix1.split()[0]])
+      if prefix1.split()[1] in types:
+        prefix = prefix.replace(prefix1.split()[1], types[prefix1.split()[1]])
+      prefix = prefix.replace(" ", ", ")
+    elif prefix1 in types:
+      prefix = prefix.replace(prefix1, types[prefix1])
+  prefix = prefix.replace("string", "String")
   return "  "+prefix+nullable+" "+name.replace("?","")+";"
 
 def printDartFormatClassInit(clas, instances):
@@ -300,14 +342,20 @@ def printDartFormatFunction(key, value):
     for v1 in value["arguments"]:
       # v = v1.replace("?","")
       v = v1.replace("?","")
-      if value["arguments"][v1] in models and models[value["arguments"][v1]]["type"] == "enum":
+      # print("-->", value["arguments"][v1])
+      val = value["arguments"][v1]
+      if "Array" in val:
+        matches = re.compile(r'\<(.*?)\>').findall(val)
+        if len(matches) >= 1:
+          val = matches[0]
+      if val in models and models[val]["type"] == "enum":
         p2 = "\""+v+"\""+":"+v
         if "Array" in value["arguments"][v1]:
           matches = re.compile(r'\<(.*?)\>').findall(value["arguments"][v1])
           print("=>")
           print(value["arguments"][v1])
           if len(matches) >= 1:
-            p2 = p2+'''.fold<List<dynamic>>([],
+            p2 = p2+'''?.fold<List<dynamic>>([],
               (List<dynamic> value, '''+ matches[0] +''' element) {
             value.add(element.toFirebaseFormattedJson());
             return value;
@@ -317,22 +365,24 @@ def printDartFormatFunction(key, value):
         if v1[-1] == "?":
           p2 = p2.replace(".toFir","?.toFir")
         params += p2
-      elif value["arguments"][v1] in models and models[value["arguments"][v1]]["type"] == "interface":
+      elif val in models and models[val]["type"] == "interface":
         p2 = "\""+v+"\""+":"+v
+        # print("-->", value["arguments"][v1])
         if "Array" in value["arguments"][v1]:
           matches = re.compile(r'\<(.*?)\>').findall(value["arguments"][v1])
-          print("=>")
-          print(value["arguments"][v1])
+          # print("=> ", value["arguments"][v1])
           if len(matches) >= 1:
             p2 = p2+'''.fold<List<dynamic>>([],
               (List<dynamic> value, '''+ matches[0] +''' element) {
             value.add(element.toFirebaseFormattedJson());
             return value;
           }),\n        '''
+            if v1[-1] == "?":
+              p2 = p2.replace(".fold","?.fold")
         else:
           p2 = p2+".toFirebaseFormattedJson(),"+"\n"+"        "
-        if v1[-1] == "?":
-          p2 = p2.replace(".toFir","?.toFir")
+          if v1[-1] == "?":
+            p2 = p2.replace(".toFir","?.toFir")
         params += p2
       # elif value["arguments"][v1] == "JSON":
       #   params += "\""+v+"\""+":json.encode("+v+"),"+"\n"+"        "
@@ -358,6 +408,7 @@ def getModels():
     if models[key]["type"] == "interface":
       toWriteModel += "class "+key+" {"+"\n"
       for v in models[key]["values"]:
+        # print(models[key]["values"][v])
         toWriteModel +=  printDartFormatDeclaration(v, models[key]["values"][v])+"\n"
       toWriteModel += printDartFormatClassInit(key, models[key]["values"])+"\n"
       toWriteModel +=   '''Map<String, dynamic> toFirebaseFormattedJson() {
@@ -422,12 +473,11 @@ if __name__ == "__main__":
       extractImports(line)
       extractFunctionNamesGroupAsString(line)
   extractFunctionNamesGroupAsDictionary()
-  uniqueTypes["AppType"] = True
+  uniqueTypes["NotificationInfo"] = True
   uniqueTypes["Language"] = True
-  uniqueTypes["ServerResponseStatus"] = True
-
+  getUniqueTypes()
   for key in uniqueTypes:
-    # print(key)
+    # print("-->", key)
     matches = re.compile(r'\<(.*?)\>').findall(key)
   
     if len(matches) >= 1:
@@ -440,9 +490,9 @@ if __name__ == "__main__":
       searchForModel(key)
   for key in errors:
     if "Error" in key: #and "Array" not in key:
+      # print("-->", key)
       # models[key] = 
       searchForModel(key)
-
   os.chdir('../../flutter/lib/Shared/cloudFunctions')
 
   f = open("index.dart", "w")

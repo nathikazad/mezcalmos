@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/c
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceReviewsFilters.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -104,7 +104,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
           RatingBarIndicator(
             rating: viewController.rating.toDouble(),
             itemBuilder: (BuildContext context, int index) => Icon(
-              Icons.star_rate_rounded,
+              Icons.star_rate,
               color: primaryBlueColor,
             ),
             itemCount: 5,
@@ -115,7 +115,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
             height: 10,
           ),
           Text(
-              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()["reviews"].toString().toLowerCase()}")
+              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()["review"].toPlural(isPlural: viewController.reviews.length == 1).toLowerCase()}")
         ],
       ),
     );

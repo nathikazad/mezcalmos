@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
@@ -55,8 +55,8 @@ class _CustCourierServicesListViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
+      appBar: MezcalmosAppBar(
+          title: 'Courier', AppBarLeftButtonType.Back, onClick: MezRouter.back),
       body: Obx(
         () {
           if (companies.value != null) {
@@ -64,38 +64,7 @@ class _CustCourierServicesListViewState
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Material(
-                          elevation: 0.5,
-                          borderRadius: BorderRadius.circular(5),
-                          child: TextFormField(
-                            style: context.txt.bodyLarge,
-                            decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                hintText: "Search...",
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: primaryBlueColor,
-                                )),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      MezIconButton(
-                        icon: Icons.place,
-                        padding: const EdgeInsets.all(12),
-                        backgroundColor: Colors.white,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5),
-                        onTap: () {},
-                      )
-                    ],
-                  ),
+                  // _searchCoomponent(context),
                   SizedBox(
                     height: 15,
                   ),
@@ -119,6 +88,41 @@ class _CustCourierServicesListViewState
     );
   }
 
+  Widget _searchCoomponent(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+          fit: FlexFit.tight,
+          child: Material(
+            elevation: 0.5,
+            borderRadius: BorderRadius.circular(5),
+            child: TextFormField(
+              style: context.txt.bodyLarge,
+              decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  hintText: "Search...",
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: primaryBlueColor,
+                  )),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        MezIconButton(
+          icon: Icons.place,
+          padding: const EdgeInsets.all(12),
+          backgroundColor: Colors.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(5),
+          onTap: () {},
+        )
+      ],
+    );
+  }
+
   Widget _companyCard(DeliveryCompany company, BuildContext context) {
     return MezCard(
         onClick: () {
@@ -134,7 +138,7 @@ class _CustCourierServicesListViewState
               style: context.txt.bodyLarge,
             ),
             SizedBox(
-              height: 5,
+              height: 7.5,
             ),
             _detailsRow(company, context)
           ],
@@ -153,7 +157,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
             Icon(
               Icons.delivery_dining,
               color: Colors.black,
-              size: 22,
+              size: 25,
             ),
             SizedBox(
               width: 5,
@@ -162,7 +166,9 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               shippingCost: 50,
               showPerKm: true,
               alignment: MainAxisAlignment.start,
-              textStyle: context.txt.bodyMedium,
+              textStyle: context.txt.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ],
         ),
@@ -177,7 +183,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               Padding(
                 padding: EdgeInsets.only(left: 2.w),
                 child: Icon(
-                  Icons.payments_outlined,
+                  Icons.payments,
                   color: Colors.black,
                   size: 22,
                 ),
@@ -195,24 +201,25 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
         SizedBox(
           width: 8,
         ),
-        Flexible(
-          child: Row(
-            children: [
-              Icon(
-                Icons.star,
-                size: 22,
-                color: Color(0xFF6779FE),
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              Text(
-                0.toString(),
-                style: context.txt.bodyMedium,
-              )
-            ],
+        if (company.rate != null && company.rate != 0)
+          Flexible(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  size: 22,
+                  color: Color(0xFF6779FE),
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Text(
+                  company.rate.toString(),
+                  style: context.txt.bodyMedium,
+                )
+              ],
+            ),
           ),
-        ),
       ],
     ),
   );

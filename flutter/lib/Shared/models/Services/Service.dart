@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -12,7 +13,7 @@ abstract class Service {
   Schedule? schedule;
   String? phoneNumber;
   int? serviceLinkId;
-  ServiceProviderType? serviceProviderType;
+  cModels.ServiceProviderType? serviceProviderType;
   ServiceState state;
   Map<LanguageType, bool> languages;
   List<Review> reviews = <Review>[];

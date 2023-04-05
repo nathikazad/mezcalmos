@@ -13,7 +13,6 @@ export interface DeliveryOrder {
   pickupLocation?: Location;
   pickupLocationText?: string;
   dropoffLocation: Location;
-  // deliveryDriverType?: ParticipantType
   deliveryDriverId?: number;
   chatWithServiceProviderId?: number;
   packageReady: boolean;
@@ -65,7 +64,6 @@ export interface DeliveryDriver {
   user?: UserInfo;
   online?: boolean;
   notificationInfo?: NotificationInfo;
-  // deliveryDriverType: ParticipantType;
 }
 
 export interface DeliveryOperator {
@@ -77,7 +75,6 @@ export interface DeliveryOperator {
     owner: boolean,
     appVersion?: string,
     online: boolean,
-    // deliveryDriverType:,
     notificationInfo?: NotificationInfo,
     user?: UserInfo
 }

@@ -5,7 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -25,22 +26,22 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
 //
 
-enum StripePaymentStatus { Authorized, Captured, Cancelled }
+// enum StripePaymentStatus { Authorized, Captured, Cancelled }
 
-extension ParseStripePaymentStatusToString on StripePaymentStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
+// extension ParseStripePaymentStatusToString on StripePaymentStatus {
+//   String toFirebaseFormatString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toLowerCase() + str.substring(1);
+//   }
+// }
 
-extension ParseStringToStripePaymentStatus on String {
-  StripePaymentStatus? toStripePaymentStatus() {
-    return StripePaymentStatus.values.firstWhereOrNull(
-        (StripePaymentStatus e) =>
-            e.toFirebaseFormatString().toLowerCase() == this);
-  }
-}
+// extension ParseStringToStripePaymentStatus on String {
+//   StripePaymentStatus? toStripePaymentStatus() {
+//     return StripePaymentStatus.values.firstWhereOrNull(
+//         (StripePaymentStatus e) =>
+//             e.toFirebaseFormatString().toLowerCase() == this);
+//   }
+// }
 
 class StripeOrderPaymentInfo {
   String id;
@@ -77,8 +78,7 @@ class StripeOrderPaymentInfo {
         expYear: data["expYear"],
         expMonth: data["expMonth"],
         last4: data["last4"],
-        status: data["status"].toString().toStripePaymentStatus() ??
-            StripePaymentStatus.Captured);
+        status: data["status"].toString().toStripePaymentStatus());
   }
 }
 
@@ -129,12 +129,12 @@ extension ParseCaptureMethodToString on CaptureMethod {
   }
 }
 
-Future<cModel.PaymentIntentResponse?> getPaymentIntent({
+Future<cModels.PaymentIntentResponse?> getPaymentIntent({
   required int serviceProviderDetailsId,
   required num paymentAmount,
 }) async {
   try {
-    cModel.PaymentIntentResponse res =
+    cModels.PaymentIntentResponse res =
         await CloudFunctions.stripe2_getPaymentIntent(
             paymentAmount: paymentAmount,
             serviceProviderDetailsId: serviceProviderDetailsId);
@@ -156,7 +156,7 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
 
 Future<String?> addCard({required String paymentMethod}) async {
   try {
-    cModel.AddCardResponse res =
+    cModels.AddCardResponse res =
         await CloudFunctions.stripe2_addCard(paymentMethod: paymentMethod);
     if (res.success == false) {
       showErrorSnackBar(errorText: res.error.toString());
@@ -191,7 +191,7 @@ Future<String?> acceptPaymentWithSavedCard(
   mezDbgPrint("Payment with saved Card ============> ${card.toString()}");
 
   try {
-    cModel.ChargeCardResponse res = await CloudFunctions.stripe2_chargeCard(
+    cModels.ChargeCardResponse res = await CloudFunctions.stripe2_chargeCard(
         serviceProviderDetailsId: serviceProviderDetailsId,
         cardId: card.cardId,
         paymentAmount: paymentAmount);
@@ -330,7 +330,7 @@ String extractPaymentIdFromIntent(String a) {
   return a.split('_').sublist(0, 2).join('_');
 }
 
-Future<cModel.SetupStripeResponse> onboardServiceProvider(
+Future<cModels.SetupStripeResponse> onboardServiceProvider(
   int serviceProviderDetailsId,
   ServiceProviderType orderType,
 ) async {
@@ -344,10 +344,10 @@ Future<cModel.SetupStripeResponse> onboardServiceProvider(
 Future<void> updateServiceProvider(
     int serviceProviderDetailsId,
     ServiceProviderType orderType,
-    Map<cModel.PaymentType, bool> acceptedPayments) async {
+    Map<cModels.PaymentType, bool> acceptedPayments) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  cModel.UpdateStripeResponse res =
+  cModels.UpdateStripeResponse res =
       await CloudFunctions.stripe2_updateServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
@@ -363,7 +363,7 @@ Future<ServerResponse> serviceProviderFunctions(
     String functionName,
     int serviceProviderId,
     ServiceProviderType orderType,
-    Map<cModel.PaymentType, bool> acceptedPayments) async {
+    Map<cModels.PaymentType, bool> acceptedPayments) async {
   final HttpsCallable cloudFunction =
       FirebaseFunctions.instance.httpsCallable('stripe-$functionName');
   try {

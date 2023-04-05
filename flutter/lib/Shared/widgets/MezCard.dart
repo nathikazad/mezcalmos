@@ -15,6 +15,7 @@ class MezCard extends StatelessWidget {
       this.firstAvatarIconColor,
       this.secondAvatarBgColor,
       this.secondAvatarBgImage,
+      this.borderRadius = 10,
       this.secondAvatarIcon,
       this.secondAvatarIconColor,
       this.leading});
@@ -33,14 +34,17 @@ class MezCard extends StatelessWidget {
   final Widget content;
   final Widget? action;
   final Widget? leading;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(radius),
-      ),
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(radius),
+      // ),
       margin: margin,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius)),
       child: InkWell(
         borderRadius: BorderRadius.circular(radius),
         onTap: onClick,
@@ -60,13 +64,13 @@ class MezCard extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 20,
+                      radius: radius,
                       backgroundColor: firstAvatarBgColor,
                       backgroundImage: firstAvatarBgImage,
                       child: Icon(
                         firstAvatarIcon,
                         color: firstAvatarIconColor,
-                        size: 25,
+                        size: radius + 3,
                       ),
                     ),
                     if (secondAvatarBgImage != null ||
@@ -76,14 +80,14 @@ class MezCard extends StatelessWidget {
                         right: -35,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
-                          radius: 22,
+                          radius: radius + 2,
                           child: CircleAvatar(
-                            radius: 20,
+                            radius: radius,
                             backgroundColor: secondAvatarBgColor,
                             backgroundImage: secondAvatarBgImage,
                             child: Icon(
                               secondAvatarIcon,
-                              size: 25,
+                              size: radius + 3,
                               color: secondAvatarIconColor,
                             ),
                           ),
@@ -100,7 +104,7 @@ class MezCard extends StatelessWidget {
                             secondAvatarBgImage != null ||
                             secondAvatarIcon != null))
                     ? 40
-                    : 8,
+                    : 12,
               ),
               Flexible(fit: FlexFit.tight, child: content),
 

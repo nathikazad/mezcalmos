@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/components/ServiceStripePaymentSetup.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['ServicePaymentsView'];

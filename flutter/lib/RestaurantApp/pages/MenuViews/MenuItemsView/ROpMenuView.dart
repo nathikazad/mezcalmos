@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
 //
@@ -51,7 +51,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
 
   @override
   void initState() {
-    restaurantID = widget.restID ?? int.parse(Get.parameters["restaurantId"]!);
+    restaurantID = widget.restID ??
+        int.parse(MezRouter.urlArguments['restaurantId'].toString());
 
     if (restaurantID != null) {
       _tabController = TabController(length: 2, vsync: this);
@@ -77,25 +78,21 @@ class _ROpMenuViewState extends State<ROpMenuView>
       },
       child: Obx(
         () => Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size(
-                double.infinity,
-                (viewController.reOrderMode.isFalse)
-                    ? kToolbarHeight * 2
-                    : kToolbarHeight),
-            child: MezcalmosAppBar(
-              !widget.canGoBack && viewController.reOrderMode.isFalse
-                  ? AppBarLeftButtonType.Menu
-                  : AppBarLeftButtonType.Back,
-              onClick: !widget.canGoBack && viewController.reOrderMode.isFalse
-                  ? null
-                  : handleBack,
-              // showLeftBtn: viewController.reOrderMode.isTrue ||
-              //     widget.canGoBack == false,
-              title: '${_i18n()["menu"]}',
-              showNotifications: true,
-              tabBar: (viewController.reOrderMode.isFalse) ? _tabBar() : null,
-            ),
+          appBar: MezcalmosAppBar(
+            tabbarHeight: (!viewController.reOrderMode.isFalse)
+                ? kToolbarHeight * 2
+                : kToolbarHeight,
+            !widget.canGoBack && viewController.reOrderMode.isFalse
+                ? AppBarLeftButtonType.Menu
+                : AppBarLeftButtonType.Back,
+            onClick: !widget.canGoBack && viewController.reOrderMode.isFalse
+                ? null
+                : handleBack,
+            // showLeftBtn: viewController.reOrderMode.isTrue ||
+            //     widget.canGoBack == false,
+            title: '${_i18n()["menu"]}',
+            showNotifications: true,
+            tabBar: (viewController.reOrderMode.isFalse) ? _tabBar() : null,
           ),
           key: Get.find<SideMenuDrawerController>().getNewKey(),
           drawer: ROpDrawer(),
@@ -311,7 +308,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
             ),
             Text(
               '${_i18n()["noCategory"]}',
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
             SizedBox(
               height: 5,

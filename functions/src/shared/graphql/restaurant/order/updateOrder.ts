@@ -1,6 +1,6 @@
 import { ChangePriceError } from "../../../../delivery/changeDeliveryPrice";
 import { getHasura } from "../../../../utilities/hasura";
-import { OrderStripeInfo } from "../../../../utilities/stripe/model";
+import { OrderStripeInfo } from "../../../models/stripe";
 import { MezError } from "../../../models/Generic/Generic";
 import { RestaurantOrder } from "../../../models/Services/Restaurant/RestaurantOrder";
 

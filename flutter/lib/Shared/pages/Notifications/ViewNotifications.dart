@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -157,7 +157,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          MezRouter.toNamed(notification.linkUrl);
+          MezRouter.toPath(notification.linkUrl);
         },
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),

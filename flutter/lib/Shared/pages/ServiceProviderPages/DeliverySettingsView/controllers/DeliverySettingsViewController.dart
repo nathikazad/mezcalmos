@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
@@ -45,7 +46,7 @@ class DeliverySettingsViewController {
   int? detailsID;
 
   bool get isDeliveryCompany =>
-      serviceProviderType == ServiceProviderType.DeliveryCompany;
+      serviceProviderType == ServiceProviderType.Delivery;
 
   Future<void> init({
     CreateServiceViewController? createServiceViewController,
@@ -77,7 +78,7 @@ class DeliverySettingsViewController {
 
   Future<void> _initEditMode(
       int serviceProviderId, ServiceProviderType serviceProviderType) async {
-    if (serviceProviderType != ServiceProviderType.DeliveryCompany) {
+    if (serviceProviderType != ServiceProviderType.Delivery) {
       selfDelivery.value = deliveryCost.value!.selfDelivery;
       deliveryType.value = selfDelivery.value!
           ? ServiceDeliveryType.Self_delivery
@@ -197,14 +198,13 @@ class DeliverySettingsViewController {
 
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
-      id: null,
-      selfDelivery: deliveryType.value == ServiceDeliveryType.Self_delivery,
-      minimumCost: double.parse(_minCost.text),
-      freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
-      costPerKm: double.parse(_costPerKm.text),
-      radius: double.parse(radius.text) * 1000,
-      costPerKmFromBase: double.tryParse(costPerKmFromBase.text),
-    );
+        id: null,
+        selfDelivery: deliveryType.value == ServiceDeliveryType.Self_delivery,
+        minimumCost: double.parse(_minCost.text),
+        freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
+        costPerKm: double.parse(_costPerKm.text),
+        radius: double.parse(radius.text) * 1000,
+        costPerKmFromBase: double.tryParse(costPerKmFromBase.text));
   }
 
   bool get isCreatingNewService => createServiceViewController != null;

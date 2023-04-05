@@ -10,18 +10,15 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
@@ -74,32 +71,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                 viewController.order.value?.restaurant.name ?? "",
                 style: context.txt.displaySmall,
               ))),
-      bottomNavigationBar: Obx(() {
-        if (showReviewBtn() && viewController.order.value != null) {
-          return MezButton(
-            label: "${_i18n()["writeReview"]}",
-            withGradient: true,
-            onClick: () async {
-              final int? newReviewId = await showReviewDialog(
-                context,
-                orderId: viewController.order.value!.orderId,
-                orderType: OrderType.Restaurant,
-                serviceProviderId: viewController.order.value!.restaurantId,
-                serviceProviderType: ServiceProviderType.Restaurant,
-              );
-              mezDbgPrint("Reviwww id =====>$newReviewId");
-              if (newReviewId != null) {
-                await insertRestaurantOrderReview(
-                    orderId: viewController.order.value!.orderId,
-                    reviewId: newReviewId);
-              }
-            },
-            borderRadius: 0,
-          );
-        } else {
-          return SizedBox();
-        }
-      }),
+      bottomNavigationBar: _addReviewButton(context),
       body: Obx(
         () {
           if (viewController.order.value != null) {
@@ -121,7 +93,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               ordersStates: viewController.order.value!.status,
                             ),
                             if (viewController.order.value!.paymentType ==
-                                PaymentType.BankTransfer)
+                                cModels.PaymentType.BankTransfer)
                               RestaurantBankInfoCard(
                                   restaurantId:
                                       viewController.order.value!.restaurantId),
@@ -176,11 +148,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               paymentType:
                                   viewController.order.value!.paymentType,
                             ),
-                            if (viewController.order.value!.review != null)
-                              ReviewCard(
-                                  review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 note: viewController.order.value!.notes),
+                            if (viewController.order.value!.review != null)
+                              ReviewCard(
+                                  showReviewTitle: true,
+                                  review: viewController.order.value!.review!),
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
                               costs: viewController.order.value!.costs,
@@ -219,6 +192,20 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     );
   }
 
+  Widget _addReviewButton(BuildContext context) {
+    return Obx(() {
+      if (viewController.order.value?.canAddReview == true) {
+        return customerAddReviewButton(context,
+            orderId: viewController.order.value!.orderId,
+            serviceProviderId: viewController.order.value!.restaurantId,
+            serviceProviderType: cModels.ServiceProviderType.Restaurant,
+            orderType: cModels.OrderType.Restaurant);
+      } else {
+        return SizedBox();
+      }
+    });
+  }
+
   List<Widget> get _mapWidget => <Widget>[
         SizedBox(
           height: 10,
@@ -236,7 +223,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   bool showReviewBtn() {
     return viewController.order.value != null &&
-        viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
+        viewController.order.value!.status ==
+            cModels.RestaurantOrderStatus.Delivered &&
         viewController.order.value!.review == null;
   }
 }

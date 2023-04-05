@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
-import { CustomerCard, StripeStatus } from './model';
+import { CustomerCard, StripeStatus } from '../../shared/models/stripe';
 import { PaymentType } from '../../shared/models/Generic/Order';
 import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
