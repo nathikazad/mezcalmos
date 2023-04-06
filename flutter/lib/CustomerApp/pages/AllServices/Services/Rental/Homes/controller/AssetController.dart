@@ -26,6 +26,31 @@ Map<RentalViewEnum, Map<CurrentSelectedViewEnum, String>> vRentalViewValues = {
     CurrentSelectedViewEnum.Asset: "Home",
     CurrentSelectedViewEnum.Agency: "Agency",
   },
+  RentalViewEnum.Classes: {
+    CurrentSelectedViewEnum.Asset: "Class",
+    CurrentSelectedViewEnum.Agency: "Studio",
+  },
+  RentalViewEnum.Wellness: {
+    CurrentSelectedViewEnum.Asset: "Wellness",
+  },
+  RentalViewEnum.Volunteer: {
+    CurrentSelectedViewEnum.Asset: "Volunteer",
+  },
+  RentalViewEnum.Tour: {
+    CurrentSelectedViewEnum.Asset: "Tour",
+  },
+  RentalViewEnum.Activities: {
+    CurrentSelectedViewEnum.Asset: "Activities",
+  },
+  RentalViewEnum.Parties: {
+    CurrentSelectedViewEnum.Asset: "Parties",
+  },
+  RentalViewEnum.Dance: {
+    CurrentSelectedViewEnum.Asset: "Dance",
+  },
+  RentalViewEnum.GetTogether: {
+    CurrentSelectedViewEnum.Asset: "Get Together",
+  },
 };
 
 class AssetController {
@@ -62,6 +87,46 @@ class AssetController {
         currentSelectedViewList =
             vRentalViewValues[RentalViewEnum.Homes]!.keys.toList();
         break;
+      case RentalViewEnum.Classes:
+        viewName = RentalViewEnum.Classes;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Classes]!.keys.toList();
+        break;
+      case RentalViewEnum.Wellness:
+        viewName = RentalViewEnum.Wellness;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Wellness]!.keys.toList();
+        break;
+      case RentalViewEnum.Volunteer:
+        viewName = RentalViewEnum.Volunteer;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Volunteer]!.keys.toList();
+        break;
+      case RentalViewEnum.Tour:
+        viewName = RentalViewEnum.Tour;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Tour]!.keys.toList();
+        break;
+      case RentalViewEnum.Activities:
+        viewName = RentalViewEnum.Activities;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Activities]!.keys.toList();
+        break;
+      case RentalViewEnum.Parties:
+        viewName = RentalViewEnum.Parties;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Parties]!.keys.toList();
+        break;
+      case RentalViewEnum.Dance:
+        viewName = RentalViewEnum.Dance;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Dance]!.keys.toList();
+        break;
+      case RentalViewEnum.GetTogether:
+        viewName = RentalViewEnum.GetTogether;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.GetTogether]!.keys.toList();
+        break;
     }
     currentSelectedView = currentSelectedViewList.first.obs;
     _generateEnumToString();
@@ -83,6 +148,22 @@ class AssetController {
         return "car";
       case RentalViewEnum.Homes:
         return "homes";
+      case RentalViewEnum.Classes:
+        return "classes";
+      case RentalViewEnum.Wellness:
+        return "wellness";
+      case RentalViewEnum.Volunteer:
+        return "volunteer";
+      case RentalViewEnum.Tour:
+        return "tour";
+      case RentalViewEnum.Activities:
+        return "activities";
+      case RentalViewEnum.Parties:
+        return "parties";
+      case RentalViewEnum.Dance:
+        return "dance";
+      case RentalViewEnum.GetTogether:
+        return "getTogether";
     }
   }
 
@@ -108,6 +189,25 @@ class AssetController {
           Icons.home,
           Icons.domain,
         ];
+      case RentalViewEnum.Classes:
+        return [
+          Icons.class_,
+          Icons.school,
+        ];
+      case RentalViewEnum.Wellness:
+        return [];
+      case RentalViewEnum.Volunteer:
+        return [];
+      case RentalViewEnum.Tour:
+        return [];
+      case RentalViewEnum.Activities:
+        return [];
+      case RentalViewEnum.Parties:
+        return [];
+      case RentalViewEnum.Dance:
+        return [];
+      case RentalViewEnum.GetTogether:
+        return [];
     }
   }
 

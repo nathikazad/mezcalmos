@@ -13,6 +13,7 @@ import 'AssetListView/AssetListView.dart';
 import '../components/ButtonSwitcher.dart';
 import 'controller/AssetController.dart';
 import 'AgencyListView/AgencyListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'dart:developer';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -33,6 +34,7 @@ class AssetListsView extends StatefulWidget {
 
 class _AssetListsViewState extends State<AssetListsView> {
   late AssetController assetController;
+  late AllServiceListViewController allServiceListViewController;
 
   @override
   void initState() {
@@ -41,6 +43,7 @@ class _AssetListsViewState extends State<AssetListsView> {
         MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
     log("viewName $viewName ${viewName.runtimeType}");
     Get.put(AssetController());
+    allServiceListViewController = Get.find<AllServiceListViewController>();
     assetController = Get.find<AssetController>();
     assetController.init(viewEnum: viewName);
   }
@@ -51,15 +54,46 @@ class _AssetListsViewState extends State<AssetListsView> {
     super.dispose();
   }
 
+  bool doesNeedButtonSwitcher() {
+    if (allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Wellness.name ||
+        allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Volunteer.name ||
+        assetController.viewName.name == RentalViewEnum.Activities.name ||
+        assetController.viewName.name == RentalViewEnum.Tour.name ||
+        assetController.viewName.name == RentalViewEnum.Parties.name ||
+        assetController.viewName.name == RentalViewEnum.Dance.name ||
+        assetController.viewName.name == RentalViewEnum.GetTogether.name) {
+      return false;
+    }
+    return true;
+  }
+
+  bool isNoSubService() {
+    if (allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Wellness.name ||
+        allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Volunteer.name) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(_i18n()['rental'][assetController.getViewNameString]
-                ["title"]
-            .toString()),
+        titleWidget: Text(isNoSubService()
+            ? _i18n()[allServiceListViewController
+                    .currentSelectedService.value.name
+                    .toLowerCase()]["title"]
+                .toString()
+            : _i18n()[allServiceListViewController
+                    .currentSelectedService.value.name
+                    .toLowerCase()][assetController.getViewNameString]["title"]
+                .toString()),
         actionIcons: <Widget>[
           AppBarActionButton(
             icon: Icons.notifications,
@@ -114,29 +148,35 @@ class _AssetListsViewState extends State<AssetListsView> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Obx(
-              () => ButtonSwitcher(
-                lButtonText: _i18n()['rental']
-                            [assetController.getViewNameString][
-                        assetController.currentSelectedViewName.first
-                            .toLowerCase()]
-                    .toString(),
-                rButtonText: _i18n()['rental']
-                            [assetController.getViewNameString][
-                        assetController.currentSelectedViewName.last
-                            .toLowerCase()]
-                    .toString(),
-                iconList: assetController.iconList,
-                values: assetController.currentSelectedViewList,
-                selectedValue: assetController.currentSelectedView.value,
-                onClick: (Enum value) {
-                  assetController.toggleView(value);
-                },
-              ),
-            ),
-          ),
+          !doesNeedButtonSwitcher()
+              ? const Offstage()
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Obx(
+                    () => ButtonSwitcher(
+                      lButtonText: _i18n()[allServiceListViewController
+                                      .currentSelectedService.value.name
+                                      .toLowerCase()]
+                                  [assetController.getViewNameString][
+                              assetController.currentSelectedViewName.first
+                                  .toLowerCase()]
+                          .toString(),
+                      rButtonText: _i18n()[allServiceListViewController
+                                      .currentSelectedService.value.name
+                                      .toLowerCase()]
+                                  [assetController.getViewNameString][
+                              assetController.currentSelectedViewName.last
+                                  .toLowerCase()]
+                          .toString(),
+                      iconList: assetController.iconList,
+                      values: assetController.currentSelectedViewList,
+                      selectedValue: assetController.currentSelectedView.value,
+                      onClick: (Enum value) {
+                        assetController.toggleView(value);
+                      },
+                    ),
+                  ),
+                ),
           Obx(
             () => assetController.currentSelectedView.value ==
                     assetController.currentSelectedViewList.first

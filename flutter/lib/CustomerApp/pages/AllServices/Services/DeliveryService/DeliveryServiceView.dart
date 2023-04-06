@@ -57,9 +57,10 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
     final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: MezSideMenu(),
+      // drawer: MezSideMenu(),
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
+        autoBack: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),

@@ -81,7 +81,7 @@
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },
-      
+
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -260,9 +260,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
-              "rmItemTitle" : "Remove item",
-              "rmItemHelper" : "Are you sure you want to remove this item from cart",
-              "rmItemButton" : "Yes, remove item",
+              "rmItemTitle": "Remove item",
+              "rmItemHelper": "Are you sure you want to remove this item from cart",
+              "rmItemButton": "Yes, remove item",
               "notAvailable": "This restaurant is closed",
               "title": "Warning",
               "leftBtn": "Checkout first",
@@ -528,10 +528,48 @@
           }
         },
         "classes": "Classes",
-        "wellness": "Wellness",
+        "class": {
+          "title": "Classes",
+          "classes": {
+            "title": "Class",
+            "class": "Class",
+            "studio": "Studio"
+          }
+        },
+        "wellness": {
+          "title": "Wellness"
+        },
         "events": "Events",
-        "volunteer": "Volunteer",
-        "adventure": "Adventure",
+        "event": {
+          "title": "Events",
+          "parties": {
+            "title": "Parties",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "dance": {
+            "title": "Dance",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          },
+          "getTogether": {
+            "title": "Get Together",
+            "description": "Obtain delivery of anything you desire to your location."
+          }
+        },
+        "volunteer": {
+          "title": "Volunteer"
+        },
+        "adventures": "Adventure",
+        "adventure": {
+          "title": "Adventure",
+          "tour": {
+            "title": "Tour",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "activities": {
+            "title": "Activities",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          }
+        },
         "welcomeText": "Welcome to MEZKALA 👋",
         "search": "Search",
         "appDescription": "Your one stop place to find all your local businesses."
@@ -673,7 +711,7 @@
           "daysReturn": "days return",
           "day": "day",
           "days": "days",
-          "return" : "return",
+          "return": "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1156,11 +1194,11 @@
       }
     },
     "widgets": {
-      "OrderMapWidget" : {
-        "mapWebText" : "Install Mezcalmos application to get live time order map tracking"
+      "OrderMapWidget": {
+        "mapWebText": "Install Mezcalmos application to get live time order map tracking"
       },
-      "MezcalmosAppBar" : {
-        "installApp" : "Install Mezcalmos App"
+      "MezcalmosAppBar": {
+        "installApp": "Install Mezcalmos App"
       },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
@@ -2208,7 +2246,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
-        "review" : "Review",
+        "review": "Review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",
@@ -2584,6 +2622,5 @@
     "cancel": "Cancel",
     "minutes": "minutes",
     "slowInternet": "Slow internet"
-    
   }
 }

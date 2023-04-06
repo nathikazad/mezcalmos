@@ -7,6 +7,12 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/componen
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/HomeCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/VehicleCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/CarCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/components/ClassCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/WellnessService/components/WellnessCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/VolunteerService/components/VolunteerCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/AdventureService/components/TourCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/AdventureService/components/ActivitiesCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/EventsService/components/PartiesCard.dart';
 
 class AssetListView extends StatefulWidget {
   const AssetListView({super.key});
@@ -57,35 +63,75 @@ class _AssetListViewState extends State<AssetListView> {
                   roomSpace: 330,
                   totalRooms: 3,
                 );
+              case RentalViewEnum.Classes:
+                return ClassCard(
+                  title: "Fitness & group exercise",
+                  agencyName: "Pueto Fitness",
+                  image: NetworkImage(customImageUrl),
+                  groupName: "Group Name",
+                  price: 30,
+                  unitTime: "person",
+                );
+              case RentalViewEnum.Wellness:
+                return WellnessCard(
+                  title: "Wellness",
+                  timeDuration: "2",
+                  timeDurationUnit: "Hours",
+                  image: NetworkImage(customImageUrl),
+                  price: 30,
+                  unitTime: "person",
+                );
+              case RentalViewEnum.Volunteer:
+                return VolunteerCard(
+                  title: "Upcycling & inspiring creativity",
+                  location: "Sayulita and San Pancho, Mexico",
+                  image: NetworkImage(customImageUrl),
+                );
+              case RentalViewEnum.Tour:
+                return TourCard(
+                  title: "Undiscovered Mexico",
+                  image: NetworkImage(customImageUrl),
+                  price: 2000,
+                  priceUnit: "person",
+                  startDuration: "25",
+                  startMonth: "Mar",
+                  endDuration: "4",
+                  endMonth: "Apr",
+                );
+              case RentalViewEnum.Activities:
+                return ActivitiesCard(
+                  title: "Hike to Zapotec villages",
+                  image: NetworkImage(customImageUrl),
+                  price: 2000,
+                  priceUnit: "person",
+                  time: "11",
+                  timeUnit: "Hours",
+                );
+              case RentalViewEnum.Parties:
+                return PartiesCard(
+                  title: "Amazonia beach party",
+                  price: 50,
+                  priceUnit: "person",
+                  image: NetworkImage(customImageUrl),
+                  rating: "4.5",
+                );
+              case RentalViewEnum.Dance:
+                return PartiesCard(
+                  title: "Amazonia Dance",
+                  price: 10,
+                  priceUnit: "person",
+                  image: NetworkImage(customImageUrl),
+                  rating: "4.9",
+                );
+              case RentalViewEnum.GetTogether:
+                return PartiesCard(
+                  title: "Amazonia Get Together",
+                  price: 10,
+                  priceUnit: "person",
+                  image: NetworkImage(customImageUrl),
+                  rating: "4.7",
+                );
             }
-            // return Padding(
-            //   padding: const EdgeInsets.only(bottom: 8.0),
-            //   child: AssetCard(
-            //     title: "House for rent in Puerto Escondido",
-            //     onClick: () {
-            //       AssetServiceView.navigate();
-            //     },
-            //     image: NetworkImage(customImageUrl),
-            //     lBottomText: "Company Name",
-            //     rBottomText: "Company Name 2",
-            //     subtitleWidget: Text("Hello"),
-            //     needBottomTitleText: true,
-            //     needDivider: true,
-            //     needLeadingImage: false,
-            //     needTrailingImage: true,
-            //     needCustomSubtitle: false,
-            //     subtitleIconData: [
-            //       aPriceCheck,
-            //       aSingleBed,
-            //       aHouseSliding,
-            //     ],
-            //     subtitleIconString: [
-            //       "\$234/day",
-            //       "3 bedrooms",
-            //       "330m²",
-            //     ],
-            //   ),
-            // );
           },
         ),
       ),

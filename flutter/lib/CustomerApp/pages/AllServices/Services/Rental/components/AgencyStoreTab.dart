@@ -71,41 +71,39 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                       price: 70,
                       unitTime: "day",
                     );
+                  case RentalViewEnum.Classes:
+                    return AgencyStoreTile(
+                      title: "6 days surf camp",
+                      image: NetworkImage(customImageUrl),
+                      price: 40,
+                      unitTime: "person",
+                    );
+                  case RentalViewEnum.Wellness:
+                    // Wellness screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.Volunteer:
+                    // Volunteer screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.Tour:
+                    // Tour screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.Activities:
+                    // Activities screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.Parties:
+                    // Parties screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.Dance:
+                    // Dance screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.GetTogether:
+                    // GetTogether screen not going to navigate here thats why no UI needed
+                    return Offstage();
                 }
               },
               childCount: 10,
             ),
           ),
-          // sliver: SliverToBoxAdapter(
-          //   child: Column(
-          //     children: [
-          //       for (int index = 0; index < 5; index++)
-          //         Padding(
-          //           padding: const EdgeInsets.all(8.0),
-          //           child: AssetCard(
-          //             title: "Home for rent in Av Juan Pablo II, Pu..",
-          //             image: NetworkImage(customImageUrl),
-          //             onClick: () {},
-          //             needCustomSubtitle: false,
-          //             needLeadingImage: true,
-          //             needTrailingImage: false,
-          //             needDivider: false,
-          //             needBottomTitleText: false,
-          //             subtitleIconData: [
-          //               aPriceCheck,
-          //               aSingleBed,
-          //               aHouseSliding,
-          //             ],
-          //             subtitleIconString: [
-          //               "\$234/day",
-          //               "3 bedrooms",
-          //               "330m²",
-          //             ],
-          //           ),
-          //         ),
-          //     ],
-          //   ),
-          // ),
         ),
       ],
     );

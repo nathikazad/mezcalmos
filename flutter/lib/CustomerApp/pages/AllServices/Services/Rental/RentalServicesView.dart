@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetListsView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
@@ -10,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rental'];
+    ['pages']['CustHomeWrapper'];
 
 class RentalView extends StatefulWidget {
   const RentalView({super.key});
@@ -24,6 +25,8 @@ class RentalView extends StatefulWidget {
 }
 
 class _RentalViewState extends State<RentalView> {
+  AllServiceListViewController allServiceListViewController =
+      Get.find<AllServiceListViewController>();
   RentalController rentalController = RentalController();
 
   @override
@@ -33,7 +36,10 @@ class _RentalViewState extends State<RentalView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(_i18n()["title"].toString()),
+        titleWidget: Text(_i18n()[allServiceListViewController
+                .currentSelectedService.value.name
+                .toLowerCase()]["title"]
+            .toString()),
         actionIcons: <Widget>[
           AppBarActionButton(
             icon: Icons.notifications,
@@ -47,12 +53,17 @@ class _RentalViewState extends State<RentalView> {
         ],
       ),
       body: ListView.builder(
-        itemCount: rentalController.allRentalValues.length,
+        itemCount: rentalController
+            .allRentalValues[
+                allServiceListViewController.currentSelectedService]!
+            .length,
         itemBuilder: (BuildContext context, int index) {
           return MezCard(
             onClick: () {
               AssetListsView.navigate(
-                viewEnum: rentalController.allRentalValues[index]["value"],
+                viewEnum: rentalController.allRentalValues[
+                    allServiceListViewController
+                        .currentSelectedService]![index]["value"],
               );
             },
             content: Row(
@@ -63,14 +74,22 @@ class _RentalViewState extends State<RentalView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _i18n()[rentalController.allRentalValues[index]["key"]]
-                            ['title'],
+                        _i18n()[allServiceListViewController
+                            .currentSelectedService.value.name
+                            .toLowerCase()][rentalController.allRentalValues[
+                                allServiceListViewController
+                                    .currentSelectedService]![index]
+                            ["key"]]['title'],
                         style: txt.displayMedium,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
                         child: Text(
-                          _i18n()[rentalController.allRentalValues[index]
+                          _i18n()[allServiceListViewController
+                              .currentSelectedService.value.name
+                              .toLowerCase()][rentalController.allRentalValues[
+                                  allServiceListViewController
+                                      .currentSelectedService]![index]
                               ["key"]]['description'],
                           style: txt.labelLarge,
                         ),
@@ -79,7 +98,9 @@ class _RentalViewState extends State<RentalView> {
                   ),
                 ),
                 Image.asset(
-                  rentalController.allRentalValues[index]["icon"].toString(),
+                  rentalController.allRentalValues[allServiceListViewController
+                          .currentSelectedService]![index]["icon"]
+                      .toString(),
                   height: 110,
                   width: 110,
                 ),

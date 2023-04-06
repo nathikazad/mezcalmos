@@ -4,9 +4,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 enum AllServiceViewEnum {
   Delivery,
   Rental,
-  Classes,
+  Class,
   Wellness,
-  Events,
+  Event,
   Volunteer,
   Adventure,
 }
@@ -46,13 +46,13 @@ class AllServiceListViewController {
       },
       {
         "icon": aAdventure,
-        "title": "adventure",
+        "title": "adventures",
       },
     ]);
   }
 
   void setCurrentSelectedService(AllServiceViewEnum serviceValue) {
-    currentSelectedService.value = serviceValue;
+    currentSelectedService = serviceValue.obs;
   }
 
   void dispose() {}

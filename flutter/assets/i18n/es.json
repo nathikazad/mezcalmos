@@ -260,9 +260,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
-              "rmItemTitle" : "Remover el artículo",
-              "rmItemHelper" : "¿Estás seguro de que quieres eliminar este artículo del carrito?",
-              "rmItemButton" : "Sí, elimine el artículo",
+              "rmItemTitle": "Remover el artículo",
+              "rmItemHelper": "¿Estás seguro de que quieres eliminar este artículo del carrito?",
+              "rmItemButton": "Sí, elimine el artículo",
               "notAvailable": "Su restaurante está cerrado",
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
@@ -529,10 +529,48 @@
           }
         },
         "classes": "Clases",
-        "wellness": "Bienestar",
+        "class": {
+          "title": "Classes",
+          "classes": {
+            "title": "Clase",
+            "class": "Clase",
+            "studio": "Estudio"
+          }
+        },
+        "wellness": {
+          "title": "Bienestar"
+        },
         "events": "Eventos",
-        "volunteer": "Voluntario",
-        "adventure": "Aventura",
+        "event": {
+          "title": "Eventos",
+          "parties": {
+            "title": "Fiestas",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "dance": {
+            "title": "Danza",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          },
+          "getTogether": {
+            "title": "Reunirse",
+            "description": "Obtain delivery of anything you desire to your location."
+          }
+        },
+        "volunteer": {
+          "title": "Voluntario"
+        },
+        "adventures": "Aventura",
+        "adventure": {
+          "title": "Aventura",
+          "tour": {
+            "title": "Visita",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "activities": {
+            "title": "Actividades",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          }
+        },
         "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",
         "appDescription": "Your one stop place to find all your local businesses."
@@ -656,8 +694,8 @@
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
           "day": "día",
-          "return" : "devolver",
-          "daysReturn" : "Días de regreso",
+          "return": "devolver",
+          "daysReturn": "Días de regreso",
           "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
@@ -1163,11 +1201,11 @@
       }
     },
     "widgets": {
-      "OrderMapWidget" : {
-        "mapWebText" : "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
+      "OrderMapWidget": {
+        "mapWebText": "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
       },
-      "MezcalmosAppBar" : {
-        "installApp" : "Instalar la aplicación Mezcalmos"
+      "MezcalmosAppBar": {
+        "installApp": "Instalar la aplicación Mezcalmos"
       },
       "ReviewCard": {
         "review": "Revisar"
@@ -1871,7 +1909,7 @@
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
-            
+
               "noPickupTimeTitle": "Sin tiempo de recogida",
               "noPickupTimeBody": "Por favor, establezca la hora de recogida primero",
               "setDvCostTitle": "Sin costo de entrega",
@@ -2233,8 +2271,8 @@
         "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
         "deleteTitle": "Eliminar este artículo",
         "deleteItem": "Eliminar elemento",
-        "added" : "Agregada",
-        "addedSubtitle" : "Artículo agregado con éxito",
+        "added": "Agregada",
+        "addedSubtitle": "Artículo agregado con éxito",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Porfavor seleccione una categoría",
