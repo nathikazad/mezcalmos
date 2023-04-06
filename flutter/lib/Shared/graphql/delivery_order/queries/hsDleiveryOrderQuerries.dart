@@ -54,7 +54,9 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
     packageReady: orderData.package_ready,
-
+    changePriceRequest: (orderData.change_price_request != null)
+        ? ChangePriceRequest.fromMap(orderData.change_price_request)
+        : null,
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
     serviceOrderId: orderData.restaurant_order?.id,

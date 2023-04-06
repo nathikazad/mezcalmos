@@ -217,7 +217,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
                   width: 2,
                 ),
                 Text(
-                  company.rate!.doubleWithoutDecimalToInt.toString(),
+                  company.rate!.doubleWithoutDecimalToInt.toStringAsFixed(1),
                   style: context.txt.bodyLarge,
                 ),
                 if (company.numberOfReviews != null)

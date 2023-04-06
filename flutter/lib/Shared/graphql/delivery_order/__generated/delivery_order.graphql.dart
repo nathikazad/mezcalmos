@@ -306,6 +306,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'change_price_request'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_company'),
             alias: null,
             arguments: [],
@@ -1368,6 +1375,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     required this.order_type,
     required this.direction,
     this.chat_with_service_provider_id,
+    this.change_price_request,
     this.delivery_company,
     required this.customer_id,
     this.customer_review_by_driver_id,
@@ -1410,6 +1418,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$direction = json['direction'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
+    final l$change_price_request = json['change_price_request'];
     final l$delivery_company = json['delivery_company'];
     final l$customer_id = json['customer_id'];
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
@@ -1451,6 +1460,9 @@ class Query$get_driver_order$delivery_order_by_pk {
       order_type: (l$order_type as String),
       direction: (l$direction as String),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
+      change_price_request: l$change_price_request == null
+          ? null
+          : mapFromJson(l$change_price_request),
       delivery_company: l$delivery_company == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$delivery_company
@@ -1522,6 +1534,8 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String direction;
 
   final int? chat_with_service_provider_id;
+
+  final dynamic? change_price_request;
 
   final Query$get_driver_order$delivery_order_by_pk$delivery_company?
       delivery_company;
@@ -1605,6 +1619,10 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
+    final l$change_price_request = change_price_request;
+    _resultData['change_price_request'] = l$change_price_request == null
+        ? null
+        : mapToJson(l$change_price_request);
     final l$delivery_company = delivery_company;
     _resultData['delivery_company'] = l$delivery_company?.toJson();
     final l$customer_id = customer_id;
@@ -1689,6 +1707,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$order_type = order_type;
     final l$direction = direction;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    final l$change_price_request = change_price_request;
     final l$delivery_company = delivery_company;
     final l$customer_id = customer_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
@@ -1729,6 +1748,7 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$order_type,
       l$direction,
       l$chat_with_service_provider_id,
+      l$change_price_request,
       l$delivery_company,
       l$customer_id,
       l$customer_review_by_driver_id,
@@ -1798,6 +1818,11 @@ class Query$get_driver_order$delivery_order_by_pk {
         other.chat_with_service_provider_id;
     if (l$chat_with_service_provider_id !=
         lOther$chat_with_service_provider_id) {
+      return false;
+    }
+    final l$change_price_request = change_price_request;
+    final lOther$change_price_request = other.change_price_request;
+    if (l$change_price_request != lOther$change_price_request) {
       return false;
     }
     final l$delivery_company = delivery_company;
@@ -1999,6 +2024,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
+    dynamic? change_price_request,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -2074,6 +2100,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? order_type = _undefined,
     Object? direction = _undefined,
     Object? chat_with_service_provider_id = _undefined,
+    Object? change_price_request = _undefined,
     Object? delivery_company = _undefined,
     Object? customer_id = _undefined,
     Object? customer_review_by_driver_id = _undefined,
@@ -2125,6 +2152,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
                 : (chat_with_service_provider_id as int?),
+        change_price_request: change_price_request == _undefined
+            ? _instance.change_price_request
+            : (change_price_request as dynamic?),
         delivery_company: delivery_company == _undefined
             ? _instance.delivery_company
             : (delivery_company
@@ -2324,6 +2354,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
+    dynamic? change_price_request,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -7559,6 +7590,13 @@ const documentNodeSubscriptionlisten_on_driver_order =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'change_price_request'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'direction'),
             alias: null,
             arguments: [],
@@ -8611,6 +8649,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     this.cancellation_time,
     required this.chat_with_customer_id,
     required this.order_type,
+    this.change_price_request,
     required this.direction,
     this.schedule_time,
     this.chat_with_service_provider_id,
@@ -8659,6 +8698,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$cancellation_time = json['cancellation_time'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$order_type = json['order_type'];
+    final l$change_price_request = json['change_price_request'];
     final l$direction = json['direction'];
     final l$schedule_time = json['schedule_time'];
     final l$chat_with_service_provider_id =
@@ -8708,6 +8748,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       cancellation_time: (l$cancellation_time as String?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
       order_type: (l$order_type as String),
+      change_price_request: l$change_price_request == null
+          ? null
+          : mapFromJson(l$change_price_request),
       direction: (l$direction as String),
       schedule_time: (l$schedule_time as String?),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
@@ -8787,6 +8830,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
   final int chat_with_customer_id;
 
   final String order_type;
+
+  final dynamic? change_price_request;
 
   final String direction;
 
@@ -8884,6 +8929,10 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
     final l$order_type = order_type;
     _resultData['order_type'] = l$order_type;
+    final l$change_price_request = change_price_request;
+    _resultData['change_price_request'] = l$change_price_request == null
+        ? null
+        : mapToJson(l$change_price_request);
     final l$direction = direction;
     _resultData['direction'] = l$direction;
     final l$schedule_time = schedule_time;
@@ -8977,6 +9026,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$cancellation_time = cancellation_time;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$order_type = order_type;
+    final l$change_price_request = change_price_request;
     final l$direction = direction;
     final l$schedule_time = schedule_time;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -9022,6 +9072,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$cancellation_time,
       l$chat_with_customer_id,
       l$order_type,
+      l$change_price_request,
       l$direction,
       l$schedule_time,
       l$chat_with_service_provider_id,
@@ -9106,6 +9157,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$order_type = order_type;
     final lOther$order_type = other.order_type;
     if (l$order_type != lOther$order_type) {
+      return false;
+    }
+    final l$change_price_request = change_price_request;
+    final lOther$change_price_request = other.change_price_request;
+    if (l$change_price_request != lOther$change_price_request) {
       return false;
     }
     final l$direction = direction;
@@ -9330,6 +9386,7 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? cancellation_time,
     int? chat_with_customer_id,
     String? order_type,
+    dynamic? change_price_request,
     String? direction,
     String? schedule_time,
     int? chat_with_service_provider_id,
@@ -9415,6 +9472,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? cancellation_time = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? order_type = _undefined,
+    Object? change_price_request = _undefined,
     Object? direction = _undefined,
     Object? schedule_time = _undefined,
     Object? chat_with_service_provider_id = _undefined,
@@ -9476,6 +9534,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
+        change_price_request: change_price_request == _undefined
+            ? _instance.change_price_request
+            : (change_price_request as dynamic?),
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
@@ -9692,6 +9753,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? cancellation_time,
     int? chat_with_customer_id,
     String? order_type,
+    dynamic? change_price_request,
     String? direction,
     String? schedule_time,
     int? chat_with_service_provider_id,
