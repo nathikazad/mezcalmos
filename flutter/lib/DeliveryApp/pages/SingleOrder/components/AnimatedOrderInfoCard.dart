@@ -225,32 +225,36 @@ class AnimatedOrderInfoCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              serviceProviderName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                fontSize: 15,
-                color: Colors.black,
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  serviceProviderName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            if (order.isDriverAssigned &&
-                order.serviceProviderDriverChatId != null)
-              MessageButton(
-                withPadding: false,
-                onTap: onServiceMsgClick,
-                chatId: order.serviceProviderDriverChatId!,
+              SizedBox(
+                width: 8,
               ),
-          ],
+              if (order.isDriverAssigned &&
+                  order.serviceProviderDriverChatId != null)
+                MessageButton(
+                  withPadding: false,
+                  onTap: onServiceMsgClick,
+                  chatId: order.serviceProviderDriverChatId!,
+                ),
+            ],
+          ),
         ),
         if (order.isDriverAssigned && order.inProcess())
           Align(
@@ -402,24 +406,21 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Icon(
           Icons.delivery_dining,
           color: Color.fromRGBO(73, 73, 73, 1),
-          size: 18,
+          size: 20,
         ),
         SizedBox(width: 3),
-        Flexible(
-          child: Text(
-            order.routeInformation?.duration.inMinutesText() ?? '- - - -',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-            ),
+        Text(
+          order.routeInformation?.duration.inMinutesText() ?? '- - - -',
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w600,
+            fontSize: 15,
           ),
         ),
         SizedBox(width: 10),
@@ -429,16 +430,13 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           size: 17,
         ),
         SizedBox(width: 3),
-        Flexible(
-          child: Text(
-            order.routeInformation?.distance.toKmText() ?? '- - - -',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-            ),
+        Text(
+          order.routeInformation?.distance.toKmText() ?? '- - - -',
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w600,
+            fontSize: 15,
           ),
         ),
       ],

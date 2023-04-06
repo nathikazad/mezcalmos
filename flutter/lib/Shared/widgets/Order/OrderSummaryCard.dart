@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
@@ -141,7 +144,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Flexible(
                           fit: FlexFit.tight,
@@ -150,7 +153,30 @@ class OrderSummaryCard extends StatelessWidget {
                             style: context.txt.bodyMedium,
                           ),
                         ),
-                        if (setTaxCallBack != null)
+                        if (costs.tax == null)
+                          Flexible(
+                            child: MezButton(
+                              width: 15.w,
+                              height: 20,
+                              label: '${_i18n()["add"]}',
+                              onClick: () async {},
+                              backgroundColor: Colors.transparent,
+                              textColor: primaryBlueColor,
+                            ),
+                          ),
+                        if (costs.tax != null)
+                          MezIconButton(
+                            icon: costs.tax != null ? Icons.edit : Icons.add,
+                            iconSize: 17,
+                            padding: const EdgeInsets.all(3),
+                            onTap: setTaxCallBack,
+                          ),
+                        if (costs.tax != null)
+                          Container(
+                            margin: const EdgeInsets.only(left: 3),
+                            child: Text("${costs.tax?.toPriceString() ?? "-"}"),
+                          )
+                        /*if (setTaxCallBack != null)
                           MezIconButton(
                             icon: costs.tax != null ? Icons.edit : Icons.add,
                             iconSize: 17,
@@ -160,7 +186,7 @@ class OrderSummaryCard extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.only(left: 3),
                           child: Text("${costs.tax?.toPriceString() ?? "-"}"),
-                        )
+                        )*/
                       ],
                     ),
                   ),
@@ -175,10 +201,11 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyLarge,
                         ),
                         Text(
-                            (costs.orderItemsCost != 0)
-                                ? costs.totalCost?.toPriceString() ?? "-"
-                                : "-",
-                            style: txt.headlineSmall),
+                          (costs.orderItemsCost != 0)
+                              ? costs.totalCost?.toPriceString() ?? "-"
+                              : "-",
+                          style: txt.bodyLarge,
+                        ),
                       ],
                     ),
                   ),

@@ -32,29 +32,26 @@ class MezSideMenu extends GetWidget<AuthController> {
     return Drawer(
       child: Obx(
         () => Container(
+          margin: EdgeInsets.only(left: 20.sp, top: 20.sp),
           padding: const EdgeInsets.all(5),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 50),
-                      _drawerHeader(),
-                      // SizedBox(height: 43),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Divider(
-                          color: Color.fromRGBO(196, 196, 196, 0.29),
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Flexible(flex: 1, child: _drawerHeader()),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                      child: Divider(
+                        color: Color.fromRGBO(196, 196, 196, 0.29),
                       ),
-                      SizedBox(height: 10),
-                      _buildSideMenuItem(),
-                      _basicSideMenuItems(context),
-                    ],
-                  ),
+                    ),
+                    _buildSideMenuItem(),
+                    _basicSideMenuItems(context),
+                  ],
                 ),
               ),
               Container(
@@ -174,79 +171,74 @@ class MezSideMenu extends GetWidget<AuthController> {
     );
   }
 
-  Container _drawerHeader() {
-    return Container(
-      padding: EdgeInsets.only(left: 21, top: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 136,
-            width: 136,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: secondaryLightBlueColor,
-              // border: Border.all(color: Colors.black),
-            ),
-            child: ClipOval(
-              clipBehavior: Clip.antiAlias,
-              child: controller.user?.image == null ||
-                      controller.user?.image == ""
-                  ? Icon(
-                      Icons.person,
-                      size: 70,
-                      color: primaryBlueColor,
-                    )
-                  : CachedNetworkImage(
-                      imageUrl: controller.user!.image,
-                      fit: BoxFit.cover,
-                      imageBuilder: (BuildContext context,
-                              ImageProvider<Object> imageProvider) =>
-                          Container(
-                        width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: imageProvider, fit: BoxFit.cover),
-                        ),
+  Column _drawerHeader() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          height: 100.sp,
+          width: 100.sp,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: secondaryLightBlueColor,
+            // border: Border.all(color: Colors.black),
+          ),
+          child: ClipOval(
+            clipBehavior: Clip.antiAlias,
+            child: controller.user?.image == null ||
+                    controller.user?.image == ""
+                ? Icon(
+                    Icons.person,
+                    size: 70,
+                    color: primaryBlueColor,
+                  )
+                : CachedNetworkImage(
+                    imageUrl: controller.user!.image,
+                    fit: BoxFit.cover,
+                    imageBuilder: (BuildContext context,
+                            ImageProvider<Object> imageProvider) =>
+                        Container(
+                      width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
                       ),
-                      placeholder: (BuildContext context, String url) =>
-                          Container(
-                        width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                      errorWidget: (BuildContext context, String url, error) =>
-                          Container(
-                              width:
-                                  getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                              height:
-                                  getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                              child: Center(child: Icon(Icons.error))),
                     ),
-            ),
+                    placeholder: (BuildContext context, String url) =>
+                        Container(
+                      width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    errorWidget: (BuildContext context, String url, error) =>
+                        Container(
+                            width:
+                                getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                            height:
+                                getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                            child: Center(child: Icon(Icons.error))),
+                  ),
           ),
-          const SizedBox(height: 15),
-          Container(
-            padding: const EdgeInsets.only(left: 5),
-            child: Text(
-              controller.user?.name ?? "",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: blackColor),
-            ),
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 2.h, left: 5),
+          child: Text(
+            controller.user?.name ?? "",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: blackColor),
           ),
-          const SizedBox(height: 30),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -256,7 +248,7 @@ class MezSideMenu extends GetWidget<AuthController> {
         children: _drawerController.sideMenuItems,
       );
     } else
-      return Container();
+      return SizedBox.shrink();
   }
 }
 
@@ -282,12 +274,9 @@ class SideMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        margin: EdgeInsets.symmetric(vertical: 1.h),
         child: Row(
           children: [
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               icon,
               color: Colors.grey.shade400,

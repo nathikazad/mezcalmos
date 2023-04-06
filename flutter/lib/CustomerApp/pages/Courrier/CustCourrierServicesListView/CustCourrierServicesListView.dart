@@ -61,7 +61,7 @@ class _CustCourierServicesListViewState
         () {
           if (companies.value != null) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 children: [
                   // _searchCoomponent(context),
@@ -124,25 +124,47 @@ class _CustCourierServicesListViewState
   }
 
   Widget _companyCard(DeliveryCompany company, BuildContext context) {
-    return MezCard(
-        onClick: () {
-          mezDbgPrint("Clicked");
-          CustCourierServiceView.navigate(companyId: company.info.hasuraId);
-        },
-        firstAvatarBgImage: CachedNetworkImageProvider(company.info.image),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              company.info.name,
-              style: context.txt.bodyLarge,
-            ),
-            SizedBox(
-              height: 7.5,
-            ),
-            _detailsRow(company, context)
-          ],
-        ));
+    return Card(
+        margin: EdgeInsets.only(bottom: 10),
+        elevation: 1,
+        child: InkWell(
+            onTap: () {
+              CustCourierServiceView.navigate(companyId: company.info.hasuraId);
+            },
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+                padding: const EdgeInsets.only(
+                    top: 12.5, right: 5, left: 12.5, bottom: 12.5),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 25,
+                        backgroundImage:
+                            CachedNetworkImageProvider(company.info.image),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Flexible(
+                        flex: 4,
+                        fit: FlexFit.loose,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              company.info.name,
+                              style: context.txt.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 7.5,
+                            ),
+                            _detailsRow(company, context)
+                          ],
+                        ),
+                      ),
+                    ]))));
   }
 }
 
@@ -166,9 +188,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               shippingCost: 50,
               showPerKm: true,
               alignment: MainAxisAlignment.start,
-              textStyle: context.txt.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              textStyle: context.txt.bodySmall,
             ),
           ],
         ),
@@ -215,7 +235,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
                 ),
                 Text(
                   company.rate.toString(),
-                  style: context.txt.bodyMedium,
+                  style: context.txt.bodySmall,
                 )
               ],
             ),

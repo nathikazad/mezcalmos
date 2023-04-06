@@ -158,6 +158,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               ),
               if (widget.viewcontroller.order.inProcess())
                 MezIconButton(
+                  elevation: 0,
                   backgroundColor: backgroundShadeColor,
                   iconColor: offShadeGreyColor,
                   onTap: () async {
@@ -189,6 +190,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               ),
               if (widget.viewcontroller.order.inProcess())
                 MezIconButton(
+                  elevation: 0,
                   backgroundColor: backgroundShadeColor,
                   iconColor: offShadeGreyColor,
                   onTap: () async {
