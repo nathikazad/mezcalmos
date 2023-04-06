@@ -181,6 +181,42 @@ type business_business {
     """filter the rows returned"""
     where: business_rental_bool_exp
   ): business_rental_aggregate!
+
+  """An array relationship"""
+  reviews(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): [review!]!
+
+  """An aggregate relationship"""
+  reviews_aggregate(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): review_aggregate!
   service_provider_type: String!
 }
 
@@ -234,6 +270,8 @@ input business_business_bool_exp {
   profile: String_comparison_exp
   rentals: business_rental_bool_exp
   rentals_aggregate: business_rental_aggregate_bool_exp
+  reviews: review_bool_exp
+  reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
 }
 
@@ -272,6 +310,7 @@ input business_business_insert_input {
   operators: business_operator_arr_rel_insert_input
   profile: String
   rentals: business_rental_arr_rel_insert_input
+  reviews: review_arr_rel_insert_input
   service_provider_type: String
 }
 
@@ -331,6 +370,7 @@ input business_business_order_by {
   operators_aggregate: business_operator_aggregate_order_by
   profile: order_by
   rentals_aggregate: business_rental_aggregate_order_by
+  reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
 }
 
@@ -3960,12 +4000,18 @@ type business_service {
     """JSON select path"""
     path: String
   ): jsonb!
+
+  """An object relationship"""
+  description: translation
   description_id: Int
   id: Int!
   image(
     """JSON select path"""
     path: String
   ): jsonb
+
+  """An object relationship"""
+  name: translation!
   name_id: Int!
   position: Int!
 }
@@ -4021,9 +4067,11 @@ input business_service_bool_exp {
   available: Boolean_comparison_exp
   category1: String_comparison_exp
   cost: jsonb_comparison_exp
+  description: translation_bool_exp
   description_id: Int_comparison_exp
   id: Int_comparison_exp
   image: jsonb_comparison_exp
+  name: translation_bool_exp
   name_id: Int_comparison_exp
   position: Int_comparison_exp
 }
@@ -4084,9 +4132,11 @@ input business_service_insert_input {
   available: Boolean
   category1: String
   cost: jsonb
+  description: translation_obj_rel_insert_input
   description_id: Int
   id: Int
   image: jsonb
+  name: translation_obj_rel_insert_input
   name_id: Int
   position: Int
 }
@@ -4145,9 +4195,11 @@ input business_service_order_by {
   available: order_by
   category1: order_by
   cost: order_by
+  description: translation_order_by
   description_id: order_by
   id: order_by
   image: order_by
+  name: translation_order_by
   name_id: order_by
   position: order_by
 }

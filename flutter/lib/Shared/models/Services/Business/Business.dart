@@ -1,50 +1,25 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
-class Business extends Service {
-  // LaundryCosts laundryCosts;
+class BusinessCardView {
+  int id;
+  int detailsId;
+  String name;
+  String image;
+  Map<PaymentType, bool> acceptedPayments;
+  double? avgRating;
+  int? reviewCount;
 
-  Business({
-    required ServiceInfo userInfo,
-    required Schedule? schedule,
-    required PaymentInfo paymentInfo,
-    required ServiceState businessState,
-    required super.deliveryCost,
-    required super.serviceDetailsId,
-    // required this.laundryCosts,
-    required Map<LanguageType, bool> languages,
-  }) : super(
-            info: userInfo,
-            schedule: schedule,
-            languages: languages,
-            state: businessState,
-            paymentInfo: paymentInfo);
-
-  // double get getAverageCost {
-  //   double allCosts = 0;
-
-  //   laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
-  //     allCosts += element.cost;
-  //   });
-  //   final double averageCost = allCosts / laundryCosts.lineItems.length;
-
-  //   return averageCost;
-  // }
-
-  // num get getCheapestCategory {
-  //   final LaundryCostLineItem cheapestCostCategory = laundryCosts.lineItems
-  //       .reduce((LaundryCostLineItem a, LaundryCostLineItem b) =>
-  //           a.cost < b.cost ? a : b);
-  //   return cheapestCostCategory.cost;
-  // }
-
-  // Map<String, dynamic> toJson() {
-  //   return <String, dynamic>{
-  //     "info": info.toJson(),
-  //     "state": state.toJson(),
-  //   };
-  // }
+  BusinessCardView(
+      {required this.id,
+      required this.detailsId,
+      required this.name,
+      required this.image,
+      required this.acceptedPayments,
+      this.avgRating,
+      this.reviewCount});
 }

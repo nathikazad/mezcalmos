@@ -4,6 +4,7 @@
 # python3 getSchema.py dl-local-schema
 import os
 import sys
+from sys import argv, stderr, platform 
 
 if(len(sys.argv) > 1):
   output = os.popen('npm list -g graphql-zeus').read()
@@ -23,7 +24,10 @@ if(len(sys.argv) > 1):
     os.system('npm run generate-gql-client-staging')
     
   os.chdir('../../flutter/lib/Shared/graphql')
-  os.system('cp ../../../../hasura/library/src/generated/schema.graphql ./')
+  if platform.startswith('win'):
+    os.system('copy ..\..\..\..\hasura\library\src\generated\schema.graphql .\\')
+  else:
+    os.system('cp ../../../../hasura/library/src/generated/schema.graphql ./')
 os.system('flutter pub run build_runner build --delete-conflicting-outputs')
 
 

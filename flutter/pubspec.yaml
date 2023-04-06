@@ -125,6 +125,7 @@ flutter:
     - assets/animation/
     - assets/sounds/
     - assets/icons/appstore.png
+    - "assets/images/customer/rental/"
 
 
 # Fonts
