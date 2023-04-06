@@ -16,8 +16,6 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
 
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
-  final BoxBorder? border;
-  final bool readOnly;
   final bool placeNameAsAdress;
   final bool showInputAsOption;
 
@@ -29,24 +27,18 @@ class LocationSearchComponent extends StatefulWidget {
   final TextEditingController? controller;
 
   final TextFieldGotUpdated? onTextChange;
-  final double? dropDownWidth;
-  final double? dropDownDxOffset;
-  final EdgeInsets hintPadding;
-  final String label;
+
+  final String? initialTextValue;
   final MapHelper.LocationChangesNotifier notifyParent;
   final Function onClear;
   final bool showSearchIcon;
-  String? text;
 
-  LocationSearchComponent({
-    this.label = "",
+  const LocationSearchComponent({
+    this.initialTextValue,
     this.placeNameAsAdress = true,
     this.controller,
     this.showInputAsOption = false,
     this.showSearchIcon = false,
-    this.readOnly = false,
-    this.hintPadding = const EdgeInsets.only(left: 2, top: 2),
-    this.border,
     this.textStyle,
     this.bgColor = const Color(0xfff8f8f8),
     this.labelStyle = const TextStyle(
@@ -54,12 +46,9 @@ class LocationSearchComponent extends StatefulWidget {
       fontSize: 14,
       color: Colors.black87,
     ),
-    this.text,
     required this.notifyParent,
     required this.onClear,
     this.onTextChange,
-    this.dropDownWidth,
-    this.dropDownDxOffset,
     Key? key,
   }) : super(key: key);
 
@@ -69,9 +58,12 @@ class LocationSearchComponent extends StatefulWidget {
 
 class LocationSearchComponentState extends State<LocationSearchComponent> {
   TextEditingController _controller = TextEditingController();
-  // TextEditingController get _controller =>
-  //     widget.controller ?? _controller;
+
   FocusNode? _focusNode;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -109,6 +101,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
           FocusNode focusNode,
           Function()? onFieldSubmitted) {
         _controller = textEditingController;
+
         _focusNode = focusNode;
         return TextFormField(
           controller: _controller,
@@ -276,6 +269,14 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
   InputDecoration _inputDecoration() {
     return InputDecoration(
       fillColor: Colors.white,
+      label: Text(widget.initialTextValue ?? ""),
+      labelStyle: widget.textStyle ??
+          widget.labelStyle.copyWith(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.black87,
+            overflow: TextOverflow.ellipsis,
+          ),
       isDense: true,
       suffixIconConstraints: BoxConstraints(
         maxWidth: 30,

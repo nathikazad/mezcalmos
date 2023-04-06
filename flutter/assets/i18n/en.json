@@ -828,7 +828,7 @@
           "CreateServiceInfoPage": {
             "name": "Restaurant name",
             "hintNameText": "Enter your name",
-            "uploadImageText": "Upload your profile image",
+            "uploadImageText": "Upload image",
             "nameError": "Please provide a name",
             "descriptionError": "Please provide a description",
             "location": "Location",

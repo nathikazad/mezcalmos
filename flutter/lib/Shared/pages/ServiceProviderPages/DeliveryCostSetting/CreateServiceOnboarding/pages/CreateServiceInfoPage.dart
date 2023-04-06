@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
@@ -115,7 +116,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             _locationCard(context),
             SizedBox(
-              height: 35,
+              height: 75,
             ),
           ],
         ),
@@ -140,7 +141,7 @@ class CreateServiceInfoPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 onTap: () async {
                   final MezLocation? newLoc = await PickLocationView.navigate();
-
+                  mezDbgPrint("After waaait ===================>$newLoc");
                   if (newLoc != null) {
                     viewController.setNewLocation(newLoc);
                   }

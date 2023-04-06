@@ -101,11 +101,11 @@ class MezRouter {
 
   static Future<bool> back({backResult = null}) async {
     mezDbgPrint("Trynig to go back ${QR.currentPath}");
+    _backResult = backResult;
     final PopResult popResult = await QR.back();
     if (popResult != PopResult.Popped) {
       return false;
     } else {
-      _backResult = backResult;
       return true;
     }
   }
@@ -188,12 +188,12 @@ class MezRouter {
 
     // add observers to the app
     // this observer will be called when the user navigates to new route
-    QR.observer.onNavigate.add((path, route) async {
+    QR.observer.onNavigate.add((String path, QRoute route) async {
       mezDbgPrint('Observer: Navigating to $path');
     });
 
     // to support android and browser back button
-    QR.observer.onPop.add((path, route) async {
+    QR.observer.onPop.add((String path, QRoute route) async {
       onPoppedCallback();
     });
 

@@ -828,7 +828,7 @@
           "CreateServiceInfoPage": {
             "name": "Nombre del restaurante",
             "hintNameText": "Introduzca su nombre",
-            "uploadImageText": "Sube tu imagen de perfil",
+            "uploadImageText": "Cargar imagen",
             "nameError": "Proporcione un nombre",
             "descriptionError": "Proporcione una descripción",
             "location": "Ubicación",

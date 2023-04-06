@@ -38,29 +38,25 @@ class CreateServiceImageComponent extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 9.5.h,
                       backgroundColor: Color(0xFFF5F5F5),
-                      child: CircleAvatar(
-                        backgroundColor: Color(0xFFF5F5F5),
-                        backgroundImage: viewController.getRightImage,
-                        radius: 9.h,
-                        child: (viewController.imageLoading.isTrue)
-                            ? CircularProgressIndicator(
-                                color: primaryBlueColor,
-                              )
-                            : (viewController.newImageFile == null &&
-                                    viewController.newImageUrl.value == null)
-                                ? Container(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      "${_i18n()['uploadImageText']}",
-                                      style: context.txt.bodyMedium?.copyWith(
-                                          color: offLightShadeGreyColor),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )
-                                : null,
-                      ),
+                      backgroundImage: viewController.getRightImage,
+                      radius: 9.5.h,
+                      child: (viewController.imageLoading.isTrue)
+                          ? CircularProgressIndicator(
+                              color: primaryBlueColor,
+                            )
+                          : (viewController.newImageFile.value == null &&
+                                  viewController.newImageUrl.value == null)
+                              ? Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(
+                                    "${_i18n()['uploadImageText']}",
+                                    style: context.txt.bodyMedium?.copyWith(
+                                        color: offLightShadeGreyColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              : null,
                     ),
                     Positioned(
                         bottom: 0,
