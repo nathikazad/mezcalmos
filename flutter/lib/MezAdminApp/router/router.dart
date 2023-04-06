@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MezAdminRoutes {
-  static const String kTabsViewRoute = '/deliveryOpHomeScreen';
+  static const String kTabsViewRoute = '/mezAdminHome';
   static const String kServiceOrdersRoute = '/serviceOrders/:serviceProviderId';
 
   static final List<QRoute> mainRoutes = <QRoute>[

@@ -1439,10 +1439,11 @@
         "order" : "Orden",
         "customer" :"Información del cliente",
         "estTimes" :"Tiempos estimados",
-        "deliveryDeatils" :"Detalles de la entrega",
+        "deliveryDetails" :"Detalles de la entrega",
         "loading" : "Obteniendo su información de pedido ...",
         "packageReady" :"Paquete listo:",
         "arrivalAtPickup": "Llegada a la recogida :",
+        "pickupLoc" :"Lugar de recogida",
         "arrivalAtDropoff": "Llegada a la caída :",
         "noDriver" :"No hay controlador asignado todavía"
 

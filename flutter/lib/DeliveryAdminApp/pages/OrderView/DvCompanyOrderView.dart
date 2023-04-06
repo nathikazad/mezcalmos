@@ -129,19 +129,26 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                     style: context.txt.bodyLarge,
                   ),
                 ),
-                OrderScheduledTimeCard(
-                    time: viewController.order.value!.orderTime,
-                    margin: const EdgeInsets.only(top: 20)),
+                if (viewController.order.value!.pickupLocation != null)
+                  OrderDeliveryLocation(
+                    title: "${_i18n()['pickupLoc']}",
+                    address:
+                        viewController.order.value!.pickupLocation!.address,
+                    margin: const EdgeInsets.only(top: 10),
+                  ),
                 OrderDeliveryLocation(
                   address: viewController.order.value!.dropOffLocation.address,
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 10),
                 ),
                 OrderPaymentMethod(
                   stripeOrderPaymentInfo:
                       viewController.order.value!.stripePaymentInfo,
                   paymentType: viewController.order.value!.paymentType,
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 10),
                 ),
+                OrderScheduledTimeCard(
+                    time: viewController.order.value!.scheduleTime,
+                    margin: const EdgeInsets.only(top: 10)),
               ],
             ),
           );

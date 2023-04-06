@@ -200,7 +200,9 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           ),
           if (widget.deliveryTime != null &&
               widget.deliveryTime!.toLocal().isBefore(DateTime.now().toLocal()))
-            _timeError()
+            _timeError(),
+          if (widget.deliveryTime == null && widget.schedule?.isOpen() == false)
+            _timeError(title: "Please select a delivery time")
         ],
       ),
     );
@@ -235,22 +237,23 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
     }
   }
 
-  Container _timeError() {
+  Container _timeError({String? title}) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
             Icons.error_outline,
             color: Colors.red,
+            size: 22,
           ),
           const SizedBox(
             width: 5,
           ),
           Flexible(
             child: Text(
-              '${_i18n()["timeError"]}',
+              title ?? '${_i18n()["timeError"]}',
               style: context.txt.bodyLarge
                   ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
