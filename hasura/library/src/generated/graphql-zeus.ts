@@ -69,6 +69,18 @@ rentals_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["business_rental_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["business_rental_bool_exp"]},ValueTypes["business_rental_aggregate"]],
+reviews?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+reviews_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 	service_provider_type?:true,
 		__typename?: true
 }>;
@@ -116,6 +128,8 @@ count?: [{	columns?:ValueTypes["business_business_select_column"][],	distinct?:b
 	profile?:ValueTypes["String_comparison_exp"],
 	rentals?:ValueTypes["business_rental_bool_exp"],
 	rentals_aggregate?:ValueTypes["business_rental_aggregate_bool_exp"],
+	reviews?:ValueTypes["review_bool_exp"],
+	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "business.business" */
@@ -135,6 +149,7 @@ count?: [{	columns?:ValueTypes["business_business_select_column"][],	distinct?:b
 	operators?:ValueTypes["business_operator_arr_rel_insert_input"],
 	profile?:string,
 	rentals?:ValueTypes["business_rental_arr_rel_insert_input"],
+	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	service_provider_type?:string
 };
 	/** aggregate max on columns */
@@ -183,6 +198,7 @@ count?: [{	columns?:ValueTypes["business_business_select_column"][],	distinct?:b
 	operators_aggregate?:ValueTypes["business_operator_aggregate_order_by"],
 	profile?:ValueTypes["order_by"],
 	rentals_aggregate?:ValueTypes["business_rental_aggregate_order_by"],
+	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	service_provider_type?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: business.business */
@@ -2675,10 +2691,14 @@ additional_parameters?: [{	/** JSON select path */
 	category1?:true,
 cost?: [{	/** JSON select path */
 	path?:string},true],
+	/** An object relationship */
+	description?:ValueTypes["translation"],
 	description_id?:true,
 	id?:true,
 image?: [{	/** JSON select path */
 	path?:string},true],
+	/** An object relationship */
+	name?:ValueTypes["translation"],
 	name_id?:true,
 	position?:true,
 		__typename?: true
@@ -2727,9 +2747,11 @@ count?: [{	columns?:ValueTypes["business_service_select_column"][],	distinct?:bo
 	available?:ValueTypes["Boolean_comparison_exp"],
 	category1?:ValueTypes["String_comparison_exp"],
 	cost?:ValueTypes["jsonb_comparison_exp"],
+	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["jsonb_comparison_exp"],
+	name?:ValueTypes["translation_bool_exp"],
 	name_id?:ValueTypes["Int_comparison_exp"],
 	position?:ValueTypes["Int_comparison_exp"]
 };
@@ -2767,9 +2789,11 @@ end). throws an error if top level container is not an array */
 	available?:boolean,
 	category1?:string,
 	cost?:ValueTypes["jsonb"],
+	description?:ValueTypes["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
 	image?:ValueTypes["jsonb"],
+	name?:ValueTypes["translation_obj_rel_insert_input"],
 	name_id?:number,
 	position?:number
 };
@@ -2817,9 +2841,11 @@ end). throws an error if top level container is not an array */
 	available?:ValueTypes["order_by"],
 	category1?:ValueTypes["order_by"],
 	cost?:ValueTypes["order_by"],
+	description?:ValueTypes["translation_order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
+	name?:ValueTypes["translation_order_by"],
 	name_id?:ValueTypes["order_by"],
 	position?:ValueTypes["order_by"]
 };
@@ -23182,6 +23208,10 @@ export type PartialObjects = {
 	rentals?:PartialObjects["business_rental"][],
 			/** An aggregate relationship */
 	rentals_aggregate?:PartialObjects["business_rental_aggregate"],
+			/** An array relationship */
+	reviews?:PartialObjects["review"][],
+			/** An aggregate relationship */
+	reviews_aggregate?:PartialObjects["review_aggregate"],
 			service_provider_type?:string
 	},
 	/** aggregated selection of "business.business" */
@@ -23228,6 +23258,8 @@ export type PartialObjects = {
 	profile?:PartialObjects["String_comparison_exp"],
 	rentals?:PartialObjects["business_rental_bool_exp"],
 	rentals_aggregate?:PartialObjects["business_rental_aggregate_bool_exp"],
+	reviews?:PartialObjects["review_bool_exp"],
+	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "business.business" */
@@ -23247,6 +23279,7 @@ export type PartialObjects = {
 	operators?:PartialObjects["business_operator_arr_rel_insert_input"],
 	profile?:string,
 	rentals?:PartialObjects["business_rental_arr_rel_insert_input"],
+	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	service_provider_type?:string
 },
 	/** aggregate max on columns */
@@ -23295,6 +23328,7 @@ export type PartialObjects = {
 	operators_aggregate?:PartialObjects["business_operator_aggregate_order_by"],
 	profile?:PartialObjects["order_by"],
 	rentals_aggregate?:PartialObjects["business_rental_aggregate_order_by"],
+	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	service_provider_type?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: business.business */
@@ -25766,9 +25800,13 @@ the end). throws an error if top level container is not an array */
 			available?:boolean,
 			category1?:string,
 			cost?:PartialObjects["jsonb"],
+			/** An object relationship */
+	description?:PartialObjects["translation"],
 			description_id?:number,
 			id?:number,
 			image?:PartialObjects["jsonb"],
+			/** An object relationship */
+	name?:PartialObjects["translation"],
 			name_id?:number,
 			position?:number
 	},
@@ -25816,9 +25854,11 @@ the end). throws an error if top level container is not an array */
 	available?:PartialObjects["Boolean_comparison_exp"],
 	category1?:PartialObjects["String_comparison_exp"],
 	cost?:PartialObjects["jsonb_comparison_exp"],
+	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["jsonb_comparison_exp"],
+	name?:PartialObjects["translation_bool_exp"],
 	name_id?:PartialObjects["Int_comparison_exp"],
 	position?:PartialObjects["Int_comparison_exp"]
 },
@@ -25856,9 +25896,11 @@ end). throws an error if top level container is not an array */
 	available?:boolean,
 	category1?:string,
 	cost?:PartialObjects["jsonb"],
+	description?:PartialObjects["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
 	image?:PartialObjects["jsonb"],
+	name?:PartialObjects["translation_obj_rel_insert_input"],
 	name_id?:number,
 	position?:number
 },
@@ -25906,9 +25948,11 @@ end). throws an error if top level container is not an array */
 	available?:PartialObjects["order_by"],
 	category1?:PartialObjects["order_by"],
 	cost?:PartialObjects["order_by"],
+	description?:PartialObjects["translation_order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
+	name?:PartialObjects["translation_order_by"],
 	name_id?:PartialObjects["order_by"],
 	position?:PartialObjects["order_by"]
 },
@@ -44428,6 +44472,10 @@ export type business_business = {
 	rentals:business_rental[],
 	/** An aggregate relationship */
 	rentals_aggregate:business_rental_aggregate,
+	/** An array relationship */
+	reviews:review[],
+	/** An aggregate relationship */
+	reviews_aggregate:review_aggregate,
 	service_provider_type:string
 }
 
@@ -44478,6 +44526,8 @@ export type business_business_bool_exp = {
 	profile?:String_comparison_exp,
 	rentals?:business_rental_bool_exp,
 	rentals_aggregate?:business_rental_aggregate_bool_exp,
+	reviews?:review_bool_exp,
+	reviews_aggregate?:review_aggregate_bool_exp,
 	service_provider_type?:String_comparison_exp
 }
 
@@ -44503,6 +44553,7 @@ export type business_business_insert_input = {
 	operators?:business_operator_arr_rel_insert_input,
 	profile?:string,
 	rentals?:business_rental_arr_rel_insert_input,
+	reviews?:review_arr_rel_insert_input,
 	service_provider_type?:string
 }
 
@@ -44557,6 +44608,7 @@ export type business_business_order_by = {
 	operators_aggregate?:business_operator_aggregate_order_by,
 	profile?:order_by,
 	rentals_aggregate?:business_rental_aggregate_order_by,
+	reviews_aggregate?:review_aggregate_order_by,
 	service_provider_type?:order_by
 }
 
@@ -47507,9 +47559,13 @@ export type business_service = {
 	available:boolean,
 	category1:string,
 	cost:jsonb,
+	/** An object relationship */
+	description?:translation,
 	description_id?:number,
 	id:number,
 	image?:jsonb,
+	/** An object relationship */
+	name:translation,
 	name_id:number,
 	position:number
 }
@@ -47562,9 +47618,11 @@ export type business_service_bool_exp = {
 	available?:Boolean_comparison_exp,
 	category1?:String_comparison_exp,
 	cost?:jsonb_comparison_exp,
+	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	image?:jsonb_comparison_exp,
+	name?:translation_bool_exp,
 	name_id?:Int_comparison_exp,
 	position?:Int_comparison_exp
 }
@@ -47610,9 +47668,11 @@ export type business_service_insert_input = {
 	available?:boolean,
 	category1?:string,
 	cost?:jsonb,
+	description?:translation_obj_rel_insert_input,
 	description_id?:number,
 	id?:number,
 	image?:jsonb,
+	name?:translation_obj_rel_insert_input,
 	name_id?:number,
 	position?:number
 }
@@ -47666,9 +47726,11 @@ export type business_service_order_by = {
 	available?:order_by,
 	category1?:order_by,
 	cost?:order_by,
+	description?:translation_order_by,
 	description_id?:order_by,
 	id?:order_by,
 	image?:order_by,
+	name?:translation_order_by,
 	name_id?:order_by,
 	position?:order_by
 }
@@ -69544,6 +69606,70 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		reviews:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		reviews_aggregate:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	business_business_aggregate_fields:{
@@ -69653,6 +69779,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		reviews:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		service_provider_type:{
 			type:"String_comparison_exp",
 			array:false,
@@ -69720,6 +69858,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		rentals:{
 			type:"business_rental_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews:{
+			type:"review_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -69810,6 +69954,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		rentals_aggregate:{
 			type:"business_rental_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -75178,6 +75328,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		description:{
+			type:"translation_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		description_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -75192,6 +75348,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -75321,6 +75483,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		description:{
+			type:"translation_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -75335,6 +75503,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -75411,6 +75585,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		description:{
+			type:"translation_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		description_id:{
 			type:"order_by",
 			array:false,
@@ -75425,6 +75605,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -132801,6 +132987,8 @@ export const ReturnTypes: Record<string,any> = {
 		profile:"String",
 		rentals:"business_rental",
 		rentals_aggregate:"business_rental_aggregate",
+		reviews:"review",
+		reviews_aggregate:"review_aggregate",
 		service_provider_type:"String"
 	},
 	business_business_aggregate:{
@@ -133586,9 +133774,11 @@ export const ReturnTypes: Record<string,any> = {
 		available:"Boolean",
 		category1:"String",
 		cost:"jsonb",
+		description:"translation",
 		description_id:"Int",
 		id:"Int",
 		image:"jsonb",
+		name:"translation",
 		name_id:"Int",
 		position:"Int"
 	},

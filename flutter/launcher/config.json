@@ -427,7 +427,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/customer/rental/"
                 ]
             }
         },

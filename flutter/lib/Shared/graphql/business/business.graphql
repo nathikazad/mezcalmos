@@ -1,0 +1,19 @@
+query get_business_by_rental_category1($distance: Float!, $from: geography!, $category1: String) {
+  business_business(where: {_and: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}, rentals: {service: {category1: {_eq: $category1}}}}}) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      name
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}

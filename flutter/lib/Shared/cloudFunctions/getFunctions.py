@@ -54,10 +54,10 @@ def searchForModel(search):
           search1 = matches[0]
       with open(fullpath, 'r') as f:
         for line in f:
-          if "enum "+search1 in line:
+          if "enum "+search1+" " in line or "enum "+search1+"{" in line:
             typeDictionary["type"] = "enum"
             found = True
-          if "interface "+search1 in line:
+          if "interface "+search1+" " in line or "interface "+search1+"{" in line:
             typeDictionary["type"] = "interface"
             found = True
           if found:

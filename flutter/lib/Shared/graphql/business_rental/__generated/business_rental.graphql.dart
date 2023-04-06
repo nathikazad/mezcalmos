@@ -5,13 +5,13 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 class Variables$Query$get_rental_by_category {
   factory Variables$Query$get_rental_by_category({
     String? category1,
-    double? distance,
-    Geography? from,
+    required double distance,
+    required Geography from,
   }) =>
       Variables$Query$get_rental_by_category._({
         if (category1 != null) r'category1': category1,
-        if (distance != null) r'distance': distance,
-        if (from != null) r'from': from,
+        r'distance': distance,
+        r'from': from,
       });
 
   Variables$Query$get_rental_by_category._(this._$data);
@@ -23,36 +23,28 @@ class Variables$Query$get_rental_by_category {
       final l$category1 = data['category1'];
       result$data['category1'] = (l$category1 as String?);
     }
-    if (data.containsKey('distance')) {
-      final l$distance = data['distance'];
-      result$data['distance'] = (l$distance as num?)?.toDouble();
-    }
-    if (data.containsKey('from')) {
-      final l$from = data['from'];
-      result$data['from'] = l$from == null ? null : geographyFromJson(l$from);
-    }
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
     return Variables$Query$get_rental_by_category._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   String? get category1 => (_$data['category1'] as String?);
-  double? get distance => (_$data['distance'] as double?);
-  Geography? get from => (_$data['from'] as Geography?);
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('category1')) {
       final l$category1 = category1;
       result$data['category1'] = l$category1;
     }
-    if (_$data.containsKey('distance')) {
-      final l$distance = distance;
-      result$data['distance'] = l$distance;
-    }
-    if (_$data.containsKey('from')) {
-      final l$from = from;
-      result$data['from'] = l$from == null ? null : geographyToJson(l$from);
-    }
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
     return result$data;
   }
 
@@ -82,18 +74,11 @@ class Variables$Query$get_rental_by_category {
     }
     final l$distance = distance;
     final lOther$distance = other.distance;
-    if (_$data.containsKey('distance') !=
-        other._$data.containsKey('distance')) {
-      return false;
-    }
     if (l$distance != lOther$distance) {
       return false;
     }
     final l$from = from;
     final lOther$from = other.from;
-    if (_$data.containsKey('from') != other._$data.containsKey('from')) {
-      return false;
-    }
     if (l$from != lOther$from) {
       return false;
     }
@@ -107,8 +92,8 @@ class Variables$Query$get_rental_by_category {
     final l$from = from;
     return Object.hashAll([
       _$data.containsKey('category1') ? l$category1 : const {},
-      _$data.containsKey('distance') ? l$distance : const {},
-      _$data.containsKey('from') ? l$from : const {},
+      l$distance,
+      l$from,
     ]);
   }
 }
@@ -150,8 +135,9 @@ class _CopyWithImpl$Variables$Query$get_rental_by_category<TRes>
       _then(Variables$Query$get_rental_by_category._({
         ..._instance._$data,
         if (category1 != _undefined) 'category1': (category1 as String?),
-        if (distance != _undefined) 'distance': (distance as double?),
-        if (from != _undefined) 'from': (from as Geography?),
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
       }));
 }
 
@@ -344,7 +330,7 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'distance')),
         type: NamedTypeNode(
           name: NameNode(value: 'Float'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -353,7 +339,7 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'from')),
         type: NamedTypeNode(
           name: NameNode(value: 'geography'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -369,39 +355,50 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'category1'),
+                name: NameNode(value: '_and'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(name: NameNode(value: 'category1')),
-                  )
-                ]),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'business'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'details'),
+                    name: NameNode(value: 'service'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'location'),
+                        name: NameNode(value: 'category1'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: 'gps'),
+                            name: NameNode(value: '_eq'),
+                            value: VariableNode(
+                                name: NameNode(value: 'category1')),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'details'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'location'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_st_d_within'),
+                                name: NameNode(value: 'gps'),
                                 value: ObjectValueNode(fields: [
                                   ObjectFieldNode(
-                                    name: NameNode(value: 'distance'),
-                                    value: VariableNode(
-                                        name: NameNode(value: 'distance')),
-                                  ),
-                                  ObjectFieldNode(
-                                    name: NameNode(value: 'from'),
-                                    value: VariableNode(
-                                        name: NameNode(value: 'from')),
-                                  ),
+                                    name: NameNode(value: '_st_d_within'),
+                                    value: ObjectValueNode(fields: [
+                                      ObjectFieldNode(
+                                        name: NameNode(value: 'distance'),
+                                        value: VariableNode(
+                                            name: NameNode(value: 'distance')),
+                                      ),
+                                      ObjectFieldNode(
+                                        name: NameNode(value: 'from'),
+                                        value: VariableNode(
+                                            name: NameNode(value: 'from')),
+                                      ),
+                                    ]),
+                                  )
                                 ]),
                               )
                             ]),
@@ -409,146 +406,168 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
                         ]),
                       )
                     ]),
-                  )
+                  ),
                 ]),
-              ),
+              )
             ]),
           )
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'service'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'description'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'name'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'translations'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'language_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'value'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'description'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'translations'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'language_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'value'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'additional_parameters'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'available'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'category1'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'cost'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'image'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'position'),
             alias: null,
             arguments: [],
             directives: [],
@@ -612,7 +631,7 @@ class Options$Query$get_rental_by_category
     extends graphql.QueryOptions<Query$get_rental_by_category> {
   Options$Query$get_rental_by_category({
     String? operationName,
-    Variables$Query$get_rental_by_category? variables,
+    required Variables$Query$get_rental_by_category variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -620,7 +639,7 @@ class Options$Query$get_rental_by_category
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -637,7 +656,7 @@ class WatchOptions$Query$get_rental_by_category
     extends graphql.WatchQueryOptions<Query$get_rental_by_category> {
   WatchOptions$Query$get_rental_by_category({
     String? operationName,
-    Variables$Query$get_rental_by_category? variables,
+    required Variables$Query$get_rental_by_category variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -648,7 +667,7 @@ class WatchOptions$Query$get_rental_by_category
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -668,10 +687,10 @@ class FetchMoreOptions$Query$get_rental_by_category
     extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$get_rental_by_category({
     required graphql.UpdateQuery updateQuery,
-    Variables$Query$get_rental_by_category? variables,
+    required Variables$Query$get_rental_by_category variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           document: documentNodeQueryget_rental_by_category,
         );
 }
@@ -680,35 +699,35 @@ extension ClientExtension$Query$get_rental_by_category
     on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$get_rental_by_category>>
       query$get_rental_by_category(
-              [Options$Query$get_rental_by_category? options]) async =>
-          await this.query(options ?? Options$Query$get_rental_by_category());
-  graphql.ObservableQuery<
-      Query$get_rental_by_category> watchQuery$get_rental_by_category(
-          [WatchOptions$Query$get_rental_by_category? options]) =>
-      this.watchQuery(options ?? WatchOptions$Query$get_rental_by_category());
+              Options$Query$get_rental_by_category options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_rental_by_category>
+      watchQuery$get_rental_by_category(
+              WatchOptions$Query$get_rental_by_category options) =>
+          this.watchQuery(options);
   void writeQuery$get_rental_by_category({
     required Query$get_rental_by_category data,
-    Variables$Query$get_rental_by_category? variables,
+    required Variables$Query$get_rental_by_category variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(
               document: documentNodeQueryget_rental_by_category),
-          variables: variables?.toJson() ?? const {},
+          variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$get_rental_by_category? readQuery$get_rental_by_category({
-    Variables$Query$get_rental_by_category? variables,
+    required Variables$Query$get_rental_by_category variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation: graphql.Operation(
             document: documentNodeQueryget_rental_by_category),
-        variables: variables?.toJson() ?? const {},
+        variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
@@ -720,6 +739,199 @@ extension ClientExtension$Query$get_rental_by_category
 
 class Query$get_rental_by_category$business_rental {
   Query$get_rental_by_category$business_rental({
+    required this.service,
+    required this.id,
+    required this.business,
+    required this.$__typename,
+  });
+
+  factory Query$get_rental_by_category$business_rental.fromJson(
+      Map<String, dynamic> json) {
+    final l$service = json['service'];
+    final l$id = json['id'];
+    final l$business = json['business'];
+    final l$$__typename = json['__typename'];
+    return Query$get_rental_by_category$business_rental(
+      service: Query$get_rental_by_category$business_rental$service.fromJson(
+          (l$service as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: Query$get_rental_by_category$business_rental$business.fromJson(
+          (l$business as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_rental_by_category$business_rental$service service;
+
+  final int id;
+
+  final Query$get_rental_by_category$business_rental$business business;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service = service;
+    _resultData['service'] = l$service.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service = service;
+    final l$id = id;
+    final l$business = business;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service,
+      l$id,
+      l$business,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_rental_by_category$business_rental) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service = service;
+    final lOther$service = other.service;
+    if (l$service != lOther$service) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_rental_by_category$business_rental
+    on Query$get_rental_by_category$business_rental {
+  CopyWith$Query$get_rental_by_category$business_rental<
+          Query$get_rental_by_category$business_rental>
+      get copyWith => CopyWith$Query$get_rental_by_category$business_rental(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_rental_by_category$business_rental<TRes> {
+  factory CopyWith$Query$get_rental_by_category$business_rental(
+    Query$get_rental_by_category$business_rental instance,
+    TRes Function(Query$get_rental_by_category$business_rental) then,
+  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental;
+
+  factory CopyWith$Query$get_rental_by_category$business_rental.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_rental_by_category$business_rental;
+
+  TRes call({
+    Query$get_rental_by_category$business_rental$service? service,
+    int? id,
+    Query$get_rental_by_category$business_rental$business? business,
+    String? $__typename,
+  });
+  CopyWith$Query$get_rental_by_category$business_rental$service<TRes>
+      get service;
+  CopyWith$Query$get_rental_by_category$business_rental$business<TRes>
+      get business;
+}
+
+class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
+    implements CopyWith$Query$get_rental_by_category$business_rental<TRes> {
+  _CopyWithImpl$Query$get_rental_by_category$business_rental(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_rental_by_category$business_rental _instance;
+
+  final TRes Function(Query$get_rental_by_category$business_rental) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_rental_by_category$business_rental(
+        service: service == _undefined || service == null
+            ? _instance.service
+            : (service as Query$get_rental_by_category$business_rental$service),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Query$get_rental_by_category$business_rental$business),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_rental_by_category$business_rental$service<TRes>
+      get service {
+    final local$service = _instance.service;
+    return CopyWith$Query$get_rental_by_category$business_rental$service(
+        local$service, (e) => call(service: e));
+  }
+
+  CopyWith$Query$get_rental_by_category$business_rental$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$get_rental_by_category$business_rental$business(
+        local$business, (e) => call(business: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_rental_by_category$business_rental<TRes>
+    implements CopyWith$Query$get_rental_by_category$business_rental<TRes> {
+  _CopyWithStubImpl$Query$get_rental_by_category$business_rental(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_rental_by_category$business_rental$service? service,
+    int? id,
+    Query$get_rental_by_category$business_rental$business? business,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_rental_by_category$business_rental$service<TRes>
+      get service =>
+          CopyWith$Query$get_rental_by_category$business_rental$service.stub(
+              _res);
+  CopyWith$Query$get_rental_by_category$business_rental$business<TRes>
+      get business =>
+          CopyWith$Query$get_rental_by_category$business_rental$business.stub(
+              _res);
+}
+
+class Query$get_rental_by_category$business_rental$service {
+  Query$get_rental_by_category$business_rental$service({
     required this.id,
     required this.name,
     this.description,
@@ -729,11 +941,10 @@ class Query$get_rental_by_category$business_rental {
     required this.cost,
     this.image,
     required this.position,
-    required this.business,
     required this.$__typename,
   });
 
-  factory Query$get_rental_by_category$business_rental.fromJson(
+  factory Query$get_rental_by_category$business_rental$service.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -744,16 +955,15 @@ class Query$get_rental_by_category$business_rental {
     final l$cost = json['cost'];
     final l$image = json['image'];
     final l$position = json['position'];
-    final l$business = json['business'];
     final l$$__typename = json['__typename'];
-    return Query$get_rental_by_category$business_rental(
+    return Query$get_rental_by_category$business_rental$service(
       id: (l$id as int),
-      name: Query$get_rental_by_category$business_rental$name.fromJson(
+      name: Query$get_rental_by_category$business_rental$service$name.fromJson(
           (l$name as Map<String, dynamic>)),
       description: l$description == null
           ? null
-          : Query$get_rental_by_category$business_rental$description.fromJson(
-              (l$description as Map<String, dynamic>)),
+          : Query$get_rental_by_category$business_rental$service$description
+              .fromJson((l$description as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -762,17 +972,16 @@ class Query$get_rental_by_category$business_rental {
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
-      business: Query$get_rental_by_category$business_rental$business.fromJson(
-          (l$business as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$get_rental_by_category$business_rental$name name;
+  final Query$get_rental_by_category$business_rental$service$name name;
 
-  final Query$get_rental_by_category$business_rental$description? description;
+  final Query$get_rental_by_category$business_rental$service$description?
+      description;
 
   final dynamic? additional_parameters;
 
@@ -785,8 +994,6 @@ class Query$get_rental_by_category$business_rental {
   final dynamic? image;
 
   final int position;
-
-  final Query$get_rental_by_category$business_rental$business business;
 
   final String $__typename;
 
@@ -812,8 +1019,6 @@ class Query$get_rental_by_category$business_rental {
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
     _resultData['position'] = l$position;
-    final l$business = business;
-    _resultData['business'] = l$business.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -830,7 +1035,6 @@ class Query$get_rental_by_category$business_rental {
     final l$cost = cost;
     final l$image = image;
     final l$position = position;
-    final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -842,7 +1046,6 @@ class Query$get_rental_by_category$business_rental {
       l$cost,
       l$image,
       l$position,
-      l$business,
       l$$__typename,
     ]);
   }
@@ -852,7 +1055,7 @@ class Query$get_rental_by_category$business_rental {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_rental_by_category$business_rental) ||
+    if (!(other is Query$get_rental_by_category$business_rental$service) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -901,11 +1104,6 @@ class Query$get_rental_by_category$business_rental {
     if (l$position != lOther$position) {
       return false;
     }
-    final l$business = business;
-    final lOther$business = other.business;
-    if (l$business != lOther$business) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -915,55 +1113,59 @@ class Query$get_rental_by_category$business_rental {
   }
 }
 
-extension UtilityExtension$Query$get_rental_by_category$business_rental
-    on Query$get_rental_by_category$business_rental {
-  CopyWith$Query$get_rental_by_category$business_rental<
-          Query$get_rental_by_category$business_rental>
-      get copyWith => CopyWith$Query$get_rental_by_category$business_rental(
+extension UtilityExtension$Query$get_rental_by_category$business_rental$service
+    on Query$get_rental_by_category$business_rental$service {
+  CopyWith$Query$get_rental_by_category$business_rental$service<
+          Query$get_rental_by_category$business_rental$service>
+      get copyWith =>
+          CopyWith$Query$get_rental_by_category$business_rental$service(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_rental_by_category$business_rental<TRes> {
-  factory CopyWith$Query$get_rental_by_category$business_rental(
-    Query$get_rental_by_category$business_rental instance,
-    TRes Function(Query$get_rental_by_category$business_rental) then,
-  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental;
+abstract class CopyWith$Query$get_rental_by_category$business_rental$service<
+    TRes> {
+  factory CopyWith$Query$get_rental_by_category$business_rental$service(
+    Query$get_rental_by_category$business_rental$service instance,
+    TRes Function(Query$get_rental_by_category$business_rental$service) then,
+  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$service;
 
-  factory CopyWith$Query$get_rental_by_category$business_rental.stub(TRes res) =
-      _CopyWithStubImpl$Query$get_rental_by_category$business_rental;
+  factory CopyWith$Query$get_rental_by_category$business_rental$service.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service;
 
   TRes call({
     int? id,
-    Query$get_rental_by_category$business_rental$name? name,
-    Query$get_rental_by_category$business_rental$description? description,
+    Query$get_rental_by_category$business_rental$service$name? name,
+    Query$get_rental_by_category$business_rental$service$description?
+        description,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
     dynamic? cost,
     dynamic? image,
     int? position,
-    Query$get_rental_by_category$business_rental$business? business,
     String? $__typename,
   });
-  CopyWith$Query$get_rental_by_category$business_rental$name<TRes> get name;
-  CopyWith$Query$get_rental_by_category$business_rental$description<TRes>
-      get description;
-  CopyWith$Query$get_rental_by_category$business_rental$business<TRes>
-      get business;
+  CopyWith$Query$get_rental_by_category$business_rental$service$name<TRes>
+      get name;
+  CopyWith$Query$get_rental_by_category$business_rental$service$description<
+      TRes> get description;
 }
 
-class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
-    implements CopyWith$Query$get_rental_by_category$business_rental<TRes> {
-  _CopyWithImpl$Query$get_rental_by_category$business_rental(
+class _CopyWithImpl$Query$get_rental_by_category$business_rental$service<TRes>
+    implements
+        CopyWith$Query$get_rental_by_category$business_rental$service<TRes> {
+  _CopyWithImpl$Query$get_rental_by_category$business_rental$service(
     this._instance,
     this._then,
   );
 
-  final Query$get_rental_by_category$business_rental _instance;
+  final Query$get_rental_by_category$business_rental$service _instance;
 
-  final TRes Function(Query$get_rental_by_category$business_rental) _then;
+  final TRes Function(Query$get_rental_by_category$business_rental$service)
+      _then;
 
   static const _undefined = {};
 
@@ -977,18 +1179,18 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
     Object? cost = _undefined,
     Object? image = _undefined,
     Object? position = _undefined,
-    Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_rental_by_category$business_rental(
+      _then(Query$get_rental_by_category$business_rental$service(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
-            : (name as Query$get_rental_by_category$business_rental$name),
+            : (name
+                as Query$get_rental_by_category$business_rental$service$name),
         description: description == _undefined
             ? _instance.description
             : (description
-                as Query$get_rental_by_category$business_rental$description?),
+                as Query$get_rental_by_category$business_rental$service$description?),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -1005,414 +1207,76 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
-        business: business == _undefined || business == null
-            ? _instance.business
-            : (business
-                as Query$get_rental_by_category$business_rental$business),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_rental_by_category$business_rental$name<TRes> get name {
+  CopyWith$Query$get_rental_by_category$business_rental$service$name<TRes>
+      get name {
     final local$name = _instance.name;
-    return CopyWith$Query$get_rental_by_category$business_rental$name(
+    return CopyWith$Query$get_rental_by_category$business_rental$service$name(
         local$name, (e) => call(name: e));
   }
 
-  CopyWith$Query$get_rental_by_category$business_rental$description<TRes>
-      get description {
+  CopyWith$Query$get_rental_by_category$business_rental$service$description<
+      TRes> get description {
     final local$description = _instance.description;
     return local$description == null
-        ? CopyWith$Query$get_rental_by_category$business_rental$description
+        ? CopyWith$Query$get_rental_by_category$business_rental$service$description
             .stub(_then(_instance))
-        : CopyWith$Query$get_rental_by_category$business_rental$description(
+        : CopyWith$Query$get_rental_by_category$business_rental$service$description(
             local$description, (e) => call(description: e));
-  }
-
-  CopyWith$Query$get_rental_by_category$business_rental$business<TRes>
-      get business {
-    final local$business = _instance.business;
-    return CopyWith$Query$get_rental_by_category$business_rental$business(
-        local$business, (e) => call(business: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_rental_by_category$business_rental<TRes>
-    implements CopyWith$Query$get_rental_by_category$business_rental<TRes> {
-  _CopyWithStubImpl$Query$get_rental_by_category$business_rental(this._res);
+class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service<
+        TRes>
+    implements
+        CopyWith$Query$get_rental_by_category$business_rental$service<TRes> {
+  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service(
+      this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Query$get_rental_by_category$business_rental$name? name,
-    Query$get_rental_by_category$business_rental$description? description,
+    Query$get_rental_by_category$business_rental$service$name? name,
+    Query$get_rental_by_category$business_rental$service$description?
+        description,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
     dynamic? cost,
     dynamic? image,
     int? position,
-    Query$get_rental_by_category$business_rental$business? business,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_rental_by_category$business_rental$name<TRes> get name =>
-      CopyWith$Query$get_rental_by_category$business_rental$name.stub(_res);
-  CopyWith$Query$get_rental_by_category$business_rental$description<TRes>
-      get description =>
-          CopyWith$Query$get_rental_by_category$business_rental$description
+  CopyWith$Query$get_rental_by_category$business_rental$service$name<TRes>
+      get name =>
+          CopyWith$Query$get_rental_by_category$business_rental$service$name
               .stub(_res);
-  CopyWith$Query$get_rental_by_category$business_rental$business<TRes>
-      get business =>
-          CopyWith$Query$get_rental_by_category$business_rental$business.stub(
-              _res);
+  CopyWith$Query$get_rental_by_category$business_rental$service$description<
+          TRes>
+      get description =>
+          CopyWith$Query$get_rental_by_category$business_rental$service$description
+              .stub(_res);
 }
 
-class Query$get_rental_by_category$business_rental$name {
-  Query$get_rental_by_category$business_rental$name({
+class Query$get_rental_by_category$business_rental$service$name {
+  Query$get_rental_by_category$business_rental$service$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_rental_by_category$business_rental$name.fromJson(
+  factory Query$get_rental_by_category$business_rental$service$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_rental_by_category$business_rental$name(
+    return Query$get_rental_by_category$business_rental$service$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_rental_by_category$business_rental$name$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<Query$get_rental_by_category$business_rental$name$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_rental_by_category$business_rental$name) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_rental_by_category$business_rental$name
-    on Query$get_rental_by_category$business_rental$name {
-  CopyWith$Query$get_rental_by_category$business_rental$name<
-          Query$get_rental_by_category$business_rental$name>
-      get copyWith =>
-          CopyWith$Query$get_rental_by_category$business_rental$name(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_rental_by_category$business_rental$name<
-    TRes> {
-  factory CopyWith$Query$get_rental_by_category$business_rental$name(
-    Query$get_rental_by_category$business_rental$name instance,
-    TRes Function(Query$get_rental_by_category$business_rental$name) then,
-  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$name;
-
-  factory CopyWith$Query$get_rental_by_category$business_rental$name.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$name;
-
-  TRes call({
-    List<Query$get_rental_by_category$business_rental$name$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_rental_by_category$business_rental$name$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_rental_by_category$business_rental$name$translations<
-                      Query$get_rental_by_category$business_rental$name$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_rental_by_category$business_rental$name<TRes>
-    implements
-        CopyWith$Query$get_rental_by_category$business_rental$name<TRes> {
-  _CopyWithImpl$Query$get_rental_by_category$business_rental$name(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_rental_by_category$business_rental$name _instance;
-
-  final TRes Function(Query$get_rental_by_category$business_rental$name) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_rental_by_category$business_rental$name(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_rental_by_category$business_rental$name$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_rental_by_category$business_rental$name$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_rental_by_category$business_rental$name$translations<
-                          Query$get_rental_by_category$business_rental$name$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_rental_by_category$business_rental$name$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$name<TRes>
-    implements
-        CopyWith$Query$get_rental_by_category$business_rental$name<TRes> {
-  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$name(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_rental_by_category$business_rental$name$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_rental_by_category$business_rental$name$translations {
-  Query$get_rental_by_category$business_rental$name$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_rental_by_category$business_rental$name$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_rental_by_category$business_rental$name$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_rental_by_category$business_rental$name$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_rental_by_category$business_rental$name$translations
-    on Query$get_rental_by_category$business_rental$name$translations {
-  CopyWith$Query$get_rental_by_category$business_rental$name$translations<
-          Query$get_rental_by_category$business_rental$name$translations>
-      get copyWith =>
-          CopyWith$Query$get_rental_by_category$business_rental$name$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_rental_by_category$business_rental$name$translations<
-    TRes> {
-  factory CopyWith$Query$get_rental_by_category$business_rental$name$translations(
-    Query$get_rental_by_category$business_rental$name$translations instance,
-    TRes Function(
-            Query$get_rental_by_category$business_rental$name$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$name$translations;
-
-  factory CopyWith$Query$get_rental_by_category$business_rental$name$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$name$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_rental_by_category$business_rental$name$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_rental_by_category$business_rental$name$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_rental_by_category$business_rental$name$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_rental_by_category$business_rental$name$translations
-      _instance;
-
-  final TRes Function(
-      Query$get_rental_by_category$business_rental$name$translations) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_rental_by_category$business_rental$name$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$name$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_rental_by_category$business_rental$name$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$name$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_rental_by_category$business_rental$description {
-  Query$get_rental_by_category$business_rental$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_rental_by_category$business_rental$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_rental_by_category$business_rental$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_rental_by_category$business_rental$description$translations
+              Query$get_rental_by_category$business_rental$service$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1420,7 +1284,7 @@ class Query$get_rental_by_category$business_rental$description {
   }
 
   final List<
-          Query$get_rental_by_category$business_rental$description$translations>
+          Query$get_rental_by_category$business_rental$service$name$translations>
       translations;
 
   final String $__typename;
@@ -1450,7 +1314,7 @@ class Query$get_rental_by_category$business_rental$description {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_rental_by_category$business_rental$description) ||
+    if (!(other is Query$get_rental_by_category$business_rental$service$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1475,55 +1339,55 @@ class Query$get_rental_by_category$business_rental$description {
   }
 }
 
-extension UtilityExtension$Query$get_rental_by_category$business_rental$description
-    on Query$get_rental_by_category$business_rental$description {
-  CopyWith$Query$get_rental_by_category$business_rental$description<
-          Query$get_rental_by_category$business_rental$description>
+extension UtilityExtension$Query$get_rental_by_category$business_rental$service$name
+    on Query$get_rental_by_category$business_rental$service$name {
+  CopyWith$Query$get_rental_by_category$business_rental$service$name<
+          Query$get_rental_by_category$business_rental$service$name>
       get copyWith =>
-          CopyWith$Query$get_rental_by_category$business_rental$description(
+          CopyWith$Query$get_rental_by_category$business_rental$service$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_rental_by_category$business_rental$description<
+abstract class CopyWith$Query$get_rental_by_category$business_rental$service$name<
     TRes> {
-  factory CopyWith$Query$get_rental_by_category$business_rental$description(
-    Query$get_rental_by_category$business_rental$description instance,
-    TRes Function(Query$get_rental_by_category$business_rental$description)
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$name(
+    Query$get_rental_by_category$business_rental$service$name instance,
+    TRes Function(Query$get_rental_by_category$business_rental$service$name)
         then,
-  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$description;
+  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$service$name;
 
-  factory CopyWith$Query$get_rental_by_category$business_rental$description.stub(
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$description;
+      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$name;
 
   TRes call({
-    List<Query$get_rental_by_category$business_rental$description$translations>?
+    List<Query$get_rental_by_category$business_rental$service$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_rental_by_category$business_rental$description$translations> Function(
+      Iterable<Query$get_rental_by_category$business_rental$service$name$translations> Function(
               Iterable<
-                  CopyWith$Query$get_rental_by_category$business_rental$description$translations<
-                      Query$get_rental_by_category$business_rental$description$translations>>)
+                  CopyWith$Query$get_rental_by_category$business_rental$service$name$translations<
+                      Query$get_rental_by_category$business_rental$service$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_rental_by_category$business_rental$description<
+class _CopyWithImpl$Query$get_rental_by_category$business_rental$service$name<
         TRes>
     implements
-        CopyWith$Query$get_rental_by_category$business_rental$description<
+        CopyWith$Query$get_rental_by_category$business_rental$service$name<
             TRes> {
-  _CopyWithImpl$Query$get_rental_by_category$business_rental$description(
+  _CopyWithImpl$Query$get_rental_by_category$business_rental$service$name(
     this._instance,
     this._then,
   );
 
-  final Query$get_rental_by_category$business_rental$description _instance;
+  final Query$get_rental_by_category$business_rental$service$name _instance;
 
-  final TRes Function(Query$get_rental_by_category$business_rental$description)
+  final TRes Function(Query$get_rental_by_category$business_rental$service$name)
       _then;
 
   static const _undefined = {};
@@ -1532,41 +1396,41 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$description<
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_rental_by_category$business_rental$description(
+      _then(Query$get_rental_by_category$business_rental$service$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_rental_by_category$business_rental$description$translations>),
+                Query$get_rental_by_category$business_rental$service$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_rental_by_category$business_rental$description$translations> Function(
+          Iterable<Query$get_rental_by_category$business_rental$service$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_rental_by_category$business_rental$description$translations<
-                          Query$get_rental_by_category$business_rental$description$translations>>)
+                      CopyWith$Query$get_rental_by_category$business_rental$service$name$translations<
+                          Query$get_rental_by_category$business_rental$service$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_rental_by_category$business_rental$description$translations(
+              CopyWith$Query$get_rental_by_category$business_rental$service$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$description<
+class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$name<
         TRes>
     implements
-        CopyWith$Query$get_rental_by_category$business_rental$description<
+        CopyWith$Query$get_rental_by_category$business_rental$service$name<
             TRes> {
-  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$description(
+  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_rental_by_category$business_rental$description$translations>?
+    List<Query$get_rental_by_category$business_rental$service$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -1574,19 +1438,19 @@ class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$description
   translations(_fn) => _res;
 }
 
-class Query$get_rental_by_category$business_rental$description$translations {
-  Query$get_rental_by_category$business_rental$description$translations({
+class Query$get_rental_by_category$business_rental$service$name$translations {
+  Query$get_rental_by_category$business_rental$service$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_rental_by_category$business_rental$description$translations.fromJson(
+  factory Query$get_rental_by_category$business_rental$service$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_rental_by_category$business_rental$description$translations(
+    return Query$get_rental_by_category$business_rental$service$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1628,7 +1492,7 @@ class Query$get_rental_by_category$business_rental$description$translations {
       return true;
     }
     if (!(other
-            is Query$get_rental_by_category$business_rental$description$translations) ||
+            is Query$get_rental_by_category$business_rental$service$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1651,30 +1515,30 @@ class Query$get_rental_by_category$business_rental$description$translations {
   }
 }
 
-extension UtilityExtension$Query$get_rental_by_category$business_rental$description$translations
-    on Query$get_rental_by_category$business_rental$description$translations {
-  CopyWith$Query$get_rental_by_category$business_rental$description$translations<
-          Query$get_rental_by_category$business_rental$description$translations>
+extension UtilityExtension$Query$get_rental_by_category$business_rental$service$name$translations
+    on Query$get_rental_by_category$business_rental$service$name$translations {
+  CopyWith$Query$get_rental_by_category$business_rental$service$name$translations<
+          Query$get_rental_by_category$business_rental$service$name$translations>
       get copyWith =>
-          CopyWith$Query$get_rental_by_category$business_rental$description$translations(
+          CopyWith$Query$get_rental_by_category$business_rental$service$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_rental_by_category$business_rental$description$translations<
+abstract class CopyWith$Query$get_rental_by_category$business_rental$service$name$translations<
     TRes> {
-  factory CopyWith$Query$get_rental_by_category$business_rental$description$translations(
-    Query$get_rental_by_category$business_rental$description$translations
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$name$translations(
+    Query$get_rental_by_category$business_rental$service$name$translations
         instance,
     TRes Function(
-            Query$get_rental_by_category$business_rental$description$translations)
+            Query$get_rental_by_category$business_rental$service$name$translations)
         then,
-  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$description$translations;
+  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$service$name$translations;
 
-  factory CopyWith$Query$get_rental_by_category$business_rental$description$translations.stub(
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$description$translations;
+      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$name$translations;
 
   TRes call({
     String? language_id,
@@ -1683,21 +1547,21 @@ abstract class CopyWith$Query$get_rental_by_category$business_rental$description
   });
 }
 
-class _CopyWithImpl$Query$get_rental_by_category$business_rental$description$translations<
+class _CopyWithImpl$Query$get_rental_by_category$business_rental$service$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_rental_by_category$business_rental$description$translations<
+        CopyWith$Query$get_rental_by_category$business_rental$service$name$translations<
             TRes> {
-  _CopyWithImpl$Query$get_rental_by_category$business_rental$description$translations(
+  _CopyWithImpl$Query$get_rental_by_category$business_rental$service$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_rental_by_category$business_rental$description$translations
+  final Query$get_rental_by_category$business_rental$service$name$translations
       _instance;
 
   final TRes Function(
-          Query$get_rental_by_category$business_rental$description$translations)
+          Query$get_rental_by_category$business_rental$service$name$translations)
       _then;
 
   static const _undefined = {};
@@ -1708,7 +1572,7 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$description$tra
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$get_rental_by_category$business_rental$description$translations(
+          Query$get_rental_by_category$business_rental$service$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -1721,12 +1585,355 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$description$tra
       ));
 }
 
-class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$description$translations<
+class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_rental_by_category$business_rental$description$translations<
+        CopyWith$Query$get_rental_by_category$business_rental$service$name$translations<
             TRes> {
-  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$description$translations(
+  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_rental_by_category$business_rental$service$description {
+  Query$get_rental_by_category$business_rental$service$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_rental_by_category$business_rental$service$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_rental_by_category$business_rental$service$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_rental_by_category$business_rental$service$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_rental_by_category$business_rental$service$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_rental_by_category$business_rental$service$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_rental_by_category$business_rental$service$description
+    on Query$get_rental_by_category$business_rental$service$description {
+  CopyWith$Query$get_rental_by_category$business_rental$service$description<
+          Query$get_rental_by_category$business_rental$service$description>
+      get copyWith =>
+          CopyWith$Query$get_rental_by_category$business_rental$service$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_rental_by_category$business_rental$service$description<
+    TRes> {
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$description(
+    Query$get_rental_by_category$business_rental$service$description instance,
+    TRes Function(
+            Query$get_rental_by_category$business_rental$service$description)
+        then,
+  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$service$description;
+
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$description;
+
+  TRes call({
+    List<Query$get_rental_by_category$business_rental$service$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_rental_by_category$business_rental$service$description$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_rental_by_category$business_rental$service$description$translations<
+                      Query$get_rental_by_category$business_rental$service$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_rental_by_category$business_rental$service$description<
+        TRes>
+    implements
+        CopyWith$Query$get_rental_by_category$business_rental$service$description<
+            TRes> {
+  _CopyWithImpl$Query$get_rental_by_category$business_rental$service$description(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_rental_by_category$business_rental$service$description
+      _instance;
+
+  final TRes Function(
+      Query$get_rental_by_category$business_rental$service$description) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_rental_by_category$business_rental$service$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_rental_by_category$business_rental$service$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_rental_by_category$business_rental$service$description$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_rental_by_category$business_rental$service$description$translations<
+                          Query$get_rental_by_category$business_rental$service$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_rental_by_category$business_rental$service$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$description<
+        TRes>
+    implements
+        CopyWith$Query$get_rental_by_category$business_rental$service$description<
+            TRes> {
+  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_rental_by_category$business_rental$service$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_rental_by_category$business_rental$service$description$translations {
+  Query$get_rental_by_category$business_rental$service$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_rental_by_category$business_rental$service$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_rental_by_category$business_rental$service$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_rental_by_category$business_rental$service$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_rental_by_category$business_rental$service$description$translations
+    on Query$get_rental_by_category$business_rental$service$description$translations {
+  CopyWith$Query$get_rental_by_category$business_rental$service$description$translations<
+          Query$get_rental_by_category$business_rental$service$description$translations>
+      get copyWith =>
+          CopyWith$Query$get_rental_by_category$business_rental$service$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_rental_by_category$business_rental$service$description$translations<
+    TRes> {
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$description$translations(
+    Query$get_rental_by_category$business_rental$service$description$translations
+        instance,
+    TRes Function(
+            Query$get_rental_by_category$business_rental$service$description$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$service$description$translations;
+
+  factory CopyWith$Query$get_rental_by_category$business_rental$service$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_rental_by_category$business_rental$service$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_rental_by_category$business_rental$service$description$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_rental_by_category$business_rental$service$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_rental_by_category$business_rental$service$description$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_rental_by_category$business_rental$service$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_rental_by_category$business_rental$service$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_rental_by_category$business_rental$service$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$service$description$translations(
       this._res);
 
   TRes _res;
