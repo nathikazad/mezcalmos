@@ -55,7 +55,7 @@ class _WrapperState extends State<Wrapper> {
         startListeningOnLocationPermission();
       }
     });
-    Future.delayed(Duration.zero, checkConnectivity);
+    Future.microtask(() => checkConnectivity);
     super.initState();
   }
 
@@ -185,8 +185,10 @@ class _WrapperState extends State<Wrapper> {
       MezRouter.popTillInclusive(SharedRoutes.kSignInAtOrderTimeRoute);
     } else {
       if (!Get.currentRoute.contains('/messages/'))
-        MezRouter.popEverythingTillBeforeWrapper()
-            .then((_) => MezRouter.toNamed(SharedRoutes.kHomeRoute));
+        MezRouter.popEverythingTillBeforeWrapper().then((_) {
+          mezDbgPrint("Going to home now");
+          MezRouter.toNamed(SharedRoutes.kHomeRoute);
+        });
     }
   }
 

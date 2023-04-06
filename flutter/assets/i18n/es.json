@@ -282,7 +282,7 @@
             "DialogRequiredSignIn": {
               "title": "Debe iniciar sesión para agregar artículos a su carrito",
               "signBtn": "Apuntame dentro",
-              "notNowBtn": "Ahora no ?"
+              "notNowBtn": "Ahora no?"
             }
           },
           "ViewItemScreen": {
@@ -1729,7 +1729,7 @@
         "orderDetails": "Detalles del pedido",
         "orderItems": "Encargar artículos",
         "addCost": "Agregar costo",
-        "save": "Ahorrar",
+        "save": "Guardar",
         "note": "Nota",
         "tax": "Impuesto",
         "estCost": "Costo estimado",

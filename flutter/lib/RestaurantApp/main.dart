@@ -22,13 +22,13 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPointNative(
-            appType: AppType.Restaurant,
-            signInCallback: signInCallback,
-            appTheme: RestaurantAppTheme.lightTheme,
-            signOutCallback: signOutCallback,
-            routes: routes,
-            locationPermissionType: LocationPermissionType.Foreground,
-          );
+              appType: AppType.Restaurant,
+              signInCallback: signInCallback,
+              appTheme: RestaurantAppTheme.lightTheme,
+              signOutCallback: signOutCallback,
+              routes: routes,
+              locationPermissionType: LocationPermissionType.Foreground,
+              stripeEnabled: true);
         },
       ),
     ),

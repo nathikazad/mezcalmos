@@ -20,15 +20,15 @@ final ThemeData _defaultAppTheme = ThemeData(
 
 class StartingPointNative extends StartingPointBase {
   //  Sideminu
-  StartingPointNative({
-    super.appTheme = null,
-    required super.signInCallback,
-    required super.signOutCallback,
-    required super.routes,
-    required super.appType,
-    super.sideMenuItems,
-    super.locationPermissionType = LocationPermissionType.None,
-  });
+  StartingPointNative(
+      {super.appTheme = null,
+      required super.signInCallback,
+      required super.signOutCallback,
+      required super.routes,
+      required super.appType,
+      super.sideMenuItems,
+      super.locationPermissionType = LocationPermissionType.None,
+      super.stripeEnabled = false});
 
   @override
   _StartingPointState createState() => _StartingPointState();
@@ -46,10 +46,12 @@ class _StartingPointState extends StartingPointBaseState {
   @override
   void initializeThirdParties() {
     super.initializeThirdParties();
-    Stripe.publishableKey = MezEnv.appLaunchMode == AppLaunchMode.prod
-        ? stripePubProdKey
-        : stripePubTestKey;
-    Stripe.instance.applySettings();
+    if (widget.stripeEnabled) {
+      Stripe.publishableKey = MezEnv.appLaunchMode == AppLaunchMode.prod
+          ? stripePubProdKey
+          : stripePubTestKey;
+      Stripe.instance.applySettings();
+    }
     Get.put<Sagora>(Sagora(), permanent: true);
     mezDbgPrint("AppStart Native initalized 😛😛😛😛😛");
   }
