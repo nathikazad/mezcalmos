@@ -90,6 +90,15 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                   case RentalViewEnum.Activities:
                     // Activities screen not going to navigate here thats why no UI needed
                     return Offstage();
+                  case RentalViewEnum.Parties:
+                    // Parties screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.Dance:
+                    // Dance screen not going to navigate here thats why no UI needed
+                    return Offstage();
+                  case RentalViewEnum.GetTogether:
+                    // GetTogether screen not going to navigate here thats why no UI needed
+                    return Offstage();
                 }
               },
               childCount: 10,

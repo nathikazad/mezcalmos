@@ -60,7 +60,10 @@ class _AssetListsViewState extends State<AssetListsView> {
         allServiceListViewController.currentSelectedService.value.name ==
             RentalViewEnum.Volunteer.name ||
         assetController.viewName.name == RentalViewEnum.Activities.name ||
-        assetController.viewName.name == RentalViewEnum.Tour.name) {
+        assetController.viewName.name == RentalViewEnum.Tour.name ||
+        assetController.viewName.name == RentalViewEnum.Parties.name ||
+        assetController.viewName.name == RentalViewEnum.Dance.name ||
+        assetController.viewName.name == RentalViewEnum.GetTogether.name) {
       return false;
     }
     return true;

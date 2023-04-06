@@ -6,7 +6,7 @@ enum AllServiceViewEnum {
   Rental,
   Class,
   Wellness,
-  Events,
+  Event,
   Volunteer,
   Adventure,
 }

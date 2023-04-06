@@ -152,6 +152,10 @@ const String aSingleBed = "assets/images/customer/rental/singlebed.png";
 // Adventure Images
 const String aTours = "assets/images/customer/tours.png";
 const String aActivities = "assets/images/customer/activities.png";
+// Events Images
+const String aParties = "assets/images/customer/parties.png";
+const String aDance = "assets/images/customer/dance.png";
+const String aGetTogether = "assets/images/customer/getTogether.png";
 
 const String _imgs_path = "assets/images/customer/taxi/";
 const String header_asset = "${_imgs_path}header.png";

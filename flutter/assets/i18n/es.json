@@ -541,6 +541,21 @@
           "title": "Bienestar"
         },
         "events": "Eventos",
+        "event": {
+          "title": "Eventos",
+          "parties": {
+            "title": "Fiestas",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "dance": {
+            "title": "Danza",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          },
+          "getTogether": {
+            "title": "Reunirse",
+            "description": "Obtain delivery of anything you desire to your location."
+          }
+        },
         "volunteer": {
           "title": "Voluntario"
         },

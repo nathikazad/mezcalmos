@@ -42,6 +42,15 @@ Map<RentalViewEnum, Map<CurrentSelectedViewEnum, String>> vRentalViewValues = {
   RentalViewEnum.Activities: {
     CurrentSelectedViewEnum.Asset: "Activities",
   },
+  RentalViewEnum.Parties: {
+    CurrentSelectedViewEnum.Asset: "Parties",
+  },
+  RentalViewEnum.Dance: {
+    CurrentSelectedViewEnum.Asset: "Dance",
+  },
+  RentalViewEnum.GetTogether: {
+    CurrentSelectedViewEnum.Asset: "Get Together",
+  },
 };
 
 class AssetController {
@@ -103,6 +112,21 @@ class AssetController {
         currentSelectedViewList =
             vRentalViewValues[RentalViewEnum.Activities]!.keys.toList();
         break;
+      case RentalViewEnum.Parties:
+        viewName = RentalViewEnum.Parties;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Parties]!.keys.toList();
+        break;
+      case RentalViewEnum.Dance:
+        viewName = RentalViewEnum.Dance;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.Dance]!.keys.toList();
+        break;
+      case RentalViewEnum.GetTogether:
+        viewName = RentalViewEnum.GetTogether;
+        currentSelectedViewList =
+            vRentalViewValues[RentalViewEnum.GetTogether]!.keys.toList();
+        break;
     }
     currentSelectedView = currentSelectedViewList.first.obs;
     _generateEnumToString();
@@ -134,6 +158,12 @@ class AssetController {
         return "tour";
       case RentalViewEnum.Activities:
         return "activities";
+      case RentalViewEnum.Parties:
+        return "parties";
+      case RentalViewEnum.Dance:
+        return "dance";
+      case RentalViewEnum.GetTogether:
+        return "getTogether";
     }
   }
 
@@ -171,6 +201,12 @@ class AssetController {
       case RentalViewEnum.Tour:
         return [];
       case RentalViewEnum.Activities:
+        return [];
+      case RentalViewEnum.Parties:
+        return [];
+      case RentalViewEnum.Dance:
+        return [];
+      case RentalViewEnum.GetTogether:
         return [];
     }
   }

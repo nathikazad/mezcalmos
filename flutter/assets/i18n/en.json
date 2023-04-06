@@ -537,11 +537,26 @@
           }
         },
         "wellness": {
-          "title": "Bienestar"
+          "title": "Wellness"
         },
         "events": "Events",
+        "event": {
+          "title": "Events",
+          "parties": {
+            "title": "Parties",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "dance": {
+            "title": "Dance",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          },
+          "getTogether": {
+            "title": "Get Together",
+            "description": "Obtain delivery of anything you desire to your location."
+          }
+        },
         "volunteer": {
-          "title": "Voluntario"
+          "title": "Volunteer"
         },
         "adventures": "Adventure",
         "adventure": {

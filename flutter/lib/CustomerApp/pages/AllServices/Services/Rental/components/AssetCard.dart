@@ -73,7 +73,10 @@ class AssetCard extends StatelessWidget {
                           ),
                         ),
                         needCustomSubtitle
-                            ? subtitleWidget
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: subtitleWidget,
+                              )
                             : Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: Row(

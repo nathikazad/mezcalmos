@@ -11,6 +11,9 @@ enum RentalViewEnum {
   Volunteer,
   Tour,
   Activities,
+  Parties,
+  Dance,
+  GetTogether,
 }
 
 class RentalController {
@@ -47,6 +50,23 @@ class RentalController {
         "value": RentalViewEnum.Activities,
         "key": "activities",
         "icon": aActivities,
+      },
+    ],
+    AllServiceViewEnum.Event: [
+      {
+        "value": RentalViewEnum.Parties,
+        "key": "parties",
+        "icon": aParties,
+      },
+      {
+        "value": RentalViewEnum.Dance,
+        "key": "dance",
+        "icon": aDance,
+      },
+      {
+        "value": RentalViewEnum.GetTogether,
+        "key": "getTogether",
+        "icon": aGetTogether,
       },
     ],
   };

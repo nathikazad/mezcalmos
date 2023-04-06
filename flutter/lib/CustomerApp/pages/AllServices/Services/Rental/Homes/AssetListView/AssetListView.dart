@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/WellnessService
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/VolunteerService/components/VolunteerCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/AdventureService/components/TourCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/AdventureService/components/ActivitiesCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/EventsService/components/PartiesCard.dart';
 
 class AssetListView extends StatefulWidget {
   const AssetListView({super.key});
@@ -105,6 +106,30 @@ class _AssetListViewState extends State<AssetListView> {
                   priceUnit: "person",
                   time: "11",
                   timeUnit: "Hours",
+                );
+              case RentalViewEnum.Parties:
+                return PartiesCard(
+                  title: "Amazonia beach party",
+                  price: 50,
+                  priceUnit: "person",
+                  image: NetworkImage(customImageUrl),
+                  rating: "4.5",
+                );
+              case RentalViewEnum.Dance:
+                return PartiesCard(
+                  title: "Amazonia Dance",
+                  price: 10,
+                  priceUnit: "person",
+                  image: NetworkImage(customImageUrl),
+                  rating: "4.9",
+                );
+              case RentalViewEnum.GetTogether:
+                return PartiesCard(
+                  title: "Amazonia Get Together",
+                  price: 10,
+                  priceUnit: "person",
+                  image: NetworkImage(customImageUrl),
+                  rating: "4.7",
                 );
             }
           },

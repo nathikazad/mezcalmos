@@ -50,8 +50,8 @@ class _AllServiceListViewState extends State<AllServiceListView> {
       case AllServiceViewEnum.Wellness:
         AssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
         return;
-      case AllServiceViewEnum.Events:
-        // TODO: Handle this case.
+      case AllServiceViewEnum.Event:
+        RentalView.navigate();
         return;
       case AllServiceViewEnum.Volunteer:
         AssetListsView.navigate(viewEnum: RentalViewEnum.Volunteer);
