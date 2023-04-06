@@ -76,12 +76,12 @@ class CreateServiceImageComponent extends StatelessWidget {
                                   defaultValue: "prod");
                               final AppLaunchMode mode =
                                   _tmpLmode.toLaunchMode();
-                              if (mode == AppLaunchMode.prod) {
-                                viewController.editImage(context);
-                              } else {
-                                viewController.newImageUrl.value =
-                                    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
-                              }
+                              // if (mode == AppLaunchMode.prod) {
+                              viewController.editImage(context);
+                              // } else {
+                              //   viewController.newImageUrl.value =
+                              //       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
+                              // }
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),
