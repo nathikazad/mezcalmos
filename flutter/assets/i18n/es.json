@@ -544,7 +544,18 @@
         "volunteer": {
           "title": "Voluntario"
         },
-        "adventure": "Aventura",
+        "adventures": "Aventura",
+        "adventure": {
+          "title": "Aventura",
+          "tour": {
+            "title": "Visita",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "activities": {
+            "title": "Actividades",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          }
+        },
         "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",
         "appDescription": "Your one stop place to find all your local businesses."

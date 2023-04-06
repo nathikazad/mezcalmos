@@ -46,7 +46,7 @@ class AllServiceListViewController {
       },
       {
         "icon": aAdventure,
-        "title": "adventure",
+        "title": "adventures",
       },
     ]);
   }

@@ -10,6 +10,8 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/componen
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/components/ClassCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/WellnessService/components/WellnessCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/VolunteerService/components/VolunteerCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/AdventureService/components/TourCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/AdventureService/components/ActivitiesCard.dart';
 
 class AssetListView extends StatefulWidget {
   const AssetListView({super.key});
@@ -83,6 +85,26 @@ class _AssetListViewState extends State<AssetListView> {
                   title: "Upcycling & inspiring creativity",
                   location: "Sayulita and San Pancho, Mexico",
                   image: NetworkImage(customImageUrl),
+                );
+              case RentalViewEnum.Tour:
+                return TourCard(
+                  title: "Undiscovered Mexico",
+                  image: NetworkImage(customImageUrl),
+                  price: 2000,
+                  priceUnit: "person",
+                  startDuration: "25",
+                  startMonth: "Mar",
+                  endDuration: "4",
+                  endMonth: "Apr",
+                );
+              case RentalViewEnum.Activities:
+                return ActivitiesCard(
+                  title: "Hike to Zapotec villages",
+                  image: NetworkImage(customImageUrl),
+                  price: 2000,
+                  priceUnit: "person",
+                  time: "11",
+                  timeUnit: "Hours",
                 );
             }
           },

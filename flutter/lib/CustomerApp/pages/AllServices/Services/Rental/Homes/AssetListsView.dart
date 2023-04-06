@@ -58,10 +58,22 @@ class _AssetListsViewState extends State<AssetListsView> {
     if (allServiceListViewController.currentSelectedService.value.name ==
             RentalViewEnum.Wellness.name ||
         allServiceListViewController.currentSelectedService.value.name ==
-            RentalViewEnum.Volunteer.name) {
+            RentalViewEnum.Volunteer.name ||
+        assetController.viewName.name == RentalViewEnum.Activities.name ||
+        assetController.viewName.name == RentalViewEnum.Tour.name) {
       return false;
     }
     return true;
+  }
+
+  bool isNoSubService() {
+    if (allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Wellness.name ||
+        allServiceListViewController.currentSelectedService.value.name ==
+            RentalViewEnum.Volunteer.name) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -70,7 +82,7 @@ class _AssetListsViewState extends State<AssetListsView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(!doesNeedButtonSwitcher()
+        titleWidget: Text(isNoSubService()
             ? _i18n()[allServiceListViewController
                     .currentSelectedService.value.name
                     .toLowerCase()]["title"]
