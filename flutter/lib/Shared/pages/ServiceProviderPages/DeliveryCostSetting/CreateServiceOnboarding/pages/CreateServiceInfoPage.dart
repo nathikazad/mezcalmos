@@ -4,10 +4,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
@@ -140,9 +139,7 @@ class CreateServiceInfoPage extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () async {
-                  final MezLocation? newLoc =
-                      await MezRouter.toNamed(SharedRoutes.kPickLocation)
-                          as MezLocation?;
+                  final MezLocation? newLoc = await PickLocationView.navigate();
 
                   if (newLoc != null) {
                     viewController.setNewLocation(newLoc);
