@@ -207,25 +207,21 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   Widget _fromFeild() {
     return Column(
       children: [
-        Obx(
-          () => Material(
-            elevation: 0,
-            child: LocationSearchComponent(
-                hintPadding: EdgeInsets.only(left: 10),
-                textStyle: context.textTheme.bodyLarge,
-                showInputAsOption: true,
-                bgColor: Colors.white,
-                text: viewController.fromLoc.value?.address,
-                controller: viewController.fromLocText,
-                onClear: () {},
-                notifyParent: (MezLocation? location) {
-                  if (location != null) {
-                    setState(() {
-                      viewController.addFromLoc(location: location);
-                    });
-                  }
-                }),
-          ),
+        Material(
+          elevation: 0,
+          child: LocationSearchComponent(
+              textStyle: context.textTheme.bodyLarge,
+              showInputAsOption: true,
+              bgColor: Colors.white,
+              controller: viewController.fromLocText,
+              onClear: () {},
+              notifyParent: (MezLocation? location) {
+                if (location != null) {
+                  setState(() {
+                    viewController.addFromLoc(location: location);
+                  });
+                }
+              }),
         ),
         SizedBox(
           height: 7,

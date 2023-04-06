@@ -84,6 +84,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                 top: 5,
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
                     Icons.info_outline,

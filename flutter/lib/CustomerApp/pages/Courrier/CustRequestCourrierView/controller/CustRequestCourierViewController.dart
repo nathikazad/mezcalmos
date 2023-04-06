@@ -54,6 +54,7 @@ class CustRequestCourierViewController {
   // getters //
 
   bool get isFromLocation => fromLoc.value != null;
+  // bool get canOrder
 
   // methods //
   Future<void> init({required int courierId}) async {

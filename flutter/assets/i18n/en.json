@@ -23,6 +23,7 @@
         "ops": "Oops",
         "wrongAddress": "Wrong/Invalid address picked!",
         "distanceError": "The distance between you and the service location exceeds 10km!",
+        "noLocError" : "Please select a location",
         "pickLocation": "Pick from map"
       },
       "LocationPicker": {
