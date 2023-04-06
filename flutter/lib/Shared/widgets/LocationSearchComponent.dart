@@ -18,18 +18,16 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
 class LocationSearchComponent extends StatefulWidget {
   final BoxBorder? border;
   final bool readOnly;
+  final bool placeNameAsAdress;
+  final bool showInputAsOption;
 
   // raduis
-  final double leftTopRadius;
-  final double leftBotRaduis;
-  final double rightTopRaduis;
-  final double rightBotRaduis;
-  final EdgeInsets suffixPadding;
+
   final Color bgColor;
   final TextStyle labelStyle;
   final TextStyle? textStyle;
-  final Function? onFocus;
-  final Function? onFocusLost;
+  final TextEditingController? controller;
+
   final TextFieldGotUpdated? onTextChange;
   final double? dropDownWidth;
   final double? dropDownDxOffset;
@@ -39,19 +37,16 @@ class LocationSearchComponent extends StatefulWidget {
   final Function onClear;
   final bool showSearchIcon;
   String? text;
-  final FocusNode? focusNode;
 
   LocationSearchComponent({
     this.label = "",
-    this.suffixPadding = EdgeInsets.zero,
+    this.placeNameAsAdress = true,
+    this.controller,
+    this.showInputAsOption = false,
     this.showSearchIcon = false,
     this.readOnly = false,
     this.hintPadding = const EdgeInsets.only(left: 2, top: 2),
     this.border,
-    this.leftTopRadius = 6,
-    this.leftBotRaduis = 6,
-    this.rightTopRaduis = 6,
-    this.rightBotRaduis = 6,
     this.textStyle,
     this.bgColor = const Color(0xfff8f8f8),
     this.labelStyle = const TextStyle(
@@ -62,12 +57,9 @@ class LocationSearchComponent extends StatefulWidget {
     this.text,
     required this.notifyParent,
     required this.onClear,
-    this.onFocus,
-    this.onFocusLost,
     this.onTextChange,
     this.dropDownWidth,
     this.dropDownDxOffset,
-    this.focusNode,
     Key? key,
   }) : super(key: key);
 
@@ -77,6 +69,8 @@ class LocationSearchComponent extends StatefulWidget {
 
 class LocationSearchComponentState extends State<LocationSearchComponent> {
   TextEditingController _controller = TextEditingController();
+  // TextEditingController get _controller =>
+  //     widget.controller ?? _controller;
   FocusNode? _focusNode;
 
   @override
@@ -120,6 +114,11 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
           controller: _controller,
           focusNode: focusNode,
           decoration: _inputDecoration(),
+          onChanged: (String v) {
+            if (v.length.isEven == true && v.length > 3) {
+              setState(() {});
+            }
+          },
           style: widget.textStyle ??
               widget.labelStyle.copyWith(
                 fontSize: 14,
@@ -139,6 +138,10 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
               .description
               .toLowerCase()
               .contains(textEditingValue.text.toLowerCase()));
+          if (widget.showInputAsOption && _controller.text.isNotEmpty) {
+            data.add(MapHelper.AutoCompleteResult(
+                description: _controller.text, placeId: null));
+          }
 
           return data;
         } else {
@@ -148,12 +151,21 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
       onSelected: (MapHelper.AutoCompleteResult selection) {
         _controller.text = selection.description;
         _focusNode?.unfocus();
-        MapHelper.getLocationFromPlaceId(selection.placeId)
-            .then((MezLocation? value) {
-          if (value != null) {
-            widget.notifyParent.call(value);
+        if (selection.placeId != null) {
+          MapHelper.getLocationFromPlaceId(
+                  selection.placeId!, selection.description)
+              .then((MezLocation? value) {
+            if (value != null) {
+              widget.notifyParent
+                  .call(MezLocation(selection.description, value.position));
+            }
+          });
+        } else {
+          widget.notifyParent.call(null);
+          if (widget.controller != null) {
+            widget.controller?.text = selection.description;
           }
-        });
+        }
       },
     );
 
@@ -269,7 +281,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
         maxWidth: 30,
       ),
       suffixIcon: Padding(
-        padding: widget.suffixPadding,
+        padding: EdgeInsets.only(right: 3),
         child: setSuffixIcon(),
       ),
       border: OutlineInputBorder(

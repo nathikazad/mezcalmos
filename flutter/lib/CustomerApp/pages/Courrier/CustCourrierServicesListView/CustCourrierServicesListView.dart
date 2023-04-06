@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -157,18 +158,19 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
             Icon(
               Icons.delivery_dining,
               color: Colors.black,
-              size: 25,
+              size: 22,
             ),
             SizedBox(
-              width: 5,
+              width: 3,
             ),
             ShippingCostComponent(
-              shippingCost: 50,
+              shippingCost: company.deliveryCost?.minimumCost,
+              formattedShippingCost: company.deliveryCost != null
+                  ? "Min: ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
+                  : null,
               showPerKm: true,
               alignment: MainAxisAlignment.start,
-              textStyle: context.txt.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              textStyle: context.textTheme.bodyMedium,
             ),
           ],
         ),
@@ -199,11 +201,12 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
           ),
         ),
         SizedBox(
-          width: 8,
+          width: 3.w,
         ),
         if (company.rate != null && company.rate != 0)
           Flexible(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.star,
@@ -214,9 +217,17 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
                   width: 2,
                 ),
                 Text(
-                  company.rate.toString(),
-                  style: context.txt.bodyMedium,
-                )
+                  company.rate!.doubleWithoutDecimalToInt.toString(),
+                  style: context.txt.bodyLarge,
+                ),
+                if (company.numberOfReviews != null)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 2, bottom: 3),
+                    child: Text(
+                      "(${company.numberOfReviews})",
+                      style: context.txt.bodyMedium,
+                    ),
+                  )
               ],
             ),
           ),

@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["General"];
 
-typedef LocationChangesNotifier = void Function(LocModel.MezLocation location);
+typedef LocationChangesNotifier = void Function(LocModel.MezLocation? location);
 
 class RouteInformation {
   String polyline;
@@ -134,9 +134,9 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
   // });
 
   final String url =
-      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&key=$placesApikey";
+      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&strictbounds=true&key=$placesApikey";
 
-  mezDbgPrint("===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
+  mezDbgPrint(" $url \n ===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
   if (loc == null) return _returnedPredictions;
 
   final http.Response resp = await http.get(Uri.parse(url));
@@ -156,7 +156,8 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
 }
 
 /// This calls Places API with a [PlaceID] that can be fetched through [getLocationsSuggestions()] and returns [Location] !
-Future<LocModel.MezLocation?> getLocationFromPlaceId(String placeId) async {
+Future<LocModel.MezLocation?> getLocationFromPlaceId(
+    String placeId, String description) async {
   final String url =
       "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=$placesApikey";
   final http.Response resp = await http.get(Uri.parse(url));
@@ -165,10 +166,9 @@ Future<LocModel.MezLocation?> getLocationFromPlaceId(String placeId) async {
   if (respJson["status"] == "OK") {
     final double lat = respJson["result"]["geometry"]["location"]["lat"];
     final double lng = respJson["result"]["geometry"]["location"]["lng"];
-    final String address = respJson["result"]["formatted_address"];
 
     return LocModel.MezLocation.fromFirebaseData(
-        {"address": address, "lat": lat, "lng": lng});
+        {"address": description, "lat": lat, "lng": lng});
   } else {
     return null;
     // in case there is a problem on request!
@@ -345,7 +345,7 @@ extension LocationDataConverter on LocationData {
 }
 
 class AutoCompleteResult {
-  String placeId;
+  String? placeId;
   String description;
   AutoCompleteResult({
     required this.placeId,

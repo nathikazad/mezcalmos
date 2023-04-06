@@ -101,12 +101,13 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
       // deliveryCost: orderData.delivery_cost,
       // packageCost: orderData.package_cost_comp ?? 0,
       driverLocation: null,
-      pickupLocation: (orderData.pickup_address != null &&
-              orderData.pickup_gps != null)
+      pickupLocation: (orderData.pickup_address != null)
           ? MezLocation(
-              orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+              orderData.pickup_address!,
+              orderData.pickup_gps?.toLocationData() ??
+                  MezLocation.buildLocationData(0, 0))
           : null,
-          
+
       dropOffLocation: MezLocation(
           orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       customerDriverChatId: orderData.chat_with_customer_id,

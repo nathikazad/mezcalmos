@@ -175,6 +175,7 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
     return DeliveryCompany(
       schedule: Schedule.fromData(data.details!.schedule),
       rate: data.reviews_aggregate.aggregate?.avg?.rating,
+      numberOfReviews: data.reviews_aggregate.aggregate?.count,
       deliveryCost: DeliveryCost(
         id: data.delivery_details.id,
         selfDelivery: data.delivery_details.self_delivery,

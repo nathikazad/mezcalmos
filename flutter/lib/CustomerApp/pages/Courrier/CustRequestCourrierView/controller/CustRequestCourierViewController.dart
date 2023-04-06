@@ -127,7 +127,8 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _makeOrder() async {
-    mezDbgPrint("Making a courier order ========> ${toLoc.value}");
+    mezDbgPrint("Making a courier order ========> ${fromLoc.value?.address}");
+    mezDbgPrint("Making a courier order ========> ${fromLocText.text}");
     try {
       await _uploadItemsImages();
       cModel.CreateCourierResponse res =
@@ -148,8 +149,7 @@ class CustRequestCourierViewController {
               ),
             )
             .toList(),
-        fromLocationText:
-            (fromLoc.value == null) ? fromLocText.text : fromLoc.value!.address,
+        fromLocationText: fromLocText.text,
         fromLocationGps: (fromLoc.value != null)
             ? cModel.Location(
                 lat: fromLoc.value!.position.latitude!,

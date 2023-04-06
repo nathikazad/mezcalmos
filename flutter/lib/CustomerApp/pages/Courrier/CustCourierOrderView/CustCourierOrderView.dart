@@ -125,16 +125,19 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   Container(
                     margin: const EdgeInsets.only(top: 15),
                     child: Text(
-                      'Delivery details',
+                      "${_i18n()['deliveryDetails']}",
                       style: context.txt.bodyLarge,
                     ),
                   ),
-                  OrderScheduledTimeCard(
-                      time: viewController.order.scheduleTime,
-                      margin: const EdgeInsets.only(top: 8)),
+                  if (viewController.order.pickupLocation != null)
+                    OrderDeliveryLocation(
+                      title: "${_i18n()['pickupLoc']}",
+                      address: viewController.order.pickupLocation!.address,
+                      margin: const EdgeInsets.only(top: 8),
+                    ),
                   OrderDeliveryLocation(
                     address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 8),
+                    margin: const EdgeInsets.only(top: 15),
                   ),
                   OrderPaymentMethod(
                     margin: EdgeInsets.only(top: 15),
@@ -142,11 +145,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
                   ),
-                  OrderDeliveryLocation(
-                    address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 15),
-                    titleTextStyle: context.txt.bodyLarge,
-                  ),
+                  OrderScheduledTimeCard(
+                      time: viewController.order.scheduleTime,
+                      margin: const EdgeInsets.only(top: 8)),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
                       billImage: viewController.order.billImage,

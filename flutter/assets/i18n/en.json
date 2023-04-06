@@ -78,6 +78,8 @@
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
+          "deliveryDetails":"Delivery details",
+          "pickupLoc": "Pickup location",
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },

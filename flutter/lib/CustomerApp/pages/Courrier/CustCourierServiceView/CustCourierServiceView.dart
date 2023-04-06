@@ -39,7 +39,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   int? companyId;
   @override
   void initState() {
-    companyId = int.parse(MezRouter.urlArguments['companyId'].toString());
+    companyId = int.tryParse(MezRouter.urlArguments['companyId'].toString());
     if (companyId != null) {
       _viewController.init(companyId: companyId!);
     }

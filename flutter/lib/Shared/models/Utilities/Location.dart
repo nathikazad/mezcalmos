@@ -34,7 +34,9 @@ class MezLocation {
   }
 
   LatLng? toLatLng() {
-    if (position.latitude != null && position.longitude != null)
+    if (isValidLocation() &&
+        position.latitude != null &&
+        position.longitude != null)
       return LatLng(position.latitude!, position.longitude!);
     return null;
   }
@@ -65,9 +67,8 @@ class MezLocation {
   }
 
   bool isValidLocation() =>
-      address.replaceAll(' ', '') != "0.0,0.0" &&
-      position.latitude != 0 &&
-      position.longitude != 0;
+      //  address.replaceAll(' ', '') != "0.0,0.0" &&
+      position.latitude != 0 && position.longitude != 0;
 
   @override
   int get hashCode => address.hashCode;
