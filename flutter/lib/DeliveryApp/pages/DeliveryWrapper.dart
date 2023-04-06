@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -44,6 +45,10 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
       _deliveryAuthController.setupDeliveryDriver().then((_) => handleState());
     });
 
+    MezRouter.registerReturnToViewCallback(SharedRoutes.kHomeRoute, () {
+      handleState();
+    });
+
     _notificationsStreamListener = initializeShowNotificationsListener();
 
     Get.find<ForegroundNotificationsController>()
@@ -56,12 +61,12 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   void handleState() {
     if (_deliveryAuthController.driver != null &&
         _deliveryAuthController.driver!.deliveryDriverState.isAuthorized) {
-      mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
+      mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
 
       MezRouter.toNamed(DeliveryAppRoutes.kCurrentOrdersListRoute);
     } else {
       MezRouter.toNamed(DeliveryAppRoutes.kDriverUnAuthRoute);
-      mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
+      mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
     }
   }
 

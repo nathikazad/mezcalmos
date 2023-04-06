@@ -93,7 +93,7 @@ class BackgroundNotificationsController extends GetxController {
 
   void notificationClickHandler(RemoteMessage message) {
     mezDbgPrint("notificationClickHandler");
-    mezDbgPrint("CurrentRoute : ${Get.currentRoute}");
+    mezDbgPrint("CurrentRoute : ${MezRouter.currentRoute}");
     mezDbgPrint(message.data);
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {

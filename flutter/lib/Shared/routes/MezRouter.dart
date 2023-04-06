@@ -127,9 +127,10 @@ class MezRouter {
         mezDbgPrint("Popped ${_navigationStack.last.name}");
         _navigationStack.last.completer.complete();
         _navigationStack.removeLast();
-        Future.delayed(
-            Duration.zero, _navigationStack.last.returnToViewCallback?.call());
+        Future.microtask(
+            () => _navigationStack.last.returnToViewCallback?.call());
       }
+      mezDbgPrint("📡📡📡📡📡📡📡📡📡 out of while loop");
     }
   }
 
@@ -144,12 +145,14 @@ class MezRouter {
   static Future<void> popTillExclusive(String routeName) async {
     if (_navigationStack.isNotEmpty && isRouteInStack(routeName)) {
       while (!isCurrentRoute(routeName) &&
-          !isCurrentRoute(SharedRoutes.kHomeRoute)) {
+          !isCurrentRoute(SharedRoutes.kWrapperRoute)) {
+        mezDbgPrint("\n trying to pop ${_navigationStack.last.name} ");
         final bool backSuccesful = await back();
         if (!backSuccesful) {
           break;
         }
-        mezDbgPrint("Popped ${_navigationStack.last.name} ");
+        mezDbgPrint(
+            "popTillExclusive currently on top of stack ${_navigationStack.last.name} ");
       }
     }
   }
@@ -158,12 +161,12 @@ class MezRouter {
   static Future<void> popTillInclusive(String routeName) async {
     if (_navigationStack.isNotEmpty) {
       while (isRouteInStack(routeName) &&
-          !isCurrentRoute(SharedRoutes.kHomeRoute)) {
+          !isCurrentRoute(SharedRoutes.kWrapperRoute)) {
         final bool backSuccesful = await back();
         if (!backSuccesful) {
           break;
         }
-        mezDbgPrint("Popped ${_navigationStack.last.name} ");
+        mezDbgPrint("popTillInclusive Popped ${_navigationStack.last.name} ");
       }
     }
   }

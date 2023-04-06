@@ -237,7 +237,7 @@
               "pickLocationHintText": "Enter name",
               "addLocationDialogButton": "Save",
               "editLocationDialogButton": "EDIT",
-              "addLocationDialogSkip": "Close"
+              "addLocationDialogSkip": "Skip"
             }
           },
           "ViewCartScreen": {

@@ -122,7 +122,7 @@ class _SignInViewState extends State<SignInView> {
         SizedBox(
           height: 20,
         ),
-        facebookLoginBtn(lmode),
+        if (!kIsWeb) facebookLoginBtn(lmode),
         SizedBox(
           height: 10,
         ),
@@ -132,12 +132,12 @@ class _SignInViewState extends State<SignInView> {
         ),
         if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
           appleLoginBtn(),
-        if (lmode == AppLaunchMode.stage && kIsWeb) webLoginBtn(),
+        if (lmode == AppLaunchMode.stage) stageLoginBtn(),
       ];
     }
   }
 
-  Widget webLoginBtn() {
+  Widget stageLoginBtn() {
     return Container(
       width: double.infinity,
       child: TextButton(
