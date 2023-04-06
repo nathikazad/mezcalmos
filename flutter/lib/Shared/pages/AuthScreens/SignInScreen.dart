@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/fakeCreds.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
@@ -132,41 +133,51 @@ class _SignInViewState extends State<SignInView> {
         ),
         if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
           appleLoginBtn(),
-        if (lmode == AppLaunchMode.stage) stageLoginBtn(),
+        if (MezEnv.appLaunchMode == AppLaunchMode.stage)
+          ...stageLoginBtns(stageCredentials),
+        if (MezEnv.appLaunchMode == AppLaunchMode.dev)
+          ...stageLoginBtns(devCredentials),
       ];
     }
   }
 
-  Widget stageLoginBtn() {
-    return Container(
-      width: double.infinity,
-      child: TextButton(
-          onPressed: () {
-            clickedLogin.value = true;
-            signIn("trist@trist.com", "password")
-                .whenComplete(() => clickedLogin.value = false);
-          },
-          style: TextButton.styleFrom(
-              backgroundColor: Colors.black,
-              fixedSize: Size(double.infinity, 50)),
-          child: Container(
-            alignment: Alignment.center,
-            child: Row(
-              children: [
-                Container(
-                    padding: EdgeInsets.only(
-                        left: Get.width * 0.05, right: Get.width * 0.05),
-                    child: Icon(Ionicons.logo_apple)),
-                Spacer(),
-                Text(
-                  "webLogin",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Spacer()
-              ],
-            ),
-          )),
-    );
+  List<Widget> stageLoginBtns(List<Credential> credentials) {
+    return credentials.fold<List<Widget>>([],
+        (List<Widget> list, Credential credential) {
+      list.add(Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: () {
+              clickedLogin.value = true;
+              signIn(credential.username, credential.password)
+                  .whenComplete(() => clickedLogin.value = false);
+            },
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.black,
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  Container(
+                      padding: EdgeInsets.only(
+                          left: Get.width * 0.05, right: Get.width * 0.05),
+                      child: Icon(Ionicons.log_in)),
+                  Spacer(),
+                  Text(
+                    "Login as ${credential.identifier.capitalize}",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Spacer()
+                ],
+              ),
+            )),
+      ));
+      list.add(SizedBox(
+        height: 10,
+      ));
+      return list;
+    });
   }
 
   Widget appleLoginBtn() {

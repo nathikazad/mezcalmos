@@ -1,0 +1,39 @@
+class Credential {
+  String identifier;
+  String username;
+  String password;
+  Credential(
+      {required this.identifier,
+      required this.username,
+      required this.password});
+}
+
+List<Credential> stageCredentials = [
+  Credential(
+      identifier: "customer",
+      username: "trist@trist.com",
+      password: "password"),
+  Credential(
+      identifier: "driver",
+      username: "driver@driver.com",
+      password: "password"),
+  Credential(
+      identifier: "mezadmin",
+      username: "mezadmin@mezadmin.com",
+      password: "password"),
+];
+
+List<Credential> devCredentials = [
+  Credential(
+      identifier: "customer",
+      username: "trist@trist.com",
+      password: "password"),
+  Credential(
+      identifier: "driver",
+      username: "driver@driver.com",
+      password: "password"),
+  Credential(
+      identifier: "mezadmin",
+      username: "mezadmin@mezadmin.com",
+      password: "password"),
+];
