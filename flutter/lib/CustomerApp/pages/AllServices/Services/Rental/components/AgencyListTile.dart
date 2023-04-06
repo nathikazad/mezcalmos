@@ -10,6 +10,8 @@ class AgencyListTile extends StatelessWidget {
     required this.iconsList,
     required this.image,
     required this.onClick,
+    this.needMessageButton = false,
+    this.onMessageClick = null,
   });
 
   final String titleText;
@@ -17,6 +19,8 @@ class AgencyListTile extends StatelessWidget {
   final List<IconData> iconsList;
   final NetworkImage image;
   final Function onClick;
+  final bool needMessageButton;
+  final void Function()? onMessageClick;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,19 @@ class AgencyListTile extends StatelessWidget {
           onClick();
         },
         firstAvatarBgImage: image,
+        action: needMessageButton
+            ? IconButton(
+                icon: Icon(
+                  Icons.textsms,
+                  color: primaryBlueColor,
+                ),
+                onPressed: () {
+                  if (onMessageClick != null) {
+                    onMessageClick!();
+                  }
+                },
+              )
+            : null,
         contentPadding: EdgeInsets.symmetric(
           vertical: 16,
           horizontal: 8,
