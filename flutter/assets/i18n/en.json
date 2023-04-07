@@ -25,6 +25,7 @@
         "distanceError": "The distance between you and the service location exceeds 10km!",
         "noLocError" : "Please select a location",
         "pickLocation": "Pick from map"
+      
       },
       "LocationPicker": {
         "pick": "PICK",
@@ -189,7 +190,8 @@
               "restClosed": "Service is closed now, but you can schedule your order for later.",
               "pickTime": "Pick your time",
               "now": "Now",
-              "timeError": "Picked delivery time is passed, please pick a valid time"
+              "timeError": "Picked delivery time is passed, please pick a valid time",
+              "required" : "Please select a delivery time"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Payment method",

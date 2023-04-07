@@ -44,12 +44,6 @@ class _CustCourierServicesListViewState
   }
 
   Future<void> fetchCompanies() async {
-    // Location location = Location();
-    // final LocationData currentLocation = await location.getLocation();
-    // MezLocation mezLocation = MezLocation.fromLocationData(
-    //     MezLocation.buildLocationData(15.87037, -97.07726));
-
-    mezDbgPrint("Calling query....");
     companies.value = await get_dv_companies() ?? [];
   }
 

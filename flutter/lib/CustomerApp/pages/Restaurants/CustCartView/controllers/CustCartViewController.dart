@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
@@ -23,6 +22,7 @@ class CustCartViewController {
   // instances //
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
+  GlobalKey<FormState> formKey = GlobalKey();
 
   CustomerCartController cartController = Get.find<CustomerCartController>();
 
@@ -312,12 +312,7 @@ class CustCartViewController {
   }
 
   bool get canOrder {
-    return cart.toLocation != null &&
-        _orderDistanceInKm <= 10 &&
-        isShippingSet.isTrue &&
-        validTime &&
-        cart.shippingCost != null &&
-        (cart.restaurant?.isOpen() == true || canSchedule);
+    return cart.toLocation != null && cart.shippingCost != null;
   }
 
   void checkCartPeriod() {
@@ -350,7 +345,7 @@ class CustCartViewController {
 
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
-        if (_orderDistanceInKm <= 15) {
+        if (_orderDistanceInKm <= 10) {
           final num shippingCost =
               deliveryCost!.costPerKm * (_orderDistanceInKm);
           if (shippingCost < deliveryCost!.minimumCost) {
