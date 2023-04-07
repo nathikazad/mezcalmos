@@ -171,11 +171,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 if (viewController.order.value?.isDriverAssigned == true)
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 10),
                     child: _billCard(context),
                   ),
                 if (viewController.orderCosts != null)
                   OrderSummaryCard(
+                    margin: EdgeInsets.only(top: 20),
                     costs: viewController.orderCosts!,
                    
                     setTaxCallBack:
@@ -588,7 +589,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           style: context.txt.bodyLarge,
                         ),
                       ),
-                      Divider(
+                      SizedBox(
                         height: 25,
                       ),
                       if (viewController.orderCosts?.deliveryCost != 0)
@@ -614,7 +615,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                           ],
                         ),
-                      Text("${_i18n()['updatePrice']}"),
+                      Text("${_i18n()['updatePrice']}",
+                          style: context.txt.bodyLarge),
                       SizedBox(
                         height: 10,
                       ),
@@ -623,7 +625,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         style: context.txt.bodyLarge,
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.attach_money_rounded),
+                          prefixIcon: Icon(
+                            Icons.attach_money_rounded,
+                            color: Colors.black,
+                          ),
                         ),
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),

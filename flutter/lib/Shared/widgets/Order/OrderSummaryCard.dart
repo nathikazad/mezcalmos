@@ -5,32 +5,33 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
-  const OrderSummaryCard({
-    Key? key,
-    this.margin,
-    this.newRow,
-    required this.costs,
-    this.divideDeliveryCost = false,
-    this.setTaxCallBack,
-    this.setDeliveryCallBack,
-    this.showNullValues = true,
-    required this.stripeOrderPaymentInfo,
-  }) : super(key: key);
+  const OrderSummaryCard(
+      {Key? key,
+      this.margin,
+      this.newRow,
+      this.changePriceRequest,
+      required this.costs,
+      this.divideDeliveryCost = false,
+      this.setTaxCallBack,
+      this.setDeliveryCallBack,
+      this.showNullValues = true,
+      required this.stripeOrderPaymentInfo})
+      : super(key: key);
   // final Order order;
   final OrderCosts costs;
   final Widget? newRow;
   final bool showNullValues;
   final bool divideDeliveryCost;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
+  final ChangePriceRequest? changePriceRequest;
 
   final Function()? setTaxCallBack;
   final Function()? setDeliveryCallBack;
@@ -107,7 +108,7 @@ class OrderSummaryCard extends StatelessWidget {
                             if (setDeliveryCallBack != null)
                               Container(
                                 child: (costs.requested)
-                                    ? Text(" Waiting for customer ")
+                                    ? Text("${_i18n()['waitingForCustomer']}")
                                     : (costs.changePriceRequest == null)
                                         ? MezIconButton(
                                             icon: costs.deliveryCost != null
@@ -152,7 +153,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Flexible(
                           fit: FlexFit.tight,
@@ -161,40 +162,25 @@ class OrderSummaryCard extends StatelessWidget {
                             style: context.txt.bodyMedium,
                           ),
                         ),
-                        if (costs.tax == null)
-                          Flexible(
-                            child: MezButton(
-                              width: 15.w,
-                              height: 20,
-                              label: '${_i18n()["add"]}',
-                              onClick: () async {},
-                              backgroundColor: Colors.transparent,
-                              textColor: primaryBlueColor,
-                            ),
-                          ),
-                        if (costs.tax != null)
-                          MezIconButton(
-                            icon: costs.tax != null ? Icons.edit : Icons.add,
-                            iconSize: 17,
-                            padding: const EdgeInsets.all(3),
-                            onTap: setTaxCallBack,
-                          ),
-                        if (costs.tax != null)
+                        if (setTaxCallBack != null)
+                          costs.tax == null || costs.tax! == 0
+                              ? InkWell(
+                                  onTap: setTaxCallBack,
+                                  child: Text("${_i18n()['add']}",
+                                      style: context.txt.bodyLarge
+                                          ?.copyWith(color: primaryBlueColor)),
+                                )
+                              : MezIconButton(
+                                  icon: Icons.edit,
+                                  iconSize: 17,
+                                  padding: const EdgeInsets.all(3),
+                                  onTap: setTaxCallBack,
+                                ),
+                        if (costs.tax != null && costs.tax! > 0)
                           Container(
                             margin: const EdgeInsets.only(left: 3),
                             child: Text("${costs.tax?.toPriceString() ?? "-"}"),
                           )
-                        /*if (setTaxCallBack != null)
-                          MezIconButton(
-                            icon: costs.tax != null ? Icons.edit : Icons.add,
-                            iconSize: 17,
-                            padding: const EdgeInsets.all(3),
-                            onTap: setTaxCallBack,
-                          ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 3),
-                          child: Text("${costs.tax?.toPriceString() ?? "-"}"),
-                        )*/
                       ],
                     ),
                   ),

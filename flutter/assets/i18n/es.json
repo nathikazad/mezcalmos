@@ -88,7 +88,7 @@
           "cancelOrder": "Cancelar orden",
           "note": "Nota",
           "delivery": "Entrega",
-          "deliveryDetails":"Detalles de la entrega",
+          "deliveryDetails": "Detalles de la entrega",
           "pickupLoc": "Lugar de recogida",
           "noDriverAssignedYet": "No hay controlador asignado todavía"
         }
@@ -233,6 +233,8 @@
               "pickLocation": "Elegir del mapa"
             },
             "OrderSummaryCard": {
+              "add" : "Agregar",
+              "waitingForCustomer" : "esperando a un cliente", 
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
@@ -1167,7 +1169,8 @@
         "totalCost": "Coste total",
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado",
-        "add": "Agregar"
+        "add": "Agregar",
+        "waitingForCustomer": "esperando a un cliente"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
@@ -1446,19 +1449,17 @@
       }
     },
     "pages": {
-      "DvCompanyOrderView" : {
-        "order" : "Orden",
-        "customer" :"Información del cliente",
-        "estTimes" :"Tiempos estimados",
-        "deliveryDetails" :"Detalles de la entrega",
-        "loading" : "Obteniendo su información de pedido ...",
-        "packageReady" :"Paquete listo:",
+      "DvCompanyOrderView": {
+        "order": "Orden",
+        "customer": "Información del cliente",
+        "estTimes": "Tiempos estimados",
+        "deliveryDetails": "Detalles de la entrega",
+        "loading": "Obteniendo su información de pedido ...",
+        "packageReady": "Paquete listo:",
         "arrivalAtPickup": "Llegada a la recogida :",
-        "pickupLoc" :"Lugar de recogida",
+        "pickupLoc": "Lugar de recogida",
         "arrivalAtDropoff": "Llegada a la caída :",
-        "noDriver" :"No hay controlador asignado todavía"
-
-
+        "noDriver": "No hay controlador asignado todavía"
       },
       "DvOpTabsView": {
         "orders": "Pedidos",

@@ -226,12 +226,12 @@ class DvOrderItems extends StatelessWidget {
                         style: context.txt.bodyLarge,
                       ),
                     ),
-                    Divider(
+                    SizedBox(
                       height: 15,
                     ),
                     Text(
                       "${_i18n()['actualCost']}",
-                      style: context.txt.bodyMedium,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 10,
@@ -241,7 +241,10 @@ class DvOrderItems extends StatelessWidget {
                       style: context.txt.bodyLarge,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.attach_money_rounded),
+                        prefixIcon: Icon(
+                          Icons.attach_money_rounded,
+                          color: Colors.black,
+                        ),
                       ),
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
