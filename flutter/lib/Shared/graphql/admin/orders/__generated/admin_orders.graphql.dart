@@ -1607,6 +1607,15 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
               ),
             ]),
           ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -4203,6 +4212,15 @@ const documentNodeQueryadmin_get_restaurant_orders = DocumentNode(definitions: [
                     value: VariableNode(name: NameNode(value: 'inProccess')),
                   )
                 ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
               )
             ]),
           ),
@@ -7089,6 +7107,15 @@ const documentNodeQueryadmin_get_laundry_orders = DocumentNode(definitions: [
                     value: VariableNode(name: NameNode(value: 'inProccess')),
                   )
                 ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
               )
             ]),
           ),

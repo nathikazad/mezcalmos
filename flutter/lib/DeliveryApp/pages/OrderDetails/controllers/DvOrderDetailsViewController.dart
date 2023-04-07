@@ -151,6 +151,7 @@ class DvOrderDetailsViewController {
           newBillFile.value = _res;
           if (newBillFile.value != null) {
             String imageUrl = await uploadImgToFbStorage(
+                compressLevel: 50,
                 imageFile: newBillFile.value!,
                 pathPrefix: "bills/delivery/$orderId");
             newBillUrl.value = await update_courier_order_bill(

@@ -1,27 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
-import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 
-class LaundryOpPastOrdersController {
-  //instances
-  LaundryOpAuthController opAuthController =
-      Get.find<LaundryOpAuthController>();
+class DriverPastOrdersController {
+  DriverPastOrdersController();
+  RxList<MinimalOrder> pastOrders = RxList.empty();
 
-  // vars
-
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
-  RxBool initalized = RxBool(false);
-  late int laundryId;
-
-// getters
-
-/* SCROLL CONTROLLER */
+  /* SCROLL CONTROLLER */
   ScrollController get scrollController => _scrollController;
   ScrollController _scrollController = ScrollController();
   final int fetchSize = 10;
@@ -31,16 +19,7 @@ class LaundryOpPastOrdersController {
   /* SCROLL CONTROLLER */
 
   Future<void> init() async {
-    laundryId = opAuthController.laundryId!;
-    mezDbgPrint("INIT PAST ORDERS 👋👋👋👋👋👋 Restaurant id $laundryId");
-    try {
-      await initOrders();
-    } on Exception catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
-
-    initalized.value = true;
+    await initOrders();
   }
 
   Future<void> initOrders() async {
@@ -56,11 +35,12 @@ class LaundryOpPastOrdersController {
 
     try {
       _fetchingData = true;
-      final List<MinimalOrder> newData = await get_laundry_orders(
+      final List<MinimalOrder> newData = await get_past_driver_orders(
               offset: _currentOffset,
               limit: fetchSize,
-              laundryStoreID: laundryId,
-              inProcess: false) ??
+              driverId: Get.find<DeliveryAuthController>()
+                  .driver!
+                  .deliveryDriverId) ??
           [];
       pastOrders.value += newData;
       if (newData.length == 0) {
@@ -70,6 +50,8 @@ class LaundryOpPastOrdersController {
     } finally {
       _fetchingData = false;
     }
+
+    // pastOrders.refresh();
   }
 
   void dispose() {

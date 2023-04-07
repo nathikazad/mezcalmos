@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/PastOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
@@ -19,25 +20,16 @@ class DriverPastOrdersView extends StatefulWidget {
 }
 
 class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
-  RxList<MinimalOrder> pastOrders = RxList.empty();
-
+  DriverPastOrdersController _viewController = DriverPastOrdersController();
   @override
   void initState() {
-    get_past_driver_orders(
-            driverId:
-                Get.find<DeliveryAuthController>().driver!.deliveryDriverId)
-        .then((List<MinimalOrder>? value) {
-      if (value != null) {
-        pastOrders.value = value;
-      }
-    });
-
+    _viewController.init();
     super.initState();
   }
 
   @override
   void dispose() {
-    pastOrders.close();
+    _viewController.dispose();
     super.dispose();
   }
 
@@ -47,6 +39,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           autoBack: true, title: "${_i18n()["pastOrders"]}"),
       body: SingleChildScrollView(
+        controller: _viewController.scrollController,
         padding: const EdgeInsets.all(8),
         child: Obx(() {
           return _pastOrdersList(context);
@@ -56,11 +49,11 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
   }
 
   Widget _pastOrdersList(BuildContext context) {
-    if (pastOrders.isNotEmpty) {
+    if (_viewController.pastOrders.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (pastOrders.isNotEmpty)
+          if (_viewController.pastOrders.isNotEmpty)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
               child: Text(
@@ -70,11 +63,12 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
             ),
           Column(
             children: List.generate(
-              pastOrders.length,
+              _viewController.pastOrders.length,
               (int index) => MinimalOrderCard(
-                order: pastOrders[index],
+                order: _viewController.pastOrders[index],
                 onTap: () {
-                  DvOrderView.navigate(orderId: pastOrders[index].id);
+                  DvOrderView.navigate(
+                      orderId: _viewController.pastOrders[index].id);
                 },
               ),
             ),

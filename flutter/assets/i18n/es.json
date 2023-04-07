@@ -55,7 +55,7 @@
         },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
-          "chatWithUs": "habla con nosotros",
+          "chatWithUs": "Habla con nosotros",
           "contactUs": "Contáctenos",
           "minimumCost": "Costo mínimo",
           "description": "Descripción",
@@ -88,7 +88,7 @@
           "cancelOrder": "Cancelar orden",
           "note": "Nota",
           "delivery": "Entrega",
-          "deliveryDetails":"Detalles de la entrega",
+          "deliveryDetails": "Detalles de la entrega",
           "pickupLoc": "Lugar de recogida",
           "noDriverAssignedYet": "No hay controlador asignado todavía"
         }
@@ -233,6 +233,8 @@
               "pickLocation": "Elegir del mapa"
             },
             "OrderSummaryCard": {
+              "add" : "Agregar",
+              "waitingForCustomer" : "esperando a un cliente", 
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
@@ -273,9 +275,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
-              "rmItemTitle" : "Remover el artículo",
-              "rmItemHelper" : "¿Estás seguro de que quieres eliminar este artículo del carrito?",
-              "rmItemButton" : "Sí, elimine el artículo",
+              "rmItemTitle": "Remover el artículo",
+              "rmItemHelper": "¿Estás seguro de que quieres eliminar este artículo del carrito?",
+              "rmItemButton": "Sí, elimine el artículo",
               "notAvailable": "Su restaurante está cerrado",
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
@@ -629,8 +631,8 @@
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
           "day": "día",
-          "return" : "devolver",
-          "daysReturn" : "Días de regreso",
+          "return": "devolver",
+          "daysReturn": "Días de regreso",
           "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
@@ -1137,11 +1139,11 @@
       }
     },
     "widgets": {
-      "OrderMapWidget" : {
-        "mapWebText" : "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
+      "OrderMapWidget": {
+        "mapWebText": "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
       },
-      "MezcalmosAppBar" : {
-        "installApp" : "Instalar la aplicación Mezcalmos"
+      "MezcalmosAppBar": {
+        "installApp": "Instalar la aplicación Mezcalmos"
       },
       "ReviewCard": {
         "review": "Revisar"
@@ -1166,7 +1168,9 @@
         "tax": "Impuesto",
         "totalCost": "Coste total",
         "refundAmount": "Cantidad devuelta",
-        "toBeCalc": "Para ser calculado"
+        "toBeCalc": "Para ser calculado",
+        "add": "Agregar",
+        "waitingForCustomer": "esperando a un cliente"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
@@ -1445,19 +1449,17 @@
       }
     },
     "pages": {
-      "DvCompanyOrderView" : {
-        "order" : "Orden",
-        "customer" :"Información del cliente",
-        "estTimes" :"Tiempos estimados",
-        "deliveryDetails" :"Detalles de la entrega",
-        "loading" : "Obteniendo su información de pedido ...",
-        "packageReady" :"Paquete listo:",
+      "DvCompanyOrderView": {
+        "order": "Orden",
+        "customer": "Información del cliente",
+        "estTimes": "Tiempos estimados",
+        "deliveryDetails": "Detalles de la entrega",
+        "loading": "Obteniendo su información de pedido ...",
+        "packageReady": "Paquete listo:",
         "arrivalAtPickup": "Llegada a la recogida :",
-        "pickupLoc" :"Lugar de recogida",
+        "pickupLoc": "Lugar de recogida",
         "arrivalAtDropoff": "Llegada a la caída :",
-        "noDriver" :"No hay controlador asignado todavía"
-
-
+        "noDriver": "No hay controlador asignado todavía"
       },
       "DvOpTabsView": {
         "orders": "Pedidos",
@@ -1757,7 +1759,7 @@
         "customer": "Cliente",
         "restaurant": "Restaurante",
         "laundry": "Lavanderia",
-        "orders": "Pedidos",
+        "order": "Pedido",
         "viewImage": "Ver imagen"
       },
       "CurrentOrders": {
@@ -1767,7 +1769,7 @@
           "offlineTitle": "Estas desconectado",
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Hoy",
-          "title": "Órdenes  Entrantes",
+          "title": "Órdenes entrantes",
           "Components": {
             "DriverNoOrdersComponent": {
               "noOrdersTitle": "No Hay Ordenes",
@@ -1792,7 +1794,7 @@
             }
           },
           "CurrentOrdersListScreen": {
-            "title": "Órdenes  Entrantes"
+            "title": "Órdenes entrantes"
           }
         },
         "CurrentOrderViewScreen": {
@@ -1859,7 +1861,7 @@
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
-            
+
               "noPickupTimeTitle": "Sin tiempo de recogida",
               "noPickupTimeBody": "Por favor, establezca la hora de recogida primero",
               "setDvCostTitle": "Sin costo de entrega",
@@ -2221,8 +2223,8 @@
         "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
         "deleteTitle": "Eliminar este artículo",
         "deleteItem": "Eliminar elemento",
-        "added" : "Agregada",
-        "addedSubtitle" : "Artículo agregado con éxito",
+        "added": "Agregada",
+        "addedSubtitle": "Artículo agregado con éxito",
         "components": {
           "ROpItemCategorySelector": {
             "errorText": "Porfavor seleccione una categoría",

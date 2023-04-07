@@ -17,7 +17,6 @@ class DriverCurrentOrdersController {
   // vars
   RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
   RxList<MinimalOrder> openOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
   RxBool initalized = RxBool(false);
   late int driverId;
   RxBool _isOnline = RxBool(true);
@@ -53,7 +52,6 @@ class DriverCurrentOrdersController {
     currentOrders.value =
         await get_current_driver_orders(driverId: driverId) ?? [];
     openOrders.value = await get_open_driver_orders(driverId: driverId) ?? [];
-    pastOrders.value = await get_past_driver_orders(driverId: driverId) ?? [];
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =
           listen_on_current_driver_orders(driverId: driverId)

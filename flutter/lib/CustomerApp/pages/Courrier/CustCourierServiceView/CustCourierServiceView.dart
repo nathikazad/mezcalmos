@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustCourierServiceView"];
@@ -85,7 +86,7 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //  __headerButtons(),
+                      // __headerButtons(),
                       Row(
                         children: [
                           RawChip(
@@ -223,39 +224,73 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   }
 
   Widget __headerButtons() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        children: [
-          Flexible(
-            child: MezButton(
-              label: '${_i18n()["chatWithUs"]}',
-              height: 32.5,
-              backgroundColor: Colors.white,
-              textColor: primaryBlueColor,
-              onClick: () async {},
-              icon: Icons.message,
-              borderRadius: 20,
-              border: Border.all(width: 1, color: primaryBlueColor),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: RawChip(
+            padding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
+            label: InkWell(
+              onTap: () {},
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.message_rounded,
+                            color: primaryBlueColor,
+                          )),
+                      TextSpan(
+                        text: '${_i18n()["chatWithUs"]}',
+                        style: context.txt.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-          SizedBox(
-            width: 15,
-          ),
-          Flexible(
-            child: MezButton(
-              label: '${_i18n()["contactUs"]}',
-              height: 32.5,
-              onClick: () async {},
-              backgroundColor: Colors.white,
-              textColor: primaryBlueColor,
-              icon: Icons.phone,
-              borderRadius: 20,
-              border: Border.all(width: 1, color: primaryBlueColor),
+        ),
+        Expanded(
+          child: RawChip(
+            padding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
+            label: InkWell(
+              onTap: () {},
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.phone,
+                            color: primaryBlueColor,
+                          )),
+                      TextSpan(
+                        text: '${_i18n()["contactUs"]}',
+                        style: context.txt.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -18672,9 +18672,15 @@ class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_
 }
 
 class Variables$Query$get_past_driver_orders {
-  factory Variables$Query$get_past_driver_orders({required int driverId}) =>
+  factory Variables$Query$get_past_driver_orders({
+    required int driverId,
+    int? offset,
+    int? limit,
+  }) =>
       Variables$Query$get_past_driver_orders._({
         r'driverId': driverId,
+        if (offset != null) r'offset': offset,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$get_past_driver_orders._(this._$data);
@@ -18684,16 +18690,34 @@ class Variables$Query$get_past_driver_orders {
     final result$data = <String, dynamic>{};
     final l$driverId = data['driverId'];
     result$data['driverId'] = (l$driverId as int);
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$get_past_driver_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get driverId => (_$data['driverId'] as int);
+  int? get offset => (_$data['offset'] as int?);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$driverId = driverId;
     result$data['driverId'] = l$driverId;
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -18717,13 +18741,35 @@ class Variables$Query$get_past_driver_orders {
     if (l$driverId != lOther$driverId) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$driverId = driverId;
-    return Object.hashAll([l$driverId]);
+    final l$offset = offset;
+    final l$limit = limit;
+    return Object.hashAll([
+      l$driverId,
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -18736,7 +18782,11 @@ abstract class CopyWith$Variables$Query$get_past_driver_orders<TRes> {
   factory CopyWith$Variables$Query$get_past_driver_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$get_past_driver_orders;
 
-  TRes call({int? driverId});
+  TRes call({
+    int? driverId,
+    int? offset,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$get_past_driver_orders<TRes>
@@ -18752,11 +18802,17 @@ class _CopyWithImpl$Variables$Query$get_past_driver_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? driverId = _undefined}) =>
+  TRes call({
+    Object? driverId = _undefined,
+    Object? offset = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$get_past_driver_orders._({
         ..._instance._$data,
         if (driverId != _undefined && driverId != null)
           'driverId': (driverId as int),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -18766,7 +18822,12 @@ class _CopyWithStubImpl$Variables$Query$get_past_driver_orders<TRes>
 
   TRes _res;
 
-  call({int? driverId}) => _res;
+  call({
+    int? driverId,
+    int? offset,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$get_past_driver_orders {
@@ -18938,7 +18999,25 @@ const documentNodeQueryget_past_driver_orders = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -18968,7 +19047,24 @@ const documentNodeQueryget_past_driver_orders = DocumentNode(definitions: [
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -28540,10 +28636,15 @@ class _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$deli
 }
 
 class Variables$Query$get_delivery_company_past_orders {
-  factory Variables$Query$get_delivery_company_past_orders(
-          {required int companyId}) =>
+  factory Variables$Query$get_delivery_company_past_orders({
+    required int companyId,
+    int? offset,
+    int? limit,
+  }) =>
       Variables$Query$get_delivery_company_past_orders._({
         r'companyId': companyId,
+        if (offset != null) r'offset': offset,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$get_delivery_company_past_orders._(this._$data);
@@ -28553,16 +28654,34 @@ class Variables$Query$get_delivery_company_past_orders {
     final result$data = <String, dynamic>{};
     final l$companyId = data['companyId'];
     result$data['companyId'] = (l$companyId as int);
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$get_delivery_company_past_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get companyId => (_$data['companyId'] as int);
+  int? get offset => (_$data['offset'] as int?);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$companyId = companyId;
     result$data['companyId'] = l$companyId;
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -28586,13 +28705,35 @@ class Variables$Query$get_delivery_company_past_orders {
     if (l$companyId != lOther$companyId) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$companyId = companyId;
-    return Object.hashAll([l$companyId]);
+    final l$offset = offset;
+    final l$limit = limit;
+    return Object.hashAll([
+      l$companyId,
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -28606,7 +28747,11 @@ abstract class CopyWith$Variables$Query$get_delivery_company_past_orders<TRes> {
           TRes res) =
       _CopyWithStubImpl$Variables$Query$get_delivery_company_past_orders;
 
-  TRes call({int? companyId});
+  TRes call({
+    int? companyId,
+    int? offset,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$get_delivery_company_past_orders<TRes>
@@ -28622,11 +28767,17 @@ class _CopyWithImpl$Variables$Query$get_delivery_company_past_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? companyId = _undefined}) =>
+  TRes call({
+    Object? companyId = _undefined,
+    Object? offset = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$get_delivery_company_past_orders._({
         ..._instance._$data,
         if (companyId != _undefined && companyId != null)
           'companyId': (companyId as int),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -28636,7 +28787,12 @@ class _CopyWithStubImpl$Variables$Query$get_delivery_company_past_orders<TRes>
 
   TRes _res;
 
-  call({int? companyId}) => _res;
+  call({
+    int? companyId,
+    int? offset,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$get_delivery_company_past_orders {
@@ -28813,7 +28969,25 @@ const documentNodeQueryget_delivery_company_past_orders =
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -28848,7 +29022,24 @@ const documentNodeQueryget_delivery_company_past_orders =
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

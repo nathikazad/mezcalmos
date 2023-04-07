@@ -46,26 +46,28 @@ query get_customer_info($customer_id: Int!) {
   }
 }
 
-
 # Set customer's infos
-mutation set_customer_info(
-  $user_id: Int!
-  $app_version: String!
- 
-) {
+mutation set_customer_info($user_id: Int!, $app_version: String!) {
   insert_customer_customer_one(
-    object: {
-      user_id: $user_id
-      app_version: $app_version
-     
-    }
+    object: { user_id: $user_id, app_version: $app_version }
   ) {
     user_id
   }
 }
 
-query get_customer_orders($custId: Int!,$inProcess: Boolean!) {
-  customer_minimal_orders(args: {cus_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
+query get_customer_orders(
+  $custId: Int!
+  $inProcess: Boolean!
+  $limit: Int
+  $offset: Int
+) {
+  customer_minimal_orders(
+    args: { cus_id: $custId }
+    where: { in_process: { _eq: $inProcess } }
+    order_by: { order_time: desc }
+    offset: $offset
+    limit: $limit
+  ) {
     id
     image
     in_process
@@ -79,8 +81,11 @@ query get_customer_orders($custId: Int!,$inProcess: Boolean!) {
     total_cost
   }
 }
-subscription listen_on_customer_orders($custId: Int!,$inProcess: Boolean!) {
-  customer_minimal_orders(args: {cus_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
+subscription listen_on_customer_orders($custId: Int!, $inProcess: Boolean!) {
+  customer_minimal_orders(
+    args: { cus_id: $custId }
+    where: { in_process: { _eq: $inProcess } }
+  ) {
     id
     image
     in_process
@@ -95,12 +100,27 @@ subscription listen_on_customer_orders($custId: Int!,$inProcess: Boolean!) {
   }
 }
 
-mutation updateDriverOrderReviewId($orderId: Int!,$reviewId: Int!) {
-  update_delivery_order_by_pk(pk_columns: {id: $orderId}, _set: {driver_review_by_customer_id: $reviewId}){driver_review_by_customer_id}
+mutation updateDriverOrderReviewId($orderId: Int!, $reviewId: Int!) {
+  update_delivery_order_by_pk(
+    pk_columns: { id: $orderId }
+    _set: { driver_review_by_customer_id: $reviewId }
+  ) {
+    driver_review_by_customer_id
+  }
 }
-mutation updateRestaurantOrderReviewId($orderId: Int!,$reviewId: Int!)  {
-  update_restaurant_order_by_pk(pk_columns: {id: $orderId}, _set: {review_id: $reviewId}){review_id}
+mutation updateRestaurantOrderReviewId($orderId: Int!, $reviewId: Int!) {
+  update_restaurant_order_by_pk(
+    pk_columns: { id: $orderId }
+    _set: { review_id: $reviewId }
+  ) {
+    review_id
+  }
 }
-mutation updateLaundryOrderReviewId($orderId: Int!,$reviewId: Int!)  {
-  update_laundry_order_by_pk(pk_columns: {id: $orderId}, _set: {review_id: $reviewId}){review_id}
+mutation updateLaundryOrderReviewId($orderId: Int!, $reviewId: Int!) {
+  update_laundry_order_by_pk(
+    pk_columns: { id: $orderId }
+    _set: { review_id: $reviewId }
+  ) {
+    review_id
+  }
 }

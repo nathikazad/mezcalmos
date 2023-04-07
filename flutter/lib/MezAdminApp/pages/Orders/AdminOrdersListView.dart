@@ -29,10 +29,6 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
   void initState() {
     viewController.init(
         adminTabsViewController: widget.adminTabsViewController);
-    viewController.scrollController.onBottomReach(() {
-      //   mezDbgPrint("Bottom reached 🥹");
-      viewController.fetchServicePastOrders();
-    }, sensitivity: 500, throttleDuration: Duration(seconds: 1));
 
     super.initState();
   }
