@@ -6,7 +6,6 @@ import { getMezAdmin } from "./graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "./models/Generic/Chat";
 import { DeliveryOrder, DeliveryOperator, DeliveryDriver } from "./models/Generic/Delivery";
 import { AuthorizationStatus } from "./models/Generic/Generic";
-import { OrderType } from "./models/Generic/Order";
 import { OrderNotification, NotificationType, NotificationAction, Notification } from "./models/Notification";
 
 export async function isMezAdmin(userId: number): Promise<boolean> {
@@ -18,15 +17,15 @@ export async function isMezAdmin(userId: number): Promise<boolean> {
     }
 }
 
-export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder, deliveryPartnerId: number, orderType: OrderType) {
-    let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(deliveryPartnerId);
-    let deliveryDrivers: DeliveryDriver[] = await getDeliveryDrivers(deliveryPartnerId);
+export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder) {
+    let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(deliveryOrder.serviceProviderId);
+    let deliveryDrivers: DeliveryDriver[] = await getDeliveryDrivers(deliveryOrder.serviceProviderId);
   
     let notification: Notification = {
       foreground: <OrderNotification>{
         time: (new Date()).toISOString(),
         notificationType: NotificationType.NewOrder,
-        orderType,
+        orderType: deliveryOrder.orderType,
         notificationAction: NotificationAction.ShowPopUp,
         orderId: deliveryOrder.deliveryId
       },
