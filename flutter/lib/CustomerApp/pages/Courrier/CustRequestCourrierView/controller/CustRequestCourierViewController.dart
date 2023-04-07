@@ -113,6 +113,7 @@ class CustRequestCourierViewController {
   Future<num?> handleNext() async {
     if (currentPage == 0) {
       if (fromKey.currentState?.validate() == true) {
+        FocusManager.instance.primaryFocus?.unfocus();
         unawaited(pageController
             .animateToPage(currentPage.value + 1,
                 duration: Duration(milliseconds: 500), curve: Curves.easeInOut)

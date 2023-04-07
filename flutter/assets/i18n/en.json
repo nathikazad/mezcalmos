@@ -23,7 +23,7 @@
         "ops": "Oops",
         "wrongAddress": "Wrong/Invalid address picked!",
         "distanceError": "The distance between you and the service location exceeds 10km!",
-        "noLocError" : "Please select a location",
+        "noLocError": "Please select a location",
         "pickLocation": "Pick from map"
       },
       "LocationPicker": {
@@ -79,7 +79,7 @@
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
-          "deliveryDetails":"Delivery details",
+          "deliveryDetails": "Delivery details",
           "pickupLoc": "Pickup location",
           "noDriverAssignedYet": "No driver assigned yet"
         }
@@ -358,7 +358,8 @@
               "deliveryCost": "Delivery cost",
               "free": "Free",
               "total": "Total",
-              "deliveryLocation": "Delivery location"
+              "deliveryLocation": "Delivery location",
+              "waitingForCustomer": "Waiting for customer"
             },
             "RestaurantBankInfoCard": {
               "title": "Restaurant bank account",
@@ -1430,19 +1431,17 @@
       }
     },
     "pages": {
-      "DvCompanyOrderView" : {
-        "order" : "Order",
-        "customer" :"Customer Info",
-        "estTimes" :"Estimated times",
-        "deliveryDetails" :"Delivery details",
-       "pickupLoc" : "Pickup location",
-        "loading" : "Getting you order info...",
-        "packageReady" :"Package ready :",
+      "DvCompanyOrderView": {
+        "order": "Order",
+        "customer": "Customer Info",
+        "estTimes": "Estimated times",
+        "deliveryDetails": "Delivery details",
+        "pickupLoc": "Pickup location",
+        "loading": "Getting you order info...",
+        "packageReady": "Package ready :",
         "arrivalAtPickup": "Arrival at pickup :",
         "arrivalAtDropoff": "Arrival at dropoff :",
-        "noDriver" :"No driver assigned yet"
-
-
+        "noDriver": "No driver assigned yet"
       },
       "DvOpTabsView": {
         "orders": "Orders",

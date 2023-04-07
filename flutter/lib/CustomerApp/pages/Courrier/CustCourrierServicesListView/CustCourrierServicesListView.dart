@@ -186,14 +186,13 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               width: 3,
             ),
             ShippingCostComponent(
-              shippingCost: company.deliveryCost?.minimumCost,
-              formattedShippingCost: company.deliveryCost != null
-                  ? "Min: ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
-                  : null,
-              showPerKm: true,
-              alignment: MainAxisAlignment.start,
-              textStyle: context.textTheme.bodyMedium,
-            ),
+                shippingCost: company.deliveryCost?.minimumCost,
+                formattedShippingCost: company.deliveryCost != null
+                    ? "Min: ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
+                    : null,
+                showPerKm: true,
+                alignment: MainAxisAlignment.start,
+                textStyle: context.txt.bodySmall),
           ],
         ),
         SizedBox(
@@ -238,10 +237,8 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
                 SizedBox(
                   width: 2,
                 ),
-                Text(
-                  company.rate!.doubleWithoutDecimalToInt.toStringAsFixed(1),
-                  style: context.txt.bodyLarge,
-                ),
+                Text(company.rate!.doubleWithoutDecimalToInt.toStringAsFixed(1),
+                    style: context.txt.bodySmall),
                 if (company.numberOfReviews != null)
                   Padding(
                     padding: const EdgeInsets.only(left: 2, bottom: 3),
