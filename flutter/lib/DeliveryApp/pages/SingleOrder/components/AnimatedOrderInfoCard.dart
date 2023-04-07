@@ -357,7 +357,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "${order.costs.orderItemsCost?.toPriceString(rounded: true)} + ${order.costs.deliveryCost?.toPriceString(rounded: true)}",
+                "${order.costs.itemCostsWithTax.toPriceString(rounded: true)} + ${order.costs.deliveryCost?.toPriceString(rounded: true)}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

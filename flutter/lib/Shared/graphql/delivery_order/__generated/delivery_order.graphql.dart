@@ -470,6 +470,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'tax'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'restaurant_order'),
             alias: null,
             arguments: [],
@@ -1386,6 +1393,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     this.estimated_arrival_at_pickup_time,
     this.estimated_package_ready_time,
     required this.id,
+    this.tax,
     this.restaurant_order,
     this.laundry,
     this.laundry_pickup_order,
@@ -1431,6 +1439,7 @@ class Query$get_driver_order$delivery_order_by_pk {
         json['estimated_arrival_at_pickup_time'];
     final l$estimated_package_ready_time = json['estimated_package_ready_time'];
     final l$id = json['id'];
+    final l$tax = json['tax'];
     final l$restaurant_order = json['restaurant_order'];
     final l$laundry = json['laundry'];
     final l$laundry_pickup_order = json['laundry_pickup_order'];
@@ -1478,6 +1487,7 @@ class Query$get_driver_order$delivery_order_by_pk {
           (l$estimated_arrival_at_pickup_time as String?),
       estimated_package_ready_time: (l$estimated_package_ready_time as String?),
       id: (l$id as int),
+      tax: l$tax == null ? null : moneyFromJson(l$tax),
       restaurant_order: l$restaurant_order == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$restaurant_order
@@ -1557,6 +1567,8 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String? estimated_package_ready_time;
 
   final int id;
+
+  final double? tax;
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant_order?
       restaurant_order;
@@ -1648,6 +1660,8 @@ class Query$get_driver_order$delivery_order_by_pk {
         l$estimated_package_ready_time;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$tax = tax;
+    _resultData['tax'] = l$tax == null ? null : moneyToJson(l$tax);
     final l$restaurant_order = restaurant_order;
     _resultData['restaurant_order'] = l$restaurant_order?.toJson();
     final l$laundry = laundry;
@@ -1719,6 +1733,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     final l$estimated_package_ready_time = estimated_package_ready_time;
     final l$id = id;
+    final l$tax = tax;
     final l$restaurant_order = restaurant_order;
     final l$laundry = laundry;
     final l$laundry_pickup_order = laundry_pickup_order;
@@ -1759,6 +1774,7 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$estimated_arrival_at_pickup_time,
       l$estimated_package_ready_time,
       l$id,
+      l$tax,
       l$restaurant_order,
       l$laundry,
       l$laundry_pickup_order,
@@ -1880,6 +1896,11 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$tax = tax;
+    final lOther$tax = other.tax;
+    if (l$tax != lOther$tax) {
       return false;
     }
     final l$restaurant_order = restaurant_order;
@@ -2036,6 +2057,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     int? id,
+    double? tax,
     Query$get_driver_order$delivery_order_by_pk$restaurant_order?
         restaurant_order,
     Query$get_driver_order$delivery_order_by_pk$laundry? laundry,
@@ -2111,6 +2133,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? estimated_arrival_at_pickup_time = _undefined,
     Object? estimated_package_ready_time = _undefined,
     Object? id = _undefined,
+    Object? tax = _undefined,
     Object? restaurant_order = _undefined,
     Object? laundry = _undefined,
     Object? laundry_pickup_order = _undefined,
@@ -2187,6 +2210,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             ? _instance.estimated_package_ready_time
             : (estimated_package_ready_time as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        tax: tax == _undefined ? _instance.tax : (tax as double?),
         restaurant_order: restaurant_order == _undefined
             ? _instance.restaurant_order
             : (restaurant_order
@@ -2366,6 +2390,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     int? id,
+    double? tax,
     Query$get_driver_order$delivery_order_by_pk$restaurant_order?
         restaurant_order,
     Query$get_driver_order$delivery_order_by_pk$laundry? laundry,
@@ -38881,6 +38906,646 @@ class _CopyWithStubImpl$Query$getCompanyOrdersCount$delivery_order_aggregate$agg
 
   call({
     int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Subscription$listen_driver_order_prices {
+  factory Variables$Subscription$listen_driver_order_prices(
+          {required int orderId}) =>
+      Variables$Subscription$listen_driver_order_prices._({
+        r'orderId': orderId,
+      });
+
+  Variables$Subscription$listen_driver_order_prices._(this._$data);
+
+  factory Variables$Subscription$listen_driver_order_prices.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    return Variables$Subscription$listen_driver_order_prices._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listen_driver_order_prices<
+          Variables$Subscription$listen_driver_order_prices>
+      get copyWith =>
+          CopyWith$Variables$Subscription$listen_driver_order_prices(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listen_driver_order_prices) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    return Object.hashAll([l$orderId]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listen_driver_order_prices<
+    TRes> {
+  factory CopyWith$Variables$Subscription$listen_driver_order_prices(
+    Variables$Subscription$listen_driver_order_prices instance,
+    TRes Function(Variables$Subscription$listen_driver_order_prices) then,
+  ) = _CopyWithImpl$Variables$Subscription$listen_driver_order_prices;
+
+  factory CopyWith$Variables$Subscription$listen_driver_order_prices.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listen_driver_order_prices;
+
+  TRes call({int? orderId});
+}
+
+class _CopyWithImpl$Variables$Subscription$listen_driver_order_prices<TRes>
+    implements
+        CopyWith$Variables$Subscription$listen_driver_order_prices<TRes> {
+  _CopyWithImpl$Variables$Subscription$listen_driver_order_prices(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listen_driver_order_prices _instance;
+
+  final TRes Function(Variables$Subscription$listen_driver_order_prices) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? orderId = _undefined}) =>
+      _then(Variables$Subscription$listen_driver_order_prices._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listen_driver_order_prices<TRes>
+    implements
+        CopyWith$Variables$Subscription$listen_driver_order_prices<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listen_driver_order_prices(
+      this._res);
+
+  TRes _res;
+
+  call({int? orderId}) => _res;
+}
+
+class Subscription$listen_driver_order_prices {
+  Subscription$listen_driver_order_prices({
+    this.delivery_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_driver_order_prices.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_order_by_pk = json['delivery_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_driver_order_prices(
+      delivery_order_by_pk: l$delivery_order_by_pk == null
+          ? null
+          : Subscription$listen_driver_order_prices$delivery_order_by_pk
+              .fromJson((l$delivery_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$listen_driver_order_prices$delivery_order_by_pk?
+      delivery_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    _resultData['delivery_order_by_pk'] = l$delivery_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listen_driver_order_prices) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final lOther$delivery_order_by_pk = other.delivery_order_by_pk;
+    if (l$delivery_order_by_pk != lOther$delivery_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_driver_order_prices
+    on Subscription$listen_driver_order_prices {
+  CopyWith$Subscription$listen_driver_order_prices<
+          Subscription$listen_driver_order_prices>
+      get copyWith => CopyWith$Subscription$listen_driver_order_prices(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_driver_order_prices<TRes> {
+  factory CopyWith$Subscription$listen_driver_order_prices(
+    Subscription$listen_driver_order_prices instance,
+    TRes Function(Subscription$listen_driver_order_prices) then,
+  ) = _CopyWithImpl$Subscription$listen_driver_order_prices;
+
+  factory CopyWith$Subscription$listen_driver_order_prices.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$listen_driver_order_prices;
+
+  TRes call({
+    Subscription$listen_driver_order_prices$delivery_order_by_pk?
+        delivery_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk;
+}
+
+class _CopyWithImpl$Subscription$listen_driver_order_prices<TRes>
+    implements CopyWith$Subscription$listen_driver_order_prices<TRes> {
+  _CopyWithImpl$Subscription$listen_driver_order_prices(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_driver_order_prices _instance;
+
+  final TRes Function(Subscription$listen_driver_order_prices) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_driver_order_prices(
+        delivery_order_by_pk: delivery_order_by_pk == _undefined
+            ? _instance.delivery_order_by_pk
+            : (delivery_order_by_pk
+                as Subscription$listen_driver_order_prices$delivery_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk {
+    final local$delivery_order_by_pk = _instance.delivery_order_by_pk;
+    return local$delivery_order_by_pk == null
+        ? CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk(
+            local$delivery_order_by_pk, (e) => call(delivery_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_driver_order_prices<TRes>
+    implements CopyWith$Subscription$listen_driver_order_prices<TRes> {
+  _CopyWithStubImpl$Subscription$listen_driver_order_prices(this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$listen_driver_order_prices$delivery_order_by_pk?
+        delivery_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk =>
+          CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeSubscriptionlisten_driver_order_prices =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'listen_driver_order_prices'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'orderId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'total_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'tax'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'package_cost_comp'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'change_price_request'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$listen_driver_order_prices
+    _parserFn$Subscription$listen_driver_order_prices(
+            Map<String, dynamic> data) =>
+        Subscription$listen_driver_order_prices.fromJson(data);
+
+class Options$Subscription$listen_driver_order_prices extends graphql
+    .SubscriptionOptions<Subscription$listen_driver_order_prices> {
+  Options$Subscription$listen_driver_order_prices({
+    String? operationName,
+    required Variables$Subscription$listen_driver_order_prices variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_driver_order_prices,
+          parserFn: _parserFn$Subscription$listen_driver_order_prices,
+        );
+}
+
+class WatchOptions$Subscription$listen_driver_order_prices
+    extends graphql.WatchQueryOptions<Subscription$listen_driver_order_prices> {
+  WatchOptions$Subscription$listen_driver_order_prices({
+    String? operationName,
+    required Variables$Subscription$listen_driver_order_prices variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_driver_order_prices,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$listen_driver_order_prices,
+        );
+}
+
+class FetchMoreOptions$Subscription$listen_driver_order_prices
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$listen_driver_order_prices({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listen_driver_order_prices variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionlisten_driver_order_prices,
+        );
+}
+
+extension ClientExtension$Subscription$listen_driver_order_prices
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listen_driver_order_prices>>
+      subscribe$listen_driver_order_prices(
+              Options$Subscription$listen_driver_order_prices options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$listen_driver_order_prices>
+      watchSubscription$listen_driver_order_prices(
+              WatchOptions$Subscription$listen_driver_order_prices options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$listen_driver_order_prices$delivery_order_by_pk {
+  Subscription$listen_driver_order_prices$delivery_order_by_pk({
+    this.total_cost,
+    this.tax,
+    required this.delivery_cost,
+    this.package_cost_comp,
+    this.change_price_request,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_driver_order_prices$delivery_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$total_cost = json['total_cost'];
+    final l$tax = json['tax'];
+    final l$delivery_cost = json['delivery_cost'];
+    final l$package_cost_comp = json['package_cost_comp'];
+    final l$change_price_request = json['change_price_request'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_driver_order_prices$delivery_order_by_pk(
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
+      tax: l$tax == null ? null : moneyFromJson(l$tax),
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      package_cost_comp: l$package_cost_comp == null
+          ? null
+          : moneyFromJson(l$package_cost_comp),
+      change_price_request: l$change_price_request == null
+          ? null
+          : mapFromJson(l$change_price_request),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? total_cost;
+
+  final double? tax;
+
+  final double delivery_cost;
+
+  final double? package_cost_comp;
+
+  final dynamic? change_price_request;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$total_cost = total_cost;
+    _resultData['total_cost'] =
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
+    final l$tax = tax;
+    _resultData['tax'] = l$tax == null ? null : moneyToJson(l$tax);
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$package_cost_comp = package_cost_comp;
+    _resultData['package_cost_comp'] =
+        l$package_cost_comp == null ? null : moneyToJson(l$package_cost_comp);
+    final l$change_price_request = change_price_request;
+    _resultData['change_price_request'] = l$change_price_request == null
+        ? null
+        : mapToJson(l$change_price_request);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$total_cost = total_cost;
+    final l$tax = tax;
+    final l$delivery_cost = delivery_cost;
+    final l$package_cost_comp = package_cost_comp;
+    final l$change_price_request = change_price_request;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$total_cost,
+      l$tax,
+      l$delivery_cost,
+      l$package_cost_comp,
+      l$change_price_request,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_driver_order_prices$delivery_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$total_cost = total_cost;
+    final lOther$total_cost = other.total_cost;
+    if (l$total_cost != lOther$total_cost) {
+      return false;
+    }
+    final l$tax = tax;
+    final lOther$tax = other.tax;
+    if (l$tax != lOther$tax) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$package_cost_comp = package_cost_comp;
+    final lOther$package_cost_comp = other.package_cost_comp;
+    if (l$package_cost_comp != lOther$package_cost_comp) {
+      return false;
+    }
+    final l$change_price_request = change_price_request;
+    final lOther$change_price_request = other.change_price_request;
+    if (l$change_price_request != lOther$change_price_request) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_driver_order_prices$delivery_order_by_pk
+    on Subscription$listen_driver_order_prices$delivery_order_by_pk {
+  CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk<
+          Subscription$listen_driver_order_prices$delivery_order_by_pk>
+      get copyWith =>
+          CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk<
+    TRes> {
+  factory CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk(
+    Subscription$listen_driver_order_prices$delivery_order_by_pk instance,
+    TRes Function(Subscription$listen_driver_order_prices$delivery_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk;
+
+  factory CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk;
+
+  TRes call({
+    double? total_cost,
+    double? tax,
+    double? delivery_cost,
+    double? package_cost_comp,
+    dynamic? change_price_request,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_driver_order_prices$delivery_order_by_pk _instance;
+
+  final TRes Function(
+      Subscription$listen_driver_order_prices$delivery_order_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? total_cost = _undefined,
+    Object? tax = _undefined,
+    Object? delivery_cost = _undefined,
+    Object? package_cost_comp = _undefined,
+    Object? change_price_request = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_driver_order_prices$delivery_order_by_pk(
+        total_cost: total_cost == _undefined
+            ? _instance.total_cost
+            : (total_cost as double?),
+        tax: tax == _undefined ? _instance.tax : (tax as double?),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        package_cost_comp: package_cost_comp == _undefined
+            ? _instance.package_cost_comp
+            : (package_cost_comp as double?),
+        change_price_request: change_price_request == _undefined
+            ? _instance.change_price_request
+            : (change_price_request as dynamic?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_driver_order_prices$delivery_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? total_cost,
+    double? tax,
+    double? delivery_cost,
+    double? package_cost_comp,
+    dynamic? change_price_request,
     String? $__typename,
   }) =>
       _res;

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -33,6 +34,7 @@ class DvOrderDetailsViewController {
 
   late int orderId;
   Rxn<DeliveryOrder> order = Rxn();
+  //Rxn<ChangePriceRequest> changePriceRequest;
   RxnNum tax = RxnNum();
   final Rxn<imPicker.XFile> newBillFile = Rxn();
   final Rxn<String> newBillUrl = Rxn();
@@ -60,26 +62,27 @@ class DvOrderDetailsViewController {
     this.orderId = orderId;
     order.value =
         await get_driver_order_by_id(orderId: orderId, withCache: false);
+
+    subscriptionId = _hasuraDb.createSubscription(start: () {
+      orderCostsStream = listen_on_driver_order_costs(orderId: orderId)
+          .listen((OrderCosts? event) {
+        if (event != null) {
+          mezDbgPrint(
+              "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====>${event.totalCost} ");
+          _orderCosts.value = event;
+        }
+      });
+    }, cancel: () {
+      orderCostsStream?.cancel();
+      orderCostsStream = null;
+    });
+
     if (order.value != null) {
       unawaited(_fetchOrdersCountAndReviews());
     }
     if (order.value != null && order.value!.orderType == OrderType.Courier) {
       unawaited(_fetchOrderItems(orderId));
       unawaited(_fetchOrderBill(orderId));
-
-      subscriptionId = _hasuraDb.createSubscription(start: () {
-        orderCostsStream = listen_on_courier_order_costs(orderId: orderId)
-            .listen((OrderCosts? event) {
-          if (event != null) {
-            mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====>${event.totalCost} ");
-            _orderCosts.value = event;
-          }
-        });
-      }, cancel: () {
-        orderCostsStream?.cancel();
-        orderCostsStream = null;
-      });
     }
   }
 

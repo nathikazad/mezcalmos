@@ -56,6 +56,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     mezDbgPrint("MezRouter.urlArguments ===> $orderId");
     if (int.tryParse(orderId) != null) {
       viewController.init(orderId: int.parse(orderId));
+      
     }
 
     super.initState();
@@ -176,8 +177,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 if (viewController.orderCosts != null)
                   OrderSummaryCard(
                     costs: viewController.orderCosts!,
-                    changePriceRequest:
-                        viewController.order.value!.changePriceRequest,
+                   
                     setTaxCallBack:
                         (viewController.order.value?.isDriverAssigned == true)
                             ? () {

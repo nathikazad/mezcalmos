@@ -8,20 +8,26 @@ import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustCourierOrderView"];
 
 class CustCourierOrderViewController {
   // instances //
 
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   // vars //
+  bool isChangePricePopUp = false;
   late BuildContext context;
   Rxn<CourierOrder> _order = Rxn();
   Rxn<ChangePriceRequest> changePriceReq = Rxn();
@@ -60,20 +66,15 @@ class CustCourierOrderViewController {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_courier_order_by_id(orderId: orderId)
             .listen((CourierOrder? event) {
-          mezDbgPrint(
-              "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.driverInfo}");
-
           if (event != null) {
             _order.value = null;
             _order.value = event;
 
-            mezDbgPrint(
-                "Order bill imaaaaaaaaggggggeeee======>${_order.value?.billImage}");
-
             _order.refresh();
-            if (event.changePriceRequest != null &&
-                event.changePriceRequest?.status ==
-                    ChangePriceRequestStatus.Requested) {
+            if (event.costs.changePriceRequest != null &&
+                event.costs.changePriceRequest?.status ==
+                    ChangePriceRequestStatus.Requested &&
+                !isChangePricePopUp) {
               mezDbgPrint("Should Showwwww");
               showPriceReqDialog();
             }
@@ -93,6 +94,7 @@ class CustCourierOrderViewController {
 
   void showPriceReqDialog() {
     mezDbgPrint("Show dialog called");
+    isChangePricePopUp = true;
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -124,7 +126,7 @@ class CustCourierOrderViewController {
                     height: 8,
                   ),
                   Text(
-                    "Price change request",
+                    "${_i18n()['priceChangeTitle']}",
                     style: context.textTheme.displayMedium,
                   ),
                   Column(
@@ -133,16 +135,17 @@ class CustCourierOrderViewController {
                       SizedBox(
                         height: 20,
                       ),
-                      Text("New price",
+                      Text("${_i18n()['newPrice']}",
                           style: context.textTheme.displaySmall
                               ?.copyWith(fontSize: 20)),
                       SizedBox(
                         height: 5,
                       ),
-                      Text(order.changePriceRequest?.newPrice.toPriceString() ??
+                      Text(order.costs.changePriceRequest?.newPrice
+                              .toPriceString() ??
                           "-"),
-                      if (order.changePriceRequest?.reason != null &&
-                          order.changePriceRequest!.reason.isNotEmpty)
+                      if (order.costs.changePriceRequest?.reason != null &&
+                          order.costs.changePriceRequest!.reason.isNotEmpty)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -150,13 +153,13 @@ class CustCourierOrderViewController {
                               height: 20,
                             ),
                             Text(
-                              "Reason",
+                              "${_i18n()['reason']}",
                               style: context.textTheme.bodyLarge,
                             ),
                             SizedBox(
                               height: 5,
                             ),
-                            Text(order.changePriceRequest?.reason ?? "reason"),
+                            Text(order.costs.changePriceRequest?.reason ?? ""),
                           ],
                         ),
                       SizedBox(
@@ -165,19 +168,21 @@ class CustCourierOrderViewController {
                     ],
                   ),
                   MezButton(
-                    label: "Accept",
+                    label: "${_i18n()['accept']}",
                     onClick: () async {
                       await _priceChangeResponse(accepted: true);
+                      isChangePricePopUp = false;
                       Navigator.pop(context);
                     },
                   ),
                   MezButton(
-                    label: "Cancel order",
+                    label: "${_i18n()['cancelOrder']}",
                     height: 50,
                     backgroundColor: Colors.transparent,
                     textColor: Colors.grey.shade900,
                     onClick: () async {
                       await _priceChangeResponse(accepted: false);
+                      isChangePricePopUp = false;
                       Navigator.pop(context);
                     },
                   )

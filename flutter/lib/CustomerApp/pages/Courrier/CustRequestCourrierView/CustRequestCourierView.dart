@@ -116,19 +116,22 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           SizedBox(
             height: 5,
           ),
-          DeliveryTimePicker(
-            fixed7days: true,
-            deliveryTime: viewController.deliveryTime.value,
-            isServiceOpen: viewController.company.value?.isOpen() ?? true,
-            numberOfDays: 7,
-            onValue: (DateTime? value) {
-              viewController.deliveryTime.value = value;
-            },
-            onClear: () {
-              viewController.deliveryTime.value = null;
-            },
-            periodOfTime: null,
-            schedule: viewController.company.value!.schedule,
+          Form(
+            key: viewController.secondFormKey,
+            child: DeliveryTimePicker(
+              fixed7days: true,
+              deliveryTime: viewController.deliveryTime.value,
+              isServiceOpen: viewController.company.value?.isOpen() ?? true,
+              numberOfDays: 7,
+              onValue: (DateTime? value) {
+                viewController.deliveryTime.value = value;
+              },
+              onClear: () {
+                viewController.deliveryTime.value = null;
+              },
+              periodOfTime: null,
+              schedule: viewController.company.value!.schedule,
+            ),
           ),
           SizedBox(
             height: 5,

@@ -25,6 +25,7 @@
         "chooseLoc": "Elegir la ubicación",
         "pickLocation": "Elegir del mapa",
         "noLocError" : "Seleccione una ubicación"
+        
       },
       "LocationPicker": {
         "pick": "ELIGE",
@@ -48,6 +49,10 @@
         }
       },
       "courrier": {
+        "CustCourierServicesListView" : {
+          "courier" : "Mensajera",
+          "min" :"Min"
+        },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
           "chatWithUs": "Habla con nosotros",
@@ -76,6 +81,10 @@
           }
         },
         "CustCourierOrderView": {
+          "priceChangeTitle" : "Solicitud de cambio de precio",
+          "reason" : "Razón",
+          "newPrice" : "Nuevo precio",
+          "accept" : "Aceptar",
           "cancelOrder": "Cancelar orden",
           "note": "Nota",
           "delivery": "Entrega",
@@ -189,7 +198,8 @@
               "restClosed": "El servicio está cerrado ahora, pero puedes programar su pedido para más adelante.",
               "pickTime": "Elige tu tiempo",
               "now": "Ahora",
-              "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido"
+              "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido",
+              "required" : "Seleccione un tiempo de entrega"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Método de pago",

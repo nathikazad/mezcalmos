@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/CustCourierServiceView.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -15,6 +16,9 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustCourierServicesListView"];
 
 class CustCourierServicesListView extends StatefulWidget {
   static Future<void> navigate() {
@@ -44,12 +48,6 @@ class _CustCourierServicesListViewState
   }
 
   Future<void> fetchCompanies() async {
-    // Location location = Location();
-    // final LocationData currentLocation = await location.getLocation();
-    // MezLocation mezLocation = MezLocation.fromLocationData(
-    //     MezLocation.buildLocationData(15.87037, -97.07726));
-
-    mezDbgPrint("Calling query....");
     companies.value = await get_dv_companies() ?? [];
   }
 
@@ -57,7 +55,9 @@ class _CustCourierServicesListViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
-          title: 'Courier', AppBarLeftButtonType.Back, onClick: MezRouter.back),
+          title: "${_i18n()['courier']}",
+          AppBarLeftButtonType.Back,
+          onClick: MezRouter.back),
       body: Obx(
         () {
           if (companies.value != null) {
@@ -66,6 +66,10 @@ class _CustCourierServicesListViewState
               child: Column(
                 children: [
                   // _searchCoomponent(context),
+                  Text(
+                    "Delivery companies arround you",
+                    style: context.textTheme.titleLarge,
+                  ),
                   SizedBox(
                     height: 15,
                   ),
@@ -188,7 +192,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
             ShippingCostComponent(
               shippingCost: company.deliveryCost?.minimumCost,
               formattedShippingCost: company.deliveryCost != null
-                  ? "Min: ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
+                  ? "Min : ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
                   : null,
               showPerKm: true,
               alignment: MainAxisAlignment.start,

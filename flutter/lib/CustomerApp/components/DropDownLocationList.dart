@@ -7,8 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
-    as MapHelper;
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:sizer/sizer.dart';
@@ -85,21 +84,21 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       });
     }
 
-    if (dropDownListValue?.location != null && dropDownListValue!.id != -1) {
-      validateFirstDistance();
-    }
+    // if (dropDownListValue?.location != null && dropDownListValue!.id != -1) {
+    //   validateFirstDistance();
+    // }
 
     // dropDownListValue = listOfSavedLoacations[0];
   }
 
-  Future<void> validateFirstDistance() async {
-    if (await _lessThanDistance(dropDownListValue!.location) == false &&
-        widget.serviceProviderLocation != null) {
-      mezDbgPrint("[cc]  _lessThanDistance ==> True");
-      showError.value = true;
-      errorTitle = "${_i18n()["distanceError"]}";
-    }
-  }
+  // Future<void> validateFirstDistance() async {
+  //   if (await _lessThanDistance(dropDownListValue!.location) == false &&
+  //       widget.serviceProviderLocation != null) {
+  //     mezDbgPrint("[cc]  _lessThanDistance ==> True");
+  //     showError.value = true;
+  //     errorTitle = "${_i18n()["distanceError"]}";
+  //   }
+  // }
 
   void getSavedLocation() {
     customerAuthController.customer?.savedLocations.forEach(
@@ -109,101 +108,71 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     );
   }
 
-  RxBool showError = RxBool(false);
-
+  bool isValid = false;
   @override
   Widget build(BuildContext context) {
-    return FormField<locModel.MezLocation>(
-      initialValue: dropDownListValue?.location,
-      validator: (locModel.MezLocation? value) {
-        if (dropDownListValue?.location.isValidLocation() == false) {
-          showError.value = true;
-          errorTitle = "${_i18n()['noLocError']}";
+    return DropdownButtonFormField<SavedLocation>(
+      selectedItemBuilder: (BuildContext context) {
+        return dropDownSelectedItemBuilder();
+      },
+      iconDisabledColor: Colors.grey.shade800,
+      iconEnabledColor: Colors.grey.shade800,
+      decoration: InputDecoration(
+          fillColor: Colors.white, filled: true, errorMaxLines: 2),
+      value: dropDownListValue,
+      dropdownColor: widget.bgColor,
+      isDense: true,
+      isExpanded: true,
+      icon: Icon(
+        Icons.expand_more,
+        color: Colors.black,
+      ),
+      hint: Text(
+        '${_i18n()["chooseLoc"]}',
+        style: context.txt.bodyLarge,
+      ),
+      items: listOfSavedLoacations
+          .map<DropdownMenuItem<SavedLocation>>(
+              (SavedLocation e) => buildItems(e))
+          .toList(),
+      validator: (SavedLocation? value) {
+        mezDbgPrint(value?.location.address);
+
+        if (value == null) {
+          return "${_i18n()['noLocError']}";
+        }
+        if (value.location.isValidLocation() == false) {
+          return "${_i18n()['noLocError']}";
+        } else if (_checkDistance() && !_lessTenTenKm(value.location)) {
+          return "${_i18n()['distanceError']}";
         } else {
-          showError.value = false;
+          return null;
+        }
+      },
+      onChanged: (SavedLocation? v) async {
+        mezDbgPrint("Is valid =======> $isValid");
+
+        if (v?.id == -1) {
+          _navigateToPickLoc();
+        } else {
+          widget.onValueChangeCallback?.call(location: v?.location);
         }
 
-        return null;
-      },
-      builder: (FormFieldState<locModel.MezLocation> field) {
-        {
-          return Column(
-            children: [
-              Card(
-                elevation: widget.elevation,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: widget.bgColor,
-                    // border: Border.all(
-                    //   // width: 1.5,
-                    //   // color: (dropDownListValue != pickLocationPlaceholder)
-                    //   //     ? Theme.of(context).primaryColorLight
-                    //   //     : Colors.red,
-                    // ),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton<SavedLocation>(
-                    selectedItemBuilder: (BuildContext context) {
-                      return dropDownSelectedItemBuilder();
-                    },
-                    iconDisabledColor: Colors.grey.shade800,
-                    iconEnabledColor: Colors.grey.shade800,
-                    value: dropDownListValue,
-                    dropdownColor: widget.bgColor,
-                    isDense: true,
-                    isExpanded: true,
-                    icon: Icon(
-                      Icons.expand_more,
-                      color: Colors.black,
-                    ),
-                    hint: Text(
-                      '${_i18n()["chooseLoc"]}',
-                      style: context.txt.bodyLarge,
-                    ),
-                    items: listOfSavedLoacations
-                        .map<DropdownMenuItem<SavedLocation>>(
-                            (SavedLocation e) => buildItems(e))
-                        .toList(),
-                    onChanged: (SavedLocation? v) async {
-                      await locationChangedHandler(v!);
-                    },
-                  )),
-                ),
-              ),
-              Obx(() {
-                if (showError.isTrue) {
-                  return _errorText();
-                } else {
-                  return SizedBox();
-                }
-              }),
-            ],
-          );
-        }
+        // await locationChangedHandler(v!);
       },
     );
   }
 
-  bool _checkDistance() {
-    return widget.serviceProviderLocation != null && widget.checkDistance;
+  bool _lessTenTenKm(locModel.MezLocation loc) {
+    mezDbgPrint(
+        "Distance =======>${calculateDistance(widget.serviceProviderLocation!.toLocationData(), dropDownListValue!.location.toLocationData())}");
+    return calculateDistance(widget.serviceProviderLocation!.toLocationData(),
+            loc.toLocationData()) <=
+        10;
   }
 
-  Future<bool> _lessThanDistance(locModel.MezLocation loc) async {
-    MapHelper.Route? routeInfo;
-    if (widget.serviceProviderLocation != null) {
-      routeInfo = await MapHelper.getDurationAndDistance(
-        widget.serviceProviderLocation!,
-        loc,
-      );
-    }
-
-    if (routeInfo != null) {
-      return (routeInfo.distance.distanceInMeters / 1000) <= 10;
-    } else
-      return false;
+  bool _checkDistance() {
+    return widget.serviceProviderLocation != null && widget.checkDistance;
   }
 
   Future<void> locationChangedHandler(SavedLocation? newLocation) async {
@@ -212,68 +181,70 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
     // we will router the user back to the Map
     if (newLocation?.id == -1) {
-      final locModel.MezLocation? newLoc = await PickLocationView.navigate(
-        initialLocation: null,
-        onSaveLocation: ({locModel.MezLocation? location}) async {
-          SavedLocation? newSavedLoc;
-
-          newSavedLoc =
-              await savedLocationDailog(context: context, loc: location!);
-
-          if (newSavedLoc != null) {
-            setState(() {
-              listOfSavedLoacations.add(newSavedLoc!);
-              dropDownListValue =
-                  listOfSavedLoacations[listOfSavedLoacations.length - 1];
-            });
-            mezDbgPrint(
-                " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
-            await _verifyDistanceAndSetLocation(newSavedLoc);
-          } else {
-            setState(() {
-              listOfSavedLoacations.add(SavedLocation(
-                  name: location.address, id: null, location: location));
-              dropDownListValue =
-                  listOfSavedLoacations[listOfSavedLoacations.length - 1];
-            });
-            await _verifyDistanceAndSetLocation(SavedLocation(
-                name: location.address, id: null, location: location));
-          }
-        },
-      );
+      _navigateToPickLoc();
     } else {
       if (newLocation != null) {
-        await _verifyDistanceAndSetLocation(newLocation);
+        //  await _verifyDistanceAndSetLocation(newLocation);
       }
     }
   }
 
-  Future<void> _verifyDistanceAndSetLocation(SavedLocation newLocation) async {
-    if (_checkDistance() && await _lessThanDistance(newLocation.location)) {
-      widget.onValueChangeCallback?.call(location: newLocation.location);
-      setState(() {
-        dropDownListValue = newLocation;
-        widget.passedInLocation = dropDownListValue!.location;
-      });
-      showError.value = false;
-    } else if (_checkDistance()) {
-      mezDbgPrint("Morrrrre than 15");
-      showError.value = true;
-      errorTitle = "${_i18n()["distanceError"]}";
-      setState(() {
-        dropDownListValue = newLocation;
-        widget.passedInLocation = dropDownListValue!.location;
-      });
-      widget.onValueChangeCallback?.call(location: newLocation.location);
-    } else {
-      widget.onValueChangeCallback?.call(location: newLocation.location);
-      setState(() {
-        dropDownListValue = newLocation;
-        widget.passedInLocation = dropDownListValue!.location;
-      });
-      showError.value = false;
-    }
+  void _navigateToPickLoc() {
+    PickLocationView.navigate(
+      initialLocation: null,
+      onSaveLocation: ({locModel.MezLocation? location}) async {
+        SavedLocation? newSavedLoc;
+
+        newSavedLoc =
+            await savedLocationDailog(context: context, loc: location!);
+
+        if (newSavedLoc != null) {
+          setState(() {
+            listOfSavedLoacations.add(newSavedLoc!);
+            dropDownListValue =
+                listOfSavedLoacations[listOfSavedLoacations.length - 1];
+          });
+          mezDbgPrint(
+              " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
+          //  await _verifyDistanceAndSetLocation(newSavedLoc);
+        } else {
+          setState(() {
+            listOfSavedLoacations.add(SavedLocation(
+                name: location.address, id: null, location: location));
+            dropDownListValue =
+                listOfSavedLoacations[listOfSavedLoacations.length - 1];
+          });
+        }
+      },
+    );
   }
+
+  // Future<void> _verifyDistanceAndSetLocation(SavedLocation newLocation) async {
+  //   if (_checkDistance() && await _lessThanDistance(newLocation.location)) {
+  //     widget.onValueChangeCallback?.call(location: newLocation.location);
+  //     setState(() {
+  //       dropDownListValue = newLocation;
+  //       widget.passedInLocation = dropDownListValue!.location;
+  //     });
+  //     showError.value = false;
+  //   } else if (_checkDistance()) {
+  //     mezDbgPrint("Morrrrre than 15");
+  //     showError.value = true;
+  //     errorTitle = "${_i18n()["distanceError"]}";
+  //     setState(() {
+  //       dropDownListValue = newLocation;
+  //       widget.passedInLocation = dropDownListValue!.location;
+  //     });
+  //     widget.onValueChangeCallback?.call(location: newLocation.location);
+  //   } else {
+  //     widget.onValueChangeCallback?.call(location: newLocation.location);
+  //     setState(() {
+  //       dropDownListValue = newLocation;
+  //       widget.passedInLocation = dropDownListValue!.location;
+  //     });
+  //     showError.value = false;
+  //   }
+  // }
 
   DropdownMenuItem<SavedLocation> buildItems(
     SavedLocation e,
@@ -344,32 +315,29 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         .toList();
   }
 
-  Widget _errorText() {
-    if (errorTitle != null) {
-      return Container(
-        margin: const EdgeInsets.only(top: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: Colors.red,
-              size: 22,
+  Widget _errorText(String title) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline,
+            color: Colors.red,
+            size: 22,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Flexible(
+            child: Text(
+              title,
+              style: context.txt.bodyLarge
+                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
-            const SizedBox(
-              width: 5,
-            ),
-            Flexible(
-              child: Text(
-                errorTitle!,
-                style: context.txt.bodyLarge
-                    ?.copyWith(color: Colors.red, fontSize: 10.sp),
-              ),
-            ),
-          ],
-        ),
-      );
-    } else
-      return SizedBox();
+          ),
+        ],
+      ),
+    );
   }
 }

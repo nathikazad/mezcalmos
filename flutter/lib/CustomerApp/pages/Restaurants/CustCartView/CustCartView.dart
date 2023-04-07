@@ -71,22 +71,29 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   CartItemsBuilder(
                     viewController: viewController,
                   ),
-                DeliveryTimePicker(
-                  deliveryTime: viewController.cart.deliveryTime,
-                  fixed7days: !viewController.cart.isSpecial,
-                  isServiceOpen: viewController.cart.restaurant!.isOpen(),
-                  numberOfDays: viewController.cart.isSpecial ? 1 : 7,
-                  onValue: (DateTime? value) {
-                    viewController.setDeliveryTime(value);
-                  },
-                  onClear: () {
-                    viewController.setDeliveryTime(null);
-                  },
-                  periodOfTime: viewController.cart.cartPeriod,
-                  schedule: viewController.cart.restaurant!.schedule,
+                Form(
+                  key: viewController.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DeliveryTimePicker(
+                        deliveryTime: viewController.cart.deliveryTime,
+                        fixed7days: !viewController.cart.isSpecial,
+                        isServiceOpen: viewController.cart.restaurant!.isOpen(),
+                        numberOfDays: viewController.cart.isSpecial ? 1 : 7,
+                        onValue: (DateTime? value) {
+                          viewController.setDeliveryTime(value);
+                        },
+                        onClear: () {
+                          viewController.setDeliveryTime(null);
+                        },
+                        periodOfTime: viewController.cart.cartPeriod,
+                        schedule: viewController.cart.restaurant!.schedule,
+                      ),
+                      _deliveryLocation(),
+                    ],
+                  ),
                 ),
-
-                _deliveryLocation(),
                 SizedBox(
                   height: 15,
                 ),
@@ -143,12 +150,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         const SizedBox(height: 9),
         DropDownLocationList(
           onValueChangeCallback: ({MezLocation? location}) {
-            if (location != null && location.isValidLocation()) {
+            if (viewController.formKey.currentState?.validate() == true &&
+                location != null) {
               viewController.switchLocation(location);
 
               mezDbgPrint(
                   "Should update cart location 🥸🥸🥸 ===> ${viewController.cart.toLocation}");
             }
+            // if (location != null && location.isValidLocation()) {
+
+            // }
           },
           bgColor: Colors.white,
           checkDistance: true,
@@ -190,17 +201,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             label: (viewController.cart.restaurant?.isOpen() == false)
                 ? '${_i18n()["scheduleOrder"]}'
                 : '${_i18n()["orderNow"]}',
-            enabled: viewController.canOrder,
+            //  enabled: viewController.canOrder,
             withGradient: true,
             borderRadius: 0,
             height: 50,
-            onClick: !viewController.canOrder
-                ? null
-                : () async {
-                    if (viewController.canOrder) {
-                      await viewController.checkoutActionButton();
-                    }
-                  },
+            onClick: () async {
+              if (viewController.formKey.currentState?.validate() == true &&
+                  viewController.canOrder) {
+                await viewController.checkoutActionButton();
+              }
+            },
           );
         } else
           return SizedBox();

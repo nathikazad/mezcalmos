@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -136,20 +137,24 @@ class _CustLaundryOrderRequestViewState
                           ),
                           Obx(
                             () => viewController.authController.user != null
-                                ? DropDownLocationList(
-                                    onValueChangeCallback: (
-                                        {MezLocation? location}) {
-                                      if (location != null &&
-                                          location.isValidLocation()) {
-                                        viewController.switchLocation(location);
+                                ? Form(
+                                    key: viewController.formKey,
+                                    child: DropDownLocationList(
+                                      onValueChangeCallback: (
+                                          {MezLocation? location}) {
+                                        if (location != null &&
+                                            location.isValidLocation()) {
+                                          viewController
+                                              .switchLocation(location);
 
-                                        // ignore: unawaited_futures
-                                      }
-                                    },
-                                    bgColor: Colors.white,
-                                    checkDistance: true,
-                                    serviceProviderLocation: viewController
-                                        .laundry.value!.info.location,
+                                          // ignore: unawaited_futures
+                                        }
+                                      },
+                                      bgColor: Colors.white,
+                                      checkDistance: true,
+                                      serviceProviderLocation: viewController
+                                          .laundry.value!.info.location,
+                                    ),
                                   )
                                 : pickFromMapComponent(context),
                           ),
@@ -318,13 +323,16 @@ class _CustLaundryOrderRequestViewState
         label: viewController.isUserSignedIn
             ? '${_i18n()["orderNow"]}'
             : "${_i18n()["signInToMakeOrder"]}",
-        enabled: viewController.isUserSignedIn ? viewController.canOrder : true,
+        // enabled: viewController.isUserSignedIn ? viewController.canOrder : true,
         onClick: () async {
           if (viewController.isUserSignedIn) {
-            final num? res = await viewController.createLaundryOrder();
-            if (res != null) {
-              await MezRouter.popEverythingTillBeforeHome().then((value) =>
-                  CustLaundryOrderView.navigate(orderId: res.toInt()));
+            mezDbgPrint(viewController.formKey.currentState?.validate());
+            if (viewController.formKey.currentState?.validate() == true) {
+              final num? res = await viewController.createLaundryOrder();
+              if (res != null) {
+                await MezRouter.popEverythingTillBeforeHome().then((value) =>
+                    CustLaundryOrderView.navigate(orderId: res.toInt()));
+              }
             }
           } else {
             await SignInView.navigateAtOrderTime();

@@ -43,7 +43,7 @@ export async function changeLaundryOrderStatus(
           setLaundryToCustomerDeliveryOrderChatInfo(laundryOrder, laundryStore, toCustomerDeliveryOrder, customer);
 
           if(laundryStore.deliveryDetails.selfDelivery == false)
-            notifyDeliveryCompany(toCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry);
+            notifyDeliveryCompany(toCustomerDeliveryOrder);
           break;
         default:
           break;

@@ -83,7 +83,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
       updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, restaurant.deliveryPartnerId!);
-      notifyDeliveryCompany(orderResponse.deliveryOrder, restaurant.deliveryPartnerId!, OrderType.Restaurant);
+      notifyDeliveryCompany(orderResponse.deliveryOrder);
     }
     
     if(checkoutRequest.paymentType == PaymentType.Card) {

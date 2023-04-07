@@ -45,6 +45,7 @@ class CustRequestCourierViewController {
   Rxn<DeliveryCompany> company = Rxn();
   RxInt currentPage = RxInt(0);
   GlobalKey<FormState> fromKey = GlobalKey<FormState>();
+  GlobalKey<FormState> secondFormKey = GlobalKey<FormState>();
   Rxn<num> shippingCost = Rxn();
   DeliveryCost? deliveryCost;
 
@@ -119,7 +120,7 @@ class CustRequestCourierViewController {
             .whenComplete(
                 () => currentPage.value = pageController.page!.toInt()));
       }
-    } else {
+    } else if (secondFormKey.currentState?.validate() == true) {
       // call cloud func
       await _makeOrder();
     }
@@ -128,8 +129,7 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _makeOrder() async {
-    mezDbgPrint("Making a courier order ========> ${fromLoc.value?.address}");
-    mezDbgPrint("Making a courier order ========> ${fromLocText.text}");
+    mezDbgPrint("Making a courier order ========> ${fromLocText.text.length}");
     try {
       await _uploadItemsImages();
       cModel.CreateCourierResponse res =
@@ -150,7 +150,8 @@ class CustRequestCourierViewController {
               ),
             )
             .toList(),
-        fromLocationText: fromLocText.text,
+        fromLocationText:
+            (fromLocText.text.length > 4) ? fromLocText.text : null,
         fromLocationGps: (fromLoc.value != null)
             ? cModel.Location(
                 lat: fromLoc.value!.position.latitude!,

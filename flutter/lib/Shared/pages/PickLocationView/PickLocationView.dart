@@ -90,7 +90,8 @@ class _PickLocationViewState extends State<PickLocationView> {
             margin: const EdgeInsets.symmetric(horizontal: 8),
             child: LocationSearchComponent(
                 showSearchIcon: true,
-                initialTextValue: "hello",
+                initialTextValue: viewController
+                    .locationPickerController.location.value?.address,
                 onClear: () {},
                 notifyParent: (MezLocation? location) {
                   mezDbgPrint(
