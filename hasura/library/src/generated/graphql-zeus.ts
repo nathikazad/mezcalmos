@@ -407,7 +407,6 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["chat_participant_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["chat_participant_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["chat_participant_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -523,7 +522,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["chat_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -589,8 +587,6 @@ stripe_cards_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["customer_stripe_cards_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_stripe_cards_bool_exp"]},ValueTypes["customer_stripe_cards_aggregate"]],
 	stripe_id?:true,
-stripe_info?: [{	/** JSON select path */
-	path?:string},true],
 stripe_sp_ids?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["customer_stripe_sp_id_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -629,10 +625,6 @@ count?: [{	columns?:ValueTypes["customer_customer_select_column"][],	distinct?:b
 	variance?:ValueTypes["customer_customer_variance_fields"],
 		__typename?: true
 }>;
-	/** append existing jsonb value of filtered columns with new jsonb value */
-["customer_customer_append_input"]: {
-	stripe_info?:ValueTypes["jsonb"]
-};
 	/** aggregate avg on columns */
 ["customer_customer_avg_fields"]: AliasType<{
 	user_id?:true,
@@ -655,7 +647,6 @@ count?: [{	columns?:ValueTypes["customer_customer_select_column"][],	distinct?:b
 	stripe_cards?:ValueTypes["customer_stripe_cards_bool_exp"],
 	stripe_cards_aggregate?:ValueTypes["customer_stripe_cards_aggregate_bool_exp"],
 	stripe_id?:ValueTypes["String_comparison_exp"],
-	stripe_info?:ValueTypes["jsonb_comparison_exp"],
 	stripe_sp_ids?:ValueTypes["customer_stripe_sp_id_bool_exp"],
 	stripe_sp_ids_aggregate?:ValueTypes["customer_stripe_sp_id_aggregate_bool_exp"],
 	user?:ValueTypes["user_bool_exp"],
@@ -663,19 +654,6 @@ count?: [{	columns?:ValueTypes["customer_customer_select_column"][],	distinct?:b
 };
 	/** unique or primary key constraints on table "customer.customer" */
 ["customer_customer_constraint"]:customer_customer_constraint;
-	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-["customer_customer_delete_at_path_input"]: {
-	stripe_info?:string[]
-};
-	/** delete the array element with specified index (negative integers count from the
-end). throws an error if top level container is not an array */
-["customer_customer_delete_elem_input"]: {
-	stripe_info?:number
-};
-	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-["customer_customer_delete_key_input"]: {
-	stripe_info?:string
-};
 	/** input type for incrementing numeric columns in table "customer.customer" */
 ["customer_customer_inc_input"]: {
 	user_id?:number
@@ -691,7 +669,6 @@ end). throws an error if top level container is not an array */
 	service_provider_type?:string,
 	stripe_cards?:ValueTypes["customer_stripe_cards_arr_rel_insert_input"],
 	stripe_id?:string,
-	stripe_info?:ValueTypes["jsonb"],
 	stripe_sp_ids?:ValueTypes["customer_stripe_sp_id_arr_rel_insert_input"],
 	user?:ValueTypes["user_obj_rel_insert_input"],
 	user_id?:number
@@ -745,7 +722,6 @@ end). throws an error if top level container is not an array */
 	service_provider_type?:ValueTypes["order_by"],
 	stripe_cards_aggregate?:ValueTypes["customer_stripe_cards_aggregate_order_by"],
 	stripe_id?:ValueTypes["order_by"],
-	stripe_info?:ValueTypes["order_by"],
 	stripe_sp_ids_aggregate?:ValueTypes["customer_stripe_sp_id_aggregate_order_by"],
 	user?:ValueTypes["user_order_by"],
 	user_id?:ValueTypes["order_by"]
@@ -753,10 +729,6 @@ end). throws an error if top level container is not an array */
 	/** primary key columns input for table: customer.customer */
 ["customer_customer_pk_columns_input"]: {
 	user_id:number
-};
-	/** prepend existing jsonb value of filtered columns with new jsonb value */
-["customer_customer_prepend_input"]: {
-	stripe_info?:ValueTypes["jsonb"]
 };
 	/** select columns of table "customer.customer" */
 ["customer_customer_select_column"]:customer_customer_select_column;
@@ -766,7 +738,6 @@ end). throws an error if top level container is not an array */
 	app_version?:string,
 	service_provider_type?:string,
 	stripe_id?:string,
-	stripe_info?:ValueTypes["jsonb"],
 	user_id?:number
 };
 	/** aggregate stddev on columns */
@@ -797,7 +768,6 @@ end). throws an error if top level container is not an array */
 	app_version?:string,
 	service_provider_type?:string,
 	stripe_id?:string,
-	stripe_info?:ValueTypes["jsonb"],
 	user_id?:number
 };
 	/** aggregate sum on columns */
@@ -808,22 +778,10 @@ end). throws an error if top level container is not an array */
 	/** update columns of table "customer.customer" */
 ["customer_customer_update_column"]:customer_customer_update_column;
 	["customer_customer_updates"]: {
-	/** append existing jsonb value of filtered columns with new jsonb value */
-	_append?:ValueTypes["customer_customer_append_input"],
-	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-	_delete_at_path?:ValueTypes["customer_customer_delete_at_path_input"],
-	/** delete the array element with specified index (negative integers count from
-the end). throws an error if top level container is not an array */
-	_delete_elem?:ValueTypes["customer_customer_delete_elem_input"],
-	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-	_delete_key?:ValueTypes["customer_customer_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["customer_customer_inc_input"],
-	/** prepend existing jsonb value of filtered columns with new jsonb value */
-	_prepend?:ValueTypes["customer_customer_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_customer_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_customer_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -1007,7 +965,6 @@ count?: [{	columns?:ValueTypes["customer_favourited_item_select_column"][],	dist
 	_inc?:ValueTypes["customer_favourited_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_favourited_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_favourited_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -1307,7 +1264,6 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	_inc?:ValueTypes["customer_minimal_order_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_minimal_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_minimal_order_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -1595,7 +1551,6 @@ count?: [{	columns?:ValueTypes["customer_saved_location_select_column"][],	disti
 	_inc?:ValueTypes["customer_saved_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_saved_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_saved_location_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -1957,7 +1912,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["customer_stripe_cards_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_stripe_cards_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_stripe_cards_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -2243,7 +2197,6 @@ count?: [{	columns?:ValueTypes["customer_stripe_sp_id_select_column"][],	distinc
 	_inc?:ValueTypes["customer_stripe_sp_id_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_stripe_sp_id_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_stripe_sp_id_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -2509,7 +2462,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["delivery_company_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_company_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_company_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -3010,7 +2962,6 @@ columns of table "delivery.courier_order_item" */
 	_inc?:ValueTypes["delivery_courier_order_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_courier_order_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_courier_order_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -3269,7 +3220,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["delivery_courier_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_courier_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_courier_order_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -3659,7 +3609,6 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["delivery_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_details_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -4087,7 +4036,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	_inc?:ValueTypes["delivery_driver_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_driver_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_driver_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -4397,7 +4345,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	_inc?:ValueTypes["delivery_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_operator_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -5248,7 +5195,6 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	_inc?:ValueTypes["delivery_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_order_public_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -5567,7 +5513,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["delivery_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_order_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -5860,7 +5805,6 @@ count?: [{	columns?:ValueTypes["direct_chat_select_column"][],	distinct?:boolean
 	_inc?:ValueTypes["direct_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["direct_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["direct_chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -6110,7 +6054,6 @@ count?: [{	columns?:ValueTypes["language_select_column"][],	distinct?:boolean},t
 	["language_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["language_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["language_bool_exp"]
 };
 	/** columns and relationships of "laundry.category" */
@@ -6394,7 +6337,6 @@ count?: [{	columns?:ValueTypes["laundry_category_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["laundry_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["laundry_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["laundry_category_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -6713,7 +6655,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["laundry_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["laundry_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["laundry_operator_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -7240,7 +7181,6 @@ count?: [{	columns?:ValueTypes["laundry_order_category_select_column"][],	distin
 	_inc?:ValueTypes["laundry_order_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["laundry_order_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["laundry_order_category_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -7626,7 +7566,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["laundry_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["laundry_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["laundry_order_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -7965,7 +7904,6 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 	_inc?:ValueTypes["laundry_store_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["laundry_store_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["laundry_store_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -8202,7 +8140,6 @@ count?: [{	columns?:ValueTypes["mez_admin_chat_select_column"][],	distinct?:bool
 	_inc?:ValueTypes["mez_admin_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["mez_admin_chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -8325,7 +8262,6 @@ count?: [{	columns?:ValueTypes["mez_admin_chat_select_column"][],	distinct?:bool
 	_inc?:ValueTypes["mez_admin_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["mez_admin_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -8449,7 +8385,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["mez_json_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_json_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["mez_json_bool_exp"]
 };
 	["money"]:unknown;
@@ -8987,24 +8922,12 @@ update_chat_participant_by_pk?: [{	/** increments the numeric columns with given
 	_set?:ValueTypes["chat_participant_set_input"],	pk_columns:ValueTypes["chat_participant_pk_columns_input"]},ValueTypes["chat_participant"]],
 update_chat_participant_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["chat_participant_updates"][]},ValueTypes["chat_participant_mutation_response"]],
-update_customer_customer?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
-	_append?:ValueTypes["customer_customer_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-	_delete_at_path?:ValueTypes["customer_customer_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
-the end). throws an error if top level container is not an array */
-	_delete_elem?:ValueTypes["customer_customer_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-	_delete_key?:ValueTypes["customer_customer_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["customer_customer_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
-	_prepend?:ValueTypes["customer_customer_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+update_customer_customer?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_customer_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_customer_set_input"],	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_customer_bool_exp"]},ValueTypes["customer_customer_mutation_response"]],
-update_customer_customer_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
-	_append?:ValueTypes["customer_customer_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-	_delete_at_path?:ValueTypes["customer_customer_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
-the end). throws an error if top level container is not an array */
-	_delete_elem?:ValueTypes["customer_customer_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-	_delete_key?:ValueTypes["customer_customer_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["customer_customer_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
-	_prepend?:ValueTypes["customer_customer_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+update_customer_customer_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_customer_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_customer_set_input"],	pk_columns:ValueTypes["customer_customer_pk_columns_input"]},ValueTypes["customer_customer"]],
 update_customer_customer_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["customer_customer_updates"][]},ValueTypes["customer_customer_mutation_response"]],
@@ -9738,7 +9661,6 @@ count?: [{	columns?:ValueTypes["notification_info_select_column"][],	distinct?:b
 	_inc?:ValueTypes["notification_info_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["notification_info_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["notification_info_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -10922,7 +10844,6 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	_inc?:ValueTypes["restaurant_cart_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_cart_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_cart_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -11071,7 +10992,6 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	_inc?:ValueTypes["restaurant_cart_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_cart_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_cart_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -11415,7 +11335,6 @@ count?: [{	columns?:ValueTypes["restaurant_category_select_column"][],	distinct?
 	_inc?:ValueTypes["restaurant_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_category_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -11769,7 +11688,6 @@ count?: [{	columns?:ValueTypes["restaurant_choice_select_column"][],	distinct?:b
 	_inc?:ValueTypes["restaurant_choice_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_choice_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_choice_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12349,7 +12267,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	_inc?:ValueTypes["restaurant_item_option_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_item_option_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_item_option_map_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12560,7 +12477,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	_inc?:ValueTypes["restaurant_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12891,7 +12807,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 	_inc?:ValueTypes["restaurant_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_operator_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -13340,7 +13255,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:ValueTypes["restaurant_option_choice_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_option_choice_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_option_choice_map_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -13633,7 +13547,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:ValueTypes["restaurant_option_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_option_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_option_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -14303,7 +14216,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	_inc?:ValueTypes["restaurant_order_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_order_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -14723,7 +14635,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	_inc?:ValueTypes["restaurant_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_order_public_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -14946,7 +14857,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["restaurant_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_order_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -15323,7 +15233,6 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	_inc?:ValueTypes["restaurant_restaurant_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_restaurant_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_restaurant_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -15642,7 +15551,6 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	_inc?:ValueTypes["review_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["review_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["review_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -15866,7 +15774,6 @@ count?: [{	columns?:ValueTypes["service_provider_customer_chat_select_column"][]
 	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_customer_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_customer_chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -16134,7 +16041,6 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	_inc?:ValueTypes["service_provider_delivery_partner_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_delivery_partner_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_delivery_partner_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -16538,7 +16444,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["service_provider_details_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_details_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -16712,7 +16617,6 @@ count?: [{	columns?:ValueTypes["service_provider_location_select_column"][],	dis
 	_inc?:ValueTypes["service_provider_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_location_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -16931,7 +16835,6 @@ count?: [{	columns?:ValueTypes["service_provider_operator_details_select_column"
 	_inc?:ValueTypes["service_provider_operator_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_operator_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_operator_details_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -17194,7 +17097,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["service_provider_post_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_post_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_post_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -17399,7 +17301,6 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 	_inc?:ValueTypes["service_provider_service_link_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_service_link_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_service_link_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -17640,7 +17541,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["service_provider_stripe_info_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_stripe_info_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_stripe_info_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -17834,7 +17734,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:ValueTypes["service_provider_subscriber_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_subscriber_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_subscriber_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -19115,7 +19014,6 @@ count?: [{	columns?:ValueTypes["translation_select_column"][],	distinct?:boolean
 	_inc?:ValueTypes["translation_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["translation_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["translation_bool_exp"]
 };
 	/** columns and relationships of "translation_value" */
@@ -19330,7 +19228,6 @@ count?: [{	columns?:ValueTypes["translation_value_select_column"][],	distinct?:b
 	_inc?:ValueTypes["translation_value_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["translation_value_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["translation_value_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -19583,7 +19480,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	_inc?:ValueTypes["user_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["user_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["user_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -19693,7 +19589,6 @@ count?: [{	columns?:ValueTypes["valid_types_app_type_select_column"][],	distinct
 	["valid_types_app_type_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["valid_types_app_type_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["valid_types_app_type_bool_exp"]
 };
 	/** columns and relationships of "valid_types.service_provider_type" */
@@ -19782,7 +19677,6 @@ count?: [{	columns?:ValueTypes["valid_types_service_provider_type_select_column"
 	["valid_types_service_provider_type_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["valid_types_service_provider_type_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["valid_types_service_provider_type_bool_exp"]
 }
   }
@@ -20183,7 +20077,6 @@ end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["chat_participant_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["chat_participant_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["chat_participant_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -20299,7 +20192,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["chat_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -20342,7 +20234,6 @@ the end). throws an error if top level container is not an array */
 			/** An aggregate relationship */
 	stripe_cards_aggregate?:PartialObjects["customer_stripe_cards_aggregate"],
 			stripe_id?:string,
-			stripe_info?:PartialObjects["jsonb"],
 			/** An array relationship */
 	stripe_sp_ids?:PartialObjects["customer_stripe_sp_id"][],
 			/** An aggregate relationship */
@@ -20372,10 +20263,6 @@ the end). throws an error if top level container is not an array */
 			var_samp?:PartialObjects["customer_customer_var_samp_fields"],
 			variance?:PartialObjects["customer_customer_variance_fields"]
 	},
-	/** append existing jsonb value of filtered columns with new jsonb value */
-["customer_customer_append_input"]: {
-	stripe_info?:PartialObjects["jsonb"]
-},
 	/** aggregate avg on columns */
 ["customer_customer_avg_fields"]: {
 		__typename?: "customer_customer_avg_fields";
@@ -20398,7 +20285,6 @@ the end). throws an error if top level container is not an array */
 	stripe_cards?:PartialObjects["customer_stripe_cards_bool_exp"],
 	stripe_cards_aggregate?:PartialObjects["customer_stripe_cards_aggregate_bool_exp"],
 	stripe_id?:PartialObjects["String_comparison_exp"],
-	stripe_info?:PartialObjects["jsonb_comparison_exp"],
 	stripe_sp_ids?:PartialObjects["customer_stripe_sp_id_bool_exp"],
 	stripe_sp_ids_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate_bool_exp"],
 	user?:PartialObjects["user_bool_exp"],
@@ -20406,19 +20292,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** unique or primary key constraints on table "customer.customer" */
 ["customer_customer_constraint"]:customer_customer_constraint,
-	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-["customer_customer_delete_at_path_input"]: {
-	stripe_info?:string[]
-},
-	/** delete the array element with specified index (negative integers count from the
-end). throws an error if top level container is not an array */
-["customer_customer_delete_elem_input"]: {
-	stripe_info?:number
-},
-	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-["customer_customer_delete_key_input"]: {
-	stripe_info?:string
-},
 	/** input type for incrementing numeric columns in table "customer.customer" */
 ["customer_customer_inc_input"]: {
 	user_id?:number
@@ -20434,7 +20307,6 @@ end). throws an error if top level container is not an array */
 	service_provider_type?:string,
 	stripe_cards?:PartialObjects["customer_stripe_cards_arr_rel_insert_input"],
 	stripe_id?:string,
-	stripe_info?:PartialObjects["jsonb"],
 	stripe_sp_ids?:PartialObjects["customer_stripe_sp_id_arr_rel_insert_input"],
 	user?:PartialObjects["user_obj_rel_insert_input"],
 	user_id?:number
@@ -20488,7 +20360,6 @@ end). throws an error if top level container is not an array */
 	service_provider_type?:PartialObjects["order_by"],
 	stripe_cards_aggregate?:PartialObjects["customer_stripe_cards_aggregate_order_by"],
 	stripe_id?:PartialObjects["order_by"],
-	stripe_info?:PartialObjects["order_by"],
 	stripe_sp_ids_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate_order_by"],
 	user?:PartialObjects["user_order_by"],
 	user_id?:PartialObjects["order_by"]
@@ -20496,10 +20367,6 @@ end). throws an error if top level container is not an array */
 	/** primary key columns input for table: customer.customer */
 ["customer_customer_pk_columns_input"]: {
 	user_id:number
-},
-	/** prepend existing jsonb value of filtered columns with new jsonb value */
-["customer_customer_prepend_input"]: {
-	stripe_info?:PartialObjects["jsonb"]
 },
 	/** select columns of table "customer.customer" */
 ["customer_customer_select_column"]:customer_customer_select_column,
@@ -20509,7 +20376,6 @@ end). throws an error if top level container is not an array */
 	app_version?:string,
 	service_provider_type?:string,
 	stripe_id?:string,
-	stripe_info?:PartialObjects["jsonb"],
 	user_id?:number
 },
 	/** aggregate stddev on columns */
@@ -20540,7 +20406,6 @@ end). throws an error if top level container is not an array */
 	app_version?:string,
 	service_provider_type?:string,
 	stripe_id?:string,
-	stripe_info?:PartialObjects["jsonb"],
 	user_id?:number
 },
 	/** aggregate sum on columns */
@@ -20551,22 +20416,10 @@ end). throws an error if top level container is not an array */
 	/** update columns of table "customer.customer" */
 ["customer_customer_update_column"]:customer_customer_update_column,
 	["customer_customer_updates"]: {
-	/** append existing jsonb value of filtered columns with new jsonb value */
-	_append?:PartialObjects["customer_customer_append_input"],
-	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-	_delete_at_path?:PartialObjects["customer_customer_delete_at_path_input"],
-	/** delete the array element with specified index (negative integers count from
-the end). throws an error if top level container is not an array */
-	_delete_elem?:PartialObjects["customer_customer_delete_elem_input"],
-	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-	_delete_key?:PartialObjects["customer_customer_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:PartialObjects["customer_customer_inc_input"],
-	/** prepend existing jsonb value of filtered columns with new jsonb value */
-	_prepend?:PartialObjects["customer_customer_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_customer_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_customer_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -20750,7 +20603,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["customer_favourited_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_favourited_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_favourited_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -21050,7 +20902,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["customer_minimal_order_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_minimal_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_minimal_order_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -21338,7 +21189,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["customer_saved_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_saved_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_saved_location_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -21700,7 +21550,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["customer_stripe_cards_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_stripe_cards_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_stripe_cards_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -21986,7 +21835,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["customer_stripe_sp_id_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_stripe_sp_id_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_stripe_sp_id_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -22228,7 +22076,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_company_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_company_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_company_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -22724,7 +22571,6 @@ columns of table "delivery.courier_order_item" */
 	_inc?:PartialObjects["delivery_courier_order_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_courier_order_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_courier_order_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -22983,7 +22829,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["delivery_courier_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_courier_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_courier_order_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -23373,7 +23218,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_details_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -23793,7 +23637,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_driver_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_driver_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_driver_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -24103,7 +23946,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_operator_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -24954,7 +24796,6 @@ cancelledByServiceProvider */
 	_inc?:PartialObjects["delivery_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_order_public_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -25273,7 +25114,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["delivery_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_order_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -25566,7 +25406,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["direct_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["direct_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["direct_chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -25816,7 +25655,6 @@ the end). throws an error if top level container is not an array */
 	["language_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["language_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["language_bool_exp"]
 },
 	/** columns and relationships of "laundry.category" */
@@ -26100,7 +25938,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["laundry_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["laundry_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["laundry_category_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -26419,7 +26256,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["laundry_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["laundry_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["laundry_operator_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -26937,7 +26773,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["laundry_order_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["laundry_order_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["laundry_order_category_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27323,7 +27158,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["laundry_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["laundry_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["laundry_order_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27626,7 +27460,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["laundry_store_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["laundry_store_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["laundry_store_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27863,7 +27696,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["mez_admin_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["mez_admin_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["mez_admin_chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27986,7 +27818,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["mez_admin_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["mez_admin_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["mez_admin_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -28109,7 +27940,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["mez_json_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["mez_json_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["mez_json_bool_exp"]
 },
 	["money"]:any,
@@ -29057,7 +28887,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["notification_info_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["notification_info_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["notification_info_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -29795,7 +29624,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_cart_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_cart_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_cart_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -29944,7 +29772,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_cart_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_cart_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_cart_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -30280,7 +30107,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_category_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -30626,7 +30452,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_choice_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_choice_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_choice_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -31190,7 +31015,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_item_option_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_item_option_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_item_option_map_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -31401,7 +31225,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -31732,7 +31555,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_operator_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -32157,7 +31979,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["restaurant_option_choice_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_option_choice_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_option_choice_map_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -32450,7 +32271,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["restaurant_option_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_option_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_option_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -33114,7 +32934,6 @@ cancelled), serviceProviderAccount: string } */
 	_inc?:PartialObjects["restaurant_order_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_order_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_order_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -33526,7 +33345,6 @@ cancelled), serviceProviderAccount: string } */
 	_inc?:PartialObjects["restaurant_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_order_public_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -33749,7 +33567,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["restaurant_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_order_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -34070,7 +33887,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_restaurant_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_restaurant_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_restaurant_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -34389,7 +34205,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["review_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["review_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["review_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -34613,7 +34428,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_customer_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_customer_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_customer_chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -34881,7 +34695,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_delivery_partner_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_delivery_partner_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_delivery_partner_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -35283,7 +35096,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["service_provider_details_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_details_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -35457,7 +35269,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_location_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -35676,7 +35487,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_operator_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_operator_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_operator_details_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -35939,7 +35749,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["service_provider_post_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_post_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_post_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -36144,7 +35953,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_service_link_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_service_link_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_service_link_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -36384,7 +36192,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["service_provider_stripe_info_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_stripe_info_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_stripe_info_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -36578,7 +36385,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["service_provider_subscriber_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_subscriber_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_subscriber_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -37303,7 +37109,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["translation_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["translation_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["translation_bool_exp"]
 },
 	/** columns and relationships of "translation_value" */
@@ -37518,7 +37323,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["translation_value_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["translation_value_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["translation_value_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -37771,7 +37575,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["user_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["user_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["user_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -37881,7 +37684,6 @@ All fields are combined with a logical 'AND'. */
 	["valid_types_app_type_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["valid_types_app_type_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["valid_types_app_type_bool_exp"]
 },
 	/** columns and relationships of "valid_types.service_provider_type" */
@@ -37970,7 +37772,6 @@ All fields are combined with a logical 'AND'. */
 	["valid_types_service_provider_type_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["valid_types_service_provider_type_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["valid_types_service_provider_type_bool_exp"]
 }
   }
@@ -38439,7 +38240,6 @@ export type chat_participant_updates = {
 	_inc?:chat_participant_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:chat_participant_set_input,
-	/** filter the rows which have to be updated */
 	where:chat_participant_bool_exp
 }
 
@@ -38585,7 +38385,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:chat_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:chat_set_input,
-	/** filter the rows which have to be updated */
 	where:chat_bool_exp
 }
 
@@ -38636,7 +38435,6 @@ export type customer_customer = {
 	/** An aggregate relationship */
 	stripe_cards_aggregate:customer_stripe_cards_aggregate,
 	stripe_id?:string,
-	stripe_info?:jsonb,
 	/** An array relationship */
 	stripe_sp_ids:customer_stripe_sp_id[],
 	/** An aggregate relationship */
@@ -38669,11 +38467,6 @@ export type customer_customer_aggregate_fields = {
 	variance?:customer_customer_variance_fields
 }
 
-/** append existing jsonb value of filtered columns with new jsonb value */
-export type customer_customer_append_input = {
-		stripe_info?:jsonb
-}
-
 /** aggregate avg on columns */
 export type customer_customer_avg_fields = {
 	__typename?: "customer_customer_avg_fields",
@@ -38697,7 +38490,6 @@ export type customer_customer_bool_exp = {
 	stripe_cards?:customer_stripe_cards_bool_exp,
 	stripe_cards_aggregate?:customer_stripe_cards_aggregate_bool_exp,
 	stripe_id?:String_comparison_exp,
-	stripe_info?:jsonb_comparison_exp,
 	stripe_sp_ids?:customer_stripe_sp_id_bool_exp,
 	stripe_sp_ids_aggregate?:customer_stripe_sp_id_aggregate_bool_exp,
 	user?:user_bool_exp,
@@ -38708,22 +38500,6 @@ export type customer_customer_bool_exp = {
 export enum customer_customer_constraint {
 	customer_pkey = "customer_pkey",
 	customer_user_id_key = "customer_user_id_key"
-}
-
-/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type customer_customer_delete_at_path_input = {
-		stripe_info?:string[]
-}
-
-/** delete the array element with specified index (negative integers count from the
-end). throws an error if top level container is not an array */
-export type customer_customer_delete_elem_input = {
-		stripe_info?:number
-}
-
-/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type customer_customer_delete_key_input = {
-		stripe_info?:string
 }
 
 /** input type for incrementing numeric columns in table "customer.customer" */
@@ -38742,7 +38518,6 @@ export type customer_customer_insert_input = {
 	service_provider_type?:string,
 	stripe_cards?:customer_stripe_cards_arr_rel_insert_input,
 	stripe_id?:string,
-	stripe_info?:jsonb,
 	stripe_sp_ids?:customer_stripe_sp_id_arr_rel_insert_input,
 	user?:user_obj_rel_insert_input,
 	user_id?:number
@@ -38802,7 +38577,6 @@ export type customer_customer_order_by = {
 	service_provider_type?:order_by,
 	stripe_cards_aggregate?:customer_stripe_cards_aggregate_order_by,
 	stripe_id?:order_by,
-	stripe_info?:order_by,
 	stripe_sp_ids_aggregate?:customer_stripe_sp_id_aggregate_order_by,
 	user?:user_order_by,
 	user_id?:order_by
@@ -38813,18 +38587,12 @@ export type customer_customer_pk_columns_input = {
 		user_id:number
 }
 
-/** prepend existing jsonb value of filtered columns with new jsonb value */
-export type customer_customer_prepend_input = {
-		stripe_info?:jsonb
-}
-
 /** select columns of table "customer.customer" */
 export enum customer_customer_select_column {
 	app_type_id = "app_type_id",
 	app_version = "app_version",
 	service_provider_type = "service_provider_type",
 	stripe_id = "stripe_id",
-	stripe_info = "stripe_info",
 	user_id = "user_id"
 }
 
@@ -38834,7 +38602,6 @@ export type customer_customer_set_input = {
 	app_version?:string,
 	service_provider_type?:string,
 	stripe_id?:string,
-	stripe_info?:jsonb,
 	user_id?:number
 }
 
@@ -38870,7 +38637,6 @@ export type customer_customer_stream_cursor_value_input = {
 	app_version?:string,
 	service_provider_type?:string,
 	stripe_id?:string,
-	stripe_info?:jsonb,
 	user_id?:number
 }
 
@@ -38886,27 +38652,14 @@ export enum customer_customer_update_column {
 	app_version = "app_version",
 	service_provider_type = "service_provider_type",
 	stripe_id = "stripe_id",
-	stripe_info = "stripe_info",
 	user_id = "user_id"
 }
 
 export type customer_customer_updates = {
-		/** append existing jsonb value of filtered columns with new jsonb value */
-	_append?:customer_customer_append_input,
-	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-	_delete_at_path?:customer_customer_delete_at_path_input,
-	/** delete the array element with specified index (negative integers count from
-the end). throws an error if top level container is not an array */
-	_delete_elem?:customer_customer_delete_elem_input,
-	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-	_delete_key?:customer_customer_delete_key_input,
-	/** increments the numeric columns with given value of the filtered values */
+		/** increments the numeric columns with given value of the filtered values */
 	_inc?:customer_customer_inc_input,
-	/** prepend existing jsonb value of filtered columns with new jsonb value */
-	_prepend?:customer_customer_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_customer_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_customer_bool_exp
 }
 
@@ -39129,7 +38882,6 @@ export type customer_favourited_item_updates = {
 	_inc?:customer_favourited_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_favourited_item_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_favourited_item_bool_exp
 }
 
@@ -39492,7 +39244,6 @@ export type customer_minimal_order_updates = {
 	_inc?:customer_minimal_order_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_minimal_order_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_minimal_order_bool_exp
 }
 
@@ -39843,7 +39594,6 @@ export type customer_saved_location_updates = {
 	_inc?:customer_saved_location_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_saved_location_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_saved_location_bool_exp
 }
 
@@ -40272,7 +40022,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:customer_stripe_cards_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_stripe_cards_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_stripe_cards_bool_exp
 }
 
@@ -40612,7 +40361,6 @@ export type customer_stripe_sp_id_updates = {
 	_inc?:customer_stripe_sp_id_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_stripe_sp_id_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_stripe_sp_id_bool_exp
 }
 
@@ -40899,7 +40647,6 @@ export type delivery_company_updates = {
 	_inc?:delivery_company_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_company_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_company_bool_exp
 }
 
@@ -41476,7 +41223,6 @@ export type delivery_courier_order_item_updates = {
 	_inc?:delivery_courier_order_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_courier_order_item_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_courier_order_item_bool_exp
 }
 
@@ -41795,7 +41541,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:delivery_courier_order_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_courier_order_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_courier_order_bool_exp
 }
 
@@ -42245,7 +41990,6 @@ export type delivery_details_updates = {
 	_inc?:delivery_details_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_details_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_details_bool_exp
 }
 
@@ -42738,7 +42482,6 @@ export type delivery_driver_updates = {
 	_inc?:delivery_driver_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_driver_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_driver_bool_exp
 }
 
@@ -43105,7 +42848,6 @@ export type delivery_operator_updates = {
 	_inc?:delivery_operator_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_operator_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_operator_bool_exp
 }
 
@@ -44021,7 +43763,6 @@ export type delivery_order_public_updates = {
 	_inc?:delivery_order_public_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_order_public_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_order_public_bool_exp
 }
 
@@ -44443,7 +44184,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:delivery_order_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_order_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_order_bool_exp
 }
 
@@ -44777,7 +44517,6 @@ export type direct_chat_updates = {
 	_inc?:direct_chat_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:direct_chat_set_input,
-	/** filter the rows which have to be updated */
 	where:direct_chat_bool_exp
 }
 
@@ -45070,7 +44809,6 @@ export enum language_update_column {
 export type language_updates = {
 		/** sets the columns of the filtered rows to the given values */
 	_set?:language_set_input,
-	/** filter the rows which have to be updated */
 	where:language_bool_exp
 }
 
@@ -45404,7 +45142,6 @@ export type laundry_category_updates = {
 	_inc?:laundry_category_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:laundry_category_set_input,
-	/** filter the rows which have to be updated */
 	where:laundry_category_bool_exp
 }
 
@@ -45779,7 +45516,6 @@ export type laundry_operator_updates = {
 	_inc?:laundry_operator_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:laundry_operator_set_input,
-	/** filter the rows which have to be updated */
 	where:laundry_operator_bool_exp
 }
 
@@ -46390,7 +46126,6 @@ export type laundry_order_category_updates = {
 	_inc?:laundry_order_category_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:laundry_order_category_set_input,
-	/** filter the rows which have to be updated */
 	where:laundry_order_category_bool_exp
 }
 
@@ -46863,7 +46598,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:laundry_order_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:laundry_order_set_input,
-	/** filter the rows which have to be updated */
 	where:laundry_order_bool_exp
 }
 
@@ -47212,7 +46946,6 @@ export type laundry_store_updates = {
 	_inc?:laundry_store_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:laundry_store_set_input,
-	/** filter the rows which have to be updated */
 	where:laundry_store_bool_exp
 }
 
@@ -47491,7 +47224,6 @@ export type mez_admin_chat_updates = {
 	_inc?:mez_admin_chat_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:mez_admin_chat_set_input,
-	/** filter the rows which have to be updated */
 	where:mez_admin_chat_bool_exp
 }
 
@@ -47646,7 +47378,6 @@ export type mez_admin_updates = {
 	_inc?:mez_admin_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:mez_admin_set_input,
-	/** filter the rows which have to be updated */
 	where:mez_admin_bool_exp
 }
 
@@ -47799,7 +47530,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:mez_json_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:mez_json_set_input,
-	/** filter the rows which have to be updated */
 	where:mez_json_bool_exp
 }
 
@@ -48790,7 +48520,6 @@ export type notification_info_updates = {
 	_inc?:notification_info_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:notification_info_set_input,
-	/** filter the rows which have to be updated */
 	where:notification_info_bool_exp
 }
 
@@ -49604,7 +49333,6 @@ export type restaurant_cart_item_updates = {
 	_inc?:restaurant_cart_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_cart_item_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_cart_item_bool_exp
 }
 
@@ -49782,7 +49510,6 @@ export type restaurant_cart_updates = {
 	_inc?:restaurant_cart_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_cart_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_cart_bool_exp
 }
 
@@ -50173,7 +49900,6 @@ export type restaurant_category_updates = {
 	_inc?:restaurant_category_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_category_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_category_bool_exp
 }
 
@@ -50582,7 +50308,6 @@ export type restaurant_choice_updates = {
 	_inc?:restaurant_choice_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_choice_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_choice_bool_exp
 }
 
@@ -51225,7 +50950,6 @@ export type restaurant_item_option_map_updates = {
 	_inc?:restaurant_item_option_map_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_item_option_map_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_item_option_map_bool_exp
 }
 
@@ -51494,7 +51218,6 @@ export type restaurant_item_updates = {
 	_inc?:restaurant_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_item_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_item_bool_exp
 }
 
@@ -51881,7 +51604,6 @@ export type restaurant_operator_updates = {
 	_inc?:restaurant_operator_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_operator_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_operator_bool_exp
 }
 
@@ -52370,7 +52092,6 @@ export type restaurant_option_choice_map_updates = {
 	_inc?:restaurant_option_choice_map_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_option_choice_map_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_option_choice_map_bool_exp
 }
 
@@ -52716,7 +52437,6 @@ export type restaurant_option_updates = {
 	_inc?:restaurant_option_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_option_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_option_bool_exp
 }
 
@@ -53472,7 +53192,6 @@ export type restaurant_order_item_updates = {
 	_inc?:restaurant_order_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_order_item_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_order_item_bool_exp
 }
 
@@ -53928,7 +53647,6 @@ export type restaurant_order_public_updates = {
 	_inc?:restaurant_order_public_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_order_public_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_order_public_bool_exp
 }
 
@@ -54218,7 +53936,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:restaurant_order_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_order_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_order_bool_exp
 }
 
@@ -54586,7 +54303,6 @@ export type restaurant_restaurant_updates = {
 	_inc?:restaurant_restaurant_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_restaurant_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_restaurant_bool_exp
 }
 
@@ -54964,7 +54680,6 @@ export type review_updates = {
 	_inc?:review_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:review_set_input,
-	/** filter the rows which have to be updated */
 	where:review_bool_exp
 }
 
@@ -55231,7 +54946,6 @@ export type service_provider_customer_chat_updates = {
 	_inc?:service_provider_customer_chat_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_customer_chat_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_customer_chat_bool_exp
 }
 
@@ -55550,7 +55264,6 @@ export type service_provider_delivery_partner_updates = {
 	_inc?:service_provider_delivery_partner_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_delivery_partner_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_delivery_partner_bool_exp
 }
 
@@ -56030,7 +55743,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:service_provider_details_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_details_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_details_bool_exp
 }
 
@@ -56242,7 +55954,6 @@ export type service_provider_location_updates = {
 	_inc?:service_provider_location_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_location_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_location_bool_exp
 }
 
@@ -56508,7 +56219,6 @@ export type service_provider_operator_details_updates = {
 	_inc?:service_provider_operator_details_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_operator_details_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_operator_details_bool_exp
 }
 
@@ -56823,7 +56533,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:service_provider_post_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_post_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_post_bool_exp
 }
 
@@ -57074,7 +56783,6 @@ export type service_provider_service_link_updates = {
 	_inc?:service_provider_service_link_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_service_link_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_service_link_bool_exp
 }
 
@@ -57370,7 +57078,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:service_provider_stripe_info_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_stripe_info_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_stripe_info_bool_exp
 }
 
@@ -57604,7 +57311,6 @@ export type service_provider_subscriber_updates = {
 	_inc?:service_provider_subscriber_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_subscriber_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_subscriber_bool_exp
 }
 
@@ -58375,7 +58081,6 @@ export type translation_updates = {
 	_inc?:translation_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:translation_set_input,
-	/** filter the rows which have to be updated */
 	where:translation_bool_exp
 }
 
@@ -58635,7 +58340,6 @@ export type translation_value_updates = {
 	_inc?:translation_value_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:translation_value_set_input,
-	/** filter the rows which have to be updated */
 	where:translation_value_bool_exp
 }
 
@@ -58946,7 +58650,6 @@ export type user_updates = {
 	_inc?:user_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:user_set_input,
-	/** filter the rows which have to be updated */
 	where:user_bool_exp
 }
 
@@ -59083,7 +58786,6 @@ export enum valid_types_app_type_update_column {
 export type valid_types_app_type_updates = {
 		/** sets the columns of the filtered rows to the given values */
 	_set?:valid_types_app_type_set_input,
-	/** filter the rows which have to be updated */
 	where:valid_types_app_type_bool_exp
 }
 
@@ -59196,7 +58898,6 @@ export enum valid_types_service_provider_type_update_column {
 export type valid_types_service_provider_type_updates = {
 		/** sets the columns of the filtered rows to the given values */
 	_set?:valid_types_service_provider_type_set_input,
-	/** filter the rows which have to be updated */
 	where:valid_types_service_provider_type_bool_exp
 }
 
@@ -60587,14 +60288,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		stripe_info:{
-			path:{
-				type:"String",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		stripe_sp_ids:{
 			distinct_on:{
 				type:"customer_stripe_sp_id_select_column",
@@ -60674,14 +60367,6 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
-		}
-	},
-	customer_customer_append_input:{
-		stripe_info:{
-			type:"jsonb",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	customer_customer_bool_exp:{
@@ -60775,12 +60460,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_info:{
-			type:"jsonb_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		stripe_sp_ids:{
 			type:"customer_stripe_sp_id_bool_exp",
 			array:false,
@@ -60807,30 +60486,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_customer_constraint: "enum",
-	customer_customer_delete_at_path_input:{
-		stripe_info:{
-			type:"String",
-			array:true,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	customer_customer_delete_elem_input:{
-		stripe_info:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	customer_customer_delete_key_input:{
-		stripe_info:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
 	customer_customer_inc_input:{
 		user_id:{
 			type:"Int",
@@ -60890,12 +60545,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		stripe_id:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info:{
-			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -61008,12 +60657,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_info:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		stripe_sp_ids_aggregate:{
 			type:"customer_stripe_sp_id_aggregate_order_by",
 			array:false,
@@ -61041,14 +60684,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
-	customer_customer_prepend_input:{
-		stripe_info:{
-			type:"jsonb",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
 	customer_customer_select_column: "enum",
 	customer_customer_set_input:{
 		app_type_id:{
@@ -61071,12 +60706,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		stripe_id:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stripe_info:{
-			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -61127,12 +60756,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		stripe_info:{
-			type:"jsonb",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		user_id:{
 			type:"Int",
 			array:false,
@@ -61142,38 +60765,8 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	customer_customer_update_column: "enum",
 	customer_customer_updates:{
-		_append:{
-			type:"customer_customer_append_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_delete_at_path:{
-			type:"customer_customer_delete_at_path_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_delete_elem:{
-			type:"customer_customer_delete_elem_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_delete_key:{
-			type:"customer_customer_delete_key_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		_inc:{
 			type:"customer_customer_inc_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_prepend:{
-			type:"customer_customer_prepend_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -81492,38 +81085,8 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_customer_customer:{
-			_append:{
-				type:"customer_customer_append_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_delete_at_path:{
-				type:"customer_customer_delete_at_path_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_delete_elem:{
-				type:"customer_customer_delete_elem_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_delete_key:{
-				type:"customer_customer_delete_key_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
 			_inc:{
 				type:"customer_customer_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_prepend:{
-				type:"customer_customer_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -81542,38 +81105,8 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_customer_customer_by_pk:{
-			_append:{
-				type:"customer_customer_append_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_delete_at_path:{
-				type:"customer_customer_delete_at_path_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_delete_elem:{
-				type:"customer_customer_delete_elem_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_delete_key:{
-				type:"customer_customer_delete_key_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
 			_inc:{
 				type:"customer_customer_inc_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			_prepend:{
-				type:"customer_customer_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -113894,7 +113427,6 @@ export const ReturnTypes: Record<string,any> = {
 		stripe_cards:"customer_stripe_cards",
 		stripe_cards_aggregate:"customer_stripe_cards_aggregate",
 		stripe_id:"String",
-		stripe_info:"jsonb",
 		stripe_sp_ids:"customer_stripe_sp_id",
 		stripe_sp_ids_aggregate:"customer_stripe_sp_id_aggregate",
 		user:"user",
@@ -120220,4 +119752,4 @@ subscription: ZeusSelect<ValueTypes["subscription_root"]>()
 };
   
 
-export const Gql = Chain('https://mez-staging.hasura.app/v1/graphql')
+export const Gql = Chain('http://localhost:8080/v1/graphql')

@@ -83,9 +83,12 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             delivery_cost: checkoutReq.deliveryCost,
           
             status: DeliveryOrderStatus.OrderReceived,
-            service_provider_id: checkoutReq.restaurantId,
-            service_provider_type: DeliveryServiceProviderType.Restaurant,
-            
+            service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
+              ? restaurant.id 
+              : restaurant.deliveryPartnerId,
+            service_provider_type: (restaurant.deliveryDetails.selfDelivery) 
+              ? DeliveryServiceProviderType.Restaurant
+              : DeliveryServiceProviderType.DeliveryCompany,
             scheduled_time: checkoutReq.scheduledTime,
             trip_distance: checkoutReq.tripDistance,
             trip_duration: checkoutReq.tripDuration,
@@ -189,8 +192,12 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
-      serviceProviderId: checkoutReq.restaurantId,
-      serviceProviderType: DeliveryServiceProviderType.Restaurant,
+      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? DeliveryServiceProviderType.DeliveryCompany 
+        : DeliveryServiceProviderType.Restaurant,
+      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? restaurant.deliveryPartnerId 
+        : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
       distanceFromBase: checkoutReq.distanceFromBase
@@ -212,8 +219,12 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
-      serviceProviderId: checkoutReq.restaurantId,
-      serviceProviderType: DeliveryServiceProviderType.Restaurant,
+      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? DeliveryServiceProviderType.DeliveryCompany 
+        : DeliveryServiceProviderType.Restaurant,
+      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? restaurant.deliveryPartnerId 
+        : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
     }

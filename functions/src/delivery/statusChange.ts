@@ -1,6 +1,6 @@
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
+import { unassignDriver, updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { OrderType } from "../shared/models/Generic/Order";
@@ -11,9 +11,8 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { isMezAdmin } from "../shared/helper";
+import { isMezAdmin, notifyDeliveryCompany } from "../shared/helper";
 import { MezError } from "../shared/models/Generic/Generic";
-import { cancelCourierFromDelivery } from "../shared/graphql/delivery/courier/updateCourier";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
 
@@ -31,7 +30,6 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
     if(!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
       throw new MezError(ChangeDeliveryStatusError.OrderNotInProcess);
     }
-
     return;
   }
   if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
@@ -86,8 +84,9 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
     checkExpectedStatus(deliveryOrder.status, changeDeliveryStatusDetails.newStatus);
 
     deliveryOrder.status = changeDeliveryStatusDetails.newStatus;
-    updateDeliveryOrderStatus(deliveryOrder);
 
+    if(deliveryOrder.status !== DeliveryOrderStatus.CancelledByDeliverer)
+      updateDeliveryOrderStatus(deliveryOrder);
     switch (deliveryOrder.orderType) {
       case OrderType.Restaurant:
         changeRestaurantOrderStatus(customer, deliveryOrder)
@@ -96,13 +95,15 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
         changeLaundryOrderStatus(customer, deliveryOrder)
         break;
       case OrderType.Courier:
-        notifyCourierStatusChange(deliveryOrder, customer);
         if(deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer) {
-          cancelCourierFromDelivery(deliveryOrder.deliveryId)
-        }
+          unassignDriver(deliveryOrder.deliveryId);
+          notifyDeliveryCompany(deliveryOrder)
+        } else
+          notifyCourierStatusChange(deliveryOrder, customer);
       default:
         break;
     }
+    
     return {
       success: true
     }
