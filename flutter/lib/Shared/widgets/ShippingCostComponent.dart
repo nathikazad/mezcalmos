@@ -27,7 +27,9 @@ class ShippingCostComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Text(
-        formattedShippingCost ?? shippingCost?.toPriceString() ?? "-",
+        formattedShippingCost ??
+            shippingCost?.toPriceString(label: showPerKm ? "/km" : null) ??
+            "-",
         style: textStyle,
       ),
     );

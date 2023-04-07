@@ -23,7 +23,8 @@
         "wrongAddress": "Dirección incorrecta/inválida elegida!",
         "distanceError": "¡La distancia entre usted y la ubicación del servicio supera los 10 km!",
         "chooseLoc": "Elegir la ubicación",
-        "pickLocation": "Elegir del mapa"
+        "pickLocation": "Elegir del mapa",
+        "noLocError" : "Seleccione una ubicación"
       },
       "LocationPicker": {
         "pick": "ELIGE",
@@ -78,6 +79,8 @@
           "cancelOrder": "Cancelar orden",
           "note": "Nota",
           "delivery": "Entrega",
+          "deliveryDetails":"Detalles de la entrega",
+          "pickupLoc": "Lugar de recogida",
           "noDriverAssignedYet": "No hay controlador asignado todavía"
         }
       },
@@ -279,7 +282,7 @@
             "DialogRequiredSignIn": {
               "title": "Debe iniciar sesión para agregar artículos a su carrito",
               "signBtn": "Apuntame dentro",
-              "notNowBtn": "Ahora no ?"
+              "notNowBtn": "Ahora no?"
             }
           },
           "ViewItemScreen": {
@@ -735,6 +738,7 @@
           "ready": "Paquete listo",
           "atPickUp": "En la recogida",
           "otwDropOff": "En el camino de caída",
+          "otwPickup": "En el camino recogida",
           "delivered": "Orden entregada",
           "received": "orden recibida",
           "canceled": "Orden cancelada",
@@ -825,7 +829,7 @@
           "CreateServiceInfoPage": {
             "name": "Nombre del restaurante",
             "hintNameText": "Introduzca su nombre",
-            "uploadImageText": "Sube tu imagen de perfil",
+            "uploadImageText": "Cargar imagen",
             "nameError": "Proporcione un nombre",
             "descriptionError": "Proporcione una descripción",
             "location": "Ubicación",
@@ -1432,6 +1436,20 @@
       }
     },
     "pages": {
+      "DvCompanyOrderView" : {
+        "order" : "Orden",
+        "customer" :"Información del cliente",
+        "estTimes" :"Tiempos estimados",
+        "deliveryDetails" :"Detalles de la entrega",
+        "loading" : "Obteniendo su información de pedido ...",
+        "packageReady" :"Paquete listo:",
+        "arrivalAtPickup": "Llegada a la recogida :",
+        "pickupLoc" :"Lugar de recogida",
+        "arrivalAtDropoff": "Llegada a la caída :",
+        "noDriver" :"No hay controlador asignado todavía"
+
+
+      },
       "DvOpTabsView": {
         "orders": "Pedidos",
         "drivers": "Conductoras",
@@ -1712,7 +1730,7 @@
         "orderDetails": "Detalles del pedido",
         "orderItems": "Encargar artículos",
         "addCost": "Agregar costo",
-        "save": "Ahorrar",
+        "save": "Guardar",
         "note": "Nota",
         "tax": "Impuesto",
         "estCost": "Costo estimado",

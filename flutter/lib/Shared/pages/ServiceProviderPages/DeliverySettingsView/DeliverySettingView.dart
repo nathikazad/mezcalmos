@@ -31,11 +31,11 @@ class DeliverySettingsView extends StatefulWidget {
   }) {
     return MezRouter.toPath(
         SharedServiceProviderRoutes.kDeliverySettingsViewRoute
-            .replaceAll(":serviceProviderId", serviceProviderId.toString())
-            .replaceAll(":detailsId", detailsId.toString())
-            .replaceAll(":deliveryDetailsId", deliveryDetailsID.toString()),
+            .replaceFirst(":serviceProviderId", serviceProviderId.toString()),
         arguments: <String, dynamic>{
           "serviceProviderType": serviceProviderType,
+          "detailsId": detailsId,
+          "deliveryDetailsId": deliveryDetailsID,
         });
   }
 
@@ -67,18 +67,15 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
 
   void _settingVariables() {
     if (MezRouter.urlArguments["serviceProviderId"] != null &&
-        Get.arguments?["serviceProviderType"] != null &&
-        MezRouter.urlArguments["deliveryDetailsId"] != null &&
-        MezRouter.urlArguments["detailsId"] != null) {
+        MezRouter.bodyArguments?["serviceProviderType"] != null &&
+        MezRouter.bodyArguments?["deliveryDetailsId"] != null &&
+        MezRouter.bodyArguments?["detailsId"] != null) {
       serviceProviderId =
           int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
-      serviceDetailsId =
-          int.tryParse(MezRouter.urlArguments["detailsId"].toString());
-      deliveryDetailsId =
-          int.tryParse(MezRouter.urlArguments["deliveryDetailsId"].toString());
-
+      serviceDetailsId = MezRouter.bodyArguments?["detailsId"] as int?;
+      deliveryDetailsId = MezRouter.bodyArguments?["deliveryDetailsId"] as int?;
       serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
-          .toString() as ServiceProviderType;
+          as ServiceProviderType?;
     }
   }
 

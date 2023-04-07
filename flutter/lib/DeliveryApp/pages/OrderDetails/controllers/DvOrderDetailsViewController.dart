@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
@@ -18,7 +16,6 @@ import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/env.dart';
 
 class DvOrderDetailsViewController {
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -132,40 +129,39 @@ class DvOrderDetailsViewController {
   }
 
   Future<void> editImage(context) async {
-    if (MezEnv.appLaunchMode == AppLaunchMode.stage) {
-      newBillUrl.value = await update_courier_order_bill(
-          orderId: orderId,
-          imageUrl:
-              "https://i.pinimg.com/originals/77/fc/85/77fc858e6e30f9cd44b492c4811f96c0.jpg");
-    } else {
-      final imPicker.ImageSource? _from =
-          await imagePickerChoiceDialog(context);
+    // if (MezEnv.appLaunchMode == AppLaunchMode.stage) {
+    //   newBillUrl.value = await update_courier_order_bill(
+    //       orderId: orderId,
+    //       imageUrl:
+    //           "https://i.pinimg.com/originals/77/fc/85/77fc858e6e30f9cd44b492c4811f96c0.jpg");
+    // } else {
+    final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
 
-      if (_from != null) {
-        billLoading.value = true;
+    if (_from != null) {
+      billLoading.value = true;
 
-        final imPicker.XFile? _res =
-            await imagePicker(picker: _imagePicker, source: _from);
+      final imPicker.XFile? _res =
+          await imagePicker(picker: _imagePicker, source: _from);
 
-        try {
-          if (_res != null) {
-            newBillFile.value = _res;
-            if (newBillFile.value != null) {
-              String imageUrl = await uploadImgToFbStorage(
-                  imageFile: newBillFile.value!,
-                  pathPrefix: "bills/delivery/$orderId");
-              newBillUrl.value = await update_courier_order_bill(
-                  orderId: orderId, imageUrl: imageUrl);
-            }
+      try {
+        if (_res != null) {
+          newBillFile.value = _res;
+          if (newBillFile.value != null) {
+            String imageUrl = await uploadImgToFbStorage(
+                imageFile: newBillFile.value!,
+                pathPrefix: "bills/delivery/$orderId");
+            newBillUrl.value = await update_courier_order_bill(
+                orderId: orderId, imageUrl: imageUrl);
           }
-          billLoading.value = false;
-        } catch (e) {
-          billLoading.value = false;
-          mezDbgPrint(
-              "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
         }
+        billLoading.value = false;
+      } catch (e) {
+        billLoading.value = false;
+        mezDbgPrint(
+            "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
+    // }
   }
 
   Future<void> requestPriceChange(BuildContext context) async {

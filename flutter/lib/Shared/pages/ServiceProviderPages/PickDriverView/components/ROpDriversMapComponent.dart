@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/controllers/PickDriverViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 
@@ -24,6 +23,7 @@ class _ROpDriversMapComponentState extends State<ROpDriversMapComponent> {
         child: MGoogleMap(
           mGoogleMapController: widget.viewController.mapController,
           padding: const EdgeInsets.all(5),
+          recenterBtnBottomPadding: 10,
         ),
       ),
     );

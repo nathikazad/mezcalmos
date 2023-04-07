@@ -37,7 +37,7 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
       _notificationsStreamListener;
   @override
   void initState() {
-    mezDbgPrint("RestaurantWrapper::init state");
+    mezDbgPrint(" 👋👋👋👋👋👋👋 Delivery Admin ::init state 👋👋👋👋👋👋👋 ");
 
     deliveryOpAuthController.setupDeliveryOperator().then((_) => handleState());
 
@@ -50,10 +50,10 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
         "🫡 Start routing process 🫡 =>${deliveryOpAuthController.operator.value?.toJson()}");
 
     if (deliveryOpAuthController.operator.value == null) {
-      // MezRouter.toNamed(kCreateRestaurant);
+      MezRouter.toNamed(DeliveryAdminRoutes.kNotAuthorizedOperatorRoute);
     } else if (deliveryOpAuthController
         .operator.value!.isWaitingToBeApprovedByOwner) {
-      //  MezRouter.toNamed(kOpUnauth);
+      MezRouter.toNamed(DeliveryAdminRoutes.kNotAuthorizedOperatorRoute);
     } else {
       MezRouter.toNamed(DeliveryAdminRoutes.kDeliveryOpHomeScreenRoute);
     }

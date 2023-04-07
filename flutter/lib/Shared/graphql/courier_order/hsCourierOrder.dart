@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -125,10 +126,11 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
                   orderData.delivery_order.estimated_package_ready_time!)
               : null,
       //  packageCost: orderData.delivery_order.package_cost_comp ?? 0,
-      pickupLocation: (orderData.delivery_order.pickup_address != null &&
-              orderData.delivery_order.pickup_gps != null)
-          ? MezLocation(orderData.delivery_order.pickup_address!,
-              orderData.delivery_order.pickup_gps!.toLocationData())
+      pickupLocation: (orderData.delivery_order.pickup_address != null)
+          ? MezLocation(
+              orderData.delivery_order.pickup_address!,
+              orderData.delivery_order.pickup_gps?.toLocationData() ??
+                  MezLocation.buildLocationData(0, 0))
           : null,
       billImage: orderData.bill_image,
       dropOffLocation: MezLocation(orderData.delivery_order.dropoff_address,
@@ -283,10 +285,11 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                     orderData.delivery_order.estimated_package_ready_time!)
                 : null,
         //  packageCost: orderData.delivery_order.package_cost_comp ?? 0,
-        pickupLocation: (orderData.delivery_order.pickup_address != null &&
-                orderData.delivery_order.pickup_gps != null)
-            ? MezLocation(orderData.delivery_order.pickup_address!,
-                orderData.delivery_order.pickup_gps!.toLocationData())
+        pickupLocation: (orderData.delivery_order.pickup_address != null)
+            ? MezLocation(
+                orderData.delivery_order.pickup_address!,
+                orderData.delivery_order.pickup_gps?.toLocationData() ??
+                    MezLocation.buildLocationData(0, 0))
             : null,
         dropOffLocation: MezLocation(orderData.delivery_order.dropoff_address,
             orderData.delivery_order.dropoff_gps.toLocationData()),

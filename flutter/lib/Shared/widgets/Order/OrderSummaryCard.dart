@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -18,6 +19,7 @@ class OrderSummaryCard extends StatelessWidget {
     Key? key,
     this.margin,
     this.newRow,
+    this.changePriceRequest,
     required this.costs,
     this.divideDeliveryCost = false,
     this.setTaxCallBack,
@@ -31,6 +33,7 @@ class OrderSummaryCard extends StatelessWidget {
   final bool showNullValues;
   final bool divideDeliveryCost;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
+  final ChangePriceRequest? changePriceRequest;
   final Function()? setTaxCallBack;
   final Function()? setDeliveryCallBack;
 
@@ -104,13 +107,18 @@ class OrderSummaryCard extends StatelessWidget {
                         Row(
                           children: [
                             if (setDeliveryCallBack != null)
-                              MezIconButton(
-                                icon: costs.deliveryCost != null
-                                    ? Icons.edit
-                                    : Icons.add,
-                                iconSize: 17,
-                                padding: const EdgeInsets.all(3),
-                                onTap: setDeliveryCallBack,
+                              Container(
+                                child: (changePriceRequest?.reason ==
+                                        ChangePriceRequestStatus.Requested)
+                                    ? Text("Waiting for customer")
+                                    : MezIconButton(
+                                        icon: costs.deliveryCost != null
+                                            ? Icons.edit
+                                            : Icons.add,
+                                        iconSize: 17,
+                                        padding: const EdgeInsets.all(3),
+                                        onTap: setDeliveryCallBack,
+                                      ),
                               ),
                             Container(
                               margin: const EdgeInsets.only(left: 3),

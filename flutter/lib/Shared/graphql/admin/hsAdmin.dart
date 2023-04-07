@@ -36,7 +36,7 @@ Future<MezAdmin?> get_admin({required int user_id}) async {
                     _admin[0].notification_info!.turn_off_notifications)
             : null);
   } else {
-    mezDbgPrint("[tt] No such customer exists :: id($user_id)");
+    mezDbgPrint("[tt] No such admin :: id($user_id)");
   }
   return null;
 }

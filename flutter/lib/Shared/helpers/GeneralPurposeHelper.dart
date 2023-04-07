@@ -791,10 +791,11 @@ void closeAllSnackbars({String? title, String? subtitle}) {
   ScaffoldMessenger.of(QR.context!).clearSnackBars();
 }
 
-void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
+void showErrorSnackBar({String errorTitle = "Error", String errorText = "",Duration? duration}) {
   return customSnackBar(
       title: errorTitle,
       subTitle: errorText,
+      duration: duration,
       icon: Icon(
         Icons.cancel,
         size: 40,

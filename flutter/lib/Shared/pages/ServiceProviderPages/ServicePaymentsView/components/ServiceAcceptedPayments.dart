@@ -283,10 +283,10 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
     );
   }
 
-  Future<void> handleBank() {
+  Future<void> handleBank(BuildContext context) {
     return showModalBottomSheet(
         isScrollControlled: true,
-        context: Get.context!,
+        context: context,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           topLeft: Radius.circular(15),

@@ -602,6 +602,12 @@
                     "apple-service-file": "services/prod/ios/laundry.plist"
                 }
             },
+            "MainActivityKt": {
+                "imports": [
+                    "import io.flutter.embedding.android.FlutterFragmentActivity"
+                ],
+                "super": "FlutterFragmentActivity"
+            },
             "pubspec": {
                 "dependencies": {
                     "agora_rtc_engine": "6.1.0"

@@ -191,18 +191,19 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        MezIconButton(
-          onTap: () {
-            if (enableExpand) {
-              onCardStateChange?.call(initialCardState.opposit());
-            }
-          },
-          iconSize: 20,
-          padding: const EdgeInsets.all(3),
-          icon: initialCardState == OrderInfoCardState.Minimized
-              ? Icons.keyboard_arrow_up_rounded
-              : Icons.keyboard_arrow_down_rounded,
-        )
+        if (enableExpand)
+          MezIconButton(
+            onTap: () {
+              if (enableExpand) {
+                onCardStateChange?.call(initialCardState.opposit());
+              }
+            },
+            iconSize: 20,
+            padding: const EdgeInsets.all(3),
+            icon: initialCardState == OrderInfoCardState.Minimized
+                ? Icons.keyboard_arrow_up_rounded
+                : Icons.keyboard_arrow_down_rounded,
+          )
       ],
     );
   }

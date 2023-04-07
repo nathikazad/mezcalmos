@@ -51,8 +51,8 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
 
   @override
   void initState() {
-    serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
-        .toString() as ServiceProviderType?;
+    serviceProviderType =
+        MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType?;
     serviceName = MezRouter.bodyArguments?["serviceName"].toString();
     serviceProviderId =
         int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());

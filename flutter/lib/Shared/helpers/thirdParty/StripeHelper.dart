@@ -381,10 +381,10 @@ Future<ServerResponse> serviceProviderFunctions(
   }
 }
 
-Future<dynamic> addCardSheet() {
+Future<dynamic> addCardSheet(BuildContext context) {
   return showModalBottomSheet(
       isScrollControlled: true,
-      context: Get.context!,
+      context: context,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
         topLeft: Radius.circular(15),

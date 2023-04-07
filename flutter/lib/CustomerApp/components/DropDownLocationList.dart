@@ -50,7 +50,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   List<SavedLocation> listOfSavedLoacations = <SavedLocation>[];
   SavedLocation? dropDownListValue;
   SavedLocation? pickLocationPlaceholder;
-
+  String? errorTitle;
   @override
   void initState() {
     mezDbgPrint("PAssed in loc ======>${widget.passedInLocation}");
@@ -97,6 +97,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         widget.serviceProviderLocation != null) {
       mezDbgPrint("[cc]  _lessThanDistance ==> True");
       showError.value = true;
+      errorTitle = "${_i18n()["distanceError"]}";
     }
   }
 
@@ -112,60 +113,77 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        Card(
-          elevation: widget.elevation,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: widget.bgColor,
-              // border: Border.all(
-              //   // width: 1.5,
-              //   // color: (dropDownListValue != pickLocationPlaceholder)
-              //   //     ? Theme.of(context).primaryColorLight
-              //   //     : Colors.red,
-              // ),
-            ),
-            child: DropdownButtonHideUnderline(
-                child: DropdownButton<SavedLocation>(
-              selectedItemBuilder: (BuildContext context) {
-                return dropDownSelectedItemBuilder(textTheme);
-              },
-              iconDisabledColor: Colors.grey.shade800,
-              iconEnabledColor: Colors.grey.shade800,
-              value: dropDownListValue,
-              dropdownColor: widget.bgColor,
-              isDense: true,
-              isExpanded: true,
-              icon: Icon(
-                Icons.expand_more,
-                color: Colors.black,
+    return FormField<locModel.MezLocation>(
+      initialValue: dropDownListValue?.location,
+      validator: (locModel.MezLocation? value) {
+        if (dropDownListValue?.location.isValidLocation() == false) {
+          showError.value = true;
+          errorTitle = "${_i18n()['noLocError']}";
+        } else {
+          showError.value = false;
+        }
+
+        return null;
+      },
+      builder: (FormFieldState<locModel.MezLocation> field) {
+        {
+          return Column(
+            children: [
+              Card(
+                elevation: widget.elevation,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: widget.bgColor,
+                    // border: Border.all(
+                    //   // width: 1.5,
+                    //   // color: (dropDownListValue != pickLocationPlaceholder)
+                    //   //     ? Theme.of(context).primaryColorLight
+                    //   //     : Colors.red,
+                    // ),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                      child: DropdownButton<SavedLocation>(
+                    selectedItemBuilder: (BuildContext context) {
+                      return dropDownSelectedItemBuilder();
+                    },
+                    iconDisabledColor: Colors.grey.shade800,
+                    iconEnabledColor: Colors.grey.shade800,
+                    value: dropDownListValue,
+                    dropdownColor: widget.bgColor,
+                    isDense: true,
+                    isExpanded: true,
+                    icon: Icon(
+                      Icons.expand_more,
+                      color: Colors.black,
+                    ),
+                    hint: Text(
+                      '${_i18n()["chooseLoc"]}',
+                      style: context.txt.bodyLarge,
+                    ),
+                    items: listOfSavedLoacations
+                        .map<DropdownMenuItem<SavedLocation>>(
+                            (SavedLocation e) => buildItems(e))
+                        .toList(),
+                    onChanged: (SavedLocation? v) async {
+                      await locationChangedHandler(v!);
+                    },
+                  )),
+                ),
               ),
-              hint: Text(
-                '${_i18n()["chooseLoc"]}',
-                style: context.txt.bodyLarge,
-              ),
-              items: listOfSavedLoacations
-                  .map<DropdownMenuItem<SavedLocation>>(
-                      (SavedLocation e) => buildItems(e, textTheme))
-                  .toList(),
-              onChanged: (SavedLocation? v) async {
-                await locationChangedHandler(v!);
-              },
-            )),
-          ),
-        ),
-        Obx(() {
-          if (showError.isTrue) {
-            return _distanceError();
-          } else {
-            return SizedBox();
-          }
-        }),
-      ],
+              Obx(() {
+                if (showError.isTrue) {
+                  return _errorText();
+                } else {
+                  return SizedBox();
+                }
+              }),
+            ],
+          );
+        }
+      },
     );
   }
 
@@ -241,6 +259,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     } else if (_checkDistance()) {
       mezDbgPrint("Morrrrre than 15");
       showError.value = true;
+      errorTitle = "${_i18n()["distanceError"]}";
       setState(() {
         dropDownListValue = newLocation;
         widget.passedInLocation = dropDownListValue!.location;
@@ -258,7 +277,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   DropdownMenuItem<SavedLocation> buildItems(
     SavedLocation e,
-    TextTheme textTheme,
   ) {
     return DropdownMenuItem<SavedLocation>(
       value: e,
@@ -289,7 +307,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     );
   }
 
-  List<Widget> dropDownSelectedItemBuilder(TextTheme txt) {
+  List<Widget> dropDownSelectedItemBuilder() {
     return listOfSavedLoacations
         .map<Widget>(
           (SavedLocation item) => Container(
@@ -326,28 +344,32 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         .toList();
   }
 
-  Container _distanceError() {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.error_outline,
-            color: Colors.red,
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Flexible(
-            child: Text(
-              '${_i18n()["distanceError"]}',
-              style: context.txt.bodyLarge
-                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
+  Widget _errorText() {
+    if (errorTitle != null) {
+      return Container(
+        margin: const EdgeInsets.only(top: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 22,
             ),
-          ),
-        ],
-      ),
-    );
+            const SizedBox(
+              width: 5,
+            ),
+            Flexible(
+              child: Text(
+                errorTitle!,
+                style: context.txt.bodyLarge
+                    ?.copyWith(color: Colors.red, fontSize: 10.sp),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else
+      return SizedBox();
   }
 }

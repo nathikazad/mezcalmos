@@ -16,8 +16,8 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
@@ -125,16 +125,19 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   Container(
                     margin: const EdgeInsets.only(top: 15),
                     child: Text(
-                      'Delivery details',
+                      "${_i18n()['deliveryDetails']}",
                       style: context.txt.bodyLarge,
                     ),
                   ),
-                  OrderScheduledTimeCard(
-                      time: viewController.order.scheduleTime,
-                      margin: const EdgeInsets.only(top: 8)),
+                  if (viewController.order.pickupLocation != null)
+                    OrderDeliveryLocation(
+                      title: "${_i18n()['pickupLoc']}",
+                      address: viewController.order.pickupLocation!.address,
+                      margin: const EdgeInsets.only(top: 8),
+                    ),
                   OrderDeliveryLocation(
                     address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 8),
+                    margin: const EdgeInsets.only(top: 15),
                   ),
                   OrderPaymentMethod(
                     margin: EdgeInsets.only(top: 15),
@@ -142,11 +145,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
                   ),
-                  OrderDeliveryLocation(
-                    address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 15),
-                    titleTextStyle: context.txt.bodyLarge,
-                  ),
+                  OrderScheduledTimeCard(
+                      time: viewController.order.scheduleTime,
+                      margin: const EdgeInsets.only(top: 8)),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
                       billImage: viewController.order.billImage,
@@ -303,7 +304,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 viewController.order.inProcess() &&
                 viewController.order.isDriverAssigned)
               MessageButton(
-                  chatId: 55,
+                  chatId: viewController.order.customerDriverChatId!,
                   onTap: () {
                     BaseMessagingScreen.navigate(
                         chatId: viewController.order.customerDriverChatId!);

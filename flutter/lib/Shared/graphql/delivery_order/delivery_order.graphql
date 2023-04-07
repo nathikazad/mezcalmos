@@ -5,7 +5,7 @@ query get_driver_order($orderId: Int!) {
     order_type
     direction
     chat_with_service_provider_id
-
+    change_price_request
     delivery_company {
       id
       details {
@@ -186,6 +186,7 @@ subscription listen_on_driver_order($orderId: Int!) {
     cancellation_time
     chat_with_customer_id
     order_type
+    change_price_request
     direction
     schedule_time
     chat_with_service_provider_id
@@ -335,7 +336,6 @@ subscription listen_on_driver_order($orderId: Int!) {
 
     service_provider_id
     delivery_driver {
-      
       user {
         name
         image

@@ -23,6 +23,7 @@
         "ops": "Oops",
         "wrongAddress": "Wrong/Invalid address picked!",
         "distanceError": "The distance between you and the service location exceeds 10km!",
+        "noLocError" : "Please select a location",
         "pickLocation": "Pick from map"
       },
       "LocationPicker": {
@@ -78,6 +79,8 @@
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
+          "deliveryDetails":"Delivery details",
+          "pickupLoc": "Pickup location",
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },
@@ -234,7 +237,7 @@
               "pickLocationHintText": "Enter name",
               "addLocationDialogButton": "Save",
               "editLocationDialogButton": "EDIT",
-              "addLocationDialogSkip": "Close"
+              "addLocationDialogSkip": "Skip"
             }
           },
           "ViewCartScreen": {
@@ -735,6 +738,7 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
+          "otwPickup": "On the way pickup",
           "delivered": "Order delivered",
           "received": "Order received",
           "canceled": "Order cancelled",
@@ -825,7 +829,7 @@
           "CreateServiceInfoPage": {
             "name": "Restaurant name",
             "hintNameText": "Enter your name",
-            "uploadImageText": "Upload your profile image",
+            "uploadImageText": "Upload image",
             "nameError": "Please provide a name",
             "descriptionError": "Please provide a description",
             "location": "Location",
@@ -1426,6 +1430,20 @@
       }
     },
     "pages": {
+      "DvCompanyOrderView" : {
+        "order" : "Order",
+        "customer" :"Customer Info",
+        "estTimes" :"Estimated times",
+        "deliveryDetails" :"Delivery details",
+       "pickupLoc" : "Pickup location",
+        "loading" : "Getting you order info...",
+        "packageReady" :"Package ready :",
+        "arrivalAtPickup": "Arrival at pickup :",
+        "arrivalAtDropoff": "Arrival at dropoff :",
+        "noDriver" :"No driver assigned yet"
+
+
+      },
       "DvOpTabsView": {
         "orders": "Orders",
         "drivers": "Drivers",

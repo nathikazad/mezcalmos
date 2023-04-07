@@ -58,6 +58,7 @@ void main() {
             routes: routes,
             sideMenuItems: sideMenuItems,
             locationPermissionType: LocationPermissionType.Foreground,
+            stripeEnabled: true,
           );
         },
       ),

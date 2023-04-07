@@ -71,7 +71,7 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder, delive
       }
     }
     deliveryDrivers = deliveryDrivers.slice(0, 10);
-    notification.linkUrl = `/`
+    notification.linkUrl = `/orders/${deliveryOrder.deliveryId}`
     deliveryDrivers.forEach((d) => {
       pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver);
     });

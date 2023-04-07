@@ -38,29 +38,25 @@ class CreateServiceImageComponent extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 9.5.h,
                       backgroundColor: Color(0xFFF5F5F5),
-                      child: CircleAvatar(
-                        backgroundColor: Color(0xFFF5F5F5),
-                        backgroundImage: viewController.getRightImage,
-                        radius: 9.h,
-                        child: (viewController.imageLoading.isTrue)
-                            ? CircularProgressIndicator(
-                                color: primaryBlueColor,
-                              )
-                            : (viewController.newImageFile == null &&
-                                    viewController.newImageUrl.value == null)
-                                ? Container(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      "${_i18n()['uploadImageText']}",
-                                      style: context.txt.bodyMedium?.copyWith(
-                                          color: offLightShadeGreyColor),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )
-                                : null,
-                      ),
+                      backgroundImage: viewController.getRightImage,
+                      radius: 9.5.h,
+                      child: (viewController.imageLoading.isTrue)
+                          ? CircularProgressIndicator(
+                              color: primaryBlueColor,
+                            )
+                          : (viewController.newImageFile.value == null &&
+                                  viewController.newImageUrl.value == null)
+                              ? Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(
+                                    "${_i18n()['uploadImageText']}",
+                                    style: context.txt.bodyMedium?.copyWith(
+                                        color: offLightShadeGreyColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              : null,
                     ),
                     Positioned(
                         bottom: 0,
@@ -76,12 +72,12 @@ class CreateServiceImageComponent extends StatelessWidget {
                                   defaultValue: "prod");
                               final AppLaunchMode mode =
                                   _tmpLmode.toLaunchMode();
-                              if (mode == AppLaunchMode.prod) {
-                                viewController.editImage(context);
-                              } else {
-                                viewController.newImageUrl.value =
-                                    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
-                              }
+                              // if (mode == AppLaunchMode.prod) {
+                              viewController.editImage(context);
+                              // } else {
+                              //   viewController.newImageUrl.value =
+                              //       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
+                              // }
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),

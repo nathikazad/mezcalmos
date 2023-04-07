@@ -104,7 +104,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                   textColor: primaryBlueColor,
                   onClick: () async {
                     if (viewController.hasLinks) {
-                      await _addDriverSheet();
+                      await _addDriverSheet(context);
                     }
                   }),
               SizedBox(
@@ -131,10 +131,10 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
     );
   }
 
-  Future<void> _addDriverSheet() {
+  Future<void> _addDriverSheet(BuildContext context) {
     return showModalBottomSheet(
         isScrollControlled: true,
-        context: Get.context!,
+        context: context,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           topLeft: Radius.circular(15),

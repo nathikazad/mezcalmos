@@ -24,8 +24,8 @@ class MezAdminAuthController extends GetxController {
     }
   }
 
-  Future<void> getMezAdmin() async {
-    _admin.value = await get_admin(user_id: _authController.hasuraUserId!);
+  Future<MezAdmin?> getMezAdmin() async {
+    return await get_admin(user_id: _authController.hasuraUserId!);
   }
 
   @override

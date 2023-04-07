@@ -56,19 +56,20 @@ abstract class StartingPointBase extends StatefulWidget {
   final List<SideMenuItem>? sideMenuItems;
   final LocationPermissionType locationPermissionType;
   final AppType appType;
+  final bool stripeEnabled;
 
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
-  StartingPointBase({
-    this.appTheme = null,
-    required this.signInCallback,
-    required this.signOutCallback,
-    required this.routes,
-    required this.appType,
-    this.sideMenuItems,
-    this.locationPermissionType = LocationPermissionType.None,
-  }) {
+  StartingPointBase(
+      {this.appTheme = null,
+      required this.signInCallback,
+      required this.signOutCallback,
+      required this.routes,
+      required this.appType,
+      this.sideMenuItems,
+      this.locationPermissionType = LocationPermissionType.None,
+      this.stripeEnabled = false}) {
     MezEnv.setAppType(appType);
   }
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/UnAuthView/controllers/LaundryUnauthViewController.dart';
-import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,7 +42,7 @@ class _LaundryUnauthViewState extends State<LaundryUnauthView> {
         showNotifications: true,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: ROpDrawer(),
+      drawer: MezSideMenu(),
       body: Obx(
         () => Container(
           margin: const EdgeInsets.all(20),

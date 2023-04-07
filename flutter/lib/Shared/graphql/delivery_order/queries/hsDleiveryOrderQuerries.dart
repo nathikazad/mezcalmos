@@ -54,6 +54,9 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
     packageReady: orderData.package_ready,
+    changePriceRequest: (orderData.change_price_request != null)
+        ? ChangePriceRequest.fromMap(orderData.change_price_request)
+        : null,
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
     serviceOrderId: orderData.restaurant_order?.id,
@@ -103,10 +106,11 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         ? LatLng(orderData.delivery_driver!.current_location!.latitude,
             orderData.delivery_driver!.current_location!.longitude)
         : null,
-    pickupLocation: (orderData.pickup_address != null &&
-            orderData.pickup_gps != null)
+    pickupLocation: (orderData.pickup_address != null)
         ? MezLocation(
-            orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+            orderData.pickup_address!,
+            orderData.pickup_gps?.toLocationData() ??
+                MezLocation.buildLocationData(0, 0))
         : null,
     dropOffLocation: MezLocation(
         orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
