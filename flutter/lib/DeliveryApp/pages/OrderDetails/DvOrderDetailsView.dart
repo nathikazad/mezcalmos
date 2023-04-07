@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
@@ -55,6 +56,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     mezDbgPrint("MezRouter.urlArguments ===> $orderId");
     if (int.tryParse(orderId) != null) {
       viewController.init(orderId: int.parse(orderId));
+      
     }
 
     super.initState();
@@ -169,12 +171,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 ),
                 if (viewController.order.value?.isDriverAssigned == true)
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 10),
                     child: _billCard(context),
                   ),
                 if (viewController.orderCosts != null)
                   OrderSummaryCard(
+                    margin: EdgeInsets.only(top: 20),
                     costs: viewController.orderCosts!,
+                   
                     setTaxCallBack:
                         (viewController.order.value?.isDriverAssigned == true)
                             ? () {
@@ -205,6 +209,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   MezCard _billCard(BuildContext context) {
     return MezCard(
+      contentPadding: EdgeInsets.only(bottom: 8, top: 8, right: 8),
       content: Text(
         "${_i18n()['bill']}",
         style: context.txt.bodyLarge,
@@ -257,6 +262,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         backgroundColor: Colors.transparent,
                       ),
                       MezIconButton(
+                        elevation: 0,
                         onTap: () async {
                           await viewController.editImage(context);
                         },
@@ -284,8 +290,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            DateFormat("dd MMMM, hh:mm a")
-                .format(viewController.order.value!.orderTime.toLocal()),
+            viewController.order.value!.orderTime.toLocal().getEstimatedTime(),
             style: context.txt.bodyLarge,
           ),
           Text(
@@ -330,16 +335,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   Row(
                     children: [
                       Icon(
-                        Icons.watch_later,
+                        Icons.history,
                         color: Colors.black,
-                        size: 18.sp,
+                        size: 15.sp,
                       ),
                       SizedBox(
                         width: 2,
                       ),
                       Text(
-                        '${viewController.customerOrdersCount.value?.toString() ?? '-'} ${_i18n()['orders']}',
-                        style: context.txt.bodyMedium,
+                        '${viewController.customerOrdersCount.value?.toString() ?? '-'} ${_i18n()['order'].toString().toPlural(isPlural: viewController.customerOrdersCount.value != 1)}',
+                        style: context.txt.bodyMedium
+                            ?.copyWith(color: Colors.black),
                       ),
                       SizedBox(
                         width: 10,
@@ -349,19 +355,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         color: primaryBlueColor,
                         size: 18.sp,
                       ),
-                      SizedBox(
-                        width: 2,
-                      ),
                       Text(
                         "4.7",
-                        style: context.txt.bodyMedium,
+                        style: context.txt.bodyMedium
+                            ?.copyWith(color: Colors.black),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            if (viewController.order.value!.customerDriverChatId != null)
+            if (viewController.order.value!.isDriverAssigned &&
+                viewController.order.value!.customerDriverChatId != null)
               MessageButton(
                   chatId: viewController.order.value!.customerDriverChatId!,
                   onTap: () {
@@ -404,16 +409,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   Row(
                     children: [
                       Icon(
-                        Icons.watch_later,
+                        Icons.history,
                         color: Colors.black,
-                        size: 18.sp,
+                        size: 15.sp,
                       ),
                       SizedBox(
                         width: 2,
                       ),
                       Text(
-                        "${viewController.serviceOrdersCount.value?.toString() ?? "-"} ${_i18n()['orders']}",
-                        style: context.txt.bodyMedium,
+                        "${viewController.serviceOrdersCount.value?.toString() ?? "-"} ${_i18n()['order'].toString().toPlural(isPlural: viewController.serviceOrdersCount.value != 1)}",
+                        style: context.txt.bodyMedium
+                            ?.copyWith(color: Colors.black),
                       ),
                       SizedBox(
                         width: 10,
@@ -423,19 +429,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         color: primaryBlueColor,
                         size: 18.sp,
                       ),
-                      SizedBox(
-                        width: 2,
-                      ),
                       Text(
                         "4.5",
-                        style: context.txt.bodyMedium,
+                        style: context.txt.bodyMedium
+                            ?.copyWith(color: Colors.black),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            if (viewController.order.value!.serviceProviderDriverChatId != null)
+            if (viewController.order.value!.isDriverAssigned &&
+                viewController.order.value!.serviceProviderDriverChatId != null)
               MessageButton(
                   chatId:
                       viewController.order.value!.serviceProviderDriverChatId!,
@@ -584,7 +589,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           style: context.txt.bodyLarge,
                         ),
                       ),
-                      Divider(
+                      SizedBox(
                         height: 25,
                       ),
                       if (viewController.orderCosts?.deliveryCost != 0)
@@ -610,7 +615,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             ),
                           ],
                         ),
-                      Text("${_i18n()['updatePrice']}"),
+                      Text("${_i18n()['updatePrice']}",
+                          style: context.txt.bodyLarge),
                       SizedBox(
                         height: 10,
                       ),
@@ -619,7 +625,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         style: context.txt.bodyLarge,
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.attach_money_rounded),
+                          prefixIcon: Icon(
+                            Icons.attach_money_rounded,
+                            color: Colors.black,
+                          ),
                         ),
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),

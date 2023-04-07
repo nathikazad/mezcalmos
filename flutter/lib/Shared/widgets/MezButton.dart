@@ -108,15 +108,11 @@ class _MezButtonState extends State<MezButton> {
                               ),
                             ),
                           Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 2),
-                              child: Text(
-                                widget.label,
-                                style: widget.textStyle ??
-                                    context.txt.bodyLarge?.copyWith(
-                                        color:
-                                            widget.textColor ?? Colors.white),
-                              ),
+                            child: Text(
+                              widget.label,
+                              style: widget.textStyle ??
+                                  context.txt.bodyLarge?.copyWith(
+                                      color: widget.textColor ?? Colors.white),
                             ),
                           ),
                         ],

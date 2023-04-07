@@ -97,6 +97,11 @@ computed_fields:
       function:
         name: packagecost
         schema: delivery
+  - name: tax
+    definition:
+      function:
+        name: tax
+        schema: delivery
   - name: total_cost
     definition:
       function:
@@ -157,6 +162,7 @@ select_permissions:
         - actual_delivered_time
         - actual_package_ready_time
         - cancellation_time
+        - change_price_request
         - chat_with_customer_id
         - chat_with_service_provider_id
         - current_gps
@@ -193,6 +199,7 @@ select_permissions:
         - in_process
         - notification_token
         - package_cost_comp
+        - tax
         - total_cost
       filter:
         _or:

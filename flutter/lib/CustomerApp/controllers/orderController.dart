@@ -16,8 +16,6 @@ class CustomerOrderController extends GetxController {
 
   RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
 
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
-
   // streams //
   StreamSubscription<List<MinimalOrder>?>? currentOrdersStream;
 
@@ -39,14 +37,11 @@ class CustomerOrderController extends GetxController {
 
   Future<void> fetchCurrentOrders() async {
     currentOrders.value = await get_customer_orders(
-        customerId: _authController.hasuraUserId!, inProcess: true);
+        limit: 10,
+        offest: 0 /* To LATER */,
+        customerId: _authController.hasuraUserId!,
+        inProcess: true);
     currentOrders.refresh();
-  }
-
-  Future<void> fetchPastOrders() async {
-    pastOrders.value = await get_customer_orders(
-        customerId: _authController.hasuraUserId!, inProcess: false);
-    pastOrders.refresh();
   }
 
   void _listenOnOrders() {
@@ -129,7 +124,6 @@ class CustomerOrderController extends GetxController {
 
     currentOrdersStream?.cancel();
     currentOrders.close();
-    pastOrders.close();
 
     super.onClose();
   }

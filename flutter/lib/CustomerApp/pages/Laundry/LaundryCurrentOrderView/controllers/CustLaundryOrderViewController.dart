@@ -61,8 +61,9 @@ class CustLaundryOrderViewController {
         orderStream = listen_on_laundry_order_by_id(orderId: orderId)
             .listen((LaundryOrder? event) {
           if (event != null) {
-            mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+            // mezDbgPrint(
+            //     "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+            order.value = null;
             order.value = event;
             order.value?.driverInfo = event.driverInfo;
           }

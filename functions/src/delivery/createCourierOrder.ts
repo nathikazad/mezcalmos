@@ -53,7 +53,7 @@ export async function createCourierOrder(customerId: number, courierRequest: Cou
 
         setCourierChatInfo(courierOrder, customer)
 
-        notifyDeliveryCompany(courierOrder.deliveryOrder, courierRequest.deliveryCompanyId, OrderType.Courier)
+        notifyDeliveryCompany(courierOrder.deliveryOrder)
         notifyAdmins(mezAdmins, courierOrder.id)
         
         return {

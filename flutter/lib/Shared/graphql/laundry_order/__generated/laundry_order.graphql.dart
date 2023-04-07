@@ -11532,10 +11532,14 @@ class Variables$Query$get_laundry_orders {
   factory Variables$Query$get_laundry_orders({
     required int laundryStoreId,
     required bool inProcess,
+    int? offset,
+    int? limit,
   }) =>
       Variables$Query$get_laundry_orders._({
         r'laundryStoreId': laundryStoreId,
         r'inProcess': inProcess,
+        if (offset != null) r'offset': offset,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$get_laundry_orders._(this._$data);
@@ -11547,6 +11551,14 @@ class Variables$Query$get_laundry_orders {
     result$data['laundryStoreId'] = (l$laundryStoreId as int);
     final l$inProcess = data['inProcess'];
     result$data['inProcess'] = (l$inProcess as bool);
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$get_laundry_orders._(result$data);
   }
 
@@ -11554,12 +11566,22 @@ class Variables$Query$get_laundry_orders {
 
   int get laundryStoreId => (_$data['laundryStoreId'] as int);
   bool get inProcess => (_$data['inProcess'] as bool);
+  int? get offset => (_$data['offset'] as int?);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$laundryStoreId = laundryStoreId;
     result$data['laundryStoreId'] = l$laundryStoreId;
     final l$inProcess = inProcess;
     result$data['inProcess'] = l$inProcess;
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -11588,6 +11610,22 @@ class Variables$Query$get_laundry_orders {
     if (l$inProcess != lOther$inProcess) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
@@ -11595,9 +11633,13 @@ class Variables$Query$get_laundry_orders {
   int get hashCode {
     final l$laundryStoreId = laundryStoreId;
     final l$inProcess = inProcess;
+    final l$offset = offset;
+    final l$limit = limit;
     return Object.hashAll([
       l$laundryStoreId,
       l$inProcess,
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
     ]);
   }
 }
@@ -11614,6 +11656,8 @@ abstract class CopyWith$Variables$Query$get_laundry_orders<TRes> {
   TRes call({
     int? laundryStoreId,
     bool? inProcess,
+    int? offset,
+    int? limit,
   });
 }
 
@@ -11633,6 +11677,8 @@ class _CopyWithImpl$Variables$Query$get_laundry_orders<TRes>
   TRes call({
     Object? laundryStoreId = _undefined,
     Object? inProcess = _undefined,
+    Object? offset = _undefined,
+    Object? limit = _undefined,
   }) =>
       _then(Variables$Query$get_laundry_orders._({
         ..._instance._$data,
@@ -11640,6 +11686,8 @@ class _CopyWithImpl$Variables$Query$get_laundry_orders<TRes>
           'laundryStoreId': (laundryStoreId as int),
         if (inProcess != _undefined && inProcess != null)
           'inProcess': (inProcess as bool),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -11652,6 +11700,8 @@ class _CopyWithStubImpl$Variables$Query$get_laundry_orders<TRes>
   call({
     int? laundryStoreId,
     bool? inProcess,
+    int? offset,
+    int? limit,
   }) =>
       _res;
 }
@@ -11834,6 +11884,24 @@ const documentNodeQueryget_laundry_orders = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -11864,7 +11932,24 @@ const documentNodeQueryget_laundry_orders = DocumentNode(definitions: [
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

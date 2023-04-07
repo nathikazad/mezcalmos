@@ -78,7 +78,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
             updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
-            notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry)
+            notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder)
         }
 
         notify(orderResponse.laundryOrder, laundryStore, mezAdmins);

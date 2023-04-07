@@ -113,7 +113,7 @@ extension parseDateTime on DateTime {
     if (withDayName) {
       return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${formatMonth.format(toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${formatLongDay.format(toLocal())}, ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${formatLongDay.format(toLocal()).replaceFirst(".", "").capitalizeMonthAfterDay}, ${DateFormat("hh:mm a").format(toLocal())}";
     }
   }
 

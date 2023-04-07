@@ -7,7 +7,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     stripe_info
     restaurant {
       id
-      
+
       details {
         id
         firebase_id
@@ -124,12 +124,12 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
-    
+
     scheduled_time
     stripe_info
     restaurant {
       id
-      
+
       details {
         id
         firebase_id
@@ -272,7 +272,7 @@ query get_restaurant_current_orders($restaurantId: Int!) {
     id
     order_time
     status
-  delivery {
+    delivery {
       delivery_cost
     }
     total_cost
@@ -285,14 +285,21 @@ query get_restaurant_current_orders($restaurantId: Int!) {
     }
   }
 }
-query get_restaurant_past_orders($restaurantId: Int!) {
+query get_restaurant_past_orders(
+  $restaurantId: Int!
+  $offset: Int
+  $limit: Int
+) {
   restaurant_order(
     where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: false } }
+    order_by: { order_time: desc }
+    offset: $offset
+    limit: $limit
   ) {
     id
     order_time
     status
-  delivery {
+    delivery {
       delivery_cost
     }
     total_cost
@@ -324,4 +331,3 @@ mutation setRestaurantOrderEstFoodReadyTime(
     estimated_package_ready_time
   }
 }
-

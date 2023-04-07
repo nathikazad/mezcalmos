@@ -23,8 +23,9 @@
         "ops": "Oops",
         "wrongAddress": "Wrong/Invalid address picked!",
         "distanceError": "The distance between you and the service location exceeds 10km!",
-        "noLocError" : "Please select a location",
+        "noLocError": "Please select a location",
         "pickLocation": "Pick from map"
+      
       },
       "LocationPicker": {
         "pick": "PICK",
@@ -48,6 +49,11 @@
         }
       },
       "courrier": {
+        "CustCourierServicesListView" : {
+          "courier" : "Courier",
+          "min" : "Min"
+        },
+
         "CustCourierServiceView": {
           "orderNow": "Order now",
           "chatWithUs": "Chat with us",
@@ -76,15 +82,20 @@
           }
         },
         "CustCourierOrderView": {
+          "priceChangeTitle" : "Price change request",
+          "reason" : "Reason",
+          "newPrice" : "New price",
+          "accept" : "Accept",
+      
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
-          "deliveryDetails":"Delivery details",
+          "deliveryDetails": "Delivery details",
           "pickupLoc": "Pickup location",
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },
-      
+
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -189,7 +200,8 @@
               "restClosed": "Service is closed now, but you can schedule your order for later.",
               "pickTime": "Pick your time",
               "now": "Now",
-              "timeError": "Picked delivery time is passed, please pick a valid time"
+              "timeError": "Picked delivery time is passed, please pick a valid time",
+              "required" : "Please select a delivery time"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Payment method",
@@ -223,6 +235,8 @@
               "pickLocation": "Pick from map"
             },
             "OrderSummaryCard": {
+              "add" : "Add",
+              "waitingForCustomer" : "Waiting for customer", 
               "orderSummary": "Summary",
               "orderCost": "Order cost",
               "deliveryCost": "Delivery cost",
@@ -263,9 +277,9 @@
               "extra": "extra"
             },
             "BottomBarItemViewScreen": {
-              "rmItemTitle" : "Remove item",
-              "rmItemHelper" : "Are you sure you want to remove this item from cart",
-              "rmItemButton" : "Yes, remove item",
+              "rmItemTitle": "Remove item",
+              "rmItemHelper": "Are you sure you want to remove this item from cart",
+              "rmItemButton": "Yes, remove item",
               "notAvailable": "This restaurant is closed",
               "title": "Warning",
               "leftBtn": "Checkout first",
@@ -358,7 +372,8 @@
               "deliveryCost": "Delivery cost",
               "free": "Free",
               "total": "Total",
-              "deliveryLocation": "Delivery location"
+              "deliveryLocation": "Delivery location",
+              "waitingForCustomer": "Waiting for customer"
             },
             "RestaurantBankInfoCard": {
               "title": "Restaurant bank account",
@@ -636,7 +651,7 @@
           "daysReturn": "days return",
           "day": "day",
           "days": "days",
-          "return" : "return",
+          "return": "return",
           "description": "Description",
           "openHours": "openHours",
           "sendMyLaundry": "Send my laundry",
@@ -1120,11 +1135,11 @@
       }
     },
     "widgets": {
-      "OrderMapWidget" : {
-        "mapWebText" : "Install Mezcalmos application to get live time order map tracking"
+      "OrderMapWidget": {
+        "mapWebText": "Install Mezcalmos application to get live time order map tracking"
       },
-      "MezcalmosAppBar" : {
-        "installApp" : "Install Mezcalmos App"
+      "MezcalmosAppBar": {
+        "installApp": "Install Mezcalmos App"
       },
       "RestaurantOrderDeliveryTimeCard": {
         "dvTime": "Delivery time"
@@ -1150,7 +1165,8 @@
         "deliveryLocation": "Delivery location",
         "refundAmount": "Refund amount",
         "tax": "Tax",
-        "toBeCalc": "To be calculated"
+        "toBeCalc": "To be calculated",
+        "add": "Add"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Payment method",
@@ -1429,19 +1445,17 @@
       }
     },
     "pages": {
-      "DvCompanyOrderView" : {
-        "order" : "Order",
-        "customer" :"Customer Info",
-        "estTimes" :"Estimated times",
-        "deliveryDetails" :"Delivery details",
-       "pickupLoc" : "Pickup location",
-        "loading" : "Getting you order info...",
-        "packageReady" :"Package ready :",
+      "DvCompanyOrderView": {
+        "order": "Order",
+        "customer": "Customer Info",
+        "estTimes": "Estimated times",
+        "deliveryDetails": "Delivery details",
+        "pickupLoc": "Pickup location",
+        "loading": "Getting you order info...",
+        "packageReady": "Package ready :",
         "arrivalAtPickup": "Arrival at pickup :",
         "arrivalAtDropoff": "Arrival at dropoff :",
-        "noDriver" :"No driver assigned yet"
-
-
+        "noDriver": "No driver assigned yet"
       },
       "DvOpTabsView": {
         "orders": "Orders",
@@ -1755,7 +1769,7 @@
         "customer": "Customer",
         "restaurant": "Restaurant",
         "laundry": "Laundry",
-        "orders": "Orders",
+        "order": "Order",
         "viewImage": "View image"
       },
       "RestaurantOrderView": {
@@ -1788,7 +1802,7 @@
           "currentOrders": "Current orders",
           "openOrders": "Open orders",
           "pastOrders": "Past orders",
-          "title": "Incoming  Orders",
+          "title": "Incoming orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",
           "Components": {
@@ -1936,7 +1950,7 @@
       "laundryOtwDeliveryBody": "order is on the way to the customer",
       "deliveredTitle": "Delivered",
       "deliveredBody": "Order has been delivered",
-      "driverNotifTitle": "New Order",
+      "driverNotifTitle": "New order",
       "driverNotifBody": "You got a new order"
     }
   },
@@ -2186,7 +2200,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reviews",
-        "review" : "Review",
+        "review": "Review",
         "base": "Based on",
         "perfomTitle": "Your review performance is",
         "excellent": "Excellent",
@@ -2561,8 +2575,7 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "minutes": "minutes",
-    "min" : "Min",
+    "min": "min",
     "slowInternet": "Slow internet"
-    
   }
 }

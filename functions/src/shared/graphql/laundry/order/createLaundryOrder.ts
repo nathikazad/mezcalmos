@@ -90,7 +90,7 @@ export async function createLaundryOrder(
                         chat_with_service_provider: {
                             data: {
                                 chat_participants: {
-                                    data: laundryOperatorsDetails
+                                    data: [...laundryOperatorsDetails, ...mezAdminDetails]
                                 }
                             }
                         },
@@ -98,8 +98,12 @@ export async function createLaundryOrder(
                         delivery_cost: laundryRequestDetails.deliveryCost / 2,
                         direction : DeliveryDirection.FromCustomer,
                         status: DeliveryOrderStatus.OrderReceived,
-                        service_provider_id: laundryRequestDetails.storeId,
-                        service_provider_type:  DeliveryServiceProviderType.Laundry,
+                        service_provider_id: (laundryStore.deliveryDetails.selfDelivery) 
+                            ? laundryStore.id 
+                            : laundryStore.deliveryPartnerId,
+                        service_provider_type: (laundryStore.deliveryDetails.selfDelivery) 
+                            ? DeliveryServiceProviderType.Laundry
+                            : DeliveryServiceProviderType.DeliveryCompany,
                         
                         scheduled_time: laundryRequestDetails.scheduledTime,
                         trip_distance: laundryRequestDetails.tripDistance,
@@ -192,8 +196,12 @@ export async function createLaundryOrder(
             tripDistance : laundryRequestDetails.tripDistance,
             tripDuration : laundryRequestDetails.tripDuration,
             tripPolyline : laundryRequestDetails.tripPolyline,
-            serviceProviderType: DeliveryServiceProviderType.Laundry,
-            serviceProviderId: laundryStore.id!,
+            serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) 
+                ? DeliveryServiceProviderType.DeliveryCompany 
+                : DeliveryServiceProviderType.Laundry,
+            serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) 
+                ? laundryStore.deliveryPartnerId 
+                : laundryStore.id,
             direction: DeliveryDirection.FromCustomer,
             packageReady: false,
         }

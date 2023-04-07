@@ -54,4 +54,7 @@ extension StringHelper on String {
       split(" ").map((String str) => str.capitalize).join(" ");
   String get capitalizeDays =>
       split("-").map((String str) => str.capitalize).join("-");
+
+  String get capitalizeMonthAfterDay => replaceFirst(
+      this[indexOf(' ') + 1], this[indexOf(' ') + 1].toUpperCase());
 }

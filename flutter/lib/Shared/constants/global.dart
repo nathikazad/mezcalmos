@@ -45,7 +45,7 @@ const String tEmailTestPassword = "password";
 
 const double nDefaultMezcalmosTextSize = 27;
 const int nSplashScreenTimer = 1;
-const int nQualityCompressionOfUserImage = 10;
+// const int nQualityCompressionOfUserImage = 10;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 const int nScheduledCounterOfferValidExpireTimeInSeconds = 900; // 15mins
 const Map<String, dynamic> defaultSchedule = {

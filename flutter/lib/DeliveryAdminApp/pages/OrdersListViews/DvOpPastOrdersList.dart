@@ -25,17 +25,18 @@ class DvOpPastOrdersView extends StatefulWidget {
 }
 
 class _DvOpPastOrdersViewState extends State<DvOpPastOrdersView> {
-  DvOpPastOrdersController viewController = DvOpPastOrdersController();
+  DvOpPastOrdersController _viewController = DvOpPastOrdersController();
 
   @override
   void initState() {
-    viewController.init();
+    _viewController.init();
 
     super.initState();
   }
 
   @override
   void dispose() {
+    _viewController.dispose();
     super.dispose();
   }
 
@@ -58,16 +59,17 @@ class _DvOpPastOrdersViewState extends State<DvOpPastOrdersView> {
                 ),
                 const SizedBox(height: 5),
                 ListView.builder(
+                  controller: _viewController.scrollController,
                   shrinkWrap: true,
                   reverse: true,
-                  itemCount: viewController.pastOrders.length,
+                  itemCount: _viewController.pastOrders.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, int index) {
                     return MinimalOrderCard(
-                      order: viewController.pastOrders[index],
+                      order: _viewController.pastOrders[index],
                       onTap: () {
                         DvCompanyOrderView.navigate(
-                            orderId: viewController.pastOrders[index].id);
+                            orderId: _viewController.pastOrders[index].id);
                       },
                     );
                   },

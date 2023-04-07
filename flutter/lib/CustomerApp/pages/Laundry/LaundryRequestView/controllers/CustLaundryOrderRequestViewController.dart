@@ -24,6 +24,7 @@ class CustLaundryOrderRequestViewController {
 
   final LocationPickerController locationPickerController =
       LocationPickerController();
+  final GlobalKey<FormState> formKey = GlobalKey();
 
   final AuthController authController = Get.find<AuthController>();
   // state vars

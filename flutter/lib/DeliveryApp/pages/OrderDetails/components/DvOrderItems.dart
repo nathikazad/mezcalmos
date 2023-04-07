@@ -147,15 +147,16 @@ class DvOrderItems extends StatelessWidget {
           (viewController.items.value![index].actualCost == null &&
                   !viewController.items.value![index].unavailable &&
                   viewController.order.value?.isDriverAssigned == true)
-              ? MezButton(
-                  label: "${_i18n()['addCost']}",
-                  height: 30,
-                  width: 90,
-                  borderRadius: 5,
-                  onClick: () async {
-                    await _showCostSheet(context, index);
-                  },
-                )
+              ? InkWell(
+                  onTap: () async => _showCostSheet(context, index),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4.sp),
+                    child: Text(
+                      '${_i18n()['addCost']}',
+                      style: context.txt.bodyLarge
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                  ))
               : Container(
                   margin: const EdgeInsets.only(right: 5, bottom: 5, top: 5),
                   child: Row(
@@ -178,6 +179,7 @@ class DvOrderItems extends StatelessWidget {
                       if (!viewController.items.value![index].unavailable &&
                           viewController.order.value?.isDriverAssigned == true)
                         MezIconButton(
+                            elevation: 0,
                             backgroundColor: backgroundShadeColor,
                             iconColor: offShadeGreyColor,
                             iconSize: 18,
@@ -224,12 +226,12 @@ class DvOrderItems extends StatelessWidget {
                         style: context.txt.bodyLarge,
                       ),
                     ),
-                    Divider(
+                    SizedBox(
                       height: 15,
                     ),
                     Text(
                       "${_i18n()['actualCost']}",
-                      style: context.txt.bodyMedium,
+                      style: context.txt.bodyLarge,
                     ),
                     SizedBox(
                       height: 10,
@@ -239,7 +241,10 @@ class DvOrderItems extends StatelessWidget {
                       style: context.txt.bodyLarge,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.attach_money_rounded),
+                        prefixIcon: Icon(
+                          Icons.attach_money_rounded,
+                          color: Colors.black,
+                        ),
                       ),
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),

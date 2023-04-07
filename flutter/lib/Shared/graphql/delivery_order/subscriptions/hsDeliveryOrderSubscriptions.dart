@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -321,4 +322,29 @@ ServiceInfo? _getServiceInfo(orderData) {
     default:
   }
   return null;
+}
+
+Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_driver_order_prices(
+          Options$Subscription$listen_driver_order_prices(
+              variables: Variables$Subscription$listen_driver_order_prices(
+                  orderId: orderId)))
+      .map((QueryResult<Subscription$listen_driver_order_prices> event) {
+    mezDbgPrint("Event =======>$event");
+    if (event.parsedData?.delivery_order_by_pk != null) {
+      Subscription$listen_driver_order_prices$delivery_order_by_pk data =
+          event.parsedData!.delivery_order_by_pk!;
+      return OrderCosts(
+          deliveryCost: data.delivery_cost.toDouble(),
+          refundAmmount: null,
+          changePriceRequest: (data.change_price_request != null)
+              ? ChangePriceRequest.fromMap(data.change_price_request)
+              : null,
+          tax: data.tax,
+          orderItemsCost: data.package_cost_comp,
+          totalCost: data.total_cost);
+    }
+    return null;
+  });
 }

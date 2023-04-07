@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,6 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
     });
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 249, 249),
       appBar: AppBar(
         centerTitle: true,
         leading: Center(
@@ -529,7 +529,7 @@ class SendMessageBox extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Nunito',
                     ),
-                    fillColor: secondaryLightBlueColor,
+                    fillColor: Color(0xFFF2F2F2),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
@@ -572,16 +572,17 @@ class SendMessageBox extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color:
-                        secondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
+                    color: primaryBlueColor //Color.fromRGBO(240, 241, 255, 1),
                     ),
-                child: Center(
-                  child: Icon(
-                    Icons.near_me,
-                    size: 28,
-                    color: Color.fromRGBO(103, 121, 254, 1),
-                  ),
-                ),
+                child: Transform.rotate(
+                    angle: -45 * pi / 180,
+                    child: Center(
+                      child: Icon(
+                        Icons.send_rounded,
+                        size: 28,
+                        color: Colors.white,
+                      ),
+                    )),
               ),
             )
           ],

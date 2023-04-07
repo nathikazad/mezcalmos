@@ -43,7 +43,6 @@ class _CreateServiceViewState extends State<CreateServiceView> {
 
   @override
   void initState() {
-    mezDbgPrint("Arguments ================>${MezRouter.bodyArguments}");
     serviceProviderType =
         MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType;
     viewController.init(serviceProviderType: serviceProviderType!);

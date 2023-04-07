@@ -212,16 +212,29 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   children: [
                     Text(
                       viewController.order.items[index].name,
-                      style: context.txt.bodyLarge,
+                      style: context.txt.bodyLarge?.copyWith(
+                          color: viewController.order.items[index].unavailable
+                              ? Colors.grey
+                              : null,
+                          decoration:
+                              viewController.order.items[index].unavailable
+                                  ? TextDecoration.lineThrough
+                                  : null),
                     ),
                     Row(
                       children: [
                         Text(
                           "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
                           style: context.txt.bodyLarge?.copyWith(
+                              color:
+                                  viewController.order.items[index].unavailable
+                                      ? Colors.grey
+                                      : null,
                               decoration: viewController
-                                          .order.items[index].actualCost !=
-                                      null
+                                              .order.items[index].actualCost !=
+                                          null ||
+                                      viewController
+                                          .order.items[index].unavailable
                                   ? TextDecoration.lineThrough
                                   : null),
                         ),
@@ -232,7 +245,16 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                             null)
                           Text(
                               "${viewController.order.items[index].actualCost!.toPriceString()}",
-                              style: context.txt.bodyLarge)
+                              style: context.txt.bodyLarge?.copyWith(
+                                decoration: viewController
+                                        .order.items[index].unavailable
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                color: viewController
+                                        .order.items[index].unavailable
+                                    ? Colors.grey
+                                    : null,
+                              ))
                       ],
                     ),
                   ],
