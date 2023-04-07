@@ -49,6 +49,10 @@
         }
       },
       "courrier": {
+        "CustCourierServicesListView" : {
+          "courier" : "Mensajera",
+          "min" :"Min"
+        },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
           "chatWithUs": "habla con nosotros",
@@ -77,6 +81,10 @@
           }
         },
         "CustCourierOrderView": {
+          "priceChangeTitle" : "Solicitud de cambio de precio",
+          "reason" : "Razón",
+          "newPrice" : "Nuevo precio",
+          "accept" : "Aceptar",
           "cancelOrder": "Cancelar orden",
           "note": "Nota",
           "delivery": "Entrega",

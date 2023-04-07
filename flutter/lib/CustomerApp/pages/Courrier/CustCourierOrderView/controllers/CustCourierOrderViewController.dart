@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -17,6 +18,9 @@ import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["courrier"]["CustCourierOrderView"];
 
 class CustCourierOrderViewController {
   // instances //
@@ -62,15 +66,9 @@ class CustCourierOrderViewController {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_courier_order_by_id(orderId: orderId)
             .listen((CourierOrder? event) {
-          mezDbgPrint(
-              "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event?.driverInfo}");
-
           if (event != null) {
             _order.value = null;
             _order.value = event;
-
-            mezDbgPrint(
-                "Order bill imaaaaaaaaggggggeeee======>${_order.value?.billImage}");
 
             _order.refresh();
             if (event.costs.changePriceRequest != null &&
@@ -128,7 +126,7 @@ class CustCourierOrderViewController {
                     height: 8,
                   ),
                   Text(
-                    "Price change request",
+                    "${_i18n()['priceChangeTitle']}",
                     style: context.textTheme.displayMedium,
                   ),
                   Column(
@@ -137,7 +135,7 @@ class CustCourierOrderViewController {
                       SizedBox(
                         height: 20,
                       ),
-                      Text("New price",
+                      Text("${_i18n()['newPrice']}",
                           style: context.textTheme.displaySmall
                               ?.copyWith(fontSize: 20)),
                       SizedBox(
@@ -155,7 +153,7 @@ class CustCourierOrderViewController {
                               height: 20,
                             ),
                             Text(
-                              "Reason",
+                              "${_i18n()['reason']}",
                               style: context.textTheme.bodyLarge,
                             ),
                             SizedBox(
@@ -170,7 +168,7 @@ class CustCourierOrderViewController {
                     ],
                   ),
                   MezButton(
-                    label: "Accept",
+                    label: "${_i18n()['accept']}",
                     onClick: () async {
                       await _priceChangeResponse(accepted: true);
                       isChangePricePopUp = false;
@@ -178,7 +176,7 @@ class CustCourierOrderViewController {
                     },
                   ),
                   MezButton(
-                    label: "Cancel order",
+                    label: "${_i18n()['cancelOrder']}",
                     height: 50,
                     backgroundColor: Colors.transparent,
                     textColor: Colors.grey.shade900,
