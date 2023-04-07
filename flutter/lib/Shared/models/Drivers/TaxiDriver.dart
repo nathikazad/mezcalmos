@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -96,8 +97,8 @@ class TaxiUserInfo extends UserInfo {
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
         : null;
-    final LanguageType? language = data["language"] != null
-        ? data["language"].toString().toLanguageType()
+    final cModels.Language? language = data["language"] != null
+        ? data["language"].toString().toLanguage()
         : null;
 
     // TODO:544D-HASURA

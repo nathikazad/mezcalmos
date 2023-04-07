@@ -52,7 +52,7 @@ class Restaurant extends Service {
     required this.schedule,
     required this.paymentInfo,
     required ServiceState restaurantState,
-    required Map<LanguageType, bool> languages,
+    required Map<cModels.Language, bool> languages,
     required super.serviceDetailsId,
     super.deliveryCost,
     super.reviews,
@@ -96,17 +96,17 @@ class Restaurant extends Service {
         //     :
         PaymentInfo();
 
-    final LanguageType primaryLanguage = restaurantData["details"]?["language"]
-                ?["primary"]
+    final cModels.Language primaryLanguage = restaurantData["details"]
+                ?["language"]?["primary"]
             .toString()
-            .toLanguageType() ??
-        LanguageType.ES;
+            .toLanguage() ??
+        cModels.Language.ES;
 
-    final LanguageType? secondaryLanguage = restaurantData["details"]
+    final cModels.Language? secondaryLanguage = restaurantData["details"]
                 ?["language"]?["secondary"]
             .toString()
-            .toLanguageType() ??
-        LanguageType.EN;
+            .toLanguage() ??
+        cModels.Language.EN;
 
     final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
         ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
@@ -332,10 +332,10 @@ class Restaurant extends Service {
     ServiceState? state,
     bool? selfDelivery,
     PaymentInfo? paymentInfo,
-    LanguageType? primaryLanguage,
+    cModels.Language? primaryLanguage,
     Schedule? schedule,
     int? deliveryDetailsId,
-    Map<LanguageType, bool>? languages,
+    Map<cModels.Language, bool>? languages,
   }) {
     return Restaurant(
       serviceDetailsId: 1,

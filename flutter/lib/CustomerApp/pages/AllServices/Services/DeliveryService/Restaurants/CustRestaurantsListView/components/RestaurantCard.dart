@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../../../../Shared/cloudFunctions/model.dart';
+
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ListRestaurantsScreen"]["components"]
     ["RestaurandCard"];
@@ -35,7 +37,7 @@ class RestaurantCard extends StatefulWidget {
 class _RestaurantCardState extends State<RestaurantCard> {
   @override
   Widget build(BuildContext context) {
-    final LanguageType userLanguage =
+    final Language userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(

@@ -23,3 +23,12 @@ class BusinessCardView {
       this.avgRating,
       this.reviewCount});
 }
+
+Map<TimeUnit, num> constructBusinessServiceCost(dynamic cost) {
+  final Map<TimeUnit, num> _cost = {};
+
+  cost?.forEach((String key, data) {
+    _cost[key.toTimeUnit()] = data;
+  });
+  return _cost;
+}

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -35,7 +36,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    final LanguageType userLanguage =
+    final cModels.Language userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Card(
       child: (isLoading)
@@ -54,7 +55,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
   }
 
   Widget _itemExpandableComponent(
-      BuildContext context, LanguageType userLanguage, TextTheme txt) {
+      BuildContext context, cModels.Language userLanguage, TextTheme txt) {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: MezExpandCard(
@@ -120,7 +121,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
     );
   }
 
-  Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
+  Widget _itemHeader(cModels.Language userLanguage, TextTheme txt) {
     return Container(
       child: Column(
         children: [
@@ -222,7 +223,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
 Widget _itemChoiche(
     {required List<Choice> choices,
     required BuildContext context,
-    required Map<LanguageType, String> optionName}) {
+    required Map<cModels.Language, String> optionName}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [

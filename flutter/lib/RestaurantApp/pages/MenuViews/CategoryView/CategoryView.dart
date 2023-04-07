@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -39,8 +40,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   /// AddCategoryController
   ///
   AddCategoryController _viewController = AddCategoryController();
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
   String? _categoryId;
   String? restaurantId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -198,7 +198,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
 
   TextFormField _categoryNameComponent(
       {required TextEditingController controller,
-      required LanguageType languageType}) {
+      required Language languageType}) {
     return TextFormField(
       controller: controller,
       style: context.txt.bodyLarge,

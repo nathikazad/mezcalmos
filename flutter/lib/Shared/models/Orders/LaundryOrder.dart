@@ -291,7 +291,7 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
   LaundryOrderCostLineItem({
     required this.weight,
     required int id,
-    required Map<LanguageType, String> name,
+    required Map<Language, String> name,
     required num cost,
   }) : super(cost: cost, name: name, id: id);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -30,7 +31,8 @@ class ItemOptionCard extends StatefulWidget {
 }
 
 class _ItemOptionCardState extends State<ItemOptionCard> {
-  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+  cModels.Language userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
   late String optionId;
   @override
   void initState() {

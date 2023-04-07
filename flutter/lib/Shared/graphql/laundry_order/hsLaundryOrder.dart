@@ -149,7 +149,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
             hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id,
             name: orderData.to_customer_delivery!.delivery_driver!.user.name,
             image: orderData.to_customer_delivery!.delivery_driver!.user.image,
-            language: LanguageType.EN)
+            language: cModels.Language.EN)
         : null,
     pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
         ? UserInfo(
@@ -158,7 +158,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
             name: orderData.from_customer_delivery!.delivery_driver!.user.name,
             image:
                 orderData.from_customer_delivery!.delivery_driver!.user.image,
-            language: LanguageType.EN)
+            language: cModels.Language.EN)
         : null,
     toCustomerDeliveryId: orderData.to_customer_delivery_id,
     fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
@@ -290,7 +290,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                     orderData.to_customer_delivery!.delivery_driver!.user.name,
                 image:
                     orderData.to_customer_delivery!.delivery_driver!.user.image,
-                language: LanguageType.EN)
+                language: cModels.Language.EN)
             : null,
         pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
             ? UserInfo(
@@ -300,7 +300,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                     .from_customer_delivery!.delivery_driver!.user.name,
                 image: orderData
                     .from_customer_delivery!.delivery_driver!.user.image,
-                language: LanguageType.EN)
+                language: cModels.Language.EN)
             : null,
         toCustomerDeliveryId: orderData.to_customer_delivery_id,
         fromCustomerDeliveryId: orderData.from_customer_delivery_id!,

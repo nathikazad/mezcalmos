@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Geography {
@@ -36,18 +37,18 @@ String moneyToJson(double money) => "$money";
 
 /// Accepts a translations array (from hasura) and return a language map object
 // ignore: avoid_annotating_with_dynamic
-Map<LanguageType, String> toLanguageMap({required List translations}) {
-  final Map<LanguageType, String> map = {};
+Map<Language, String> toLanguageMap({required List translations}) {
+  final Map<Language, String> map = {};
   translations.forEach((element) {
-    map[element.language_id.toString().toLanguageType()] = element.value;
+    map[element.language_id.toString().toLanguage()] = element.value;
   });
   return map;
 }
 
-Map<LanguageType, bool> convertToLanguages(languages) {
-  Map<LanguageType, bool> data = {};
+Map<Language, bool> convertToLanguages(languages) {
+  Map<Language, bool> data = {};
   languages.forEach((key, value) {
-    data[key.toString().toLanguageType()] = value;
+    data[key.toString().toLanguage()] = value;
   });
   return data;
 }

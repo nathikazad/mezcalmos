@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -27,14 +28,13 @@ class LaundrOpCategoryViewController {
       TextEditingController();
   TabController? tabController;
 
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
   final Rxn<Laundry> laundry = Rxn<Laundry>();
   final Rxn<LaundryCosts> laundryCosts = Rxn();
   final Rxn<LaundryCostLineItem> copyOfCategory = Rxn();
 
-  final Rxn<LanguageType> primaryLang = Rxn();
-  final Rxn<LanguageType> secondaryLang = Rxn();
+  final Rxn<Language> primaryLang = Rxn();
+  final Rxn<Language> secondaryLang = Rxn();
 
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
@@ -117,7 +117,7 @@ class LaundrOpCategoryViewController {
   Future<void> editCategory() async {
     LaundryCostLineItem newCategory = _constructCategory();
     if (!fd.mapEquals(newCategory.name, copyOfCategory.value!.name)) {
-      newCategory.name.forEach((LanguageType key, String value) {
+      newCategory.name.forEach((Language key, String value) {
         update_translation(
             langType: key,
             value: value,

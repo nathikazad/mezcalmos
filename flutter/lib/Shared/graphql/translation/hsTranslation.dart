@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 HasuraDb _db = Get.find<HasuraDb>();
 
 Future<bool> update_translation(
-    {required LanguageType langType,
+    {required Language langType,
     required String value,
     // required ServiceType serviceType,
     // required int serviceId,
@@ -52,7 +52,7 @@ Future<int> insert_translation({
         translations: Input$translation_value_arr_rel_insert_input(
           data: _convertTranslation(translation),
           // data: translation.entries.map<Input$translation_value_insert_input>(
-          //     (LanguageType key, String value) {
+          //     (Language key, String value) {
           //   return Input$translation_value_insert_input();
           // }).toList(),
         ),
@@ -69,7 +69,7 @@ Future<int> insert_translation({
 
 List<Input$translation_value_insert_input> _convertTranslation(LanguageMap tr) {
   final List<Input$translation_value_insert_input> data = [];
-  tr.forEach((LanguageType key, String value) {
+  tr.forEach((Language key, String value) {
     data.add(Input$translation_value_insert_input(
         language_id: key.toFirebaseFormatString(), value: value));
   });

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -8,7 +9,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 ///
 /// Ex : Mezcalmos Admin => MA
 
-LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+Language userLanguage = Get.find<LanguageController>().userLanguageKey;
 String getRandomString(int length) {
   const String _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

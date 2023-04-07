@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -29,8 +30,8 @@ class ROpChoiceViewController {
   RxBool editMode = RxBool(false);
   RxBool isAv = RxBool(false);
   RxBool needToFetch = RxBool(false);
-  Rx<LanguageType> primaryLang = Rx(LanguageType.ES);
-  Rx<LanguageType> secondaryLang = Rx(LanguageType.EN);
+  Rx<cModels.Language> primaryLang = Rx(cModels.Language.ES);
+  Rx<cModels.Language> secondaryLang = Rx(cModels.Language.EN);
 
   // text inputs //
   TextEditingController prChoiceName = TextEditingController();
@@ -53,7 +54,7 @@ class ROpChoiceViewController {
 
   Future<void> _assignLanguages() async {
     primaryLang.value =
-        await get_restaurant_priamry_lang(restaurantId) ?? LanguageType.ES;
+        await get_restaurant_priamry_lang(restaurantId) ?? cModels.Language.ES;
     secondaryLang.value = primaryLang.value.toOpLang();
   }
 
@@ -107,7 +108,9 @@ class ROpChoiceViewController {
 
   Future<void> _editChoice() async {
     if (fd.mapEquals(_contructChoice().name, choice.value!.name) == false) {
-      _contructChoice().name.forEach((LanguageType key, String value) async {
+      _contructChoice()
+          .name
+          .forEach((cModels.Language key, String value) async {
         await update_translation(
             langType: key, value: value, translationId: choice.value!.nameId!);
       });

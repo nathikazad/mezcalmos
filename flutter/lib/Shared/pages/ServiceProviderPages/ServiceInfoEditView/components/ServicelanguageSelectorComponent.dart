@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -9,7 +10,7 @@ dynamic _i18n() =>
         ['ROpEditInfoView']['components']['ServiceLanguageSelectorComponent'];
 
 typedef void OnChangeShouldUpdateLang(
-  LanguageType languageType,
+  Language languageType,
 );
 
 class ServiceLanguageSelectorComponent extends StatefulWidget {
@@ -21,8 +22,8 @@ class ServiceLanguageSelectorComponent extends StatefulWidget {
     this.isSecondary = false,
   }) : super(key: key);
 
-  final Rxn<LanguageType> languageValue;
-  final Rxn<LanguageType>? oppositeLanguageValue;
+  final Rxn<Language> languageValue;
+  final Rxn<Language>? oppositeLanguageValue;
   final OnChangeShouldUpdateLang onChangeShouldUpdateLang;
   final bool isSecondary;
 
@@ -41,8 +42,8 @@ class _ServiceLanguageSelectorComponentState
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FormField<LanguageType>(
-        builder: (FormFieldState<LanguageType> state) {
+      child: FormField<Language>(
+        builder: (FormFieldState<Language> state) {
           return Obx(
             () => InputDecorator(
               decoration: InputDecoration(
@@ -69,23 +70,23 @@ class _ServiceLanguageSelectorComponentState
               ),
               isEmpty: widget.languageValue.value == null,
               child: DropdownButtonHideUnderline(
-                child: DropdownButton<LanguageType>(
+                child: DropdownButton<Language>(
                   value: widget.languageValue.value,
                   isDense: true,
                   iconSize: (widget.isSecondary) ? 0 : 24,
                   dropdownColor: Colors.white,
                   onChanged: widget.isSecondary
                       ? null
-                      : (LanguageType? newValue) {
+                      : (Language? newValue) {
                           if (newValue != null) {
                             widget.onChangeShouldUpdateLang(newValue);
                           }
                         },
                   items: [
-                    LanguageType.EN,
-                    LanguageType.ES,
-                  ].map((LanguageType value) {
-                    return DropdownMenuItem<LanguageType>(
+                    Language.EN,
+                    Language.ES,
+                  ].map((Language value) {
+                    return DropdownMenuItem<Language>(
                       value: value,
                       child: (value.toLanguageName() != null)
                           ? Text(

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 
@@ -34,8 +35,8 @@ class ROpOptionViewController {
 
   Rx<OptionType> optionType = Rx(OptionType.ChooseOne);
   RxList<Choice> optionChoices = RxList([]);
-  Rx<LanguageType> primaryLang = Rx(LanguageType.ES);
-  Rx<LanguageType> secondaryLang = Rx(LanguageType.EN);
+  Rx<cModels.Language> primaryLang = Rx(cModels.Language.ES);
+  Rx<cModels.Language> secondaryLang = Rx(cModels.Language.EN);
 
   RxnInt min = RxnInt();
   RxnInt max = RxnInt();
@@ -75,7 +76,7 @@ class ROpOptionViewController {
     if (int.tryParse(restaurantId) != null) {
       primaryLang.value =
           await get_restaurant_priamry_lang(int.parse(restaurantId)) ??
-              LanguageType.ES;
+              cModels.Language.ES;
       secondaryLang.value = primaryLang.value.toOpLang();
     }
   }
@@ -225,7 +226,9 @@ class ROpOptionViewController {
     mezDbgPrint(
         "UPDATE NAME ${!fd.mapEquals(editableOption.value!.name, _contructOption().name)}");
     if (!fd.mapEquals(editableOption.value!.name, _contructOption().name)) {
-      _contructOption().name.forEach((LanguageType key, String value) async {
+      _contructOption()
+          .name
+          .forEach((cModels.Language key, String value) async {
         mezDbgPrint("updatttttt ${editableOption.value?.nameId}");
         await update_translation(
             langType: key,

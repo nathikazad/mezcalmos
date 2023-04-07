@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class MezLocation {
@@ -81,4 +82,11 @@ class MezLocation {
       }
     };
   }
+}
+
+cModels.Location constructLocation(Geography locationData, address) {
+  return cModels.Location(
+      lat: locationData.latitude,
+      lng: locationData.longitude,
+      address: address);
 }

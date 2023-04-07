@@ -107,11 +107,13 @@ Future<String?> add_category(
               translations: Input$translation_value_arr_rel_insert_input(
                   data: <Input$translation_value_insert_input>[
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.EN.toFirebaseFormatString(),
-                        value: category.name?[LanguageType.EN]),
+                        language_id:
+                            cModels.Language.EN.toFirebaseFormatString(),
+                        value: category.name?[cModels.Language.EN]),
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.ES.toFirebaseFormatString(),
-                        value: category.name?[LanguageType.ES]),
+                        language_id:
+                            cModels.Language.ES.toFirebaseFormatString(),
+                        value: category.name?[cModels.Language.ES]),
                   ]),
             ),
           ),
@@ -124,11 +126,13 @@ Future<String?> add_category(
               translations: Input$translation_value_arr_rel_insert_input(
                   data: <Input$translation_value_insert_input>[
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.EN.toFirebaseFormatString(),
-                        value: category.dialog?[LanguageType.EN]),
+                        language_id:
+                            cModels.Language.EN.toFirebaseFormatString(),
+                        value: category.dialog?[cModels.Language.EN]),
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.ES.toFirebaseFormatString(),
-                        value: category.dialog?[LanguageType.ES]),
+                        language_id:
+                            cModels.Language.ES.toFirebaseFormatString(),
+                        value: category.dialog?[cModels.Language.ES]),
                   ]),
             ),
           ),

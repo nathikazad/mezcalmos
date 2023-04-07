@@ -4,7 +4,10 @@ import { ServiceProvider } from "../Service";
 
 export interface Business {
     profile: BusinessProfile;
-    details: ServiceProvider
+    details: ServiceProvider;
+    rentals?: Array<Rental>;
+    classes?: Array<Class>;
+    events?: Array<Event>;
 }
 
 export interface BusinessService {
@@ -14,16 +17,11 @@ export interface BusinessService {
     position: number;
     businessId: number;
     available: boolean;
-    image: string;
-    cost: BusinessServiceCost;
+    image?: Array<string>;
+    cost: Record<TimeUnit, number>;
     additionalParameters?: Record<string, any>
 }
-export interface BusinessServiceCost {
-    perHour?: number;
-    perDay?: number;
-    perWeek?: number;
-    perMonth?: number;
-}
+
 export enum TimeUnit {
     PerHour = "perHour",
     PerDay = "perDay",

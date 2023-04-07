@@ -63,8 +63,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
               .forEach((String key, value) {
             final List<Choice> choices = [];
             _restauItem.optionNames[key] = {
-              LanguageType.EN: value['optionName']["en"],
-              LanguageType.ES: value['optionName']["es"]
+              cModels.Language.EN: value['optionName']["en"],
+              cModels.Language.ES: value['optionName']["es"]
             };
 
             value['choices'].forEach((key, value) {
@@ -72,9 +72,9 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                 Choice(
                   id: value['id'],
                   name: {
-                    LanguageType.EN: value['name']
+                    cModels.Language.EN: value['name']
                         [userLanguage.toFirebaseFormatString()],
-                    LanguageType.ES: value['name']
+                    cModels.Language.ES: value['name']
                         [userLanguage.toFirebaseFormatString()]
                   },
                   cost: value['cost'],
@@ -165,7 +165,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
                 language: orderData.delivery!.delivery_driver!.user.language_id
-                    .toLanguageType())
+                    .toLanguage())
             : null,
         scheduleTime: (orderData.scheduled_time != null)
             ? DateTime.tryParse(orderData.scheduled_time!)
@@ -239,8 +239,8 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
           .forEach((String key, value) {
         final List<Choice> choices = [];
         _restauItem.optionNames[key] = {
-          LanguageType.EN: value['optionName']["en"],
-          LanguageType.ES: value['optionName']["es"]
+          cModels.Language.EN: value['optionName']["en"],
+          cModels.Language.ES: value['optionName']["es"]
         };
 
         value['choices'].forEach((key, value) {
@@ -248,9 +248,9 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
             Choice(
               id: value['id'],
               name: {
-                LanguageType.EN: value['name']
+                cModels.Language.EN: value['name']
                     [userLanguage.toFirebaseFormatString()],
-                LanguageType.ES: value['name']
+                cModels.Language.ES: value['name']
                     [userLanguage.toFirebaseFormatString()]
               },
               cost: value['cost'],
@@ -340,7 +340,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,
             language: orderData.delivery!.delivery_driver!.user.language_id
-                .toLanguageType())
+                .toLanguage())
         : null,
     scheduleTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)

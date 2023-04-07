@@ -30,10 +30,10 @@ class ServiceInfoEditViewController {
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<MezLocation> newLocation = Rxn();
 
-  final Rx<LanguageType> primaryLang = Rx(LanguageType.EN);
-  final Rx<LanguageType> secondaryLang = Rx(LanguageType.ES);
-  final Rxn<LanguageType> editablePrLang = Rxn();
-  final Rxn<LanguageType> editableScLang = Rxn();
+  final Rx<Language> primaryLang = Rx(Language.EN);
+  final Rx<Language> secondaryLang = Rx(Language.ES);
+  final Rxn<Language> editablePrLang = Rxn();
+  final Rxn<Language> editableScLang = Rxn();
   final Rxn<File> newImageFile = Rxn();
 
   final RxBool imageLoading = RxBool(false);
@@ -86,7 +86,7 @@ class ServiceInfoEditViewController {
   Future<void> updateServiceDescriptionDescription() async {
     // if (!fd.mapEquals(service.value!.description, _contructDesc())) {
     if (service.value!.descriptionId != null) {
-      _contructDesc().forEach((LanguageType key, String value) {
+      _contructDesc().forEach((Language key, String value) {
         update_translation(
             langType: key,
             value: value,
@@ -153,12 +153,12 @@ class ServiceInfoEditViewController {
         name: serviceNameTxt.text);
   }
 
-  // void changePrimaryLang(LanguageType value) {
+  // void changePrimaryLang(Language value) {
   //   editablePrLang.value = value;
   //   editableScLang.value = value.toOpLang();
   // }
 
-  // bool validateSecondaryLanguUpdate(LanguageType value) {
+  // bool validateSecondaryLanguUpdate(Language value) {
   //   if (primaryLang.value != null) {
   //     if (value != primaryLang.value) {
   //       return true;

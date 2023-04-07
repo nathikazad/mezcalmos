@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -21,8 +22,7 @@ class ROpItemCategorySelector extends StatefulWidget {
 }
 
 class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {

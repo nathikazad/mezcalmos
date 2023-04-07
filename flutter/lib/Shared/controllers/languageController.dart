@@ -6,6 +6,7 @@ import 'dart:io' as dartIO;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -14,7 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 class LanguageController extends GetxController {
   // default is english
   RxBool isLamgInitialized = false.obs;
-  Rx<LanguageType> _userLanguageKey = sDefaultLanguage.obs;
+  Rx<Language> _userLanguageKey = sDefaultLanguage.obs;
   Rx<bool> controllerHasInitialized = false.obs;
 
   // jsonStrings will have:
@@ -23,8 +24,7 @@ class LanguageController extends GetxController {
       .obs; // language Object by default  must be set to en if no lang given  in constructor.
 
   LanguageController() {
-    final LanguageType? lang =
-        GetStorage().read("lang").toString().toLanguageType();
+    final Language? lang = GetStorage().read("lang").toString().toLanguage();
     if (lang == null) {
       _userLanguageKey.value = _getSystemLanguage();
       GetStorage()
@@ -36,12 +36,12 @@ class LanguageController extends GetxController {
     mezDbgPrint(" 🗿🗿🗿🗿🗿 USER LANGUAGE [[ $lang ]]🗿🗿🗿🗿🗿🗿🗿🗿");
   }
 
-  Map<LanguageType, dynamic> languageDetails = {
-    LanguageType.EN: {"fullName": "English", "langImage": usaFlagAsset},
-    LanguageType.ES: {"fullName": "Español", "langImage": mexicoFlagAsset}
+  Map<Language, dynamic> languageDetails = {
+    Language.EN: {"fullName": "English", "langImage": usaFlagAsset},
+    Language.ES: {"fullName": "Español", "langImage": mexicoFlagAsset}
   };
 
-  LanguageType get userLanguageKey => _userLanguageKey.value;
+  Language get userLanguageKey => _userLanguageKey.value;
   String get langFullName =>
       languageDetails[_userLanguageKey.value]['fullName'];
   String get langImage => languageDetails[_userLanguageKey.value]['langImage'];
@@ -62,21 +62,19 @@ class LanguageController extends GetxController {
     }
   }
 
-  LanguageType get oppositLangKey => _userLanguageKey.value == LanguageType.EN
-      ? LanguageType.ES
-      : LanguageType.EN;
+  Language get oppositLangKey =>
+      _userLanguageKey.value == Language.EN ? Language.ES : Language.EN;
   String get oppositToLang =>
-      _userLanguageKey.value == LanguageType.EN ? "A Español" : "To English";
-  String get oppositFlag => _userLanguageKey.value == LanguageType.EN
-      ? mexicoFlagAsset
-      : usaFlagAsset;
+      _userLanguageKey.value == Language.EN ? "A Español" : "To English";
+  String get oppositFlag =>
+      _userLanguageKey.value == Language.EN ? mexicoFlagAsset : usaFlagAsset;
 
   Future<void> changeUserLanguage(
-      {LanguageType? language = null, bool saveToDatabase = true}) async {
+      {Language? language = null, bool saveToDatabase = true}) async {
     if (saveToDatabase && Get.find<AuthController>().isUserSignedIn) {
       await Get.find<AuthController>()
           .changeLanguage(language ?? _userLanguageKey.value.toOpLang())
-          .then((LanguageType value) => _userLanguageKey.value = value);
+          .then((Language value) => _userLanguageKey.value = value);
     } else {
       _userLanguageKey.value = language ?? _userLanguageKey.value.toOpLang();
     }
@@ -85,10 +83,10 @@ class LanguageController extends GetxController {
     _userLanguageKey.refresh();
 
     // if (language == null) {
-    //   if (Get.find<AuthController>().user?.language == LanguageType.ES) {
-    //     language = LanguageType.EN;
+    //   if (Get.find<AuthController>().user?.language == Language.ES) {
+    //     language = Language.EN;
     //   } else {
-    //     language = LanguageType.ES;
+    //     language = Language.ES;
     //   }
     //   if (Get.find<AuthController>().user != null) {
     //     Get.find<AuthController>().user!.language = language;
@@ -109,11 +107,11 @@ class LanguageController extends GetxController {
   }
 
   ///this function [changeLangForWeb] used only for web
-  void changeLangForWeb(LanguageType? language) {
-    _userLanguageKey.value = language ?? LanguageType.EN;
+  void changeLangForWeb(Language? language) {
+    _userLanguageKey.value = language ?? Language.EN;
   }
 
-  void setLanguage(LanguageType language) {
+  void setLanguage(Language language) {
     _userLanguageKey.value = language;
   }
 
@@ -129,14 +127,10 @@ class LanguageController extends GetxController {
       };
     }).then((_) {
       isLamgInitialized.value = true;
-      if (_jsonStrings[
-                      LanguageType.EN.toFirebaseFormatString()]
-                  .toString() !=
-              "" &&
-          _jsonStrings[LanguageType.EN.toFirebaseFormatString()] != null &&
-          _jsonStrings[LanguageType.ES.toFirebaseFormatString()].toString() !=
-              "" &&
-          _jsonStrings[LanguageType.ES.toFirebaseFormatString()] != null) {
+      if (_jsonStrings[Language.EN.toFirebaseFormatString()].toString() != "" &&
+          _jsonStrings[Language.EN.toFirebaseFormatString()] != null &&
+          _jsonStrings[Language.ES.toFirebaseFormatString()].toString() != "" &&
+          _jsonStrings[Language.ES.toFirebaseFormatString()] != null) {
         controllerHasInitialized.value = true;
       } else {
         controllerHasInitialized.value = false;
@@ -144,10 +138,10 @@ class LanguageController extends GetxController {
     });
   }
 
-  LanguageType _getSystemLanguage() {
+  Language _getSystemLanguage() {
     return dartIO.Platform.localeName.substring(0, 2) == 'es'
-        ? LanguageType.ES
-        : LanguageType.EN;
+        ? Language.ES
+        : Language.EN;
   }
 
   @override

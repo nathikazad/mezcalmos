@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -13,7 +14,8 @@ class ItemChosenChoiceComponent extends StatelessWidget {
   }) : super(key: key);
   final LanguageMap optionName;
   final List<Choice> choices;
-  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+  cModels.Language userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {

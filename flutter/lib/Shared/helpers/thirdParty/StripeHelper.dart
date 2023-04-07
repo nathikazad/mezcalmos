@@ -414,7 +414,7 @@ Future<dynamic> addCardSheet() {
                         ),
                       ),
                       Get.find<LanguageController>().userLanguageKey ==
-                              LanguageType.EN
+                              Language.EN
                           ? Row(
                               children: [
                                 Text(

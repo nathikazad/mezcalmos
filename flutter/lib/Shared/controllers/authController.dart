@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
@@ -211,7 +212,7 @@ class AuthController extends GetxController {
     await _auth.signOut();
   }
 
-  Future<LanguageType> changeLanguage(LanguageType newLanguage) async {
+  Future<cModels.Language> changeLanguage(cModels.Language newLanguage) async {
     return await change_user_language(
         userId: user!.hasuraId, language: newLanguage);
   }

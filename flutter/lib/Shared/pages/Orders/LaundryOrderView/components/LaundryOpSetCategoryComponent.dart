@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -27,8 +28,7 @@ class LaundyOpSetCategoryComponent extends StatefulWidget {
 
 class _LaundyOpSetCategoryComponentState
     extends State<LaundyOpSetCategoryComponent> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   @override
   void initState() {
@@ -170,8 +170,6 @@ class _LaundyOpSetCategoryComponentState
       });
     };
   }
-
- 
 
   Widget _itemRowCard({required LaundryOrderCostLineItem item}) {
     return Container(

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
@@ -130,10 +131,10 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
             id: cartitem.restaurant_item.id,
             name: {
               cartitem.restaurant_item.name.translations.first.language_id
-                      .toLanguageType():
+                      .toLanguage():
                   cartitem.restaurant_item.name.translations.first.value,
               cartitem.restaurant_item.name.translations[1].language_id
-                      .toLanguageType():
+                      .toLanguage():
                   cartitem.restaurant_item.name.translations[1].value,
             },
             itemType: cartitem.restaurant_item.item_type.toItemType(),
@@ -153,9 +154,9 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
               Choice(
                 id: value['id'],
                 name: {
-                  LanguageType.EN: value['name']
+                  cModels.Language.EN: value['name']
                       [userLanguage.toFirebaseFormatString()],
-                  LanguageType.ES: value['name']
+                  cModels.Language.ES: value['name']
                       [userLanguage.toFirebaseFormatString()]
                 },
                 cost: value['cost'],
@@ -323,9 +324,9 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             _res.details!.approved,
           ),
 
-          // primaryLanguage: _res.details!.language_id.toString().toLanguageType(),
+          // primaryLanguage: _res.details!.language_id.toString().toLanguage(),
           // secondaryLanguage:
-          //     _res.language_id.toString().toLanguageType().toOpLang(),
+          //     _res.language_id.toString().toLanguage().toOpLang(),
         );
       }
 
@@ -345,10 +346,10 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
               id: cartitem.restaurant_item.id,
               name: {
                 cartitem.restaurant_item.name.translations.first.language_id
-                        .toLanguageType():
+                        .toLanguage():
                     cartitem.restaurant_item.name.translations.first.value,
                 cartitem.restaurant_item.name.translations[1].language_id
-                        .toLanguageType():
+                        .toLanguage():
                     cartitem.restaurant_item.name.translations[1].value,
               },
               itemType: cartitem.restaurant_item.item_type.toItemType(),
@@ -368,8 +369,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
                 Choice(
                   id: value['id'],
                   name: {
-                    LanguageType.EN: value['name']["en"],
-                    LanguageType.ES: value['name']["es"]
+                    cModels.Language.EN: value['name']["en"],
+                    cModels.Language.ES: value['name']["es"]
                   },
                   cost: value['cost'],
                 ),

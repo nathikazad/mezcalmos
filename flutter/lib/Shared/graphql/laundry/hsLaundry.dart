@@ -79,10 +79,10 @@ Future<Laundry?> get_laundry_store_by_id(
             description: (data.details?.description?.translations != null)
                 ? {
                     data.details!.description!.translations.first.language_id
-                            .toLanguageType():
+                            .toLanguage():
                         data.details!.description!.translations.first.value,
                     data.details!.description!.translations[1].language_id
-                            .toLanguageType():
+                            .toLanguage():
                         data.details!.description!.translations[1].value,
                   }
                 : null,
@@ -271,11 +271,11 @@ Future<int?> add_laundry_category(
                 translations: Input$translation_value_arr_rel_insert_input(
                     data: <Input$translation_value_insert_input>[
                       Input$translation_value_insert_input(
-                          language_id: LanguageType.EN.toFirebaseFormatString(),
-                          value: category.name[LanguageType.EN]),
+                          language_id: Language.EN.toFirebaseFormatString(),
+                          value: category.name[Language.EN]),
                       Input$translation_value_insert_input(
-                          language_id: LanguageType.ES.toFirebaseFormatString(),
-                          value: category.name[LanguageType.ES]),
+                          language_id: Language.ES.toFirebaseFormatString(),
+                          value: category.name[Language.ES]),
                     ]),
               ),
             ),
@@ -371,10 +371,10 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
             description: (data.details?.description?.translations != null)
                 ? {
                     data.details!.description!.translations.first.language_id
-                            .toLanguageType():
+                            .toLanguage():
                         data.details!.description!.translations.first.value,
                     data.details!.description!.translations[1].language_id
-                            .toLanguageType():
+                            .toLanguage():
                         data.details!.description!.translations[1].value,
                   }
                 : null,
@@ -391,9 +391,9 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
         laundryState: ServiceState(data.details!.open_status.toServiceStatus(),
             data.details!.approved),
 
-        // primaryLanguage: data.details!.language_id.toString().toLanguageType(),
+        // primaryLanguage: data.details!.language_id.toString().toLanguage(),
         // secondaryLanguage:
-        //     data.data.details!.toString().toLanguageType().toOpLang(),
+        //     data.data.details!.toString().toLanguage().toOpLang(),
         laundryCosts: laundryCosts);
   }).toList();
   return laundries;

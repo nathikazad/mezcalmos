@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
@@ -35,8 +36,7 @@ class SingleLaundryScreen extends StatefulWidget {
 class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   int? laundryId;
   Rxn<Laundry> laundry = Rxn();
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   @override
   void initState() {

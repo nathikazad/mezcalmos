@@ -41,21 +41,21 @@ class ROpItemViewController {
 
   Category addNewCatgeory = Category(
     name: {
-      LanguageType.EN: "Add new category",
-      LanguageType.ES: "Añadir nueva categoria"
+      cModels.Language.EN: "Add new category",
+      cModels.Language.ES: "Añadir nueva categoria"
     },
   );
   Category noCatgeory = Category(
     name: {
-      LanguageType.EN: "No category",
-      LanguageType.ES: "Ninguna Categoria"
+      cModels.Language.EN: "No category",
+      cModels.Language.ES: "Ninguna Categoria"
     },
   );
 
   final RxList<Category> categories = RxList.empty();
   final Rxn<Category> currentCategory = Rxn();
-  Rx<LanguageType> prLang = Rx(LanguageType.ES);
-  Rx<LanguageType> scLang = Rx(LanguageType.ES);
+  Rx<cModels.Language> prLang = Rx(cModels.Language.ES);
+  Rx<cModels.Language> scLang = Rx(cModels.Language.ES);
   final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
@@ -92,7 +92,7 @@ class ROpItemViewController {
       schedule.value = await get_restaurant_schedule(
           restaurantId: this.restaurantId, withCache: false);
     }
-    prLang.value = await get_restaurant_priamry_lang(4) ?? LanguageType.ES;
+    prLang.value = await get_restaurant_priamry_lang(4) ?? cModels.Language.ES;
     scLang.value = prLang.value.toOpLang();
     await _assignCategories();
     mezDbgPrint("Item id ===========>>>>> $itemId");
@@ -221,7 +221,7 @@ class ROpItemViewController {
         editableItem.value!.description, _contructItem().description)) {
       _contructItem()
           .description
-          ?.forEach((LanguageType key, String value) async {
+          ?.forEach((cModels.Language key, String value) async {
         await update_translation(
             langType: key,
             value: value,
@@ -234,7 +234,7 @@ class ROpItemViewController {
     mezDbgPrint(
         "UPDATE NAME ${!fd.mapEquals(editableItem.value!.name, _contructItem().name)}");
     if (!fd.mapEquals(editableItem.value!.name, _contructItem().name)) {
-      _contructItem().name.forEach((LanguageType key, String value) async {
+      _contructItem().name.forEach((cModels.Language key, String value) async {
         mezDbgPrint("updatttttt ${editableItem.value?.nameId}");
         await update_translation(
             langType: key,
@@ -297,7 +297,7 @@ class ROpItemViewController {
       return null;
   }
 
-  List<String> getItemsNames(LanguageType languageType) {
+  List<String> getItemsNames(cModels.Language languageType) {
     final List<String> data = [];
     // TODO Update to hasura @m66are
     // final List<Item> items = restaurant.value!.getAllItems();

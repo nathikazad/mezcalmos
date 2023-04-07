@@ -58,11 +58,11 @@ Future<int?> add_one_item(
         translations: Input$translation_value_arr_rel_insert_input(
             data: <Input$translation_value_insert_input>[
               Input$translation_value_insert_input(
-                  language_id: LanguageType.EN.toFirebaseFormatString(),
-                  value: item.name[LanguageType.EN]),
+                  language_id: cModels.Language.EN.toFirebaseFormatString(),
+                  value: item.name[cModels.Language.EN]),
               Input$translation_value_insert_input(
-                  language_id: LanguageType.ES.toFirebaseFormatString(),
-                  value: item.name[LanguageType.ES]),
+                  language_id: cModels.Language.ES.toFirebaseFormatString(),
+                  value: item.name[cModels.Language.ES]),
             ]),
       ),
     ),
@@ -78,11 +78,11 @@ Future<int?> add_one_item(
         translations: Input$translation_value_arr_rel_insert_input(
             data: <Input$translation_value_insert_input>[
               Input$translation_value_insert_input(
-                  language_id: LanguageType.EN.toFirebaseFormatString(),
-                  value: item.description?[LanguageType.EN]),
+                  language_id: cModels.Language.EN.toFirebaseFormatString(),
+                  value: item.description?[cModels.Language.EN]),
               Input$translation_value_insert_input(
-                  language_id: LanguageType.ES.toFirebaseFormatString(),
-                  value: item.description?[LanguageType.ES]),
+                  language_id: cModels.Language.ES.toFirebaseFormatString(),
+                  value: item.description?[cModels.Language.ES]),
             ]),
       ),
     ),
@@ -269,7 +269,7 @@ List<Choice> _convertChoices(
 Future<List<Item>> search_items(
     {required List<int> servicesIds,
     required String keyword,
-    required LanguageType lang,
+    required cModels.Language lang,
     bool withCache = true}) async {
   final QueryResult<Query$searchItems> response =
       await _db.graphQLClient.query$searchItems(Options$Query$searchItems(

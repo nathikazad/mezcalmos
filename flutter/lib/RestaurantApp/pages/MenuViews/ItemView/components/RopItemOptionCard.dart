@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -22,7 +23,7 @@ class ROpItemOptionCard extends StatefulWidget {
   final int? itemId;
   final ROpItemViewController viewController;
 
-  static final LanguageType userLanguage =
+  static final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   @override

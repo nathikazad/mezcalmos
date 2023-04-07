@@ -112,7 +112,7 @@ class RestaurantOrder extends DeliverableOrder {
         null;
   }
 
-  String clipBoardText(LanguageType languageType) {
+  String clipBoardText(cModels.Language languageType) {
     String text = "";
     text += "${restaurant.name}\n";
     text +=

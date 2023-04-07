@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -19,7 +20,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
-  static LanguageType userLanguage =
+  static cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   @override

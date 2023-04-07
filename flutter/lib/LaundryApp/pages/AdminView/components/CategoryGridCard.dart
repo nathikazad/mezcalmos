@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
@@ -32,12 +33,11 @@ class CategoryGridCard extends StatefulWidget {
 }
 
 class _CategoryGridCardState extends State<CategoryGridCard> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
 
-  late LanguageType primaryLang;
+  late Language primaryLang;
   RxBool nameMissing = RxBool(false);
-  late LanguageType? secondaryLang;
+  late Language? secondaryLang;
 
   @override
   void initState() {

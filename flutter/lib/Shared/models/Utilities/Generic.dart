@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:collection/collection.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 enum ServiceStatus { Open, ClosedTemporarily, ClosedIndefinitely }
 
@@ -19,12 +20,7 @@ extension ParseStringToServiceStatusStatus on String {
   }
 }
 
-enum LanguageType {
-  EN,
-  ES,
-}
-
-extension ParseLanugaugeTypeToString on LanguageType {
+extension ParseLangaugeToString on Language {
   String toLanguageCode() {
     String str = toString().split('.').last;
     if (str[1] == 's') {
@@ -33,17 +29,17 @@ extension ParseLanugaugeTypeToString on LanguageType {
     return "${str.toLowerCase()}";
   }
 
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
+  // String toFirebaseFormatString() {
+  //   final String str = toString().split('.').last;
 
-    return str[0].toLowerCase() + str.substring(1).toLowerCase();
-  }
+  //   return str[0].toLowerCase() + str.substring(1).toLowerCase();
+  // }
 
-  LanguageType toOpLang() {
-    if (this == LanguageType.EN) {
-      return LanguageType.ES;
+  Language toOpLang() {
+    if (this == Language.EN) {
+      return Language.ES;
     } else {
-      return LanguageType.EN;
+      return Language.EN;
     }
   }
 
@@ -61,31 +57,31 @@ extension ParseLanugaugeTypeToString on LanguageType {
   }
 }
 
-extension ParseStringToLanugaugeType on String {
-  LanguageType toLanguageType() {
-    return (LanguageType.values.firstWhereOrNull(
-          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
-        )) ??
-        LanguageType.ES;
-  }
+extension ParseStringToLangauge on String {
+  // Language toLanguage() {
+  //   return (Language.values.firstWhereOrNull(
+  //         (Language e) => e.toFirebaseFormatString().toLowerCase() == this,
+  //       )) ??
+  //       Language.ES;
+  // }
 
-  LanguageType? toNullableLanguageType() {
-    return (LanguageType.values.firstWhereOrNull(
-          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
+  Language? toNullableLanguageType() {
+    return (Language.values.firstWhereOrNull(
+          (Language e) => e.toFirebaseFormatString().toLowerCase() == this,
         )) ??
         null;
   }
 }
 
-typedef LanguageMap = Map<LanguageType, String>;
+typedef LanguageMap = Map<Language, String>;
 
 LanguageMap convertToLanguageMap(Map data) {
   // mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
   final LanguageMap map = {};
   data.forEach((language, string) {
-    if (language == LanguageType.EN.toFirebaseFormatString() ||
-        language == LanguageType.ES.toFirebaseFormatString()) {
-      map[language.toString().toLanguageType()] = string;
+    if (language == Language.EN.toFirebaseFormatString() ||
+        language == Language.ES.toFirebaseFormatString()) {
+      map[language.toString().toLanguage()] = string;
     }
   });
   return map;
@@ -94,7 +90,7 @@ LanguageMap convertToLanguageMap(Map data) {
 extension LanguageMapToFirebaseFormat on LanguageMap {
   Map<String, String> toFirebaseFormat() {
     final Map<String, String> _tempMap = {};
-    keys.forEach((LanguageType key) {
+    keys.forEach((Language key) {
       _tempMap[key.toFirebaseFormatString()] = this[key]!;
     });
     return _tempMap;

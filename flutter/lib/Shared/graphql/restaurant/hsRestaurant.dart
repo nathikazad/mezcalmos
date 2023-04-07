@@ -101,9 +101,9 @@ Future<List<Item>> fetch_restaurant_items({required int restaurant_id}) async {
     _items.add(
       Item(
         name: {
-          element.name.translations.first.language_id.toLanguageType():
+          element.name.translations.first.language_id.toLanguage():
               element.name.translations.first.value,
-          element.name.translations[1].language_id.toLanguageType():
+          element.name.translations[1].language_id.toLanguage():
               element.name.translations[1].value,
         },
         available: element.available,
@@ -185,7 +185,7 @@ Future<Restaurant?> get_restaurant_by_id(
   return null;
 }
 
-Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
+Future<cModels.Language?> get_restaurant_priamry_lang(int restaurantId) async {
   final QueryResult<Query$getRestaurantLang> response = await _db.graphQLClient
       .query$getRestaurantLang(Options$Query$getRestaurantLang(
           variables: Variables$Query$getRestaurantLang(id: restaurantId)));
@@ -194,7 +194,7 @@ Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
         "🚨🚨🚨 restuarnt primay lang query errors : ${response.exception}");
   } else if (response.parsedData?.restaurant_restaurant_by_pk != null) {
     mezDbgPrint("✅✅✅ restuarnt primay lang query success");
-    return LanguageType.EN;
+    return cModels.Language.EN;
   }
   return null;
 }

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -25,7 +26,7 @@ class CustRestaurantListViewController {
   RxString searchQuery = RxString("");
   late LocationData customerLocation;
 
-  final LanguageType userLanguage =
+  final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   void init() {

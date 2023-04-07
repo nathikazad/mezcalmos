@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -174,7 +175,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
   }
 
   PreferredSizeWidget bottomFilters(BuildContext context) {
-    final LanguageType userLanguage =
+    final Language userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return PreferredSize(
       preferredSize: const Size.fromHeight(60),
@@ -190,7 +191,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
-  Widget _menuFilterChips(LanguageType userLanguage, BuildContext context) {
+  Widget _menuFilterChips(Language userLanguage, BuildContext context) {
     return Container(
       width: double.infinity,
       color: Get.theme.scaffoldBackgroundColor,

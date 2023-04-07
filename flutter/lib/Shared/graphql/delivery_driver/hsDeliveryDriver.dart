@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/__generated/delivery_driver.graphql.dart';
@@ -53,7 +54,7 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
           driverInfo: DeliveryDriverUserInfo(
             hasuraId: driverData.user.id,
             image: driverData.user.image,
-            language: driverData.user.language_id.toString().toLanguageType(),
+            language: driverData.user.language_id.toString().toLanguage(),
             name: driverData.user.name,
           ),
           type: DeliveryDriverType.Delivery_driver);
@@ -90,7 +91,7 @@ Future<DeliveryDriver?> get_driver_by_user_id(
           driverInfo: DeliveryDriverUserInfo(
               hasuraId: data.first.user.id,
               image: data.first.user.image,
-              language: data.first.user.language_id.toString().toLanguageType(),
+              language: data.first.user.language_id.toString().toLanguage(),
               name: data.first.user.name),
           type: DeliveryDriverType.Delivery_driver);
     }

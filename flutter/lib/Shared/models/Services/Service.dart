@@ -15,7 +15,7 @@ abstract class Service {
   int? serviceLinkId;
   cModels.ServiceProviderType? serviceProviderType;
   ServiceState state;
-  Map<LanguageType, bool> languages;
+  Map<cModels.Language, bool> languages;
   List<Review> reviews = <Review>[];
   num? rate;
   DeliveryCost? deliveryCost;
@@ -36,11 +36,11 @@ abstract class Service {
       required this.deliveryCost,
       this.paymentInfo});
 
-  LanguageType get primaryLanguage => languages.entries
+  cModels.Language get primaryLanguage => languages.entries
       .firstWhere(
-          (MapEntry<LanguageType, bool> element) => element.value == true)
+          (MapEntry<cModels.Language, bool> element) => element.value == true)
       .key;
-  LanguageType get secondaryLanguage => primaryLanguage.toOpLang();
+  cModels.Language get secondaryLanguage => primaryLanguage.toOpLang();
 
   bool get showReviews {
     return rate != null && reviews.isNotEmpty;

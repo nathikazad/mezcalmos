@@ -70,7 +70,7 @@ const String firebaseFunctionsStageUrl =
     'https://us-central1-mezcalmos-staging.cloudfunctions.net';
 const String hasuraDbUrl = 'https://www.hasura.app';
 
-const LanguageType sDefaultLanguage = LanguageType.ES;
+const Language sDefaultLanguage = Language.ES;
 const String sDefaultTheme = "light";
 
 const String sMez = "MEZ";

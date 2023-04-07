@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -118,7 +119,7 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
   mezDbgPrint("Getting locations with querry =======>$search");
   final List<AutoCompleteResult> _returnedPredictions = [];
 
-  final LanguageType userLanguage =
+  final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   // ignore: unawaited_futures

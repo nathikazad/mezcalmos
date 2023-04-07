@@ -84,11 +84,13 @@ Future<int?> add_option(
               translations: Input$translation_value_arr_rel_insert_input(
                   data: <Input$translation_value_insert_input>[
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.EN.toFirebaseFormatString(),
-                        value: option.name[LanguageType.EN]),
+                        language_id:
+                            cModels.Language.EN.toFirebaseFormatString(),
+                        value: option.name[cModels.Language.EN]),
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.ES.toFirebaseFormatString(),
-                        value: option.name[LanguageType.ES]),
+                        language_id:
+                            cModels.Language.ES.toFirebaseFormatString(),
+                        value: option.name[cModels.Language.ES]),
                   ]),
             ),
           ),
@@ -167,11 +169,13 @@ Input$restaurant_item_option_map_insert_input convert_option_to_hasura(
               translations: Input$translation_value_arr_rel_insert_input(
                   data: <Input$translation_value_insert_input>[
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.EN.toFirebaseFormatString(),
-                        value: option.name[LanguageType.EN]),
+                        language_id:
+                            cModels.Language.EN.toFirebaseFormatString(),
+                        value: option.name[cModels.Language.EN]),
                     Input$translation_value_insert_input(
-                        language_id: LanguageType.ES.toFirebaseFormatString(),
-                        value: option.name[LanguageType.ES]),
+                        language_id:
+                            cModels.Language.ES.toFirebaseFormatString(),
+                        value: option.name[cModels.Language.ES]),
                   ]),
             ),
           ),

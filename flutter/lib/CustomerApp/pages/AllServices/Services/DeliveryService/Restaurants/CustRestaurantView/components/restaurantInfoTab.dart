@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -32,15 +33,15 @@ class RestaurantInfoTab extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
-  /// LanguageType
-  static final LanguageType userLanguage =
+  /// Language
+  static final Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {
     mezDbgPrint(
         "Restaurant ==> ${restaurant.info.hasuraId.toString().toString()}  : Rate [${restaurant.rate}] - Reviews List: [${restaurant.reviews.length}]");
-    final LanguageType userLanguage =
+    final Language userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -26,7 +27,7 @@ class Laundry extends Service {
     required super.serviceDetailsId,
     required this.selfDelivery,
     required this.laundryCosts,
-    required Map<LanguageType, bool> languages,
+    required Map<Language, bool> languages,
   }) : super(
             info: userInfo,
             schedule: schedule,
@@ -56,17 +57,17 @@ class Laundry extends Service {
   //       (laundryData["details"]["averageNumberOfDays"] != null)
   //           ? laundryData["details"]["averageNumberOfDays"]
   //           : 2;
-  //   final LanguageType primaryLanguage = laundryData["details"]?["language"]
+  //   final Language primaryLanguage = laundryData["details"]?["language"]
   //               ?["primary"]
   //           .toString()
-  //           .toLanguageType() ??
-  //       LanguageType.ES;
+  //           .toLanguage() ??
+  //       Language.ES;
 
-  //   final LanguageType? secondaryLanguage = laundryData["details"]?["language"]
+  //   final Language? secondaryLanguage = laundryData["details"]?["language"]
   //               ?["secondary"]
   //           .toString()
   //           .toNullableLanguageType() ??
-  //       LanguageType.EN;
+  //       Language.EN;
 
   //   final Laundry laundry = Laundry(
   //       userInfo: ServiceInfo.fromData(laundryData["info"]),
@@ -137,7 +138,7 @@ class LaundryCosts {
 
 class LaundryCostLineItem {
   int id;
-  Map<LanguageType, String> name;
+  Map<Language, String> name;
   num cost;
   int? nameId;
   int? storeId;
@@ -167,7 +168,7 @@ class LaundryCostLineItem {
   }
 
   String getRightNameForUser() {
-    final LanguageType userLanguage =
+    final Language userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     final String availableName = name[name.keys.first]!;
     if (name[userLanguage] != null) {
@@ -178,7 +179,7 @@ class LaundryCostLineItem {
   }
 
   LaundryCostLineItem copyWith({
-    Map<LanguageType, String>? name,
+    Map<Language, String>? name,
     num? cost,
   }) {
     return LaundryCostLineItem(

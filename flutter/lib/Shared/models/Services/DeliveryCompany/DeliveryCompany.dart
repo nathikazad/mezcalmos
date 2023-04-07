@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -24,7 +25,7 @@ class DeliveryCompany extends Service {
   DeliveryCompany copyWith({
     ServiceInfo? userInfo,
     ServiceState? state,
-    Map<LanguageType, bool>? languages,
+    Map<Language, bool>? languages,
   }) {
     return DeliveryCompany(
       info: userInfo ?? info,

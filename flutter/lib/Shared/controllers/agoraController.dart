@@ -369,7 +369,7 @@ class Sagora extends GetxController {
             callerImage: event.data["callerImage"],
             callerType: event.data["callerType"],
             callerId: event.data["callerId"],
-            languageType: event.data["language"].toString().toLanguageType(),
+            languageType: event.data["language"].toString().toLanguage(),
             chatId: event.data['chatId'],
             agoraToken: event.data['agoraToken'],
             recipientuid: event.data['recipientuid']);
@@ -395,7 +395,7 @@ class Sagora extends GetxController {
     required String callerImage,
     required String callerType,
     required String callerId,
-    required Gen.LanguageType languageType,
+    required cModels.Language languageType,
     required String chatId,
     required String agoraToken,
     required String recipientuid,

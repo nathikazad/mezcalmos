@@ -1,12 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: avoid_annotating_with_dynamic
 
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Choice {
   int id;
   num cost = 0;
-  Map<LanguageType, String> name;
+  Map<Language, String> name;
   int? nameId;
   int position = 0;
   bool available = true;
@@ -70,7 +71,7 @@ class Choice {
   Choice copyWith({
     int? id,
     num? cost,
-    Map<LanguageType, String>? name,
+    Map<Language, String>? name,
     int? nameId,
     int? position,
     bool? available,

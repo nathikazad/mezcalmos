@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuVie
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -33,8 +34,7 @@ class ROpCategoryItems extends StatefulWidget {
 }
 
 class _ROpCategoryItemsState extends State<ROpCategoryItems> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {

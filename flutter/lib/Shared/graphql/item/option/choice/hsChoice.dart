@@ -62,11 +62,11 @@ Future<int?> add_choice(
               translations: Input$translation_value_arr_rel_insert_input(
                 data: [
                   Input$translation_value_insert_input(
-                      language_id: LanguageType.EN.toFirebaseFormatString(),
-                      value: choice.name[LanguageType.EN]),
+                      language_id: cModels.Language.EN.toFirebaseFormatString(),
+                      value: choice.name[cModels.Language.EN]),
                   Input$translation_value_insert_input(
-                      language_id: LanguageType.ES.toFirebaseFormatString(),
-                      value: choice.name[LanguageType.ES]),
+                      language_id: cModels.Language.ES.toFirebaseFormatString(),
+                      value: choice.name[cModels.Language.ES]),
                 ],
               ),
             ),
@@ -133,11 +133,11 @@ Input$restaurant_option_choice_map_insert_input convert_choice_to_hasura(
           translations: Input$translation_value_arr_rel_insert_input(
               data: <Input$translation_value_insert_input>[
                 Input$translation_value_insert_input(
-                    language_id: LanguageType.EN.toFirebaseFormatString(),
-                    value: choice.name[LanguageType.EN]),
+                    language_id: cModels.Language.EN.toFirebaseFormatString(),
+                    value: choice.name[cModels.Language.EN]),
                 Input$translation_value_insert_input(
-                    language_id: LanguageType.ES.toFirebaseFormatString(),
-                    value: choice.name[LanguageType.ES]),
+                    language_id: cModels.Language.ES.toFirebaseFormatString(),
+                    value: choice.name[cModels.Language.ES]),
               ]),
         ),
       ),

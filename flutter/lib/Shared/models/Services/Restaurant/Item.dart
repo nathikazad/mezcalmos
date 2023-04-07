@@ -18,7 +18,7 @@ class Item {
   LanguageMap? description;
 
   String? image;
-  Map<LanguageType, String> name;
+  Map<cModels.Language, String> name;
   num cost = 0;
   List<Option> options;
   Category? category;
@@ -200,7 +200,7 @@ class Item {
     String? restaurantName,
     LanguageMap? description,
     String? image,
-    Map<LanguageType, String>? name,
+    Map<cModels.Language, String>? name,
     num? cost,
     List<Option>? options,
     Category? category,

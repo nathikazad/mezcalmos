@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -51,7 +52,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     super.dispose();
   }
 
-  final LanguageType userLanguage =
+  final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   @override

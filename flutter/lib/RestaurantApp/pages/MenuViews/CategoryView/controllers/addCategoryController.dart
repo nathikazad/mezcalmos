@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -24,14 +25,13 @@ class AddCategoryController {
   TabController? tabController;
 
   /// Variables ///
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
   late int restaurantId;
   Rxn<Category> category = Rxn<Category>();
 
-  Rxn<LanguageType> primaryLang = Rxn();
+  Rxn<Language> primaryLang = Rxn();
 
-  Rxn<LanguageType> secondaryLang = Rxn();
+  Rxn<Language> secondaryLang = Rxn();
 
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
@@ -122,7 +122,7 @@ class AddCategoryController {
       mezDbgPrint("Name changed ✅");
 
       await Future.forEach(_contructName().entries,
-          (MapEntry<LanguageType, String> element) async {
+          (MapEntry<Language, String> element) async {
         await update_translation(
             langType: element.key,
             translationId: category.value!.descriptionId!,
@@ -134,7 +134,7 @@ class AddCategoryController {
   Future<void> _updateDescription() async {
     if (!fd.mapEquals(_contructDescription(), category.value!.dialog)) {
       await Future.forEach(_contructDescription()!.entries,
-          (MapEntry<LanguageType, String> element) async {
+          (MapEntry<Language, String> element) async {
         await update_translation(
             langType: element.key,
             translationId: category.value!.descriptionId!,
@@ -143,23 +143,23 @@ class AddCategoryController {
     }
   }
 
-  Map<LanguageType, String> _contructName() {
-    final Map<LanguageType, String> name = {
+  Map<Language, String> _contructName() {
+    final Map<Language, String> name = {
       primaryLang.value!: primaryCategoryNameController.text,
       secondaryLang.value!: secondaryCategoryNameController.text,
     };
     return name;
   }
 
-  Map<LanguageType, String>? _contructDescription() {
-    final Map<LanguageType, String>? desc = {
+  Map<Language, String>? _contructDescription() {
+    final Map<Language, String>? desc = {
       primaryLang.value!: primaryCatDesc.text,
       secondaryLang.value!: secondaryCatDesc.text,
     };
     return desc;
   }
 
-  List<String> getCatNames(LanguageType languageType) {
+  List<String> getCatNames(Language languageType) {
     final List<String> data = [];
     // restaurant.value!.getCategories.forEach((Category element) {
     //   if (element.name?[languageType] != null) {
