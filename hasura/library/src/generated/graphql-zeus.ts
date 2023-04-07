@@ -4523,6 +4523,8 @@ change_price_request?: [{	/** JSON select path */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:true,
+	/** A computed field, executes function "delivery.tax" */
+	tax?:true,
 	/** A computed field, executes function "delivery.deliverytotalcost" */
 	total_cost?:true,
 	/** in meters */
@@ -4700,6 +4702,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	service_provider_review_by_driver_id?:ValueTypes["Int_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
+	tax?:ValueTypes["money_comparison_exp"],
 	total_cost?:ValueTypes["money_comparison_exp"],
 	trip_distance?:ValueTypes["Int_comparison_exp"],
 	trip_duration?:ValueTypes["Int_comparison_exp"],
@@ -5060,6 +5063,7 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
+	tax?:ValueTypes["order_by"],
 	total_cost?:ValueTypes["order_by"],
 	trip_distance?:ValueTypes["order_by"],
 	trip_duration?:ValueTypes["order_by"],
@@ -24226,6 +24230,8 @@ the end). throws an error if top level container is not an array */
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status?:string,
+			/** A computed field, executes function "delivery.tax" */
+	tax?:PartialObjects["money"],
 			/** A computed field, executes function "delivery.deliverytotalcost" */
 	total_cost?:PartialObjects["money"],
 			/** in meters */
@@ -24402,6 +24408,7 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:PartialObjects["Int_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
+	tax?:PartialObjects["money_comparison_exp"],
 	total_cost?:PartialObjects["money_comparison_exp"],
 	trip_distance?:PartialObjects["Int_comparison_exp"],
 	trip_duration?:PartialObjects["Int_comparison_exp"],
@@ -24762,6 +24769,7 @@ cancelledByServiceProvider */
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
+	tax?:PartialObjects["order_by"],
 	total_cost?:PartialObjects["order_by"],
 	trip_distance?:PartialObjects["order_by"],
 	trip_duration?:PartialObjects["order_by"],
@@ -43231,6 +43239,8 @@ export type delivery_order = {
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
 	status:string,
+	/** A computed field, executes function "delivery.tax" */
+	tax?:money,
 	/** A computed field, executes function "delivery.deliverytotalcost" */
 	total_cost?:money,
 	/** in meters */
@@ -43419,6 +43429,7 @@ export type delivery_order_bool_exp = {
 	service_provider_review_by_driver_id?:Int_comparison_exp,
 	service_provider_type?:String_comparison_exp,
 	status?:String_comparison_exp,
+	tax?:money_comparison_exp,
 	total_cost?:money_comparison_exp,
 	trip_distance?:Int_comparison_exp,
 	trip_duration?:Int_comparison_exp,
@@ -43795,6 +43806,7 @@ export type delivery_order_order_by = {
 	service_provider_review_by_driver_id?:order_by,
 	service_provider_type?:order_by,
 	status?:order_by,
+	tax?:order_by,
 	total_cost?:order_by,
 	trip_distance?:order_by,
 	trip_duration?:order_by,
@@ -69941,6 +69953,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		tax:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		total_cost:{
 			type:"money_comparison_exp",
 			array:false,
@@ -71163,6 +71181,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		tax:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -115112,6 +115136,7 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_review_by_driver_id:"Int",
 		service_provider_type:"String",
 		status:"String",
+		tax:"money",
 		total_cost:"money",
 		trip_distance:"Int",
 		trip_duration:"Int",

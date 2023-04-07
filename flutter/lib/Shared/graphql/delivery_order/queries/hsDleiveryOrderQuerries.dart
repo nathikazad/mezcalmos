@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -54,9 +55,7 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
     packageReady: orderData.package_ready,
-    changePriceRequest: (orderData.change_price_request != null)
-        ? ChangePriceRequest.fromMap(orderData.change_price_request)
-        : null,
+
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
     serviceOrderId: orderData.restaurant_order?.id,
@@ -121,7 +120,10 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     costs: OrderCosts(
       deliveryCost: orderData.delivery_cost,
       refundAmmount: null,
-      tax: null,
+      tax: orderData.tax,
+      changePriceRequest: (orderData.change_price_request != null)
+          ? ChangePriceRequest.fromMap(orderData.change_price_request)
+          : null,
       orderItemsCost: orderData.package_cost_comp,
       totalCost: orderData.total_cost,
     ),

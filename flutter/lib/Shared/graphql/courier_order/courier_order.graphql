@@ -103,32 +103,17 @@ query get_courier_order_by_id($orderId: Int!) {
     }
   }
 }
-subscription listen_or_courier_order_prices($orderId: Int!) {
-   delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}){
 
-   total_cost
-    actual_items_cost
-     refund_amount
-    stripe_fees
-    tax
-    delivery_order{
-      delivery_cost
-    }
-   }
-}
-query get_courier_order_prices($orderId: Int!) {
-   delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}){
-
-   total_cost
-    actual_items_cost
-     refund_amount
-    stripe_fees
-    tax
-    delivery_order{
-      delivery_cost
-    }
-   }
-}
+# query get_driver_order_prices($orderId: Int!) {
+#  delivery_order_by_pk(id :$orderId){
+#     total_cost,
+#     tax,
+#     delivery_cost,
+#     package_cost_comp,
+#     change_price_request,
+    
+#   }
+# }
 query get_courier_order_items_by_id($orderId: Int!) {
   delivery_courier_order(where: {delivery_order_id: {_eq: $orderId}}) {
     items {

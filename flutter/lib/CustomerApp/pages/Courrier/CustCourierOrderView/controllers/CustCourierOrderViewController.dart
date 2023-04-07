@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -22,6 +23,7 @@ class CustCourierOrderViewController {
 
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   // vars //
+  bool isChangePricePopUp = false;
   late BuildContext context;
   Rxn<CourierOrder> _order = Rxn();
   Rxn<ChangePriceRequest> changePriceReq = Rxn();
@@ -71,9 +73,10 @@ class CustCourierOrderViewController {
                 "Order bill imaaaaaaaaggggggeeee======>${_order.value?.billImage}");
 
             _order.refresh();
-            if (event.changePriceRequest != null &&
-                event.changePriceRequest?.status ==
-                    ChangePriceRequestStatus.Requested) {
+            if (event.costs.changePriceRequest != null &&
+                event.costs.changePriceRequest?.status ==
+                    ChangePriceRequestStatus.Requested &&
+                !isChangePricePopUp) {
               mezDbgPrint("Should Showwwww");
               showPriceReqDialog();
             }
@@ -93,6 +96,7 @@ class CustCourierOrderViewController {
 
   void showPriceReqDialog() {
     mezDbgPrint("Show dialog called");
+    isChangePricePopUp = true;
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -139,10 +143,11 @@ class CustCourierOrderViewController {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(order.changePriceRequest?.newPrice.toPriceString() ??
+                      Text(order.costs.changePriceRequest?.newPrice
+                              .toPriceString() ??
                           "-"),
-                      if (order.changePriceRequest?.reason != null &&
-                          order.changePriceRequest!.reason.isNotEmpty)
+                      if (order.costs.changePriceRequest?.reason != null &&
+                          order.costs.changePriceRequest!.reason.isNotEmpty)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -156,7 +161,7 @@ class CustCourierOrderViewController {
                             SizedBox(
                               height: 5,
                             ),
-                            Text(order.changePriceRequest?.reason ?? "reason"),
+                            Text(order.costs.changePriceRequest?.reason ?? ""),
                           ],
                         ),
                       SizedBox(
@@ -168,6 +173,7 @@ class CustCourierOrderViewController {
                     label: "Accept",
                     onClick: () async {
                       await _priceChangeResponse(accepted: true);
+                      isChangePricePopUp = false;
                       Navigator.pop(context);
                     },
                   ),
@@ -178,6 +184,7 @@ class CustCourierOrderViewController {
                     textColor: Colors.grey.shade900,
                     onClick: () async {
                       await _priceChangeResponse(accepted: false);
+                      isChangePricePopUp = false;
                       Navigator.pop(context);
                     },
                   )
