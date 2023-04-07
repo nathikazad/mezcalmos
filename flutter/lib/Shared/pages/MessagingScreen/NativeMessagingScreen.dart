@@ -81,7 +81,7 @@ class MessagingScreenStateForApps extends BaseMessagingScreenState {
             participantId: response.id!.toInt(),
             participantImage: response.image!,
             participantName: response.name!,
-            participantType: response.participantType.toString());
+            participantType: response.participantType!);
       }).onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint("Error ===> $error | $stackTrace");
         sagora!.callStatus.value = CallStatus.none;

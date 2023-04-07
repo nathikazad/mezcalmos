@@ -323,20 +323,20 @@
                 "stage": {
                     "appName": "MezAdmin Stage",
                     "packageName": "com.mezstaging.admin",
-                    "googe-service-file": "services/stage/android/deliveryadmin.json",
-                    "apple-service-file": "services/stage/ios/deliveryadmin.plist"
+                    "googe-service-file": "services/stage/android/mezadmin.json",
+                    "apple-service-file": "services/stage/ios/mezadmin.plist"
                 },
                 "prod": {
                     "appName": "MezAdmin",
                     "packageName": "com.mezcalmos.admin",
-                    "googe-service-file": "services/prod/android/deliveryadmin.json",
-                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+                    "googe-service-file": "services/prod/android/mezadmin.json",
+                    "apple-service-file": "services/prod/ios/mezadmin.plist"
                 },
                 "dev": {
                     "appName": "MezAdmin Dev",
                     "packageName": "com.mezcalmos.admin",
-                    "googe-service-file": "services/prod/android/deliveryadmin.json",
-                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+                    "googe-service-file": "services/prod/android/mezadmin.json",
+                    "apple-service-file": "services/prod/ios/mezadmin.plist"
                 }
             },
             "MainActivityKt": {

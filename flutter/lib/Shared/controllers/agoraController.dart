@@ -19,8 +19,8 @@ import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
+
 import 'package:mezcalmos/env_example.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
@@ -258,31 +258,31 @@ class Sagora extends GetxController {
                 id: int.parse(event.body['extra']['callerId']),
               ),
             };
-            if (MezRouter.currentRoute().name ==
-                NativeOnlyRoutes.kAgoraCallScreenRoute) {
-              Future<void>.microtask(() => MezRouter.back().then(
-                    (_) => MezRouter.toNamed(
-                        NativeOnlyRoutes.kAgoraCallScreenRoute,
-                        arguments: <String, dynamic>{
-                          "chatId": int.parse(event.body?['extra']?['chatId']),
-                          "talkingTo": Participant(
-                            image: event.body?['avatar'],
-                            name: event.body?['nameCaller'],
-                            participantType: event.body['extra']['callerType']
-                                .toString()
-                                .toParticipantType(),
-                            // wrong actual user id, it's more like an agora generated id
-                            id: event.body['extra']['callerId'],
-                          ),
-                        }),
-                  ));
-            } else {
-              // Pushing to call screen + awaiting in case we wanna return with value.
-              // ignore: unawaited_futures
-              Future.microtask(() => MezRouter.toNamed(
-                  NativeOnlyRoutes.kAgoraCallScreenRoute,
-                  arguments: args));
-            }
+            // if (MezRouter.currentRoute().name ==
+            //     NativeOnlyRoutes.kAgoraCallScreenRoute) {
+            //   Future<void>.microtask(() => MezRouter.back().then(
+            //         (_) => AgoraCall.navigate(
+            //             chatId: event.body?['extra']?['chatId'],
+            //             participantId:
+            //                 int.parse(event.body['extra']['callerId']),
+            //             participantImage: event.body?['avatar'],
+            //             participantName: event.body?['nameCaller'],
+            //             participantType: event.body['extra']['callerType']
+            //                 .toString()
+            //                 .convertToParticipantType()),
+            //       ));
+            // } else {
+            // Pushing to call screen + awaiting in case we wanna return with value.
+            // ignore: unawaited_futures
+            Future.microtask(() => AgoraCall.navigate(
+                chatId: int.parse(event.body?['extra']?['chatId']),
+                participantId: int.parse(event.body['extra']['callerId']),
+                participantImage: event.body?['avatar'],
+                participantName: event.body?['nameCaller'],
+                participantType: event.body['extra']['callerType']
+                    .toString()
+                    .convertToParticipantType()));
+            // }
           }
           break;
         default:
