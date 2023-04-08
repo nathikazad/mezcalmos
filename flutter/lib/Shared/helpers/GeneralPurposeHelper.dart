@@ -791,7 +791,8 @@ void closeAllSnackbars({String? title, String? subtitle}) {
   ScaffoldMessenger.of(QR.context!).clearSnackBars();
 }
 
-void showErrorSnackBar({String errorTitle = "Error", String errorText = "",Duration? duration}) {
+void showErrorSnackBar(
+    {String errorTitle = "Error", String errorText = "", Duration? duration}) {
   return customSnackBar(
       title: errorTitle,
       subTitle: errorText,
@@ -801,6 +802,10 @@ void showErrorSnackBar({String errorTitle = "Error", String errorText = "",Durat
         size: 40,
         color: Colors.redAccent,
       ));
+}
+
+void showRouteErrorSnackBar() {
+  return showErrorSnackBar(errorText: "${_i18n()['routeError']}");
 }
 
 class DashedLineVerticalPainter extends CustomPainter {

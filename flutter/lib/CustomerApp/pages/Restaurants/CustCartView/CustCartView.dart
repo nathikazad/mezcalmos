@@ -150,12 +150,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         const SizedBox(height: 9),
         DropDownLocationList(
           onValueChangeCallback: ({MezLocation? location}) {
-            if (viewController.formKey.currentState?.validate() == true &&
-                location != null) {
+            if (location != null) {
               viewController.switchLocation(location);
-
-              mezDbgPrint(
-                  "Should update cart location 🥸🥸🥸 ===> ${viewController.cart.toLocation}");
             }
             // if (location != null && location.isValidLocation()) {
 

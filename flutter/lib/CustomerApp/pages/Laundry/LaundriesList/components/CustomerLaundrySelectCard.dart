@@ -23,7 +23,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
     required this.customerLocation,
   }) : super(key: key);
   final Laundry laundry;
-  final LocationData customerLocation;
+  final LocationData? customerLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -177,13 +177,17 @@ class CustomerLaundrySelectCard extends StatelessWidget {
     );
   }
 
-  num _getShippingPrice() {
-    final num customerDistance = calculateDistance(
-            customerLocation, laundry.info.location.toLocationData()) /
-        1000;
-    final num deliveryCost =
-        ((customerDistance * laundry.deliveryCost!.costPerKm) / 5).round() * 5;
-    return max(laundry.deliveryCost!.minimumCost, (2 * deliveryCost));
+  num? _getShippingPrice() {
+    if (customerLocation != null) {
+      final num customerDistance = calculateDistance(
+              customerLocation!, laundry.info.location.toLocationData()) /
+          1000;
+      final num deliveryCost =
+          ((customerDistance * laundry.deliveryCost!.costPerKm) / 5).round() *
+              5;
+      return max(laundry.deliveryCost!.minimumCost, (2 * deliveryCost));
+    }
+    return null;
   }
 
   String _getDollarsSign() {

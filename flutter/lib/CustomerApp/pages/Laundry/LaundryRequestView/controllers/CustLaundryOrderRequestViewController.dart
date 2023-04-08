@@ -1,7 +1,9 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as cloudFunctionModels;
@@ -16,6 +18,7 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustLaundryOrderRequestViewController {
   // instances //
@@ -120,35 +123,39 @@ class CustLaundryOrderRequestViewController {
     }
   }
 
-  Future<num?> createLaundryOrder() async {
-    final LaundryRequest _laundryRequest = LaundryRequest(
+  LaundryRequest _constructLaundryRequest(MapHelper.Route route) {
+    LaundryRequest _laundryRequest = LaundryRequest(
         laundryId: laundry.value!.info.hasuraId,
         deliveryCost: shippingCost.value!);
-    mezDbgPrint(orderNote.text);
+    _laundryRequest.routeInformation = MapHelper.RouteInformation(
+      polyline: route.encodedPolyLine,
+      distance: route.distance,
+      duration: route.duration,
+    );
+
+    _laundryRequest.laundryId = laundry.value!.info.hasuraId;
+    _laundryRequest.from = laundry.value!.info.location;
+    _laundryRequest.to = customerLoc.value!;
+    _laundryRequest.notes = orderNote.text;
+    _laundryRequest.paymentType = PaymentType.Cash;
+    return _laundryRequest;
+  }
+
+  Future<void> createLaundryOrder() async {
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         laundry.value!.info.location, customerLoc.value!);
 
     if (route != null) {
-      _laundryRequest.routeInformation = MapHelper.RouteInformation(
-        polyline: route.encodedPolyLine,
-        distance: route.distance,
-        duration: route.duration,
-      );
-
-      _laundryRequest.laundryId = laundry.value!.info.hasuraId;
-      _laundryRequest.from = laundry.value!.info.location;
-      _laundryRequest.to = customerLoc.value!;
-      _laundryRequest.notes = orderNote.text;
-      _laundryRequest.paymentType = PaymentType.Cash;
-
+      LaundryRequest _laundryRequest = _constructLaundryRequest(route);
       mezDbgPrint("👋👋👋👋 paylod  👋👋👋👋");
       mezDbgPrint(_laundryRequest.toString());
-      return await _checkoutOrder(_laundryRequest);
+      await _checkoutOrder(_laundryRequest);
+    } else {
+      showRouteErrorSnackBar();
     }
-    return null;
   }
 
-  Future<num?> _checkoutOrder(LaundryRequest laundryRequest) async {
+  Future<void> _checkoutOrder(LaundryRequest laundryRequest) async {
     try {
       cloudFunctionModels.ReqLaundryResponse response =
           await CloudFunctions.laundry2_requestLaundry(
@@ -167,19 +174,22 @@ class CustLaundryOrderRequestViewController {
         tripPolyline: laundryRequest.routeInformation!.polyline,
         deliveryType: cloudFunctionModels.DeliveryType.Delivery,
       );
-      if (response.success == false) {
+      if (response.orderId == null) {
         mezDbgPrint(response.error);
         showErrorSnackBar(errorText: response.error.toString());
+      } else {
+        await MezRouter.popEverythingTillBeforeHome().then((value) =>
+            CustLaundryOrderView.navigate(orderId: response.orderId!.toInt()));
       }
-      return response.orderId;
-    } catch (e, stk) {
-      mezDbgPrint("error function");
+    } on FirebaseFunctionsException catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
       showErrorSnackBar(
-        errorTitle: "Server error please try again",
+        errorText: e.message.toString(),
       );
+    } catch (e) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
     }
-    return null;
   }
 }

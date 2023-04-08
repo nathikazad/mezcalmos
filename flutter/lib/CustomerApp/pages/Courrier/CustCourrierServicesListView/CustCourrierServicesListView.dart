@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
@@ -62,16 +61,17 @@ class _CustCourierServicesListViewState
         () {
           if (companies.value != null) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // _searchCoomponent(context),
                   Text(
-                    "Delivery companies arround you",
-                    style: context.textTheme.titleLarge,
+                    "${_i18n()['title']}",
+                    style: context.textTheme.displaySmall,
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 20,
                   ),
                   Column(
                     children: List.generate(
