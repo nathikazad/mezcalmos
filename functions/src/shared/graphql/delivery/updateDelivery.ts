@@ -50,7 +50,8 @@ export async function updateDeliveryPackageCost(deliveryOrder: DeliveryOrder) {
         id: deliveryOrder.deliveryId
       }, 
       _set: {
-        package_cost: deliveryOrder.packageCost
+        package_cost: deliveryOrder.packageCost,
+        package_ready: true
       }
     }, { 
       package_cost: true
