@@ -279,6 +279,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
 
   MezCard _estTime() {
     return MezCard(
+        margin: const EdgeInsets.only(top: 15),
         contentPadding: const EdgeInsets.all(8),
         firstAvatarBgColor: secondaryLightBlueColor,
         secondAvatarBgColor: primaryBlueColor,

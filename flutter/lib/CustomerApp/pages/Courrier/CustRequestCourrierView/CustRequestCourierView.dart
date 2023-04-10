@@ -186,11 +186,8 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             DropDownLocationList(
               elevation: 0,
-              onValueChangeCallback: ({MezLocation? location}) {
-                if (location != null &&
-                    viewController.fromKey.currentState?.validate() == true) {
-                  viewController.setToLocation(location);
-                }
+              onValueChangeCallback: (MezLocation location) {
+                viewController.setToLocation(location);
               },
               bgColor: Colors.white,
               checkDistance: false,

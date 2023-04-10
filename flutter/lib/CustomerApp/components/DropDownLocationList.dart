@@ -17,7 +17,7 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["DropDownLocationList"]; //
 
-typedef OnDropDownNewValue = void Function({locModel.MezLocation? location});
+typedef OnDropDownNewValue = void Function(locModel.MezLocation location);
 
 class DropDownLocationList extends StatefulWidget {
   DropDownLocationList({
@@ -110,10 +110,14 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   FocusNode _focusNode = FocusNode();
-  bool get isValid =>
-      dropDownListValue?.location != null &&
-      _checkDistance() &&
-      _lessTenTenKm(dropDownListValue!.location);
+  bool get isValid {
+    if (dropDownListValue?.location != null) {
+      return (_checkDistance())
+          ? _lessTenTenKm(dropDownListValue!.location)
+          : true;
+    } else
+      return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,8 +150,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                   (SavedLocation e) => buildItems(e))
               .toList(),
           validator: (SavedLocation? value) {
-            mezDbgPrint(value?.location.address);
-
             if (value == null) {
               _focusNode.requestFocus();
               return "${_i18n()['noLocError']}";
@@ -171,10 +173,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               dropDownListValue = v;
               widget.passedInLocation = dropDownListValue?.location;
             }
-
+            mezDbgPrint("Calling calback =====>$isValid");
             if (isValid) {
-              widget.onValueChangeCallback
-                  ?.call(location: dropDownListValue?.location);
+              widget.onValueChangeCallback?.call(dropDownListValue!.location);
             }
           }
 
@@ -205,7 +206,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       //  await_navigateToPickLoc();
     } else {
       if (newLocation != null) {
-        widget.onValueChangeCallback?.call(location: newLocation.location);
+        widget.onValueChangeCallback?.call(newLocation.location);
 
         dropDownListValue = newLocation;
         widget.passedInLocation = dropDownListValue!.location;
