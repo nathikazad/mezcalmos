@@ -41,9 +41,10 @@ class _MezAdminWrapperState extends State<MezAdminWrapper> {
         MezRouter.toNamed(MezAdminRoutes.kTabsViewRoute);
       } else {
         showErrorSnackBar(
-            duration: Duration(seconds: 5),
+            duration: Duration(seconds: 2),
             errorText:
                 "There is no mez admin with this id : ${Get.find<AuthController>().hasuraUserId}");
+        Get.find<AuthController>().signOut();
       }
     });
 

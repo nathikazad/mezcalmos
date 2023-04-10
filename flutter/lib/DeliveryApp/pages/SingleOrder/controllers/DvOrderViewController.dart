@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
@@ -14,6 +16,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class DvOrderViewcontroller {
   // instances //
@@ -57,6 +60,11 @@ class DvOrderViewcontroller {
 
   // init
   Future<void> init({required int orderId}) async {
+    MezRouter.registerReturnToViewCallback(DvOrderView.constructPath(orderId),
+        () {
+      clearNotifications(orderId);
+    });
+    clearNotifications(orderId);
     _order.value = await get_driver_order_by_id(orderId: orderId);
     mezDbgPrint(
         "TIME FROM QUERY ========>${_order.value?.estimatedArrivalAtDropoff}");
@@ -191,5 +199,10 @@ class DvOrderViewcontroller {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     }
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Courier, orderId: orderId);
   }
 }
