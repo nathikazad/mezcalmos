@@ -222,8 +222,8 @@ Widget _backButton({required VoidCallback? click}) {
           gradient: click == null
               ? null
               : LinearGradient(colors: [
-                  primaryBlueColor,
-                  primaryBlueColor,
+                  Color.fromARGB(255, 97, 127, 255),
+                  Color.fromARGB(255, 198, 90, 252),
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: Icon(
