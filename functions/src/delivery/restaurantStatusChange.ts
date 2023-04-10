@@ -28,6 +28,7 @@ export async function changeRestaurantOrderStatus(
         serviceProviderDetailsId: restaurantOrder.spDetailsId,
         orderStripePaymentInfo: restaurantOrder.stripeInfo!
       }
+      //TODO @sanchit: if declined, then return with error
       await capturePayment(paymentDetails, restaurantOrder.totalCost)
     }
   }
