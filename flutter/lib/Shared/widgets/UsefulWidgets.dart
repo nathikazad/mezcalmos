@@ -93,7 +93,7 @@ class MezcalmosSharedWidgets {
     );
   }
 
-  static Widget fillMezkalaTitle({required int actionLength, bool showLogo = true}) {
+  static Widget fillMezkalaTitle({bool showLogo = true}) {
     return Container(
       width: 45.w,
       //  width: ,

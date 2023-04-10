@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyListTile.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyStoreTile.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/CustomAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/OrderViewPage/order_view_page.dart';
 
 class AssetServiceView extends StatefulWidget {
   const AssetServiceView({super.key});
@@ -192,6 +192,7 @@ class _AssetServiceViewState extends State<AssetServiceView> {
                 label: "Book now",
                 withGradient: true,
                 onClick: () async {
+                  await OrderViewPage.navigate();
                   return;
                 },
               ),

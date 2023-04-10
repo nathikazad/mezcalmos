@@ -94,17 +94,6 @@ class _AssetListsViewState extends State<AssetListsView> {
                     .currentSelectedService.value.name
                     .toLowerCase()][assetController.getViewNameString]["title"]
                 .toString()),
-        actionIcons: <Widget>[
-          AppBarActionButton(
-            icon: Icons.notifications,
-            onpress: () {},
-          ),
-          SizedBox(width: 5),
-          AppBarActionButton(
-            icon: Icons.access_time_filled,
-            onpress: () {},
-          ),
-        ],
       ),
       body: Column(
         children: [

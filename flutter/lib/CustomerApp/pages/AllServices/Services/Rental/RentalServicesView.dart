@@ -40,17 +40,6 @@ class _RentalViewState extends State<RentalView> {
                 .currentSelectedService.value.name
                 .toLowerCase()]["title"]
             .toString()),
-        actionIcons: <Widget>[
-          AppBarActionButton(
-            icon: Icons.notifications,
-            onpress: () {},
-          ),
-          SizedBox(width: 5),
-          AppBarActionButton(
-            icon: Icons.access_time_filled,
-            onpress: () {},
-          ),
-        ],
       ),
       body: ListView.builder(
         itemCount: rentalController

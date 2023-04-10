@@ -17,8 +17,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -36,6 +36,8 @@ class DeliveryServiceView extends StatefulWidget {
 
 class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   AuthController authController = Get.find<AuthController>();
+  AllServiceListViewController allServiceListViewController =
+      Get.find<AllServiceListViewController>();
 
   CustomerOrderController? _orderController;
 
@@ -61,19 +63,23 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
+        titleWidget: Text(_i18n()[allServiceListViewController
+                .currentSelectedService.value.name
+                .toLowerCase()]
+            .toString()),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            const SizedBox(height: 10),
-            mezWelcomeContainer(
-              Theme.of(context).textTheme.displayMedium!,
-            ),
-            mezDescription(txt.titleMedium!),
-            const SizedBox(height: 10),
-            mezServiceTitle(txt.displayMedium!),
+            // const SizedBox(height: 10),
+            // mezWelcomeContainer(
+            //   Theme.of(context).textTheme.displayMedium!,
+            // ),
+            // mezDescription(txt.titleMedium!),
+            // const SizedBox(height: 10),
+            // mezServiceTitle(txt.displayMedium!),
             mezListOfServices(),
           ],
         ),

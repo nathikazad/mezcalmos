@@ -591,7 +591,7 @@
         },
         "welcomeText": "Welcome to MEZKALA 👋",
         "search": "Search",
-        "appDescription": "Your one stop place to find all your local businesses."
+        "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."
       },
       "CustomerWrapper": {
         "savedLocations": "Saved locations",
@@ -615,7 +615,8 @@
           "subtitle": "Obtain delivery of anything you desire to your location."
         },
         "comingSoon": "Coming soon ...",
-        "supportText": "Need help ? contact our support team"
+        "supportText": "Need help ? contact our support team",
+        "delivery": "Deliveries"
       },
       "Laundry": {
         "Components": {

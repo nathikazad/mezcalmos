@@ -588,12 +588,12 @@
         },
         "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",
-        "appDescription": "Your one stop place to find all your local businesses."
+        "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad."
       },
       "CustomerWrapper": {
         "savedLocations": "Ubicaciones guardadas",
         "welcomeText": "Bienvenido a MEZCALMOS 👋",
-        "appDescription": " Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad",
+        "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad.",
         "services": "Servicios",
         "taxi": {
           "title": "Taxi",
@@ -612,7 +612,8 @@
           "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
         },
         "comingSoon": "Próximamente...",
-        "supportText": "Necesitas ayuda ? contacta con nuestro equipo de soporte"
+        "supportText": "Necesitas ayuda ? contacta con nuestro equipo de soporte",
+        "delivery": "Entregas"
       },
       "Laundry": {
         "Components": {
