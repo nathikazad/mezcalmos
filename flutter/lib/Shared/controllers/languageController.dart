@@ -24,7 +24,7 @@ class LanguageController extends GetxController {
       .obs; // language Object by default  must be set to en if no lang given  in constructor.
 
   LanguageController() {
-    final Language? lang = GetStorage().read("lang").toString().toLanguage();
+    final Language? lang = GetStorage().read("lang")?.toString().toLanguage();
     if (lang == null) {
       _userLanguageKey.value = _getSystemLanguage();
       GetStorage()
