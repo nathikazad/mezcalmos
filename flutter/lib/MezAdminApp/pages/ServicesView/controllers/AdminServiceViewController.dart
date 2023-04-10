@@ -81,7 +81,7 @@ class AdminServicesViewController {
         restLimit.value += increaseLimit ?? 0;
         unawaited(fetchRestaurants());
         break;
-      case ServiceProviderType.Delivery:
+      case ServiceProviderType.DeliveryCompany:
         dvLimit.value += increaseLimit ?? 0;
         unawaited(fetchCompanies());
         break;
@@ -95,7 +95,7 @@ class AdminServicesViewController {
         return _laundries.value;
       case ServiceProviderType.Restaurant:
         return _restaurants.value;
-      case ServiceProviderType.Delivery:
+      case ServiceProviderType.DeliveryCompany:
         return _dvCompanies.value;
       case ServiceProviderType.Customer:
         return null;

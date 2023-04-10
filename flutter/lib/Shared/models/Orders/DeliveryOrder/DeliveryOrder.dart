@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
@@ -20,6 +22,7 @@ class DeliveryOrder extends DeliverableOrder {
       required this.packageReady,
       required this.serviceOrderId,
       required this.status,
+     
       required super.scheduleTime,
       required super.estimatedArrivalAtDropoff,
       required super.estimatedArrivalAtPickup,
@@ -94,6 +97,12 @@ class DeliveryOrder extends DeliverableOrder {
         status == DeliveryOrderStatus.AtPickup;
   }
 
+  bool get haveAtLeastOneEstTime {
+    return estimatedArrivalAtDropoff != null ||
+        estimatedArrivalAtPickup != null ||
+        estimatedPackageReadyTime != null;
+  }
+
   // static void copyTo(DeliveryOrder from, DeliveryOrder to) {
   //   to.driverInfo = from.driverInfo;
   //   to.costs = from.costs;
@@ -106,3 +115,5 @@ class DeliveryOrder extends DeliverableOrder {
   @override
   String toString() => super.toString();
 }
+
+

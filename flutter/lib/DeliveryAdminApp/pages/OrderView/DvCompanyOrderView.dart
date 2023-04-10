@@ -3,28 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/controllers/DvCompanyOrderViewController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
+import 'package:mezcalmos/env_example.dart';
 
-//
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-    ["pages"]["RestaurantOrderView"];
-//
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["DvCompanyOrderView"];
 
 class DvCompanyOrderView extends StatefulWidget {
   const DvCompanyOrderView({Key? key}) : super(key: key);
@@ -62,7 +61,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "Order"),
+          onClick: MezRouter.back, title: "${_i18n()['order']}"),
       body: Obx(() {
         if (viewController.order.value != null) {
           return SingleChildScrollView(
@@ -98,51 +97,58 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 if (viewController.canSetDriver) _driverCard(),
                 if (viewController.order.value!.orderWithDriver)
                   OrderMapWidget(
+                      margin: const EdgeInsets.only(top: 20),
                       deliveryOrderId: viewController.order.value!.orderId,
                       updateDriver: viewController.order.value!.orderWithDriver,
                       polyline: viewController
                           .order.value!.routeInformation?.polyline,
                       from: viewController.order.value!.pickupLocation,
                       to: viewController.order.value!.dropOffLocation),
-                _serviceCard(),
+                if (MezEnv.appType == AppType.MezAdmin) _serviceCard(),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
-                    "Customer Info",
+                    "${_i18n()['customer']}",
                     style: context.txt.bodyLarge,
                   ),
                 ),
                 MezCard(
-                    margin: const EdgeInsets.only(top: 5),
-                    contentPadding: const EdgeInsets.all(8),
-                    firstAvatarBgImage: CachedNetworkImageProvider(
-                        viewController.order.value!.customer.image),
-                    content: Text(
-                      viewController.order.value!.customer.name,
-                      style: context.txt.bodyLarge,
-                    )),
-
-                Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: Text(
-                    'Delivery Details',
+                  margin: const EdgeInsets.only(top: 5),
+                  contentPadding: const EdgeInsets.all(8),
+                  firstAvatarBgImage: CachedNetworkImageProvider(
+                      viewController.order.value!.customer.image),
+                  content: Text(
+                    viewController.order.value!.customer.name,
                     style: context.txt.bodyLarge,
                   ),
                 ),
-                OrderScheduledTimeCard(
-                    time: viewController.order.value!.orderTime,
-                    margin: const EdgeInsets.only(top: 20)),
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    "${_i18n()['deliveryDetails']}",
+                    style: context.txt.bodyLarge,
+                  ),
+                ),
+                if (viewController.order.value!.pickupLocation != null)
+                  OrderDeliveryLocation(
+                    title: "${_i18n()['pickupLoc']}",
+                    address:
+                        viewController.order.value!.pickupLocation!.address,
+                    margin: const EdgeInsets.only(top: 10),
+                  ),
                 OrderDeliveryLocation(
                   address: viewController.order.value!.dropOffLocation.address,
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 10),
                 ),
                 OrderPaymentMethod(
                   stripeOrderPaymentInfo:
                       viewController.order.value!.stripePaymentInfo,
                   paymentType: viewController.order.value!.paymentType,
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 10),
                 ),
-                //   OrderNoteCard(note: viewController.order.value!.note),
+                OrderScheduledTimeCard(
+                    time: viewController.order.value!.scheduleTime,
+                    margin: const EdgeInsets.only(top: 10)),
               ],
             ),
           );
@@ -159,7 +165,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                   height: 15,
                 ),
                 Text(
-                  "Getting you order info...",
+                  "${_i18n()['loading']}",
                   style:
                       context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
                 ),
@@ -171,88 +177,91 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
     );
   }
 
-  Column _estTimes() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: 20, bottom: 10),
-          child: Text(
-            "Estimated Times",
-            style: context.txt.bodyLarge,
+  Widget _estTimes() {
+    if (viewController.order.value?.haveAtLeastOneEstTime == true) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 10),
+            child: Text(
+              "${_i18n()['estTimes']}",
+              style: context.txt.bodyLarge,
+            ),
           ),
-        ),
-        if (viewController.order.value!.estimatedPackageReadyTime != null)
-          MezCard(
-              contentPadding: const EdgeInsets.all(8),
-              firstAvatarBgColor: secondaryLightBlueColor,
-              secondAvatarBgColor: primaryBlueColor,
-              firstAvatarIcon: Icons.watch_later,
-              firstAvatarIconColor: primaryBlueColor,
-              secondAvatarIcon: Icons.check_circle,
-              secondAvatarIconColor: Colors.white,
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Package ready :",
-                    style: context.txt.bodyLarge,
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(viewController.order.value!.estimatedPackageReadyTime!
-                      .getEstimatedTime()),
-                ],
-              )),
-        if (viewController.order.value!.estimatedArrivalAtPickup != null)
-          MezCard(
-              contentPadding: const EdgeInsets.all(8),
-              firstAvatarBgColor: secondaryLightBlueColor,
-              secondAvatarBgColor: primaryBlueColor,
-              firstAvatarIcon: Icons.watch_later,
-              firstAvatarIconColor: primaryBlueColor,
-              secondAvatarIcon: Icons.delivery_dining,
-              secondAvatarIconColor: Colors.white,
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Arrival at pickup :",
-                    style: context.txt.bodyLarge,
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(viewController.order.value!.estimatedArrivalAtPickup!
-                      .getEstimatedTime()),
-                ],
-              )),
-        if (viewController.order.value!.estimatedArrivalAtPickup != null)
-          MezCard(
-              contentPadding: const EdgeInsets.all(8),
-              firstAvatarBgColor: secondaryLightBlueColor,
-              secondAvatarBgColor: primaryBlueColor,
-              firstAvatarIcon: Icons.watch_later,
-              firstAvatarIconColor: primaryBlueColor,
-              secondAvatarIcon: Icons.delivery_dining,
-              secondAvatarIconColor: Colors.white,
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Arrival at dropoff :",
-                    style: context.txt.bodyLarge,
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(viewController.order.value!.estimatedArrivalAtDropoff!
-                      .getEstimatedTime()),
-                ],
-              )),
-      ],
-    );
+          if (viewController.order.value!.estimatedPackageReadyTime != null)
+            MezCard(
+                contentPadding: const EdgeInsets.all(8),
+                firstAvatarBgColor: secondaryLightBlueColor,
+                secondAvatarBgColor: primaryBlueColor,
+                firstAvatarIcon: Icons.watch_later,
+                firstAvatarIconColor: primaryBlueColor,
+                secondAvatarIcon: Icons.check_circle,
+                secondAvatarIconColor: Colors.white,
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${_i18n()['packageReady']}",
+                      style: context.txt.bodyLarge,
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(viewController.order.value!.estimatedPackageReadyTime!
+                        .getEstimatedTime()),
+                  ],
+                )),
+          if (viewController.order.value!.estimatedArrivalAtPickup != null)
+            MezCard(
+                contentPadding: const EdgeInsets.all(8),
+                firstAvatarBgColor: secondaryLightBlueColor,
+                secondAvatarBgColor: primaryBlueColor,
+                firstAvatarIcon: Icons.watch_later,
+                firstAvatarIconColor: primaryBlueColor,
+                secondAvatarIcon: Icons.delivery_dining,
+                secondAvatarIconColor: Colors.white,
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${_i18n()['arrivalAtPickup']}",
+                      style: context.txt.bodyLarge,
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(viewController.order.value!.estimatedArrivalAtPickup!
+                        .getEstimatedTime()),
+                  ],
+                )),
+          if (viewController.order.value!.estimatedArrivalAtPickup != null)
+            MezCard(
+                contentPadding: const EdgeInsets.all(8),
+                firstAvatarBgColor: secondaryLightBlueColor,
+                secondAvatarBgColor: primaryBlueColor,
+                firstAvatarIcon: Icons.watch_later,
+                firstAvatarIconColor: primaryBlueColor,
+                secondAvatarIcon: Icons.delivery_dining,
+                secondAvatarIconColor: Colors.white,
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${_i18n()['arrivalAtDropoff']}",
+                      style: context.txt.bodyLarge,
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(viewController.order.value!.estimatedArrivalAtDropoff!
+                        .getEstimatedTime()),
+                  ],
+                )),
+        ],
+      );
+    } else
+      return SizedBox();
   }
 
   MezCard _driverCard() {
@@ -269,7 +278,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
               viewController.order.value!.driverInfo!.image),
       content: Text(
         viewController.order.value!.driverInfo?.name ??
-            "No driver assigned yet",
+            "${_i18n()['noDriver']}",
         style: context.txt.bodyLarge,
       ),
       action: Row(
@@ -285,14 +294,6 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 : Icons.add,
             iconSize: 22,
           ),
-          if (viewController.order.value!.serviceProviderDriverChatId != null)
-            MessageButton(
-                chatId: 55,
-                onTap: () {
-                  BaseMessagingScreen.navigate(
-                      chatId: viewController
-                          .order.value!.serviceProviderDriverChatId!);
-                })
         ],
       ),
     );
@@ -315,26 +316,6 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
               viewController.order.value!.serviceProvider.name,
               style: context.txt.bodyLarge,
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.start,
-            //   children: [
-            //     Icon(
-            //       Icons.place,
-            //       color: primaryBlueColor,
-            //       size: 18,
-            //     ),
-            //     SizedBox(
-            //       width: 5,
-            //     ),
-            //     Flexible(
-            //       child: Text(
-            //         viewController.order.value!.serviceInfo.location.address,
-            //         style: context.txt.bodyMedium,
-            //         maxLines: 1,
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ));
   }

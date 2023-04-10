@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -31,99 +32,100 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
   )
       .map<DeliveryOrder?>(
           (QueryResult<Subscription$listen_on_driver_order> event) {
-    final Subscription$listen_on_driver_order$delivery_order_by_pk orderData =
-        event.parsedData!.delivery_order_by_pk!;
+    if (event.parsedData?.delivery_order_by_pk != null) {
+      final Subscription$listen_on_driver_order$delivery_order_by_pk orderData =
+          event.parsedData!.delivery_order_by_pk!;
 
-    StripeOrderPaymentInfo? _paymentInfo;
-    if (orderData.restaurant_order?.stripe_info != null) {
-      _paymentInfo = StripeOrderPaymentInfo.fromJson(
-          orderData.restaurant_order!.stripe_info);
-    }
-    if (orderData.laundry_pickup_order?.stripe_info != null) {
-      _paymentInfo = StripeOrderPaymentInfo.fromJson(
-          orderData.restaurant_order!.stripe_info);
-    }
-    if (orderData.laundry_delivery_order?.stripe_info != null) {
-      _paymentInfo = StripeOrderPaymentInfo.fromJson(
-          orderData.restaurant_order!.stripe_info);
-    }
-    return DeliveryOrder(
-      orderId: orderData.id,
-      scheduleTime: (orderData.schedule_time != null)
-          ? DateTime.tryParse(orderData.schedule_time!)
-          : null,
-      packageReady: orderData.package_ready,
+      StripeOrderPaymentInfo? _paymentInfo;
+      if (orderData.restaurant_order?.stripe_info != null) {
+        _paymentInfo = StripeOrderPaymentInfo.fromJson(
+            orderData.restaurant_order!.stripe_info);
+      }
+      if (orderData.laundry_pickup_order?.stripe_info != null) {
+        _paymentInfo = StripeOrderPaymentInfo.fromJson(
+            orderData.restaurant_order!.stripe_info);
+      }
+      if (orderData.laundry_delivery_order?.stripe_info != null) {
+        _paymentInfo = StripeOrderPaymentInfo.fromJson(
+            orderData.restaurant_order!.stripe_info);
+      }
+      return DeliveryOrder(
+        orderId: orderData.id,
+        scheduleTime: (orderData.schedule_time != null)
+            ? DateTime.tryParse(orderData.schedule_time!)
+            : null,
+        packageReady: orderData.package_ready,
 
-      orderType: orderData.order_type.toOrderType(),
-      stripePaymentInfo: _paymentInfo,
-      serviceOrderId: orderData.restaurant_order?.id,
-      deliveryCompany: _getDeliveryCompany(orderData)!,
-      serviceProvider: _getServiceInfo(orderData)!,
-      customer: UserInfo(
-          hasuraId: orderData.customer.user.id,
-          image: orderData.customer.user.image,
-          name: orderData.customer.user.name),
-      deliveryDirection: orderData.direction.toDeliveryDirection(),
-      routeInformation: (orderData.trip_duration != null &&
-              orderData.trip_distance != null &&
-              orderData.trip_polyline != null)
-          ? RouteInformation(
-              duration: RideDuration(
-                  orderData.trip_duration.toString(), orderData.trip_duration!),
-              distance: RideDistance(
-                  orderData.trip_distance.toString(), orderData.trip_distance!),
-              polyline: orderData.trip_polyline!)
-          : null,
-      orderTime: DateTime.parse(orderData.order_time),
-      driverInfo: (orderData.delivery_driver != null)
-          ? UserInfo(
-              hasuraId: orderData.delivery_driver!.user.id,
-              name: orderData.delivery_driver!.user.name,
-              image: orderData.delivery_driver!.user.image,
-              language: null)
-          : null,
-      estimatedArrivalAtDropoff:
-          (orderData.estimated_arrival_at_dropoff_time != null)
-              ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
-              : null,
+        orderType: orderData.order_type.toOrderType(),
+        stripePaymentInfo: _paymentInfo,
+        serviceOrderId: orderData.restaurant_order?.id,
+        deliveryCompany: _getDeliveryCompany(orderData)!,
+        serviceProvider: _getServiceInfo(orderData)!,
+        customer: UserInfo(
+            hasuraId: orderData.customer.user.id,
+            image: orderData.customer.user.image,
+            name: orderData.customer.user.name),
+        deliveryDirection: orderData.direction.toDeliveryDirection(),
+        routeInformation: (orderData.trip_duration != null &&
+                orderData.trip_distance != null &&
+                orderData.trip_polyline != null)
+            ? RouteInformation(
+                duration: RideDuration(orderData.trip_duration.toString(),
+                    orderData.trip_duration!),
+                distance: RideDistance(orderData.trip_distance.toString(),
+                    orderData.trip_distance!),
+                polyline: orderData.trip_polyline!)
+            : null,
+        orderTime: DateTime.parse(orderData.order_time),
+        driverInfo: (orderData.delivery_driver != null)
+            ? UserInfo(
+                hasuraId: orderData.delivery_driver!.user.id,
+                name: orderData.delivery_driver!.user.name,
+                image: orderData.delivery_driver!.user.image,
+                language: null)
+            : null,
+        estimatedArrivalAtDropoff:
+            (orderData.estimated_arrival_at_dropoff_time != null)
+                ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
+                : null,
 
-      estimatedArrivalAtPickup:
-          (orderData.estimated_arrival_at_pickup_time != null)
-              ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
-              : null,
-      estimatedPackageReadyTime:
-          (orderData.estimated_package_ready_time != null)
-              ? DateTime.parse(orderData.estimated_package_ready_time!)
-              : null,
-      status: orderData.status.toDeliveryOrderStatus(),
-      deliveryProviderType:
-          orderData.service_provider_type.toServiceProviderType(),
-      // deliveryCost: orderData.delivery_cost,
-      // packageCost: orderData.package_cost_comp ?? 0,
-      driverLocation: (orderData.delivery_driver != null &&
-              orderData.delivery_driver?.current_location != null)
-          ? LatLng(orderData.delivery_driver!.current_location!.latitude,
-              orderData.delivery_driver!.current_location!.longitude)
-          : null,
-      pickupLocation: (orderData.pickup_address != null &&
-              orderData.pickup_gps != null)
-          ? MezLocation(
-              orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
-          : null,
-      dropOffLocation: MezLocation(
-          orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
-      customerDriverChatId: orderData.chat_with_customer_id,
-      serviceProviderDriverChatId: orderData.chat_with_service_provider_id,
-      paymentType: orderData.payment_type.toPaymentType(),
-      chatId: orderData.chat_with_customer_id,
-      costs: OrderCosts(
-          deliveryCost: orderData.delivery_cost,
-          refundAmmount: null,
-          tax: null,
-          orderItemsCost: orderData.package_cost_comp,
-          totalCost: orderData.total_cost),
-      deliveryOrderId: orderData.id,
-    );
+        estimatedArrivalAtPickup:
+            (orderData.estimated_arrival_at_pickup_time != null)
+                ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
+                : null,
+        estimatedPackageReadyTime:
+            (orderData.estimated_package_ready_time != null)
+                ? DateTime.parse(orderData.estimated_package_ready_time!)
+                : null,
+        status: orderData.status.toDeliveryOrderStatus(),
+        deliveryProviderType:
+            orderData.service_provider_type.toServiceProviderType(),
+        // deliveryCost: orderData.delivery_cost,
+        // packageCost: orderData.package_cost_comp ?? 0,
+        driverLocation: null,
+        pickupLocation: (orderData.pickup_address != null)
+            ? MezLocation(
+                orderData.pickup_address!,
+                orderData.pickup_gps?.toLocationData() ??
+                    MezLocation.buildLocationData(0, 0))
+            : null,
+
+        dropOffLocation: MezLocation(
+            orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
+        customerDriverChatId: orderData.chat_with_customer_id,
+        serviceProviderDriverChatId: orderData.chat_with_service_provider_id,
+        paymentType: orderData.payment_type.toPaymentType(),
+        chatId: orderData.chat_with_customer_id,
+        costs: OrderCosts(
+            deliveryCost: orderData.delivery_cost,
+            refundAmmount: null,
+            tax: null,
+            orderItemsCost: orderData.package_cost_comp,
+            totalCost: orderData.total_cost),
+        deliveryOrderId: orderData.id,
+      );
+    }
+    return null;
   });
 }
 
@@ -265,7 +267,7 @@ UserInfo? _getDeliveryCompany<T>(
   final cModels.ServiceProviderType serviceProviderType =
       orderData.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
-    case cModels.ServiceProviderType.Delivery:
+    case cModels.ServiceProviderType.DeliveryCompany:
       return UserInfo(
           hasuraId: orderData.delivery_company!.id,
           name: orderData.delivery_company!.details!.name,
@@ -321,4 +323,29 @@ ServiceInfo? _getServiceInfo(orderData) {
     default:
   }
   return null;
+}
+
+Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_driver_order_prices(
+          Options$Subscription$listen_driver_order_prices(
+              variables: Variables$Subscription$listen_driver_order_prices(
+                  orderId: orderId)))
+      .map((QueryResult<Subscription$listen_driver_order_prices> event) {
+    mezDbgPrint("Event =======>$event");
+    if (event.parsedData?.delivery_order_by_pk != null) {
+      Subscription$listen_driver_order_prices$delivery_order_by_pk data =
+          event.parsedData!.delivery_order_by_pk!;
+      return OrderCosts(
+          deliveryCost: data.delivery_cost.toDouble(),
+          refundAmmount: null,
+          changePriceRequest: (data.change_price_request != null)
+              ? ChangePriceRequest.fromMap(data.change_price_request)
+              : null,
+          tax: data.tax,
+          orderItemsCost: data.package_cost_comp,
+          totalCost: data.total_cost);
+    }
+    return null;
+  });
 }

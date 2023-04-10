@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/DeliverySettingCostComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/DeliverySettingsCompaniesList.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/ServiceDeliveryTypePicker.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -34,11 +33,11 @@ class DeliverySettingsView extends StatefulWidget {
   }) {
     return MezRouter.toPath(
         SharedServiceProviderRoutes.kDeliverySettingsViewRoute
-            .replaceAll(":serviceProviderId", serviceProviderId.toString())
-            .replaceAll(":detailsId", detailsId.toString())
-            .replaceAll(":deliveryDetailsId", deliveryDetailsID.toString()),
+            .replaceFirst(":serviceProviderId", serviceProviderId.toString()),
         arguments: <String, dynamic>{
           "serviceProviderType": serviceProviderType,
+          "detailsId": detailsId,
+          "deliveryDetailsId": deliveryDetailsID,
         });
   }
 
@@ -69,16 +68,16 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
   }
 
   void _settingVariables() {
-    if (Get.parameters["serviceProviderId"] != null &&
-        Get.arguments?["serviceProviderType"] != null &&
-        Get.parameters["deliveryDetailsId"] != null &&
-        Get.parameters["detailsId"] != null) {
-      serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
-      serviceDetailsId = int.tryParse(Get.parameters["detailsId"]!);
-      deliveryDetailsId = int.tryParse(Get.parameters["deliveryDetailsId"]!);
-
+    if (MezRouter.urlArguments["serviceProviderId"] != null &&
+        MezRouter.bodyArguments?["serviceProviderType"] != null &&
+        MezRouter.bodyArguments?["deliveryDetailsId"] != null &&
+        MezRouter.bodyArguments?["detailsId"] != null) {
+      serviceProviderId =
+          int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
+      serviceDetailsId = MezRouter.bodyArguments?["detailsId"] as int?;
+      deliveryDetailsId = MezRouter.bodyArguments?["deliveryDetailsId"] as int?;
       serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
-          .toString() as ServiceProviderType;
+          as ServiceProviderType?;
     }
   }
 
@@ -110,12 +109,13 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
                 SizedBox(
                   height: 10,
                 ),
-                if (serviceProviderType != ServiceProviderType.Delivery)
+                if (serviceProviderType != ServiceProviderType.DeliveryCompany)
                   ServiceDeliveryTypePicker(
                     viewController: viewController,
                   ),
                 (viewController.isSelfDelivery ||
-                        serviceProviderType == ServiceProviderType.Delivery)
+                        serviceProviderType ==
+                            ServiceProviderType.DeliveryCompany)
                     ? DeliverySettingCostComponent(
                         viewController: viewController)
                     : DeliverySettingsCompaniesList(

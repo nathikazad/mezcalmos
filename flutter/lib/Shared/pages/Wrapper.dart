@@ -35,6 +35,11 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
     // this will execute first and much faster since it's a microtask.
+    MezRouter.registerReturnToViewCallback(SharedRoutes.kWrapperRoute, () {
+      mezDbgPrint("back in wrapper");
+      authController.userRedirectFinish = false;
+      handleAuthStateChange(authController.fireAuthUser);
+    });
     Future<void>.microtask(() {
       mezDbgPrint(authController.fireAuthUser);
       mezDbgPrint("NOOOOOT stream auth state ======== ");
@@ -50,7 +55,7 @@ class _WrapperState extends State<Wrapper> {
         startListeningOnLocationPermission();
       }
     });
-    Future.delayed(Duration.zero, checkConnectivity);
+    Future.microtask(() => checkConnectivity);
     super.initState();
   }
 
@@ -180,8 +185,10 @@ class _WrapperState extends State<Wrapper> {
       MezRouter.popTillInclusive(SharedRoutes.kSignInAtOrderTimeRoute);
     } else {
       if (!Get.currentRoute.contains('/messages/'))
-        MezRouter.popEverythingTillBeforeWrapper()
-            .then((_) => MezRouter.toNamed(SharedRoutes.kHomeRoute));
+        MezRouter.popEverythingTillBeforeWrapper().then((_) {
+          mezDbgPrint("Going to home now");
+          MezRouter.toNamed(SharedRoutes.kHomeRoute);
+        });
     }
   }
 

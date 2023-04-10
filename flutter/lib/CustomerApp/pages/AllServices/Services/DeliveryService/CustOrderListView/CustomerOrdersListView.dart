@@ -49,6 +49,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
       body: Obx(
         () => viewController.hasOrders
             ? SingleChildScrollView(
+                controller: viewController.scrollController,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

@@ -107,7 +107,7 @@ class CustomerAuthController extends GetxController {
           orderId: orderId,
           reviewId: reviewId,
         );
-      case ServiceProviderType.Delivery:
+      case ServiceProviderType.DeliveryCompany:
         return addDriverOrderReviewId(
           orderId: orderId,
           reviewId: reviewId,

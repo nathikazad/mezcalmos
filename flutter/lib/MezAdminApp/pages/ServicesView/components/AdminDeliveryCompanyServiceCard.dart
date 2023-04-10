@@ -61,7 +61,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         onChanged: (bool v) {
                           viewController.switchServiceStatus(
                               serviceDetailsId: company.serviceDetailsId,
-                              providerType: ServiceProviderType.Delivery,
+                              providerType: ServiceProviderType.DeliveryCompany,
                               value: v);
                         },
                         activeColor: primaryBlueColor,
@@ -101,7 +101,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                               serviceProviderId: company.info.hasuraId,
                               serviceName: company.info.name,
                               serviceProviderType:
-                                  ServiceProviderType.Delivery);
+                                  ServiceProviderType.DeliveryCompany);
                         }),
                     _smallBtn(
                         icon: Icons.person,

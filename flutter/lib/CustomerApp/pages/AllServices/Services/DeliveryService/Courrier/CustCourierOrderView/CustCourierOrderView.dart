@@ -16,8 +16,8 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
@@ -37,8 +37,12 @@ class CustCourierOrderView extends StatefulWidget {
   static Future<void> navigate({
     required int orderId,
   }) {
-    return MezRouter.toPath(CourierRoutes.kCourierOrderView
-        .replaceFirst(":orderId", orderId.toString()));
+    return MezRouter.toPath(constructPath(orderId));
+  }
+
+  static String constructPath(int orderId) {
+    return CourierRoutes.kCourierOrderView
+        .replaceFirst(":orderId", orderId.toString());
   }
 
   const CustCourierOrderView({super.key});
@@ -121,16 +125,19 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   Container(
                     margin: const EdgeInsets.only(top: 15),
                     child: Text(
-                      'Delivery details',
+                      "${_i18n()['deliveryDetails']}",
                       style: context.txt.bodyLarge,
                     ),
                   ),
-                  OrderScheduledTimeCard(
-                      time: viewController.order.scheduleTime,
-                      margin: const EdgeInsets.only(top: 8)),
+                  if (viewController.order.pickupLocation != null)
+                    OrderDeliveryLocation(
+                      title: "${_i18n()['pickupLoc']}",
+                      address: viewController.order.pickupLocation!.address,
+                      margin: const EdgeInsets.only(top: 8),
+                    ),
                   OrderDeliveryLocation(
                     address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 8),
+                    margin: const EdgeInsets.only(top: 15),
                   ),
                   OrderPaymentMethod(
                     margin: EdgeInsets.only(top: 15),
@@ -138,11 +145,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
                   ),
-                  OrderDeliveryLocation(
-                    address: viewController.order.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 15),
-                    titleTextStyle: context.txt.bodyLarge,
-                  ),
+                  OrderScheduledTimeCard(
+                      time: viewController.order.scheduleTime,
+                      margin: const EdgeInsets.only(top: 8)),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
                       billImage: viewController.order.billImage,
@@ -207,16 +212,29 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                   children: [
                     Text(
                       viewController.order.items[index].name,
-                      style: context.txt.bodyLarge,
+                      style: context.txt.bodyLarge?.copyWith(
+                          color: viewController.order.items[index].unavailable
+                              ? Colors.grey
+                              : null,
+                          decoration:
+                              viewController.order.items[index].unavailable
+                                  ? TextDecoration.lineThrough
+                                  : null),
                     ),
                     Row(
                       children: [
                         Text(
                           "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
                           style: context.txt.bodyLarge?.copyWith(
+                              color:
+                                  viewController.order.items[index].unavailable
+                                      ? Colors.grey
+                                      : null,
                               decoration: viewController
-                                          .order.items[index].actualCost !=
-                                      null
+                                              .order.items[index].actualCost !=
+                                          null ||
+                                      viewController
+                                          .order.items[index].unavailable
                                   ? TextDecoration.lineThrough
                                   : null),
                         ),
@@ -227,7 +245,16 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                             null)
                           Text(
                               "${viewController.order.items[index].actualCost!.toPriceString()}",
-                              style: context.txt.bodyLarge)
+                              style: context.txt.bodyLarge?.copyWith(
+                                decoration: viewController
+                                        .order.items[index].unavailable
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                color: viewController
+                                        .order.items[index].unavailable
+                                    ? Colors.grey
+                                    : null,
+                              ))
                       ],
                     ),
                   ],
@@ -299,7 +326,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 viewController.order.inProcess() &&
                 viewController.order.isDriverAssigned)
               MessageButton(
-                  chatId: 55,
+                  chatId: viewController.order.customerDriverChatId!,
                   onTap: () {
                     BaseMessagingScreen.navigate(
                         chatId: viewController.order.customerDriverChatId!);
@@ -318,7 +345,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
         return customerAddReviewButton(context,
             orderId: viewController.order.deliveryOrderId!,
             serviceProviderId: viewController.order.serviceProvider.hasuraId,
-            serviceProviderType: ServiceProviderType.Delivery,
+            serviceProviderType: ServiceProviderType.DeliveryCompany,
             orderType: OrderType.Courier);
       } else {
         return SizedBox();

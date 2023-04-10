@@ -790,13 +790,36 @@ void closeAllSnackbars({String? title, String? subtitle}) {
   ScaffoldMessenger.of(QR.context!).clearSnackBars();
 }
 
-void showErrorSnackBar({String errorTitle = "Error", String errorText = ""}) {
+void showErrorSnackBar(
+    {String errorTitle = "Error", String errorText = "", Duration? duration}) {
   return customSnackBar(
       title: errorTitle,
       subTitle: errorText,
+      duration: duration,
       icon: Icon(
         Icons.cancel,
         size: 40,
         color: Colors.redAccent,
       ));
+}
+
+void showRouteErrorSnackBar() {
+  return showErrorSnackBar(errorText: "${_i18n()['routeError']}");
+}
+
+class DashedLineVerticalPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    double dashHeight = 5, dashSpace = 3, startY = 0;
+    final Paint paint = Paint()
+      ..color = primaryBlueColor
+      ..strokeWidth = size.width;
+    while (startY < size.height) {
+      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashHeight), paint);
+      startY += dashHeight + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

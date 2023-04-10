@@ -799,7 +799,7 @@ enum Language { EN, ES }
 extension ParseLanguageToString on Language {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
+    return str.toLowerCase();
   }
 }
 extension ParseStringToLanguage on String {
@@ -1421,7 +1421,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
-enum ServiceProviderType { Restaurant, Laundry, Taxi, Business, Delivery, Customer }
+enum ServiceProviderType { Restaurant, Laundry, Taxi, Business, DeliveryCompany, Customer }
 extension ParseServiceProviderTypeToString on ServiceProviderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;

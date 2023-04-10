@@ -62,7 +62,7 @@ class OperatorsListViewController {
 
   Future<void> fetchOperators() async {
     switch (serviceProviderType) {
-      case cModels.ServiceProviderType.Delivery:
+      case cModels.ServiceProviderType.DeliveryCompany:
         operators.value = await get_delivery_company_operators(
                 companyId: serviceProviderId, withCache: false) ??
             [];
@@ -113,7 +113,7 @@ class OperatorsListViewController {
         return cModels.ParticipantType.RestaurantOperator;
       case cModels.ServiceProviderType.Laundry:
         return cModels.ParticipantType.LaundryOperator;
-      case cModels.ServiceProviderType.Delivery:
+      case cModels.ServiceProviderType.DeliveryCompany:
         return cModels.ParticipantType.DeliveryOperator;
       default:
         return cModels.ParticipantType.RestaurantOperator;

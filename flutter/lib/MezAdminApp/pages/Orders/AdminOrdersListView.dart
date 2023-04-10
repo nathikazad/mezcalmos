@@ -30,10 +30,6 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
   void initState() {
     viewController.init(
         adminTabsViewController: widget.adminTabsViewController);
-    viewController.scrollController.onBottomReach(() {
-      //   mezDbgPrint("Bottom reached 🥹");
-      viewController.fetchServicePastOrders();
-    }, sensitivity: 500, throttleDuration: Duration(seconds: 1));
 
     super.initState();
   }
@@ -63,7 +59,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                     ServiceProviderType.Restaurant)
                   _buildRestuarntOrders(),
                 if (viewController.currentService ==
-                    ServiceProviderType.Delivery)
+                    ServiceProviderType.DeliveryCompany)
                   _buildDeliveryOrders(),
                 if (viewController.currentService ==
                     ServiceProviderType.Laundry)

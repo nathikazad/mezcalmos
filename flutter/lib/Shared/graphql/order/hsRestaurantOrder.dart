@@ -445,13 +445,15 @@ Future<List<MinimalOrder>?> get_current_restaurant_orders(
 }
 
 Future<List<MinimalOrder>?> get_past_restaurant_orders(
-    {required int restaurantId}) async {
+    {required int restaurantId,
+    required int limit,
+    required int offset}) async {
   final QueryResult<Query$get_restaurant_past_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_restaurant_past_orders(
     Options$Query$get_restaurant_past_orders(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Query$get_restaurant_past_orders(
-          restaurantId: restaurantId),
+          restaurantId: restaurantId, offset: offset, limit: limit),
     ),
   );
   if (queryResult.parsedData?.restaurant_order != null) {

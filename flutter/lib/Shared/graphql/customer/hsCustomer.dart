@@ -169,14 +169,18 @@ Future set_notification_token(
 // }
 
 Future<List<MinimalOrder>> get_customer_orders(
-    {required int customerId, required bool inProcess}) async {
+    {required int customerId,
+    required bool inProcess,
+    required int limit,
+    required offest}) async {
   final QueryResult<Query$get_customer_orders> res =
       await _graphClient.query$get_customer_orders(
     Options$Query$get_customer_orders(
       variables: Variables$Query$get_customer_orders(
-        custId: customerId,
-        inProcess: inProcess,
-      ),
+          custId: customerId,
+          inProcess: inProcess,
+          limit: limit,
+          offset: offest),
     ),
   );
   if (res.parsedData?.customer_minimal_orders == null) {

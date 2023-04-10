@@ -32,8 +32,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
   static Future<void> navigate({required int orderId}) {
-    return MezRouter.toPath(RestaurantRoutes.restaurantOrdersRoute
-        .replaceAll(":orderId", orderId.toString()));
+    return MezRouter.toPath(constructPath(orderId));
+  }
+
+  static String constructPath(int orderId) {
+    return RestaurantRoutes.restaurantOrdersRoute
+        .replaceAll(":orderId", orderId.toString());
   }
 
   @override

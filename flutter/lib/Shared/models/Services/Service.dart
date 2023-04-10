@@ -18,6 +18,7 @@ abstract class Service {
   Map<cModels.Language, bool> languages;
   List<Review> reviews = <Review>[];
   num? rate;
+  num? numberOfReviews;
   DeliveryCost? deliveryCost;
 
   PaymentInfo? paymentInfo;
@@ -28,6 +29,7 @@ abstract class Service {
       this.schedule,
       this.phoneNumber,
       this.serviceLinkId,
+      this.numberOfReviews,
       this.serviceProviderType,
       required this.state,
       required this.languages,

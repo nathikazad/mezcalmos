@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpCurrentOrders.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
@@ -53,17 +54,14 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
 
       case 1:
         return ServiceDriversListView(
-          serviceProviderId: Get.find<DeliveryOpAuthController>().companyId,
-          serviceProviderType: ServiceProviderType.Delivery,
+          serviceProviderId: opAuthController.companyId,
+          serviceProviderType: ServiceProviderType.DeliveryCompany,
           serviceLinkId: opAuthController.operator.value!.state.serviceLinkId,
         );
       case 2:
         return DeliveryCostSettingView(
-          deliveryDetailsId: Get.find<DeliveryOpAuthController>()
-              .operator
-              .value!
-              .state
-              .deliveryDetailsId,
+          deliveryDetailsId:
+              opAuthController.operator.value!.state.deliveryDetailsId,
         );
       case 3:
         return ServiceProfileView(

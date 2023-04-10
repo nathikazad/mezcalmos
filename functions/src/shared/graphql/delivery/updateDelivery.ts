@@ -1,6 +1,6 @@
 import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
-import { ChangePriceStatus, DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { ChangePriceStatus, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { MezError } from "../../models/Generic/Generic";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
@@ -50,7 +50,8 @@ export async function updateDeliveryPackageCost(deliveryOrder: DeliveryOrder) {
         id: deliveryOrder.deliveryId
       }, 
       _set: {
-        package_cost: deliveryOrder.packageCost
+        package_cost: deliveryOrder.packageCost,
+        package_ready: true
       }
     }, { 
       package_cost: true
@@ -166,6 +167,25 @@ export async function clearLock(deliveryOrderId: number) {
       }
     }, { 
      lock_time: true
+    
+    }]
+  });
+}
+
+export async function unassignDriver(deliveryOrderId: number) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_delivery_order_by_pk: [{
+      pk_columns: {
+        id: deliveryOrderId
+      }, 
+      _set: {
+        delivery_driver_id: null!,
+        status: DeliveryOrderStatus.OrderReceived
+      }
+    }, { 
+     delivery_driver_id: true
     
     }]
   });

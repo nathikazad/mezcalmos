@@ -100,7 +100,7 @@ class DriversViewController {
       case cModels.ServiceProviderType.Laundry:
         return cModels.DeliveryServiceProviderType.Laundry;
         break;
-      case cModels.ServiceProviderType.Delivery:
+      case cModels.ServiceProviderType.DeliveryCompany:
         return cModels.DeliveryServiceProviderType.DeliveryCompany;
         break;
       default:

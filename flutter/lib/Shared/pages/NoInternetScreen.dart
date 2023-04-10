@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mezcalmos/Shared/themes/AppColors.dart';
-import 'package:mezcalmos/Shared/themes/styles.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
-import 'package:mezcalmos/Shared/widgets/CustomFlatButton.dart';
+import 'package:mezcalmos/Shared/themes/styles.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -43,9 +41,9 @@ class NoInternetScreen extends StatelessWidget {
           ),
           MezButton(
               withGradient: true,
-              height: 10.h,
+              // height: ,
               width: 50.w,
-              borderRadius: 20.0,
+              borderRadius: 15.0,
               onClick: () async {
                 await ConnectivityHelper.instance.checkForInternet(null);
               },

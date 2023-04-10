@@ -33,6 +33,7 @@ import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env.dart';
@@ -55,19 +56,20 @@ abstract class StartingPointBase extends StatefulWidget {
   final List<SideMenuItem>? sideMenuItems;
   final LocationPermissionType locationPermissionType;
   final AppType appType;
+  final bool stripeEnabled;
 
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
-  StartingPointBase({
-    this.appTheme = null,
-    required this.signInCallback,
-    required this.signOutCallback,
-    required this.routes,
-    required this.appType,
-    this.sideMenuItems,
-    this.locationPermissionType = LocationPermissionType.None,
-  }) {
+  StartingPointBase(
+      {this.appTheme = null,
+      required this.signInCallback,
+      required this.signOutCallback,
+      required this.routes,
+      required this.appType,
+      this.sideMenuItems,
+      this.locationPermissionType = LocationPermissionType.None,
+      this.stripeEnabled = false}) {
     MezEnv.setAppType(appType);
   }
 
@@ -87,7 +89,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
+        String.fromEnvironment('LMODE', defaultValue: "stage");
     _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
@@ -284,7 +286,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     _initializeConfig();
 
     final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-
+    MezRouter.setupQR();
     return DevicePreview(
       enabled: MezEnv.previewMode == true ? true : false,
       builder: (BuildContext context) => MaterialApp.router(
@@ -302,7 +304,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
         title: MezEnv.appType.toShortString(),
         theme: appTheme,
         color: Colors.white,
-        
+
         routerDelegate: QRouterDelegate(
           routes,
           observers: [

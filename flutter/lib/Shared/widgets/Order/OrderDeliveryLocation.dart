@@ -11,8 +11,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 
 class OrderDeliveryLocation extends StatelessWidget {
   const OrderDeliveryLocation(
-      {super.key, required this.address, this.margin, this.titleTextStyle});
+      {super.key,
+      this.title,
+      required this.address,
+      this.margin,
+      this.titleTextStyle});
   final String address;
+  final String? title;
   final EdgeInsets? margin;
   final TextStyle? titleTextStyle;
 
@@ -24,7 +29,7 @@ class OrderDeliveryLocation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${_i18n()["title"]}',
+            title ?? '${_i18n()["title"]}',
             style: titleTextStyle ?? context.txt.titleLarge,
           ),
           const SizedBox(

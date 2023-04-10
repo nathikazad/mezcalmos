@@ -41,7 +41,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
         title: '${_i18n()["laundries"]}',
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,8 +58,12 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
             //     textAlign: TextAlign.start,
             //   ),
             // ),
+            Text(
+              "${_i18n()['title']}",
+              style: context.textTheme.displaySmall,
+            ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             Obx(() {
               if (viewController.hasData) {
@@ -85,7 +89,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
           viewController.laundries.value!.length,
           (int index) => CustomerLaundrySelectCard(
             laundry: viewController.laundries.value![index],
-            customerLocation: viewController.customerCurrentLocation.value!,
+            customerLocation: viewController.customerCurrentLocation.value,
           ),
         ),
       );

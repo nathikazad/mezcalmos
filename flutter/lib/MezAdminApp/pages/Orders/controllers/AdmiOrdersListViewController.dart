@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/orders/hsAdminOrders.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -18,11 +19,12 @@ class AdmiOrdersListViewController {
   // obs //
   Rxn<List<MinimalOrder>> restaurantOrders = Rxn();
   Rxn<List<MinimalOrder>> restaurantPastOrders = Rxn();
-  int restLimit = 10;
+  int restOffset = 0;
   Rxn<List<MinimalOrder>> laundryPastOrders = Rxn();
-  int laundryLimit = 10;
+  int laundryOffset = 0;
   Rxn<List<MinimalOrder>> dvPastOrders = Rxn();
-  int dvLimit = 10;
+  int dvOffset = 0;
+  int fetchSize = 10;
   Rxn<List<MinimalOrder>> deliveryOrders = Rxn();
   Rxn<List<MinimalOrder>> laundryOrders = Rxn();
   RxBool isFetching = RxBool(false);
@@ -39,7 +41,7 @@ class AdmiOrdersListViewController {
         return restaurantPastOrders.value ?? [];
       case ServiceProviderType.Laundry:
         return laundryPastOrders.value ?? [];
-      case ServiceProviderType.Delivery:
+      case ServiceProviderType.DeliveryCompany:
         return dvPastOrders.value ?? [];
 
       default:
@@ -97,39 +99,53 @@ class AdmiOrdersListViewController {
       laundryOrderStream?.cancel();
       laundryOrderStream = null;
     });
+
+    scrollController.onBottomReach(fetchServicePastOrders, sensitivity: 200);
   }
 
   Future<void> fetchServicePastOrders() async {
     isFetching.value = true;
     mezDbgPrint("Fetching service orders 🥹");
-    switch (currentService) {
-      case ServiceProviderType.Restaurant:
-        restLimit += 10;
-        restaurantPastOrders.value?.addAll((await get_admin_restaurant_orders(
-                    inProcess: false, withCache: false, limit: restLimit))
-                ?.toList() ??
-            []);
+    try {
+      switch (currentService) {
+        case ServiceProviderType.Restaurant:
+          restaurantPastOrders.value?.addAll((await get_admin_restaurant_orders(
+                      inProcess: false,
+                      withCache: false,
+                      offset: restOffset,
+                      limit: fetchSize))
+                  ?.toList() ??
+              []);
+          restOffset += 10;
 
-        break;
-      case ServiceProviderType.Laundry:
-        laundryLimit += 10;
-        laundryPastOrders.value?.addAll((await get_admin_laundry_orders(
-                    inProcess: false, withCache: false, limit: laundryLimit))
-                ?.toList() ??
-            []);
+          break;
+        case ServiceProviderType.Laundry:
+          laundryPastOrders.value?.addAll((await get_admin_laundry_orders(
+                      inProcess: false,
+                      withCache: false,
+                      offset: laundryOffset,
+                      limit: fetchSize))
+                  ?.toList() ??
+              []);
+          laundryOffset += 10;
 
-        break;
-      case ServiceProviderType.Delivery:
-        dvLimit += 10;
-        dvPastOrders.value?.addAll((await get_admin_dv_orders(
-                    inProcess: false, withCache: false, limit: dvLimit))
-                ?.toList() ??
-            []);
+          break;
+        case ServiceProviderType.DeliveryCompany:
+          dvPastOrders.value?.addAll((await get_admin_dv_orders(
+                      inProcess: false,
+                      withCache: false,
+                      offset: dvOffset,
+                      limit: fetchSize))
+                  ?.toList() ??
+              []);
+          dvOffset += 10;
 
-        break;
-      default:
+          break;
+        default:
+      }
+    } finally {
+      isFetching.value = false;
     }
-    isFetching.value = false;
   }
 
   void dispose() {

@@ -113,7 +113,7 @@ class _AdminServicesViewState extends State<AdminServicesView> {
             viewController: viewController,
             laundry: viewController.laundries![index]);
         {}
-      case ServiceProviderType.Delivery:
+      case ServiceProviderType.DeliveryCompany:
         return AdminDeliveryCompanyServiceCard(
             viewController: viewController,
             company: viewController.companies![index]);

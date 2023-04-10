@@ -3374,10 +3374,14 @@ class Variables$Query$get_customer_orders {
   factory Variables$Query$get_customer_orders({
     required int custId,
     required bool inProcess,
+    int? limit,
+    int? offset,
   }) =>
       Variables$Query$get_customer_orders._({
         r'custId': custId,
         r'inProcess': inProcess,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
       });
 
   Variables$Query$get_customer_orders._(this._$data);
@@ -3389,6 +3393,14 @@ class Variables$Query$get_customer_orders {
     result$data['custId'] = (l$custId as int);
     final l$inProcess = data['inProcess'];
     result$data['inProcess'] = (l$inProcess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
     return Variables$Query$get_customer_orders._(result$data);
   }
 
@@ -3396,12 +3408,22 @@ class Variables$Query$get_customer_orders {
 
   int get custId => (_$data['custId'] as int);
   bool get inProcess => (_$data['inProcess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$custId = custId;
     result$data['custId'] = l$custId;
     final l$inProcess = inProcess;
     result$data['inProcess'] = l$inProcess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
     return result$data;
   }
 
@@ -3430,6 +3452,22 @@ class Variables$Query$get_customer_orders {
     if (l$inProcess != lOther$inProcess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
@@ -3437,9 +3475,13 @@ class Variables$Query$get_customer_orders {
   int get hashCode {
     final l$custId = custId;
     final l$inProcess = inProcess;
+    final l$limit = limit;
+    final l$offset = offset;
     return Object.hashAll([
       l$custId,
       l$inProcess,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
     ]);
   }
 }
@@ -3456,6 +3498,8 @@ abstract class CopyWith$Variables$Query$get_customer_orders<TRes> {
   TRes call({
     int? custId,
     bool? inProcess,
+    int? limit,
+    int? offset,
   });
 }
 
@@ -3475,12 +3519,16 @@ class _CopyWithImpl$Variables$Query$get_customer_orders<TRes>
   TRes call({
     Object? custId = _undefined,
     Object? inProcess = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
   }) =>
       _then(Variables$Query$get_customer_orders._({
         ..._instance._$data,
         if (custId != _undefined && custId != null) 'custId': (custId as int),
         if (inProcess != _undefined && inProcess != null)
           'inProcess': (inProcess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
       }));
 }
 
@@ -3493,6 +3541,8 @@ class _CopyWithStubImpl$Variables$Query$get_customer_orders<TRes>
   call({
     int? custId,
     bool? inProcess,
+    int? limit,
+    int? offset,
   }) =>
       _res;
 }
@@ -3684,6 +3734,24 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3713,6 +3781,23 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
                 ]),
               )
             ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
           ),
         ],
         directives: [],

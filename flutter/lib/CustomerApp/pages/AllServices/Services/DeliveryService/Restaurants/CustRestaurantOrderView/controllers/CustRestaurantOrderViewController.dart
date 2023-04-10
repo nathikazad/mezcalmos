@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -12,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustRestaurantOrderViewController {
   final MGoogleMapController mGoogleMapController = MGoogleMapController(
@@ -32,8 +34,11 @@ class CustRestaurantOrderViewController {
   Future<void> init({required int orderId}) async {
     mezDbgPrint(
         '======================================================================> $orderId');
-    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
-        orderType: cModels.OrderType.Restaurant, orderId: orderId);
+    MezRouter.registerReturnToViewCallback(
+        ViewRestaurantOrderScreen.constructPath(orderId), () {
+      clearNotifications(orderId);
+    });
+    clearNotifications(orderId);
     try {
       order.value =
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
@@ -64,6 +69,11 @@ class CustRestaurantOrderViewController {
         orderStream = null;
       });
     }
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: cModels.OrderType.Restaurant, orderId: orderId);
   }
 
   Future<ServerResponse> addReview({

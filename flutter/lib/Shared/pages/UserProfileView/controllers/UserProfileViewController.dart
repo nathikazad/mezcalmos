@@ -23,6 +23,7 @@ class UserProfileViewController {
 
 // Obs //
   final Rxn<imPicker.XFile> newImageFile = Rxn();
+
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
   Rx<UserProfileViewMode> mode = Rx(UserProfileViewMode.None);

@@ -1,5 +1,7 @@
 import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpTabsView.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpUnauthView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpPastOrdersList.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -7,8 +9,9 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryAdminRoutes {
   static const String kDeliveryOpHomeScreenRoute = '/home';
+  static const String kDeliveryOpPastOrdersRoute = '/pastOrders';
 
-  static const String kNotAuthorizedOperatorRoute = "/unauthorized";
+  static const String kNotAuthorizedOperatorRoute = "/deliveryOp/unauthorized";
   static const String kOrderViewRoute = "/deliveryOrders/:orderId";
 
   static String getDvCompanyOrderRoute(int orderId) {
@@ -20,6 +23,16 @@ class DeliveryAdminRoutes {
           path: kDeliveryOpHomeScreenRoute,
           name: kDeliveryOpHomeScreenRoute,
           builder: () => DvOpTabsView(),
+        ),
+        QRoute(
+          path: kDeliveryOpPastOrdersRoute,
+          name: kDeliveryOpPastOrdersRoute,
+          builder: () => DvOpPastOrdersView(),
+        ),
+        QRoute(
+          path: kNotAuthorizedOperatorRoute,
+          name: kNotAuthorizedOperatorRoute,
+          builder: () => DvOpUnauthView(),
         ),
       ] +
       sharedWitAdminRoutes +

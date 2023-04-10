@@ -12,6 +12,18 @@ export async function createLaundryToCustomerDeliveryOrder(
 ): Promise<DeliveryOrder> {
     let chain = getHasura();
 
+    let mezAdmins = await chain.query({
+        mez_admin: [{}, {
+            user_id: true,
+        }]
+    });
+
+    let mezAdminDetails = mezAdmins.mez_admin.map((m) => {
+        return {
+          participant_id: m.user_id,
+          app_type_id: AppType.MezAdmin
+        };
+    });
     let laundryOperatorsDetails = laundryStore.operators?.map((v) => {
         return {
             participant_id: v.userId,
@@ -49,7 +61,7 @@ export async function createLaundryToCustomerDeliveryOrder(
                 chat_with_service_provider: {
                     data: {
                         chat_participants: {
-                            data: laundryOperatorsDetails
+                            data: [...laundryOperatorsDetails, ...mezAdminDetails]
                         }
                     }
                 },
@@ -61,8 +73,8 @@ export async function createLaundryToCustomerDeliveryOrder(
                     ? laundryStore.id 
                     : laundryStore.deliveryPartnerId,
                 service_provider_type: (laundryStore.deliveryDetails.selfDelivery) 
-                ? DeliveryServiceProviderType.Laundry
-                : DeliveryServiceProviderType.DeliveryCompany,
+                    ? DeliveryServiceProviderType.Laundry
+                    : DeliveryServiceProviderType.DeliveryCompany,
                 
                 scheduled_time: laundryOrder.scheduledTime,
                 trip_distance: fromCustomerDelivery.tripDistance,
@@ -108,8 +120,10 @@ export async function createLaundryToCustomerDeliveryOrder(
         tripDistance : fromCustomerDelivery.tripDistance,
         tripDuration : fromCustomerDelivery.tripDuration,
         tripPolyline : fromCustomerDelivery.tripPolyline,
-        serviceProviderType: DeliveryServiceProviderType.Laundry,
-        serviceProviderId: laundryStore.id,
+        serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) 
+            ? DeliveryServiceProviderType.DeliveryCompany 
+            : DeliveryServiceProviderType.Laundry,
+        serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) ? laundryStore.deliveryPartnerId : laundryStore.id,
         direction: DeliveryDirection.ToCustomer,
         packageReady: false,
     }

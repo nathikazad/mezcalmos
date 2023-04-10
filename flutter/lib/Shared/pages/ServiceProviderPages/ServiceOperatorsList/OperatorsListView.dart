@@ -7,13 +7,15 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/components/ListOperatorCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -27,26 +29,23 @@ class OperatorsListView extends StatefulWidget {
     this.serviceProviderType,
     this.serviceProviderId,
     this.serviceLinkId,
-    this.showAppBar,
   });
 
   final int? serviceProviderId;
   final int? serviceLinkId;
   final ServiceProviderType? serviceProviderType;
-  final bool? showAppBar;
 
   static Future<void> navigate(
       {required int serviceProviderId,
       required int serviceLinkId,
       required ServiceProviderType serviceProviderType}) {
-    return MezRouter.toPath(
-        SharedServiceProviderRoutes.kOperatorsListRoute
-            .replaceAll(":ServiceProviderId", serviceProviderId.toString())
-            .replaceAll(":serviceLinkId", serviceLinkId.toString()),
-        arguments: <String, dynamic>{
-          "serviceProviderType": serviceProviderType,
-          "showAppBar": true,
-        });
+    mezDbgPrint("Arguments =============>$serviceProviderId \n $serviceLinkId");
+    String route = SharedServiceProviderRoutes.kOperatorsListRoute
+        .replaceFirst(":serviceProviderId", serviceProviderId.toString());
+    route = route.replaceFirst(":serviceLinkId", serviceLinkId.toString());
+    return MezRouter.toPath(route, arguments: <String, dynamic>{
+      "serviceProviderType": serviceProviderType,
+    });
   }
 
   @override
@@ -57,13 +56,12 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   OperatorsListViewController viewController = OperatorsListViewController();
   int? serviceProviderId;
   int? serviceLinkId;
-  bool showAppBar = true;
   ServiceProviderType? serviceProviderType;
 
   @override
   void initState() {
     _settingVariables();
-
+    mezDbgPrint("Body args ::::::========>${MezRouter.urlArguments.asMap}");
     viewController.init(
         serviceProviderId: serviceProviderId!,
         serviceLinkId: serviceLinkId!,
@@ -75,23 +73,18 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   void _settingVariables() {
     serviceProviderId = widget.serviceProviderId ??
         int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
-    serviceProviderId = widget.serviceLinkId ??
+    serviceLinkId = widget.serviceLinkId ??
         int.tryParse(MezRouter.urlArguments["serviceLinkId"].toString());
-    showAppBar = widget.showAppBar ??
-        MezRouter.bodyArguments?["showAppBar"].toString() as bool? ??
-        true;
+
     serviceProviderType = widget.serviceProviderType ??
-        MezRouter.bodyArguments?["serviceProviderType"].toString()
-            as ServiceProviderType;
+        MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: (showAppBar)
-            ? MezcalmosAppBar(AppBarLeftButtonType.Back,
-                onClick: MezRouter.back, title: "${_i18n()['operators']}")
-            : null,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+            onClick: MezRouter.back, title: "${_i18n()['operators']}"),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -99,7 +92,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
               MezAddButton(
                 onClick: () async {
                   // await viewController.fetchServiceLinks();
-                  await _addOperatorSheet();
+                  await _addOperatorSheet(context);
                 },
                 title: "${_i18n()['addOperator']}",
               ),
@@ -120,10 +113,10 @@ class _OperatorsListViewState extends State<OperatorsListView> {
         ));
   }
 
-  Future<void> _addOperatorSheet() {
+  Future<void> _addOperatorSheet(BuildContext context) {
     return showModalBottomSheet(
         isScrollControlled: true,
-        context: Get.context!,
+        context: context,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           topLeft: Radius.circular(15),

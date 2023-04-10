@@ -71,7 +71,9 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
           // landry
           serviceProviderImage:
               widget.viewcontroller.order.serviceProvider.image,
-          serviceProviderName: widget.viewcontroller.order.serviceProvider.name,
+          serviceProviderName: widget.viewcontroller.isCourier
+              ? widget.viewcontroller.order.pickupLocation?.address ?? ""
+              : widget.viewcontroller.order.serviceProvider.name,
           serviceProviderTimeWidget: widget.viewcontroller.inPickupPhase
               ? _dropOffTimeSetter()
               : _pickUpTimeSetter(),
@@ -156,6 +158,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               ),
               if (widget.viewcontroller.order.inProcess())
                 MezIconButton(
+                  elevation: 0,
                   backgroundColor: backgroundShadeColor,
                   iconColor: offShadeGreyColor,
                   onTap: () async {
@@ -187,6 +190,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
               ),
               if (widget.viewcontroller.order.inProcess())
                 MezIconButton(
+                  elevation: 0,
                   backgroundColor: backgroundShadeColor,
                   iconColor: offShadeGreyColor,
                   onTap: () async {

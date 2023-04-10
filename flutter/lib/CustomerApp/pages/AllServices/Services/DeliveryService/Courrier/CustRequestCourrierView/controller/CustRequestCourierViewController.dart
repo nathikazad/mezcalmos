@@ -45,6 +45,7 @@ class CustRequestCourierViewController {
   Rxn<DeliveryCompany> company = Rxn();
   RxInt currentPage = RxInt(0);
   GlobalKey<FormState> fromKey = GlobalKey<FormState>();
+  GlobalKey<FormState> secondFormKey = GlobalKey<FormState>();
   Rxn<num> shippingCost = Rxn();
   DeliveryCost? deliveryCost;
 
@@ -54,6 +55,7 @@ class CustRequestCourierViewController {
   // getters //
 
   bool get isFromLocation => fromLoc.value != null;
+  // bool get canOrder
 
   // methods //
   Future<void> init({required int courierId}) async {
@@ -112,13 +114,14 @@ class CustRequestCourierViewController {
   Future<num?> handleNext() async {
     if (currentPage == 0) {
       if (fromKey.currentState?.validate() == true) {
+        FocusManager.instance.primaryFocus?.unfocus();
         unawaited(pageController
             .animateToPage(currentPage.value + 1,
                 duration: Duration(milliseconds: 500), curve: Curves.easeInOut)
             .whenComplete(
                 () => currentPage.value = pageController.page!.toInt()));
       }
-    } else {
+    } else if (secondFormKey.currentState?.validate() == true) {
       // call cloud func
       await _makeOrder();
     }
@@ -127,14 +130,14 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _makeOrder() async {
-    mezDbgPrint("Making a courier order ========> ${toLoc.value}");
+    mezDbgPrint("Making a courier order ========> ${fromLocText.text.length}");
     try {
       await _uploadItemsImages();
       cModels.CreateCourierResponse res =
           await CloudFunctions.delivery2_createCourierOrder(
         toLocation: cModels.Location(
             lat: toLoc.value!.position.latitude!,
-            lng: toLoc.value!.position.latitude!,
+            lng: toLoc.value!.position.longitude!,
             address: toLoc.value!.address),
         items: items
             .asMap()
@@ -148,11 +151,12 @@ class CustRequestCourierViewController {
               ),
             )
             .toList(),
-        fromLocationText: (fromLoc.value == null) ? fromLocText.text : null,
+        fromLocationText:
+            (fromLocText.text.length > 4) ? fromLocText.text : null,
         fromLocationGps: (fromLoc.value != null)
             ? cModels.Location(
                 lat: fromLoc.value!.position.latitude!,
-                lng: fromLoc.value!.position.latitude!,
+                lng: fromLoc.value!.position.longitude!,
                 address: fromLoc.value!.address)
             : null,
         deliveryCompanyId: company.value!.info.hasuraId,
@@ -195,12 +199,11 @@ class CustRequestCourierViewController {
   }
 
   Future<void> updateShippingPrice() async {
-    final MezLocation? loc = fromLoc.value;
     num? _orderDistanceInKm;
-    if (loc != null && toLoc.value != null) {
+    if (fromLoc.value != null && toLoc.value != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         toLoc.value!,
-        loc,
+        fromLoc.value!,
       );
 
       if (routeInfo != null) {

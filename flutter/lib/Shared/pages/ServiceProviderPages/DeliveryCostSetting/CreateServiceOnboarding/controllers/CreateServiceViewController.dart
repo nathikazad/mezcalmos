@@ -1,19 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -90,7 +86,8 @@ class CreateServiceViewController {
     if (newImageFile.value != null) {
       newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          pathPrefix: "restaurants/$serviceName/avatar/");
+          pathPrefix:
+              "restaurants/$serviceName/avatar/${newImageFile.value!.path}");
     }
   }
 
@@ -205,7 +202,7 @@ class CreateServiceViewController {
 
   Future<void> handleInfoPageNext() async {
     if (infoFromKey.currentState?.validate() == true) {
-      // await _setImage();
+      await _setImage();
       serviceInput.value.serviceInfo = ServiceInfo(
           location: newLocation.value!,
           hasuraId: Random().nextInt(5),
@@ -260,10 +257,10 @@ class CreateServiceViewController {
     }
   }
 
-  bool get _infoIsValid =>
-      serviceName.text.length > 3 &&
-      newLocation.value != null &&
-      newImageUrl.value != null;
+  // bool get _infoIsValid =>
+  //     serviceName.text.length > 3 &&
+  //     newLocation.value != null &&
+  //     newImageUrl.value != null;
 
   bool get _isDeliveryCostValid {
     return costFormKey.currentState?.validate() == true;

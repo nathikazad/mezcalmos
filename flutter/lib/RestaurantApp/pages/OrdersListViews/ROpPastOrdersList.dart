@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpPastOrdersViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -18,7 +18,7 @@ class ROpPastOrdersList extends StatefulWidget {
   }) : super(key: key);
 
   static Future<void> navigate() {
-    return MezRouter.toPath(RestaurantRouter.pastOrdersRoute);
+    return MezRouter.toPath(RestaurantAppRoutes.pastOrdersRoute);
   }
 
   @override
@@ -26,17 +26,18 @@ class ROpPastOrdersList extends StatefulWidget {
 }
 
 class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
-  ROpPastOrdersController viewController = ROpPastOrdersController();
+  ROpPastOrdersController _viewController = ROpPastOrdersController();
 
   @override
   void initState() {
-    viewController.init();
+    _viewController.init();
 
     super.initState();
   }
 
   @override
   void dispose() {
+    _viewController.dispose();
     super.dispose();
   }
 
@@ -48,9 +49,10 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
           MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
       body: Obx(
         () {
-          if (!viewController.pastOrders.isNotEmpty) {
+          if (_viewController.pastOrders.isNotEmpty) {
             return Scrollbar(
               child: SingleChildScrollView(
+                controller: _viewController.scrollController,
                 padding: EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,14 +66,14 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                     ListView.builder(
                       shrinkWrap: true,
                       reverse: true,
-                      itemCount: viewController.pastOrders.length,
+                      itemCount: _viewController.pastOrders.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (_, int index) {
                         return MinimalOrderCard(
-                          order: viewController.pastOrders[index],
+                          order: _viewController.pastOrders[index],
                           onTap: () {
                             RestaurantOrderView.navigate(
-                                orderId: viewController.pastOrders[index].id
+                                orderId: _viewController.pastOrders[index].id
                                     .toString());
                           },
                         );

@@ -23,7 +23,8 @@
         "wrongAddress": "Dirección incorrecta/inválida elegida!",
         "distanceError": "¡La distancia entre usted y la ubicación del servicio supera los 10 km!",
         "chooseLoc": "Elegir la ubicación",
-        "pickLocation": "Elegir del mapa"
+        "pickLocation": "Elegir del mapa",
+        "noLocError": "Seleccione una ubicación"
       },
       "LocationPicker": {
         "pick": "ELIGE",
@@ -47,9 +48,14 @@
         }
       },
       "courrier": {
+        "CustCourierServicesListView": {
+          "title": "Empresas de entrega a su alrededor",
+          "courier": "Mensajera",
+          "min": "Min"
+        },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
-          "chatWithUs": "habla con nosotros",
+          "chatWithUs": "Habla con nosotros",
           "contactUs": "Contáctenos",
           "minimumCost": "Costo mínimo",
           "description": "Descripción",
@@ -57,7 +63,7 @@
           "viewAll": "Ver todo"
         },
         "CustRequestCourierView": {
-          "title": "Mensajera",
+          "title": "Mandaditos",
           "from": "De",
           "to": "A",
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
@@ -75,9 +81,15 @@
           }
         },
         "CustCourierOrderView": {
+          "priceChangeTitle": "Solicitud de cambio de precio",
+          "reason": "Razón",
+          "newPrice": "Nuevo precio",
+          "accept": "Aceptar",
           "cancelOrder": "Cancelar orden",
           "note": "Nota",
           "delivery": "Entrega",
+          "deliveryDetails": "Detalles de la entrega",
+          "pickupLoc": "Lugar de recogida",
           "noDriverAssignedYet": "No hay controlador asignado todavía"
         }
       },
@@ -186,7 +198,8 @@
               "restClosed": "El servicio está cerrado ahora, pero puedes programar su pedido para más adelante.",
               "pickTime": "Elige tu tiempo",
               "now": "Ahora",
-              "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido"
+              "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido",
+              "required": "Seleccione un tiempo de entrega"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Método de pago",
@@ -220,6 +233,8 @@
               "pickLocation": "Elegir del mapa"
             },
             "OrderSummaryCard": {
+              "add": "Agregar",
+              "waitingForCustomer": "esperando a un cliente",
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
@@ -279,7 +294,7 @@
             "DialogRequiredSignIn": {
               "title": "Debe iniciar sesión para agregar artículos a su carrito",
               "signBtn": "Apuntame dentro",
-              "notNowBtn": "Ahora no ?"
+              "notNowBtn": "Ahora no?"
             }
           },
           "ViewItemScreen": {
@@ -593,7 +608,7 @@
           "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
         },
         "courier": {
-          "title": "Mensajera",
+          "title": "Mandaditos",
           "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
         },
         "comingSoon": "Próximamente...",
@@ -704,7 +719,7 @@
         },
         "LaundriesListView": {
           "laundries": "Lavanderías",
-          "title": "Encuentra tus lavanderías \nmás cercanas o tintorerías ",
+          "title": "Lavanderías a tu alrededor",
           "noLaundaryFound": "No se encontró lavandería",
           "components": {
             "laundrySelectCard": {
@@ -813,6 +828,7 @@
           "ready": "Paquete listo",
           "atPickUp": "En la recogida",
           "otwDropOff": "En el camino de caída",
+          "otwPickup": "En el camino recogida",
           "delivered": "Orden entregada",
           "received": "orden recibida",
           "canceled": "Orden cancelada",
@@ -836,6 +852,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Guardado",
+        "routeError" : "Error a obtener su información de ubicación e ruta",
         "writeReview": "Escribir un comentario",
         "savedTitle": "tu información ha sido guardada",
         "yesCancel": "Sí, cancelar pedido",
@@ -903,7 +920,7 @@
           "CreateServiceInfoPage": {
             "name": "Nombre del restaurante",
             "hintNameText": "Introduzca su nombre",
-            "uploadImageText": "Sube tu imagen de perfil",
+            "uploadImageText": "Cargar imagen",
             "nameError": "Proporcione un nombre",
             "descriptionError": "Proporcione una descripción",
             "location": "Ubicación",
@@ -942,7 +959,6 @@
         "save": "Guardar",
         "cost": "Costo",
         "radius": "Rango de entrega",
-
         "costPerKmFromBase": "Costo por km de la base"
       },
       "DeliverySettingsView": {
@@ -1230,7 +1246,9 @@
         "tax": "Impuesto",
         "totalCost": "Coste total",
         "refundAmount": "Cantidad devuelta",
-        "toBeCalc": "Para ser calculado"
+        "toBeCalc": "Para ser calculado",
+        "add": "Agregar",
+        "waitingForCustomer": "esperando a un cliente"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
@@ -1509,6 +1527,18 @@
       }
     },
     "pages": {
+      "DvCompanyOrderView": {
+        "order": "Orden",
+        "customer": "Información del cliente",
+        "estTimes": "Tiempos estimados",
+        "deliveryDetails": "Detalles de la entrega",
+        "loading": "Obteniendo su información de pedido ...",
+        "packageReady": "Paquete listo:",
+        "arrivalAtPickup": "Llegada a la recogida :",
+        "pickupLoc": "Lugar de recogida",
+        "arrivalAtDropoff": "Llegada a la caída :",
+        "noDriver": "No hay controlador asignado todavía"
+      },
       "DvOpTabsView": {
         "orders": "Pedidos",
         "drivers": "Conductoras",
@@ -1789,7 +1819,7 @@
         "orderDetails": "Detalles del pedido",
         "orderItems": "Encargar artículos",
         "addCost": "Agregar costo",
-        "save": "Ahorrar",
+        "save": "Guardar",
         "note": "Nota",
         "tax": "Impuesto",
         "estCost": "Costo estimado",
@@ -1807,7 +1837,7 @@
         "customer": "Cliente",
         "restaurant": "Restaurante",
         "laundry": "Lavanderia",
-        "orders": "Pedidos",
+        "order": "Pedido",
         "viewImage": "Ver imagen"
       },
       "CurrentOrders": {
@@ -1817,7 +1847,7 @@
           "offlineTitle": "Estas desconectado",
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Hoy",
-          "title": "Órdenes  Entrantes",
+          "title": "Órdenes entrantes",
           "Components": {
             "DriverNoOrdersComponent": {
               "noOrdersTitle": "No Hay Ordenes",
@@ -1842,7 +1872,7 @@
             }
           },
           "CurrentOrdersListScreen": {
-            "title": "Órdenes  Entrantes"
+            "title": "Órdenes entrantes"
           }
         },
         "CurrentOrderViewScreen": {
@@ -1909,7 +1939,6 @@
               "time": "Tiempo",
               "dropoff": "Entregar",
               "pickup": "Recoger",
-
               "noPickupTimeTitle": "Sin tiempo de recogida",
               "noPickupTimeBody": "Por favor, establezca la hora de recogida primero",
               "setDvCostTitle": "Sin costo de entrega",
@@ -1971,7 +2000,7 @@
         "title": "Entrega",
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
-        "courier": "Mensajera"
+        "courier": "Mandaditos"
       }
     },
     "notificationHandler": {

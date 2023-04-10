@@ -27,7 +27,6 @@ class DeliveryOpAuthController extends GetxController {
     mezDbgPrint("DeliveryAuthController: init $hashCode");
     mezDbgPrint(
         "DeliveryAuthController: calling handle state change first time");
-    // Todo @m66are remove this restaurant id hard code
 
     setupDeliveryOperator();
 
@@ -35,10 +34,6 @@ class DeliveryOpAuthController extends GetxController {
   }
 
   Future<void> setupDeliveryOperator() async {
-    // final RestaurantOperatorState? operatorState =
-    //     await get_operator_state(operatorId: operatorUserId, withCache: false);
-    // final UserInfo operatorInfo =
-    //     await get_user_by_hasura_id(hasuraId: operatorUserId);
     operator.value = await get_delivery_operator(userId: operatorUserId);
     if (operator.value != null) {
       _companyId.value = operator.value!.state.serviceProviderId;

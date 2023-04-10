@@ -6,6 +6,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
@@ -44,8 +45,8 @@ class _CreateServiceViewState extends State<CreateServiceView> {
 
   @override
   void initState() {
-    serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
-        .toString() as ServiceProviderType;
+    serviceProviderType =
+        MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType;
     viewController.init(serviceProviderType: serviceProviderType!);
     super.initState();
   }

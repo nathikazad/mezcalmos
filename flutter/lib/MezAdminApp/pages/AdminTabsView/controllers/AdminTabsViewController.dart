@@ -16,7 +16,7 @@ class AdminTabsViewController {
   List<ServiceProviderType> serviceTypes = [
     ServiceProviderType.Restaurant,
     ServiceProviderType.Laundry,
-    ServiceProviderType.Delivery
+    ServiceProviderType.DeliveryCompany
   ];
   // obs //
   Rx<ServiceProviderType> selectedServiceProviderType =
@@ -36,7 +36,7 @@ class AdminTabsViewController {
       switch (type) {
         case ServiceProviderType.Restaurant:
           return restOrdersCount.value.toString();
-        case ServiceProviderType.Delivery:
+        case ServiceProviderType.DeliveryCompany:
           return dvOrdersCount.value.toString();
         case ServiceProviderType.Laundry:
           return laundryOrdersCount.value.toString();

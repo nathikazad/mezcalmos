@@ -27,7 +27,7 @@ extension ParseServiceProviderTypeToString on ServiceProviderType {
     switch (this) {
       case ServiceProviderType.Restaurant:
         return Icons.food_bank;
-      case ServiceProviderType.Delivery:
+      case ServiceProviderType.DeliveryCompany:
         return Icons.delivery_dining;
       case ServiceProviderType.Laundry:
         return Icons.dry_cleaning;

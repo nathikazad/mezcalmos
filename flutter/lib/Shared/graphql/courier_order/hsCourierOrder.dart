@@ -11,6 +11,8 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -125,10 +127,11 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
                   orderData.delivery_order.estimated_package_ready_time!)
               : null,
       //  packageCost: orderData.delivery_order.package_cost_comp ?? 0,
-      pickupLocation: (orderData.delivery_order.pickup_address != null &&
-              orderData.delivery_order.pickup_gps != null)
-          ? MezLocation(orderData.delivery_order.pickup_address!,
-              orderData.delivery_order.pickup_gps!.toLocationData())
+      pickupLocation: (orderData.delivery_order.pickup_address != null)
+          ? MezLocation(
+              orderData.delivery_order.pickup_address!,
+              orderData.delivery_order.pickup_gps?.toLocationData() ??
+                  MezLocation.buildLocationData(0, 0))
           : null,
       billImage: orderData.bill_image,
       dropOffLocation: MezLocation(orderData.delivery_order.dropoff_address,
@@ -283,10 +286,11 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                     orderData.delivery_order.estimated_package_ready_time!)
                 : null,
         //  packageCost: orderData.delivery_order.package_cost_comp ?? 0,
-        pickupLocation: (orderData.delivery_order.pickup_address != null &&
-                orderData.delivery_order.pickup_gps != null)
-            ? MezLocation(orderData.delivery_order.pickup_address!,
-                orderData.delivery_order.pickup_gps!.toLocationData())
+        pickupLocation: (orderData.delivery_order.pickup_address != null)
+            ? MezLocation(
+                orderData.delivery_order.pickup_address!,
+                orderData.delivery_order.pickup_gps?.toLocationData() ??
+                    MezLocation.buildLocationData(0, 0))
             : null,
         dropOffLocation: MezLocation(orderData.delivery_order.dropoff_address,
             orderData.delivery_order.dropoff_gps.toLocationData()),
@@ -294,11 +298,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         serviceProviderDriverChatId:
             orderData.delivery_order.chat_with_service_provider_id,
         paymentType: orderData.payment_type.toPaymentType(),
-        changePriceRequest:
-            (orderData.delivery_order.change_price_request != null)
-                ? ChangePriceRequest.fromMap(
-                    orderData.delivery_order.change_price_request)
-                : null,
+       
         packageReady: orderData.delivery_order.package_ready,
         stripePaymentInfo: _paymentInfo,
         serviceProvider: ServiceInfo(
@@ -343,6 +343,11 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             deliveryCost: orderData.delivery_order.delivery_cost,
             refundAmmount: orderData.refund_amount,
             tax: orderData.tax,
+             changePriceRequest:
+            (orderData.delivery_order.change_price_request != null)
+                ? ChangePriceRequest.fromMap(
+                    orderData.delivery_order.change_price_request)
+                : null,
             orderItemsCost: orderData.actual_items_cost,
             totalCost: orderData.total_cost),
       );
@@ -351,28 +356,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
   });
 }
 
-Stream<OrderCosts?> listen_on_courier_order_costs({required orderId}) {
-  return _hasuraDb.graphQLClient
-      .subscribe$listen_or_courier_order_prices(
-          Options$Subscription$listen_or_courier_order_prices(
-              variables: Variables$Subscription$listen_or_courier_order_prices(
-                  orderId: orderId)))
-      .map((QueryResult<Subscription$listen_or_courier_order_prices> event) {
-    mezDbgPrint("Event =======>$event");
-    if (event.parsedData?.delivery_courier_order != null &&
-        event.parsedData?.delivery_courier_order.isNotEmpty == true) {
-      Subscription$listen_or_courier_order_prices$delivery_courier_order data =
-          event.parsedData!.delivery_courier_order.first;
-      return OrderCosts(
-          deliveryCost: data.delivery_order.delivery_cost.toDouble(),
-          refundAmmount: data.refund_amount,
-          tax: data.tax,
-          orderItemsCost: data.actual_items_cost,
-          totalCost: data.total_cost);
-    }
-    return null;
-  });
-}
+
 
 Future<List<CourierOrdeItem>?> get_courier_order_items(
     {required int orderId, bool withCache = true}) async {

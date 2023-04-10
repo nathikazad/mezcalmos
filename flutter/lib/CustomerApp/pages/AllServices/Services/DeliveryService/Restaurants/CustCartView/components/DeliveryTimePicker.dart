@@ -57,6 +57,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
     super.dispose();
   }
 
+  bool get scheduleRequired => widget.schedule?.isOpen() == false;
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -84,6 +85,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                 top: 5,
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
                     Icons.info_outline,
@@ -105,107 +107,139 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           SizedBox(
             height: 8,
           ),
-          Card(
-            child: InkWell(
-              onTap: (widget.deliveryTime != null)
-                  ? null
-                  : () async {
-                      await _pickDeliveryTime(context);
-                    },
-              //  borderRadius: BorderRadius.circular(10),
-              child: Obx(
-                () => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.watch_later,
-                        color: Colors.black,
-                        size: 14.sp,
-                      ),
-                      SizedBox(
-                        width: 9,
-                      ),
-                      (widget.deliveryTime == null)
-                          ? Flexible(
-                              fit: FlexFit.tight,
-                              child: Text(
-                                  (widget.isServiceOpen == false)
-                                      ? '${_i18n()["pickTime"]}'
-                                      : '${_i18n()["now"]}',
-                                  style: context.txt.bodyLarge?.copyWith(
-                                    fontSize: 12.sp,
-                                  )),
-                            )
-                          : Flexible(
-                              fit: FlexFit.tight,
-                              child: Text(_formattedTime,
-                                  style: context.txt.bodyLarge?.copyWith(
-                                    fontSize: 12.sp,
-                                  )),
-                            ),
-                      if (widget.deliveryTime == null)
-                        Icon(
-                          Icons.chevron_right,
-                          color: Colors.black,
-                        ),
-                      if (widget.deliveryTime != null)
-                        InkWell(
-                          onTap: () {
-                            _pickDeliveryTime(context);
-                          },
-                          customBorder: CircleBorder(),
-                          child: Ink(
-                            padding: const EdgeInsets.all(3),
+          FormField<DateTime?>(
+              autovalidateMode: AutovalidateMode.always,
+              validator: (DateTime? value) {
+                if (scheduleRequired && value == null) {
+                  return "${_i18n()['required']}";
+                } else if (value != null &&
+                    value.toLocal().isBefore(DateTime.now().toLocal())) {
+                  return '${_i18n()["timeError"]}';
+                }
+
+                return null;
+              },
+              builder: (FormFieldState<DateTime?> field) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Card(
+                      child: InkWell(
+                        onTap: (widget.deliveryTime != null)
+                            ? null
+                            : () async {
+                                await _pickDeliveryTime(context, field);
+                              },
+                        //  borderRadius: BorderRadius.circular(10),
+                        child: Obx(
+                          () => Container(
                             decoration: BoxDecoration(
-                                color: secondaryLightBlueColor,
-                                shape: BoxShape.circle),
-                            child: Icon(
-                              Icons.edit,
-                              size: 20,
-                              color: primaryBlueColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.watch_later,
+                                  color: Colors.black,
+                                  size: 14.sp,
+                                ),
+                                SizedBox(
+                                  width: 9,
+                                ),
+                                (widget.deliveryTime == null)
+                                    ? Flexible(
+                                        fit: FlexFit.tight,
+                                        child: Text(
+                                            (widget.isServiceOpen == false)
+                                                ? '${_i18n()["pickTime"]}'
+                                                : '${_i18n()["now"]}',
+                                            style:
+                                                context.txt.bodyLarge?.copyWith(
+                                              fontSize: 12.sp,
+                                            )),
+                                      )
+                                    : Flexible(
+                                        fit: FlexFit.tight,
+                                        child: Text(_formattedTime,
+                                            style:
+                                                context.txt.bodyLarge?.copyWith(
+                                              fontSize: 12.sp,
+                                            )),
+                                      ),
+                                if (widget.deliveryTime == null)
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.black,
+                                  ),
+                                if (widget.deliveryTime != null)
+                                  InkWell(
+                                    onTap: () {
+                                      _pickDeliveryTime(context, field);
+                                    },
+                                    customBorder: CircleBorder(),
+                                    child: Ink(
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                          color: secondaryLightBlueColor,
+                                          shape: BoxShape.circle),
+                                      child: Icon(
+                                        Icons.edit,
+                                        size: 20,
+                                        color: primaryBlueColor,
+                                      ),
+                                    ),
+                                  ),
+                                if (widget.deliveryTime != null &&
+                                    widget.shoudSchedule == false)
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: InkWell(
+                                      customBorder: CircleBorder(),
+                                      onTap: () {
+                                        widget.onClear.call();
+                                        field.setValue(null);
+                                      },
+                                      child: Ink(
+                                        padding: const EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                            color: offRedColor,
+                                            shape: BoxShape.circle),
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 20,
+                                          color: redAccentColor,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ],
                             ),
                           ),
                         ),
-                      if (widget.deliveryTime != null &&
-                          widget.shoudSchedule == false)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: InkWell(
-                            customBorder: CircleBorder(),
-                            onTap: () {
-                              widget.onClear.call();
-                            },
-                            child: Ink(
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                  color: offRedColor, shape: BoxShape.circle),
-                              child: Icon(
-                                Icons.close,
-                                size: 20,
-                                color: redAccentColor,
-                              ),
-                            ),
-                          ),
-                        )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          if (widget.deliveryTime != null &&
-              widget.deliveryTime!.toLocal().isBefore(DateTime.now().toLocal()))
-            _timeError()
+                      ),
+                    ),
+                    if (field.hasError)
+                      Container(
+                          child: Text("${field.errorText}",
+                              style: context
+                                  .theme.inputDecorationTheme.errorStyle))
+                  ],
+                );
+              }),
+
+          // if (widget.deliveryTime != null &&
+          //     widget.deliveryTime!.toLocal().isBefore(DateTime.now().toLocal()))
+          //   _timeError(),
+          // if (widget.deliveryTime == null && widget.schedule?.isOpen() == false)
+          //   _timeError(title: "Please select a delivery time")
         ],
       ),
     );
   }
 
-  Future<void> _pickDeliveryTime(BuildContext context) async {
+  Future<void> _pickDeliveryTime(
+      BuildContext context, FormFieldState<Object?> field) async {
     if (widget.schedule != null) {
       await showModalBottomSheet<DateTime>(
           shape: RoundedRectangleBorder(
@@ -226,6 +260,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
             );
           }).then((DateTime? value) {
         if (value != null) {
+          field.setValue(value);
           widget.onValue.call(value);
         }
       });
@@ -234,22 +269,23 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
     }
   }
 
-  Container _timeError() {
+  Container _timeError({String? title}) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
             Icons.error_outline,
             color: Colors.red,
+            size: 22,
           ),
           const SizedBox(
             width: 5,
           ),
           Flexible(
             child: Text(
-              '${_i18n()["timeError"]}',
+              title ?? '${_i18n()["timeError"]}',
               style: context.txt.bodyLarge
                   ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),

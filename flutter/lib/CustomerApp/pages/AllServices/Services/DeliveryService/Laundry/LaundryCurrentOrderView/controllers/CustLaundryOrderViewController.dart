@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustLaundryOrderViewController {
   // instances //
@@ -22,7 +24,7 @@ class CustLaundryOrderViewController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   // vars //
   Rxn<LaundryOrder> order = Rxn();
-  cModels.RestaurantOrderStatus? _statusSnapshot;
+  cModels.LaundryOrderStatus? _statusSnapshot;
   LaundryOrderPhase? _phaseSnapshot;
 
   // getters //
@@ -36,8 +38,11 @@ class CustLaundryOrderViewController {
 
   // init
   Future<void> init({required int orderId}) async {
-    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
-        orderType: cModels.OrderType.Laundry, orderId: orderId);
+    MezRouter.registerReturnToViewCallback(
+        CustLaundryOrderView.constructPath(orderId), () {
+      clearNotifications(orderId);
+    });
+    clearNotifications(orderId);
     try {
       order.value =
           await get_laundry_order_by_id(orderId: orderId, withCache: false);
@@ -56,8 +61,9 @@ class CustLaundryOrderViewController {
         orderStream = listen_on_laundry_order_by_id(orderId: orderId)
             .listen((LaundryOrder? event) {
           if (event != null) {
-            mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+            // mezDbgPrint(
+            //     "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+            order.value = null;
             order.value = event;
             order.value?.driverInfo = event.driverInfo;
           }
@@ -69,6 +75,11 @@ class CustLaundryOrderViewController {
     }
     // first time init map
     //mGoogleMapController.animateMarkersPolyLinesBounds(true);
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: cModels.OrderType.Laundry, orderId: orderId);
   }
 
 // Order status change methods

@@ -16,6 +16,7 @@ extension DeliveryOrderHelper on DeliveryOrderStatus {
       case DeliveryOrderStatus.CancelledByServiceProvider:
       case DeliveryOrderStatus.CancelledByCustomer:
       case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByAdmin:
         return "${_i18n()['status']["canceled"]}";
 
       case DeliveryOrderStatus.OrderReceived:
@@ -25,13 +26,12 @@ extension DeliveryOrderHelper on DeliveryOrderStatus {
         return "${_i18n()["status"]['atPickUp']}";
       case DeliveryOrderStatus.OnTheWayToDropoff:
         return "${_i18n()["status"]['otwDropOff']}";
+      case DeliveryOrderStatus.OnTheWayToPickup:
+        return "${_i18n()["status"]['otwPickup']}";
       case DeliveryOrderStatus.AtDropoff:
         return "${_i18n()["status"]['atDropOff']}";
       case DeliveryOrderStatus.Delivered:
         return "${_i18n()["status"]['delivered']}";
-
-      default:
-        return "${_i18n()["status"]['ready']}";
     }
   }
 
@@ -41,6 +41,7 @@ extension DeliveryOrderHelper on DeliveryOrderStatus {
     switch (this) {
       case DeliveryOrderStatus.CancelledByDeliverer:
       case DeliveryOrderStatus.CancelledByServiceProvider:
+      case DeliveryOrderStatus.CancelledByAdmin:
       case DeliveryOrderStatus.CancelledByCustomer:
         return Container(
           padding: const EdgeInsets.all(5),

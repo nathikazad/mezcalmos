@@ -26,7 +26,9 @@ class PickLocationView extends StatefulWidget {
       "initialLocation": initialLocation,
       "onSaveLocation": onSaveLocation
     });
-    mezDbgPrint("After await =====");
+    mezDbgPrint(
+        "Back result right before popping =====>${MezRouter.backResult}");
+
     return MezRouter.backResult;
   }
 
@@ -84,27 +86,25 @@ class _PickLocationViewState extends State<PickLocationView> {
             margin: const EdgeInsets.all(8),
             child: Text(_i18n()["pickLabele"]),
           ),
-          Obx(
-            () => Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              child: LocationSearchComponent(
-                  hintPadding: EdgeInsets.only(left: 10),
-                  suffixPadding: EdgeInsets.only(right: 10),
-                  showSearchIcon: true,
-                  text: viewController
-                      .locationPickerController.location.value?.address,
-                  onClear: () {},
-                  notifyParent: (MezLocation? location) {
-                    mezDbgPrint(
-                        "Location =================================>$location");
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: LocationSearchComponent(
+                showSearchIcon: true,
+                initialTextValue: viewController
+                    .locationPickerController.location.value?.address,
+                onClear: () {},
+                notifyParent: (MezLocation? location) {
+                  mezDbgPrint(
+                      "Location =================================>$location");
+                  if (location != null) {
                     setState(() {
                       viewController.locationPickerController
-                          .setLocation(location!);
+                          .setLocation(location);
                       viewController.locationPickerController.moveToNewLatLng(
                           location.latitude, location.longitude);
                     });
-                  }),
-            ),
+                  }
+                }),
           ),
           SizedBox(
             height: 10,
@@ -123,11 +123,13 @@ class _PickLocationViewState extends State<PickLocationView> {
                       locationPickerMapController:
                           viewController.locationPickerController,
                       notifyParentOfConfirm: (_) {},
-                      notifyParentOfLocationFinalized: (MezLocation location) {
-                        setState(() {
-                          viewController.locationPickerController
-                              .setLocation(location);
-                        });
+                      notifyParentOfLocationFinalized: (MezLocation? location) {
+                        if (location != null) {
+                          setState(() {
+                            viewController.locationPickerController
+                                .setLocation(location);
+                          });
+                        }
                       },
                     )
                   : Center(

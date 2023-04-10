@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
@@ -11,23 +13,26 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
-  const OrderSummaryCard({
-    Key? key,
-    this.margin,
-    this.newRow,
-    required this.costs,
-    this.divideDeliveryCost = false,
-    this.setTaxCallBack,
-    this.setDeliveryCallBack,
-    this.showNullValues = true,
-    required this.stripeOrderPaymentInfo,
-  }) : super(key: key);
+  const OrderSummaryCard(
+      {Key? key,
+      this.margin,
+      this.newRow,
+      this.changePriceRequest,
+      required this.costs,
+      this.divideDeliveryCost = false,
+      this.setTaxCallBack,
+      this.setDeliveryCallBack,
+      this.showNullValues = true,
+      required this.stripeOrderPaymentInfo})
+      : super(key: key);
   // final Order order;
   final OrderCosts costs;
   final Widget? newRow;
   final bool showNullValues;
   final bool divideDeliveryCost;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
+  final ChangePriceRequest? changePriceRequest;
+
   final Function()? setTaxCallBack;
   final Function()? setDeliveryCallBack;
 
@@ -101,19 +106,26 @@ class OrderSummaryCard extends StatelessWidget {
                         Row(
                           children: [
                             if (setDeliveryCallBack != null)
-                              MezIconButton(
-                                icon: costs.deliveryCost != null
-                                    ? Icons.edit
-                                    : Icons.add,
-                                iconSize: 17,
-                                padding: const EdgeInsets.all(3),
-                                onTap: setDeliveryCallBack,
+                              Container(
+                                child: (costs.requested)
+                                    ? Text("${_i18n()['waitingForCustomer']}")
+                                    : (costs.changePriceRequest == null)
+                                        ? MezIconButton(
+                                            icon: costs.deliveryCost != null
+                                                ? Icons.edit
+                                                : Icons.add,
+                                            iconSize: 17,
+                                            padding: const EdgeInsets.all(3),
+                                            onTap: setDeliveryCallBack,
+                                          )
+                                        : SizedBox(),
                               ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 3),
-                              child: Text(
-                                  "${(divideDeliveryCost) ? "${(costs.deliveryCost ?? 0 / 2).toPriceString()} x 2 " : "${(costs.deliveryCost?.toPriceString() ?? "-")}"}"),
-                            ),
+                            if (costs.requested == false)
+                              Container(
+                                margin: const EdgeInsets.only(left: 3),
+                                child: Text(
+                                    "${(divideDeliveryCost) ? "${((costs.deliveryCost ?? 0) / 2).toPriceString()} x 2 " : "${(costs.deliveryCost?.toPriceString() ?? "-")}"}"),
+                              ),
                           ],
                         ),
                       ],
@@ -151,16 +163,24 @@ class OrderSummaryCard extends StatelessWidget {
                           ),
                         ),
                         if (setTaxCallBack != null)
-                          MezIconButton(
-                            icon: costs.tax != null ? Icons.edit : Icons.add,
-                            iconSize: 17,
-                            padding: const EdgeInsets.all(3),
-                            onTap: setTaxCallBack,
-                          ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 3),
-                          child: Text("${costs.tax?.toPriceString() ?? "-"}"),
-                        )
+                          costs.tax == null || costs.tax! == 0
+                              ? InkWell(
+                                  onTap: setTaxCallBack,
+                                  child: Text("${_i18n()['add']}",
+                                      style: context.txt.bodyLarge
+                                          ?.copyWith(color: primaryBlueColor)),
+                                )
+                              : MezIconButton(
+                                  icon: Icons.edit,
+                                  iconSize: 17,
+                                  padding: const EdgeInsets.all(3),
+                                  onTap: setTaxCallBack,
+                                ),
+                        if (costs.tax != null && costs.tax! > 0)
+                          Container(
+                            margin: const EdgeInsets.only(left: 3),
+                            child: Text("${costs.tax?.toPriceString() ?? "-"}"),
+                          )
                       ],
                     ),
                   ),
@@ -175,10 +195,11 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyLarge,
                         ),
                         Text(
-                            (costs.orderItemsCost != 0)
-                                ? costs.totalCost?.toPriceString() ?? "-"
-                                : "-",
-                            style: txt.headlineSmall),
+                          (costs.orderItemsCost != 0)
+                              ? costs.totalCost?.toPriceString() ?? "-"
+                              : "-",
+                          style: txt.bodyLarge,
+                        ),
                       ],
                     ),
                   ),

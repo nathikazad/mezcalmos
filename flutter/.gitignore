@@ -42,6 +42,7 @@ font_awesome_flutter/
 .packages
 build/
 lib/env.dart
+lib/Shared/pages/AuthScreens/fakeCreds.dart
 pubspec.yaml
 
 # If you're building an application, you may want to check-in your pubspec.lock

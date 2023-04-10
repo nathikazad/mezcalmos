@@ -28,6 +28,7 @@
         ],
         "shared_pubspec": {
             "dependencies": {
+                "ensure_visible_when_focused": "^1.1.1",
                 "cupertino_icons": "^1.0.2",
                 "flutter_datetime_picker": "^1.5.1",
                 "photo_view": "^0.14.0",
@@ -323,20 +324,20 @@
                 "stage": {
                     "appName": "MezAdmin Stage",
                     "packageName": "com.mezstaging.admin",
-                    "googe-service-file": "services/stage/android/deliveryadmin.json",
-                    "apple-service-file": "services/stage/ios/deliveryadmin.plist"
+                    "googe-service-file": "services/stage/android/mezadmin.json",
+                    "apple-service-file": "services/stage/ios/mezadmin.plist"
                 },
                 "prod": {
                     "appName": "MezAdmin",
                     "packageName": "com.mezcalmos.admin",
-                    "googe-service-file": "services/prod/android/deliveryadmin.json",
-                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+                    "googe-service-file": "services/prod/android/mezadmin.json",
+                    "apple-service-file": "services/prod/ios/mezadmin.plist"
                 },
                 "dev": {
                     "appName": "MezAdmin Dev",
                     "packageName": "com.mezcalmos.admin",
-                    "googe-service-file": "services/prod/android/deliveryadmin.json",
-                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+                    "googe-service-file": "services/prod/android/mezadmin.json",
+                    "apple-service-file": "services/prod/ios/mezadmin.plist"
                 }
             },
             "MainActivityKt": {
@@ -364,7 +365,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -428,7 +430,8 @@
                     "assets/animation/",
                     "assets/sounds/",
                     "assets/icons/appstore.png",
-                    "assets/images/customer/rental/"
+                    "assets/images/customer/rental/",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -482,6 +485,7 @@
                     "assets/images/customer/restaurants/",
                     "assets/images/customer/taxi/",
                     "assets/images/customer/laundry/",
+                    "assets/images/shared/markers/",
                     "assets/fonts/",
                     "assets/i18n/",
                     "assets/animation/",
@@ -579,7 +583,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -598,6 +603,12 @@
                     "googe-service-file": "services/prod/android/laundry.json",
                     "apple-service-file": "services/prod/ios/laundry.plist"
                 }
+            },
+            "MainActivityKt": {
+                "imports": [
+                    "import io.flutter.embedding.android.FlutterFragmentActivity"
+                ],
+                "super": "FlutterFragmentActivity"
             },
             "pubspec": {
                 "dependencies": {
@@ -618,7 +629,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         },
@@ -669,7 +681,8 @@
                     "assets/i18n/",
                     "assets/animation/",
                     "assets/sounds/",
-                    "assets/icons/appstore.png"
+                    "assets/icons/appstore.png",
+                    "assets/images/shared/markers/"
                 ]
             }
         }

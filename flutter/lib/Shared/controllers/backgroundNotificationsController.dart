@@ -7,9 +7,9 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -94,7 +94,7 @@ class BackgroundNotificationsController extends GetxController {
 
   void notificationClickHandler(RemoteMessage message) {
     mezDbgPrint("notificationClickHandler");
-    mezDbgPrint("CurrentRoute : ${Get.currentRoute}");
+    mezDbgPrint("CurrentRoute : ${MezRouter.currentRoute}");
     mezDbgPrint(message.data);
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {
@@ -145,11 +145,10 @@ class BackgroundNotificationsController extends GetxController {
     if (deviceNotificationToken != null) {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
       final cModels.NotificationInfo? notifInfo = await get_notif_info(
-          userId: authController.hasuraUserId!, appType: "customer");
+          userId: authController.hasuraUserId!,
+          appType: "${MezEnv.appType.toNormalString().toLowerCase()}");
 
       try {
-        SettingsController settingsController = Get.find<SettingsController>();
-
         if (notifInfo != null && notifInfo.token != deviceNotificationToken) {
           // ignore: unawaited_futures
           update_notif_info(
@@ -164,7 +163,7 @@ class BackgroundNotificationsController extends GetxController {
           insert_notif_info(
               userId: authController.hasuraUserId!,
               token: deviceNotificationToken,
-              appType: MezEnv.appType.toNormalString().toLowerCase());
+              appType: MezEnv.appType.toNormalString().unCapFirst);
         }
       } catch (e, stk) {
         mezDbgPrint(e);

@@ -20,7 +20,7 @@ class AgoraCall extends StatefulWidget {
       required int participantId,
       required String participantImage,
       required String participantName,
-      required String participantType}) {
+      required ParticipantType participantType}) {
     return MezRouter.toPath(NativeOnlyRoutes.kAgoraCallScreenRoute,
         arguments: <String, dynamic>{
           'chatId': chatId,
@@ -36,14 +36,12 @@ class AgoraCall extends StatefulWidget {
 }
 
 class _AgoraCallState extends State<AgoraCall> {
-  final MessageController _msgController = MessageController();
   final SettingsController _settingsController = Get.find<SettingsController>();
   final Sagora _sagora = Get.find<Sagora>();
   final Participant talkingTo = Participant(
       image: MezRouter.bodyArguments?['participantImage'],
-      name: MezRouter.bodyArguments?['participantImage'],
-      participantType: MezRouter.bodyArguments?['participantType'].toString()
-          as ParticipantType,
+      name: MezRouter.bodyArguments?['participantName'],
+      participantType: MezRouter.bodyArguments?['participantType'],
       id: MezRouter.bodyArguments?['participantId']);
 
   // final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;

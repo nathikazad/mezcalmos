@@ -11029,6 +11029,11 @@ type delivery_order {
   status: String!
 
   """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
   A computed field, executes function "delivery.deliverytotalcost"
   """
   total_cost: money
@@ -11236,6 +11241,7 @@ input delivery_order_bool_exp {
   service_provider_review_by_driver_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
   status: String_comparison_exp
+  tax: money_comparison_exp
   total_cost: money_comparison_exp
   trip_distance: Int_comparison_exp
   trip_duration: Int_comparison_exp
@@ -11682,6 +11688,7 @@ input delivery_order_order_by {
   service_provider_review_by_driver_id: order_by
   service_provider_type: order_by
   status: order_by
+  tax: order_by
   total_cost: order_by
   trip_distance: order_by
   trip_duration: order_by

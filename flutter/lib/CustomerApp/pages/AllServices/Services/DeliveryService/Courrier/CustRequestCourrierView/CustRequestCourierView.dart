@@ -15,8 +15,8 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
@@ -118,19 +118,26 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           SizedBox(
             height: 5,
           ),
-          DeliveryTimePicker(
-            fixed7days: true,
-            deliveryTime: viewController.deliveryTime.value,
-            isServiceOpen: viewController.company.value?.isOpen() ?? true,
-            numberOfDays: 7,
-            onValue: (DateTime? value) {
-              viewController.deliveryTime.value = value;
-            },
-            onClear: () {
-              viewController.deliveryTime.value = null;
-            },
-            periodOfTime: null,
-            schedule: viewController.company.value!.schedule,
+          Form(
+            key: viewController.secondFormKey,
+            child: DeliveryTimePicker(
+              fixed7days: true,
+              deliveryTime: viewController.deliveryTime.value,
+              isServiceOpen: viewController.company.value?.isOpen() ?? true,
+              numberOfDays: 7,
+              onValue: (DateTime? value) {
+                if (value != null &&
+                    viewController.secondFormKey.currentState?.validate() ==
+                        true) {
+                  viewController.deliveryTime.value = value;
+                }
+              },
+              onClear: () {
+                viewController.deliveryTime.value = null;
+              },
+              periodOfTime: null,
+              schedule: viewController.company.value!.schedule,
+            ),
           ),
           SizedBox(
             height: 5,
@@ -182,7 +189,8 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             DropDownLocationList(
               elevation: 0,
               onValueChangeCallback: ({MezLocation? location}) {
-                if (location != null && location.isValidLocation()) {
+                if (location != null &&
+                    viewController.fromKey.currentState?.validate() == true) {
                   viewController.setToLocation(location);
                 }
               },
@@ -209,27 +217,21 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   Widget _fromFeild() {
     return Column(
       children: [
-        Obx(
-          () => Material(
-            elevation: 0,
-            child: LocationSearchComponent(
-                hintPadding: EdgeInsets.only(left: 10),
-                suffixPadding: EdgeInsets.only(right: 10),
-                leftBotRaduis: 15,
-                rightBotRaduis: 15,
-                rightTopRaduis: 15,
-                leftTopRadius: 15,
-                showSearchIcon: false,
-                textStyle: context.textTheme.bodyLarge,
-                bgColor: Colors.white,
-                text: viewController.fromLoc.value?.address,
-                onClear: () {},
-                notifyParent: (MezLocation? location) {
+        Material(
+          elevation: 0,
+          child: LocationSearchComponent(
+              textStyle: context.textTheme.bodyLarge,
+              showInputAsOption: true,
+              bgColor: Colors.white,
+              controller: viewController.fromLocText,
+              onClear: () {},
+              notifyParent: (MezLocation? location) {
+                if (location != null) {
                   setState(() {
-                    viewController.addFromLoc(location: location!);
+                    viewController.addFromLoc(location: location);
                   });
-                }),
-          ),
+                }
+              }),
         ),
         SizedBox(
           height: 7,

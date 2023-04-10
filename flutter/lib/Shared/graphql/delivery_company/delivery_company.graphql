@@ -43,6 +43,7 @@ query getDeliveryCompanies {
     id
       reviews_aggregate {
       aggregate {
+        count
         avg {
           rating
         }

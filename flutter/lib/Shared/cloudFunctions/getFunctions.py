@@ -280,6 +280,8 @@ extension ParseStringTo#### on String {
   name = key[0].lower() + key[1:]
   converter = converter.replace("####",key)
   converter = converter.replace("****",name)
+  if key == "Language":
+    converter = converter.replace("str[0].toLowerCase() + str.substring(1)", "str.toLowerCase()")
   return str+converter+"\n\n"
 
 def printDartFormatFunction(key, value):

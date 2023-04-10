@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -54,6 +55,7 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
     packageReady: orderData.package_ready,
+
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
     serviceOrderId: orderData.restaurant_order?.id,
@@ -103,10 +105,11 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         ? LatLng(orderData.delivery_driver!.current_location!.latitude,
             orderData.delivery_driver!.current_location!.longitude)
         : null,
-    pickupLocation: (orderData.pickup_address != null &&
-            orderData.pickup_gps != null)
+    pickupLocation: (orderData.pickup_address != null)
         ? MezLocation(
-            orderData.pickup_address!, orderData.pickup_gps!.toLocationData())
+            orderData.pickup_address!,
+            orderData.pickup_gps?.toLocationData() ??
+                MezLocation.buildLocationData(0, 0))
         : null,
     dropOffLocation: MezLocation(
         orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
@@ -117,7 +120,10 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     costs: OrderCosts(
       deliveryCost: orderData.delivery_cost,
       refundAmmount: null,
-      tax: null,
+      tax: orderData.tax,
+      changePriceRequest: (orderData.change_price_request != null)
+          ? ChangePriceRequest.fromMap(orderData.change_price_request)
+          : null,
       orderItemsCost: orderData.package_cost_comp,
       totalCost: orderData.total_cost,
     ),
@@ -195,12 +201,13 @@ Future<List<MinimalOrder>?> get_open_driver_orders(
 }
 
 Future<List<MinimalOrder>?> get_past_driver_orders(
-    {required int driverId}) async {
+    {required int driverId, required offset, required limit}) async {
   final QueryResult<Query$get_past_driver_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_past_driver_orders(
     Options$Query$get_past_driver_orders(
       fetchPolicy: FetchPolicy.networkOnly,
-      variables: Variables$Query$get_past_driver_orders(driverId: driverId),
+      variables: Variables$Query$get_past_driver_orders(
+          driverId: driverId, offset: offset, limit: limit),
     ),
   );
   if (queryResult.parsedData?.delivery_order != null) {
@@ -264,13 +271,13 @@ Future<List<MinimalOrder>?> get_dvcompany_current_orders(
 }
 
 Future<List<MinimalOrder>?> get_dvcompany_past_orders(
-    {required int companyId}) async {
+    {required int companyId, int? offset, int? limit}) async {
   final QueryResult<Query$get_delivery_company_past_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_delivery_company_past_orders(
     Options$Query$get_delivery_company_past_orders(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Query$get_delivery_company_past_orders(
-          companyId: companyId),
+          companyId: companyId, offset: offset, limit: limit),
     ),
   );
   if (queryResult.parsedData?.delivery_order != null) {
@@ -410,7 +417,7 @@ UserInfo? _getDeliveryCompany(
   final cModels.ServiceProviderType serviceProviderType =
       orderData.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
-    case cModels.ServiceProviderType.Delivery:
+    case cModels.ServiceProviderType.DeliveryCompany:
       return UserInfo(
           hasuraId: orderData.delivery_company!.id,
           name: orderData.delivery_company!.details!.name,
@@ -517,7 +524,7 @@ Future<num?> fetch_delivery_orders_count(
       }
 
       break;
-    case cModels.ServiceProviderType.Delivery:
+    case cModels.ServiceProviderType.DeliveryCompany:
       QueryResult<Query$getCompanyOrdersCount> res = await _hasuraDb
           .graphQLClient
           .query$getCompanyOrdersCount(Options$Query$getCompanyOrdersCount(

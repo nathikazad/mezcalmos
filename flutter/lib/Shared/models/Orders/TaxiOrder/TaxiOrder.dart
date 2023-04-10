@@ -109,7 +109,7 @@ class TaxiOrder extends Order {
     required super.chatId,
   }) : super(
             orderTime: orderTime,
-            deliveryProviderType: cModels.ServiceProviderType.Delivery,
+            deliveryProviderType: cModels.ServiceProviderType.DeliveryCompany,
             orderId: orderId,
             paymentType: paymentType,
             orderType: cModels.OrderType.Taxi,

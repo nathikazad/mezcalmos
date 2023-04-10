@@ -197,6 +197,7 @@ class CustRequestCourierItems extends StatelessWidget {
       bool isPrice = false,
       String? Function(String?)? validator}) {
     return TextFormField(
+        scrollPadding: EdgeInsets.only(bottom: 100),
         controller: controller,
         validator: validator,
         keyboardType:

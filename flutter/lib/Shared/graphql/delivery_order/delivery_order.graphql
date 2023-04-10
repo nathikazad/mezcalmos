@@ -1,18 +1,18 @@
 query get_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-   schedule_time
+    schedule_time
     chat_with_customer_id
     order_type
     direction
     chat_with_service_provider_id
-    
+    change_price_request
     delivery_company {
       id
       details {
         id
         image
         name
-          location {
+        location {
           gps
           address
         }
@@ -29,7 +29,7 @@ query get_driver_order($orderId: Int!) {
     estimated_arrival_at_pickup_time
     estimated_package_ready_time
     id
-
+tax
     restaurant_order {
       id
       stripe_info
@@ -178,7 +178,7 @@ query get_driver_order($orderId: Int!) {
 }
 
 subscription listen_on_driver_order($orderId: Int!) {
-   delivery_order_by_pk(id: $orderId) {
+  delivery_order_by_pk(id: $orderId) {
     actual_arrival_at_dropoff_time
     actual_arrival_at_pickup_time
     actual_delivered_time
@@ -186,13 +186,14 @@ subscription listen_on_driver_order($orderId: Int!) {
     cancellation_time
     chat_with_customer_id
     order_type
+    change_price_request
     direction
     schedule_time
     chat_with_service_provider_id
     delivery_company {
       id
       details {
-          location {
+        location {
           gps
           address
         }
@@ -335,8 +336,6 @@ subscription listen_on_driver_order($orderId: Int!) {
 
     service_provider_id
     delivery_driver {
-      current_location
-
       user {
         name
         image
@@ -358,11 +357,10 @@ subscription listen_on_driver_order($orderId: Int!) {
       }
     }
   }
-  }
+}
 
 subscription listen_on_order_driver_location($orderId: Int!) {
-   delivery_order_by_pk(id: $orderId) {
-  
+  delivery_order_by_pk(id: $orderId) {
     delivery_driver {
       current_location
 
@@ -372,23 +370,18 @@ subscription listen_on_order_driver_location($orderId: Int!) {
         id
       }
     }
-   
-}
+  }
 }
 query get_order_driver_info($orderId: Int!) {
-   delivery_order_by_pk(id: $orderId) {
-  
+  delivery_order_by_pk(id: $orderId) {
     delivery_driver {
-    
-
       user {
         name
         image
         id
       }
     }
-   
-}
+  }
 }
 
 subscription listen_on_inprocess_driver_orders($driverId: Int!) {
@@ -430,12 +423,15 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
   }
 }
 
-query get_past_driver_orders($driverId: Int!) {
+query get_past_driver_orders($driverId: Int!, $offset: Int, $limit: Int) {
   delivery_order(
     where: {
       delivery_driver_id: { _eq: $driverId }
       in_process: { _eq: false }
     }
+    order_by: { order_time: desc }
+    offset: $offset
+    limit: $limit
   ) {
     id
     order_time
@@ -508,9 +504,12 @@ query get_inprocess_driver_orders($driverId: Int!) {
     }
   }
 }
-query get_open_driver_orders($in_process : Boolean!) {
+query get_open_driver_orders($in_process: Boolean!) {
   delivery_order(
-   where: {delivery_driver_id: {_is_null: true}, in_process: { _eq: $in_process }}
+    where: {
+      delivery_driver_id: { _is_null: true }
+      in_process: { _eq: $in_process }
+    }
   ) {
     id
     order_time
@@ -547,7 +546,10 @@ query get_open_driver_orders($in_process : Boolean!) {
 }
 subscription listen_open_driver_orders($in_process: Boolean!) {
   delivery_order(
-    where: {delivery_driver_id: {_is_null: true}, in_process: { _eq: $in_process }}
+    where: {
+      delivery_driver_id: { _is_null: true }
+      in_process: { _eq: $in_process }
+    }
   ) {
     id
     order_time
@@ -622,12 +624,19 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     }
   }
 }
-query get_delivery_company_past_orders($companyId: Int!) {
+query get_delivery_company_past_orders(
+  $companyId: Int!
+  $offset: Int
+  $limit: Int
+) {
   delivery_order(
     where: {
       delivery_company: { id: { _eq: $companyId } }
       in_process: { _eq: false }
     }
+    order_by: { order_time: desc }
+    offset: $offset
+    limit: $limit
   ) {
     id
     order_time
@@ -712,12 +721,11 @@ query get_pick_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
     order_type
 
-    
     delivery_company {
       id
       details {
         id
-          location {
+        location {
           gps
           address
         }
@@ -766,29 +774,52 @@ query get_pick_driver_order($orderId: Int!) {
   }
 }
 query getCustomerDvOrdersCount($id: Int!) {
-  delivery_order_aggregate(where: {customer_id: {_eq: $id}}) {
+  delivery_order_aggregate(where: { customer_id: { _eq: $id } }) {
     aggregate {
       count
     }
   }
 }
 query getRestaurantOrdersCount($restId: Int!) {
-  delivery_order_aggregate(where: {restaurant: {id: {_eq: $restId}}}) {
+  delivery_order_aggregate(where: { restaurant: { id: { _eq: $restId } } }) {
     aggregate {
       count
     }
   }
 }
 query getLaundryOrdersCount($laundryId: Int!) {
-  delivery_order_aggregate(where: {laundry: {id: {_eq: $laundryId}}}) {
+  delivery_order_aggregate(where: { laundry: { id: { _eq: $laundryId } } }) {
     aggregate {
       count
     }
   }
-}query getCompanyOrdersCount($companyId: Int!) {
-  delivery_order_aggregate(where: {service_provider_id:  {_eq: $companyId}}) {
+}
+query getCompanyOrdersCount($companyId: Int!) {
+  delivery_order_aggregate(
+    where: { service_provider_id: { _eq: $companyId } }
+  ) {
     aggregate {
       count
     }
+  }
+}
+# querry listen_driver_order_prices($orderId: Int!) {
+#   delivery_order_by_pk(id :$orderId){
+#     total_cost,
+#     tax,
+#     delivery_cost,
+#     package_cost_comp,
+#     change_price_request,
+    
+#   }
+# }
+subscription listen_driver_order_prices($orderId: Int!) {
+  delivery_order_by_pk(id :$orderId){
+    total_cost,
+    tax,
+    delivery_cost,
+    package_cost_comp,
+    change_price_request,
+    
   }
 }

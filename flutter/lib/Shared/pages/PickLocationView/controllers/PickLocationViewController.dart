@@ -45,7 +45,7 @@ class PickLocationViewController {
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
       setNewLocationOnController(
           latlng: LatLng(locData.latitude!, locData.longitude!));
-
+      mezDbgPrint("Geting current location ==========>>>$locData");
       geoCodeAndSetControllerLocation(
           LatLng(locData.latitude!, locData.longitude!));
     });
@@ -93,7 +93,8 @@ class PickLocationViewController {
 
       await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
       await onSave?.call(location: locationPickerController.location.value!);
-
+      mezDbgPrint(
+          "Poppping with result =====================>${locationPickerController.location.value}");
       await MezRouter.back(backResult: locationPickerController.location.value);
     }
   }

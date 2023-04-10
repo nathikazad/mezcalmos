@@ -4,6 +4,7 @@ import 'package:mezcalmos/LaundryApp/notificationHandler.dart';
 import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -12,6 +13,7 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings["MezAdmin"]["notificationHandler"];
 
 Notification mezAdminNotificationHandler(String key, value) {
+  mezDbgPrint("notification value ====> ==================>$value");
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
 

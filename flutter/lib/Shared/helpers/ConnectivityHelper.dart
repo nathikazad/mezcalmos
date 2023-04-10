@@ -30,22 +30,31 @@ class ConnectivityHelper {
     // _internetStatusStreamController =
     // StreamController<InternetStatus>.broadcast();
     mezDbgPrint("NETWORK CHECKER");
-    _internetStatusStreamController.add(await checkForInternet());
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
-      try {
-        _internetStatusStreamController.add(await checkForInternet());
-      } catch (e) {
-        _internetStatusStreamController.add(InternetStatus.Offline);
-      }
-    });
+    // ignore: unawaited_futures
+    checkConnectivity();
     Connectivity().onConnectivityChanged.listen((ConnectivityResult c) async {
       _internetStatusStreamController.add(await checkForInternet());
     });
   }
 
+  Future<void> checkConnectivity() async {
+    // mezDbgPrint("Checking connectivity");
+    bool onlineMode = true;
+    try {
+      final InternetStatus internetStatus = await checkForInternet();
+      // mezDbgPrint(internetStatus);
+      _internetStatusStreamController.add(internetStatus);
+      onlineMode = internetStatus != InternetStatus.Offline;
+    } catch (e) {
+      _internetStatusStreamController.add(InternetStatus.Offline);
+      onlineMode = false;
+    }
+    _timer?.cancel();
+    _timer = Timer(Duration(seconds: (onlineMode) ? 10 : 1), checkConnectivity);
+  }
+
   Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
-    List<Future<bool>> futures = <Future<bool>>[
+    final List<Future<bool>> futures = <Future<bool>>[
       _pingServer(sNetworkCheckUrl1),
       _pingServer(firebaseDbUrl),
       _pingServer(hasuraDbUrl),
@@ -55,11 +64,12 @@ class ConnectivityHelper {
     ];
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
-        .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
+        .timeout(Duration(seconds: 10), onTimeout: () => <bool>[false]);
     if (results.contains(false)) {
       return InternetStatus.Offline;
     } else {
-      if (stopwatch.elapsed.inMilliseconds < 3000)
+      // mezDbgPrint(stopwatch.elapsed.inMilliseconds);
+      if (stopwatch.elapsed.inMilliseconds < 5000)
         return InternetStatus.Online;
       else
         return InternetStatus.Slow;

@@ -85,7 +85,7 @@ export enum ServiceProviderType {
   Laundry = "laundry",
   Taxi = "taxi",
   Business = "business",
-  Delivery = "delivery",
+  DeliveryCompany = "deliveryCompany",
   Customer = "customer"
 }
 

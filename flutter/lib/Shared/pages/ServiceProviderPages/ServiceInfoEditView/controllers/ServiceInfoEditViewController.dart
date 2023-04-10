@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,7 +33,7 @@ class ServiceInfoEditViewController {
   final Rx<Language> secondaryLang = Rx(Language.ES);
   final Rxn<Language> editablePrLang = Rxn();
   final Rxn<Language> editableScLang = Rxn();
-  final Rxn<File> newImageFile = Rxn();
+  final Rxn<imPicker.XFile> newImageFile = Rxn();
 
   final RxBool imageLoading = RxBool(false);
   final RxBool isAvailable = RxBool(false);
@@ -127,7 +126,12 @@ class ServiceInfoEditViewController {
     try {
       await updateServiceDescriptionDescription();
       await updateServiceLocation();
-
+      if (newImageFile.value != null) {
+        String path =
+            "/services/${serviceType.name}/$serviceId/images/${DateTime.now().toIso8601String()}";
+        newImageUrl.value = await uploadImgToFbStorage(
+            imageFile: newImageFile.value!, pathPrefix: path);
+      }
       await updateServiceInfo();
       return true;
     } on Exception catch (e, stk) {
@@ -182,7 +186,7 @@ class ServiceInfoEditViewController {
 
       try {
         if (_res != null) {
-          newImageFile.value = File(_res.path);
+          newImageFile.value = _res;
         }
         imageLoading.value = false;
       } catch (e) {

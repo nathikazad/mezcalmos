@@ -46,7 +46,7 @@ class DeliverySettingsViewController {
   int? detailsID;
 
   bool get isDeliveryCompany =>
-      serviceProviderType == ServiceProviderType.Delivery;
+      serviceProviderType == ServiceProviderType.DeliveryCompany;
 
   Future<void> init({
     CreateServiceViewController? createServiceViewController,
@@ -78,7 +78,7 @@ class DeliverySettingsViewController {
 
   Future<void> _initEditMode(
       int serviceProviderId, ServiceProviderType serviceProviderType) async {
-    if (serviceProviderType != ServiceProviderType.Delivery) {
+    if (serviceProviderType != ServiceProviderType.DeliveryCompany) {
       selfDelivery.value = deliveryCost.value!.selfDelivery;
       deliveryType.value = selfDelivery.value!
           ? ServiceDeliveryType.Self_delivery

@@ -110,8 +110,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 5),
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 10, bottom: 10),
                                 child: Row(
                                   children: [
                                     Icon(Icons.hourglass_empty,
@@ -151,7 +151,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                     ),
                   )
                 else
-                  NoOrdersComponent(),
+                  Padding(
+                      padding: EdgeInsets.only(top: 17.5.h),
+                      child: NoOrdersComponent()),
               ],
             ),
           ),
@@ -167,7 +169,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
             child: Row(
               children: [
                 Icon(Icons.route, color: primaryBlueColor),

@@ -52,8 +52,8 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
 
   @override
   void initState() {
-    serviceProviderType = MezRouter.bodyArguments?["serviceProviderType"]
-        .toString() as ServiceProviderType?;
+    serviceProviderType =
+        MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType?;
     serviceName = MezRouter.bodyArguments?["serviceName"].toString();
     serviceProviderId =
         int.tryParse(MezRouter.urlArguments["serviceProviderId"].toString());
@@ -110,7 +110,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                           order: viewController.currentOrders.value![index],
                           onTap: () {
                             switch (viewController.providerType) {
-                              case ServiceProviderType.Delivery:
+                              case ServiceProviderType.DeliveryCompany:
                                 //   MezRouter.toNamed(getDvCompanyOrderRoute(
                                 //       viewController
                                 //           .currentOrders.value![index].id));

@@ -23,7 +23,9 @@
         "ops": "Oops",
         "wrongAddress": "Wrong/Invalid address picked!",
         "distanceError": "The distance between you and the service location exceeds 10km!",
+        "noLocError": "Please select a location",
         "pickLocation": "Pick from map"
+      
       },
       "LocationPicker": {
         "pick": "PICK",
@@ -47,6 +49,12 @@
         }
       },
       "courrier": {
+        "CustCourierServicesListView" : {
+          "title" : "Delivery companies arround you",
+          "courier" : "Courier",
+          "min" : "Min"
+        },
+
         "CustCourierServiceView": {
           "orderNow": "Order now",
           "chatWithUs": "Chat with us",
@@ -75,9 +83,16 @@
           }
         },
         "CustCourierOrderView": {
+          "priceChangeTitle" : "Price change request",
+          "reason" : "Reason",
+          "newPrice" : "New price",
+          "accept" : "Accept",
+      
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
+          "deliveryDetails": "Delivery details",
+          "pickupLoc": "Pickup location",
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },
@@ -186,7 +201,8 @@
               "restClosed": "Service is closed now, but you can schedule your order for later.",
               "pickTime": "Pick your time",
               "now": "Now",
-              "timeError": "Picked delivery time is passed, please pick a valid time"
+              "timeError": "Picked delivery time is passed, please pick a valid time",
+              "required" : "Please select a delivery time"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Payment method",
@@ -220,6 +236,8 @@
               "pickLocation": "Pick from map"
             },
             "OrderSummaryCard": {
+              "add" : "Add",
+              "waitingForCustomer" : "Waiting for customer", 
               "orderSummary": "Summary",
               "orderCost": "Order cost",
               "deliveryCost": "Delivery cost",
@@ -234,7 +252,7 @@
               "pickLocationHintText": "Enter name",
               "addLocationDialogButton": "Save",
               "editLocationDialogButton": "EDIT",
-              "addLocationDialogSkip": "Close"
+              "addLocationDialogSkip": "Skip"
             }
           },
           "ViewCartScreen": {
@@ -355,7 +373,8 @@
               "deliveryCost": "Delivery cost",
               "free": "Free",
               "total": "Total",
-              "deliveryLocation": "Delivery location"
+              "deliveryLocation": "Delivery location",
+              "waitingForCustomer": "Waiting for customer"
             },
             "RestaurantBankInfoCard": {
               "title": "Restaurant bank account",
@@ -691,6 +710,7 @@
           }
         },
         "LaundriesListView": {
+
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -702,7 +722,7 @@
             }
           },
           "laundries": "Laundries",
-          "title": "Find your closest laundries\nor dry cleaners ",
+          "title": "Laundries arround you ",
           "noLaundaryFound": "No laundry found"
         },
         "SingleLaundryScreen": {
@@ -813,6 +833,7 @@
           "ready": "Package ready",
           "atPickUp": "At pickup",
           "otwDropOff": "On the way dropoff",
+          "otwPickup": "On the way pickup",
           "delivered": "Order delivered",
           "received": "Order received",
           "canceled": "Order cancelled",
@@ -836,6 +857,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
+        "routeError" : "Error getting your location and route informations",
         "writeReview": "Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",
@@ -903,7 +925,7 @@
           "CreateServiceInfoPage": {
             "name": "Restaurant name",
             "hintNameText": "Enter your name",
-            "uploadImageText": "Upload your profile image",
+            "uploadImageText": "Upload image",
             "nameError": "Please provide a name",
             "descriptionError": "Please provide a description",
             "location": "Location",
@@ -1224,7 +1246,8 @@
         "deliveryLocation": "Delivery location",
         "refundAmount": "Refund amount",
         "tax": "Tax",
-        "toBeCalc": "To be calculated"
+        "toBeCalc": "To be calculated",
+        "add": "Add"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Payment method",
@@ -1503,6 +1526,18 @@
       }
     },
     "pages": {
+      "DvCompanyOrderView": {
+        "order": "Order",
+        "customer": "Customer Info",
+        "estTimes": "Estimated times",
+        "deliveryDetails": "Delivery details",
+        "pickupLoc": "Pickup location",
+        "loading": "Getting you order info...",
+        "packageReady": "Package ready :",
+        "arrivalAtPickup": "Arrival at pickup :",
+        "arrivalAtDropoff": "Arrival at dropoff :",
+        "noDriver": "No driver assigned yet"
+      },
       "DvOpTabsView": {
         "orders": "Orders",
         "drivers": "Drivers",
@@ -1815,7 +1850,7 @@
         "customer": "Customer",
         "restaurant": "Restaurant",
         "laundry": "Laundry",
-        "orders": "Orders",
+        "order": "Order",
         "viewImage": "View image"
       },
       "RestaurantOrderView": {
@@ -1848,7 +1883,7 @@
           "currentOrders": "Current orders",
           "openOrders": "Open orders",
           "pastOrders": "Past orders",
-          "title": "Incoming  Orders",
+          "title": "Incoming orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",
           "Components": {
@@ -1996,7 +2031,7 @@
       "laundryOtwDeliveryBody": "order is on the way to the customer",
       "deliveredTitle": "Delivered",
       "deliveredBody": "Order has been delivered",
-      "driverNotifTitle": "New Order",
+      "driverNotifTitle": "New order",
       "driverNotifBody": "You got a new order"
     }
   },
@@ -2621,6 +2656,7 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "minutes": "minutes",
+    "min": "min",
     "slowInternet": "Slow internet"
   }
 }

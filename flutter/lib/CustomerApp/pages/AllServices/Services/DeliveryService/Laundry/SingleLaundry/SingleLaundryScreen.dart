@@ -196,7 +196,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
       runSpacing: 2.0,
       children: [
         Text(
-          "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
+          "${_i18n()["minimumCost"].toString().inCaps} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
           //maxLines: 1,
           textAlign: TextAlign.start,
           style: context.txt.bodyMedium?.copyWith(
@@ -213,7 +213,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
         ),
         Text(
-          "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toPlural(isPlural: laundry.value!.averageNumberOfDays != 1)} ${_i18n()["return"]}",
+          "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toString().toPlural(isPlural: laundry.value!.averageNumberOfDays != 1).inCaps} ${_i18n()["return"].toString()}",
           maxLines: 1,
           textAlign: TextAlign.center,
           style: context.txt.bodyMedium?.copyWith(
