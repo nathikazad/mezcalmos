@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
@@ -122,11 +123,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
               children: [
                 Card(
                   child: InkWell(
-                    onTap: (widget.deliveryTime != null)
-                        ? null
-                        : () async {
-                            await _pickDeliveryTime(context, field);
-                          },
+                    onTap: () async => _pickDeliveryTime(context, field),
                     //  borderRadius: BorderRadius.circular(10),
                     child: Obx(
                       () => Container(
@@ -157,17 +154,17 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                   )
                                 : Flexible(
                                     fit: FlexFit.tight,
-                                    child: Text(_formattedTime,
+                                    child: Text(_formattedTime.toCapital(),
                                         style: context.txt.bodyLarge?.copyWith(
                                           fontSize: 12.sp,
                                         )),
                                   ),
-                            if (widget.deliveryTime == null)
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.black,
-                              ),
-                            if (widget.deliveryTime != null)
+                            //if (widget.deliveryTime == null)
+                            Icon(
+                              Icons.chevron_right,
+                              color: Colors.black,
+                            ),
+                            /*if (widget.deliveryTime != null)
                               InkWell(
                                 onTap: () {
                                   _pickDeliveryTime(context, field);
@@ -207,7 +204,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                     ),
                                   ),
                                 ),
-                              )
+                              )*/
                           ],
                         ),
                       ),

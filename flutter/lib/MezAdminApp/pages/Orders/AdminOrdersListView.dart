@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
@@ -64,6 +65,11 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                     ServiceProviderType.Laundry)
                   _buildLaundryOrders(),
                 _buildPastOrders(),
+                if (viewController.enableShowMoreButton)
+                  MezButton(
+                    label: 'Show more',
+                    onClick: viewController.fetchServicePastOrders,
+                  ),
               ],
             ),
           ),

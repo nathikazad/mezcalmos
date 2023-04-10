@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -178,7 +179,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             return DropdownMenuItem<DateTime>(
                 value: value,
                 child: Text(
-                    "${DateFormat.MMMMEEEEd(userLangCode).format(value)}"));
+                    "${DateFormat.MMMMEEEEd(userLangCode).format(value).toCapital()}"));
           }).toList(),
         ),
       ),

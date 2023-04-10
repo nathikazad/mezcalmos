@@ -128,7 +128,11 @@ class CustCourierOrderViewController {
                   ),
                   Text(
                     "${_i18n()['priceChangeTitle']}",
-                    style: context.textTheme.displayMedium,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                    ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

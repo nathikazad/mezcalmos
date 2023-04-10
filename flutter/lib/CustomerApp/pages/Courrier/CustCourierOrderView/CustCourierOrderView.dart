@@ -29,6 +29,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustCourierOrderView"];
@@ -97,7 +98,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MezCard(
-                    contentPadding: const EdgeInsets.all(12),
+                    contentPadding: const EdgeInsets.all(15),
                     leading: viewController.order.status.widget(
                         packageReady: viewController.order.packageReady),
                     content: Text(
@@ -153,11 +154,6 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       billImage: viewController.order.billImage,
                       margin: const EdgeInsets.only(top: 15),
                     ),
-                  if (viewController.order.review != null)
-                    ReviewCard(
-                      review: viewController.order.review!,
-                      showReviewTitle: true,
-                    ),
                   OrderNoteCard(
                       margin: const EdgeInsets.only(top: 15),
                       note: viewController.order.notes),
@@ -167,6 +163,11 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     stripeOrderPaymentInfo:
                         viewController.order.stripePaymentInfo,
                   ),
+                  if (viewController.order.review != null)
+                    ReviewCard(
+                      review: viewController.order.review!,
+                      showReviewTitle: true,
+                    ),
                   SizedBox(
                     height: 25,
                   ),
@@ -210,37 +211,88 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      viewController.order.items[index].name,
-                      style: context.txt.bodyLarge?.copyWith(
-                          color: viewController.order.items[index].unavailable
-                              ? Colors.grey
-                              : null,
-                          decoration:
-                              viewController.order.items[index].unavailable
-                                  ? TextDecoration.lineThrough
-                                  : null),
+                    SizedBox(
+                      width: 45.w,
+                      height: 40,
+                      child: Text(
+                        viewController.order.items[index].name,
+                        style: context.txt.bodyLarge?.copyWith(
+                            color: viewController.order.items[index].unavailable
+                                ? Colors.grey
+                                : null,
+                            decoration:
+                                viewController.order.items[index].unavailable
+                                    ? TextDecoration.lineThrough
+                                    : null),
+                      ),
                     ),
                     Row(
                       children: [
-                        Text(
-                          "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
-                          style: context.txt.bodyLarge?.copyWith(
-                              color:
-                                  viewController.order.items[index].unavailable
-                                      ? Colors.grey
-                                      : null,
-                              decoration: viewController
-                                              .order.items[index].actualCost !=
-                                          null ||
-                                      viewController
-                                          .order.items[index].unavailable
-                                  ? TextDecoration.lineThrough
-                                  : null),
-                        ),
-                        if (viewController.order.items[index].actualCost !=
-                            null)
-                          Icon(Icons.arrow_forward_rounded),
+                        if (viewController.order.items[index].estCost == null &&
+                            viewController.order.items[index].actualCost ==
+                                null)
+                          Text(
+                            '-',
+                            style: context.txt.bodyLarge?.copyWith(
+                                color: viewController
+                                        .order.items[index].unavailable
+                                    ? Colors.grey
+                                    : null,
+                                decoration: viewController.order.items[index]
+                                                .actualCost !=
+                                            null ||
+                                        viewController
+                                            .order.items[index].unavailable
+                                    ? TextDecoration.lineThrough
+                                    : null),
+                          ),
+                        if (viewController.order.items[index].estCost != null &&
+                            (viewController.order.items[index].estCost !=
+                                viewController.order.items[index].actualCost))
+                          Text(
+                            '${viewController.order.items[index].estCost?.toPriceString()}',
+                            style: context.txt.bodyLarge?.copyWith(
+                                color: viewController
+                                        .order.items[index].unavailable
+                                    ? Colors.grey
+                                    : null,
+                                decoration: viewController.order.items[index]
+                                                .actualCost !=
+                                            null ||
+                                        viewController
+                                            .order.items[index].unavailable
+                                    ? TextDecoration.lineThrough
+                                    : null),
+                          ),
+                        /*if (viewController.order.items[index].estCost != null &&
+                            viewController.order.items[index].actualCost ==
+                                null)
+                          Text(
+                            "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
+                            style: context.txt.bodyLarge?.copyWith(
+                                color: viewController
+                                        .order.items[index].unavailable
+                                    ? Colors.grey
+                                    : null,
+                                decoration: viewController.order.items[index]
+                                                .actualCost !=
+                                            null ||
+                                        viewController
+                                            .order.items[index].unavailable
+                                    ? TextDecoration.lineThrough
+                                    : null),
+                          ),*/
+                        if (viewController.order.items[index].estCost != null &&
+                            viewController.order.items[index].actualCost !=
+                                null &&
+                            (viewController.order.items[index].estCost !=
+                                viewController.order.items[index].actualCost))
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            color: viewController.order.items[index].unavailable
+                                ? Colors.grey
+                                : Colors.black,
+                          ),
                         if (viewController.order.items[index].actualCost !=
                             null)
                           Text(
@@ -279,6 +331,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
 
   MezCard _estTime() {
     return MezCard(
+        margin: EdgeInsets.only(top: 15),
         contentPadding: const EdgeInsets.all(8),
         firstAvatarBgColor: secondaryLightBlueColor,
         secondAvatarBgColor: primaryBlueColor,
@@ -296,8 +349,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             SizedBox(
               height: 2,
             ),
-            Text(viewController.order.estimatedArrivalAtDropoff!
-                .getEstimatedTime()),
+            if (viewController.order.inDeliveryPhase)
+              Text(viewController.order.estimatedArrivalAtDropoff!
+                  .getEstimatedTime()),
           ],
         ));
   }

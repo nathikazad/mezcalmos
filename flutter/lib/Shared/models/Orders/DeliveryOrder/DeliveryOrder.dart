@@ -22,7 +22,6 @@ class DeliveryOrder extends DeliverableOrder {
       required this.packageReady,
       required this.serviceOrderId,
       required this.status,
-     
       required super.scheduleTime,
       required super.estimatedArrivalAtDropoff,
       required super.estimatedArrivalAtPickup,
@@ -71,9 +70,12 @@ class DeliveryOrder extends DeliverableOrder {
   }
 
   bool inProcess() {
-    return status != DeliveryOrderStatus.CancelledByCustomer &&
-        status != DeliveryOrderStatus.CancelledByDeliverer &&
-        status != DeliveryOrderStatus.CancelledByServiceProvider;
+    return !<DeliveryOrderStatus>[
+      DeliveryOrderStatus.CancelledByCustomer,
+      DeliveryOrderStatus.CancelledByDeliverer,
+      DeliveryOrderStatus.CancelledByServiceProvider,
+      DeliveryOrderStatus.Delivered
+    ].contains(status);
   }
 
   @override
@@ -115,5 +117,3 @@ class DeliveryOrder extends DeliverableOrder {
   @override
   String toString() => super.toString();
 }
-
-

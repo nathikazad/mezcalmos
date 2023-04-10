@@ -24,8 +24,7 @@
         "distanceError": "¡La distancia entre usted y la ubicación del servicio supera los 10 km!",
         "chooseLoc": "Elegir la ubicación",
         "pickLocation": "Elegir del mapa",
-        "noLocError" : "Seleccione una ubicación"
-        
+        "noLocError": "Seleccione una ubicación"
       },
       "LocationPicker": {
         "pick": "ELIGE",
@@ -49,9 +48,9 @@
         }
       },
       "courrier": {
-        "CustCourierServicesListView" : {
-          "courier" : "Mensajera",
-          "min" :"Min"
+        "CustCourierServicesListView": {
+          "courier": "Mensajera",
+          "min": "Min"
         },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
@@ -81,10 +80,10 @@
           }
         },
         "CustCourierOrderView": {
-          "priceChangeTitle" : "Solicitud de cambio de precio",
-          "reason" : "Razón",
-          "newPrice" : "Nuevo precio",
-          "accept" : "Aceptar",
+          "priceChangeTitle": "Solicitud de cambio de precio",
+          "reason": "Razón",
+          "newPrice": "Nuevo precio",
+          "accept": "Aceptar",
           "cancelOrder": "Cancelar orden",
           "note": "Nota",
           "delivery": "Entrega",
@@ -199,7 +198,7 @@
               "pickTime": "Elige tu tiempo",
               "now": "Ahora",
               "timeError": "Se pasa el tiempo de entrega elegido, elija un tiempo válido",
-              "required" : "Seleccione un tiempo de entrega"
+              "required": "Seleccione un tiempo de entrega"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Método de pago",
@@ -213,7 +212,7 @@
               "title": "Tu carrito esta vacío"
             },
             "BuildCart": {
-              "inCart": "Mis Ordenes",
+              "inCart": "Mis ordenes",
               "yesClear": "Sí",
               "no": "No",
               "clearCart": "Vaciar carrito",
@@ -233,8 +232,8 @@
               "pickLocation": "Elegir del mapa"
             },
             "OrderSummaryCard": {
-              "add" : "Agregar",
-              "waitingForCustomer" : "esperando a un cliente", 
+              "add": "Agregar",
+              "waitingForCustomer": "esperando a un cliente",
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
