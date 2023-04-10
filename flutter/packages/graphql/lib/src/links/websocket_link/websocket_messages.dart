@@ -3,6 +3,28 @@
 import "dart:convert";
 import 'package:intl/intl.dart';
 
+void mezDbgPrint2(log, {bool showMilliSeconds = false}) {
+  String d = DateFormat('HH:mm:ss').format(DateTime.now());
+  String caller = StackTrace.current
+      .toString()
+      .split('\n')
+      .lastWhere(
+        (String element) => element.contains('mezcalmos/'),
+        orElse: () => '',
+      )
+      .split("                           ")[0];
+
+  if (caller.isNotEmpty) caller = caller.split('/').last.replaceAll(')', '');
+
+  log.toString().split('\n').forEach((String str) {
+    if (showMilliSeconds) {
+      d += ":${DateTime.now().millisecondsSinceEpoch}";
+    }
+
+    print("[MZL][$caller][$d] $str\n");
+  });
+}
+
 /// These messages represent the structures used for Client-server communication
 /// in a GraphQL web-socket subscription. Each message is represented in a JSON
 /// format where the data type is denoted by the `type` field.
@@ -75,8 +97,8 @@ abstract class GraphQLSocketMessage extends JsonSerializable {
     try {
       payload = (map['payload'] ?? <String, dynamic>{}) as Map<String, dynamic>;
     } catch (e) {
-      pprint("😵😵😵😵😵😵 ${map['payload']}");
-      pprint(map);
+      mezDbgPrint2("😵😵😵😵😵😵 ${map['payload']}");
+      mezDbgPrint2(map);
       payload = {"error": map['payload']};
     }
 

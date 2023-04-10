@@ -38,11 +38,11 @@ class ConnectivityHelper {
   }
 
   Future<void> checkConnectivity() async {
-    // mezDbgPrint("Checking connectivity");
+    mezDbgPrint("Checking connectivity");
     bool onlineMode = true;
     try {
       final InternetStatus internetStatus = await checkForInternet();
-      // mezDbgPrint(internetStatus);
+      mezDbgPrint(internetStatus);
       _internetStatusStreamController.add(internetStatus);
       onlineMode = internetStatus != InternetStatus.Offline;
     } catch (e) {
