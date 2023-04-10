@@ -1,0 +1,66 @@
+query get_class_by_id($id: Int!) {
+  business_class_by_pk(id: $id) {
+    business_id
+    schedule
+    schedule_type
+    service {
+      additional_parameters
+      available
+      category1
+      cost
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      id
+      image
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      position
+    }
+  }
+}
+
+query get_class_by_category($category1: String, $distance: Float!, $from: geography!, $limit: Int, $offset: Int) {
+  business_class(where: {_and: {service: {category1: {_eq: $category1}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
+    service {
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      cost
+      image
+      position
+    }
+    id
+    business {
+      id
+      details {
+        id
+        name
+        location {
+          gps
+          address
+        }
+      }
+    }
+  }
+}
