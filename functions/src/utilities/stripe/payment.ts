@@ -232,6 +232,7 @@ export async function updateOrderIdAndFetchPaymentInfo(
 
   }
   if(!(serviceProvider.stripeInfo)) {
+    // TODO: @sanchit remove all throw errors, needs to be enums
     throw new MezError("noStripeAccountOfServiceProvider");
   }
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
@@ -255,6 +256,7 @@ export async function updateOrderIdAndFetchPaymentInfo(
     pi.payment_method as string,
     stripeOptions
   );
+  // TODO @sanchit, check status is the correct status and not requires_action
   paymentDetails.orderStripePaymentInfo = {
     id: stripePaymentId,
     stripeFees: stripeFees,

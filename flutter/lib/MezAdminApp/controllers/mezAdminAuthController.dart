@@ -20,12 +20,14 @@ class MezAdminAuthController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     if (_authController.user != null) {
-      await getMezAdmin();
+      MezAdmin? mezAdmin = await getMezAdmin();
+      if (mezAdmin == null)
+        unawaited(Future.microtask(() => _authController.signOut()));
     }
   }
 
   Future<MezAdmin?> getMezAdmin() async {
-    return await get_admin(user_id: _authController.hasuraUserId!);
+    return get_admin(user_id: _authController.hasuraUserId!);
   }
 
   @override

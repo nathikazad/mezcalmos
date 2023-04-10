@@ -91,6 +91,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
         orderId: orderResponse.restaurantOrder.orderId,
         serviceProviderDetailsId: restaurant.serviceProviderDetailsId
       }
+      //TODO @sanchit: verify that the card has been verified using 3DS and status is not 'requires_action'
       await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
     }
     // clear user cart 

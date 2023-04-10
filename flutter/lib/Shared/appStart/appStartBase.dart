@@ -28,6 +28,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -94,6 +95,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
     /// initializeSetup
     initializeSetup();
+    ConnectivityHelper.instance.startCheckingInternet();
   }
 
   @override
