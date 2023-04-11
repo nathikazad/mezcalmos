@@ -11,3 +11,13 @@ array_relationships:
         remote_table:
           name: cart_item
           schema: business
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - customer_id
+        - business_id
+        - discount_value
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

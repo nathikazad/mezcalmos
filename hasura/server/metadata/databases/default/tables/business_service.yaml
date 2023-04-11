@@ -8,3 +8,17 @@ object_relationships:
   - name: name
     using:
       foreign_key_constraint_on: name_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - available
+        - description_id
+        - id
+        - name_id
+        - position
+        - additional_parameters
+        - cost
+        - image
+        - category1
+      filter: {}
