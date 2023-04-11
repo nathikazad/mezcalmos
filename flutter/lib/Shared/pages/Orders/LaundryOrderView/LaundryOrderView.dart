@@ -6,17 +6,17 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderTimes.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundrySetCategoryComponent.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/controllers/LaundryOrderViewController.dart';
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
@@ -32,6 +32,11 @@ class LaundryOrderView extends StatefulWidget {
   static Future<void> navigate({required int orderId}) {
     return MezRouter.toPath(LaundryAppRoutes.kOrderViewRoute
         .replaceAll(":orderId", orderId.toString()));
+  }
+
+  static String constructPath(int orderId) {
+    return LaundryAppRoutes.kOrderViewRoute
+        .replaceFirst(":orderId", orderId.toString());
   }
 
   @override

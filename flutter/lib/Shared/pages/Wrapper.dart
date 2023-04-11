@@ -55,15 +55,14 @@ class _WrapperState extends State<Wrapper> {
         startListeningOnLocationPermission();
       }
     });
-    Future.microtask(() => checkConnectivity);
+    Future.microtask(() => checkConnectivity());
     super.initState();
   }
 
   void checkConnectivity() {
-    ConnectivityHelper.instance.startCheckingInternet();
     ConnectivityHelper.internetStatusStream
         .listen((InternetStatus internetStatus) {
-      // mezDbgPrint(internetStatus);
+      mezDbgPrint("Inside check connectivity");
       if (internetStatus == InternetStatus.Offline) {
         if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
           mezDbgPrint("No internet going so going to no internet page");

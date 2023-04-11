@@ -32297,11 +32297,31 @@ type review {
   customer: customer_customer
   from_entity_id: Int!
   from_entity_type: String!
+
+  """
+  A computed field, executes function "fromimage"
+  """
+  from_image: String
+
+  """
+  A computed field, executes function "fromname"
+  """
+  from_name: String
   id: Int!
   note: String
   rating: Int!
   to_entity_id: Int!
   to_entity_type: String!
+
+  """
+  A computed field, executes function "toimage"
+  """
+  to_image: String
+
+  """
+  A computed field, executes function "toname"
+  """
+  to_name: String
 }
 
 """
@@ -32396,11 +32416,15 @@ input review_bool_exp {
   customer: customer_customer_bool_exp
   from_entity_id: Int_comparison_exp
   from_entity_type: String_comparison_exp
+  from_image: String_comparison_exp
+  from_name: String_comparison_exp
   id: Int_comparison_exp
   note: String_comparison_exp
   rating: Int_comparison_exp
   to_entity_id: Int_comparison_exp
   to_entity_type: String_comparison_exp
+  to_image: String_comparison_exp
+  to_name: String_comparison_exp
 }
 
 """
@@ -32526,11 +32550,15 @@ input review_order_by {
   customer: customer_customer_order_by
   from_entity_id: order_by
   from_entity_type: order_by
+  from_image: order_by
+  from_name: order_by
   id: order_by
   note: order_by
   rating: order_by
   to_entity_id: order_by
   to_entity_type: order_by
+  to_image: order_by
+  to_name: order_by
 }
 
 """primary key columns input for table: review"""

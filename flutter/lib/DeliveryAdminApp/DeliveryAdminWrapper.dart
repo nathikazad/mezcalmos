@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
@@ -39,7 +40,9 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
   void initState() {
     mezDbgPrint(" 👋👋👋👋👋👋👋 Delivery Admin ::init state 👋👋👋👋👋👋👋 ");
 
-    deliveryOpAuthController.setupDeliveryOperator().then((_) => handleState());
+    deliveryOpAuthController
+        .setupDeliveryOperator()
+        .whenComplete(() => handleState());
 
     _setupNotifications();
     super.initState();
@@ -49,13 +52,14 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
     mezDbgPrint(
         "🫡 Start routing process 🫡 =>${deliveryOpAuthController.operator.value?.toJson()}");
 
-    if (deliveryOpAuthController.operator.value == null) {
-      MezRouter.toNamed(DeliveryAdminRoutes.kNotAuthorizedOperatorRoute);
-    } else if (deliveryOpAuthController
-        .operator.value!.isWaitingToBeApprovedByOwner) {
-      MezRouter.toNamed(DeliveryAdminRoutes.kNotAuthorizedOperatorRoute);
+    if (deliveryOpAuthController.operator.value?.isAuthorized == true) {
+      MezRouter.toNamed(DeliveryAdminRoutes.kDeliveryOpTabsView);
     } else {
-      MezRouter.toNamed(DeliveryAdminRoutes.kDeliveryOpHomeScreenRoute);
+      showErrorSnackBar(
+          duration: Duration(seconds: 2),
+          errorText:
+              "There is no Delivery operator with this information. Please contact support");
+      Get.find<AuthController>().signOut();
     }
   }
 

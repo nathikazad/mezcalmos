@@ -1,3 +1,4 @@
+import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpTabsView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpUnauthView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
@@ -8,7 +9,7 @@ import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryAdminRoutes {
-  static const String kDeliveryOpHomeScreenRoute = '/home';
+  static const String kDeliveryOpTabsView = '/tabsView';
   static const String kDeliveryOpPastOrdersRoute = '/pastOrders';
 
   static const String kNotAuthorizedOperatorRoute = "/deliveryOp/unauthorized";
@@ -20,8 +21,13 @@ class DeliveryAdminRoutes {
 
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(
-          path: kDeliveryOpHomeScreenRoute,
-          name: kDeliveryOpHomeScreenRoute,
+          path: SharedRoutes.kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
+          builder: () => DeliveryAdminWrapper(),
+        ),
+        QRoute(
+          path: kDeliveryOpTabsView,
+          name: kDeliveryOpTabsView,
           builder: () => DvOpTabsView(),
         ),
         QRoute(

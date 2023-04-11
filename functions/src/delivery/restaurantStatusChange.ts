@@ -21,6 +21,18 @@ export async function changeRestaurantOrderStatus(
   let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(deliveryOrder.deliveryId);
   let restaurantOperators: Operator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
 
+  if (deliveryOrder.status == DeliveryOrderStatus.Delivered) {
+    if (restaurantOrder.paymentType == PaymentType.Card) {
+      let paymentDetails: PaymentDetails = {
+        orderId: restaurantOrder.orderId!,
+        serviceProviderDetailsId: restaurantOrder.spDetailsId,
+        orderStripePaymentInfo: restaurantOrder.stripeInfo!
+      }
+      //TODO @sanchit: if declined, then return with error
+      await capturePayment(paymentDetails, restaurantOrder.totalCost)
+    }
+  }
+
   if (deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
     restaurantOrder.status = RestaurantOrderStatus.OnTheWay;
     updateRestaurantOrderStatus(restaurantOrder);
@@ -61,16 +73,5 @@ export async function changeRestaurantOrderStatus(
         pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user.language);
       }
     })
-  }
-
-  if (deliveryOrder.status == DeliveryOrderStatus.Delivered) {
-    if (restaurantOrder.paymentType == PaymentType.Card) {
-      let paymentDetails: PaymentDetails = {
-        orderId: restaurantOrder.orderId!,
-        serviceProviderDetailsId: restaurantOrder.spDetailsId,
-        orderStripePaymentInfo: restaurantOrder.stripeInfo!
-      }
-      await capturePayment(paymentDetails, restaurantOrder.totalCost)
-    }
   }
 }

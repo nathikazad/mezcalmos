@@ -18,11 +18,11 @@ class AdmiOrdersListViewController {
   late AdminTabsViewController adminTabsViewController;
   // obs //
   Rxn<List<MinimalOrder>> restaurantOrders = Rxn();
-  Rxn<List<MinimalOrder>> restaurantPastOrders = Rxn();
+  RxList<MinimalOrder> restaurantPastOrders = RxList.empty();
   int restOffset = 0;
-  Rxn<List<MinimalOrder>> laundryPastOrders = Rxn();
+  RxList<MinimalOrder> laundryPastOrders = RxList.empty();
   int laundryOffset = 0;
-  Rxn<List<MinimalOrder>> dvPastOrders = Rxn();
+  RxList<MinimalOrder> dvPastOrders = RxList.empty();
   int dvOffset = 0;
   int fetchSize = 10;
   Rxn<List<MinimalOrder>> deliveryOrders = Rxn();
@@ -38,16 +38,20 @@ class AdmiOrdersListViewController {
   List<MinimalOrder> get pastOrders {
     switch (currentService) {
       case ServiceProviderType.Restaurant:
-        return restaurantPastOrders.value ?? [];
+        return restaurantPastOrders;
       case ServiceProviderType.Laundry:
-        return laundryPastOrders.value ?? [];
+        return laundryPastOrders;
       case ServiceProviderType.DeliveryCompany:
-        return dvPastOrders.value ?? [];
+        return dvPastOrders;
 
       default:
         return [];
     }
   }
+
+  bool get enableShowMoreButton =>
+      scrollController.positions.isNotEmpty &&
+      scrollController.position.maxScrollExtent == 0.0;
 
   ServiceProviderType get currentService =>
       adminTabsViewController.selectedServiceProviderType.value;
@@ -104,23 +108,27 @@ class AdmiOrdersListViewController {
   }
 
   Future<void> fetchServicePastOrders() async {
+    if (isFetching.value) return;
+
     isFetching.value = true;
     mezDbgPrint("Fetching service orders 🥹");
     try {
       switch (currentService) {
         case ServiceProviderType.Restaurant:
-          restaurantPastOrders.value?.addAll((await get_admin_restaurant_orders(
-                      inProcess: false,
-                      withCache: false,
-                      offset: restOffset,
-                      limit: fetchSize))
-                  ?.toList() ??
+          restaurantPastOrders.addAll((await get_admin_restaurant_orders(
+                  inProcess: false,
+                  withCache: false,
+                  offset: restOffset,
+                  limit: fetchSize)) ??
               []);
+
+          print(
+              '=========Fetching service orders>${restaurantPastOrders.value}');
           restOffset += 10;
 
           break;
         case ServiceProviderType.Laundry:
-          laundryPastOrders.value?.addAll((await get_admin_laundry_orders(
+          laundryPastOrders.addAll((await get_admin_laundry_orders(
                       inProcess: false,
                       withCache: false,
                       offset: laundryOffset,
@@ -131,7 +139,7 @@ class AdmiOrdersListViewController {
 
           break;
         case ServiceProviderType.DeliveryCompany:
-          dvPastOrders.value?.addAll((await get_admin_dv_orders(
+          dvPastOrders.addAll((await get_admin_dv_orders(
                       inProcess: false,
                       withCache: false,
                       offset: dvOffset,

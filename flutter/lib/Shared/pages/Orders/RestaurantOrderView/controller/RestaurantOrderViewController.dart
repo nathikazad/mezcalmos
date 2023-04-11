@@ -4,11 +4,14 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class RestaurantOrderViewController {
   // instances //
@@ -31,6 +34,11 @@ class RestaurantOrderViewController {
 
   // init
   Future<void> init({required int orderId}) async {
+    MezRouter.registerReturnToViewCallback(
+        RestaurantOrderView.constructPath(orderId), () {
+      clearNotifications(orderId);
+    });
+    clearNotifications(orderId);
     try {
       order.value =
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
@@ -199,5 +207,10 @@ class RestaurantOrderViewController {
   void dispose() {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     order.close();
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: cModels.OrderType.Restaurant, orderId: orderId);
   }
 }

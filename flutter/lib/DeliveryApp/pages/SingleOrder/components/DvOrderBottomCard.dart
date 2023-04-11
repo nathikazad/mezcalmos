@@ -148,6 +148,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
             widget.viewcontroller.order.packageReady == true);
   }
 
+
+
   Widget _pickUpTimeSetter() {
     return (widget.viewcontroller.pickuSetted)
         ? Row(

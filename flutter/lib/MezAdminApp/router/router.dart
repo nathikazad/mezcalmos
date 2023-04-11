@@ -15,15 +15,16 @@ class MezAdminRoutes {
 
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(
-          path: kTabsViewRoute,
-          name: kTabsViewRoute,
-          builder: () => AdminTabsView(),
-        ),
-        QRoute(
           path: SharedRoutes.kHomeRoute,
           name: SharedRoutes.kHomeRoute,
           builder: () => MezAdminWrapper(),
         ),
+        QRoute(
+          path: kTabsViewRoute,
+          name: kTabsViewRoute,
+          builder: () => AdminTabsView(),
+        ),
+       
         QRoute(
           path: kServiceOrdersRoute,
           name: kServiceOrdersRoute,

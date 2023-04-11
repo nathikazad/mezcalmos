@@ -85,8 +85,6 @@ class CustomerCartController extends GetxController {
       final Cart? value = await get_customer_cart(
         customerId: _auth.hasuraUserId!,
       );
-      mezDbgPrint(
-          "Fetching cart with ===================>${_auth.hasuraUserId!}========>${value?.toFirebaseFormattedJson()}");
       if (value != null) {
         cart.value = value;
         cart.value?.restaurant = value.restaurant;

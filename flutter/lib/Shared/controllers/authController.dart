@@ -45,68 +45,73 @@ class AuthController extends GetxController {
   String? _previousUserValue = "init";
   bool userRedirectFinish = false;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
+    InternetStatus internetStatus =
+        await ConnectivityHelper.instance.checkForInternet();
+    while (internetStatus == InternetStatus.Offline) {
+      mezDbgPrint(
+          "COnnection not there on authController init, so inside while loop 💕💕💕💕💕💕💕");
+      internetStatus = await ConnectivityHelper.internetStatusStream.first;
+    }
+    mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
     _auth.authStateChanges().listen((fireAuth.User? user) async {
-      mezDbgPrint('Auth controller init! 👋👋👋👋👋');
-      userRedirectFinish = false;
-      if (user?.toString() == _previousUserValue) {
-        mezDbgPrint(
-            'Authcontroller:: same sign in event fired again, skipping it');
-        return;
-      }
-      _previousUserValue = user?.toString();
-
-      mezDbgPrint('Authcontroller:: Auth state change!');
-      mezDbgPrint(user?.hashCode);
-      mezDbgPrint(user ?? "empty");
-
-      if (user == null) {
-        _hasuraUserId.value = null;
-        await hasuraDb.initializeHasura();
-        await _onSignOutCallback();
-        mezDbgPrint('AuthController: User is currently signed out!');
-      } else {
-        mezDbgPrint('AuthController: User is currently signed in!');
-        final InternetStatus internetStatus =
-            await ConnectivityHelper.instance.checkForInternet();
-        if (internetStatus != InternetStatus.Offline) {
-          fireAuth.IdTokenResult? tokenResult =
-              await user.getIdTokenResult(true);
-          mezDbgPrint(tokenResult.claims);
-
-          if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
-              roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
-                  ['x-hasura-allowed-roles'])) {
-            mezDbgPrint("No token, calling addHasuraClaims");
-
-            await FirebaseFunctions.instance
-                .httpsCallable('user2-addHasuraClaim')
-                .call();
-
-            tokenResult = await user.getIdTokenResult(true);
-          }
-          _hasuraUserId.value = int.parse(tokenResult
-              .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
-
-          mezDbgPrint(_hasuraUserId.value);
-
-          await hasuraDb.initializeHasura();
-          await fetchUserInfoFromHasura();
-          _setLAppLanguage();
-          await _onSignInCallback();
-        } else {
-          unawaited(fireAuth.FirebaseAuth.instance.signOut());
-          user = null;
-        }
-      }
-
-      _authStateStreamController.add(user);
+      await authChangeCallback(user);
     });
 
     super.onInit();
+  }
+
+  Future<void> authChangeCallback(fireAuth.User? user) async {
+    mezDbgPrint('Auth controller init! 👋👋👋👋👋');
+    userRedirectFinish = false;
+    if (user?.toString() == _previousUserValue) {
+      mezDbgPrint(
+          'Authcontroller:: same sign in event fired again, skipping it');
+      return;
+    }
+    _previousUserValue = user?.toString();
+
+    mezDbgPrint('Authcontroller:: Auth state change!');
+    mezDbgPrint(user?.hashCode);
+    mezDbgPrint(user ?? "empty");
+
+    if (user == null) {
+      _hasuraUserId.value = null;
+      await hasuraDb.initializeHasura();
+      await _onSignOutCallback();
+      mezDbgPrint('AuthController: User is currently signed out!');
+    } else {
+      mezDbgPrint('AuthController: User is currently signed in!');
+
+      fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
+      mezDbgPrint(tokenResult.claims);
+
+      if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
+          roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
+              ['x-hasura-allowed-roles'])) {
+        mezDbgPrint("No token, calling addHasuraClaims");
+
+        await FirebaseFunctions.instance
+            .httpsCallable('user2-addHasuraClaim')
+            .call();
+
+        tokenResult = await user.getIdTokenResult(true);
+      }
+      _hasuraUserId.value = int.parse(tokenResult
+          .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
+
+      mezDbgPrint(_hasuraUserId.value);
+
+      await hasuraDb.initializeHasura();
+      await fetchUserInfoFromHasura();
+      _setLAppLanguage();
+      await _onSignInCallback();
+    }
+
+    _authStateStreamController.add(user);
   }
 
   bool roleMissing(List<Object?> actualRoles) {

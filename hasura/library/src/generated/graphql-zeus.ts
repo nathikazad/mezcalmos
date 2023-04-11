@@ -18587,11 +18587,19 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	customer?:ValueTypes["customer_customer"],
 	from_entity_id?:true,
 	from_entity_type?:true,
+	/** A computed field, executes function "fromimage" */
+	from_image?:true,
+	/** A computed field, executes function "fromname" */
+	from_name?:true,
 	id?:true,
 	note?:true,
 	rating?:true,
 	to_entity_id?:true,
 	to_entity_type?:true,
+	/** A computed field, executes function "toimage" */
+	to_image?:true,
+	/** A computed field, executes function "toname" */
+	to_name?:true,
 		__typename?: true
 }>;
 	/** aggregated selection of "review" */
@@ -18668,11 +18676,15 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	customer?:ValueTypes["customer_customer_bool_exp"],
 	from_entity_id?:ValueTypes["Int_comparison_exp"],
 	from_entity_type?:ValueTypes["String_comparison_exp"],
+	from_image?:ValueTypes["String_comparison_exp"],
+	from_name?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	note?:ValueTypes["String_comparison_exp"],
 	rating?:ValueTypes["Int_comparison_exp"],
 	to_entity_id?:ValueTypes["Int_comparison_exp"],
-	to_entity_type?:ValueTypes["String_comparison_exp"]
+	to_entity_type?:ValueTypes["String_comparison_exp"],
+	to_image?:ValueTypes["String_comparison_exp"],
+	to_name?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "review" */
 ["review_constraint"]:review_constraint;
@@ -18767,11 +18779,15 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	customer?:ValueTypes["customer_customer_order_by"],
 	from_entity_id?:ValueTypes["order_by"],
 	from_entity_type?:ValueTypes["order_by"],
+	from_image?:ValueTypes["order_by"],
+	from_name?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	note?:ValueTypes["order_by"],
 	rating?:ValueTypes["order_by"],
 	to_entity_id?:ValueTypes["order_by"],
-	to_entity_type?:ValueTypes["order_by"]
+	to_entity_type?:ValueTypes["order_by"],
+	to_image?:ValueTypes["order_by"],
+	to_name?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: review */
 ["review_pk_columns_input"]: {
@@ -40503,11 +40519,19 @@ the end). throws an error if top level container is not an array */
 	customer?:PartialObjects["customer_customer"],
 			from_entity_id?:number,
 			from_entity_type?:string,
+			/** A computed field, executes function "fromimage" */
+	from_image?:string,
+			/** A computed field, executes function "fromname" */
+	from_name?:string,
 			id?:number,
 			note?:string,
 			rating?:number,
 			to_entity_id?:number,
-			to_entity_type?:string
+			to_entity_type?:string,
+			/** A computed field, executes function "toimage" */
+	to_image?:string,
+			/** A computed field, executes function "toname" */
+	to_name?:string
 	},
 	/** aggregated selection of "review" */
 ["review_aggregate"]: {
@@ -40583,11 +40607,15 @@ the end). throws an error if top level container is not an array */
 	customer?:PartialObjects["customer_customer_bool_exp"],
 	from_entity_id?:PartialObjects["Int_comparison_exp"],
 	from_entity_type?:PartialObjects["String_comparison_exp"],
+	from_image?:PartialObjects["String_comparison_exp"],
+	from_name?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	note?:PartialObjects["String_comparison_exp"],
 	rating?:PartialObjects["Int_comparison_exp"],
 	to_entity_id?:PartialObjects["Int_comparison_exp"],
-	to_entity_type?:PartialObjects["String_comparison_exp"]
+	to_entity_type?:PartialObjects["String_comparison_exp"],
+	to_image?:PartialObjects["String_comparison_exp"],
+	to_name?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "review" */
 ["review_constraint"]:review_constraint,
@@ -40682,11 +40710,15 @@ the end). throws an error if top level container is not an array */
 	customer?:PartialObjects["customer_customer_order_by"],
 	from_entity_id?:PartialObjects["order_by"],
 	from_entity_type?:PartialObjects["order_by"],
+	from_image?:PartialObjects["order_by"],
+	from_name?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	note?:PartialObjects["order_by"],
 	rating?:PartialObjects["order_by"],
 	to_entity_id?:PartialObjects["order_by"],
-	to_entity_type?:PartialObjects["order_by"]
+	to_entity_type?:PartialObjects["order_by"],
+	to_image?:PartialObjects["order_by"],
+	to_name?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: review */
 ["review_pk_columns_input"]: {
@@ -64644,11 +64676,19 @@ export type review = {
 	customer?:customer_customer,
 	from_entity_id:number,
 	from_entity_type:string,
+	/** A computed field, executes function "fromimage" */
+	from_image?:string,
+	/** A computed field, executes function "fromname" */
+	from_name?:string,
 	id:number,
 	note?:string,
 	rating:number,
 	to_entity_id:number,
-	to_entity_type:string
+	to_entity_type:string,
+	/** A computed field, executes function "toimage" */
+	to_image?:string,
+	/** A computed field, executes function "toname" */
+	to_name?:string
 }
 
 /** aggregated selection of "review" */
@@ -64733,11 +64773,15 @@ export type review_bool_exp = {
 	customer?:customer_customer_bool_exp,
 	from_entity_id?:Int_comparison_exp,
 	from_entity_type?:String_comparison_exp,
+	from_image?:String_comparison_exp,
+	from_name?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	note?:String_comparison_exp,
 	rating?:Int_comparison_exp,
 	to_entity_id?:Int_comparison_exp,
-	to_entity_type?:String_comparison_exp
+	to_entity_type?:String_comparison_exp,
+	to_image?:String_comparison_exp,
+	to_name?:String_comparison_exp
 }
 
 /** unique or primary key constraints on table "review" */
@@ -64845,11 +64889,15 @@ export type review_order_by = {
 	customer?:customer_customer_order_by,
 	from_entity_id?:order_by,
 	from_entity_type?:order_by,
+	from_image?:order_by,
+	from_name?:order_by,
 	id?:order_by,
 	note?:order_by,
 	rating?:order_by,
 	to_entity_id?:order_by,
-	to_entity_type?:order_by
+	to_entity_type?:order_by,
+	to_image?:order_by,
+	to_name?:order_by
 }
 
 /** primary key columns input for table: review */
@@ -120025,6 +120073,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		from_image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_name:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -120050,6 +120110,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		to_entity_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_name:{
 			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
@@ -120298,6 +120370,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		from_image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_name:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -120323,6 +120407,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		to_entity_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_name:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -138641,11 +138737,15 @@ export const ReturnTypes: Record<string,any> = {
 		customer:"customer_customer",
 		from_entity_id:"Int",
 		from_entity_type:"String",
+		from_image:"String",
+		from_name:"String",
 		id:"Int",
 		note:"String",
 		rating:"Int",
 		to_entity_id:"Int",
-		to_entity_type:"String"
+		to_entity_type:"String",
+		to_image:"String",
+		to_name:"String"
 	},
 	review_aggregate:{
 		aggregate:"review_aggregate_fields",

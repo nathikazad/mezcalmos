@@ -22,7 +22,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class RestaurantCard extends StatefulWidget {
   final Restaurant restaurant;
   final GestureTapCallback? onClick;
-  final LocationData customerLocation;
+  final LocationData? customerLocation;
   const RestaurantCard(
       {Key? key,
       @required this.onClick,
@@ -178,15 +178,18 @@ class _RestaurantCardState extends State<RestaurantCard> {
     );
   }
 
-  num _getShippingPrice() {
-    final num customerDistance = calculateDistance(widget.customerLocation,
-            widget.restaurant.info.location.toLocationData()) /
-        1000;
-    final num deliveryCost =
-        ((customerDistance * widget.restaurant.deliveryCost!.costPerKm) / 5)
-                .round() *
-            5;
-    return max(widget.restaurant.deliveryCost!.minimumCost, deliveryCost);
+  num? _getShippingPrice() {
+    if (widget.customerLocation != null) {
+      final num customerDistance = calculateDistance(widget.customerLocation!,
+              widget.restaurant.info.location.toLocationData()) /
+          1000;
+      final num deliveryCost =
+          ((customerDistance * widget.restaurant.deliveryCost!.costPerKm) / 5)
+                  .round() *
+              5;
+      return max(widget.restaurant.deliveryCost!.minimumCost, deliveryCost);
+    }
+    return null;
   }
 
   Container mezRestuarntCardImage() {
