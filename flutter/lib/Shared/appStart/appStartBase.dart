@@ -292,12 +292,12 @@ class StartingPointBaseState extends State<StartingPointBase> {
     MezRouter.setupQR();
 
     if (kIsWeb && 100.w > 700) {
-      return MaterialApp(
-        home: Scaffold(
-          body: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(color: secondaryLightBlueColor),
-              child: Text("Sorry this app is not available on web yet !")),
+      return Center(
+        child: ClipRect(
+          child: SizedBox(
+            width: 700,
+            child: _actualApp(appTheme, routes),
+          ),
         ),
       );
     } else
