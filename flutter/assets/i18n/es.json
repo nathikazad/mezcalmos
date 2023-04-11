@@ -213,7 +213,7 @@
               "title": "Tu carrito esta vacío"
             },
             "BuildCart": {
-              "inCart": "Mis Ordenes",
+              "inCart": "Mis ordenes",
               "yesClear": "Sí",
               "no": "No",
               "clearCart": "Vaciar carrito",
@@ -2556,6 +2556,9 @@
             "reject": "Rechazar"
           }
         }
+      },
+      "AdmiOrdersListView": {
+        "showMore": "Mostrar más"
       }
     }
   },

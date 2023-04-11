@@ -44,6 +44,16 @@ class DvOrderViewcontroller {
     return order.orderType == OrderType.Courier;
   }
 
+  bool get showCustomerAddReviewButton {
+    return order.status == DeliveryOrderStatus.OrderReceived &&
+        order.customerReviewByDriver == null;
+  }
+
+  bool get showServiceAddReviewButton {
+    return order.status == DeliveryOrderStatus.OrderReceived &&
+        order.serviceReviewByDriver == null;
+  }
+
   DeliveryOrder get order => _order.value!;
   bool get hasData => _order.value != null;
   bool get inPickupPhase =>

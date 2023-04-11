@@ -156,7 +156,8 @@ abstract class DeliverableOrder extends Order {
   UserInfo? deliveryCompany;
   MezLocation? pickupLocation;
   int? deliveryOrderId;
-
+  final Review? customerReviewByDriver;
+  final Review? serviceReviewByDriver;
   LatLng? driverLocation;
   DeliveryDirection deliveryDirection;
 
@@ -174,6 +175,8 @@ abstract class DeliverableOrder extends Order {
     required this.deliveryDirection,
     super.notes,
     super.review,
+    this.customerReviewByDriver,
+    this.serviceReviewByDriver,
     required this.deliveryCompany,
     super.serviceProviderId,
     required super.paymentType,

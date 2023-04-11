@@ -2,6 +2,8 @@ query get_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
     schedule_time
     chat_with_customer_id
+
+
     order_type
     direction
     chat_with_service_provider_id
@@ -174,6 +176,26 @@ tax
         language_id
       }
     }
+     customer_review_by_driver {
+      from_entity_id
+      from_entity_type
+      rating
+      note
+      id
+      to_entity_id
+      to_entity_type
+      created_at}
+service_provider_review_by_driver {
+   from_entity_id
+    from_entity_type
+    rating
+    note
+    id
+    to_entity_id
+    to_entity_type
+    created_at
+   
+}
   }
 }
 
@@ -356,6 +378,26 @@ subscription listen_on_driver_order($orderId: Int!) {
         language_id
       }
     }
+    customer_review_by_driver {
+      from_entity_id
+      from_entity_type
+      rating
+      note
+      id
+      to_entity_id
+      to_entity_type
+      created_at}
+service_provider_review_by_driver {
+   from_entity_id
+    from_entity_type
+    rating
+    note
+    id
+    to_entity_id
+    to_entity_type
+    created_at
+   
+}
   }
 }
 

@@ -4,14 +4,19 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.da
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
+    ["AdmiOrdersListView"];
 
 class AdmiOrdersListView extends StatefulWidget {
   const AdmiOrdersListView({super.key, required this.adminTabsViewController});
@@ -64,6 +69,11 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                     ServiceProviderType.Laundry)
                   _buildLaundryOrders(),
                 _buildPastOrders(),
+                if (viewController.enableShowMoreButton)
+                  MezButton(
+                    label: '${_i18n()["showMore"]}',
+                    onClick: viewController.fetchServicePastOrders,
+                  ),
               ],
             ),
           ),

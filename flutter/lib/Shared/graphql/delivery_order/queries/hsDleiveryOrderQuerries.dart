@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -128,6 +129,40 @@ Future<DeliveryOrder?> get_driver_order_by_id(
       totalCost: orderData.total_cost,
     ),
     deliveryOrderId: orderData.id,
+       customerReviewByDriver: (orderData.customer_review_by_driver != null)
+            ? Review(
+                comment: orderData.customer_review_by_driver!.note,
+                rating: orderData.customer_review_by_driver!.rating,
+                toEntityId: orderData.customer_review_by_driver!.to_entity_id,
+                toEntityType: orderData
+                    .customer_review_by_driver!.to_entity_type
+                    .toServiceProviderType(),
+                fromEntityId:
+                    orderData.customer_review_by_driver!.from_entity_id,
+                fromEntityType: orderData
+                    .customer_review_by_driver!.from_entity_type
+                    .toServiceProviderType(),
+                reviewTime: DateTime.parse(
+                  orderData.customer_review_by_driver!.created_at,
+                ))
+            : null,
+        serviceReviewByDriver: (orderData.service_provider_review_by_driver != null)
+            ? Review(
+                comment: orderData.service_provider_review_by_driver!.note,
+                rating: orderData.service_provider_review_by_driver!.rating,
+                toEntityId: orderData.service_provider_review_by_driver!.to_entity_id,
+                toEntityType: orderData
+                    .service_provider_review_by_driver!.to_entity_type
+                    .toServiceProviderType(),
+                fromEntityId:
+                    orderData.service_provider_review_by_driver!.from_entity_id,
+                fromEntityType: orderData
+                    .service_provider_review_by_driver!.from_entity_type
+                    .toServiceProviderType(),
+                reviewTime: DateTime.parse(
+                  orderData.service_provider_review_by_driver!.created_at,
+                ))
+            : null,
   );
 }
 
