@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyListTile.dart';
+import 'package:mezcalmos/CustomerApp/pages/CartViewPage/cart_view_page.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
@@ -137,65 +138,65 @@ class _AssetServiceViewState extends State<AssetServiceView> {
                             image: NetworkImage(customImageUrl),
                           ),
                         ),
-                        // Start date title + picker
-                        title("Start Date"),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: MezCard(
-                            content: Text("Select Time"),
-                          ),
-                        ),
-                        // Duration title + picker
-                        title("Duration"),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: MezCard(
-                            content: Text("Duration"),
-                          ),
-                        ),
-                        // Payment method title + card details
-                        title("Payment Method"),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: MezCard(
-                            content: Text("Visa ************4470"),
-                          ),
-                        ),
-                        // Notes
-                        title("Notes"),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: MezCard(
-                            contentPadding: EdgeInsets.all(4.0),
-                            content: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.1,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.zero,
-                                  hintText: "Write your notes here.",
-                                  fillColor: Colors.transparent,
-                                ),
-                                keyboardType: TextInputType.multiline,
-                                textInputAction: TextInputAction.newline,
-                                minLines: 1,
-                                maxLines: 5,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // // Start date title + picker
+                        // title("Start Date"),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 8.0),
+                        //   child: MezCard(
+                        //     content: Text("Select Time"),
+                        //   ),
+                        // ),
+                        // // Duration title + picker
+                        // title("Duration"),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 8.0),
+                        //   child: MezCard(
+                        //     content: Text("Duration"),
+                        //   ),
+                        // ),
+                        // // Payment method title + card details
+                        // title("Payment Method"),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 8.0),
+                        //   child: MezCard(
+                        //     content: Text("Visa ************4470"),
+                        //   ),
+                        // ),
+                        // // Notes
+                        // title("Notes"),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 8.0),
+                        //   child: MezCard(
+                        //     contentPadding: EdgeInsets.all(4.0),
+                        //     content: SizedBox(
+                        //       height: MediaQuery.of(context).size.height * 0.1,
+                        //       child: TextField(
+                        //         decoration: InputDecoration(
+                        //           contentPadding: EdgeInsets.zero,
+                        //           hintText: "Write your notes here.",
+                        //           fillColor: Colors.transparent,
+                        //         ),
+                        //         keyboardType: TextInputType.multiline,
+                        //         textInputAction: TextInputAction.newline,
+                        //         minLines: 1,
+                        //         maxLines: 5,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                 ),
               ),
-              MezButton(
-                label: "Book now",
-                withGradient: true,
-                onClick: () async {
-                  await OrderViewPage.navigate();
-                  return;
-                },
-              ),
+              // MezButton(
+              //   label: "Add to cart",
+              //   withGradient: true,
+              //   onClick: () async {
+              //     await CartViewPage.navigate();
+              //     return;
+              //   },
+              // ),
             ],
           )),
     );

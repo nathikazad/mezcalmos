@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/router/orderRoute.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/cartRoute.dart';
 
 class XRouter {
   static String deliveryServicesRoute = "/deliveryServices";
@@ -32,7 +33,7 @@ class XRouter {
             ]),
       ] +
       RentalRoutes().routes +
-      OrderRoutes().routes +
+      CartRoute().routes +
       LaundryRoutes().routes +
       RestaurantRoutes().routes +
       CustomerRoutes().routes +

@@ -25,7 +25,6 @@
         "distanceError": "The distance between you and the service location exceeds 10km!",
         "noLocError": "Please select a location",
         "pickLocation": "Pick from map"
-      
       },
       "LocationPicker": {
         "pick": "PICK",
@@ -49,10 +48,10 @@
         }
       },
       "courrier": {
-        "CustCourierServicesListView" : {
-          "title" : "Delivery companies arround you",
-          "courier" : "Courier",
-          "min" : "Min"
+        "CustCourierServicesListView": {
+          "title": "Delivery companies arround you",
+          "courier": "Courier",
+          "min": "Min"
         },
 
         "CustCourierServiceView": {
@@ -83,11 +82,11 @@
           }
         },
         "CustCourierOrderView": {
-          "priceChangeTitle" : "Price change request",
-          "reason" : "Reason",
-          "newPrice" : "New price",
-          "accept" : "Accept",
-      
+          "priceChangeTitle": "Price change request",
+          "reason": "Reason",
+          "newPrice": "New price",
+          "accept": "Accept",
+
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
@@ -202,7 +201,7 @@
               "pickTime": "Pick your time",
               "now": "Now",
               "timeError": "Picked delivery time is passed, please pick a valid time",
-              "required" : "Please select a delivery time"
+              "required": "Please select a delivery time"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Payment method",
@@ -236,8 +235,8 @@
               "pickLocation": "Pick from map"
             },
             "OrderSummaryCard": {
-              "add" : "Add",
-              "waitingForCustomer" : "Waiting for customer", 
+              "add": "Add",
+              "waitingForCustomer": "Waiting for customer",
               "orderSummary": "Summary",
               "orderCost": "Order cost",
               "deliveryCost": "Delivery cost",
@@ -594,6 +593,9 @@
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."
       },
       "CustomerWrapper": {
+        "orders": {
+          "myCart": "My cart"
+        },
         "savedLocations": "Saved locations",
         "welcomeText": "Welcome to MEZCALMOS 👋",
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
@@ -711,7 +713,6 @@
           }
         },
         "LaundriesListView": {
-
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -858,7 +859,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
-        "routeError" : "Error getting your location and route informations",
+        "routeError": "Error getting your location and route informations",
         "writeReview": "Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",

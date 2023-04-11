@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -15,6 +18,8 @@ import 'controller/AssetController.dart';
 import 'AgencyListView/AgencyListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'dart:developer';
+import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:location_platform_interface/location_platform_interface.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -35,6 +40,7 @@ class AssetListsView extends StatefulWidget {
 class _AssetListsViewState extends State<AssetListsView> {
   late AssetController assetController;
   late AllServiceListViewController allServiceListViewController;
+  MGoogleMapController mGoogleMapController = MGoogleMapController();
 
   @override
   void initState() {
@@ -97,12 +103,11 @@ class _AssetListsViewState extends State<AssetListsView> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+          SingleChildScrollView(
+            child: Column(
               children: [
-                Expanded(
-                  flex: 6,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.only(right: 4.0),
                     child: MezCard(
@@ -117,55 +122,51 @@ class _AssetListsViewState extends State<AssetListsView> {
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 4.0),
-                    child: MezCard(
-                      radius: 5,
-                      content: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Icon(
-                          Icons.location_on,
-                          size: 24,
-                          color: primaryBlueColor,
-                        ),
-                      ),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropDownLocationList(
+                    bgColor: Colors.white,
+                    onValueChangeCallback: ({MezLocation? location}) {
+                      if (location != null) {
+                        mezDbgPrint("location $location");
+                      }
+                    },
                   ),
                 ),
+                !doesNeedButtonSwitcher()
+                    ? const Offstage()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Obx(
+                          () => ButtonSwitcher(
+                            lButtonText: _i18n()[allServiceListViewController
+                                            .currentSelectedService.value.name
+                                            .toLowerCase()]
+                                        [assetController.getViewNameString][
+                                    assetController
+                                        .currentSelectedViewName.first
+                                        .toLowerCase()]
+                                .toString(),
+                            rButtonText: _i18n()[allServiceListViewController
+                                            .currentSelectedService.value.name
+                                            .toLowerCase()]
+                                        [assetController.getViewNameString][
+                                    assetController.currentSelectedViewName.last
+                                        .toLowerCase()]
+                                .toString(),
+                            iconList: assetController.iconList,
+                            values: assetController.currentSelectedViewList,
+                            selectedValue:
+                                assetController.currentSelectedView.value,
+                            onClick: (Enum value) {
+                              assetController.toggleView(value);
+                            },
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),
-          !doesNeedButtonSwitcher()
-              ? const Offstage()
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Obx(
-                    () => ButtonSwitcher(
-                      lButtonText: _i18n()[allServiceListViewController
-                                      .currentSelectedService.value.name
-                                      .toLowerCase()]
-                                  [assetController.getViewNameString][
-                              assetController.currentSelectedViewName.first
-                                  .toLowerCase()]
-                          .toString(),
-                      rButtonText: _i18n()[allServiceListViewController
-                                      .currentSelectedService.value.name
-                                      .toLowerCase()]
-                                  [assetController.getViewNameString][
-                              assetController.currentSelectedViewName.last
-                                  .toLowerCase()]
-                          .toString(),
-                      iconList: assetController.iconList,
-                      values: assetController.currentSelectedViewList,
-                      selectedValue: assetController.currentSelectedView.value,
-                      onClick: (Enum value) {
-                        assetController.toggleView(value);
-                      },
-                    ),
-                  ),
-                ),
           Obx(
             () => assetController.currentSelectedView.value ==
                     assetController.currentSelectedViewList.first

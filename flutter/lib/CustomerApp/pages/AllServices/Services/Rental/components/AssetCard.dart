@@ -18,6 +18,7 @@ class AssetCard extends StatelessWidget {
     this.needCustomSubtitle = true,
     this.subtitleIconData = const <String>[],
     this.subtitleIconString = const <String>[],
+    this.leftBottomIcon = null,
   });
 
   final String title;
@@ -33,6 +34,7 @@ class AssetCard extends StatelessWidget {
   final List<String> subtitleIconData;
   final List<String> subtitleIconString;
   final bool needCustomSubtitle;
+  final Widget? leftBottomIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +133,20 @@ class AssetCard extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(lBottomText),
+                      leftBottomIcon == null
+                          ? Text(lBottomText)
+                          : Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4.0),
+                                  child: leftBottomIcon ??
+                                      Icon(
+                                        Icons.access_time_filled,
+                                      ),
+                                ),
+                                Text(lBottomText),
+                              ],
+                            ),
                       Text(rBottomText),
                     ],
                   )
