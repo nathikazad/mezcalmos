@@ -107,11 +107,11 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
           controller: _controller,
           focusNode: focusNode,
           decoration: _inputDecoration(),
-          onChanged: (String v) {
-            if (v.length.isEven == true && v.length > 3) {
-              setState(() {});
-            }
-          },
+          // onChanged: (String v) {
+          //   if (v.length.isEven == true && v.length > 3) {
+          //     setState(() {});
+          //   }
+          // },
           style: widget.textStyle ??
               widget.labelStyle.copyWith(
                 fontSize: 14,

@@ -161,30 +161,30 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   Widget _itemsPage() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: Form(
-        key: viewController.fromKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${_i18n()["from"]}',
-              style: context.txt.bodyLarge,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            _fromFeild(),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              '${_i18n()["to"]}',
-              style: context.txt.bodyLarge,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            DropDownLocationList(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${_i18n()["from"]}',
+            style: context.txt.bodyLarge,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          _fromFeild(),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            '${_i18n()["to"]}',
+            style: context.txt.bodyLarge,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Form(
+            key: viewController.fromKey,
+            child: DropDownLocationList(
               elevation: 0,
               onValueChangeCallback: (MezLocation location) {
                 viewController.setToLocation(location);
@@ -194,17 +194,17 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               passedInLocation: viewController.toLoc.value,
               serviceProviderLocation: null,
             ),
-            SizedBox(
-              height: 15,
-            ),
-            CustRequestCourierItems(
-              viewController: viewController,
-            ),
-            SizedBox(
-              height: 75,
-            ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          CustRequestCourierItems(
+            viewController: viewController,
+          ),
+          SizedBox(
+            height: 75,
+          ),
+        ],
       ),
     );
   }
