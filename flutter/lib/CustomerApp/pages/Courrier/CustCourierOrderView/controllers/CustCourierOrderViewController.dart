@@ -128,7 +128,11 @@ class CustCourierOrderViewController {
                   ),
                   Text(
                     "${_i18n()['priceChangeTitle']}",
-                    style: context.textTheme.displayMedium,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                    ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,6 +242,11 @@ class CustCourierOrderViewController {
       return false;
     }
   }
+
+  bool equalEstActCost(int index) =>
+      order.items[index].actualCost == order.items[index].estCost;
+  bool isEstCostNull(int index) => order.items[index].estCost == null;
+  bool isActCostNull(int index) => order.items[index].actualCost == null;
 
   void dispose() {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);

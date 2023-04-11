@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -118,8 +120,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                           ),
                           Flexible(
                             child: isCustomerRowFirst
-                                ? _customerAnimatedRow()
-                                : _serviceProviderAnimatedRow(),
+                                ? _customerAnimatedRow(context)
+                                : _serviceProviderAnimatedRow(context),
                           )
                         ],
                       ),
@@ -147,8 +149,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                         ),
                         Flexible(
                           child: !isCustomerRowFirst
-                              ? _customerAnimatedRow()
-                              : _serviceProviderAnimatedRow(),
+                              ? _customerAnimatedRow(context)
+                              : _serviceProviderAnimatedRow(context),
                         )
                       ],
                     ),
@@ -208,19 +210,19 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     );
   }
 
-  List<Widget> get mainAnimatedContainerItems => <Widget>[
-        _customerAnimatedRow(),
-        if (order.pickupLocation != null)
-          SizedBox(
-            height: 35,
-          ),
-        if (order.pickupLocation != null) _serviceProviderAnimatedRow(),
-        // SizedBox(
-        //   height: 10,
-        // ),
-      ];
+  // List<Widget> get mainAnimatedContainerItems => <Widget>[
+  //       _customerAnimatedRow(),
+  //       if (order.pickupLocation != null)
+  //         SizedBox(
+  //           height: 35,
+  //         ),
+  //       if (order.pickupLocation != null) _serviceProviderAnimatedRow(),
+  //       // SizedBox(
+  //       //   height: 10,
+  //       // ),
+  //     ];
 
-  Row _serviceProviderAnimatedRow() {
+  Row _serviceProviderAnimatedRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -264,12 +266,29 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 5.0),
               child: serviceProviderTimeWidget,
             ),
-          )
+          ),
+        if (order.status == DeliveryOrderStatus.Delivered &&
+            order.serviceReviewByDriver == null)
+          InkWell(
+            onTap: () {},
+            child: Ink(
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                color: secondaryLightBlueColor,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                "Add review",
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: primaryBlueColor),
+              ),
+            ),
+          ),
       ],
     );
   }
 
-  Widget _customerAnimatedRow() {
+  Widget _customerAnimatedRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -305,7 +324,24 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 5.0),
               child: customerTimeWidget,
             ),
-          )
+          ),
+        if (order.status == DeliveryOrderStatus.Delivered &&
+            order.customerReviewByDriver == null)
+          InkWell(
+            onTap: () {},
+            child: Ink(
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                color: secondaryLightBlueColor,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                "Add review",
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: primaryBlueColor),
+              ),
+            ),
+          ),
       ],
     );
   }

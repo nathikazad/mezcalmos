@@ -55,13 +55,10 @@ extension DeliveryOrderHelper on DeliveryOrderStatus {
         );
 
       case DeliveryOrderStatus.OrderReceived:
-        return Container(
-          // padding: const EdgeInsets.only(right: 10.0),
-          child: Icon(
-            Icons.shopping_bag,
-            size: 35,
-            color: primaryBlueColor,
-          ),
+        return Icon(
+          Icons.shopping_bag,
+          size: 35,
+          color: primaryBlueColor,
         );
 
       case DeliveryOrderStatus.AtPickup:

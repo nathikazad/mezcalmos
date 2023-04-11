@@ -1255,6 +1255,148 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'customer_review_by_driver'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'from_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'from_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'rating'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'note'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'created_at'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'service_provider_review_by_driver'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'from_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'from_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'rating'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'note'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'created_at'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -1415,6 +1557,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     this.trip_duration,
     this.trip_polyline,
     required this.customer,
+    this.customer_review_by_driver,
+    this.service_provider_review_by_driver,
     required this.$__typename,
   });
 
@@ -1462,6 +1606,9 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$trip_duration = json['trip_duration'];
     final l$trip_polyline = json['trip_polyline'];
     final l$customer = json['customer'];
+    final l$customer_review_by_driver = json['customer_review_by_driver'];
+    final l$service_provider_review_by_driver =
+        json['service_provider_review_by_driver'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk(
       schedule_time: (l$schedule_time as String?),
@@ -1531,6 +1678,16 @@ class Query$get_driver_order$delivery_order_by_pk {
       trip_polyline: (l$trip_polyline as String?),
       customer: Query$get_driver_order$delivery_order_by_pk$customer.fromJson(
           (l$customer as Map<String, dynamic>)),
+      customer_review_by_driver: l$customer_review_by_driver == null
+          ? null
+          : Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver
+              .fromJson((l$customer_review_by_driver as Map<String, dynamic>)),
+      service_provider_review_by_driver: l$service_provider_review_by_driver ==
+              null
+          ? null
+          : Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+              .fromJson((l$service_provider_review_by_driver
+                  as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1615,6 +1772,12 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String? trip_polyline;
 
   final Query$get_driver_order$delivery_order_by_pk$customer customer;
+
+  final Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver?
+      customer_review_by_driver;
+
+  final Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver?
+      service_provider_review_by_driver;
 
   final String $__typename;
 
@@ -1709,6 +1872,13 @@ class Query$get_driver_order$delivery_order_by_pk {
     _resultData['trip_polyline'] = l$trip_polyline;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
+    final l$customer_review_by_driver = customer_review_by_driver;
+    _resultData['customer_review_by_driver'] =
+        l$customer_review_by_driver?.toJson();
+    final l$service_provider_review_by_driver =
+        service_provider_review_by_driver;
+    _resultData['service_provider_review_by_driver'] =
+        l$service_provider_review_by_driver?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1756,6 +1926,9 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$trip_duration = trip_duration;
     final l$trip_polyline = trip_polyline;
     final l$customer = customer;
+    final l$customer_review_by_driver = customer_review_by_driver;
+    final l$service_provider_review_by_driver =
+        service_provider_review_by_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$schedule_time,
@@ -1796,6 +1969,8 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$trip_duration,
       l$trip_polyline,
       l$customer,
+      l$customer_review_by_driver,
+      l$service_provider_review_by_driver,
       l$$__typename,
     ]);
   }
@@ -2011,6 +2186,19 @@ class Query$get_driver_order$delivery_order_by_pk {
     if (l$customer != lOther$customer) {
       return false;
     }
+    final l$customer_review_by_driver = customer_review_by_driver;
+    final lOther$customer_review_by_driver = other.customer_review_by_driver;
+    if (l$customer_review_by_driver != lOther$customer_review_by_driver) {
+      return false;
+    }
+    final l$service_provider_review_by_driver =
+        service_provider_review_by_driver;
+    final lOther$service_provider_review_by_driver =
+        other.service_provider_review_by_driver;
+    if (l$service_provider_review_by_driver !=
+        lOther$service_provider_review_by_driver) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -2083,6 +2271,10 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     int? trip_duration,
     String? trip_polyline,
     Query$get_driver_order$delivery_order_by_pk$customer? customer,
+    Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver?
+        customer_review_by_driver,
+    Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver?
+        service_provider_review_by_driver,
     String? $__typename,
   });
   CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<TRes>
@@ -2101,6 +2293,10 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
       get delivery_driver;
   CopyWith$Query$get_driver_order$delivery_order_by_pk$customer<TRes>
       get customer;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+      TRes> get customer_review_by_driver;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+      TRes> get service_provider_review_by_driver;
 }
 
 class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
@@ -2155,6 +2351,8 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? trip_duration = _undefined,
     Object? trip_polyline = _undefined,
     Object? customer = _undefined,
+    Object? customer_review_by_driver = _undefined,
+    Object? service_provider_review_by_driver = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_driver_order$delivery_order_by_pk(
@@ -2283,6 +2481,15 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             ? _instance.customer
             : (customer
                 as Query$get_driver_order$delivery_order_by_pk$customer),
+        customer_review_by_driver: customer_review_by_driver == _undefined
+            ? _instance.customer_review_by_driver
+            : (customer_review_by_driver
+                as Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver?),
+        service_provider_review_by_driver: service_provider_review_by_driver ==
+                _undefined
+            ? _instance.service_provider_review_by_driver
+            : (service_provider_review_by_driver
+                as Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2364,6 +2571,29 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     return CopyWith$Query$get_driver_order$delivery_order_by_pk$customer(
         local$customer, (e) => call(customer: e));
   }
+
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+      TRes> get customer_review_by_driver {
+    final local$customer_review_by_driver = _instance.customer_review_by_driver;
+    return local$customer_review_by_driver == null
+        ? CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver
+            .stub(_then(_instance))
+        : CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver(
+            local$customer_review_by_driver,
+            (e) => call(customer_review_by_driver: e));
+  }
+
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+      TRes> get service_provider_review_by_driver {
+    final local$service_provider_review_by_driver =
+        _instance.service_provider_review_by_driver;
+    return local$service_provider_review_by_driver == null
+        ? CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+            .stub(_then(_instance))
+        : CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+            local$service_provider_review_by_driver,
+            (e) => call(service_provider_review_by_driver: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
@@ -2416,6 +2646,10 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     int? trip_duration,
     String? trip_polyline,
     Query$get_driver_order$delivery_order_by_pk$customer? customer,
+    Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver?
+        customer_review_by_driver,
+    Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver?
+        service_provider_review_by_driver,
     String? $__typename,
   }) =>
       _res;
@@ -2453,6 +2687,16 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
       get customer =>
           CopyWith$Query$get_driver_order$delivery_order_by_pk$customer.stub(
               _res);
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+          TRes>
+      get customer_review_by_driver =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver
+              .stub(_res);
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+          TRes>
+      get service_provider_review_by_driver =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+              .stub(_res);
 }
 
 class Query$get_driver_order$delivery_order_by_pk$delivery_company {
@@ -7287,6 +7531,570 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$customer$use
       _res;
 }
 
+class Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver {
+  Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver({
+    required this.from_entity_id,
+    required this.from_entity_type,
+    required this.rating,
+    this.note,
+    required this.id,
+    required this.to_entity_id,
+    required this.to_entity_type,
+    required this.created_at,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$from_entity_id = json['from_entity_id'];
+    final l$from_entity_type = json['from_entity_type'];
+    final l$rating = json['rating'];
+    final l$note = json['note'];
+    final l$id = json['id'];
+    final l$to_entity_id = json['to_entity_id'];
+    final l$to_entity_type = json['to_entity_type'];
+    final l$created_at = json['created_at'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver(
+      from_entity_id: (l$from_entity_id as int),
+      from_entity_type: (l$from_entity_type as String),
+      rating: (l$rating as int),
+      note: (l$note as String?),
+      id: (l$id as int),
+      to_entity_id: (l$to_entity_id as int),
+      to_entity_type: (l$to_entity_type as String),
+      created_at: (l$created_at as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int from_entity_id;
+
+  final String from_entity_type;
+
+  final int rating;
+
+  final String? note;
+
+  final int id;
+
+  final int to_entity_id;
+
+  final String to_entity_type;
+
+  final String created_at;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$from_entity_id = from_entity_id;
+    _resultData['from_entity_id'] = l$from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    _resultData['from_entity_type'] = l$from_entity_type;
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$note = note;
+    _resultData['note'] = l$note;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$to_entity_id = to_entity_id;
+    _resultData['to_entity_id'] = l$to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    _resultData['to_entity_type'] = l$to_entity_type;
+    final l$created_at = created_at;
+    _resultData['created_at'] = l$created_at;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$from_entity_id = from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    final l$rating = rating;
+    final l$note = note;
+    final l$id = id;
+    final l$to_entity_id = to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    final l$created_at = created_at;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$from_entity_id,
+      l$from_entity_type,
+      l$rating,
+      l$note,
+      l$id,
+      l$to_entity_id,
+      l$to_entity_type,
+      l$created_at,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$from_entity_id = from_entity_id;
+    final lOther$from_entity_id = other.from_entity_id;
+    if (l$from_entity_id != lOther$from_entity_id) {
+      return false;
+    }
+    final l$from_entity_type = from_entity_type;
+    final lOther$from_entity_type = other.from_entity_type;
+    if (l$from_entity_type != lOther$from_entity_type) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$note = note;
+    final lOther$note = other.note;
+    if (l$note != lOther$note) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$to_entity_id = to_entity_id;
+    final lOther$to_entity_id = other.to_entity_id;
+    if (l$to_entity_id != lOther$to_entity_id) {
+      return false;
+    }
+    final l$to_entity_type = to_entity_type;
+    final lOther$to_entity_type = other.to_entity_type;
+    if (l$to_entity_type != lOther$to_entity_type) {
+      return false;
+    }
+    final l$created_at = created_at;
+    final lOther$created_at = other.created_at;
+    if (l$created_at != lOther$created_at) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver
+    on Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+          Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver(
+    Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver
+        instance,
+    TRes Function(
+            Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver;
+
+  TRes call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver
+      _instance;
+
+  final TRes Function(
+          Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? from_entity_id = _undefined,
+    Object? from_entity_type = _undefined,
+    Object? rating = _undefined,
+    Object? note = _undefined,
+    Object? id = _undefined,
+    Object? to_entity_id = _undefined,
+    Object? to_entity_type = _undefined,
+    Object? created_at = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver(
+        from_entity_id: from_entity_id == _undefined || from_entity_id == null
+            ? _instance.from_entity_id
+            : (from_entity_id as int),
+        from_entity_type:
+            from_entity_type == _undefined || from_entity_type == null
+                ? _instance.from_entity_type
+                : (from_entity_type as String),
+        rating: rating == _undefined || rating == null
+            ? _instance.rating
+            : (rating as int),
+        note: note == _undefined ? _instance.note : (note as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        to_entity_id: to_entity_id == _undefined || to_entity_id == null
+            ? _instance.to_entity_id
+            : (to_entity_id as int),
+        to_entity_type: to_entity_type == _undefined || to_entity_type == null
+            ? _instance.to_entity_type
+            : (to_entity_type as String),
+        created_at: created_at == _undefined || created_at == null
+            ? _instance.created_at
+            : (created_at as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$customer_review_by_driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver {
+  Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver({
+    required this.from_entity_id,
+    required this.from_entity_type,
+    required this.rating,
+    this.note,
+    required this.id,
+    required this.to_entity_id,
+    required this.to_entity_type,
+    required this.created_at,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$from_entity_id = json['from_entity_id'];
+    final l$from_entity_type = json['from_entity_type'];
+    final l$rating = json['rating'];
+    final l$note = json['note'];
+    final l$id = json['id'];
+    final l$to_entity_id = json['to_entity_id'];
+    final l$to_entity_type = json['to_entity_type'];
+    final l$created_at = json['created_at'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+      from_entity_id: (l$from_entity_id as int),
+      from_entity_type: (l$from_entity_type as String),
+      rating: (l$rating as int),
+      note: (l$note as String?),
+      id: (l$id as int),
+      to_entity_id: (l$to_entity_id as int),
+      to_entity_type: (l$to_entity_type as String),
+      created_at: (l$created_at as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int from_entity_id;
+
+  final String from_entity_type;
+
+  final int rating;
+
+  final String? note;
+
+  final int id;
+
+  final int to_entity_id;
+
+  final String to_entity_type;
+
+  final String created_at;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$from_entity_id = from_entity_id;
+    _resultData['from_entity_id'] = l$from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    _resultData['from_entity_type'] = l$from_entity_type;
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$note = note;
+    _resultData['note'] = l$note;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$to_entity_id = to_entity_id;
+    _resultData['to_entity_id'] = l$to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    _resultData['to_entity_type'] = l$to_entity_type;
+    final l$created_at = created_at;
+    _resultData['created_at'] = l$created_at;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$from_entity_id = from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    final l$rating = rating;
+    final l$note = note;
+    final l$id = id;
+    final l$to_entity_id = to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    final l$created_at = created_at;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$from_entity_id,
+      l$from_entity_type,
+      l$rating,
+      l$note,
+      l$id,
+      l$to_entity_id,
+      l$to_entity_type,
+      l$created_at,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$from_entity_id = from_entity_id;
+    final lOther$from_entity_id = other.from_entity_id;
+    if (l$from_entity_id != lOther$from_entity_id) {
+      return false;
+    }
+    final l$from_entity_type = from_entity_type;
+    final lOther$from_entity_type = other.from_entity_type;
+    if (l$from_entity_type != lOther$from_entity_type) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$note = note;
+    final lOther$note = other.note;
+    if (l$note != lOther$note) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$to_entity_id = to_entity_id;
+    final lOther$to_entity_id = other.to_entity_id;
+    if (l$to_entity_id != lOther$to_entity_id) {
+      return false;
+    }
+    final l$to_entity_type = to_entity_type;
+    final lOther$to_entity_type = other.to_entity_type;
+    if (l$to_entity_type != lOther$to_entity_type) {
+      return false;
+    }
+    final l$created_at = created_at;
+    final lOther$created_at = other.created_at;
+    if (l$created_at != lOther$created_at) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+    on Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+          Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+    Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+        instance,
+    TRes Function(
+            Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver;
+
+  TRes call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+      _instance;
+
+  final TRes Function(
+          Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? from_entity_id = _undefined,
+    Object? from_entity_type = _undefined,
+    Object? rating = _undefined,
+    Object? note = _undefined,
+    Object? id = _undefined,
+    Object? to_entity_id = _undefined,
+    Object? to_entity_type = _undefined,
+    Object? created_at = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+        from_entity_id: from_entity_id == _undefined || from_entity_id == null
+            ? _instance.from_entity_id
+            : (from_entity_id as int),
+        from_entity_type:
+            from_entity_type == _undefined || from_entity_type == null
+                ? _instance.from_entity_type
+                : (from_entity_type as String),
+        rating: rating == _undefined || rating == null
+            ? _instance.rating
+            : (rating as int),
+        note: note == _undefined ? _instance.note : (note as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        to_entity_id: to_entity_id == _undefined || to_entity_id == null
+            ? _instance.to_entity_id
+            : (to_entity_id as int),
+        to_entity_type: to_entity_type == _undefined || to_entity_type == null
+            ? _instance.to_entity_type
+            : (to_entity_type as String),
+        created_at: created_at == _undefined || created_at == null
+            ? _instance.created_at
+            : (created_at as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Subscription$listen_on_driver_order {
   factory Variables$Subscription$listen_on_driver_order(
           {required int orderId}) =>
@@ -8571,6 +9379,148 @@ const documentNodeSubscriptionlisten_on_driver_order =
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'customer_review_by_driver'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'from_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'from_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'rating'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'note'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'created_at'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'service_provider_review_by_driver'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'from_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'from_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'rating'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'note'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_entity_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'created_at'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -8709,6 +9659,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     this.trip_duration,
     this.trip_polyline,
     required this.customer,
+    this.customer_review_by_driver,
+    this.service_provider_review_by_driver,
     required this.$__typename,
   });
 
@@ -8762,6 +9714,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$trip_duration = json['trip_duration'];
     final l$trip_polyline = json['trip_polyline'];
     final l$customer = json['customer'];
+    final l$customer_review_by_driver = json['customer_review_by_driver'];
+    final l$service_provider_review_by_driver =
+        json['service_provider_review_by_driver'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk(
       actual_arrival_at_dropoff_time:
@@ -8838,6 +9793,16 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       customer:
           Subscription$listen_on_driver_order$delivery_order_by_pk$customer
               .fromJson((l$customer as Map<String, dynamic>)),
+      customer_review_by_driver: l$customer_review_by_driver == null
+          ? null
+          : Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver
+              .fromJson((l$customer_review_by_driver as Map<String, dynamic>)),
+      service_provider_review_by_driver: l$service_provider_review_by_driver ==
+              null
+          ? null
+          : Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+              .fromJson((l$service_provider_review_by_driver
+                  as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8933,6 +9898,12 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
 
   final Subscription$listen_on_driver_order$delivery_order_by_pk$customer
       customer;
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver?
+      customer_review_by_driver;
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver?
+      service_provider_review_by_driver;
 
   final String $__typename;
 
@@ -9037,6 +10008,13 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     _resultData['trip_polyline'] = l$trip_polyline;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
+    final l$customer_review_by_driver = customer_review_by_driver;
+    _resultData['customer_review_by_driver'] =
+        l$customer_review_by_driver?.toJson();
+    final l$service_provider_review_by_driver =
+        service_provider_review_by_driver;
+    _resultData['service_provider_review_by_driver'] =
+        l$service_provider_review_by_driver?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -9088,6 +10066,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$trip_duration = trip_duration;
     final l$trip_polyline = trip_polyline;
     final l$customer = customer;
+    final l$customer_review_by_driver = customer_review_by_driver;
+    final l$service_provider_review_by_driver =
+        service_provider_review_by_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$actual_arrival_at_dropoff_time,
@@ -9132,6 +10113,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$trip_duration,
       l$trip_polyline,
       l$customer,
+      l$customer_review_by_driver,
+      l$service_provider_review_by_driver,
       l$$__typename,
     ]);
   }
@@ -9371,6 +10354,19 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     if (l$customer != lOther$customer) {
       return false;
     }
+    final l$customer_review_by_driver = customer_review_by_driver;
+    final lOther$customer_review_by_driver = other.customer_review_by_driver;
+    if (l$customer_review_by_driver != lOther$customer_review_by_driver) {
+      return false;
+    }
+    final l$service_provider_review_by_driver =
+        service_provider_review_by_driver;
+    final lOther$service_provider_review_by_driver =
+        other.service_provider_review_by_driver;
+    if (l$service_provider_review_by_driver !=
+        lOther$service_provider_review_by_driver) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -9452,6 +10448,10 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? trip_duration,
     String? trip_polyline,
     Subscription$listen_on_driver_order$delivery_order_by_pk$customer? customer,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver?
+        customer_review_by_driver,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver?
+        service_provider_review_by_driver,
     String? $__typename,
   });
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
@@ -9470,6 +10470,10 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
       TRes> get delivery_driver;
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer<
       TRes> get customer;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+      TRes> get customer_review_by_driver;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+      TRes> get service_provider_review_by_driver;
 }
 
 class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
@@ -9532,6 +10536,8 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? trip_duration = _undefined,
     Object? trip_polyline = _undefined,
     Object? customer = _undefined,
+    Object? customer_review_by_driver = _undefined,
+    Object? service_provider_review_by_driver = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listen_on_driver_order$delivery_order_by_pk(
@@ -9677,6 +10683,15 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
             ? _instance.customer
             : (customer
                 as Subscription$listen_on_driver_order$delivery_order_by_pk$customer),
+        customer_review_by_driver: customer_review_by_driver == _undefined
+            ? _instance.customer_review_by_driver
+            : (customer_review_by_driver
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver?),
+        service_provider_review_by_driver: service_provider_review_by_driver ==
+                _undefined
+            ? _instance.service_provider_review_by_driver
+            : (service_provider_review_by_driver
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -9758,6 +10773,29 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer(
         local$customer, (e) => call(customer: e));
   }
+
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+      TRes> get customer_review_by_driver {
+    final local$customer_review_by_driver = _instance.customer_review_by_driver;
+    return local$customer_review_by_driver == null
+        ? CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver(
+            local$customer_review_by_driver,
+            (e) => call(customer_review_by_driver: e));
+  }
+
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+      TRes> get service_provider_review_by_driver {
+    final local$service_provider_review_by_driver =
+        _instance.service_provider_review_by_driver;
+    return local$service_provider_review_by_driver == null
+        ? CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+            local$service_provider_review_by_driver,
+            (e) => call(service_provider_review_by_driver: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
@@ -9819,6 +10857,10 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? trip_duration,
     String? trip_polyline,
     Subscription$listen_on_driver_order$delivery_order_by_pk$customer? customer,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver?
+        customer_review_by_driver,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver?
+        service_provider_review_by_driver,
     String? $__typename,
   }) =>
       _res;
@@ -9861,6 +10903,16 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
           TRes>
       get customer =>
           CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer
+              .stub(_res);
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+          TRes>
+      get customer_review_by_driver =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver
+              .stub(_res);
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+          TRes>
+      get service_provider_review_by_driver =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver
               .stub(_res);
 }
 
@@ -14746,6 +15798,570 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? image,
     String? name,
     String? language_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver({
+    required this.from_entity_id,
+    required this.from_entity_type,
+    required this.rating,
+    this.note,
+    required this.id,
+    required this.to_entity_id,
+    required this.to_entity_type,
+    required this.created_at,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$from_entity_id = json['from_entity_id'];
+    final l$from_entity_type = json['from_entity_type'];
+    final l$rating = json['rating'];
+    final l$note = json['note'];
+    final l$id = json['id'];
+    final l$to_entity_id = json['to_entity_id'];
+    final l$to_entity_type = json['to_entity_type'];
+    final l$created_at = json['created_at'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver(
+      from_entity_id: (l$from_entity_id as int),
+      from_entity_type: (l$from_entity_type as String),
+      rating: (l$rating as int),
+      note: (l$note as String?),
+      id: (l$id as int),
+      to_entity_id: (l$to_entity_id as int),
+      to_entity_type: (l$to_entity_type as String),
+      created_at: (l$created_at as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int from_entity_id;
+
+  final String from_entity_type;
+
+  final int rating;
+
+  final String? note;
+
+  final int id;
+
+  final int to_entity_id;
+
+  final String to_entity_type;
+
+  final String created_at;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$from_entity_id = from_entity_id;
+    _resultData['from_entity_id'] = l$from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    _resultData['from_entity_type'] = l$from_entity_type;
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$note = note;
+    _resultData['note'] = l$note;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$to_entity_id = to_entity_id;
+    _resultData['to_entity_id'] = l$to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    _resultData['to_entity_type'] = l$to_entity_type;
+    final l$created_at = created_at;
+    _resultData['created_at'] = l$created_at;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$from_entity_id = from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    final l$rating = rating;
+    final l$note = note;
+    final l$id = id;
+    final l$to_entity_id = to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    final l$created_at = created_at;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$from_entity_id,
+      l$from_entity_type,
+      l$rating,
+      l$note,
+      l$id,
+      l$to_entity_id,
+      l$to_entity_type,
+      l$created_at,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$from_entity_id = from_entity_id;
+    final lOther$from_entity_id = other.from_entity_id;
+    if (l$from_entity_id != lOther$from_entity_id) {
+      return false;
+    }
+    final l$from_entity_type = from_entity_type;
+    final lOther$from_entity_type = other.from_entity_type;
+    if (l$from_entity_type != lOther$from_entity_type) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$note = note;
+    final lOther$note = other.note;
+    if (l$note != lOther$note) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$to_entity_id = to_entity_id;
+    final lOther$to_entity_id = other.to_entity_id;
+    if (l$to_entity_id != lOther$to_entity_id) {
+      return false;
+    }
+    final l$to_entity_type = to_entity_type;
+    final lOther$to_entity_type = other.to_entity_type;
+    if (l$to_entity_type != lOther$to_entity_type) {
+      return false;
+    }
+    final l$created_at = created_at;
+    final lOther$created_at = other.created_at;
+    if (l$created_at != lOther$created_at) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver;
+
+  TRes call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? from_entity_id = _undefined,
+    Object? from_entity_type = _undefined,
+    Object? rating = _undefined,
+    Object? note = _undefined,
+    Object? id = _undefined,
+    Object? to_entity_id = _undefined,
+    Object? to_entity_type = _undefined,
+    Object? created_at = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver(
+        from_entity_id: from_entity_id == _undefined || from_entity_id == null
+            ? _instance.from_entity_id
+            : (from_entity_id as int),
+        from_entity_type:
+            from_entity_type == _undefined || from_entity_type == null
+                ? _instance.from_entity_type
+                : (from_entity_type as String),
+        rating: rating == _undefined || rating == null
+            ? _instance.rating
+            : (rating as int),
+        note: note == _undefined ? _instance.note : (note as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        to_entity_id: to_entity_id == _undefined || to_entity_id == null
+            ? _instance.to_entity_id
+            : (to_entity_id as int),
+        to_entity_type: to_entity_type == _undefined || to_entity_type == null
+            ? _instance.to_entity_type
+            : (to_entity_type as String),
+        created_at: created_at == _undefined || created_at == null
+            ? _instance.created_at
+            : (created_at as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$customer_review_by_driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver({
+    required this.from_entity_id,
+    required this.from_entity_type,
+    required this.rating,
+    this.note,
+    required this.id,
+    required this.to_entity_id,
+    required this.to_entity_type,
+    required this.created_at,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$from_entity_id = json['from_entity_id'];
+    final l$from_entity_type = json['from_entity_type'];
+    final l$rating = json['rating'];
+    final l$note = json['note'];
+    final l$id = json['id'];
+    final l$to_entity_id = json['to_entity_id'];
+    final l$to_entity_type = json['to_entity_type'];
+    final l$created_at = json['created_at'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+      from_entity_id: (l$from_entity_id as int),
+      from_entity_type: (l$from_entity_type as String),
+      rating: (l$rating as int),
+      note: (l$note as String?),
+      id: (l$id as int),
+      to_entity_id: (l$to_entity_id as int),
+      to_entity_type: (l$to_entity_type as String),
+      created_at: (l$created_at as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int from_entity_id;
+
+  final String from_entity_type;
+
+  final int rating;
+
+  final String? note;
+
+  final int id;
+
+  final int to_entity_id;
+
+  final String to_entity_type;
+
+  final String created_at;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$from_entity_id = from_entity_id;
+    _resultData['from_entity_id'] = l$from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    _resultData['from_entity_type'] = l$from_entity_type;
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$note = note;
+    _resultData['note'] = l$note;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$to_entity_id = to_entity_id;
+    _resultData['to_entity_id'] = l$to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    _resultData['to_entity_type'] = l$to_entity_type;
+    final l$created_at = created_at;
+    _resultData['created_at'] = l$created_at;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$from_entity_id = from_entity_id;
+    final l$from_entity_type = from_entity_type;
+    final l$rating = rating;
+    final l$note = note;
+    final l$id = id;
+    final l$to_entity_id = to_entity_id;
+    final l$to_entity_type = to_entity_type;
+    final l$created_at = created_at;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$from_entity_id,
+      l$from_entity_type,
+      l$rating,
+      l$note,
+      l$id,
+      l$to_entity_id,
+      l$to_entity_type,
+      l$created_at,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$from_entity_id = from_entity_id;
+    final lOther$from_entity_id = other.from_entity_id;
+    if (l$from_entity_id != lOther$from_entity_id) {
+      return false;
+    }
+    final l$from_entity_type = from_entity_type;
+    final lOther$from_entity_type = other.from_entity_type;
+    if (l$from_entity_type != lOther$from_entity_type) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$note = note;
+    final lOther$note = other.note;
+    if (l$note != lOther$note) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$to_entity_id = to_entity_id;
+    final lOther$to_entity_id = other.to_entity_id;
+    if (l$to_entity_id != lOther$to_entity_id) {
+      return false;
+    }
+    final l$to_entity_type = to_entity_type;
+    final lOther$to_entity_type = other.to_entity_type;
+    if (l$to_entity_type != lOther$to_entity_type) {
+      return false;
+    }
+    final l$created_at = created_at;
+    final lOther$created_at = other.created_at;
+    if (l$created_at != lOther$created_at) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver;
+
+  TRes call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? from_entity_id = _undefined,
+    Object? from_entity_type = _undefined,
+    Object? rating = _undefined,
+    Object? note = _undefined,
+    Object? id = _undefined,
+    Object? to_entity_id = _undefined,
+    Object? to_entity_type = _undefined,
+    Object? created_at = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+        from_entity_id: from_entity_id == _undefined || from_entity_id == null
+            ? _instance.from_entity_id
+            : (from_entity_id as int),
+        from_entity_type:
+            from_entity_type == _undefined || from_entity_type == null
+                ? _instance.from_entity_type
+                : (from_entity_type as String),
+        rating: rating == _undefined || rating == null
+            ? _instance.rating
+            : (rating as int),
+        note: note == _undefined ? _instance.note : (note as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        to_entity_id: to_entity_id == _undefined || to_entity_id == null
+            ? _instance.to_entity_id
+            : (to_entity_id as int),
+        to_entity_type: to_entity_type == _undefined || to_entity_type == null
+            ? _instance.to_entity_type
+            : (to_entity_type as String),
+        created_at: created_at == _undefined || created_at == null
+            ? _instance.created_at
+            : (created_at as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$service_provider_review_by_driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? from_entity_id,
+    String? from_entity_type,
+    int? rating,
+    String? note,
+    int? id,
+    int? to_entity_id,
+    String? to_entity_type,
+    String? created_at,
     String? $__typename,
   }) =>
       _res;

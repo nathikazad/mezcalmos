@@ -17,6 +17,8 @@ class DeliveryOrder extends DeliverableOrder {
       required super.deliveryOrderId,
       required super.orderTime,
       super.stripePaymentInfo,
+      super.customerReviewByDriver,
+      super.serviceReviewByDriver,
       required super.costs,
       required this.packageReady,
       required this.serviceOrderId,

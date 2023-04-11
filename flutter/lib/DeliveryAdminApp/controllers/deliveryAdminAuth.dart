@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 
@@ -42,8 +41,11 @@ class DeliveryOpAuthController extends GetxController {
       if (operator.value != null) {
         _companyId.value = operator.value!.state.serviceProviderId;
       }
-    } on Exception {
-      showErrorSnackBar();
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+
+      // showErrorSnackBar();
     }
   }
 
