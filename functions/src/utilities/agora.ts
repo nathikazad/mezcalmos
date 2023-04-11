@@ -145,8 +145,8 @@ function getAgoraDetails(chatId: number, userId: number): ParticipantAgoraDetail
     chatId.toString(),
     userId,
     agora.RtcRole.PUBLISHER,
-    0,
-    0
+    600,
+    600
   );
   console.log(token)
   return <ParticipantAgoraDetails> {
