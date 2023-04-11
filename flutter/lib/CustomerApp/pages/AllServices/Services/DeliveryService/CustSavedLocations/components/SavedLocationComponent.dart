@@ -52,40 +52,66 @@ class SavedLocationComponent extends StatelessWidget {
                   child: Text(savelocation.name.capitalizeFirst.toString(),
                       style: context.txt.headlineMedium),
                 ),
-                InkWell(
-                  onTap: () {
-                    Get.find<CustomerAuthController>()
-                        .setAsDefaultLocation(savelocation);
-                  },
-                  //borderRadius: BorderRadius.circular(16),
-                  child: Ink(
-                    height: 3.2.h,
-                    //width: 59.sp,
-                    // width: Get.find<LanguageController>().userLanguageKey ==
-                    //         LanguageType.EN
-                    //     ? 20.w
-                    //     : 28.w,
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(
-                        color: (savelocation.defaultLocation)
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        backgroundColor: (savelocation.defaultLocation)
                             ? primaryBlueColor
                             : backgroundShadeColor,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: Center(
-                      child: Text(
-                        '${_i18n()["defaultAddressText"]}',
-                        style: TextStyle(
-                          fontFamily: "Montserrat",
-                          color: (savelocation.defaultLocation)
-                              ? Colors.white
-                              : Color(0xFF787878),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11.sp,
-                        ),
+                        shadowColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4.25),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        minimumSize: Size.zero),
+                    onPressed: () {
+                      Get.find<CustomerAuthController>()
+                          .setAsDefaultLocation(savelocation);
+                    },
+                    child: Text(
+                      '${_i18n()["defaultAddressText"]}',
+                      style: TextStyle(
+                        fontFamily: "Montserrat",
+                        color: (savelocation.defaultLocation)
+                            ? Colors.white
+                            : Color(0xFF787878),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11.sp,
                       ),
-                    ),
-                  ),
-                ),
+                    )),
+                // InkWell(
+                //   onTap: () {
+                //     Get.find<CustomerAuthController>()
+                //         .setAsDefaultLocation(savelocation);
+                //   },
+                //   //borderRadius: BorderRadius.circular(16),
+                //   child: Ink(
+                //     height: 3.2.h,
+                //     //width: 59.sp,
+                //     // width: Get.find<LanguageController>().userLanguageKey ==
+                //     //         LanguageType.EN
+                //     //     ? 20.w
+                //     //     : 28.w,
+                //     padding: EdgeInsets.symmetric(horizontal: 12),
+                //     decoration: BoxDecoration(
+                //         color: (savelocation.defaultLocation)
+                //             ? primaryBlueColor
+                //             : backgroundShadeColor,
+                //         borderRadius: BorderRadius.all(Radius.circular(50))),
+                //     child: Center(
+                //       child: Text(
+                //         '${_i18n()["defaultAddressText"]}',
+                //         style: TextStyle(
+                //           fontFamily: "Montserrat",
+                //           color: (savelocation.defaultLocation)
+                //               ? Colors.white
+                //               : Color(0xFF787878),
+                //           fontWeight: FontWeight.w600,
+                //           fontSize: 11.sp,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   width: 11,
                 ),

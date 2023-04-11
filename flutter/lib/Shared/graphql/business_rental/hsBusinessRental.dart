@@ -27,7 +27,7 @@ Future<List<Rental>> get_rental_by_category(
               category1: category1.toFirebaseFormatString(),
               distance: distance,
               from: Geography(
-                  fromLocation.lat as double, fromLocation.lng as double),
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
               limit: limit)));
 

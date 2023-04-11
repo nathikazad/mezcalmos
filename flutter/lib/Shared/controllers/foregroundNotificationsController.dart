@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
@@ -82,18 +82,12 @@ class ForegroundNotificationsController extends GetxController {
             removeNotification(_notification.id);
           }
         } catch (e, stk) {
-          mezDbgPrint("Invalid notification");
+          mezDbgPrint("Invalid notification 🛑");
           mezDbgPrint(e);
           mezDbgPrint(stk);
         }
       });
     });
-
-    //     .listen((dynamic event) {
-    //   // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
-    //   // mezDbgPrint(event.snapshot.value);
-
-    // });
 
     _notificationNodeRemoveListener?.cancel();
     _databaseHelper.firebaseDatabase
@@ -112,6 +106,7 @@ class ForegroundNotificationsController extends GetxController {
   }
 
   void removeNotification(String notificationId) {
+    mezDbgPrint("👉 Removing notification $notificationId");
     _databaseHelper.firebaseDatabase
         .ref()
         .child("$_notificationNode/$notificationId")
@@ -136,7 +131,7 @@ class ForegroundNotificationsController extends GetxController {
   void clearAllOrderNotifications(
       {required OrderType orderType, required num orderId}) {
     mezDbgPrint(
-        "fbNotificationsController: Clearing All Messages Notifications");
+        "🗑️ Clearing notifs of order id => $orderId and order type => $orderType");
     notifications()
         .where((Notification notification) =>
             notification.orderId == orderId &&

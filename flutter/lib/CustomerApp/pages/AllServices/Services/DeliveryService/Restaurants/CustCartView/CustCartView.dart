@@ -149,13 +149,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         ),
         const SizedBox(height: 9),
         DropDownLocationList(
-          onValueChangeCallback: ({MezLocation? location}) {
-            if (location != null) {
-              viewController.switchLocation(location);
-            }
-            // if (location != null && location.isValidLocation()) {
-
-            // }
+          onValueChangeCallback: (MezLocation location) {
+            viewController.switchLocation(location);
           },
           bgColor: Colors.white,
           checkDistance: true,

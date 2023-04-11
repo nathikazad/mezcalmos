@@ -213,7 +213,7 @@
               "title": "Tu carrito esta vacío"
             },
             "BuildCart": {
-              "inCart": "Mis Ordenes",
+              "inCart": "Mis ordenes",
               "yesClear": "Sí",
               "no": "No",
               "clearCart": "Vaciar carrito",
@@ -1828,7 +1828,7 @@
         "tax": "Impuesto",
         "estCost": "Costo estimado",
         "addTax": "Agregar costo fiscal",
-        "bill": "Factura",
+        "bill": "Ticket",
         "upload": "Subir",
         "cancel": "Cancelar",
         "markAv": "Marca como disponible",
@@ -2638,6 +2638,9 @@
             "reject": "Rechazar"
           }
         }
+      },
+      "AdmiOrdersListView": {
+        "showMore": "Mostrar más"
       }
     }
   },

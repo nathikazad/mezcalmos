@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
-import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 // import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -26,7 +26,6 @@ Notification customerNotificationHandler(
 
     case NotificationType.OrderStatusChange:
       final OrderType orderType = value['orderType'].toString().toOrderType();
-      mezDbgPrint(value['orderType']);
       switch (orderType) {
         case OrderType.Restaurant:
           return restaurantOrderStatusChangeNotificationHandler(key, value);
@@ -74,14 +73,12 @@ Notification customerNotificationHandler(
 Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   final LaundryOrderStatus newOrdersStatus =
       value['status'].toString().toLaundryOrderStatus();
-  mezDbgPrint(newOrdersStatus);
   final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(dynamicFields);
   return Notification(
     id: key,
     icon: Material.Icons.local_laundry_service,
-    linkUrl: LaundryRoutes.getLaundryOrderWithId(value['orderId']),
+    linkUrl: value["linkUrl"],
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -97,14 +94,12 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
   final DeliveryOrderStatus newOrdersStatus =
       value['status'].toString().toDeliveryOrderStatus();
-  mezDbgPrint(newOrdersStatus);
   final Map<String, dynamic> dynamicFields =
       _getCourierOrderStatusFields(newOrdersStatus);
-  mezDbgPrint(dynamicFields);
   return Notification(
     id: key,
     icon: Material.Icons.shopping_bag_rounded,
-    linkUrl: CourierRoutes.custCourierOrderRoute(value["orderId"]),
+    linkUrl: value["linkUrl"],
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -125,7 +120,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.flatware,
-    linkUrl: "getRestaurantOrderRoute(int.parse(value['orderId']))",
+    linkUrl: value["linkUrl"],
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -345,9 +340,6 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  value.forEach((kkey, vv) {
-    mezDbgPrint("$kkey : $vv}");
-  });
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??

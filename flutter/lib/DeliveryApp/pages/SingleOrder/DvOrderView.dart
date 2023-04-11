@@ -27,6 +27,10 @@ class DvOrderView extends StatefulWidget {
     return MezRouter.toPath(DeliveryAppRoutes.kDvOrderView
         .replaceAll(":orderId", orderId.toString()));
   }
+    static String constructPath(int orderId) {
+    return DeliveryAppRoutes.kDvOrderView
+        .replaceFirst(":orderId", orderId.toString());
+  }
 
   @override
   _DvOrderViewState createState() => _DvOrderViewState();

@@ -34,3 +34,22 @@ array_relationships:
         table:
           name: rental
           schema: business
+  - name: reviews
+    using:
+      manual_configuration:
+        column_mapping:
+          id: to_entity_id
+          service_provider_type: to_entity_type
+        insertion_order: null
+        remote_table:
+          name: review
+          schema: public
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - details_id
+        - id
+        - profile
+        - service_provider_type
+      filter: {}

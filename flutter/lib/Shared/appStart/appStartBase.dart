@@ -14,6 +14,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -94,6 +96,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
     /// initializeSetup
     initializeSetup();
+    ConnectivityHelper.instance.startCheckingInternet();
   }
 
   @override
@@ -285,14 +288,28 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
     _initializeConfig();
 
-    final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+    // final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
     MezRouter.setupQR();
+
+    if (kIsWeb && 100.w > 700) {
+      return Center(
+        child: ClipRect(
+          child: SizedBox(
+            width: 700,
+            child: _actualApp(appTheme, routes),
+          ),
+        ),
+      );
+    } else
+      return _actualApp(appTheme, routes);
+  }
+
+  DevicePreview _actualApp(ThemeData appTheme, List<QRoute> routes) {
     return DevicePreview(
       enabled: MezEnv.previewMode == true ? true : false,
       builder: (BuildContext context) => MaterialApp.router(
         routeInformationParser: QRouteInformationParser(),
 
-        // navigatorObservers: [MezRouter()],
         useInheritedMediaQuery: true,
         locale:
             MezEnv.previewMode == true ? DevicePreview.locale(context) : null,
@@ -307,30 +324,9 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
         routerDelegate: QRouterDelegate(
           routes,
-          observers: [
-            BotToastNavigatorObserver()
-            // Add your observers to the main navigator
-            // to watch for all routes in all navigators use [QR.observer]
-          ],
-        ), // enableLog: true,
-        // getPages: routes,
-        // initialRoute: kWrapperRoute,
+          observers: [BotToastNavigatorObserver()],
+        ),
       ),
-      //     GetMaterialApp(
-      //   navigatorObservers: [MezRouter()],
-      //   useInheritedMediaQuery: true,
-      //   locale:
-      //       MezEnv.previewMode == true ? DevicePreview.locale(context) : null,
-      //   builder: MezEnv.previewMode == true ? DevicePreview.appBuilder : null,
-      //   debugShowCheckedModeBanner: false,
-      //   onInit: () async => _initializeConfig(),
-      //   title: MezEnv.appType.toShortString(),
-      //   theme: appTheme,
-      //   color: Colors.white,
-      //   enableLog: true,
-      //   getPages: routes,
-      //   initialRoute: SharedRoutes.kWrapperRoute,
-      // ),
     );
   }
 }

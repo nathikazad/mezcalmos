@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -52,6 +54,16 @@ class _AssetListsViewState extends State<AssetListsView> {
     allServiceListViewController = Get.find<AllServiceListViewController>();
     assetController = Get.find<AssetController>();
     assetController.init(viewEnum: viewName);
+    fetchRentals();
+  }
+
+  void fetchRentals() async {
+    final List<Rental> _rental = await get_rental_by_category(
+        category1: RentalCategory1.Home,
+        distance: 100000,
+        fromLocation: Location(lat: 15.8, lng: -97),
+        withCache: true);
+    mezDbgPrint("Rentals: ${_rental}");
   }
 
   @override
@@ -126,10 +138,8 @@ class _AssetListsViewState extends State<AssetListsView> {
                   padding: const EdgeInsets.all(8.0),
                   child: DropDownLocationList(
                     bgColor: Colors.white,
-                    onValueChangeCallback: ({MezLocation? location}) {
-                      if (location != null) {
-                        mezDbgPrint("location $location");
-                      }
+                    onValueChangeCallback: (MezLocation location) {
+                      mezDbgPrint("location $location");
                     },
                   ),
                 ),

@@ -140,14 +140,13 @@ class _CustLaundryOrderRequestViewState
                                 ? Form(
                                     key: viewController.formKey,
                                     child: DropDownLocationList(
-                                      onValueChangeCallback: (
-                                          {MezLocation? location}) {
+                                      onValueChangeCallback:
+                                          (MezLocation location) {
                                         mezDbgPrint(
                                             "Loctaion ::::::::====>$location");
-                                        if (location != null &&
-                                            viewController.formKey.currentState
-                                                    ?.validate() ==
-                                                true) {
+                                        if (viewController.formKey.currentState
+                                                ?.validate() ==
+                                            true) {
                                           viewController
                                               .switchLocation(location);
 

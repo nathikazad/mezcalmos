@@ -12,6 +12,27 @@ object_relationships:
         remote_table:
           name: customer
           schema: customer
+computed_fields:
+  - name: from_image
+    definition:
+      function:
+        name: fromimage
+        schema: public
+  - name: from_name
+    definition:
+      function:
+        name: fromname
+        schema: public
+  - name: to_image
+    definition:
+      function:
+        name: toimage
+        schema: public
+  - name: to_name
+    definition:
+      function:
+        name: toname
+        schema: public
 insert_permissions:
   - role: customer
     permission:

@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -24,7 +23,7 @@ class CustRestaurantListViewController {
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(true);
   RxString searchQuery = RxString("");
-  late LocationData customerLocation;
+  LocationData? customerLocation;
 
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
@@ -37,18 +36,16 @@ class CustRestaurantListViewController {
 
       _assignServiceIds();
       filter();
-    }).whenComplete(() {
       _getCustomerCurrentLocation();
+    }).whenComplete(() {
+      isLoading.value = false;
     });
   }
 
-  Future<LocationData> _getCustomerCurrentLocation() async {
-    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀");
-    LocationData res = await Location().getLocation();
-    customerLocation = res;
-    isLoading.value = false;
-    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀 =====>$res");
-    return res;
+  void _getCustomerCurrentLocation() {
+    Location()
+        .getLocation()
+        .then((LocationData value) => customerLocation = value);
   }
 
   void changeAlwaysOpenSwitch(bool value) {

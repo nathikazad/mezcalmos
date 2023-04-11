@@ -2647,6 +2647,9 @@
             "reject": "Reject"
           }
         }
+      },
+      "AdmiOrdersListView": {
+        "showMore": "Show more"
       }
     }
   },
