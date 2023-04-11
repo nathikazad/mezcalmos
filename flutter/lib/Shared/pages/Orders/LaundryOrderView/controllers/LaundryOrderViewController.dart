@@ -334,6 +334,6 @@ class LaundryOrderViewController {
 
   void clearNotifications(int orderId) {
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
-        orderType: OrderType.Courier, orderId: orderId);
+        orderType: cModels.OrderType.Courier, orderId: orderId);
   }
 }
