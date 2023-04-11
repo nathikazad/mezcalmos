@@ -25,11 +25,6 @@ class MezAdminRoutes {
           builder: () => AdminTabsView(),
         ),
         QRoute(
-          path: SharedRoutes.kHomeRoute,
-          name: SharedRoutes.kHomeRoute,
-          builder: () => MezAdminWrapper(),
-        ),
-        QRoute(
           path: kServiceOrdersRoute,
           name: kServiceOrdersRoute,
           builder: () => AdminServiceOrdersView(),
