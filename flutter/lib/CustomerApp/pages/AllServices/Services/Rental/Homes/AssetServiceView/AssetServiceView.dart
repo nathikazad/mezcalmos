@@ -38,21 +38,17 @@ class _AssetServiceViewState extends State<AssetServiceView> {
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
     return Scaffold(
-      body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              CustomAppBar(),
-            ];
-          },
-          body: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+      body: Column(
+        children: [
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                CustomAppBar(),
+                SliverPadding(
+                  padding: EdgeInsets.all(8),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate(
+                      <Widget>[
                         // Title
                         Text(
                           "Home for rent in Av Juan Pablo II, Puerto Escondido",
@@ -138,6 +134,26 @@ class _AssetServiceViewState extends State<AssetServiceView> {
                             image: NetworkImage(customImageUrl),
                           ),
                         ),
+                        // Online Booking not available text
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: primaryBlueColor,
+                                ),
+                              ),
+                              Expanded(
+                                child: blueText(
+                                  "Online booking is not available, you can message the business for any inquiries.",
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                         // // Start date title + picker
                         // title("Start Date"),
                         // Padding(
@@ -188,17 +204,20 @@ class _AssetServiceViewState extends State<AssetServiceView> {
                     ),
                   ),
                 ),
-              ),
-              // MezButton(
-              //   label: "Add to cart",
-              //   withGradient: true,
-              //   onClick: () async {
-              //     await CartViewPage.navigate();
-              //     return;
-              //   },
-              // ),
-            ],
-          )),
+              ],
+            ),
+          ),
+          // MezButton(
+          //   label: "Add to cart",
+          //   withGradient: true,
+          //   borderRadius: 0,
+          //   onClick: () async {
+          //     await CartViewPage.navigate();
+          //     return;
+          //   },
+          // ),
+        ],
+      ),
     );
   }
 
@@ -238,6 +257,8 @@ class _AssetServiceViewState extends State<AssetServiceView> {
     return Text(
       text,
       style: style,
+      maxLines: 3,
+      textAlign: TextAlign.start,
     );
   }
 

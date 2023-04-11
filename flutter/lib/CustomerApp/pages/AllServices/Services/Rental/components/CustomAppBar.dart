@@ -28,9 +28,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
       pinned: true,
       leading: backButtonAppBar(),
       actions: [
-        MezIconButton(
-          icon: Icons.history,
-          onTap: () {},
+        Padding(
+          padding: const EdgeInsets.only(right: 10.0),
+          child: MezIconButton(
+            icon: Icons.history,
+            onTap: () {},
+          ),
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(

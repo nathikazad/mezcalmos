@@ -63,7 +63,10 @@ class _AssetListsViewState extends State<AssetListsView> {
         distance: 100000,
         fromLocation: Location(lat: 15.8, lng: -97),
         withCache: true);
-    mezDbgPrint("Rentals: ${_rental}");
+    _rental.map((e) {
+      mezDbgPrint(e.details.toFirebaseFormattedJson());
+      return e;
+    });
   }
 
   @override
@@ -139,7 +142,13 @@ class _AssetListsViewState extends State<AssetListsView> {
                   child: DropDownLocationList(
                     bgColor: Colors.white,
                     onValueChangeCallback: (MezLocation location) {
-                      mezDbgPrint("location $location");
+                      if (location.address.isNotEmpty) {
+                        mezDbgPrint(
+                            "MezLocation ${location.toFirebaseFormattedJson()}");
+                      } else {
+                        mezDbgPrint(
+                            "MezLocation is empty ${location.toFirebaseFormattedJson()}");
+                      }
                     },
                   ),
                 ),
