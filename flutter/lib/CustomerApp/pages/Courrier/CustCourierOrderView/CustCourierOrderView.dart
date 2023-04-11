@@ -208,14 +208,13 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
             viewController.order.items.length,
             (int index) => MezExpandableCard(
                 marging: EdgeInsets.only(bottom: 5),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 45.w,
-                      height: 40,
-                      child: Text(
+                title: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
                         viewController.order.items[index].name,
+                        maxLines: 2,
                         style: context.txt.bodyLarge?.copyWith(
                             color: viewController.order.items[index].unavailable
                                 ? Colors.grey
@@ -225,87 +224,88 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                                     ? TextDecoration.lineThrough
                                     : null),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        if (viewController.isEstCostNull(index) &&
-                            viewController.isActCostNull(index))
-                          Text(
-                            '-',
-                            style: context.txt.bodyLarge?.copyWith(
-                                color: viewController
-                                        .order.items[index].unavailable
-                                    ? Colors.grey
-                                    : null,
-                                decoration: viewController.order.items[index]
-                                                .actualCost !=
-                                            null ||
-                                        viewController
-                                            .order.items[index].unavailable
-                                    ? TextDecoration.lineThrough
-                                    : null),
-                          ),
-                        if (!viewController.isEstCostNull(index) &&
-                            !viewController.equalEstActCost(index))
-                          Text(
-                            '${viewController.order.items[index].estCost?.toPriceString()}',
-                            style: context.txt.bodyLarge?.copyWith(
-                                color: viewController
-                                        .order.items[index].unavailable
-                                    ? Colors.grey
-                                    : null,
-                                decoration: viewController.order.items[index]
-                                                .actualCost !=
-                                            null ||
-                                        viewController
-                                            .order.items[index].unavailable
-                                    ? TextDecoration.lineThrough
-                                    : null),
-                          ),
-                        /*if (viewController.order.items[index].estCost != null &&
-                            viewController.order.items[index].actualCost ==
-                                null)
-                          Text(
-                            "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
-                            style: context.txt.bodyLarge?.copyWith(
-                                color: viewController
-                                        .order.items[index].unavailable
-                                    ? Colors.grey
-                                    : null,
-                                decoration: viewController.order.items[index]
-                                                .actualCost !=
-                                            null ||
-                                        viewController
-                                            .order.items[index].unavailable
-                                    ? TextDecoration.lineThrough
-                                    : null),
-                          ),*/
-                        if (!viewController.isEstCostNull(index) &&
-                            !viewController.isActCostNull(index) &&
-                            !viewController.equalEstActCost(index))
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            color: viewController.order.items[index].unavailable
-                                ? Colors.grey
-                                : Colors.black,
-                          ),
-                        if (viewController.order.items[index].actualCost !=
-                            null)
-                          Text(
-                              "${viewController.order.items[index].actualCost!.toPriceString()}",
+                      Row(
+                        children: [
+                          if (viewController.isEstCostNull(index) &&
+                              viewController.isActCostNull(index))
+                            Text(
+                              '-',
                               style: context.txt.bodyLarge?.copyWith(
-                                decoration: viewController
-                                        .order.items[index].unavailable
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                color: viewController
-                                        .order.items[index].unavailable
-                                    ? Colors.grey
-                                    : null,
-                              ))
-                      ],
-                    ),
-                  ],
+                                  color: viewController
+                                          .order.items[index].unavailable
+                                      ? Colors.grey
+                                      : null,
+                                  decoration: viewController.order.items[index]
+                                                  .actualCost !=
+                                              null ||
+                                          viewController
+                                              .order.items[index].unavailable
+                                      ? TextDecoration.lineThrough
+                                      : null),
+                            ),
+                          if (!viewController.isEstCostNull(index) &&
+                              !viewController.equalEstActCost(index))
+                            Text(
+                              '${viewController.order.items[index].estCost?.toPriceString()}',
+                              style: context.txt.bodyLarge?.copyWith(
+                                  color: viewController
+                                          .order.items[index].unavailable
+                                      ? Colors.grey
+                                      : null,
+                                  decoration: viewController.order.items[index]
+                                                  .actualCost !=
+                                              null ||
+                                          viewController
+                                              .order.items[index].unavailable
+                                      ? TextDecoration.lineThrough
+                                      : null),
+                            ),
+                          /*if (viewController.order.items[index].estCost != null &&
+                              viewController.order.items[index].actualCost ==
+                                  null)
+                            Text(
+                              "${viewController.order.items[index].estCost?.toPriceString() ?? "-"}",
+                              style: context.txt.bodyLarge?.copyWith(
+                                  color: viewController
+                                          .order.items[index].unavailable
+                                      ? Colors.grey
+                                      : null,
+                                  decoration: viewController.order.items[index]
+                                                  .actualCost !=
+                                              null ||
+                                          viewController
+                                              .order.items[index].unavailable
+                                      ? TextDecoration.lineThrough
+                                      : null),
+                            ),*/
+                          if (!viewController.isEstCostNull(index) &&
+                              !viewController.isActCostNull(index) &&
+                              !viewController.equalEstActCost(index))
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              color:
+                                  viewController.order.items[index].unavailable
+                                      ? Colors.grey
+                                      : Colors.black,
+                            ),
+                          if (viewController.order.items[index].actualCost !=
+                              null)
+                            Text(
+                                "${viewController.order.items[index].actualCost!.toPriceString()}",
+                                style: context.txt.bodyLarge?.copyWith(
+                                  decoration: viewController
+                                          .order.items[index].unavailable
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                                  color: viewController
+                                          .order.items[index].unavailable
+                                      ? Colors.grey
+                                      : null,
+                                ))
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 imageUrl: viewController.order.items[index].image,
                 expandableWidget:
