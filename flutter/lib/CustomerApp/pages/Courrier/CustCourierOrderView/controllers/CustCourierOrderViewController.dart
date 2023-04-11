@@ -243,6 +243,11 @@ class CustCourierOrderViewController {
     }
   }
 
+  bool equalEstActCost(int index) =>
+      order.items[index].actualCost == order.items[index].estCost;
+  bool isEstCostNull(int index) => order.items[index].estCost == null;
+  bool isActCostNull(int index) => order.items[index].actualCost == null;
+
   void dispose() {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     _order.close();

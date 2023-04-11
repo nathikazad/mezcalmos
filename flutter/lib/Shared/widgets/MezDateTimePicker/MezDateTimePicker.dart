@@ -179,7 +179,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             return DropdownMenuItem<DateTime>(
                 value: value,
                 child: Text(
-                    "${DateFormat.MMMMEEEEd(userLangCode).format(value).toCapital()}"));
+                    "${DateFormat.MMMMEEEEd(userLangCode).format(value).inCaps}"));
           }).toList(),
         ),
       ),

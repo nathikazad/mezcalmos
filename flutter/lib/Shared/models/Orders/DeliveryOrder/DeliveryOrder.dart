@@ -70,12 +70,9 @@ class DeliveryOrder extends DeliverableOrder {
   }
 
   bool inProcess() {
-    return !<DeliveryOrderStatus>[
-      DeliveryOrderStatus.CancelledByCustomer,
-      DeliveryOrderStatus.CancelledByDeliverer,
-      DeliveryOrderStatus.CancelledByServiceProvider,
-      DeliveryOrderStatus.Delivered
-    ].contains(status);
+    return status != DeliveryOrderStatus.CancelledByCustomer &&
+        status != DeliveryOrderStatus.CancelledByDeliverer &&
+        status != DeliveryOrderStatus.CancelledByServiceProvider;
   }
 
   @override

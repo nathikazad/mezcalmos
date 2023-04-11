@@ -228,9 +228,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                     ),
                     Row(
                       children: [
-                        if (viewController.order.items[index].estCost == null &&
-                            viewController.order.items[index].actualCost ==
-                                null)
+                        if (viewController.isEstCostNull(index) &&
+                            viewController.isActCostNull(index))
                           Text(
                             '-',
                             style: context.txt.bodyLarge?.copyWith(
@@ -246,9 +245,8 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                                     ? TextDecoration.lineThrough
                                     : null),
                           ),
-                        if (viewController.order.items[index].estCost != null &&
-                            (viewController.order.items[index].estCost !=
-                                viewController.order.items[index].actualCost))
+                        if (!viewController.isEstCostNull(index) &&
+                            !viewController.equalEstActCost(index))
                           Text(
                             '${viewController.order.items[index].estCost?.toPriceString()}',
                             style: context.txt.bodyLarge?.copyWith(
@@ -282,11 +280,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                                     ? TextDecoration.lineThrough
                                     : null),
                           ),*/
-                        if (viewController.order.items[index].estCost != null &&
-                            viewController.order.items[index].actualCost !=
-                                null &&
-                            (viewController.order.items[index].estCost !=
-                                viewController.order.items[index].actualCost))
+                        if (!viewController.isEstCostNull(index) &&
+                            !viewController.isActCostNull(index) &&
+                            !viewController.equalEstActCost(index))
                           Icon(
                             Icons.arrow_forward_rounded,
                             color: viewController.order.items[index].unavailable

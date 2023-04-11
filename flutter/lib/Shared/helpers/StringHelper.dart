@@ -22,10 +22,6 @@ extension StringHelper on String {
     return this + (isPlural ? 's' : '');
   }
 
-  String toCapital() {
-    return capitalize ?? this;
-  }
-
   String generateTwoFirstLetters() {
     String imageString = '';
     if (isNotEmpty) {

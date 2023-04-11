@@ -154,7 +154,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                   )
                                 : Flexible(
                                     fit: FlexFit.tight,
-                                    child: Text(_formattedTime.toCapital(),
+                                    child: Text(_formattedTime.inCaps,
                                         style: context.txt.bodyLarge?.copyWith(
                                           fontSize: 12.sp,
                                         )),

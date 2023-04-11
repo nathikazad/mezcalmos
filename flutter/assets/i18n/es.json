@@ -2556,6 +2556,9 @@
             "reject": "Rechazar"
           }
         }
+      },
+      "AdmiOrdersListView": {
+        "showMore": "Mostrar más"
       }
     }
   },

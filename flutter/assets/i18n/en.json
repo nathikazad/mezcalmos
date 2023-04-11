@@ -25,7 +25,6 @@
         "distanceError": "The distance between you and the service location exceeds 10km!",
         "noLocError": "Please select a location",
         "pickLocation": "Pick from map"
-      
       },
       "LocationPicker": {
         "pick": "PICK",
@@ -49,9 +48,9 @@
         }
       },
       "courrier": {
-        "CustCourierServicesListView" : {
-          "courier" : "Courier",
-          "min" : "Min"
+        "CustCourierServicesListView": {
+          "courier": "Courier",
+          "min": "Min"
         },
 
         "CustCourierServiceView": {
@@ -82,11 +81,11 @@
           }
         },
         "CustCourierOrderView": {
-          "priceChangeTitle" : "Price change request",
-          "reason" : "Reason",
-          "newPrice" : "New price",
-          "accept" : "Accept",
-      
+          "priceChangeTitle": "Price change request",
+          "reason": "Reason",
+          "newPrice": "New price",
+          "accept": "Accept",
+
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
@@ -201,7 +200,7 @@
               "pickTime": "Pick your time",
               "now": "Now",
               "timeError": "Picked delivery time is passed, please pick a valid time",
-              "required" : "Please select a delivery time"
+              "required": "Please select a delivery time"
             },
             "PaymentMethodPicker": {
               "paymentMethod": "Payment method",
@@ -235,8 +234,8 @@
               "pickLocation": "Pick from map"
             },
             "OrderSummaryCard": {
-              "add" : "Add",
-              "waitingForCustomer" : "Waiting for customer", 
+              "add": "Add",
+              "waitingForCustomer": "Waiting for customer",
               "orderSummary": "Summary",
               "orderCost": "Order cost",
               "deliveryCost": "Delivery cost",
@@ -2564,6 +2563,9 @@
             "reject": "Reject"
           }
         }
+      },
+      "AdmiOrdersListView": {
+        "showMore": "Show more"
       }
     }
   },
