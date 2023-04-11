@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -18,6 +17,8 @@ class DeliveryOrder extends DeliverableOrder {
       required super.deliveryOrderId,
       required super.orderTime,
       super.stripePaymentInfo,
+      super.customerReviewByDriver,
+      super.serviceReviewByDriver,
       required super.costs,
       required this.packageReady,
       required this.serviceOrderId,
@@ -72,6 +73,7 @@ class DeliveryOrder extends DeliverableOrder {
   bool inProcess() {
     return status != DeliveryOrderStatus.CancelledByCustomer &&
         status != DeliveryOrderStatus.CancelledByDeliverer &&
+        status != DeliveryOrderStatus.Delivered &&
         status != DeliveryOrderStatus.CancelledByServiceProvider;
   }
 

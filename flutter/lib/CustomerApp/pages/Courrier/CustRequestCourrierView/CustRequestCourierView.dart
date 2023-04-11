@@ -124,7 +124,11 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               isServiceOpen: viewController.company.value?.isOpen() ?? true,
               numberOfDays: 7,
               onValue: (DateTime? value) {
-                viewController.deliveryTime.value = value;
+                if (value != null &&
+                    viewController.secondFormKey.currentState?.validate() ==
+                        true) {
+                  viewController.deliveryTime.value = value;
+                }
               },
               onClear: () {
                 viewController.deliveryTime.value = null;
@@ -182,10 +186,8 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             DropDownLocationList(
               elevation: 0,
-              onValueChangeCallback: ({MezLocation? location}) {
-                if (location != null && location.isValidLocation()) {
-                  viewController.setToLocation(location);
-                }
+              onValueChangeCallback: (MezLocation location) {
+                viewController.setToLocation(location);
               },
               bgColor: Colors.white,
               checkDistance: false,

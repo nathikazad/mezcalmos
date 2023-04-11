@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class DvCompanyOrderViewController {
   // instances //
@@ -35,6 +38,11 @@ class DvCompanyOrderViewController {
 
   // init
   Future<void> init({required int orderId}) async {
+    MezRouter.registerReturnToViewCallback(
+        DvCompanyOrderView.constructPath(orderId), () {
+      clearNotifications(orderId);
+    });
+    clearNotifications(orderId);
     try {
       order.value = await get_driver_order_by_id(orderId: orderId);
       if (order.value!.routeInformation != null) {
@@ -238,5 +246,10 @@ class DvCompanyOrderViewController {
     mezDbgPrint("Called dispose 😔😔😔😔");
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     order.close();
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Courier, orderId: orderId);
   }
 }

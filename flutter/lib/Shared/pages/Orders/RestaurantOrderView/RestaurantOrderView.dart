@@ -45,6 +45,11 @@ class RestaurantOrderView extends StatefulWidget {
         .replaceAll(":orderId", orderId));
   }
 
+  static String constructPath(int orderId) {
+    return RestaurantAppRoutes.restaurantOrderRoute
+        .replaceFirst(":orderId", orderId.toString());
+  }
+
   @override
   State<RestaurantOrderView> createState() => _RestaurantOrderViewState();
 }

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/controllers/CustLaundryOrderRequestViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -140,10 +139,13 @@ class _CustLaundryOrderRequestViewState
                                 ? Form(
                                     key: viewController.formKey,
                                     child: DropDownLocationList(
-                                      onValueChangeCallback: (
-                                          {MezLocation? location}) {
-                                        if (location != null &&
-                                            location.isValidLocation()) {
+                                      onValueChangeCallback:
+                                          (MezLocation location) {
+                                        mezDbgPrint(
+                                            "Loctaion ::::::::====>$location");
+                                        if (viewController.formKey.currentState
+                                                ?.validate() ==
+                                            true) {
                                           viewController
                                               .switchLocation(location);
 
@@ -328,11 +330,7 @@ class _CustLaundryOrderRequestViewState
           if (viewController.isUserSignedIn) {
             mezDbgPrint(viewController.formKey.currentState?.validate());
             if (viewController.formKey.currentState?.validate() == true) {
-              final num? res = await viewController.createLaundryOrder();
-              if (res != null) {
-                await MezRouter.popEverythingTillBeforeHome().then((value) =>
-                    CustLaundryOrderView.navigate(orderId: res.toInt()));
-              }
+              await viewController.createLaundryOrder();
             }
           } else {
             await SignInView.navigateAtOrderTime();

@@ -160,14 +160,14 @@ class HasuraDb {
       // _wsLink?.config.connect(uri: hasuraDbSocketLink, headers: headers);
     }
     _wsLink!.connectOrReconnect();
-    _wsLink!.client!.connectionStateController.listen((value) {
-      mezDbgPrint(value.toString());
-      if (value == gqClient.SocketConnectionState.connected) {
-        _wsLink!.client!.messages.listen((event) {
-          // mezDbgPrint("🩲🩲 ${event.type}");
-        });
-      }
-    });
+    // _wsLink!.client!.connectionStateController.listen((value) {
+    //   // mezDbgPrint("🔒🔒🔒🔒🔒🔒🔒🔒${value.toString()}");
+    //   if (value == gqClient.SocketConnectionState.connected) {
+    //     _wsLink!.client!.messages.listen((event) {
+    //       // mezDbgPrint("🩲🩲 ${event.type}");
+    //     });
+    //   }
+    // });
 
     _link = gqClient.Link.split(
         (gqClient.Request request) => request.isSubscription, _wsLink!, _link);

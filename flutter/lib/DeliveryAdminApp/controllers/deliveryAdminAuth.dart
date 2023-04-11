@@ -34,12 +34,19 @@ class DeliveryOpAuthController extends GetxController {
   }
 
   Future<void> setupDeliveryOperator() async {
-    operator.value = await get_delivery_operator(userId: operatorUserId);
-    if (operator.value != null) {
-      _companyId.value = operator.value!.state.serviceProviderId;
-    }
+    try {
+      mezDbgPrint("Gettign dv operator for user id: $operatorUserId");
+      operator.value = await get_delivery_operator(userId: operatorUserId);
+      mezDbgPrint("Operator value  ====>${operator.value}");
+      if (operator.value != null) {
+        _companyId.value = operator.value!.state.serviceProviderId;
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
 
-    mezDbgPrint("👑👑 Delivery Operator :: ${operator.value?.toJson()}");
+      // showErrorSnackBar();
+    }
   }
 
   @override

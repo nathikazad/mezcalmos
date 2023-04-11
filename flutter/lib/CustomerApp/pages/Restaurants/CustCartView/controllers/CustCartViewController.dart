@@ -335,12 +335,12 @@ class CustCartViewController {
 
   Future<bool> updateShippingPrice() async {
     isShippingSet.value = false;
-    final LocModel.MezLocation? loc = cart.toLocation;
+    
 
-    if (loc != null && cart.restaurant != null) {
+    if (cart.toLocation != null && cart.restaurant != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         cart.restaurant!.info.location,
-        loc,
+        cart.toLocation!,
       );
 
       if (routeInfo != null) {

@@ -48,9 +48,10 @@
         }
       },
       "courrier": {
-        "CustCourierServicesListView": {
-          "courier": "Courier",
-          "min": "Min"
+        "CustCourierServicesListView" : {
+          "title" : "Delivery companies arround you",
+          "courier" : "Courier",
+          "min" : "Min"
         },
 
         "CustCourierServiceView": {
@@ -630,6 +631,7 @@
           }
         },
         "LaundriesListView": {
+
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -641,7 +643,7 @@
             }
           },
           "laundries": "Laundries",
-          "title": "Find your closest laundries\nor dry cleaners ",
+          "title": "Laundries arround you ",
           "noLaundaryFound": "No laundry found"
         },
         "SingleLaundryScreen": {
@@ -776,6 +778,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
+        "routeError" : "Error getting your location and route informations",
         "writeReview": "Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",
