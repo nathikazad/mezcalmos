@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-// import 'package:mezcalmos/Shared/pages/AuthScreens/fakeCreds.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/fakeCreds.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
@@ -129,54 +131,54 @@ class _SignInViewState extends State<SignInView> {
         SizedBox(
           height: 10,
         ),
-        // if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
-        //   appleLoginBtn(),
-        // if (MezEnv.appLaunchMode == AppLaunchMode.stage)
-        //   ...stageLoginBtns(stageCredentials),
-        // if (MezEnv.appLaunchMode == AppLaunchMode.dev)
-        //   ...stageLoginBtns(devCredentials),
+        if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
+          appleLoginBtn(),
+        if (MezEnv.appLaunchMode == AppLaunchMode.stage)
+          ...stageLoginBtns(stageCredentials),
+        if (MezEnv.appLaunchMode == AppLaunchMode.dev)
+          ...stageLoginBtns(devCredentials),
       ];
     }
   }
 
-  // List<Widget> stageLoginBtns(List<Credential> credentials) {
-  //   return credentials.fold<List<Widget>>([],
-  //       (List<Widget> list, Credential credential) {
-  //     list.add(Container(
-  //       width: double.infinity,
-  //       child: TextButton(
-  //           onPressed: () {
-  //             clickedLogin.value = true;
-  //             signIn(credential.username, credential.password)
-  //                 .whenComplete(() => clickedLogin.value = false);
-  //           },
-  //           style: TextButton.styleFrom(
-  //               backgroundColor: Colors.black,
-  //               fixedSize: Size(double.infinity, 50)),
-  //           child: Container(
-  //             alignment: Alignment.center,
-  //             child: Row(
-  //               children: [
-  //                 Container(
-  //                     padding: EdgeInsets.only(
-  //                         left: Get.width * 0.05, right: Get.width * 0.05),
-  //                     child: Icon(Ionicons.log_in)),
-  //                 Spacer(),
-  //                 Text(
-  //                   "Login as ${credential.identifier.capitalize}",
-  //                   style: TextStyle(fontWeight: FontWeight.bold),
-  //                 ),
-  //                 Spacer()
-  //               ],
-  //             ),
-  //           )),
-  //     ));
-  //     list.add(SizedBox(
-  //       height: 10,
-  //     ));
-  //     return list;
-  //   });
-  // }
+  List<Widget> stageLoginBtns(List<Credential> credentials) {
+    return credentials.fold<List<Widget>>([],
+        (List<Widget> list, Credential credential) {
+      list.add(Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: () {
+              clickedLogin.value = true;
+              signIn(credential.username, credential.password)
+                  .whenComplete(() => clickedLogin.value = false);
+            },
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.black,
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  Container(
+                      padding: EdgeInsets.only(
+                          left: Get.width * 0.05, right: Get.width * 0.05),
+                      child: Icon(Ionicons.log_in)),
+                  Spacer(),
+                  Text(
+                    "Login as ${credential.identifier.capitalize}",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Spacer()
+                ],
+              ),
+            )),
+      ));
+      list.add(SizedBox(
+        height: 10,
+      ));
+      return list;
+    });
+  }
 
   Widget appleLoginBtn() {
     return Container(
