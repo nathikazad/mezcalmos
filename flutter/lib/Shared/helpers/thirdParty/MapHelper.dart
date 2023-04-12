@@ -134,7 +134,7 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
   // });
 
   final String url =
-      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&strictbounds=true&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&strictbounds=true";
 
   mezDbgPrint(" $url \n ===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
   if (loc == null) return _returnedPredictions;
@@ -159,7 +159,7 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
 Future<LocModel.MezLocation?> getLocationFromPlaceId(
     String placeId, String description) async {
   final String url =
-      "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/place/details/json?placeid=$placeId";
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);
 
@@ -180,7 +180,7 @@ Future<LocModel.MezLocation?> getLocationFromPlaceId(
 Future<String?> getAdressFromLatLng(LatLng latlng) async {
   //TODO: ALL HTTP CALLS MUST BE IMPLEMENTED INSIDE OF A TRY CATCH BLOCK!
   final String url =
-      "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng.latitude},${latlng.longitude}&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/geocode/json?latlng=${latlng.latitude},${latlng.longitude}";
 
   http.Response? resp = null;
   try {
@@ -215,7 +215,7 @@ Future<Route?> getDurationAndDistance(
   mezDbgPrint(
       "[tt] Called getDurationAndDistance \n- TO :  lat(${to.latitude}) | lng(to(${to.longitude}) \n- FROM :  lat(${from.latitude}) | lng(to(${from.longitude})!");
   final String url =
-      "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.latitude},${to.longitude}&origin=${from.latitude},${from.longitude}&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/directions/json?units=metric&region=mx&destination=${to.latitude},${to.longitude}&origin=${from.latitude},${from.longitude}";
   mezDbgPrint("URL ==> $url");
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);

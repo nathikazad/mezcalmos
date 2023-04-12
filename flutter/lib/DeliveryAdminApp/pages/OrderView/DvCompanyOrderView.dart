@@ -20,7 +20,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
-import 'package:mezcalmos/env_example.dart';
+import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["DvCompanyOrderView"];
@@ -32,7 +32,8 @@ class DvCompanyOrderView extends StatefulWidget {
     return MezRouter.toPath(DeliveryAdminRoutes.kOrderViewRoute
         .replaceAll(":orderId", orderId.toString()));
   }
-    static String constructPath(int orderId) {
+
+  static String constructPath(int orderId) {
     return DeliveryAdminRoutes.kOrderViewRoute
         .replaceFirst(":orderId", orderId.toString());
   }
