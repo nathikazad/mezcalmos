@@ -37,12 +37,12 @@ enum CallUserError {
 export async function callUser(callerUserId: number, callUserDetails: CallUserDetails): Promise<CallUserResponse> {
   try {
     let chat: Chat = await getChat(callUserDetails.chatId)
-    let chatInfo: ChatInfo = chat.chatInfo[AppTypeToChatInfoAppName[getAppTypeFromParticipantType(callUserDetails.callerParticipantType)]];
+    let chatInfo: ChatInfo | undefined = chat.chatInfo[AppTypeToChatInfoAppName[getAppTypeFromParticipantType(callUserDetails.callerParticipantType)]];
     
     let recipient: Participant = getRecipient(chat, chatInfo);
 
     // out of bounds error if caller isnt there in participant 
-    let caller:Participant = chat.participants.filter((p) => p.participantType == callUserDetails.callerParticipantType && p.id == callerUserId)[0]
+    let caller:Participant = chat.participants!.filter((p) => p.participantType == callUserDetails.callerParticipantType && p.id == callerUserId)[0]
     if(!caller) {
       throw new MezError(CallUserError.CallerNotInParticipants);
     }
@@ -76,11 +76,11 @@ export async function callUser(callerUserId: number, callUserDetails: CallUserDe
   }
 
   function getRecipient(chat: Chat, chatInfo: ChatInfo): Participant {
-    let correctParticipants: Participant[] = chat.participants.filter((p) => p.participantType == chatInfo.participantType && p.notificationInfo?.turnOffNotifications == false);
+    let correctParticipants: Participant[] = chat.participants!.filter((p) => p.participantType == chatInfo.participantType && p.notificationInfo?.turnOffNotifications == false);
     if (correctParticipants.length > 0) {
       return correctParticipants[0]
     } else if (chatInfo.participantType != ParticipantType.Customer) { // if the customer is trying to reach someone then forward to mez admin
-      correctParticipants = chat.participants.filter((p) => p.participantType == ParticipantType.MezAdmin && p.notificationInfo?.turnOffNotifications == false);
+      correctParticipants = chat.participants!.filter((p) => p.participantType == ParticipantType.MezAdmin && p.notificationInfo?.turnOffNotifications == false);
       if (correctParticipants.length > 0)
         return correctParticipants[0] 
     }

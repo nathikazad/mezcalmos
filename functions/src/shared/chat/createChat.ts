@@ -1,25 +1,42 @@
-import { createDirectChat, createMezAdminChat, createRestaurantCustomerChat } from "../graphql/chat/createChat";
+import { getBusiness } from "../graphql/business/getBusiness";
+import { createDirectChat, createMezAdminChat, createServiceProviderCustomerChat } from "../graphql/chat/createChat";
+import { getServiceProviderCustomerChat } from "../graphql/chat/getChat";
+import { getLaundryStore } from "../graphql/laundry/getLaundry";
 import { getRestaurant } from "../graphql/restaurant/getRestaurant";
 import { getCustomer } from "../graphql/user/customer/getCustomer";
 import { getUser } from "../graphql/user/getUser";
 import { getMezAdmins } from "../graphql/user/mezAdmin/getMezAdmin";
-import { AppType } from "../models/Generic/Generic";
-import { ServiceProviderType } from "../models/Services/Service";
+import { Chat } from "../models/Generic/Chat";
+import { AppType, MezError } from "../models/Generic/Generic";
+import { CustomerInfo } from "../models/Generic/User";
+import { ServiceProvider, ServiceProviderType } from "../models/Services/Service";
 
 export interface ServiceProviderDetails {
     serviceProviderId: number,
     serviceProviderType: ServiceProviderType
 }
-export async function createServiceProviderChat(customerId: number, serviceProviderDetails: ServiceProviderDetails) {
-    if(serviceProviderDetails.serviceProviderType =  ServiceProviderType.Restaurant) {
-        let restaurantPromise = getRestaurant(serviceProviderDetails.serviceProviderId);
-        let customerPromise = getCustomer(customerId);
-        let response = await Promise.all([restaurantPromise, customerPromise]);
-        let restaurant = response[0];
-        let customer = response[1];
-
-        createRestaurantCustomerChat(restaurant, customer);
+export async function createServiceProviderChat(customerId: number, serviceProviderDetails: ServiceProviderDetails): Promise<Chat> {
+    let chat: Chat | undefined = await getServiceProviderCustomerChat(customerId, serviceProviderDetails.serviceProviderId, serviceProviderDetails.serviceProviderType);
+    if(chat) {
+        return chat;
     }
+    let customer: CustomerInfo = await getCustomer(customerId);
+    let serviceProvider: ServiceProvider;
+    switch (serviceProviderDetails.serviceProviderType) {
+        case ServiceProviderType.Restaurant:
+            serviceProvider = await getRestaurant(serviceProviderDetails.serviceProviderId);
+            break;
+        case ServiceProviderType.Laundry:
+            serviceProvider = await getLaundryStore(serviceProviderDetails.serviceProviderId);
+            break;
+        case ServiceProviderType.Business:
+            serviceProvider = (await getBusiness(serviceProviderDetails.serviceProviderId)).details;
+        case ServiceProviderType.DeliveryCompany:
+            //add delivery company
+        default:
+            throw new MezError("invalidServiceProviderType");
+    }
+    return createServiceProviderCustomerChat(serviceProvider, customer);
 }
 
 export interface DirectChatDetails {

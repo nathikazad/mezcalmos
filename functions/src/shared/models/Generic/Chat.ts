@@ -36,7 +36,7 @@ export interface ChatInfo {
   chatImage: string,
   phoneNumber?: string,
   participantType?: ParticipantType,
-  parentLink: string
+  parentLink?: string
 }
 
 export enum ParticipantType {
@@ -66,10 +66,13 @@ export function getAppTypeFromParticipantType(participantType: ParticipantType):
   return Object.keys(AppParticipant).filter(function(key) {return AppParticipant[key as AppType] === participantType})[0] as AppType;
 }
 
+
 export interface Chat {
-  participants: Participant[]
+  chatId: number,
+  chatInfo: Partial<Record<ChatInfoAppName, ChatInfo>>,
+  messages?: Array<Message>
   chatType: ChatType
-  chatInfo: Record<ChatInfoAppName, ChatInfo>
+  participants?: Array<Participant>
 }
 
 export interface Participant extends UserInfo {
@@ -78,11 +81,7 @@ export interface Participant extends UserInfo {
 }
 
 export interface Message {
-  chatId: string;
-  orderId: string;
   userId: string;
-  participantType: ParticipantType;
-  notified?: boolean;
   message: string,
   timestamp: string
 }

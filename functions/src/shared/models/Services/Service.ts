@@ -1,7 +1,7 @@
 import { ServiceProviderStripeInfo } from "../stripe";
 import { ParticipantType } from "../Generic/Chat";
 import { DeliveryDetails } from "../Generic/Delivery";
-import { AuthorizationStatus, Language, Location, NotificationInfo } from "../Generic/Generic";
+import { AppType, AuthorizationStatus, Language, Location, NotificationInfo } from "../Generic/Generic";
 import {  PaymentType } from "../Generic/Order";
 import { UserInfo } from "../Generic/User";
 import { ForegroundNotification } from "../Notification";
@@ -83,7 +83,6 @@ export interface ServiceLink{
 export enum ServiceProviderType {
   Restaurant = "restaurant",
   Laundry = "laundry",
-  Taxi = "taxi",
   Business = "business",
   DeliveryCompany = "deliveryCompany",
   Customer = "customer"
@@ -95,4 +94,12 @@ export interface OperatorApprovedNotification extends ForegroundNotification {
   serviceProviderName: string,
   serviceProviderId: number,
   participantType: ParticipantType,
+}
+
+export const ServiceProviderToAppType: Record<ServiceProviderType, AppType> = {
+  [ServiceProviderType.Restaurant]: AppType.Restaurant,
+  [ServiceProviderType.Laundry]: AppType.Laundry,
+  [ServiceProviderType.Business]: AppType.Business,
+  [ServiceProviderType.DeliveryCompany]: AppType.DeliveryAdmin,
+  [ServiceProviderType.Customer]: AppType.Customer,
 }

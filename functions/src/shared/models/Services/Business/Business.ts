@@ -1,4 +1,4 @@
-import { Language } from "../../Generic/Generic";
+import { Language, Location } from "../../Generic/Generic";
 import { ForegroundNotification } from "../../Notification";
 import { ServiceProvider } from "../Service";
 
@@ -30,6 +30,7 @@ export enum TimeUnit {
 }
 export interface Rental {
     category1: RentalCategory1;
+    category2?: RentalCategory2;
     details: BusinessService;
 }
 export interface Class {
@@ -37,17 +38,20 @@ export interface Class {
     scheduleType: ScheduleType;
     schedule?: any;
     details: BusinessService;
-
+    gpsLocation?: Location;
+    time?: string;
 }
 export interface Event {
     category1: EventCategory1;
     scheduleType: ScheduleType;
     schedule?: any;
     details: BusinessService;
+    gpsLocation?: Location;
+    time?: string;
 }
 export enum RentalCategory1 {
     Surf = "surf",
-    Motorcycle = "motorcycle",
+    Vehicle = "vehicle",
     Home = "home",
     Uncategorized = "uncategorized"
 }
@@ -79,7 +83,17 @@ export enum BusinessProfile {
     Volunteer = "volunteer",
     TourAgency = "tourAgency"
 }
-
+export interface HomeRental {
+    rental: Rental;
+    bedrooms: number;
+    bathrooms: number;
+    gpsLocation: Location,
+    homeType: string,
+}
+export enum RentalCategory2 {
+    Motorcycle = "motorcycle",
+    Car = "car",
+}
 export interface NewBusinessNotification extends ForegroundNotification {
     name: string,
     image: string,

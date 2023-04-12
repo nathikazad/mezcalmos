@@ -4,22 +4,10 @@ table:
 object_relationships:
   - name: chat
     using:
-      manual_configuration:
-        column_mapping:
-          chat_id: id
-        insertion_order: null
-        remote_table:
-          name: chat
-          schema: public
+      foreign_key_constraint_on: chat_id
   - name: customer
     using:
-      manual_configuration:
-        column_mapping:
-          customer_id: user_id
-        insertion_order: null
-        remote_table:
-          name: customer
-          schema: customer
+      foreign_key_constraint_on: customer_id
   - name: restaurant
     using:
       manual_configuration:

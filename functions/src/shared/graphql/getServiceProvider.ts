@@ -518,7 +518,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 //     ? response.laundry_store_by_pk.delivery_partners[0].delivery_company_id
                 //     : undefined,
             }
-        case ServiceProviderType.Delivery:
+        case ServiceProviderType.DeliveryCompany:
             let deliveryOperators: Operator[] = response.service_provider_details[0].delivery_company!.delivery_operators.map((o) => {
                 return {
                     id: o.id,
@@ -538,7 +538,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
             return {
                 id: response.service_provider_details[0].delivery_company!.id,
                 serviceProviderDetailsId: response.service_provider_details[0].id,
-                serviceProviderType: response.service_provider_details[0].service_provider_type,
+                serviceProviderType: response.service_provider_details[0].service_provider_type as ServiceProviderType,
                 name: response.service_provider_details[0].name,
                 image: response.service_provider_details[0].image,
                 location: {

@@ -1,44 +1,44 @@
 import { getHasura } from "../../../utilities/hasura";
 import { DirectChatDetails } from "../../chat/createChat";
-import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName } from "../../models/Generic/Chat";
-import { AppType } from "../../models/Generic/Generic";
+import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, Chat, ChatInfo } from "../../models/Generic/Chat";
+import { AppType, MezError } from "../../models/Generic/Generic";
 import { CustomerInfo, MezAdmin, UserInfo } from "../../models/Generic/User";
-import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
+import { ServiceProvider, ServiceProviderToAppType } from "../../models/Services/Service";
 
-export async function createRestaurantCustomerChat(restaurant: ServiceProvider, customer: CustomerInfo) {
+export async function createServiceProviderCustomerChat(serviceProvider: ServiceProvider, customer: CustomerInfo): Promise<Chat> {
     let chain = getHasura();
-    let restaurantOperatorsDetails = restaurant.operators!.map((r) => {
+    let operatorsDetails = serviceProvider.operators!.map((r) => {
         return {
             participant_id: r.userId,
-            app_type_id: AppType.Restaurant
+            app_type_id: ServiceProviderToAppType[serviceProvider.serviceProviderType]
         };
     });
+    let chatInfo: Partial<Record<ChatInfoAppName, ChatInfo>> = {
+        [ChatInfoAppName.CustomerApp]: {
+            chatTitle: serviceProvider.name,
+            chatImage: serviceProvider.image,
+        },
+        [AppTypeToChatInfoAppName[ServiceProviderToAppType[serviceProvider.serviceProviderType]]]: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+        },
+    }
 
-    // let response = 
-    await chain.mutation({
+    let response = await chain.mutation({
         insert_service_provider_customer_chat_one: [{
             object: {
                 customer_id: customer.id,
-                service_provider_id: restaurant.id,
-                service_provider_type: ServiceProviderType.Restaurant,
+                service_provider_id: serviceProvider.id,
+                service_provider_type: serviceProvider.serviceProviderType,
                 chat: {
                     data: {
-                        chat_info: JSON.stringify({
-                            [ChatInfoAppName.CustomerApp]: {
-                                chatTitle: restaurant.name,
-                                chatImage: restaurant.image,
-                            },
-                            [ChatInfoAppName.RestaurantApp]: {
-                                chatTitle: customer.name ?? "Customer",
-                                chatImage: customer.image,
-                            },
-                        }),
+                        chat_info: JSON.stringify(chatInfo),
                         chat_participants: {
                             data: [{
                                     participant_id: customer.id,
                                     app_type_id: AppType.Customer
                                 },
-                                ...restaurantOperatorsDetails
+                                ...operatorsDetails
                             ]
                         }
                     }
@@ -48,6 +48,14 @@ export async function createRestaurantCustomerChat(restaurant: ServiceProvider, 
             chat_id: true,
         }]
     })
+    if(response.insert_service_provider_customer_chat_one == null) {
+        throw new MezError("chatCreationError");
+    }
+    return {
+        chatId: response.insert_service_provider_customer_chat_one.chat_id,
+        chatInfo,
+        chatType: ChatType.Group
+    }
 }
 
 export async function createDirectChat(user1: UserInfo, user2: UserInfo, directChatDetails: DirectChatDetails) {

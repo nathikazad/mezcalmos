@@ -81,7 +81,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         case ServiceProviderType.Laundry:
             deliveryCompanyType = DeliveryServiceProviderType.Laundry
             break;
-        case ServiceProviderType.Delivery:
+        case ServiceProviderType.DeliveryCompany:
             deliveryCompanyType = DeliveryServiceProviderType.DeliveryCompany
             break;
         default:

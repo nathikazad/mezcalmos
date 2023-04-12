@@ -43,7 +43,7 @@ export async function addOperator(operatorUserId: number, addOpDetails: AddOpera
             case ServiceProviderType.Restaurant:
                 await createRestaurantOperator(operatorUserId, addOpDetails, serviceProvider);
                 break;
-            case ServiceProviderType.Delivery:
+            case ServiceProviderType.DeliveryCompany:
                 await createDeliveryOperator(operatorUserId, addOpDetails, serviceProvider)
                 break;
             case ServiceProviderType.Laundry:
@@ -116,7 +116,7 @@ async function notify(operatorUserInfo: UserInfo, serviceProvider: ServiceProvid
                 }
             });
             break;
-        case ServiceProviderType.Delivery:
+        case ServiceProviderType.DeliveryCompany:
             let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(serviceProvider.id);
             deliveryOperators.forEach((o) => {
                 if (o.owner && o.user) {

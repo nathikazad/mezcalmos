@@ -33784,11 +33784,11 @@ columns and relationships of "service_provider_customer_chat"
 """
 type service_provider_customer_chat {
   """An object relationship"""
-  chat: chat
+  chat: chat!
   chat_id: Int!
 
   """An object relationship"""
-  customer: customer_customer
+  customer: customer_customer!
   customer_id: Int!
 
   """An object relationship"""
