@@ -144,7 +144,44 @@ type business_business {
     """filter the rows returned"""
     where: business_operator_bool_exp
   ): business_operator_aggregate!
+  points: Int!
   profile: String!
+
+  """An array relationship"""
+  referrals(
+    """distinct select on columns"""
+    distinct_on: [business_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_referral_order_by!]
+
+    """filter the rows returned"""
+    where: business_referral_bool_exp
+  ): [business_referral!]!
+
+  """An aggregate relationship"""
+  referrals_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_referral_order_by!]
+
+    """filter the rows returned"""
+    where: business_referral_bool_exp
+  ): business_referral_aggregate!
 
   """An array relationship"""
   rentals(
@@ -249,6 +286,7 @@ type business_business_aggregate_fields {
 type business_business_avg_fields {
   details_id: Float
   id: Float
+  points: Float
 }
 
 """
@@ -267,7 +305,10 @@ input business_business_bool_exp {
   id: Int_comparison_exp
   operators: business_operator_bool_exp
   operators_aggregate: business_operator_aggregate_bool_exp
+  points: Int_comparison_exp
   profile: String_comparison_exp
+  referrals: business_referral_bool_exp
+  referrals_aggregate: business_referral_aggregate_bool_exp
   rentals: business_rental_bool_exp
   rentals_aggregate: business_rental_aggregate_bool_exp
   reviews: review_bool_exp
@@ -296,6 +337,7 @@ input type for incrementing numeric columns in table "business.business"
 input business_business_inc_input {
   details_id: Int
   id: Int
+  points: Int
 }
 
 """
@@ -308,7 +350,9 @@ input business_business_insert_input {
   events: business_event_arr_rel_insert_input
   id: Int
   operators: business_operator_arr_rel_insert_input
+  points: Int
   profile: String
+  referrals: business_referral_arr_rel_insert_input
   rentals: business_rental_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   service_provider_type: String
@@ -318,6 +362,7 @@ input business_business_insert_input {
 type business_business_max_fields {
   details_id: Int
   id: Int
+  points: Int
   profile: String
   service_provider_type: String
 }
@@ -326,6 +371,7 @@ type business_business_max_fields {
 type business_business_min_fields {
   details_id: Int
   id: Int
+  points: Int
   profile: String
   service_provider_type: String
 }
@@ -368,7 +414,9 @@ input business_business_order_by {
   events_aggregate: business_event_aggregate_order_by
   id: order_by
   operators_aggregate: business_operator_aggregate_order_by
+  points: order_by
   profile: order_by
+  referrals_aggregate: business_referral_aggregate_order_by
   rentals_aggregate: business_rental_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
@@ -390,6 +438,9 @@ enum business_business_select_column {
   id
 
   """column name"""
+  points
+
+  """column name"""
   profile
 
   """column name"""
@@ -402,6 +453,7 @@ input type for updating data in table "business.business"
 input business_business_set_input {
   details_id: Int
   id: Int
+  points: Int
   profile: String
   service_provider_type: String
 }
@@ -410,18 +462,21 @@ input business_business_set_input {
 type business_business_stddev_fields {
   details_id: Float
   id: Float
+  points: Float
 }
 
 """aggregate stddev_pop on columns"""
 type business_business_stddev_pop_fields {
   details_id: Float
   id: Float
+  points: Float
 }
 
 """aggregate stddev_samp on columns"""
 type business_business_stddev_samp_fields {
   details_id: Float
   id: Float
+  points: Float
 }
 
 """
@@ -439,6 +494,7 @@ input business_business_stream_cursor_input {
 input business_business_stream_cursor_value_input {
   details_id: Int
   id: Int
+  points: Int
   profile: String
   service_provider_type: String
 }
@@ -447,6 +503,7 @@ input business_business_stream_cursor_value_input {
 type business_business_sum_fields {
   details_id: Int
   id: Int
+  points: Int
 }
 
 """
@@ -458,6 +515,9 @@ enum business_business_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  points
 
   """column name"""
   profile
@@ -479,18 +539,21 @@ input business_business_updates {
 type business_business_var_pop_fields {
   details_id: Float
   id: Float
+  points: Float
 }
 
 """aggregate var_samp on columns"""
 type business_business_var_samp_fields {
   details_id: Float
   id: Float
+  points: Float
 }
 
 """aggregate variance on columns"""
 type business_business_variance_fields {
   details_id: Float
   id: Float
+  points: Float
 }
 
 """
@@ -1238,6 +1301,7 @@ type business_class {
   """An object relationship"""
   business: business_business!
   business_id: Int!
+  gps_location: geography
   id: Int!
   schedule(
     """JSON select path"""
@@ -1250,6 +1314,7 @@ type business_class {
   """An object relationship"""
   service: business_service!
   service_id: Int!
+  time: timestamptz
 }
 
 """
@@ -1345,11 +1410,13 @@ input business_class_bool_exp {
   _or: [business_class_bool_exp!]
   business: business_business_bool_exp
   business_id: Int_comparison_exp
+  gps_location: geography_comparison_exp
   id: Int_comparison_exp
   schedule: jsonb_comparison_exp
   schedule_type: String_comparison_exp
   service: business_service_bool_exp
   service_id: Int_comparison_exp
+  time: timestamptz_comparison_exp
 }
 
 """
@@ -1404,6 +1471,7 @@ input type for inserting data into table "business.class"
 input business_class_insert_input {
   business: business_business_obj_rel_insert_input
   business_id: Int
+  gps_location: geography
   id: Int
   schedule: jsonb
 
@@ -1411,6 +1479,7 @@ input business_class_insert_input {
   schedule_type: String
   service: business_service_obj_rel_insert_input
   service_id: Int
+  time: timestamptz
 }
 
 """aggregate max on columns"""
@@ -1421,6 +1490,7 @@ type business_class_max_fields {
   """scheduled or onDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """
@@ -1433,6 +1503,7 @@ input business_class_max_order_by {
   """scheduled or onDemand"""
   schedule_type: order_by
   service_id: order_by
+  time: order_by
 }
 
 """aggregate min on columns"""
@@ -1443,6 +1514,7 @@ type business_class_min_fields {
   """scheduled or onDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """
@@ -1455,6 +1527,7 @@ input business_class_min_order_by {
   """scheduled or onDemand"""
   schedule_type: order_by
   service_id: order_by
+  time: order_by
 }
 
 """
@@ -1481,11 +1554,13 @@ input business_class_on_conflict {
 input business_class_order_by {
   business: business_business_order_by
   business_id: order_by
+  gps_location: order_by
   id: order_by
   schedule: order_by
   schedule_type: order_by
   service: business_service_order_by
   service_id: order_by
+  time: order_by
 }
 
 """primary key columns input for table: business.class"""
@@ -1506,6 +1581,9 @@ enum business_class_select_column {
   business_id
 
   """column name"""
+  gps_location
+
+  """column name"""
   id
 
   """column name"""
@@ -1516,6 +1594,9 @@ enum business_class_select_column {
 
   """column name"""
   service_id
+
+  """column name"""
+  time
 }
 
 """
@@ -1523,12 +1604,14 @@ input type for updating data in table "business.class"
 """
 input business_class_set_input {
   business_id: Int
+  gps_location: geography
   id: Int
   schedule: jsonb
 
   """scheduled or onDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """aggregate stddev on columns"""
@@ -1593,12 +1676,14 @@ input business_class_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input business_class_stream_cursor_value_input {
   business_id: Int
+  gps_location: geography
   id: Int
   schedule: jsonb
 
   """scheduled or onDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """aggregate sum on columns"""
@@ -1625,6 +1710,9 @@ enum business_class_update_column {
   business_id
 
   """column name"""
+  gps_location
+
+  """column name"""
   id
 
   """column name"""
@@ -1635,6 +1723,9 @@ enum business_class_update_column {
 
   """column name"""
   service_id
+
+  """column name"""
+  time
 }
 
 input business_class_updates {
@@ -1723,6 +1814,7 @@ type business_event {
   """An object relationship"""
   business: business_business!
   business_id: Int!
+  gps_location: geography
   id: Int!
   schedule(
     """JSON select path"""
@@ -1735,6 +1827,7 @@ type business_event {
   """An object relationship"""
   service: business_service!
   service_id: Int!
+  time: timestamptz
 }
 
 """
@@ -1830,11 +1923,13 @@ input business_event_bool_exp {
   _or: [business_event_bool_exp!]
   business: business_business_bool_exp
   business_id: Int_comparison_exp
+  gps_location: geography_comparison_exp
   id: Int_comparison_exp
   schedule: jsonb_comparison_exp
   schedule_type: String_comparison_exp
   service: business_service_bool_exp
   service_id: Int_comparison_exp
+  time: timestamptz_comparison_exp
 }
 
 """
@@ -1889,6 +1984,7 @@ input type for inserting data into table "business.event"
 input business_event_insert_input {
   business: business_business_obj_rel_insert_input
   business_id: Int
+  gps_location: geography
   id: Int
   schedule: jsonb
 
@@ -1896,6 +1992,7 @@ input business_event_insert_input {
   schedule_type: String
   service: business_service_obj_rel_insert_input
   service_id: Int
+  time: timestamptz
 }
 
 """aggregate max on columns"""
@@ -1906,6 +2003,7 @@ type business_event_max_fields {
   """scheduled or OnDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """
@@ -1918,6 +2016,7 @@ input business_event_max_order_by {
   """scheduled or OnDemand"""
   schedule_type: order_by
   service_id: order_by
+  time: order_by
 }
 
 """aggregate min on columns"""
@@ -1928,6 +2027,7 @@ type business_event_min_fields {
   """scheduled or OnDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """
@@ -1940,6 +2040,7 @@ input business_event_min_order_by {
   """scheduled or OnDemand"""
   schedule_type: order_by
   service_id: order_by
+  time: order_by
 }
 
 """
@@ -1966,11 +2067,13 @@ input business_event_on_conflict {
 input business_event_order_by {
   business: business_business_order_by
   business_id: order_by
+  gps_location: order_by
   id: order_by
   schedule: order_by
   schedule_type: order_by
   service: business_service_order_by
   service_id: order_by
+  time: order_by
 }
 
 """primary key columns input for table: business.event"""
@@ -1991,6 +2094,9 @@ enum business_event_select_column {
   business_id
 
   """column name"""
+  gps_location
+
+  """column name"""
   id
 
   """column name"""
@@ -2001,6 +2107,9 @@ enum business_event_select_column {
 
   """column name"""
   service_id
+
+  """column name"""
+  time
 }
 
 """
@@ -2008,12 +2117,14 @@ input type for updating data in table "business.event"
 """
 input business_event_set_input {
   business_id: Int
+  gps_location: geography
   id: Int
   schedule: jsonb
 
   """scheduled or OnDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """aggregate stddev on columns"""
@@ -2078,12 +2189,14 @@ input business_event_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input business_event_stream_cursor_value_input {
   business_id: Int
+  gps_location: geography
   id: Int
   schedule: jsonb
 
   """scheduled or OnDemand"""
   schedule_type: String
   service_id: Int
+  time: timestamptz
 }
 
 """aggregate sum on columns"""
@@ -2110,6 +2223,9 @@ enum business_event_update_column {
   business_id
 
   """column name"""
+  gps_location
+
+  """column name"""
   id
 
   """column name"""
@@ -2120,6 +2236,9 @@ enum business_event_update_column {
 
   """column name"""
   service_id
+
+  """column name"""
+  time
 }
 
 input business_event_updates {
@@ -2199,6 +2318,283 @@ input business_event_variance_order_by {
   business_id: order_by
   id: order_by
   service_id: order_by
+}
+
+"""
+columns and relationships of "business.home_rental"
+"""
+type business_home_rental {
+  bathrooms: Int!
+  bedrooms: Int!
+  gps_location: geography!
+  homeType: String!
+
+  """An object relationship"""
+  rental: business_rental!
+  rental_id: Int!
+}
+
+"""
+aggregated selection of "business.home_rental"
+"""
+type business_home_rental_aggregate {
+  aggregate: business_home_rental_aggregate_fields
+  nodes: [business_home_rental!]!
+}
+
+"""
+aggregate fields of "business.home_rental"
+"""
+type business_home_rental_aggregate_fields {
+  avg: business_home_rental_avg_fields
+  count(columns: [business_home_rental_select_column!], distinct: Boolean): Int!
+  max: business_home_rental_max_fields
+  min: business_home_rental_min_fields
+  stddev: business_home_rental_stddev_fields
+  stddev_pop: business_home_rental_stddev_pop_fields
+  stddev_samp: business_home_rental_stddev_samp_fields
+  sum: business_home_rental_sum_fields
+  var_pop: business_home_rental_var_pop_fields
+  var_samp: business_home_rental_var_samp_fields
+  variance: business_home_rental_variance_fields
+}
+
+"""aggregate avg on columns"""
+type business_home_rental_avg_fields {
+  bathrooms: Float
+  bedrooms: Float
+  rental_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "business.home_rental". All fields are combined with a logical 'AND'.
+"""
+input business_home_rental_bool_exp {
+  _and: [business_home_rental_bool_exp!]
+  _not: business_home_rental_bool_exp
+  _or: [business_home_rental_bool_exp!]
+  bathrooms: Int_comparison_exp
+  bedrooms: Int_comparison_exp
+  gps_location: geography_comparison_exp
+  homeType: String_comparison_exp
+  rental: business_rental_bool_exp
+  rental_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.home_rental"
+"""
+enum business_home_rental_constraint {
+  """
+  unique or primary key constraint on columns "rental_id"
+  """
+  home_rental_pkey
+
+  """
+  unique or primary key constraint on columns "rental_id"
+  """
+  home_rental_rental_id_key
+}
+
+"""
+input type for incrementing numeric columns in table "business.home_rental"
+"""
+input business_home_rental_inc_input {
+  bathrooms: Int
+  bedrooms: Int
+  rental_id: Int
+}
+
+"""
+input type for inserting data into table "business.home_rental"
+"""
+input business_home_rental_insert_input {
+  bathrooms: Int
+  bedrooms: Int
+  gps_location: geography
+  homeType: String
+  rental: business_rental_obj_rel_insert_input
+  rental_id: Int
+}
+
+"""aggregate max on columns"""
+type business_home_rental_max_fields {
+  bathrooms: Int
+  bedrooms: Int
+  homeType: String
+  rental_id: Int
+}
+
+"""aggregate min on columns"""
+type business_home_rental_min_fields {
+  bathrooms: Int
+  bedrooms: Int
+  homeType: String
+  rental_id: Int
+}
+
+"""
+response of any mutation on the table "business.home_rental"
+"""
+type business_home_rental_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_home_rental!]!
+}
+
+"""
+on_conflict condition type for table "business.home_rental"
+"""
+input business_home_rental_on_conflict {
+  constraint: business_home_rental_constraint!
+  update_columns: [business_home_rental_update_column!]! = []
+  where: business_home_rental_bool_exp
+}
+
+"""Ordering options when selecting data from "business.home_rental"."""
+input business_home_rental_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  gps_location: order_by
+  homeType: order_by
+  rental: business_rental_order_by
+  rental_id: order_by
+}
+
+"""primary key columns input for table: business.home_rental"""
+input business_home_rental_pk_columns_input {
+  rental_id: Int!
+}
+
+"""
+select columns of table "business.home_rental"
+"""
+enum business_home_rental_select_column {
+  """column name"""
+  bathrooms
+
+  """column name"""
+  bedrooms
+
+  """column name"""
+  gps_location
+
+  """column name"""
+  homeType
+
+  """column name"""
+  rental_id
+}
+
+"""
+input type for updating data in table "business.home_rental"
+"""
+input business_home_rental_set_input {
+  bathrooms: Int
+  bedrooms: Int
+  gps_location: geography
+  homeType: String
+  rental_id: Int
+}
+
+"""aggregate stddev on columns"""
+type business_home_rental_stddev_fields {
+  bathrooms: Float
+  bedrooms: Float
+  rental_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type business_home_rental_stddev_pop_fields {
+  bathrooms: Float
+  bedrooms: Float
+  rental_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type business_home_rental_stddev_samp_fields {
+  bathrooms: Float
+  bedrooms: Float
+  rental_id: Float
+}
+
+"""
+Streaming cursor of the table "business_home_rental"
+"""
+input business_home_rental_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_home_rental_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_home_rental_stream_cursor_value_input {
+  bathrooms: Int
+  bedrooms: Int
+  gps_location: geography
+  homeType: String
+  rental_id: Int
+}
+
+"""aggregate sum on columns"""
+type business_home_rental_sum_fields {
+  bathrooms: Int
+  bedrooms: Int
+  rental_id: Int
+}
+
+"""
+update columns of table "business.home_rental"
+"""
+enum business_home_rental_update_column {
+  """column name"""
+  bathrooms
+
+  """column name"""
+  bedrooms
+
+  """column name"""
+  gps_location
+
+  """column name"""
+  homeType
+
+  """column name"""
+  rental_id
+}
+
+input business_home_rental_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_home_rental_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_home_rental_set_input
+  where: business_home_rental_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_home_rental_var_pop_fields {
+  bathrooms: Float
+  bedrooms: Float
+  rental_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type business_home_rental_var_samp_fields {
+  bathrooms: Float
+  bedrooms: Float
+  rental_id: Float
+}
+
+"""aggregate variance on columns"""
+type business_home_rental_variance_fields {
+  bathrooms: Float
+  bedrooms: Float
+  rental_id: Float
 }
 
 """
@@ -3603,6 +3999,341 @@ type business_order_request_variance_fields {
 }
 
 """
+columns and relationships of "business.referral"
+"""
+type business_referral {
+  business_id: Int!
+  customer_id: Int!
+}
+
+"""
+aggregated selection of "business.referral"
+"""
+type business_referral_aggregate {
+  aggregate: business_referral_aggregate_fields
+  nodes: [business_referral!]!
+}
+
+input business_referral_aggregate_bool_exp {
+  count: business_referral_aggregate_bool_exp_count
+}
+
+input business_referral_aggregate_bool_exp_count {
+  arguments: [business_referral_select_column!]
+  distinct: Boolean
+  filter: business_referral_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "business.referral"
+"""
+type business_referral_aggregate_fields {
+  avg: business_referral_avg_fields
+  count(columns: [business_referral_select_column!], distinct: Boolean): Int!
+  max: business_referral_max_fields
+  min: business_referral_min_fields
+  stddev: business_referral_stddev_fields
+  stddev_pop: business_referral_stddev_pop_fields
+  stddev_samp: business_referral_stddev_samp_fields
+  sum: business_referral_sum_fields
+  var_pop: business_referral_var_pop_fields
+  var_samp: business_referral_var_samp_fields
+  variance: business_referral_variance_fields
+}
+
+"""
+order by aggregate values of table "business.referral"
+"""
+input business_referral_aggregate_order_by {
+  avg: business_referral_avg_order_by
+  count: order_by
+  max: business_referral_max_order_by
+  min: business_referral_min_order_by
+  stddev: business_referral_stddev_order_by
+  stddev_pop: business_referral_stddev_pop_order_by
+  stddev_samp: business_referral_stddev_samp_order_by
+  sum: business_referral_sum_order_by
+  var_pop: business_referral_var_pop_order_by
+  var_samp: business_referral_var_samp_order_by
+  variance: business_referral_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "business.referral"
+"""
+input business_referral_arr_rel_insert_input {
+  data: [business_referral_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: business_referral_on_conflict
+}
+
+"""aggregate avg on columns"""
+type business_referral_avg_fields {
+  business_id: Float
+  customer_id: Float
+}
+
+"""
+order by avg() on columns of table "business.referral"
+"""
+input business_referral_avg_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "business.referral". All fields are combined with a logical 'AND'.
+"""
+input business_referral_bool_exp {
+  _and: [business_referral_bool_exp!]
+  _not: business_referral_bool_exp
+  _or: [business_referral_bool_exp!]
+  business_id: Int_comparison_exp
+  customer_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.referral"
+"""
+enum business_referral_constraint {
+  """
+  unique or primary key constraint on columns "customer_id"
+  """
+  referral_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "business.referral"
+"""
+input business_referral_inc_input {
+  business_id: Int
+  customer_id: Int
+}
+
+"""
+input type for inserting data into table "business.referral"
+"""
+input business_referral_insert_input {
+  business_id: Int
+  customer_id: Int
+}
+
+"""aggregate max on columns"""
+type business_referral_max_fields {
+  business_id: Int
+  customer_id: Int
+}
+
+"""
+order by max() on columns of table "business.referral"
+"""
+input business_referral_max_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""aggregate min on columns"""
+type business_referral_min_fields {
+  business_id: Int
+  customer_id: Int
+}
+
+"""
+order by min() on columns of table "business.referral"
+"""
+input business_referral_min_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""
+response of any mutation on the table "business.referral"
+"""
+type business_referral_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_referral!]!
+}
+
+"""
+on_conflict condition type for table "business.referral"
+"""
+input business_referral_on_conflict {
+  constraint: business_referral_constraint!
+  update_columns: [business_referral_update_column!]! = []
+  where: business_referral_bool_exp
+}
+
+"""Ordering options when selecting data from "business.referral"."""
+input business_referral_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""primary key columns input for table: business.referral"""
+input business_referral_pk_columns_input {
+  customer_id: Int!
+}
+
+"""
+select columns of table "business.referral"
+"""
+enum business_referral_select_column {
+  """column name"""
+  business_id
+
+  """column name"""
+  customer_id
+}
+
+"""
+input type for updating data in table "business.referral"
+"""
+input business_referral_set_input {
+  business_id: Int
+  customer_id: Int
+}
+
+"""aggregate stddev on columns"""
+type business_referral_stddev_fields {
+  business_id: Float
+  customer_id: Float
+}
+
+"""
+order by stddev() on columns of table "business.referral"
+"""
+input business_referral_stddev_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type business_referral_stddev_pop_fields {
+  business_id: Float
+  customer_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "business.referral"
+"""
+input business_referral_stddev_pop_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type business_referral_stddev_samp_fields {
+  business_id: Float
+  customer_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "business.referral"
+"""
+input business_referral_stddev_samp_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""
+Streaming cursor of the table "business_referral"
+"""
+input business_referral_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_referral_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_referral_stream_cursor_value_input {
+  business_id: Int
+  customer_id: Int
+}
+
+"""aggregate sum on columns"""
+type business_referral_sum_fields {
+  business_id: Int
+  customer_id: Int
+}
+
+"""
+order by sum() on columns of table "business.referral"
+"""
+input business_referral_sum_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""
+update columns of table "business.referral"
+"""
+enum business_referral_update_column {
+  """column name"""
+  business_id
+
+  """column name"""
+  customer_id
+}
+
+input business_referral_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_referral_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_referral_set_input
+  where: business_referral_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_referral_var_pop_fields {
+  business_id: Float
+  customer_id: Float
+}
+
+"""
+order by var_pop() on columns of table "business.referral"
+"""
+input business_referral_var_pop_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type business_referral_var_samp_fields {
+  business_id: Float
+  customer_id: Float
+}
+
+"""
+order by var_samp() on columns of table "business.referral"
+"""
+input business_referral_var_samp_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""aggregate variance on columns"""
+type business_referral_variance_fields {
+  business_id: Float
+  customer_id: Float
+}
+
+"""
+order by variance() on columns of table "business.referral"
+"""
+input business_referral_variance_order_by {
+  business_id: order_by
+  customer_id: order_by
+}
+
+"""
 columns and relationships of "business.rental"
 """
 type business_rental {
@@ -3785,6 +4516,16 @@ type business_rental_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [business_rental!]!
+}
+
+"""
+input type for inserting object relation for remote table "business.rental"
+"""
+input business_rental_obj_rel_insert_input {
+  data: business_rental_insert_input!
+
+  """upsert condition"""
+  on_conflict: business_rental_on_conflict
 }
 
 """
@@ -3996,6 +4737,7 @@ type business_service {
   ): jsonb
   available: Boolean!
   category1: String!
+  category2: String
   cost(
     """JSON select path"""
     path: String
@@ -4066,6 +4808,7 @@ input business_service_bool_exp {
   additional_parameters: jsonb_comparison_exp
   available: Boolean_comparison_exp
   category1: String_comparison_exp
+  category2: String_comparison_exp
   cost: jsonb_comparison_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
@@ -4131,6 +4874,7 @@ input business_service_insert_input {
   additional_parameters: jsonb
   available: Boolean
   category1: String
+  category2: String
   cost: jsonb
   description: translation_obj_rel_insert_input
   description_id: Int
@@ -4144,6 +4888,7 @@ input business_service_insert_input {
 """aggregate max on columns"""
 type business_service_max_fields {
   category1: String
+  category2: String
   description_id: Int
   id: Int
   name_id: Int
@@ -4153,6 +4898,7 @@ type business_service_max_fields {
 """aggregate min on columns"""
 type business_service_min_fields {
   category1: String
+  category2: String
   description_id: Int
   id: Int
   name_id: Int
@@ -4194,6 +4940,7 @@ input business_service_order_by {
   additional_parameters: order_by
   available: order_by
   category1: order_by
+  category2: order_by
   cost: order_by
   description: translation_order_by
   description_id: order_by
@@ -4230,6 +4977,9 @@ enum business_service_select_column {
   category1
 
   """column name"""
+  category2
+
+  """column name"""
   cost
 
   """column name"""
@@ -4255,6 +5005,7 @@ input business_service_set_input {
   additional_parameters: jsonb
   available: Boolean
   category1: String
+  category2: String
   cost: jsonb
   description_id: Int
   id: Int
@@ -4303,6 +5054,7 @@ input business_service_stream_cursor_value_input {
   additional_parameters: jsonb
   available: Boolean
   category1: String
+  category2: String
   cost: jsonb
   description_id: Int
   id: Int
@@ -4331,6 +5083,9 @@ enum business_service_update_column {
 
   """column name"""
   category1
+
+  """column name"""
+  category2
 
   """column name"""
   cost
@@ -16850,6 +17605,19 @@ type mutation_root {
   delete_business_event_by_pk(id: Int!): business_event
 
   """
+  delete data from the table: "business.home_rental"
+  """
+  delete_business_home_rental(
+    """filter the rows which have to be deleted"""
+    where: business_home_rental_bool_exp!
+  ): business_home_rental_mutation_response
+
+  """
+  delete single row from the table: "business.home_rental"
+  """
+  delete_business_home_rental_by_pk(rental_id: Int!): business_home_rental
+
+  """
   delete data from the table: "business.operator"
   """
   delete_business_operator(
@@ -16887,6 +17655,19 @@ type mutation_root {
   delete single row from the table: "business.order_request_item"
   """
   delete_business_order_request_item_by_pk(id: Int!): business_order_request_item
+
+  """
+  delete data from the table: "business.referral"
+  """
+  delete_business_referral(
+    """filter the rows which have to be deleted"""
+    where: business_referral_bool_exp!
+  ): business_referral_mutation_response
+
+  """
+  delete single row from the table: "business.referral"
+  """
+  delete_business_referral_by_pk(customer_id: Int!): business_referral
 
   """
   delete data from the table: "business.rental"
@@ -17733,6 +18514,28 @@ type mutation_root {
   ): business_event
 
   """
+  insert data into the table: "business.home_rental"
+  """
+  insert_business_home_rental(
+    """the rows to be inserted"""
+    objects: [business_home_rental_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_home_rental_on_conflict
+  ): business_home_rental_mutation_response
+
+  """
+  insert a single row into the table: "business.home_rental"
+  """
+  insert_business_home_rental_one(
+    """the row to be inserted"""
+    object: business_home_rental_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_home_rental_on_conflict
+  ): business_home_rental
+
+  """
   insert data into the table: "business.operator"
   """
   insert_business_operator(
@@ -17797,6 +18600,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: business_order_request_on_conflict
   ): business_order_request
+
+  """
+  insert data into the table: "business.referral"
+  """
+  insert_business_referral(
+    """the rows to be inserted"""
+    objects: [business_referral_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_referral_on_conflict
+  ): business_referral_mutation_response
+
+  """
+  insert a single row into the table: "business.referral"
+  """
+  insert_business_referral_one(
+    """the row to be inserted"""
+    object: business_referral_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_referral_on_conflict
+  ): business_referral
 
   """
   insert data into the table: "business.rental"
@@ -19343,6 +20168,40 @@ type mutation_root {
   ): [business_event_mutation_response]
 
   """
+  update data of the table: "business.home_rental"
+  """
+  update_business_home_rental(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_home_rental_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_home_rental_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_home_rental_bool_exp!
+  ): business_home_rental_mutation_response
+
+  """
+  update single row of the table: "business.home_rental"
+  """
+  update_business_home_rental_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_home_rental_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_home_rental_set_input
+    pk_columns: business_home_rental_pk_columns_input!
+  ): business_home_rental
+
+  """
+  update multiples rows of table: "business.home_rental"
+  """
+  update_business_home_rental_many(
+    """updates to execute, in order"""
+    updates: [business_home_rental_updates!]!
+  ): [business_home_rental_mutation_response]
+
+  """
   update data of the table: "business.operator"
   """
   update_business_operator(
@@ -19487,6 +20346,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [business_order_request_updates!]!
   ): [business_order_request_mutation_response]
+
+  """
+  update data of the table: "business.referral"
+  """
+  update_business_referral(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_referral_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_referral_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_referral_bool_exp!
+  ): business_referral_mutation_response
+
+  """
+  update single row of the table: "business.referral"
+  """
+  update_business_referral_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_referral_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_referral_set_input
+    pk_columns: business_referral_pk_columns_input!
+  ): business_referral
+
+  """
+  update multiples rows of table: "business.referral"
+  """
+  update_business_referral_many(
+    """updates to execute, in order"""
+    updates: [business_referral_updates!]!
+  ): [business_referral_mutation_response]
 
   """
   update data of the table: "business.rental"
@@ -22377,6 +23270,51 @@ type query_root {
   business_event_by_pk(id: Int!): business_event
 
   """
+  fetch data from the table: "business.home_rental"
+  """
+  business_home_rental(
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): [business_home_rental!]!
+
+  """
+  fetch aggregated fields from the table: "business.home_rental"
+  """
+  business_home_rental_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): business_home_rental_aggregate!
+
+  """
+  fetch data from the table: "business.home_rental" using primary key columns
+  """
+  business_home_rental_by_pk(rental_id: Int!): business_home_rental
+
+  """
   fetch data from the table: "business.operator"
   """
   business_operator(
@@ -22510,6 +23448,51 @@ type query_root {
   fetch data from the table: "business.order_request_item" using primary key columns
   """
   business_order_request_item_by_pk(id: Int!): business_order_request_item
+
+  """
+  fetch data from the table: "business.referral"
+  """
+  business_referral(
+    """distinct select on columns"""
+    distinct_on: [business_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_referral_order_by!]
+
+    """filter the rows returned"""
+    where: business_referral_bool_exp
+  ): [business_referral!]!
+
+  """
+  fetch aggregated fields from the table: "business.referral"
+  """
+  business_referral_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_referral_order_by!]
+
+    """filter the rows returned"""
+    where: business_referral_bool_exp
+  ): business_referral_aggregate!
+
+  """
+  fetch data from the table: "business.referral" using primary key columns
+  """
+  business_referral_by_pk(customer_id: Int!): business_referral
 
   """
   fetch data from the table: "business.rental"
@@ -36346,6 +37329,65 @@ type subscription_root {
   ): [business_event!]!
 
   """
+  fetch data from the table: "business.home_rental"
+  """
+  business_home_rental(
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): [business_home_rental!]!
+
+  """
+  fetch aggregated fields from the table: "business.home_rental"
+  """
+  business_home_rental_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): business_home_rental_aggregate!
+
+  """
+  fetch data from the table: "business.home_rental" using primary key columns
+  """
+  business_home_rental_by_pk(rental_id: Int!): business_home_rental
+
+  """
+  fetch data from the table in a streaming manner: "business.home_rental"
+  """
+  business_home_rental_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_home_rental_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): [business_home_rental!]!
+
+  """
   fetch data from the table: "business.operator"
   """
   business_operator(
@@ -36521,6 +37563,65 @@ type subscription_root {
     """filter the rows returned"""
     where: business_order_request_bool_exp
   ): [business_order_request!]!
+
+  """
+  fetch data from the table: "business.referral"
+  """
+  business_referral(
+    """distinct select on columns"""
+    distinct_on: [business_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_referral_order_by!]
+
+    """filter the rows returned"""
+    where: business_referral_bool_exp
+  ): [business_referral!]!
+
+  """
+  fetch aggregated fields from the table: "business.referral"
+  """
+  business_referral_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_referral_order_by!]
+
+    """filter the rows returned"""
+    where: business_referral_bool_exp
+  ): business_referral_aggregate!
+
+  """
+  fetch data from the table: "business.referral" using primary key columns
+  """
+  business_referral_by_pk(customer_id: Int!): business_referral
+
+  """
+  fetch data from the table in a streaming manner: "business.referral"
+  """
+  business_referral_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_referral_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_referral_bool_exp
+  ): [business_referral!]!
 
   """
   fetch data from the table: "business.rental"

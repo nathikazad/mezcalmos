@@ -68,6 +68,7 @@ export enum ServiceType {
 export enum ScheduleType {
     Scheduled = "scheduled",
     OnDemand = "onDemand",
+    OneTime = "oneTime",
 }
 export enum BusinessProfile {
     SurfShop = "surfShop",

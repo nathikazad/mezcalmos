@@ -1615,7 +1615,7 @@ extension ParseStringToServiceType on String {
 }
 
 
-enum ScheduleType { Scheduled, OnDemand }
+enum ScheduleType { Scheduled, OnDemand, OneTime }
 extension ParseScheduleTypeToString on ScheduleType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;

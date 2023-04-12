@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -267,7 +267,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               child: serviceProviderTimeWidget,
             ),
           ),
-        if (order.status == DeliveryOrderStatus.Delivered &&
+        if (order.status == cModels.DeliveryOrderStatus.Delivered &&
             order.serviceReviewByDriver == null)
           InkWell(
             onTap: () {},
@@ -325,7 +325,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               child: customerTimeWidget,
             ),
           ),
-        if (order.status == DeliveryOrderStatus.Delivered &&
+        if (order.status == cModels.DeliveryOrderStatus.Delivered &&
             order.customerReviewByDriver == null)
           InkWell(
             onTap: () {},

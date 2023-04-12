@@ -62,3 +62,92 @@ query get_rental_by_id($id: Int!) {
     }
   }
 }
+
+query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offset: Int) {
+  business_home_rental(where: {gps_location: {_st_d_within: {distance: $distance, from: $from}}}, limit: $limit, offset: $offset) {
+    bathrooms
+    bedrooms
+    gps_location
+    homeType
+    rental {
+      id
+      service {
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        additional_parameters
+        available
+        category1
+        cost
+        image
+        position
+      }
+      business {
+        id
+        details {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+
+query get_home_rental_by_id($rental_id: Int!) {
+  business_home_rental_by_pk(rental_id: $rental_id) {
+    bathrooms
+    bedrooms
+    gps_location
+    homeType
+    rental {
+      service {
+        additional_parameters
+        available
+        category1
+        cost
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        image
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        position
+      }
+      business {
+        id
+        details {
+          accepted_payments
+          id
+          name
+          image
+        }
+        reviews_aggregate {
+          aggregate {
+            avg {
+              rating
+            }
+            count
+          }
+        }
+      }
+    }
+  }
+}
