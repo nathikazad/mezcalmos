@@ -204,6 +204,26 @@ class DvOrderDetailsViewController {
     }
   }
 
+  Future<bool> cancelOrder() async {
+    try {
+      ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery2_changeStatus(
+        deliveryId: order.value!.orderId,
+        newStatus: DeliveryOrderStatus.CancelledByDeliverer,
+      );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success == true;
+    } on FirebaseFunctionsException catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.message.toString());
+    }
+    return false;
+  }
+
   void dispose() {
     if (subscriptionId != null) _hasuraDb.cancelSubscription(subscriptionId!);
   }

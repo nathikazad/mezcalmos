@@ -127,6 +127,7 @@ select_permissions:
         - to_image
         - to_name
       filter: {}
+      allow_aggregations: true
   - role: delivery_operator
     permission:
       columns:

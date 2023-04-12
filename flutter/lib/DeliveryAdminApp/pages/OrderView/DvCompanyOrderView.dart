@@ -8,12 +8,14 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
@@ -32,7 +34,8 @@ class DvCompanyOrderView extends StatefulWidget {
     return MezRouter.toPath(DeliveryAdminRoutes.kOrderViewRoute
         .replaceAll(":orderId", orderId.toString()));
   }
-    static String constructPath(int orderId) {
+
+  static String constructPath(int orderId) {
     return DeliveryAdminRoutes.kOrderViewRoute
         .replaceFirst(":orderId", orderId.toString());
   }
@@ -153,6 +156,25 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 OrderScheduledTimeCard(
                     time: viewController.order.value!.scheduleTime,
                     margin: const EdgeInsets.only(top: 10)),
+                if (viewController.order.value!.status ==
+                    DeliveryOrderStatus.OrderReceived)
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: MezButton(
+                      label: '${_i18n()["cancelOrder"]}',
+                      onClick: () async {
+                        await showConfirmationDialog(context,
+                            onYesClick: () async {
+                          final bool resp = await viewController.cancelOrder();
+                          if (resp) {
+                            Navigator.pop(context);
+                          }
+                        });
+                      },
+                      backgroundColor: offRedColor,
+                      textColor: Colors.redAccent,
+                    ),
+                  )
               ],
             ),
           );

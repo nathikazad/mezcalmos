@@ -1,13 +1,16 @@
 import 'dart:async';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -240,6 +243,25 @@ class DvCompanyOrderViewController {
   //       _statusSnapshot = order.status;
   //   }
   // }
+  Future<bool> cancelOrder() async {
+    try {
+      ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery2_changeStatus(
+        deliveryId: order.value!.orderId,
+        newStatus: DeliveryOrderStatus.CancelledByDeliverer,
+      );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success == true;
+    } on FirebaseFunctionsException catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.message.toString());
+    }
+    return false;
+  }
 
 // dispose
   void dispose() {

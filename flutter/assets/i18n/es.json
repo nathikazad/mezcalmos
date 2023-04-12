@@ -1728,6 +1728,8 @@
         "subtitle": "Necesita una invitación para usar nuestra aplicación de entrega"
       },
       "OrderDetailsScreen": {
+
+      "cancelOrder" :"Cancelar el pedido",
         "service": "Servicio",
         "cancelled": "Cancelada",
         "approved": "Aprobada",

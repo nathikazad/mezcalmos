@@ -1740,6 +1740,7 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
+        "cancelOrder" :"Cancel Order",
         "service": "Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
