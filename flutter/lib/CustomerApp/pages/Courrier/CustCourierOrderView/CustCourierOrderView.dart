@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -29,7 +29,6 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustCourierOrderView"];
@@ -392,11 +391,11 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
       if (viewController.hasData &&
           viewController.order.canAddReview == true &&
           viewController.order.deliveryOrderId != null) {
-        return customerAddReviewButton(context,
-            orderId: viewController.order.deliveryOrderId!,
-            serviceProviderId: viewController.order.serviceProvider.hasuraId,
-            serviceProviderType: ServiceProviderType.DeliveryCompany,
-            orderType: OrderType.Courier);
+        return CustAddReviewButton(
+          orderId: viewController.order.deliveryOrderId!,
+          toEntityId: viewController.order.serviceProvider.hasuraId,
+          toEntityType: ServiceProviderType.DeliveryCompany,
+        );
       } else {
         return SizedBox();
       }

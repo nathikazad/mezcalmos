@@ -65,6 +65,10 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       created_at
       from_entity_id
       from_entity_type
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       id
       note
       rating
@@ -184,6 +188,10 @@ query get_restaurant_order_by_id($order_id: Int!) {
     status
     review_id
     review {
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       created_at
       from_entity_id
       from_entity_type

@@ -405,6 +405,7 @@
               "codText": "Cash on delivery",
               "debitCreditText": "Credit/Debit Card",
               "reviews": "Reviews",
+              "viewAll" :"View All",
               "paymentMethod": "Payment Method",
               "workingHours": "Working hours",
               "weekDays": {
@@ -1845,7 +1846,8 @@
               "updatePrice": "New price",
               "save": "Request price change",
               "cancel": "cancel",
-              "card": "Card"
+              "card": "Card",
+              "addReview" : "Add review"
             },
             "DriverBottomLaundryOrderCard": {
               "oops": "Oops",

@@ -63,13 +63,14 @@ class _ReviewCardState extends State<ReviewCard> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (widget.showUserImage)
+                      if (widget.showUserImage &&
+                          widget.review.fromImage != null)
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: CircleAvatar(
                             radius: 23,
                             backgroundImage: CachedNetworkImageProvider(
-                                widget.review.customer?.image ?? ""),
+                                widget.review.fromImage ?? ""),
                           ),
                         ),
                       Flexible(
@@ -77,7 +78,7 @@ class _ReviewCardState extends State<ReviewCard> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.review.customer?.name ?? "",
+                              Text(widget.review.fromName ?? "_",
                                   style: context.txt.bodyLarge),
                               SizedBox(
                                 height: 2,

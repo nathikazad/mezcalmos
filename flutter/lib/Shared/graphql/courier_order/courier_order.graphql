@@ -41,6 +41,10 @@ query get_courier_order_by_id($orderId: Int!) {
       }
     }
      driver_review_by_customer {
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       created_at
       from_entity_id
       from_entity_type
@@ -192,6 +196,10 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
     }
     delivery_order {
        driver_review_by_customer {
+         from_name,
+    from_image,
+    to_name,
+    to_image,
       created_at
       from_entity_id
       from_entity_type

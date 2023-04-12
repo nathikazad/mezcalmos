@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
+import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -105,6 +106,12 @@ class DvOrderDetailsViewController {
     customerOrdersCount.value = await fetch_delivery_orders_count(
         entityId: order.value!.customer.hasuraId,
         serviceProviderType: ServiceProviderType.Customer);
+    customerReview.value = await get_service_review_average(
+        serviceId: order.value!.customer.hasuraId,
+        serviceProviderType: ServiceProviderType.Customer);
+    serviceReview.value = await get_service_review_average(
+        serviceId: order.value!.serviceProvider.hasuraId,
+        serviceProviderType: order.value!.orderType.toServiceProviderType());
   }
 
   Future<void> markItemAvailable(

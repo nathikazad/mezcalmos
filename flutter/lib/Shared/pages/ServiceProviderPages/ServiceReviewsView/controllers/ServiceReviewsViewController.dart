@@ -21,7 +21,7 @@ class ServiceReviewsViewController {
   // state variables
 
   RxList<Review> _reviews = RxList.empty();
-  RxnDouble _rating = RxnDouble();
+  RxnNum _rating = RxnNum();
   List<ReviewsFilter> filters = [
     ReviewsFilter.Default,
     ReviewsFilter.HighestRate,
@@ -42,10 +42,15 @@ class ServiceReviewsViewController {
     try {
       _reviews.value = await get_service_reviews(
               serviceId: serviceProfileViewController.serviceId,
+              serviceProviderType:
+                  serviceProfileViewController.service.serviceProviderType!,
               withCache: false) ??
           [];
       _rating.value = await get_service_review_average(
-          serviceId: serviceProfileViewController.serviceId, withCache: false);
+          serviceId: serviceProfileViewController.serviceId,
+          serviceProviderType:
+              serviceProfileViewController.service.serviceProviderType!,
+          withCache: false);
     } on Exception catch (e, stk) {
       mezDbgPrint("Errors $e");
       mezDbgPrint("Errors $stk");

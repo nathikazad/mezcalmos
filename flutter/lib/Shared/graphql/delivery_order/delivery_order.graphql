@@ -757,6 +757,8 @@ mutation updateDeliveryOrder($orderId: Int!, $data: delivery_order_set_input!) {
   update_delivery_order_by_pk(pk_columns: { id: $orderId }, _set: $data) {
     estimated_arrival_at_dropoff_time
     estimated_arrival_at_pickup_time
+    service_provider_review_by_driver_id
+    customer_review_by_driver_id
   }
 }
 query get_pick_driver_order($orderId: Int!) {

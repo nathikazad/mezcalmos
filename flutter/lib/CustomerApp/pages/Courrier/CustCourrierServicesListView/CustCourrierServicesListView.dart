@@ -200,32 +200,32 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
             ),
           ],
         ),
-        SizedBox(
-          width: 3.w,
-        ),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 2.w),
-                child: Icon(
-                  Icons.payments,
-                  color: Colors.black,
-                  size: 22,
-                ),
-              ),
-              SizedBox(width: 5),
-              if (company.paymentInfo?.acceptCard == false)
-                Icon(
-                  Icons.credit_card,
-                  color: Colors.black,
-                  size: 22,
-                ),
-            ],
-          ),
-        ),
+        // SizedBox(
+        //   width: 3.w,
+        // ),
+        // Flexible(
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     crossAxisAlignment: CrossAxisAlignment.end,
+        //     children: [
+        //       Padding(
+        //         padding: EdgeInsets.only(left: 2.w),
+        //         child: Icon(
+        //           Icons.payments,
+        //           color: Colors.black,
+        //           size: 22,
+        //         ),
+        //       ),
+        //       SizedBox(width: 5),
+        //       if (company.paymentInfo?.acceptCard == false)
+        //         Icon(
+        //           Icons.credit_card,
+        //           color: Colors.black,
+        //           size: 22,
+        //         ),
+        //     ],
+        //   ),
+        // ),
         SizedBox(
           width: 3.w,
         ),

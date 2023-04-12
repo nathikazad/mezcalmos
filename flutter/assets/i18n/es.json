@@ -400,6 +400,7 @@
             "restaurantInfoTab": {
               "description": "Descripción",
               "location": "Dirección",
+              "viewAll" : "Ver Todo",
               "codText": "Efectivo en la entrega",
               "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",
@@ -1811,7 +1812,8 @@
               "updateReason": "Razón del cambio de precios",
               "updatePrice": "Nuevo precio",
               "save": "Solicitar cambio de precio",
-              "cancel": "Cancelar"
+              "cancel": "Cancelar",
+              "addReview" : "Añadir reseña"
             },
             "DriverBottomLaundryOrderCard": {
               "orderStatus": {
