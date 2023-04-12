@@ -48,6 +48,9 @@ class _CustCourierServicesListViewState
 
   Future<void> fetchCompanies() async {
     companies.value = await get_dv_companies() ?? [];
+    companies.value = companies.value
+        ?.where((DeliveryCompany element) => element.state.isOpen)
+        .toList();
   }
 
   @override

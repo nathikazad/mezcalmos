@@ -742,7 +742,8 @@
   "Shared": {
     "controllers": {
       "authController": {
-        "failedOTPConfirmRequest": "La confirmación del código OTP falló :("
+        "failedOTPConfirmRequest": "La confirmación del código OTP falló :(",
+        "setNameAndImage" : "Establezca su nombre e imagen antes de continuar "
       }
     },
     "helpers": {

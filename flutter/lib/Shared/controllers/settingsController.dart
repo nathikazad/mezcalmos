@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_api_availability/google_api_availability.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
@@ -35,10 +37,18 @@ class SettingsController extends GetxController {
   LanguageController get appLanguage => _appLanguage;
 
   SettingsController(this.locationType, {this.sideMenuItems = const []});
+  late bool _isGooglePlayServiceAvailable;
+  bool get isGooglePlayServiceAvailable => _isGooglePlayServiceAvailable;
 
   @override
   Future<void> onInit() async {
     Get.put(LocationController(locationType: locationType), permanent: true);
+    await GoogleApiAvailability.instance
+        .checkGooglePlayServicesAvailability()
+        .then((GooglePlayServicesAvailability value) =>
+            _isGooglePlayServiceAvailable =
+                value == GooglePlayServicesAvailability.success);
+
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);

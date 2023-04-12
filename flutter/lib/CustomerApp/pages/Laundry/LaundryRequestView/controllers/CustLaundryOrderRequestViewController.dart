@@ -142,16 +142,19 @@ class CustLaundryOrderRequestViewController {
   }
 
   Future<void> createLaundryOrder() async {
-    MapHelper.Route? route = await MapHelper.getDurationAndDistance(
-        laundry.value!.info.location, customerLoc.value!);
+    bool nameAndImageChecker =
+        await Get.find<AuthController>().nameAndImageChecker();
+    if (nameAndImageChecker) {
+      MapHelper.Route? route = await MapHelper.getDurationAndDistance(
+          laundry.value!.info.location, customerLoc.value!);
 
-    if (route != null) {
-      LaundryRequest _laundryRequest = _constructLaundryRequest(route);
-      mezDbgPrint("👋👋👋👋 paylod  👋👋👋👋");
-      mezDbgPrint(_laundryRequest.toString());
-      await _checkoutOrder(_laundryRequest);
-    } else {
-      showRouteErrorSnackBar();
+      if (route != null) {
+        LaundryRequest _laundryRequest = _constructLaundryRequest(route);
+
+        await _checkoutOrder(_laundryRequest);
+      } else {
+        showRouteErrorSnackBar();
+      }
     }
   }
 

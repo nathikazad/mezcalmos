@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -9,10 +7,13 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -44,7 +45,7 @@ class AuthController extends GetxController {
   String? _previousUserValue = "init";
   bool userRedirectFinish = false;
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
@@ -225,6 +226,16 @@ class AuthController extends GetxController {
     if (_userInfo.value != null) {
       Get.find<LanguageController>().changeUserLanguage(
           language: _userInfo.value?.language, saveToDatabase: false);
+    }
+  }
+
+  Future<bool> nameAndImageChecker() async {
+    if (isDisplayNameSet() && isUserImgSet()) {
+      return true;
+    } else {
+      showErrorSnackBar(errorText: "${_i18n()['setNameAndImage']}");
+      await UserProfileView.navigate(initalMode: UserProfileViewMode.Editing);
+      return isDisplayNameSet() && isUserImgSet();
     }
   }
 

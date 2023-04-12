@@ -30,6 +30,7 @@
             "dependencies": {
                 "ensure_visible_when_focused": "^1.1.1",
                 "cupertino_icons": "^1.0.2",
+                "google_api_availability": "^5.0.0",
                 "flutter_datetime_picker": "^1.5.1",
                 "photo_view": "^0.14.0",
                 "google_fonts": "^3.0.1",

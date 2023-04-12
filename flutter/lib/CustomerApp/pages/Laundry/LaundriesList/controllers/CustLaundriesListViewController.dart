@@ -18,6 +18,9 @@ class CustLaundriesListViewController {
 
   Future<void> init() async {
     laundries.value = await get_laundries(withCache: false);
+    laundries.value = laundries.value
+        ?.where((Laundry element) => element.state.isOpen)
+        .toList();
     mezDbgPrint("laundries =======>${laundries.value?.length}");
     unawaited(_getCustomerCurrentLocation());
   }

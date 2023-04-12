@@ -248,7 +248,7 @@ class DvCompanyOrderViewController {
       ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery2_changeStatus(
         deliveryId: order.value!.orderId,
-        newStatus: DeliveryOrderStatus.CancelledByDeliverer,
+        newStatus: DeliveryOrderStatus.CancelledByServiceProvider,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
