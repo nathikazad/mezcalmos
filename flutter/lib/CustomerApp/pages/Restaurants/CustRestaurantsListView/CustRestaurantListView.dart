@@ -58,11 +58,8 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
       //   title: "${_i18n()['restaurants']}",
       // ),
 
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: MezRouter.back,
-        title: "${_i18n()['restaurants']}"
-      ),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back, title: "${_i18n()['restaurants']}"),
       floatingActionButton: FloatingCartComponent(),
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(8),
@@ -210,7 +207,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         ),
                         Flexible(
                           child: Text(
-                            '${_i18n()["meal"]}',
+                            '${_i18n()["meals"]}',
                             style: context.txt.bodyLarge?.copyWith(
                               color: viewController.byRestaurants
                                   ? Colors.grey.shade700

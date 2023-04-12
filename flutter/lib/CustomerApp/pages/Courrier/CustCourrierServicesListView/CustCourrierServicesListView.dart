@@ -66,13 +66,13 @@ class _CustCourierServicesListViewState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // _searchCoomponent(context),
-                  Text(
-                    "${_i18n()['title']}",
-                    style: context.textTheme.displaySmall,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  // Text(
+                  //   "${_i18n()['title']}",
+                  //   style: context.textTheme.displaySmall,
+                  // ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
                   Column(
                     children: List.generate(
                         companies.value!.length,

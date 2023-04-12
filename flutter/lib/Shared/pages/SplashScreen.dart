@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
@@ -24,8 +25,8 @@ class SplashScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          height: Get.width * 0.6,
-                          width: Get.width * 0.6,
+                          height: 150.mezSp,
+                          width: 150.mezSp,
                           child: ClipOval(
                             child: Container(
                                 color: Colors.white,

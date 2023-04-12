@@ -58,13 +58,13 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
             //     textAlign: TextAlign.start,
             //   ),
             // ),
-            Text(
-              "${_i18n()['title']}",
-              style: context.textTheme.displaySmall,
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            // Text(
+            //   "${_i18n()['title']}",
+            //   style: context.textTheme.displaySmall,
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
             Obx(() {
               if (viewController.hasData) {
                 return _buildLaundries();

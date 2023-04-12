@@ -85,7 +85,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
               ? Text(
                   viewController.order.deliveryCompany?.name ?? "",
                   style: context.txt.bodyLarge
-                      ?.copyWith(fontSize: 23.5, fontWeight: FontWeight.bold),
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 )
               : SizedBox())),
       bottomNavigationBar: _addReviewButton(context),

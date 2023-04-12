@@ -30,9 +30,10 @@ class MezSideMenu extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 75.mezW,
       child: Obx(
         () => Container(
-          margin: EdgeInsets.only(left: 20.sp, top: 20.sp),
+          margin: EdgeInsets.only(left: 7.5.mezW, top: 20.sp),
           padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,8 +179,8 @@ class MezSideMenu extends GetWidget<AuthController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          height: 100.sp,
-          width: 100.sp,
+          height: 100.mezSp,
+          width: 100.mezSp,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: secondaryLightBlueColor,
@@ -227,7 +228,7 @@ class MezSideMenu extends GetWidget<AuthController> {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(top: 2.h, left: 5),
+          padding: EdgeInsets.only(top: 15),
           child: Text(
             controller.user?.name ?? "",
             textAlign: TextAlign.center,

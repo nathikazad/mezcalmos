@@ -48,12 +48,14 @@ class MezcalmosSharedWidgets {
       //  width: ,
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             if (showLogo)
-              logo(size: getSizeRelativeToScreen(60, Get.width, Get.height)),
+              logo(
+                  size: 9
+                      .mezW), //getSizeRelativeToScreen(60, Get.width, Get.height)),
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: mezcalmosTitle(),

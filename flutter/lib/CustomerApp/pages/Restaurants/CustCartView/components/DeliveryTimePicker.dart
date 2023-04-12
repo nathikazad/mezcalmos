@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -126,11 +127,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   children: [
                     Card(
                       child: InkWell(
-                        onTap: (widget.deliveryTime != null)
-                            ? null
-                            : () async {
-                                await _pickDeliveryTime(context, field);
-                              },
+                        onTap: () async => _pickDeliveryTime(context, field),
                         //  borderRadius: BorderRadius.circular(10),
                         child: Obx(
                           () => Container(
@@ -157,7 +154,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                                 : '${_i18n()["now"]}',
                                             style:
                                                 context.txt.bodyLarge?.copyWith(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.mezSp,
                                             )),
                                       )
                                     : Flexible(
@@ -165,55 +162,13 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                         child: Text(_formattedTime,
                                             style:
                                                 context.txt.bodyLarge?.copyWith(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.mezSp,
                                             )),
                                       ),
-                                if (widget.deliveryTime == null)
-                                  Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.black,
-                                  ),
-                                if (widget.deliveryTime != null)
-                                  InkWell(
-                                    onTap: () {
-                                      _pickDeliveryTime(context, field);
-                                    },
-                                    customBorder: CircleBorder(),
-                                    child: Ink(
-                                      padding: const EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                          color: secondaryLightBlueColor,
-                                          shape: BoxShape.circle),
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 20,
-                                        color: primaryBlueColor,
-                                      ),
-                                    ),
-                                  ),
-                                if (widget.deliveryTime != null &&
-                                    widget.shoudSchedule == false)
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: InkWell(
-                                      customBorder: CircleBorder(),
-                                      onTap: () {
-                                        widget.onClear.call();
-                                        field.setValue(null);
-                                      },
-                                      child: Ink(
-                                        padding: const EdgeInsets.all(3),
-                                        decoration: BoxDecoration(
-                                            color: offRedColor,
-                                            shape: BoxShape.circle),
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: redAccentColor,
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.black,
+                                ),
                               ],
                             ),
                           ),
@@ -288,7 +243,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
             child: Text(
               title ?? '${_i18n()["timeError"]}',
               style: context.txt.bodyLarge
-                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
+                  ?.copyWith(color: Colors.red, fontSize: 10.mezSp),
             ),
           ),
         ],

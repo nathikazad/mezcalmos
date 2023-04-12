@@ -186,7 +186,7 @@
             "showOnlyOpen": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
             "noOpenRestaurant": "No hay restaurantes abiertos",
-            "meal": "Comida",
+            "meals": "Comidas",
             "noItemTitle": "No se han encontrado resultados",
             "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
           }
@@ -403,6 +403,7 @@
               "codText": "Efectivo en la entrega",
               "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",
+              "viewAll": "Ver Todo",
               "paymentMethod": "Método de pago",
               "workingHours": "Horas laborales",
               "weekDays": {
@@ -412,8 +413,7 @@
                 "thursday": "Jue",
                 "friday": "Vie",
                 "saturday": "Sáb",
-                "sunday": "Dom",
-                "viewAll": "Ver Todo"
+                "sunday": "Dom"
               }
             },
             "workinHoursCart": {
@@ -774,7 +774,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Guardado",
-        "routeError" : "Error a obtener su información de ubicación e ruta",
+        "routeError": "Error a obtener su información de ubicación e ruta",
         "writeReview": "Escribir un comentario",
         "savedTitle": "tu información ha sido guardada",
         "yesCancel": "Sí, cancelar pedido",
