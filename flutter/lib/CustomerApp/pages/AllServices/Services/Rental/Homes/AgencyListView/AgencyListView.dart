@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/HomeRentalController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyListTile.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AgencyServiceView/AgencyServiceView.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class AgencyListView extends StatefulWidget {
   const AgencyListView({
@@ -40,15 +42,24 @@ class _AgencyListViewState extends State<AgencyListView> {
                   controller: homeRentalController.agencyScrollController,
                   itemCount: homeRentalController.agencyRentalData.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final String image =
+                        homeRentalController.agencyRentalData[index].image;
                     return AgencyListTile(
                       onClick: () {
                         AgencyServiceView.navigate();
                       },
                       titleText:
                           homeRentalController.agencyRentalData[index].name,
-                      rating: "4.9",
+                      rating: homeRentalController
+                              .agencyRentalData[index].avgRating ??
+                          0.0,
+                      reviewCount: homeRentalController
+                              .agencyRentalData[index].reviewCount ??
+                          0,
                       image: NetworkImage(
-                        homeRentalController.agencyRentalData[index].image,
+                        image == "null" || image.isEmpty
+                            ? customImageUrl
+                            : image,
                       ),
                       iconsList: homeRentalController
                           .agencyRentalData[index].acceptedPayments,

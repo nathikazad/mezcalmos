@@ -8,6 +8,7 @@ class AgencyListTile extends StatelessWidget {
     super.key,
     required this.titleText,
     required this.rating,
+    required this.reviewCount,
     required this.iconsList,
     required this.image,
     required this.onClick,
@@ -16,7 +17,8 @@ class AgencyListTile extends StatelessWidget {
   });
 
   final String titleText;
-  final String rating;
+  final double rating;
+  final int reviewCount;
   final Map<PaymentType, bool> iconsList;
   final NetworkImage image;
   final Function onClick;
@@ -79,7 +81,7 @@ class AgencyListTile extends StatelessWidget {
             ),
             Row(
               children: [
-                for (int index = 0; index < iconsList.length; index++)
+                for (int index = 0; index < iconListBuilder.length; index++)
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Icon(
@@ -94,7 +96,7 @@ class AgencyListTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  rating,
+                  "${rating.toString()} (${reviewCount.toString()})",
                 ),
               ],
             ),
