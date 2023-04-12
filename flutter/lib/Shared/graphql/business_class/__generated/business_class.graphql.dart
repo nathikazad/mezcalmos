@@ -1773,6 +1773,8 @@ class Variables$Query$get_class_by_category {
     required Geography from,
     int? limit,
     int? offset,
+    String? category2,
+    String? schedule_type,
   }) =>
       Variables$Query$get_class_by_category._({
         if (category1 != null) r'category1': category1,
@@ -1780,6 +1782,8 @@ class Variables$Query$get_class_by_category {
         r'from': from,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
+        if (category2 != null) r'category2': category2,
+        if (schedule_type != null) r'schedule_type': schedule_type,
       });
 
   Variables$Query$get_class_by_category._(this._$data);
@@ -1803,6 +1807,14 @@ class Variables$Query$get_class_by_category {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
+    if (data.containsKey('category2')) {
+      final l$category2 = data['category2'];
+      result$data['category2'] = (l$category2 as String?);
+    }
+    if (data.containsKey('schedule_type')) {
+      final l$schedule_type = data['schedule_type'];
+      result$data['schedule_type'] = (l$schedule_type as String?);
+    }
     return Variables$Query$get_class_by_category._(result$data);
   }
 
@@ -1813,6 +1825,8 @@ class Variables$Query$get_class_by_category {
   Geography get from => (_$data['from'] as Geography);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
+  String? get category2 => (_$data['category2'] as String?);
+  String? get schedule_type => (_$data['schedule_type'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('category1')) {
@@ -1830,6 +1844,14 @@ class Variables$Query$get_class_by_category {
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('category2')) {
+      final l$category2 = category2;
+      result$data['category2'] = l$category2;
+    }
+    if (_$data.containsKey('schedule_type')) {
+      final l$schedule_type = schedule_type;
+      result$data['schedule_type'] = l$schedule_type;
     }
     return result$data;
   }
@@ -1884,6 +1906,24 @@ class Variables$Query$get_class_by_category {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (_$data.containsKey('category2') !=
+        other._$data.containsKey('category2')) {
+      return false;
+    }
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$schedule_type = schedule_type;
+    final lOther$schedule_type = other.schedule_type;
+    if (_$data.containsKey('schedule_type') !=
+        other._$data.containsKey('schedule_type')) {
+      return false;
+    }
+    if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
     return true;
   }
 
@@ -1894,12 +1934,16 @@ class Variables$Query$get_class_by_category {
     final l$from = from;
     final l$limit = limit;
     final l$offset = offset;
+    final l$category2 = category2;
+    final l$schedule_type = schedule_type;
     return Object.hashAll([
       _$data.containsKey('category1') ? l$category1 : const {},
       l$distance,
       l$from,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('category2') ? l$category2 : const {},
+      _$data.containsKey('schedule_type') ? l$schedule_type : const {},
     ]);
   }
 }
@@ -1919,6 +1963,8 @@ abstract class CopyWith$Variables$Query$get_class_by_category<TRes> {
     Geography? from,
     int? limit,
     int? offset,
+    String? category2,
+    String? schedule_type,
   });
 }
 
@@ -1941,6 +1987,8 @@ class _CopyWithImpl$Variables$Query$get_class_by_category<TRes>
     Object? from = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? category2 = _undefined,
+    Object? schedule_type = _undefined,
   }) =>
       _then(Variables$Query$get_class_by_category._({
         ..._instance._$data,
@@ -1950,6 +1998,9 @@ class _CopyWithImpl$Variables$Query$get_class_by_category<TRes>
         if (from != _undefined && from != null) 'from': (from as Geography),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
+        if (category2 != _undefined) 'category2': (category2 as String?),
+        if (schedule_type != _undefined)
+          'schedule_type': (schedule_type as String?),
       }));
 }
 
@@ -1965,6 +2016,8 @@ class _CopyWithStubImpl$Variables$Query$get_class_by_category<TRes>
     Geography? from,
     int? limit,
     int? offset,
+    String? category2,
+    String? schedule_type,
   }) =>
       _res;
 }
@@ -2175,6 +2228,24 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'category2')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'schedule_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -2192,13 +2263,28 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                     name: NameNode(value: 'service'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'category1'),
+                        name: NameNode(value: '_and'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: '_eq'),
-                            value: VariableNode(
-                                name: NameNode(value: 'category1')),
-                          )
+                            name: NameNode(value: 'category1'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_eq'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'category1')),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'category2'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_eq'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'category2')),
+                              )
+                            ]),
+                          ),
                         ]),
                       )
                     ]),
@@ -2235,6 +2321,16 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                             ]),
                           )
                         ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'schedule_type'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: VariableNode(
+                            name: NameNode(value: 'schedule_type')),
                       )
                     ]),
                   ),

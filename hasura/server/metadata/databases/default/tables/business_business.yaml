@@ -27,6 +27,13 @@ array_relationships:
         table:
           name: operator
           schema: business
+  - name: referrals
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: referral
+          schema: business
   - name: rentals
     using:
       foreign_key_constraint_on:

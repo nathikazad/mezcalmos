@@ -28,8 +28,37 @@ query get_event_by_id($id: Int!) {
   }
 }
 
-query get_event_by_category($category1: String, $distance: Float!, $from: geography!, $limit: Int, $offset: Int) {
-  business_event(where: {_and: {service: {category1: {_eq: $category1}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
+query get_event_by_category($category1: String, $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category2: String, $schedule_type: String) {
+  business_event(
+    where: {
+      _and: {
+        service: {
+          _and: {
+            category1: {
+              _eq: $category1
+            }, 
+            category2: {
+              _eq: $category2
+            }
+          }
+        }, 
+        business: {
+          details: {
+            location: {
+              gps: {
+                _st_d_within: {
+                  distance: $distance, 
+                  from: $from
+                }
+              }
+            }
+          }
+        }, 
+        schedule_type: {
+          _eq: $schedule_type
+        }
+      }
+    }, limit: $limit, offset: $offset) {
     service {
       id
       name {

@@ -1,0 +1,7 @@
+table:
+  name: home_rental
+  schema: business
+object_relationships:
+  - name: rental
+    using:
+      foreign_key_constraint_on: rental_id
