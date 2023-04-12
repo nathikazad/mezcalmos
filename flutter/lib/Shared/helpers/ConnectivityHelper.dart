@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/env_example.dart';
+import 'package:flutter/foundation.dart';
+import 'package:mezcalmos/env.dart';
 
 enum InternetStatus { Online, Slow, Offline }
 
@@ -38,11 +39,11 @@ class ConnectivityHelper {
   }
 
   Future<void> checkConnectivity() async {
-    mezDbgPrint("Checking connectivity");
+    // mezDbgPrint("Checking connectivity");
     bool onlineMode = true;
     try {
       final InternetStatus internetStatus = await checkForInternet();
-      mezDbgPrint(internetStatus);
+      // mezDbgPrint(internetStatus);
       _internetStatusStreamController.add(internetStatus);
       onlineMode = internetStatus != InternetStatus.Offline;
     } catch (e) {
@@ -54,14 +55,18 @@ class ConnectivityHelper {
   }
 
   Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
-    final List<Future<bool>> futures = <Future<bool>>[
-      _pingServer(sNetworkCheckUrl1),
-      _pingServer(firebaseDbUrl),
-      _pingServer(hasuraDbUrl),
-      MezEnv.appLaunchMode == AppLaunchMode.prod
-          ? _pingServer(firebaseFunctionsProdUrl)
-          : _pingServer(firebaseFunctionsStageUrl)
-    ];
+    List<Future<bool>> futures = <Future<bool>>[_pingServer(proxyUrl)];
+
+    if (!kIsWeb) {
+      futures.addAll([
+        _pingServer(sNetworkCheckUrl1),
+        _pingServer(firebaseDbUrl),
+        _pingServer(hasuraDbUrl),
+        MezEnv.appLaunchMode == AppLaunchMode.prod
+            ? _pingServer(firebaseFunctionsProdUrl)
+            : _pingServer(firebaseFunctionsStageUrl)
+      ]);
+    }
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
         .timeout(Duration(seconds: 10), onTimeout: () => <bool>[false]);

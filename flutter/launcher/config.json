@@ -681,7 +681,8 @@
                     "assets/animation/",
                     "assets/sounds/",
                     "assets/icons/appstore.png",
-                    "assets/images/shared/markers/"
+                    "assets/images/shared/markers/",
+                    "assets/images/restaurantApp/createRestaurant.png"
                 ]
             }
         }
