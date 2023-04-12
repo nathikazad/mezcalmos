@@ -2,16 +2,16 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/graphql/business_class/__generated/business_class.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/business_class/__generated/business_class.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/business_event/__generated/business_event.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/business_event/__generated/business_event.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<List<ClassWithBusiness>> get_class_by_category(
-    {required List<ClassCategory1> categories1,
+Future<List<EventWithBusiness>> get_event_by_category(
+    {required List<EventCategory1> categories1,
     required double distance,
     required Location fromLocation,
     required List<ScheduleType> scheduleType,
@@ -19,13 +19,14 @@ Future<List<ClassWithBusiness>> get_class_by_category(
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<ClassWithBusiness> _classes = <ClassWithBusiness>[];
-  final QueryResult<Query$get_class_by_category> response = await _db
+  final List<EventWithBusiness> _events = <EventWithBusiness>[];
+
+  final QueryResult<Query$get_event_by_category> response = await _db
       .graphQLClient
-      .query$get_class_by_category(Options$Query$get_class_by_category(
+      .query$get_event_by_category(Options$Query$get_event_by_category(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-          variables: Variables$Query$get_class_by_category(
+          variables: Variables$Query$get_event_by_category(
               categories1:
                   categories1.map((e) => e.toFirebaseFormatString()).toList(),
               distance: distance,
@@ -37,13 +38,13 @@ Future<List<ClassWithBusiness>> get_class_by_category(
               offset: offset,
               limit: limit)));
 
-  if (response.parsedData?.business_class != null) {
-    response.parsedData?.business_class
-        .forEach((Query$get_class_by_category$business_class data) async {
-      _classes.add(ClassWithBusiness(
+  if (response.parsedData?.business_event != null) {
+    response.parsedData?.business_event
+        .forEach((Query$get_event_by_category$business_event data) async {
+      _events.add(EventWithBusiness(
           businessName: data.business.details.name,
-          class_: Class(
-            category1: data.service.category1.toClassCategory1(),
+          event: Event(
+            category1: data.service.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null
                 ? Location(
                     lat: data.gps_location!.latitude,
@@ -65,33 +66,33 @@ Future<List<ClassWithBusiness>> get_class_by_category(
             schedule: data.schedule,
           )));
     });
-    return _classes;
+    return _events;
   } else {
     return [];
   }
 }
 
-Future<ClassWithBusiness?> get_class_by_id(
+Future<EventWithBusiness?> get_event_by_id(
     {required int id, required bool withCache}) async {
-  final QueryResult<Query$get_class_by_id> response = await _db.graphQLClient
-      .query$get_class_by_id(Options$Query$get_class_by_id(
+  final QueryResult<Query$get_event_by_id> response = await _db.graphQLClient
+      .query$get_event_by_id(Options$Query$get_event_by_id(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-          variables: Variables$Query$get_class_by_id(id: id)));
+          variables: Variables$Query$get_event_by_id(id: id)));
 
   mezDbgPrint("[+] -> id : $id");
-  if (response.parsedData?.business_class_by_pk == null) {
+  if (response.parsedData?.business_event_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
     mezDbgPrint("✅✅✅✅ Hasura query success ");
-    final Query$get_class_by_id$business_class_by_pk? data =
-        response.parsedData?.business_class_by_pk!;
+    final Query$get_event_by_id$business_event_by_pk? data =
+        response.parsedData?.business_event_by_pk!;
 
     if (data != null) {
-      return ClassWithBusiness(
+      return EventWithBusiness(
           businessName: data.business.details.name,
-          class_: Class(
-              category1: data.service.category1.toClassCategory1(),
+          event: Event(
+              category1: data.service.category1.toEventCategory1(),
               gpsLocation: data.gps_location != null
                   ? Location(
                       lat: data.gps_location!.latitude,
@@ -121,14 +122,14 @@ Future<ClassWithBusiness?> get_class_by_id(
   return null;
 }
 
-class ClassWithBusiness extends Class {
+class EventWithBusiness extends Event {
   final String businessName;
-  ClassWithBusiness({
-    required Class class_,
+  EventWithBusiness({
+    required Event event,
     required this.businessName,
   }) : super(
-          scheduleType: class_.scheduleType,
-          category1: class_.category1,
-          details: class_.details,
+          scheduleType: event.scheduleType,
+          category1: event.category1,
+          details: event.details,
         );
 }

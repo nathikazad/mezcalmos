@@ -1,8 +1,26 @@
 query get_class_by_id($id: Int!) {
   business_class_by_pk(id: $id) {
-    business_id
+    business {
+      id
+      details {
+        id
+        accepted_payments
+        image
+        name
+      }
+      reviews_aggregate {
+        aggregate {
+          avg {
+            rating
+          }
+          count
+        }
+      }
+    }
     schedule
     schedule_type
+    gps_location
+    time
     service {
       additional_parameters
       available
@@ -27,49 +45,11 @@ query get_class_by_id($id: Int!) {
   }
 }
 
-query get_class_by_category($category1: String, $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category2: String, $schedule_type: String) {
-  business_class(
-    where: {
-      _and: {
-        service: {
-          _and: {
-            category1: {
-              _eq: $category1
-            }, 
-            category2: {
-              _eq: $category2
-            }
-          }
-        }, 
-        business: {
-          details: {
-            location: {
-              gps: {
-                _st_d_within: {
-                  distance: $distance, 
-                  from: $from
-                }
-              }
-            }
-          }
-        }, 
-        schedule_type: {
-          _eq: $schedule_type
-        }
-      }
-    }, 
-    limit: $limit, 
-    offset: $offset
-  ) {
+query get_class_by_category($categories1: [String!], $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $categories2: [String!], $schedule_type: [String!]) {
+  business_class(where: {_and: {service: {_and: {category1: {_in: $categories1}, category2: {_in: $categories2}}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, schedule_type: {_in: $schedule_type}}}, limit: $limit, offset: $offset) {
     service {
       id
       name {
-        translations {
-          language_id
-          value
-        }
-      }
-      description {
         translations {
           language_id
           value
@@ -83,6 +63,8 @@ query get_class_by_category($category1: String, $distance: Float!, $from: geogra
       position
     }
     id
+    gps_location
+    time
     business {
       id
       details {
@@ -94,5 +76,7 @@ query get_class_by_category($category1: String, $distance: Float!, $from: geogra
         }
       }
     }
+    schedule_type
+    schedule
   }
 }

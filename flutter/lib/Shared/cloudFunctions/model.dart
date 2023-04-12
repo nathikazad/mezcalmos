@@ -1503,12 +1503,14 @@ extension ParseStringToTimeUnit on String {
 
 class Rental {
   RentalCategory1 category1;
+  RentalCategory2? category2;
   BusinessService details;
   Rental({
-    required this.category1, required this.details});
+    required this.category1, this.category2, required this.details});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "category1": category1,
+      "category2": category2,
       "details": details,
     };
   }
@@ -1520,14 +1522,18 @@ class Class {
   ScheduleType scheduleType;
   dynamic? schedule;
   BusinessService details;
+  Location? gpsLocation;
+  String? time;
   Class({
-    required this.category1, required this.scheduleType, this.schedule, required this.details});
+    required this.category1, required this.scheduleType, this.schedule, required this.details, this.gpsLocation, this.time});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "category1": category1,
       "scheduleType": scheduleType,
       "schedule": schedule,
       "details": details,
+      "gpsLocation": gpsLocation,
+      "time": time,
     };
   }
 
@@ -1538,20 +1544,24 @@ class Event {
   ScheduleType scheduleType;
   dynamic? schedule;
   BusinessService details;
+  Location? gpsLocation;
+  String? time;
   Event({
-    required this.category1, required this.scheduleType, this.schedule, required this.details});
+    required this.category1, required this.scheduleType, this.schedule, required this.details, this.gpsLocation, this.time});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "category1": category1,
       "scheduleType": scheduleType,
       "schedule": schedule,
       "details": details,
+      "gpsLocation": gpsLocation,
+      "time": time,
     };
   }
 
 }
 
-enum RentalCategory1 { Surf, Motorcycle, Home, Uncategorized }
+enum RentalCategory1 { Surf, Vehicle, Home, Uncategorized }
 extension ParseRentalCategory1ToString on RentalCategory1 {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -1627,6 +1637,42 @@ extension ParseStringToScheduleType on String {
     return ScheduleType.values.firstWhere(
         (ScheduleType scheduleType) =>
             scheduleType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class HomeRental {
+  Rental rental;
+  num bedrooms;
+  num bathrooms;
+  Location gpsLocation;
+  String homeType;
+  HomeRental({
+    required this.rental, required this.bedrooms, required this.bathrooms, required this.gpsLocation, required this.homeType});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "rental": rental,
+      "bedrooms": bedrooms,
+      "bathrooms": bathrooms,
+      "gpsLocation": gpsLocation,
+      "homeType": homeType,
+    };
+  }
+
+}
+
+enum RentalCategory2 { Motorcycle, Car }
+extension ParseRentalCategory2ToString on RentalCategory2 {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToRentalCategory2 on String {
+  RentalCategory2 toRentalCategory2() {
+    return RentalCategory2.values.firstWhere(
+        (RentalCategory2 rentalCategory2) =>
+            rentalCategory2.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

@@ -1,14 +1,27 @@
-query get_rental_by_category($category1: String, $distance: Float!, $from: geography!, $limit: Int, $offset: Int) {
-  business_rental(where: {_and: {service: {category1: {_eq: $category1}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
+query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category1: String, $categories2: [String!]) {
+  business_rental(
+    where: {
+      _and: {
+        service: {
+          _and: {
+            category1: {_eq: $category1}, 
+            category2: {_in: $categories2}
+          }
+        }, 
+        business: {
+          details: {
+            location: {
+              gps: {
+                _st_d_within: {distance: $distance, from: $from}
+              }
+            }
+          }
+        }
+      }
+    }, limit: $limit, offset: $offset) {
     service {
       id
       name {
-        translations {
-          language_id
-          value
-        }
-      }
-      description {
         translations {
           language_id
           value
@@ -38,7 +51,27 @@ query get_rental_by_category($category1: String, $distance: Float!, $from: geogr
 
 query get_rental_by_id($id: Int!) {
   business_rental_by_pk(id: $id) {
-    business_id
+    business {
+      id
+      details {
+        id
+        name
+        image
+        location {
+          gps
+          address
+        }
+        accepted_payments
+      }
+      reviews_aggregate {
+        aggregate {
+          avg {
+            rating
+          }
+          count
+        }
+      }
+    }
     service {
       additional_parameters
       available
@@ -110,6 +143,23 @@ query get_home_rental_by_id($rental_id: Int!) {
     gps_location
     homeType
     rental {
+      business {
+        id
+        details {
+          id
+          accepted_payments
+          image
+          name
+        }
+        reviews_aggregate {
+          aggregate {
+            avg {
+              rating
+            }
+            count
+          }
+        }
+      }
       service {
         additional_parameters
         available

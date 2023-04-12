@@ -267,11 +267,128 @@ const documentNodeQueryget_class_by_id = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'business_id'),
+            name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'accepted_payments'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'reviews_aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'aggregate'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'avg'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'rating'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'count'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'schedule'),
@@ -282,6 +399,20 @@ const documentNodeQueryget_class_by_id = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'schedule_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'gps_location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'time'),
             alias: null,
             arguments: [],
             directives: [],
@@ -562,35 +693,47 @@ extension ClientExtension$Query$get_class_by_id on graphql.GraphQLClient {
 
 class Query$get_class_by_id$business_class_by_pk {
   Query$get_class_by_id$business_class_by_pk({
-    required this.business_id,
+    required this.business,
     this.schedule,
     required this.schedule_type,
+    this.gps_location,
+    this.time,
     required this.service,
     required this.$__typename,
   });
 
   factory Query$get_class_by_id$business_class_by_pk.fromJson(
       Map<String, dynamic> json) {
-    final l$business_id = json['business_id'];
+    final l$business = json['business'];
     final l$schedule = json['schedule'];
     final l$schedule_type = json['schedule_type'];
+    final l$gps_location = json['gps_location'];
+    final l$time = json['time'];
     final l$service = json['service'];
     final l$$__typename = json['__typename'];
     return Query$get_class_by_id$business_class_by_pk(
-      business_id: (l$business_id as int),
+      business: Query$get_class_by_id$business_class_by_pk$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       schedule_type: (l$schedule_type as String),
+      gps_location:
+          l$gps_location == null ? null : geographyFromJson(l$gps_location),
+      time: (l$time as String?),
       service: Query$get_class_by_id$business_class_by_pk$service.fromJson(
           (l$service as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final int business_id;
+  final Query$get_class_by_id$business_class_by_pk$business business;
 
   final dynamic? schedule;
 
   final String schedule_type;
+
+  final Geography? gps_location;
+
+  final String? time;
 
   final Query$get_class_by_id$business_class_by_pk$service service;
 
@@ -598,12 +741,17 @@ class Query$get_class_by_id$business_class_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$business_id = business_id;
-    _resultData['business_id'] = l$business_id;
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$schedule_type = schedule_type;
     _resultData['schedule_type'] = l$schedule_type;
+    final l$gps_location = gps_location;
+    _resultData['gps_location'] =
+        l$gps_location == null ? null : geographyToJson(l$gps_location);
+    final l$time = time;
+    _resultData['time'] = l$time;
     final l$service = service;
     _resultData['service'] = l$service.toJson();
     final l$$__typename = $__typename;
@@ -613,15 +761,19 @@ class Query$get_class_by_id$business_class_by_pk {
 
   @override
   int get hashCode {
-    final l$business_id = business_id;
+    final l$business = business;
     final l$schedule = schedule;
     final l$schedule_type = schedule_type;
+    final l$gps_location = gps_location;
+    final l$time = time;
     final l$service = service;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$business_id,
+      l$business,
       l$schedule,
       l$schedule_type,
+      l$gps_location,
+      l$time,
       l$service,
       l$$__typename,
     ]);
@@ -636,9 +788,9 @@ class Query$get_class_by_id$business_class_by_pk {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$business_id = business_id;
-    final lOther$business_id = other.business_id;
-    if (l$business_id != lOther$business_id) {
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$schedule = schedule;
@@ -649,6 +801,16 @@ class Query$get_class_by_id$business_class_by_pk {
     final l$schedule_type = schedule_type;
     final lOther$schedule_type = other.schedule_type;
     if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
+    final l$gps_location = gps_location;
+    final lOther$gps_location = other.gps_location;
+    if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$time = time;
+    final lOther$time = other.time;
+    if (l$time != lOther$time) {
       return false;
     }
     final l$service = service;
@@ -685,12 +847,16 @@ abstract class CopyWith$Query$get_class_by_id$business_class_by_pk<TRes> {
       _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk;
 
   TRes call({
-    int? business_id,
+    Query$get_class_by_id$business_class_by_pk$business? business,
     dynamic? schedule,
     String? schedule_type,
+    Geography? gps_location,
+    String? time,
     Query$get_class_by_id$business_class_by_pk$service? service,
     String? $__typename,
   });
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business<TRes>
+      get business;
   CopyWith$Query$get_class_by_id$business_class_by_pk$service<TRes> get service;
 }
 
@@ -708,22 +874,28 @@ class _CopyWithImpl$Query$get_class_by_id$business_class_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? business_id = _undefined,
+    Object? business = _undefined,
     Object? schedule = _undefined,
     Object? schedule_type = _undefined,
+    Object? gps_location = _undefined,
+    Object? time = _undefined,
     Object? service = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_class_by_id$business_class_by_pk(
-        business_id: business_id == _undefined || business_id == null
-            ? _instance.business_id
-            : (business_id as int),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business as Query$get_class_by_id$business_class_by_pk$business),
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
         schedule_type: schedule_type == _undefined || schedule_type == null
             ? _instance.schedule_type
             : (schedule_type as String),
+        gps_location: gps_location == _undefined
+            ? _instance.gps_location
+            : (gps_location as Geography?),
+        time: time == _undefined ? _instance.time : (time as String?),
         service: service == _undefined || service == null
             ? _instance.service
             : (service as Query$get_class_by_id$business_class_by_pk$service),
@@ -731,6 +903,13 @@ class _CopyWithImpl$Query$get_class_by_id$business_class_by_pk<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$get_class_by_id$business_class_by_pk$business(
+        local$business, (e) => call(business: e));
+  }
+
   CopyWith$Query$get_class_by_id$business_class_by_pk$service<TRes>
       get service {
     final local$service = _instance.service;
@@ -746,17 +925,930 @@ class _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk<TRes>
   TRes _res;
 
   call({
-    int? business_id,
+    Query$get_class_by_id$business_class_by_pk$business? business,
     dynamic? schedule,
     String? schedule_type,
+    Geography? gps_location,
+    String? time,
     Query$get_class_by_id$business_class_by_pk$service? service,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business<TRes>
+      get business =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business.stub(
+              _res);
   CopyWith$Query$get_class_by_id$business_class_by_pk$service<TRes>
       get service =>
           CopyWith$Query$get_class_by_id$business_class_by_pk$service.stub(
               _res);
+}
+
+class Query$get_class_by_id$business_class_by_pk$business {
+  Query$get_class_by_id$business_class_by_pk$business({
+    required this.id,
+    required this.details,
+    required this.reviews_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$get_class_by_id$business_class_by_pk$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$reviews_aggregate = json['reviews_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$get_class_by_id$business_class_by_pk$business(
+      id: (l$id as int),
+      details:
+          Query$get_class_by_id$business_class_by_pk$business$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      reviews_aggregate:
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate
+              .fromJson((l$reviews_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_class_by_id$business_class_by_pk$business$details details;
+
+  final Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate
+      reviews_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$reviews_aggregate = reviews_aggregate;
+    _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$reviews_aggregate = reviews_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$reviews_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_class_by_id$business_class_by_pk$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$reviews_aggregate = reviews_aggregate;
+    final lOther$reviews_aggregate = other.reviews_aggregate;
+    if (l$reviews_aggregate != lOther$reviews_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_class_by_id$business_class_by_pk$business
+    on Query$get_class_by_id$business_class_by_pk$business {
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business<
+          Query$get_class_by_id$business_class_by_pk$business>
+      get copyWith =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_class_by_id$business_class_by_pk$business<
+    TRes> {
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business(
+    Query$get_class_by_id$business_class_by_pk$business instance,
+    TRes Function(Query$get_class_by_id$business_class_by_pk$business) then,
+  ) = _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business;
+
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business;
+
+  TRes call({
+    int? id,
+    Query$get_class_by_id$business_class_by_pk$business$details? details,
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate?
+        reviews_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$details<TRes>
+      get details;
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+      TRes> get reviews_aggregate;
+}
+
+class _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business<TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business<TRes> {
+  _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_class_by_id$business_class_by_pk$business _instance;
+
+  final TRes Function(Query$get_class_by_id$business_class_by_pk$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? reviews_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_class_by_id$business_class_by_pk$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_class_by_id$business_class_by_pk$business$details),
+        reviews_aggregate: reviews_aggregate == _undefined ||
+                reviews_aggregate == null
+            ? _instance.reviews_aggregate
+            : (reviews_aggregate
+                as Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_class_by_id$business_class_by_pk$business$details(
+        local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+      TRes> get reviews_aggregate {
+    final local$reviews_aggregate = _instance.reviews_aggregate;
+    return CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate(
+        local$reviews_aggregate, (e) => call(reviews_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business<TRes> {
+  _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_class_by_id$business_class_by_pk$business$details? details,
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate?
+        reviews_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$details<TRes>
+      get details =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$details
+              .stub(_res);
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+          TRes>
+      get reviews_aggregate =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate
+              .stub(_res);
+}
+
+class Query$get_class_by_id$business_class_by_pk$business$details {
+  Query$get_class_by_id$business_class_by_pk$business$details({
+    required this.id,
+    required this.accepted_payments,
+    required this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_class_by_id$business_class_by_pk$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_class_by_id$business_class_by_pk$business$details(
+      id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$accepted_payments,
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_class_by_id$business_class_by_pk$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_class_by_id$business_class_by_pk$business$details
+    on Query$get_class_by_id$business_class_by_pk$business$details {
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$details<
+          Query$get_class_by_id$business_class_by_pk$business$details>
+      get copyWith =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_class_by_id$business_class_by_pk$business$details<
+    TRes> {
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$details(
+    Query$get_class_by_id$business_class_by_pk$business$details instance,
+    TRes Function(Query$get_class_by_id$business_class_by_pk$business$details)
+        then,
+  ) = _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$details;
+
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$details;
+
+  TRes call({
+    int? id,
+    dynamic? accepted_payments,
+    String? image,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$details<
+            TRes> {
+  _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_class_by_id$business_class_by_pk$business$details _instance;
+
+  final TRes Function(
+      Query$get_class_by_id$business_class_by_pk$business$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_class_by_id$business_class_by_pk$business$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? accepted_payments,
+    String? image,
+    String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate {
+  Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate
+    on Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate {
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate>
+      get copyWith =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+    TRes> {
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate(
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate
+        instance,
+    TRes Function(
+            Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate;
+
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate;
+
+  TRes call({
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate {
+  Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate({
+    this.avg,
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$avg = json['avg'];
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate(
+      avg: l$avg == null
+          ? null
+          : Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg
+              .fromJson((l$avg as Map<String, dynamic>)),
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg?
+      avg;
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$avg = avg;
+    _resultData['avg'] = l$avg?.toJson();
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$avg = avg;
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$avg,
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$avg = avg;
+    final lOther$avg = other.avg;
+    if (l$avg != lOther$avg) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate
+    on Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate {
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate(
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate;
+
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate;
+
+  TRes call({
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg?
+        avg,
+    int? count,
+    String? $__typename,
+  });
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+      TRes> get avg;
+}
+
+class _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? avg = _undefined,
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate(
+        avg: avg == _undefined
+            ? _instance.avg
+            : (avg
+                as Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg?),
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+      TRes> get avg {
+    final local$avg = _instance.avg;
+    return local$avg == null
+        ? CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg
+            .stub(_then(_instance))
+        : CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg(
+            local$avg, (e) => call(avg: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg?
+        avg,
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+          TRes>
+      get avg =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg
+              .stub(_res);
+}
+
+class Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg {
+  Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg({
+    this.rating,
+    required this.$__typename,
+  });
+
+  factory Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg.fromJson(
+      Map<String, dynamic> json) {
+    final l$rating = json['rating'];
+    final l$$__typename = json['__typename'];
+    return Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg(
+      rating: (l$rating as num?)?.toDouble(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? rating;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$rating = rating;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$rating,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg
+    on Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg {
+  CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg>
+      get copyWith =>
+          CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+    TRes> {
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg(
+    Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg
+        instance,
+    TRes Function(
+            Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg)
+        then,
+  ) = _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg;
+
+  factory CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg;
+
+  TRes call({
+    double? rating,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg
+      _instance;
+
+  final TRes Function(
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? rating = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg(
+        rating: rating == _undefined ? _instance.rating : (rating as double?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$business$reviews_aggregate$aggregate$avg(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? rating,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$get_class_by_id$business_class_by_pk$service {
@@ -1768,21 +2860,21 @@ class _CopyWithStubImpl$Query$get_class_by_id$business_class_by_pk$service$name$
 
 class Variables$Query$get_class_by_category {
   factory Variables$Query$get_class_by_category({
-    String? category1,
+    List<String>? categories1,
     required double distance,
     required Geography from,
     int? limit,
     int? offset,
-    String? category2,
-    String? schedule_type,
+    List<String>? categories2,
+    List<String>? schedule_type,
   }) =>
       Variables$Query$get_class_by_category._({
-        if (category1 != null) r'category1': category1,
+        if (categories1 != null) r'categories1': categories1,
         r'distance': distance,
         r'from': from,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
-        if (category2 != null) r'category2': category2,
+        if (categories2 != null) r'categories2': categories2,
         if (schedule_type != null) r'schedule_type': schedule_type,
       });
 
@@ -1791,9 +2883,10 @@ class Variables$Query$get_class_by_category {
   factory Variables$Query$get_class_by_category.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('category1')) {
-      final l$category1 = data['category1'];
-      result$data['category1'] = (l$category1 as String?);
+    if (data.containsKey('categories1')) {
+      final l$categories1 = data['categories1'];
+      result$data['categories1'] =
+          (l$categories1 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
     final l$distance = data['distance'];
     result$data['distance'] = (l$distance as num).toDouble();
@@ -1807,31 +2900,34 @@ class Variables$Query$get_class_by_category {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
-    if (data.containsKey('category2')) {
-      final l$category2 = data['category2'];
-      result$data['category2'] = (l$category2 as String?);
+    if (data.containsKey('categories2')) {
+      final l$categories2 = data['categories2'];
+      result$data['categories2'] =
+          (l$categories2 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
     if (data.containsKey('schedule_type')) {
       final l$schedule_type = data['schedule_type'];
-      result$data['schedule_type'] = (l$schedule_type as String?);
+      result$data['schedule_type'] = (l$schedule_type as List<dynamic>?)
+          ?.map((e) => (e as String))
+          .toList();
     }
     return Variables$Query$get_class_by_category._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  String? get category1 => (_$data['category1'] as String?);
+  List<String>? get categories1 => (_$data['categories1'] as List<String>?);
   double get distance => (_$data['distance'] as double);
   Geography get from => (_$data['from'] as Geography);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
-  String? get category2 => (_$data['category2'] as String?);
-  String? get schedule_type => (_$data['schedule_type'] as String?);
+  List<String>? get categories2 => (_$data['categories2'] as List<String>?);
+  List<String>? get schedule_type => (_$data['schedule_type'] as List<String>?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('category1')) {
-      final l$category1 = category1;
-      result$data['category1'] = l$category1;
+    if (_$data.containsKey('categories1')) {
+      final l$categories1 = categories1;
+      result$data['categories1'] = l$categories1?.map((e) => e).toList();
     }
     final l$distance = distance;
     result$data['distance'] = l$distance;
@@ -1845,13 +2941,13 @@ class Variables$Query$get_class_by_category {
       final l$offset = offset;
       result$data['offset'] = l$offset;
     }
-    if (_$data.containsKey('category2')) {
-      final l$category2 = category2;
-      result$data['category2'] = l$category2;
+    if (_$data.containsKey('categories2')) {
+      final l$categories2 = categories2;
+      result$data['categories2'] = l$categories2?.map((e) => e).toList();
     }
     if (_$data.containsKey('schedule_type')) {
       final l$schedule_type = schedule_type;
-      result$data['schedule_type'] = l$schedule_type;
+      result$data['schedule_type'] = l$schedule_type?.map((e) => e).toList();
     }
     return result$data;
   }
@@ -1871,13 +2967,24 @@ class Variables$Query$get_class_by_category {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$category1 = category1;
-    final lOther$category1 = other.category1;
-    if (_$data.containsKey('category1') !=
-        other._$data.containsKey('category1')) {
+    final l$categories1 = categories1;
+    final lOther$categories1 = other.categories1;
+    if (_$data.containsKey('categories1') !=
+        other._$data.containsKey('categories1')) {
       return false;
     }
-    if (l$category1 != lOther$category1) {
+    if (l$categories1 != null && lOther$categories1 != null) {
+      if (l$categories1.length != lOther$categories1.length) {
+        return false;
+      }
+      for (int i = 0; i < l$categories1.length; i++) {
+        final l$categories1$entry = l$categories1[i];
+        final lOther$categories1$entry = lOther$categories1[i];
+        if (l$categories1$entry != lOther$categories1$entry) {
+          return false;
+        }
+      }
+    } else if (l$categories1 != lOther$categories1) {
       return false;
     }
     final l$distance = distance;
@@ -1906,13 +3013,24 @@ class Variables$Query$get_class_by_category {
     if (l$offset != lOther$offset) {
       return false;
     }
-    final l$category2 = category2;
-    final lOther$category2 = other.category2;
-    if (_$data.containsKey('category2') !=
-        other._$data.containsKey('category2')) {
+    final l$categories2 = categories2;
+    final lOther$categories2 = other.categories2;
+    if (_$data.containsKey('categories2') !=
+        other._$data.containsKey('categories2')) {
       return false;
     }
-    if (l$category2 != lOther$category2) {
+    if (l$categories2 != null && lOther$categories2 != null) {
+      if (l$categories2.length != lOther$categories2.length) {
+        return false;
+      }
+      for (int i = 0; i < l$categories2.length; i++) {
+        final l$categories2$entry = l$categories2[i];
+        final lOther$categories2$entry = lOther$categories2[i];
+        if (l$categories2$entry != lOther$categories2$entry) {
+          return false;
+        }
+      }
+    } else if (l$categories2 != lOther$categories2) {
       return false;
     }
     final l$schedule_type = schedule_type;
@@ -1921,7 +3039,18 @@ class Variables$Query$get_class_by_category {
         other._$data.containsKey('schedule_type')) {
       return false;
     }
-    if (l$schedule_type != lOther$schedule_type) {
+    if (l$schedule_type != null && lOther$schedule_type != null) {
+      if (l$schedule_type.length != lOther$schedule_type.length) {
+        return false;
+      }
+      for (int i = 0; i < l$schedule_type.length; i++) {
+        final l$schedule_type$entry = l$schedule_type[i];
+        final lOther$schedule_type$entry = lOther$schedule_type[i];
+        if (l$schedule_type$entry != lOther$schedule_type$entry) {
+          return false;
+        }
+      }
+    } else if (l$schedule_type != lOther$schedule_type) {
       return false;
     }
     return true;
@@ -1929,21 +3058,33 @@ class Variables$Query$get_class_by_category {
 
   @override
   int get hashCode {
-    final l$category1 = category1;
+    final l$categories1 = categories1;
     final l$distance = distance;
     final l$from = from;
     final l$limit = limit;
     final l$offset = offset;
-    final l$category2 = category2;
+    final l$categories2 = categories2;
     final l$schedule_type = schedule_type;
     return Object.hashAll([
-      _$data.containsKey('category1') ? l$category1 : const {},
+      _$data.containsKey('categories1')
+          ? l$categories1 == null
+              ? null
+              : Object.hashAll(l$categories1.map((v) => v))
+          : const {},
       l$distance,
       l$from,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
-      _$data.containsKey('category2') ? l$category2 : const {},
-      _$data.containsKey('schedule_type') ? l$schedule_type : const {},
+      _$data.containsKey('categories2')
+          ? l$categories2 == null
+              ? null
+              : Object.hashAll(l$categories2.map((v) => v))
+          : const {},
+      _$data.containsKey('schedule_type')
+          ? l$schedule_type == null
+              ? null
+              : Object.hashAll(l$schedule_type.map((v) => v))
+          : const {},
     ]);
   }
 }
@@ -1958,13 +3099,13 @@ abstract class CopyWith$Variables$Query$get_class_by_category<TRes> {
       _CopyWithStubImpl$Variables$Query$get_class_by_category;
 
   TRes call({
-    String? category1,
+    List<String>? categories1,
     double? distance,
     Geography? from,
     int? limit,
     int? offset,
-    String? category2,
-    String? schedule_type,
+    List<String>? categories2,
+    List<String>? schedule_type,
   });
 }
 
@@ -1982,25 +3123,27 @@ class _CopyWithImpl$Variables$Query$get_class_by_category<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? category1 = _undefined,
+    Object? categories1 = _undefined,
     Object? distance = _undefined,
     Object? from = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
-    Object? category2 = _undefined,
+    Object? categories2 = _undefined,
     Object? schedule_type = _undefined,
   }) =>
       _then(Variables$Query$get_class_by_category._({
         ..._instance._$data,
-        if (category1 != _undefined) 'category1': (category1 as String?),
+        if (categories1 != _undefined)
+          'categories1': (categories1 as List<String>?),
         if (distance != _undefined && distance != null)
           'distance': (distance as double),
         if (from != _undefined && from != null) 'from': (from as Geography),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
-        if (category2 != _undefined) 'category2': (category2 as String?),
+        if (categories2 != _undefined)
+          'categories2': (categories2 as List<String>?),
         if (schedule_type != _undefined)
-          'schedule_type': (schedule_type as String?),
+          'schedule_type': (schedule_type as List<String>?),
       }));
 }
 
@@ -2011,13 +3154,13 @@ class _CopyWithStubImpl$Variables$Query$get_class_by_category<TRes>
   TRes _res;
 
   call({
-    String? category1,
+    List<String>? categories1,
     double? distance,
     Geography? from,
     int? limit,
     int? offset,
-    String? category2,
-    String? schedule_type,
+    List<String>? categories2,
+    List<String>? schedule_type,
   }) =>
       _res;
 }
@@ -2184,9 +3327,12 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
     name: NameNode(value: 'get_class_by_category'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'category1')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
+        variable: VariableNode(name: NameNode(value: 'categories1')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -2229,9 +3375,12 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'category2')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
+        variable: VariableNode(name: NameNode(value: 'categories2')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -2239,8 +3388,11 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
       ),
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'schedule_type')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -2269,9 +3421,9 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                             name: NameNode(value: 'category1'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
+                                name: NameNode(value: '_in'),
                                 value: VariableNode(
-                                    name: NameNode(value: 'category1')),
+                                    name: NameNode(value: 'categories1')),
                               )
                             ]),
                           ),
@@ -2279,9 +3431,9 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                             name: NameNode(value: 'category2'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
+                                name: NameNode(value: '_in'),
                                 value: VariableNode(
-                                    name: NameNode(value: 'category2')),
+                                    name: NameNode(value: 'categories2')),
                               )
                             ]),
                           ),
@@ -2328,7 +3480,7 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                     name: NameNode(value: 'schedule_type'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
+                        name: NameNode(value: '_in'),
                         value: VariableNode(
                             name: NameNode(value: 'schedule_type')),
                       )
@@ -2364,50 +3516,6 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'translations'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'language_id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: 'value'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'description'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -2509,6 +3617,20 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'gps_location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
@@ -2587,6 +3709,20 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'schedule_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -2716,7 +3852,11 @@ class Query$get_class_by_category$business_class {
   Query$get_class_by_category$business_class({
     required this.service,
     required this.id,
+    this.gps_location,
+    this.time,
     required this.business,
+    required this.schedule_type,
+    this.schedule,
     required this.$__typename,
   });
 
@@ -2724,14 +3864,23 @@ class Query$get_class_by_category$business_class {
       Map<String, dynamic> json) {
     final l$service = json['service'];
     final l$id = json['id'];
+    final l$gps_location = json['gps_location'];
+    final l$time = json['time'];
     final l$business = json['business'];
+    final l$schedule_type = json['schedule_type'];
+    final l$schedule = json['schedule'];
     final l$$__typename = json['__typename'];
     return Query$get_class_by_category$business_class(
       service: Query$get_class_by_category$business_class$service.fromJson(
           (l$service as Map<String, dynamic>)),
       id: (l$id as int),
+      gps_location:
+          l$gps_location == null ? null : geographyFromJson(l$gps_location),
+      time: (l$time as String?),
       business: Query$get_class_by_category$business_class$business.fromJson(
           (l$business as Map<String, dynamic>)),
+      schedule_type: (l$schedule_type as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -2740,7 +3889,15 @@ class Query$get_class_by_category$business_class {
 
   final int id;
 
+  final Geography? gps_location;
+
+  final String? time;
+
   final Query$get_class_by_category$business_class$business business;
+
+  final String schedule_type;
+
+  final dynamic? schedule;
 
   final String $__typename;
 
@@ -2750,8 +3907,17 @@ class Query$get_class_by_category$business_class {
     _resultData['service'] = l$service.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$gps_location = gps_location;
+    _resultData['gps_location'] =
+        l$gps_location == null ? null : geographyToJson(l$gps_location);
+    final l$time = time;
+    _resultData['time'] = l$time;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
+    final l$schedule_type = schedule_type;
+    _resultData['schedule_type'] = l$schedule_type;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2761,12 +3927,20 @@ class Query$get_class_by_category$business_class {
   int get hashCode {
     final l$service = service;
     final l$id = id;
+    final l$gps_location = gps_location;
+    final l$time = time;
     final l$business = business;
+    final l$schedule_type = schedule_type;
+    final l$schedule = schedule;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$service,
       l$id,
+      l$gps_location,
+      l$time,
       l$business,
+      l$schedule_type,
+      l$schedule,
       l$$__typename,
     ]);
   }
@@ -2790,9 +3964,29 @@ class Query$get_class_by_category$business_class {
     if (l$id != lOther$id) {
       return false;
     }
+    final l$gps_location = gps_location;
+    final lOther$gps_location = other.gps_location;
+    if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$time = time;
+    final lOther$time = other.time;
+    if (l$time != lOther$time) {
+      return false;
+    }
     final l$business = business;
     final lOther$business = other.business;
     if (l$business != lOther$business) {
+      return false;
+    }
+    final l$schedule_type = schedule_type;
+    final lOther$schedule_type = other.schedule_type;
+    if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2826,7 +4020,11 @@ abstract class CopyWith$Query$get_class_by_category$business_class<TRes> {
   TRes call({
     Query$get_class_by_category$business_class$service? service,
     int? id,
+    Geography? gps_location,
+    String? time,
     Query$get_class_by_category$business_class$business? business,
+    String? schedule_type,
+    dynamic? schedule,
     String? $__typename,
   });
   CopyWith$Query$get_class_by_category$business_class$service<TRes> get service;
@@ -2850,7 +4048,11 @@ class _CopyWithImpl$Query$get_class_by_category$business_class<TRes>
   TRes call({
     Object? service = _undefined,
     Object? id = _undefined,
+    Object? gps_location = _undefined,
+    Object? time = _undefined,
     Object? business = _undefined,
+    Object? schedule_type = _undefined,
+    Object? schedule = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_class_by_category$business_class(
@@ -2858,9 +4060,19 @@ class _CopyWithImpl$Query$get_class_by_category$business_class<TRes>
             ? _instance.service
             : (service as Query$get_class_by_category$business_class$service),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        gps_location: gps_location == _undefined
+            ? _instance.gps_location
+            : (gps_location as Geography?),
+        time: time == _undefined ? _instance.time : (time as String?),
         business: business == _undefined || business == null
             ? _instance.business
             : (business as Query$get_class_by_category$business_class$business),
+        schedule_type: schedule_type == _undefined || schedule_type == null
+            ? _instance.schedule_type
+            : (schedule_type as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2889,7 +4101,11 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_class<TRes>
   call({
     Query$get_class_by_category$business_class$service? service,
     int? id,
+    Geography? gps_location,
+    String? time,
     Query$get_class_by_category$business_class$business? business,
+    String? schedule_type,
+    dynamic? schedule,
     String? $__typename,
   }) =>
       _res;
@@ -2907,7 +4123,6 @@ class Query$get_class_by_category$business_class$service {
   Query$get_class_by_category$business_class$service({
     required this.id,
     required this.name,
-    this.description,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -2921,7 +4136,6 @@ class Query$get_class_by_category$business_class$service {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
-    final l$description = json['description'];
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
@@ -2933,10 +4147,6 @@ class Query$get_class_by_category$business_class$service {
       id: (l$id as int),
       name: Query$get_class_by_category$business_class$service$name.fromJson(
           (l$name as Map<String, dynamic>)),
-      description: l$description == null
-          ? null
-          : Query$get_class_by_category$business_class$service$description
-              .fromJson((l$description as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -2952,9 +4162,6 @@ class Query$get_class_by_category$business_class$service {
   final int id;
 
   final Query$get_class_by_category$business_class$service$name name;
-
-  final Query$get_class_by_category$business_class$service$description?
-      description;
 
   final dynamic? additional_parameters;
 
@@ -2976,8 +4183,6 @@ class Query$get_class_by_category$business_class$service {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -3001,7 +4206,6 @@ class Query$get_class_by_category$business_class$service {
   int get hashCode {
     final l$id = id;
     final l$name = name;
-    final l$description = description;
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
@@ -3012,7 +4216,6 @@ class Query$get_class_by_category$business_class$service {
     return Object.hashAll([
       l$id,
       l$name,
-      l$description,
       l$additional_parameters,
       l$available,
       l$category1,
@@ -3040,11 +4243,6 @@ class Query$get_class_by_category$business_class$service {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
       return false;
     }
     final l$additional_parameters = additional_parameters;
@@ -3111,7 +4309,6 @@ abstract class CopyWith$Query$get_class_by_category$business_class$service<
   TRes call({
     int? id,
     Query$get_class_by_category$business_class$service$name? name,
-    Query$get_class_by_category$business_class$service$description? description,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -3122,8 +4319,6 @@ abstract class CopyWith$Query$get_class_by_category$business_class$service<
   });
   CopyWith$Query$get_class_by_category$business_class$service$name<TRes>
       get name;
-  CopyWith$Query$get_class_by_category$business_class$service$description<TRes>
-      get description;
 }
 
 class _CopyWithImpl$Query$get_class_by_category$business_class$service<TRes>
@@ -3143,7 +4338,6 @@ class _CopyWithImpl$Query$get_class_by_category$business_class$service<TRes>
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
-    Object? description = _undefined,
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
@@ -3157,10 +4351,6 @@ class _CopyWithImpl$Query$get_class_by_category$business_class$service<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as Query$get_class_by_category$business_class$service$name),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$get_class_by_category$business_class$service$description?),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -3187,16 +4377,6 @@ class _CopyWithImpl$Query$get_class_by_category$business_class$service<TRes>
     return CopyWith$Query$get_class_by_category$business_class$service$name(
         local$name, (e) => call(name: e));
   }
-
-  CopyWith$Query$get_class_by_category$business_class$service$description<TRes>
-      get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$get_class_by_category$business_class$service$description
-            .stub(_then(_instance))
-        : CopyWith$Query$get_class_by_category$business_class$service$description(
-            local$description, (e) => call(description: e));
-  }
 }
 
 class _CopyWithStubImpl$Query$get_class_by_category$business_class$service<TRes>
@@ -3210,7 +4390,6 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_class$service<TRes>
   call({
     int? id,
     Query$get_class_by_category$business_class$service$name? name,
-    Query$get_class_by_category$business_class$service$description? description,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -3224,10 +4403,6 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_class$service<TRes>
       get name =>
           CopyWith$Query$get_class_by_category$business_class$service$name.stub(
               _res);
-  CopyWith$Query$get_class_by_category$business_class$service$description<TRes>
-      get description =>
-          CopyWith$Query$get_class_by_category$business_class$service$description
-              .stub(_res);
 }
 
 class Query$get_class_by_category$business_class$service$name {
@@ -3555,349 +4730,6 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_class$service$name$
         CopyWith$Query$get_class_by_category$business_class$service$name$translations<
             TRes> {
   _CopyWithStubImpl$Query$get_class_by_category$business_class$service$name$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_class_by_category$business_class$service$description {
-  Query$get_class_by_category$business_class$service$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_class_by_category$business_class$service$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_class_by_category$business_class$service$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_class_by_category$business_class$service$description$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Query$get_class_by_category$business_class$service$description$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_class_by_category$business_class$service$description) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_class_by_category$business_class$service$description
-    on Query$get_class_by_category$business_class$service$description {
-  CopyWith$Query$get_class_by_category$business_class$service$description<
-          Query$get_class_by_category$business_class$service$description>
-      get copyWith =>
-          CopyWith$Query$get_class_by_category$business_class$service$description(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_class_by_category$business_class$service$description<
-    TRes> {
-  factory CopyWith$Query$get_class_by_category$business_class$service$description(
-    Query$get_class_by_category$business_class$service$description instance,
-    TRes Function(
-            Query$get_class_by_category$business_class$service$description)
-        then,
-  ) = _CopyWithImpl$Query$get_class_by_category$business_class$service$description;
-
-  factory CopyWith$Query$get_class_by_category$business_class$service$description.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_class_by_category$business_class$service$description;
-
-  TRes call({
-    List<Query$get_class_by_category$business_class$service$description$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_class_by_category$business_class$service$description$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_class_by_category$business_class$service$description$translations<
-                      Query$get_class_by_category$business_class$service$description$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_class_by_category$business_class$service$description<
-        TRes>
-    implements
-        CopyWith$Query$get_class_by_category$business_class$service$description<
-            TRes> {
-  _CopyWithImpl$Query$get_class_by_category$business_class$service$description(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_class_by_category$business_class$service$description
-      _instance;
-
-  final TRes Function(
-      Query$get_class_by_category$business_class$service$description) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_class_by_category$business_class$service$description(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_class_by_category$business_class$service$description$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_class_by_category$business_class$service$description$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_class_by_category$business_class$service$description$translations<
-                          Query$get_class_by_category$business_class$service$description$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_class_by_category$business_class$service$description$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_class_by_category$business_class$service$description<
-        TRes>
-    implements
-        CopyWith$Query$get_class_by_category$business_class$service$description<
-            TRes> {
-  _CopyWithStubImpl$Query$get_class_by_category$business_class$service$description(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_class_by_category$business_class$service$description$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_class_by_category$business_class$service$description$translations {
-  Query$get_class_by_category$business_class$service$description$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_class_by_category$business_class$service$description$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_class_by_category$business_class$service$description$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_class_by_category$business_class$service$description$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_class_by_category$business_class$service$description$translations
-    on Query$get_class_by_category$business_class$service$description$translations {
-  CopyWith$Query$get_class_by_category$business_class$service$description$translations<
-          Query$get_class_by_category$business_class$service$description$translations>
-      get copyWith =>
-          CopyWith$Query$get_class_by_category$business_class$service$description$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_class_by_category$business_class$service$description$translations<
-    TRes> {
-  factory CopyWith$Query$get_class_by_category$business_class$service$description$translations(
-    Query$get_class_by_category$business_class$service$description$translations
-        instance,
-    TRes Function(
-            Query$get_class_by_category$business_class$service$description$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_class_by_category$business_class$service$description$translations;
-
-  factory CopyWith$Query$get_class_by_category$business_class$service$description$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_class_by_category$business_class$service$description$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_class_by_category$business_class$service$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_class_by_category$business_class$service$description$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_class_by_category$business_class$service$description$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_class_by_category$business_class$service$description$translations
-      _instance;
-
-  final TRes Function(
-          Query$get_class_by_category$business_class$service$description$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_class_by_category$business_class$service$description$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_class_by_category$business_class$service$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_class_by_category$business_class$service$description$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_class_by_category$business_class$service$description$translations(
       this._res);
 
   TRes _res;
