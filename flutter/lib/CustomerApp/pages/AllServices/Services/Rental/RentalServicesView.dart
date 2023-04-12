@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetListsView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/HomeAssetListsView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/OtherView/OtherAssetLists.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/HomeRentalController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -27,7 +30,7 @@ class RentalView extends StatefulWidget {
 class _RentalViewState extends State<RentalView> {
   AllServiceListViewController allServiceListViewController =
       Get.find<AllServiceListViewController>();
-  RentalController rentalController = RentalController();
+  SubServiceController rentalController = SubServiceController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +52,18 @@ class _RentalViewState extends State<RentalView> {
         itemBuilder: (BuildContext context, int index) {
           return MezCard(
             onClick: () {
-              AssetListsView.navigate(
-                viewEnum: rentalController.allRentalValues[
-                    allServiceListViewController
-                        .currentSelectedService]![index]["value"],
-              );
+              final RentalViewEnum goToView = rentalController.allRentalValues[
+                  allServiceListViewController
+                      .currentSelectedService]![index]["value"];
+              if (goToView == RentalViewEnum.Homes) {
+                HomeAssetListsView.navigate(
+                  viewEnum: goToView,
+                );
+              } else {
+                OtherAssetListsView.navigate(
+                  viewEnum: goToView,
+                );
+              }
             },
             content: Row(
               crossAxisAlignment: CrossAxisAlignment.end,

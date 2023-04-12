@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:flutter/material.dart';
 
 enum CurrentSelectedViewEnum {
@@ -14,12 +14,8 @@ Map<RentalViewEnum, Map<CurrentSelectedViewEnum, String>> vRentalViewValues = {
     CurrentSelectedViewEnum.Asset: "Board",
     CurrentSelectedViewEnum.Agency: "Store",
   },
-  RentalViewEnum.MotorCycle: {
+  RentalViewEnum.Vehicle: {
     CurrentSelectedViewEnum.Asset: "Vehicle",
-    CurrentSelectedViewEnum.Agency: "Store",
-  },
-  RentalViewEnum.Car: {
-    CurrentSelectedViewEnum.Asset: "Car",
     CurrentSelectedViewEnum.Agency: "Store",
   },
   RentalViewEnum.Homes: {
@@ -72,15 +68,10 @@ class AssetController {
         currentSelectedViewList =
             vRentalViewValues[RentalViewEnum.Surf]!.keys.toList();
         break;
-      case RentalViewEnum.MotorCycle:
-        viewName = RentalViewEnum.MotorCycle;
+      case RentalViewEnum.Vehicle:
+        viewName = RentalViewEnum.Vehicle;
         currentSelectedViewList =
-            vRentalViewValues[RentalViewEnum.MotorCycle]!.keys.toList();
-        break;
-      case RentalViewEnum.Car:
-        viewName = RentalViewEnum.Car;
-        currentSelectedViewList =
-            vRentalViewValues[RentalViewEnum.Car]!.keys.toList();
+            vRentalViewValues[RentalViewEnum.Vehicle]!.keys.toList();
         break;
       case RentalViewEnum.Homes:
         viewName = RentalViewEnum.Homes;
@@ -142,10 +133,8 @@ class AssetController {
     switch (viewName) {
       case RentalViewEnum.Surf:
         return "surf";
-      case RentalViewEnum.MotorCycle:
-        return "motorcycle";
-      case RentalViewEnum.Car:
-        return "car";
+      case RentalViewEnum.Vehicle:
+        return "vehicle";
       case RentalViewEnum.Homes:
         return "homes";
       case RentalViewEnum.Classes:
@@ -174,14 +163,9 @@ class AssetController {
           Icons.surfing,
           Icons.store,
         ];
-      case RentalViewEnum.MotorCycle:
+      case RentalViewEnum.Vehicle:
         return [
           Icons.two_wheeler,
-          Icons.store,
-        ];
-      case RentalViewEnum.Car:
-        return [
-          Icons.directions_car,
           Icons.store,
         ];
       case RentalViewEnum.Homes:

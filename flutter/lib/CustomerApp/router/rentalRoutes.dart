@@ -2,18 +2,21 @@ import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart'
     deferred as rentalView;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetListsView.dart'
-    deferred as rentalServiceView;
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/HomeAssetListsView.dart'
+    deferred as homeAssetListView;
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AgencyServiceView/AgencyServiceView.dart'
     deferred as homeServiceView;
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart'
     deferred as assetService;
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/OtherView/OtherAssetLists.dart'
+    deferred as otherAssetListView;
 
 class RentalRoutes {
   static String rentalViewRoute = "/rental";
-  static String rentalServiceRoute = "/rentalServiceView";
+  static String homeAssetRoute = "/homeAssets";
   static String homeServiceRoute = "/homeServiceView";
   static String assetServiceRoute = "/assetServiceView";
+  static String otherAssetRoute = "/otherAssets";
 
   final List<QRoute> routes = [
     QRoute(
@@ -24,11 +27,11 @@ class RentalRoutes {
           DefferedLoader(rentalView.loadLibrary),
         ]),
     QRoute(
-        name: rentalServiceRoute,
-        path: rentalServiceRoute,
-        builder: () => rentalServiceView.AssetListsView(),
+        name: homeAssetRoute,
+        path: homeAssetRoute,
+        builder: () => homeAssetListView.HomeAssetListsView(),
         middleware: <QMiddleware>[
-          DefferedLoader(rentalServiceView.loadLibrary),
+          DefferedLoader(homeAssetListView.loadLibrary),
         ]),
     QRoute(
         name: homeServiceRoute,
@@ -43,6 +46,13 @@ class RentalRoutes {
         builder: () => assetService.AssetServiceView(),
         middleware: <QMiddleware>[
           DefferedLoader(assetService.loadLibrary),
+        ]),
+    QRoute(
+        name: otherAssetRoute,
+        path: otherAssetRoute,
+        builder: () => otherAssetListView.OtherAssetListsView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(otherAssetListView.loadLibrary),
         ]),
   ];
 }

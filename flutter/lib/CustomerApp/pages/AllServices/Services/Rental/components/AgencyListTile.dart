@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
@@ -16,7 +17,7 @@ class AgencyListTile extends StatelessWidget {
 
   final String titleText;
   final String rating;
-  final List<IconData> iconsList;
+  final Map<PaymentType, bool> iconsList;
   final NetworkImage image;
   final Function onClick;
   final bool needMessageButton;
@@ -25,6 +26,22 @@ class AgencyListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
+
+    List<IconData> iconListGenerator() {
+      final List<IconData> iconData = [];
+      if (iconsList[PaymentType.Card] ?? false) {
+        iconData.add(Icons.payments);
+      }
+      if (iconsList[PaymentType.Card] ?? false) {
+        iconData.add(Icons.credit_card);
+      }
+      if (iconsList[PaymentType.BankTransfer] ?? false) {
+        iconData.add(Icons.account_balance);
+      }
+      return iconData;
+    }
+
+    final List<IconData> iconListBuilder = iconListGenerator();
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: MezCard(
@@ -66,7 +83,7 @@ class AgencyListTile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Icon(
-                      iconsList[index],
+                      iconListBuilder[index],
                     ),
                   ),
                 Padding(

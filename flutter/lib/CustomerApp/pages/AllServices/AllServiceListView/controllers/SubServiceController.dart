@@ -3,8 +3,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 
 enum RentalViewEnum {
   Surf,
-  MotorCycle,
-  Car,
+  Vehicle,
   Homes,
   Classes,
   Wellness,
@@ -16,7 +15,7 @@ enum RentalViewEnum {
   GetTogether,
 }
 
-class RentalController {
+class SubServiceController {
   Map<AllServiceViewEnum, List<Map<String, dynamic>>> allRentalValues = {
     AllServiceViewEnum.Rental: [
       {
@@ -25,14 +24,9 @@ class RentalController {
         "icon": aSurf,
       },
       {
-        "value": RentalViewEnum.MotorCycle,
-        "key": "motorcycle",
+        "value": RentalViewEnum.Vehicle,
+        "key": "vehicle",
         "icon": aMotocycle,
-      },
-      {
-        "value": RentalViewEnum.Car,
-        "key": "car",
-        "icon": aCar,
       },
       {
         "value": RentalViewEnum.Homes,
