@@ -526,8 +526,8 @@
             "board": "Board",
             "store": "Store"
           },
-          "motorcycle": {
-            "title": "Motorcycle",
+          "vehicle": {
+            "title": "Vehicle",
             "description": "Get your clothes cleaned by your nearest laundry service.",
             "vehicle": "Vehicle",
             "store": "Store"

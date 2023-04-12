@@ -524,8 +524,8 @@
             "board": "Tablero",
             "store": "Tienda"
           },
-          "motorcycle": {
-            "title": "Motocicleta",
+          "vehicle": {
+            "title": "Vehículo",
             "description": "Get your clothes cleaned by your nearest laundry service.",
             "vehicle": "Vehículo",
             "store": "Tienda"

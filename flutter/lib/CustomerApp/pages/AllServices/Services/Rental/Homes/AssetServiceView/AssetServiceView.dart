@@ -119,21 +119,21 @@ class _AssetServiceViewState extends State<AssetServiceView> {
                         ),
                         // Agency title + agency list tile
                         title("Agency"),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: AgencyListTile(
-                            titleText: "Puerto Estate",
-                            rating: "4.9",
-                            onClick: () {},
-                            iconsList: [
-                              Icons.payments,
-                              Icons.credit_card,
-                            ],
-                            needMessageButton: true,
-                            onMessageClick: () {},
-                            image: NetworkImage(customImageUrl),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 8.0),
+                        //   child: AgencyListTile(
+                        //     titleText: "Puerto Estate",
+                        //     rating: "4.9",
+                        //     onClick: () {},
+                        //     iconsList: [
+                        //       Icons.payments,
+                        //       Icons.credit_card,
+                        //     ],
+                        //     needMessageButton: true,
+                        //     onMessageClick: () {},
+                        //     image: NetworkImage(customImageUrl),
+                        //   ),
+                        // ),
                         // Online Booking not available text
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),

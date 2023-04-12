@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetListsView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/HomeAssetListsView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/DeliveryServiceView.dart';
@@ -25,6 +26,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
   void initState() {
     super.initState();
     Get.put(AllServiceListViewController());
+    Get.put(AssetController());
     cServiceController = Get.find<AllServiceListViewController>();
     cServiceController.init();
   }
@@ -45,16 +47,16 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         RentalView.navigate();
         return;
       case AllServiceViewEnum.Class:
-        AssetListsView.navigate(viewEnum: RentalViewEnum.Classes);
+        HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Classes);
         return;
       case AllServiceViewEnum.Wellness:
-        AssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
+        HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
         return;
       case AllServiceViewEnum.Event:
         RentalView.navigate();
         return;
       case AllServiceViewEnum.Volunteer:
-        AssetListsView.navigate(viewEnum: RentalViewEnum.Volunteer);
+        HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Volunteer);
         return;
       case AllServiceViewEnum.Adventure:
         RentalView.navigate();

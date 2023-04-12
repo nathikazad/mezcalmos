@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/controller/AssetController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyStoreTile.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/RentalController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
 import 'package:get/get.dart';
@@ -57,18 +57,11 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                       price: 27,
                       unitTime: "hour",
                     );
-                  case RentalViewEnum.MotorCycle:
+                  case RentalViewEnum.Vehicle:
                     return AgencyStoreTile(
                       title: "ROYAL ENFIELD CLASSIC 500",
                       image: NetworkImage(customImageUrl),
                       price: 50,
-                      unitTime: "day",
-                    );
-                  case RentalViewEnum.Car:
-                    return AgencyStoreTile(
-                      title: "Renault Twingo",
-                      image: NetworkImage(customImageUrl),
-                      price: 70,
                       unitTime: "day",
                     );
                   case RentalViewEnum.Classes:
