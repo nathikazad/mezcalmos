@@ -60,20 +60,33 @@ query get_event_by_category($categories1: [String!], $distance: Float!, $from: g
             }
           }
         }, 
-        business: {
-          details: {
-            location: {
-              gps: {
-                _st_d_within: {
-                  distance: $distance, 
-                  from: $from
-                }
-              }
-            }
-          }
-        }, 
         schedule_type: {
           _in: $schedule_type
+        }, 
+        _or: {
+          gps_location: {
+            _st_d_within: {
+              distance: $distance, 
+              from: $from
+            }
+          }, 
+          _and: {
+            business: {
+              details: {
+                location: {
+                  gps: {
+                    _st_d_within: {
+                      distance: $distance, 
+                      from: $from
+                    }
+                  }
+                }
+              }
+            }, 
+            gps_location: {
+              _is_null: true
+            }
+          }
         }
       }
     }, limit: $limit, offset: $offset) {
