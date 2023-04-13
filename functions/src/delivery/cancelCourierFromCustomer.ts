@@ -70,7 +70,7 @@ async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrde
     let mezAdmins: MezAdmin[] = promiseResponse[0];
     let deliveryOperators: DeliveryOperator[] = promiseResponse[1];
 
-    let notification: Notification = {
+    let adminNotification: Notification = {
         foreground: <CourierOrderStatusChangeNotification>{
             status: DeliveryOrderStatus.CancelledByCustomer,
             time: (new Date()).toISOString(),
@@ -83,22 +83,35 @@ async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrde
         linkUrl: `/deliveryOrders/${deliveryId}`
     };
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, adminNotification, m.notificationInfo, ParticipantType.MezAdmin);
     });
     deliveryOperators.forEach((d) => {
         pushNotification(d.user?.firebaseId!,
-            notification,
+            adminNotification,
             d.notificationInfo,
             ParticipantType.DeliveryOperator,
             d.user?.language
         );
     });
-    notification.foreground.linkUrl = `/orderDetails/${deliveryId}`
-    let n:CourierOrderStatusChangeNotification = notification.foreground as CourierOrderStatusChangeNotification;
-    n.orderId = deliveryId;
+
+    
+
+
+    let driverNotification: Notification = {
+        foreground: <CourierOrderStatusChangeNotification>{
+            status: DeliveryOrderStatus.CancelledByCustomer,
+            time: (new Date()).toISOString(),
+            notificationType: NotificationType.OrderStatusChange,
+            orderType: OrderType.Courier,
+            notificationAction: NotificationAction.ShowPopUp,
+            orderId: deliveryId
+        },
+        background: deliveryOrderStatusChangeMessages[courierOrder.deliveryOrder.status],
+        linkUrl: `/orders/${deliveryId}`
+    };
     if (courierOrder.deliveryOrder.deliveryDriver) {
         pushNotification(courierOrder.deliveryOrder.deliveryDriver.user?.firebaseId!,
-            notification,
+            driverNotification,
             courierOrder.deliveryOrder.deliveryDriver.notificationInfo,
             ParticipantType.DeliveryDriver,
             courierOrder.deliveryOrder.deliveryDriver.user?.language
