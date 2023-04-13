@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -145,7 +146,7 @@ class _CustCourierServicesListViewState
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 25,
+                        radius: 21.mezSp,
                         backgroundImage:
                             CachedNetworkImageProvider(company.info.image),
                       ),
@@ -180,11 +181,12 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               Icons.delivery_dining,
               color: Colors.black,
-              size: 22,
+              size: 17.5.mezSp,
             ),
             SizedBox(
               width: 3,
@@ -200,20 +202,20 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
             ),
           ],
         ),
-        SizedBox(
-          width: 3.w,
-        ),
+        // SizedBox(
+        //   width: 3.w,
+        // ),s
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 2.w),
                 child: Icon(
                   Icons.payments,
                   color: Colors.black,
-                  size: 22,
+                  size: 15.mezSp,
                 ),
               ),
               SizedBox(width: 5),
@@ -226,9 +228,9 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
             ],
           ),
         ),
-        SizedBox(
-          width: 3.w,
-        ),
+        // SizedBox(
+        //   width: 3.w,
+        // ),
         if (company.rate != null && company.rate != 0)
           Flexible(
             child: Row(
@@ -236,7 +238,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               children: [
                 Icon(
                   Icons.star,
-                  size: 22,
+                  size: 17.5.mezSp,
                   color: Color(0xFF6779FE),
                 ),
                 SizedBox(
