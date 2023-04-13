@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
@@ -127,6 +126,7 @@ class LaundrOpCategoryViewController {
     LaundryCostLineItem? data =
         await update_laundry_category(newCategory: newCategory);
     if (data != null) {
+      copyOfCategory.value = null;
       copyOfCategory.value = data;
       shouldRefetch = true;
       showSavedSnackBar();
