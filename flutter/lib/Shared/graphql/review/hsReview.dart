@@ -34,7 +34,7 @@ Future<int?> insert_review({required Review review}) async {
 
 Future<num?> get_service_review_average(
     {required int serviceId,
-    required ServiceProviderType serviceProviderType,
+    required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
   final QueryResult<Query$get_service_review_average> response =
       await _db.graphQLClient.query$get_service_review_average(
@@ -60,7 +60,7 @@ Future<num?> get_service_review_average(
 
 Future<List<Review>?> get_service_reviews(
     {required int serviceId,
-    required ServiceProviderType serviceProviderType,
+    required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
   final QueryResult<Query$get_service_reviews> response =
       await _db.graphQLClient.query$get_service_reviews(

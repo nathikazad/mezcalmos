@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 class CustCourierServicesListViewController {
   RxList<DeliveryCompany> filteredServices = RxList<DeliveryCompany>.empty();
@@ -16,7 +17,7 @@ class CustCourierServicesListViewController {
   RxString searchQuery = RxString("");
   LocationData? customerLocation;
 
-  final LanguageType userLanguage =
+  final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   void init() {

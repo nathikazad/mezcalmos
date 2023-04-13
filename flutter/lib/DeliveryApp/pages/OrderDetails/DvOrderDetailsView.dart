@@ -27,6 +27,7 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -194,7 +195,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         viewController.order.value!.stripePaymentInfo,
                   ),
                 if (viewController.order.value!.status ==
-                        DeliveryOrderStatus.OrderReceived &&
+                        cModels.DeliveryOrderStatus.OrderReceived &&
                     viewController.order.value!.isDriverAssigned)
                   Container(
                     margin: EdgeInsets.only(top: 20),

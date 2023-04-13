@@ -244,7 +244,7 @@ class DvOrderViewcontroller {
       int? res = await dv_update_review_id(
           orderId: order.orderId,
           reviewId: reviewId,
-          serviceProviderType: ServiceProviderType.Customer);
+          serviceProviderType: cModels.ServiceProviderType.Customer);
       if (res != null) {
         return res;
       }

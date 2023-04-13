@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 class CustLaundriesListViewController {
   RxList<Laundry> filteredServices = RxList<Laundry>.empty();
@@ -16,7 +17,7 @@ class CustLaundriesListViewController {
   RxString searchQuery = RxString("");
   LocationData? customerLocation;
 
-  final LanguageType userLanguage =
+  final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   void init() {

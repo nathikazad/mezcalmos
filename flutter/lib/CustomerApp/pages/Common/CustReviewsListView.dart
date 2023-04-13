@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpReviewsView'];
@@ -20,7 +21,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class CustReviewsListView extends StatefulWidget {
   const CustReviewsListView({super.key});
   static Future<void> navigate(
-      {required int serviceId, required ServiceProviderType serviceType}) {
+      {required int serviceId,
+      required cModels.ServiceProviderType serviceType}) {
     return MezRouter.toPath(
         CustomerRoutes.customerReviewRoute
             .replaceFirst(":serviceId", "$serviceId"),
@@ -35,13 +37,13 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
   RxnNum rating = RxnNum();
   Rxn<List<Review>> reviews = Rxn();
   int? serviceId;
-  ServiceProviderType? serviceProviderType;
+  cModels.ServiceProviderType? serviceProviderType;
   bool get hasData => rating.value != null && reviews.value != null;
   @override
   void initState() {
     serviceId = int.tryParse(MezRouter.urlArguments["serviceId"].toString());
     serviceProviderType =
-        MezRouter.bodyArguments?["serviceType"] as ServiceProviderType?;
+        MezRouter.bodyArguments?["serviceType"] as cModels.ServiceProviderType?;
     if (serviceId != null && serviceProviderType != null) {
       fetchReviews();
     } else

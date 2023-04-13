@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 class CustCourierServiceViewController {
   // instances //
@@ -24,7 +25,7 @@ class CustCourierServiceViewController {
 
     unawaited(get_service_reviews(
             serviceId: companyId,
-            serviceProviderType: ServiceProviderType.DeliveryCompany,
+            serviceProviderType: cModels.ServiceProviderType.DeliveryCompany,
             withCache: false)
         .then((List<Review>? value) {
       if (value != null) {
@@ -34,7 +35,7 @@ class CustCourierServiceViewController {
 
     unawaited(get_service_review_average(
             serviceId: companyId,
-            serviceProviderType: ServiceProviderType.DeliveryCompany,
+            serviceProviderType: cModels.ServiceProviderType.DeliveryCompany,
             withCache: false)
         .then((num? value) {
       if (value != null) {

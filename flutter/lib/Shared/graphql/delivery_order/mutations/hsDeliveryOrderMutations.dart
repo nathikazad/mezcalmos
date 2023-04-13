@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -31,13 +32,13 @@ Future<DateTime?> dv_update_est_pickup_time(
 Future<int?> dv_update_review_id(
     {required int orderId,
     required int reviewId,
-    required ServiceProviderType serviceProviderType}) async {
+    required cModels.ServiceProviderType serviceProviderType}) async {
   final QueryResult<Mutation$updateDeliveryOrder> res = await _hasuraDb
       .graphQLClient
       .mutate$updateDeliveryOrder(Options$Mutation$updateDeliveryOrder(
           variables: Variables$Mutation$updateDeliveryOrder(
               orderId: orderId,
-              data: serviceProviderType == ServiceProviderType.Customer
+              data: serviceProviderType == cModels.ServiceProviderType.Customer
                   ? Input$delivery_order_set_input(
                       customer_review_by_driver_id: reviewId,
                     )
@@ -48,7 +49,7 @@ Future<int?> dv_update_review_id(
     throw Exception(
         " 🛑🛑🛑 Update review id order exceptions ${res.exception}");
   }
-  return serviceProviderType == ServiceProviderType.Customer
+  return serviceProviderType == cModels.ServiceProviderType.Customer
       ? res
           .parsedData!.update_delivery_order_by_pk!.customer_review_by_driver_id
       : res.parsedData!.update_delivery_order_by_pk!

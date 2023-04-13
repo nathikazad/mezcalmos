@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 class CustomerRestaurantController {
   // controllers //
@@ -49,7 +50,7 @@ class CustomerRestaurantController {
     restaurant.value = await get_restaurant_by_id(id: restaurantId);
     unawaited(get_service_reviews(
             serviceId: restaurantId,
-            serviceProviderType: ServiceProviderType.Restaurant)
+            serviceProviderType: cModels.ServiceProviderType.Restaurant)
         .then((List<Review>? value) {
       if (value != null) {
         restaurant.value!.reviews = value;
@@ -57,7 +58,7 @@ class CustomerRestaurantController {
     }));
     unawaited(get_service_review_average(
             serviceId: restaurantId,
-            serviceProviderType: ServiceProviderType.Restaurant)
+            serviceProviderType: cModels.ServiceProviderType.Restaurant)
         .then((num? value) {
       if (value != null) {
         restaurant.value!.rate = value;

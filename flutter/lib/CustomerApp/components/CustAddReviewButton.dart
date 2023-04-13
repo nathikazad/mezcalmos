@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["GeneralPurposeHelper"];
@@ -17,7 +18,7 @@ class CustAddReviewButton extends StatelessWidget {
       required this.toEntityType,
       required this.orderId});
   final int toEntityId;
-  final ServiceProviderType toEntityType;
+  final cModels.ServiceProviderType toEntityType;
   final int orderId;
 
   @override
@@ -33,7 +34,7 @@ class CustAddReviewButton extends StatelessWidget {
             toEntityId: toEntityId,
             toEntityType: toEntityType,
             fromEntityId: Get.find<AuthController>().hasuraUserId!,
-            fromEntityType: ServiceProviderType.Customer,
+            fromEntityType: cModels.ServiceProviderType.Customer,
             orderId: orderId);
         if (res != null) {
           await Get.find<CustomerAuthController>().setReviewId(
