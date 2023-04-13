@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/controllers/LaundrOpCategoryViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -16,13 +16,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 class LaundrOpCategoryView extends StatefulWidget {
   const LaundrOpCategoryView({Key? key}) : super(key: key);
 
-  static Future<void> navigate({int? categoryId, required int laundryId}) {
+  static Future<bool?> navigate(
+      {int? categoryId, required int laundryId}) async {
     String route = LaundryAppRoutes.kCategoryViewRoute
-        .replaceAll(":laundryId", laundryId.toString());
+        .replaceFirst(":laundryId", laundryId.toString());
     if (categoryId != null) {
-      route = route.replaceAll(":categoryId", categoryId.toString());
+      route = route.replaceFirst(":categoryId", categoryId.toString());
     }
-    return MezRouter.toPath(route);
+    await MezRouter.toPath(route);
+    return MezRouter.backResult;
   }
 
   @override
@@ -190,7 +192,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
           controller: _viewController.categoryPricingController,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (String? v) {
-            if (v != null && v.isNotEmpty && int.tryParse(v) != null) {
+            if (v != null && v.isNotEmpty && double.tryParse(v) != null) {
               return null;
             } else {
               return "${_i18n()["categoryPriceError"]}";

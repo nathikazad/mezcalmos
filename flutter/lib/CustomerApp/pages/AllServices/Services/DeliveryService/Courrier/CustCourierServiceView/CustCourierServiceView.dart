@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustCourierServiceView/controllers/CustCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,13 +13,13 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustCourierServiceView"];
@@ -195,7 +196,11 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
             ),
             Spacer(),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                CustReviewsListView.navigate(
+                    serviceId: _viewController.company.info.hasuraId,
+                    serviceType: cModels.ServiceProviderType.DeliveryCompany);
+              },
               child: Ink(
                 color: Colors.transparent,
                 padding: const EdgeInsets.all(10),

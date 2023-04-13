@@ -433,7 +433,7 @@ class Launcher:
         self.flutter_setup = f"--dart-define=APP_SP={self.user_args['app']} --dart-define=HOST={self.user_args['host']} --dart-define=LMODE={self.user_args['lmode']}{_previewDartDefine}"
 
 
-        text_file =  open('../lib/env_example.dart')
+        text_file =  open('../lib/env.example')
         data = text_file.read()
         if self.user_args['preview'] == True:
             data = data.replace("_previewMode = false", "_previewMode = true")
@@ -468,7 +468,7 @@ class Launcher:
             os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart{ios_export_options_plist_arg}{isVerbose}')
         elif self.user_args['build'] == 'web':
             # flutter build web --release --web-renderer html
-            os.system(f'flutter build web --release --web-renderer html --target lib/{self.user_args["app"]}/main_web.dart{isVerbose}')
+            os.system(f'Check image problem{isVerbose}')
         else:
             is_apk = self.user_args["build"] == 'apk'
             cmd_build = f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}{"--split-per-abi"if is_apk else""}'
@@ -532,7 +532,8 @@ class Launcher:
 
 
     def __launch__(self):        
-        open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=open('patches/pubspec_ref.yaml').read()))
+        patchable_pub_file=open('../pubspec.yaml').read()
+        open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=patchable_pub_file))
         PRINTLN(f"App =--> {self.user_args['app']}")
         if self.user_args['app'] != "WebApp":
             self.__patcher__()

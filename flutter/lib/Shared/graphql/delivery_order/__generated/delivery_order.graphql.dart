@@ -34713,6 +34713,20 @@ const documentNodeMutationupdateDeliveryOrder = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'service_provider_review_by_driver_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer_review_by_driver_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -34828,6 +34842,8 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
   Mutation$updateDeliveryOrder$update_delivery_order_by_pk({
     this.estimated_arrival_at_dropoff_time,
     this.estimated_arrival_at_pickup_time,
+    this.service_provider_review_by_driver_id,
+    this.customer_review_by_driver_id,
     required this.$__typename,
   });
 
@@ -34837,12 +34853,18 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
         json['estimated_arrival_at_dropoff_time'];
     final l$estimated_arrival_at_pickup_time =
         json['estimated_arrival_at_pickup_time'];
+    final l$service_provider_review_by_driver_id =
+        json['service_provider_review_by_driver_id'];
+    final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryOrder$update_delivery_order_by_pk(
       estimated_arrival_at_dropoff_time:
           (l$estimated_arrival_at_dropoff_time as String?),
       estimated_arrival_at_pickup_time:
           (l$estimated_arrival_at_pickup_time as String?),
+      service_provider_review_by_driver_id:
+          (l$service_provider_review_by_driver_id as int?),
+      customer_review_by_driver_id: (l$customer_review_by_driver_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -34850,6 +34872,10 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
   final String? estimated_arrival_at_dropoff_time;
 
   final String? estimated_arrival_at_pickup_time;
+
+  final int? service_provider_review_by_driver_id;
+
+  final int? customer_review_by_driver_id;
 
   final String $__typename;
 
@@ -34862,6 +34888,13 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     _resultData['estimated_arrival_at_pickup_time'] =
         l$estimated_arrival_at_pickup_time;
+    final l$service_provider_review_by_driver_id =
+        service_provider_review_by_driver_id;
+    _resultData['service_provider_review_by_driver_id'] =
+        l$service_provider_review_by_driver_id;
+    final l$customer_review_by_driver_id = customer_review_by_driver_id;
+    _resultData['customer_review_by_driver_id'] =
+        l$customer_review_by_driver_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -34872,10 +34905,15 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
     final l$estimated_arrival_at_dropoff_time =
         estimated_arrival_at_dropoff_time;
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final l$service_provider_review_by_driver_id =
+        service_provider_review_by_driver_id;
+    final l$customer_review_by_driver_id = customer_review_by_driver_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$estimated_arrival_at_dropoff_time,
       l$estimated_arrival_at_pickup_time,
+      l$service_provider_review_by_driver_id,
+      l$customer_review_by_driver_id,
       l$$__typename,
     ]);
   }
@@ -34902,6 +34940,20 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
         other.estimated_arrival_at_pickup_time;
     if (l$estimated_arrival_at_pickup_time !=
         lOther$estimated_arrival_at_pickup_time) {
+      return false;
+    }
+    final l$service_provider_review_by_driver_id =
+        service_provider_review_by_driver_id;
+    final lOther$service_provider_review_by_driver_id =
+        other.service_provider_review_by_driver_id;
+    if (l$service_provider_review_by_driver_id !=
+        lOther$service_provider_review_by_driver_id) {
+      return false;
+    }
+    final l$customer_review_by_driver_id = customer_review_by_driver_id;
+    final lOther$customer_review_by_driver_id =
+        other.customer_review_by_driver_id;
+    if (l$customer_review_by_driver_id != lOther$customer_review_by_driver_id) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -34939,6 +34991,8 @@ abstract class CopyWith$Mutation$updateDeliveryOrder$update_delivery_order_by_pk
   TRes call({
     String? estimated_arrival_at_dropoff_time,
     String? estimated_arrival_at_pickup_time,
+    int? service_provider_review_by_driver_id,
+    int? customer_review_by_driver_id,
     String? $__typename,
   });
 }
@@ -34963,6 +35017,8 @@ class _CopyWithImpl$Mutation$updateDeliveryOrder$update_delivery_order_by_pk<
   TRes call({
     Object? estimated_arrival_at_dropoff_time = _undefined,
     Object? estimated_arrival_at_pickup_time = _undefined,
+    Object? service_provider_review_by_driver_id = _undefined,
+    Object? customer_review_by_driver_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateDeliveryOrder$update_delivery_order_by_pk(
@@ -34974,6 +35030,13 @@ class _CopyWithImpl$Mutation$updateDeliveryOrder$update_delivery_order_by_pk<
             estimated_arrival_at_pickup_time == _undefined
                 ? _instance.estimated_arrival_at_pickup_time
                 : (estimated_arrival_at_pickup_time as String?),
+        service_provider_review_by_driver_id:
+            service_provider_review_by_driver_id == _undefined
+                ? _instance.service_provider_review_by_driver_id
+                : (service_provider_review_by_driver_id as int?),
+        customer_review_by_driver_id: customer_review_by_driver_id == _undefined
+            ? _instance.customer_review_by_driver_id
+            : (customer_review_by_driver_id as int?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -34993,6 +35056,8 @@ class _CopyWithStubImpl$Mutation$updateDeliveryOrder$update_delivery_order_by_pk
   call({
     String? estimated_arrival_at_dropoff_time,
     String? estimated_arrival_at_pickup_time,
+    int? service_provider_review_by_driver_id,
+    int? customer_review_by_driver_id,
     String? $__typename,
   }) =>
       _res;

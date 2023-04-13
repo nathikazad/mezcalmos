@@ -62,7 +62,7 @@ class _WrapperState extends State<Wrapper> {
   void checkConnectivity() {
     ConnectivityHelper.internetStatusStream
         .listen((InternetStatus internetStatus) {
-      mezDbgPrint("Inside check connectivity");
+      // mezDbgPrint("Inside check connectivity");
       if (internetStatus == InternetStatus.Offline) {
         if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
           mezDbgPrint("No internet going so going to no internet page");

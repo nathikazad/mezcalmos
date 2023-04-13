@@ -35,7 +35,7 @@ class _ServiceReviewCardState extends State<ServiceReviewCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.review.customer?.name ?? "",
+                      widget.review.fromName ?? "",
                       style: context.txt.bodyLarge,
                     ),
                     Text(

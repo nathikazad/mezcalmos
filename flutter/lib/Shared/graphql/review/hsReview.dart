@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/review/__generated/review.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -33,15 +32,18 @@ Future<int?> insert_review({required Review review}) async {
   return res.parsedData!.insert_review_one?.id;
 }
 
-Future<double?> get_service_review_average(
-    {required int serviceId, bool withCache = true}) async {
+Future<num?> get_service_review_average(
+    {required int serviceId,
+    required ServiceProviderType serviceProviderType,
+    bool withCache = true}) async {
   final QueryResult<Query$get_service_review_average> response =
       await _db.graphQLClient.query$get_service_review_average(
     Options$Query$get_service_review_average(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables:
-          Variables$Query$get_service_review_average(serviceId: serviceId),
+      variables: Variables$Query$get_service_review_average(
+          serviceId: serviceId,
+          serviceType: serviceProviderType.toFirebaseFormatString()),
     ),
   );
   Query$get_service_review_average$review_aggregate? data =
@@ -49,7 +51,7 @@ Future<double?> get_service_review_average(
 
   if (data == null) {
     throw Exception(
-        "🚨🚨🚨 get_restaurant_review_average Hasura querry exception =>${response.exception}");
+        "🚨🚨🚨 get_$serviceProviderType Hasura querry exception =>${response.exception}");
   } else {
     mezDbgPrint(" 😍😍😍😍 Getting avg rating =======>>>>>>>>>>>>$data");
     return data.aggregate?.avg?.rating;
@@ -57,13 +59,17 @@ Future<double?> get_service_review_average(
 }
 
 Future<List<Review>?> get_service_reviews(
-    {required int serviceId, bool withCache = true}) async {
+    {required int serviceId,
+    required ServiceProviderType serviceProviderType,
+    bool withCache = true}) async {
   final QueryResult<Query$get_service_reviews> response =
       await _db.graphQLClient.query$get_service_reviews(
     Options$Query$get_service_reviews(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables: Variables$Query$get_service_reviews(serviceId: serviceId),
+      variables: Variables$Query$get_service_reviews(
+          serviceId: serviceId,
+          serviceType: serviceProviderType.toFirebaseFormatString()),
     ),
   );
   List<Query$get_service_reviews$review>? data = response.parsedData?.review;
@@ -78,12 +84,10 @@ Future<List<Review>?> get_service_reviews(
           id: reviewData.id,
           rating: reviewData.rating,
           comment: reviewData.note,
-          customer: (reviewData.customer != null)
-              ? UserInfo(
-                  hasuraId: reviewData.customer!.user.id,
-                  name: reviewData.customer!.user.name,
-                  image: reviewData.customer!.user.image)
-              : null,
+          fromImage: reviewData.from_image,
+          fromName: reviewData.from_name,
+          toImage: reviewData.to_image,
+          toName: reviewData.to_name,
           reviewTime: DateTime.parse(reviewData.created_at),
           toEntityId: reviewData.to_entity_id,
           toEntityType: reviewData.to_entity_type.toServiceProviderType(),

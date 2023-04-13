@@ -2,6 +2,7 @@
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryOrder extends DeliverableOrder {
   int? serviceOrderId;
@@ -62,6 +63,17 @@ class DeliveryOrder extends DeliverableOrder {
   bool get inDeliveryPhase =>
       status == DeliveryOrderStatus.OnTheWayToDropoff ||
       status == DeliveryOrderStatus.AtDropoff;
+  bool get driverCanReviewService {
+    return status == DeliveryOrderStatus.Delivered &&
+        serviceReviewByDriver == null &&
+        deliveryProviderType == ServiceProviderType.DeliveryCompany &&
+        (orderType == OrderType.Restaurant || orderType == OrderType.Laundry);
+  }
+
+  bool get driverCanReviewCustomer {
+    return status == DeliveryOrderStatus.Delivered &&
+        customerReviewByDriver == null;
+  }
 
   @override
   bool operator ==(covariant DeliveryOrder other) {

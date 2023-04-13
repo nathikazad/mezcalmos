@@ -2,14 +2,14 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
-import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
+import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
-class CustLaundriesListViewController {
-  RxList<Laundry> filteredServices = RxList<Laundry>.empty();
+class CustCourierServicesListViewController {
+  RxList<DeliveryCompany> filteredServices = RxList<DeliveryCompany>.empty();
 
-  List<Laundry> _services = List<Laundry>.empty();
+  List<DeliveryCompany> _services = List<DeliveryCompany>.empty();
 
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(true);
@@ -22,7 +22,7 @@ class CustLaundriesListViewController {
   void init() {
     isLoading.value = true;
 
-    get_laundries(withCache: false).then((List<Laundry>? list) {
+    get_dv_companies().then((List<DeliveryCompany>? list) {
       if (list != null) {
         _services = list;
 
@@ -45,11 +45,11 @@ class CustLaundriesListViewController {
   }
 
   void filter() {
-    List<Laundry> newList = new List<Laundry>.from(_services);
+    List<DeliveryCompany> newList = new List<DeliveryCompany>.from(_services);
 
     newList = newList
         .searchByName(searchQuery.value)
-        .showOnlyOpen(showOnlyOpen.value) as List<Laundry>;
+        .showOnlyOpen(showOnlyOpen.value) as List<DeliveryCompany>;
     newList.sortByOpen();
     filteredServices.value = newList;
   }

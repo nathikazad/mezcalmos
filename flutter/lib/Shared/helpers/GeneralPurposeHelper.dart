@@ -686,6 +686,156 @@ Widget customerAddReviewButton(
   );
 }
 
+Future<int?> addReviewDialog(
+    {required BuildContext context,
+    required int toEntityId,
+    required cModels.ServiceProviderType toEntityType,
+    required int fromEntityId,
+    required cModels.ServiceProviderType fromEntityType,
+    required int orderId}) async {
+  final TextEditingController controller = TextEditingController();
+  num rating = 3;
+  return await showDialog<int?>(
+      context: context,
+      barrierDismissible: false,
+      useRootNavigator: false,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          scrollable: true,
+          contentPadding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 18,
+            bottom: 10,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: primaryBlueColor, shape: BoxShape.circle),
+                padding: const EdgeInsets.all(10),
+                child: Center(
+                    child: Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                )),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${_i18n()["review"]["title"]}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16.sp,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "${_i18n()["review"]["subtitle"]}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.sp,
+                ),
+              ),
+              RatingBar.builder(
+                unratedColor: unratedStarColor,
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                glow: false,
+                itemPadding:
+                    EdgeInsets.symmetric(horizontal: 4.0, vertical: 12),
+                itemBuilder: (BuildContext context, _) => Icon(
+                  Icons.star,
+                  color: primaryBlueColor,
+                ),
+                onRatingUpdate: (double newRate) {
+                  rating = newRate;
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                maxLines: 8,
+                minLines: 5,
+                controller: controller,
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w600,
+                ),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    fillColor: unratedStarColor,
+                    hintText: "${_i18n()["review"]["hintText"]}"),
+              ),
+              const SizedBox(height: 18),
+              MezButton(
+                textStyle: context.txt.headlineMedium?.copyWith(
+                  color: primaryBlueColor,
+                ),
+                label: "${_i18n()["review"]["send"]}",
+                height: 45,
+                textColor: primaryBlueColor,
+                backgroundColor: secondaryLightBlueColor,
+                onClick: () async {
+                  final Review review = Review(
+                      comment: controller.text,
+                      rating: rating,
+                      toEntityId: toEntityId,
+                      toEntityType: toEntityType,
+                      fromEntityId: fromEntityId,
+                      fromEntityType: fromEntityType,
+                      reviewTime: DateTime.now().toUtc());
+
+                  final int? reviewId = await insert_review(review: review);
+                  if (reviewId != null) {
+                    customSnackBar(
+                      title: _i18n()["review"]["successTitle"],
+                      subTitle: _i18n()["review"]["successSubtitle"],
+                    );
+                    Navigator.pop(context, reviewId);
+                  } else {
+                    customSnackBar(title: 'Error', subTitle: 'error');
+                  }
+                },
+              ),
+              SizedBox(height: 10),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Ink(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  width: double.infinity,
+                  child: Text(
+                    "${_i18n()["review"]["close"]}",
+                    textAlign: TextAlign.center,
+                    style: context.txt.headlineMedium?.copyWith(
+                      color: offShadeGreyColor,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+  return null;
+}
+
 Widget radioCircleButton(
     {bool value = false, required void Function(bool?) onTap}) {
   return InkWell(

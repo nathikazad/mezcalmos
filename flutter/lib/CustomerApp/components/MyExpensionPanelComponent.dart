@@ -66,7 +66,7 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
 
     /// Initialize _isExpanded
-    _isExpanded = (PageStorage.of(context).readState(context) as bool?) ??
+    _isExpanded = (PageStorage.of(context)?.readState(context) as bool?) ??
         widget.initiallyExpanded;
 
     if (_isExpanded) _controller.value = 1.0;
@@ -91,7 +91,7 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
           });
         });
       }
-      PageStorage.of(context).writeState(context, _isExpanded);
+      PageStorage.of(context)?.writeState(context, _isExpanded);
     });
     widget.onExpansionChanged?.call(_isExpanded);
   }

@@ -10,13 +10,10 @@ import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CustomerRoutes {
-  static const String customerReviewRoute = '/reviews';
+  static const String customerReviewRoute = '/reviews/:serviceId';
   static const String customerOrdersRoute = '/orders';
   static const String savedCards = '/savedCards';
   static const String savedLocations = '/savedLocations';
-
-  static String getReviewsListRoute(int serviceId) =>
-      '$customerReviewRoute/$serviceId';
 
   final List<QRoute> routes = [
     QRoute(

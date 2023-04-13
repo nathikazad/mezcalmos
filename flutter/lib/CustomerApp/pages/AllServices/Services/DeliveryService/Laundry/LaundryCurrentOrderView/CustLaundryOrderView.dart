@@ -11,14 +11,13 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -217,12 +216,11 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
   Widget _addReviewButton(BuildContext context) {
     return Obx(() {
       if (viewController.order.value?.canAddReview == true) {
-        return customerAddReviewButton(context,
-            orderId: viewController.order.value!.orderId,
-            serviceProviderId:
-                viewController.order.value!.serviceProvider.hasuraId,
-            serviceProviderType: cModels.ServiceProviderType.Laundry,
-            orderType: cModels.OrderType.Laundry);
+        return CustAddReviewButton(
+          orderId: viewController.order.value!.orderId,
+          toEntityId: viewController.order.value!.serviceProvider.hasuraId,
+          toEntityType: cModels.ServiceProviderType.Laundry,
+        );
       } else {
         return SizedBox();
       }

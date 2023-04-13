@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantsListView/components/RestaurantCard.dart';
@@ -11,7 +12,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:sizer/sizer.dart';
@@ -58,11 +58,8 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
       //   title: "${_i18n()['restaurants']}",
       // ),
 
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: MezRouter.back,
-        title: "${_i18n()['restaurants']}"
-      ),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back, title: "${_i18n()['restaurants']}"),
       floatingActionButton: FloatingCartComponent(),
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(8),
@@ -274,21 +271,13 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   }
 
   Widget _sortingSwitcher() {
-    return Obx(
-      () => SwitchListTile(
-        value: viewController.showOnlyOpen.value,
-        onChanged: (bool v) {
-          viewController.changeAlwaysOpenSwitch(v);
-          viewController.filter();
-        },
-        activeColor: primaryBlueColor,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-        title: Text(
-          "${_i18n()["showOnlyOpen"]}",
-          style: context.txt.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
-        ),
-      ),
-    );
+    return Obx(() => CustSwitchOpenService(
+          showOnlyOpen: viewController.showOnlyOpen.value,
+          onChange: (bool value) {
+            viewController.changeAlwaysOpenSwitch(value);
+            viewController.filter();
+          },
+        ));
   }
 
   Widget _searchInput() {

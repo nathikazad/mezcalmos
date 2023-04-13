@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -130,12 +132,12 @@ class _SignInViewState extends State<SignInView> {
         SizedBox(
           height: 10,
         ),
-           if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
-            appleLoginBtn(),
-            if (MezEnv.appLaunchMode == AppLaunchMode.stage)
+        if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
+          appleLoginBtn(),
+        if (MezEnv.appLaunchMode == AppLaunchMode.stage)
           ...stageLoginBtns(stageCredentials),
-            if (MezEnv.appLaunchMode == AppLaunchMode.dev)
-            ...stageLoginBtns(devCredentials),
+        if (MezEnv.appLaunchMode == AppLaunchMode.dev)
+          ...stageLoginBtns(devCredentials),
       ];
     }
   }

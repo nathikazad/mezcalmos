@@ -8,17 +8,15 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
@@ -199,11 +197,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   Widget _addReviewButton(BuildContext context) {
     return Obx(() {
       if (viewController.order.value?.canAddReview == true) {
-        return customerAddReviewButton(context,
-            orderId: viewController.order.value!.orderId,
-            serviceProviderId: viewController.order.value!.restaurantId,
-            serviceProviderType: cModels.ServiceProviderType.Restaurant,
-            orderType: cModels.OrderType.Restaurant);
+        return CustAddReviewButton(
+          orderId: viewController.order.value!.orderId,
+          toEntityId: viewController.order.value!.serviceProvider.hasuraId,
+          toEntityType: cModels.ServiceProviderType.Restaurant,
+        );
       } else {
         return SizedBox();
       }

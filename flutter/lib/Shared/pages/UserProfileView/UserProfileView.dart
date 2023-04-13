@@ -18,8 +18,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});
-  static Future<void> navigate() {
-    return MezRouter.toPath(SharedRoutes.kUserNewProfile);
+  static Future<void> navigate({UserProfileViewMode? initalMode}) {
+    return MezRouter.toPath(SharedRoutes.kUserNewProfile,
+        arguments: {"mode": initalMode});
   }
 
   @override
@@ -31,7 +32,10 @@ class _UserProfileViewState extends State<UserProfileView> {
 
   @override
   void initState() {
-    viewController.initProfileView();
+    UserProfileViewMode initMode =
+        MezRouter.bodyArguments?["mode"] as UserProfileViewMode? ??
+            UserProfileViewMode.None;
+    viewController.initProfileView(initMode);
     super.initState();
   }
 

@@ -130,11 +130,10 @@ Future<LaundryOrder?> get_laundry_order_by_id(
             comment: orderData.review!.note,
             rating: orderData.review!.rating,
             toEntityId: orderData.review!.to_entity_id,
-            customer: UserInfo(
-              name: orderData.review?.customer?.user.name,
-              image: orderData.review?.customer?.user.image,
-              hasuraId: orderData.review!.customer!.user.id,
-            ),
+            fromImage: orderData.review!.from_image,
+            fromName: orderData.review!.from_name,
+            toImage: orderData.review!.to_image,
+            toName: orderData.review!.to_name,
             toEntityType:
                 orderData.review!.to_entity_type.toServiceProviderType(),
             fromEntityId: orderData.review!.from_entity_id,
@@ -267,11 +266,10 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                 comment: orderData.review!.note,
                 rating: orderData.review!.rating,
                 toEntityId: orderData.review!.to_entity_id,
-                customer: UserInfo(
-                  name: orderData.review?.customer?.user.name,
-                  image: orderData.review?.customer?.user.image,
-                  hasuraId: orderData.review!.customer!.user.id,
-                ),
+               fromImage: orderData.review!.from_image,
+          fromName: orderData.review!.from_name,
+          toImage: orderData.review!.to_image,
+          toName: orderData.review!.to_name,
                 toEntityType:
                     orderData.review!.to_entity_type.toServiceProviderType(),
                 fromEntityId: orderData.review!.from_entity_id,
