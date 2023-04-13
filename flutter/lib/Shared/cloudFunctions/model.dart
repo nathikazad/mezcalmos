@@ -1800,7 +1800,6 @@ class ServiceLink {
 enum ServiceProviderType {
   Restaurant,
   Laundry,
-  Taxi,
   Business,
   DeliveryCompany,
   Customer,
@@ -1981,7 +1980,7 @@ extension ParseStringToRentalCategory1 on String {
   }
 }
 
-enum ClassCategory1 { Yoga, MartialArt }
+enum ClassCategory1 { Yoga, Surf, MartialArt }
 
 extension ParseClassCategory1ToString on ClassCategory1 {
   String toFirebaseFormatString() {

@@ -12,13 +12,14 @@ select_permissions:
   - role: customer
     permission:
       columns:
+        - additional_parameters
         - available
+        - category1
+        - category2
+        - cost
         - description_id
         - id
+        - image
         - name_id
         - position
-        - additional_parameters
-        - cost
-        - image
-        - category1
       filter: {}

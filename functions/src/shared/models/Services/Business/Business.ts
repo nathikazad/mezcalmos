@@ -57,7 +57,8 @@ export enum RentalCategory1 {
 }
 export enum ClassCategory1 {
     Yoga = "yoga",
-    MartialArt = "martialArt"
+    Surf = "surf",
+    MartialArt = "martialArt",
 }
 export enum EventCategory1 {
     Party = "party",

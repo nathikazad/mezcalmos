@@ -85,7 +85,8 @@ export enum ServiceProviderType {
   Laundry = "laundry",
   Business = "business",
   DeliveryCompany = "deliveryCompany",
-  Customer = "customer"
+  Customer = "customer",
+  DeliveryDriver = "deliveryDriver"
 }
 
 export interface OperatorApprovedNotification extends ForegroundNotification {
@@ -102,4 +103,5 @@ export const ServiceProviderToAppType: Record<ServiceProviderType, AppType> = {
   [ServiceProviderType.Business]: AppType.Business,
   [ServiceProviderType.DeliveryCompany]: AppType.DeliveryAdmin,
   [ServiceProviderType.Customer]: AppType.Customer,
+  [ServiceProviderType.DeliveryDriver]: AppType.Delivery,
 }
