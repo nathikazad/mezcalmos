@@ -3442,41 +3442,6 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                     ]),
                   ),
                   ObjectFieldNode(
-                    name: NameNode(value: 'business'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: 'details'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: 'location'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'gps'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_st_d_within'),
-                                    value: ObjectValueNode(fields: [
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'distance'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'distance')),
-                                      ),
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'from'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'from')),
-                                      ),
-                                    ]),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          )
-                        ]),
-                      )
-                    ]),
-                  ),
-                  ObjectFieldNode(
                     name: NameNode(value: 'schedule_type'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
@@ -3484,6 +3449,84 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                         value: VariableNode(
                             name: NameNode(value: 'schedule_type')),
                       )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: '_or'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'gps_location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_st_d_within'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'distance'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'distance')),
+                              ),
+                              ObjectFieldNode(
+                                name: NameNode(value: 'from'),
+                                value:
+                                    VariableNode(name: NameNode(value: 'from')),
+                              ),
+                            ]),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: '_and'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'business'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'details'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'location'),
+                                    value: ObjectValueNode(fields: [
+                                      ObjectFieldNode(
+                                        name: NameNode(value: 'gps'),
+                                        value: ObjectValueNode(fields: [
+                                          ObjectFieldNode(
+                                            name:
+                                                NameNode(value: '_st_d_within'),
+                                            value: ObjectValueNode(fields: [
+                                              ObjectFieldNode(
+                                                name:
+                                                    NameNode(value: 'distance'),
+                                                value: VariableNode(
+                                                    name: NameNode(
+                                                        value: 'distance')),
+                                              ),
+                                              ObjectFieldNode(
+                                                name: NameNode(value: 'from'),
+                                                value: VariableNode(
+                                                    name: NameNode(
+                                                        value: 'from')),
+                                              ),
+                                            ]),
+                                          )
+                                        ]),
+                                      )
+                                    ]),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps_location'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_is_null'),
+                                value: BooleanValueNode(value: true),
+                              )
+                            ]),
+                          ),
+                        ]),
+                      ),
                     ]),
                   ),
                 ]),
@@ -3624,6 +3667,20 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'schedule_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'time'),
             alias: null,
             arguments: [],
@@ -3709,20 +3766,6 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'schedule_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'schedule'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -3853,10 +3896,10 @@ class Query$get_class_by_category$business_class {
     required this.service,
     required this.id,
     this.gps_location,
-    this.time,
-    required this.business,
     required this.schedule_type,
     this.schedule,
+    this.time,
+    required this.business,
     required this.$__typename,
   });
 
@@ -3865,10 +3908,10 @@ class Query$get_class_by_category$business_class {
     final l$service = json['service'];
     final l$id = json['id'];
     final l$gps_location = json['gps_location'];
-    final l$time = json['time'];
-    final l$business = json['business'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
+    final l$time = json['time'];
+    final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$get_class_by_category$business_class(
       service: Query$get_class_by_category$business_class$service.fromJson(
@@ -3876,11 +3919,11 @@ class Query$get_class_by_category$business_class {
       id: (l$id as int),
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
+      schedule_type: (l$schedule_type as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       time: (l$time as String?),
       business: Query$get_class_by_category$business_class$business.fromJson(
           (l$business as Map<String, dynamic>)),
-      schedule_type: (l$schedule_type as String),
-      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3891,13 +3934,13 @@ class Query$get_class_by_category$business_class {
 
   final Geography? gps_location;
 
-  final String? time;
-
-  final Query$get_class_by_category$business_class$business business;
-
   final String schedule_type;
 
   final dynamic? schedule;
+
+  final String? time;
+
+  final Query$get_class_by_category$business_class$business business;
 
   final String $__typename;
 
@@ -3910,14 +3953,14 @@ class Query$get_class_by_category$business_class {
     final l$gps_location = gps_location;
     _resultData['gps_location'] =
         l$gps_location == null ? null : geographyToJson(l$gps_location);
-    final l$time = time;
-    _resultData['time'] = l$time;
-    final l$business = business;
-    _resultData['business'] = l$business.toJson();
     final l$schedule_type = schedule_type;
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$time = time;
+    _resultData['time'] = l$time;
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3928,19 +3971,19 @@ class Query$get_class_by_category$business_class {
     final l$service = service;
     final l$id = id;
     final l$gps_location = gps_location;
-    final l$time = time;
-    final l$business = business;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
+    final l$time = time;
+    final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$service,
       l$id,
       l$gps_location,
-      l$time,
-      l$business,
       l$schedule_type,
       l$schedule,
+      l$time,
+      l$business,
       l$$__typename,
     ]);
   }
@@ -3969,16 +4012,6 @@ class Query$get_class_by_category$business_class {
     if (l$gps_location != lOther$gps_location) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
-      return false;
-    }
-    final l$business = business;
-    final lOther$business = other.business;
-    if (l$business != lOther$business) {
-      return false;
-    }
     final l$schedule_type = schedule_type;
     final lOther$schedule_type = other.schedule_type;
     if (l$schedule_type != lOther$schedule_type) {
@@ -3987,6 +4020,16 @@ class Query$get_class_by_category$business_class {
     final l$schedule = schedule;
     final lOther$schedule = other.schedule;
     if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$time = time;
+    final lOther$time = other.time;
+    if (l$time != lOther$time) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -4021,10 +4064,10 @@ abstract class CopyWith$Query$get_class_by_category$business_class<TRes> {
     Query$get_class_by_category$business_class$service? service,
     int? id,
     Geography? gps_location,
-    String? time,
-    Query$get_class_by_category$business_class$business? business,
     String? schedule_type,
     dynamic? schedule,
+    String? time,
+    Query$get_class_by_category$business_class$business? business,
     String? $__typename,
   });
   CopyWith$Query$get_class_by_category$business_class$service<TRes> get service;
@@ -4049,10 +4092,10 @@ class _CopyWithImpl$Query$get_class_by_category$business_class<TRes>
     Object? service = _undefined,
     Object? id = _undefined,
     Object? gps_location = _undefined,
-    Object? time = _undefined,
-    Object? business = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
+    Object? time = _undefined,
+    Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_class_by_category$business_class(
@@ -4063,16 +4106,16 @@ class _CopyWithImpl$Query$get_class_by_category$business_class<TRes>
         gps_location: gps_location == _undefined
             ? _instance.gps_location
             : (gps_location as Geography?),
-        time: time == _undefined ? _instance.time : (time as String?),
-        business: business == _undefined || business == null
-            ? _instance.business
-            : (business as Query$get_class_by_category$business_class$business),
         schedule_type: schedule_type == _undefined || schedule_type == null
             ? _instance.schedule_type
             : (schedule_type as String),
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
+        time: time == _undefined ? _instance.time : (time as String?),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business as Query$get_class_by_category$business_class$business),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -4102,10 +4145,10 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_class<TRes>
     Query$get_class_by_category$business_class$service? service,
     int? id,
     Geography? gps_location,
-    String? time,
-    Query$get_class_by_category$business_class$business? business,
     String? schedule_type,
     dynamic? schedule,
+    String? time,
+    Query$get_class_by_category$business_class$business? business,
     String? $__typename,
   }) =>
       _res;

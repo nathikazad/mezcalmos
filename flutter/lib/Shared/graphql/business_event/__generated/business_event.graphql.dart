@@ -3467,41 +3467,6 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                     ]),
                   ),
                   ObjectFieldNode(
-                    name: NameNode(value: 'business'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: 'details'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: 'location'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'gps'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_st_d_within'),
-                                    value: ObjectValueNode(fields: [
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'distance'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'distance')),
-                                      ),
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'from'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'from')),
-                                      ),
-                                    ]),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          )
-                        ]),
-                      )
-                    ]),
-                  ),
-                  ObjectFieldNode(
                     name: NameNode(value: 'schedule_type'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
@@ -3509,6 +3474,84 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                         value: VariableNode(
                             name: NameNode(value: 'schedule_type')),
                       )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: '_or'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'gps_location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_st_d_within'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'distance'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'distance')),
+                              ),
+                              ObjectFieldNode(
+                                name: NameNode(value: 'from'),
+                                value:
+                                    VariableNode(name: NameNode(value: 'from')),
+                              ),
+                            ]),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: '_and'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'business'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'details'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'location'),
+                                    value: ObjectValueNode(fields: [
+                                      ObjectFieldNode(
+                                        name: NameNode(value: 'gps'),
+                                        value: ObjectValueNode(fields: [
+                                          ObjectFieldNode(
+                                            name:
+                                                NameNode(value: '_st_d_within'),
+                                            value: ObjectValueNode(fields: [
+                                              ObjectFieldNode(
+                                                name:
+                                                    NameNode(value: 'distance'),
+                                                value: VariableNode(
+                                                    name: NameNode(
+                                                        value: 'distance')),
+                                              ),
+                                              ObjectFieldNode(
+                                                name: NameNode(value: 'from'),
+                                                value: VariableNode(
+                                                    name: NameNode(
+                                                        value: 'from')),
+                                              ),
+                                            ]),
+                                          )
+                                        ]),
+                                      )
+                                    ]),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps_location'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_is_null'),
+                                value: BooleanValueNode(value: true),
+                              )
+                            ]),
+                          ),
+                        ]),
+                      ),
                     ]),
                   ),
                 ]),
