@@ -1170,7 +1170,8 @@
         "refundAmount": "Refund amount",
         "tax": "Tax",
         "toBeCalc": "To be calculated",
-        "add": "Add"
+        "add": "Add",
+        "waitingForCustomer":"Waiting for customer"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Payment method",
@@ -1459,7 +1460,8 @@
         "packageReady": "Package ready :",
         "arrivalAtPickup": "Arrival at pickup :",
         "arrivalAtDropoff": "Arrival at dropoff :",
-        "noDriver": "No driver assigned yet"
+        "noDriver": "No driver assigned yet",
+        "cancelOrder" :"Cancel Order"
       },
       "DvOpTabsView": {
         "orders": "Orders",

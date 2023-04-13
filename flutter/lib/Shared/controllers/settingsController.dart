@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
 
@@ -37,17 +38,21 @@ class SettingsController extends GetxController {
   LanguageController get appLanguage => _appLanguage;
 
   SettingsController(this.locationType, {this.sideMenuItems = const []});
-  late bool _isGooglePlayServiceAvailable;
+  bool _isGooglePlayServiceAvailable = true;
   bool get isGooglePlayServiceAvailable => _isGooglePlayServiceAvailable;
 
   @override
   Future<void> onInit() async {
     Get.put(LocationController(locationType: locationType), permanent: true);
-    await GoogleApiAvailability.instance
-        .checkGooglePlayServicesAvailability()
-        .then((GooglePlayServicesAvailability value) =>
-            _isGooglePlayServiceAvailable =
-                value == GooglePlayServicesAvailability.success);
+    try {
+      GooglePlayServicesAvailability res = await GoogleApiAvailability.instance
+          .checkGooglePlayServicesAvailability();
+      _isGooglePlayServiceAvailable =
+          res == GooglePlayServicesAvailability.success;
+    } catch (e) {
+      mezDbgPrint("Google Play Services not available");
+      _isGooglePlayServiceAvailable = false;
+    }
 
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)

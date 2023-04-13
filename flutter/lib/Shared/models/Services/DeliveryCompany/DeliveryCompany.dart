@@ -40,7 +40,5 @@ class DeliveryCompany extends Service {
     );
   }
 
-  bool isOpen() {
-    return state.isOpen && (schedule?.isOpen() ?? true);
-  }
+
 }

@@ -323,9 +323,6 @@ class Restaurant extends Service {
     return data;
   }
 
-  bool isOpen() {
-    return state.isOpen && (schedule?.isOpen() ?? true);
-  }
 
   Restaurant copyWith({
     ServiceInfo? userInfo,

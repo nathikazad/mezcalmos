@@ -46,6 +46,10 @@ abstract class Service {
   bool get showReviews {
     return rate != null && reviews.isNotEmpty;
   }
+
+  bool isOpen() {
+    return state.isOpen && (schedule?.isOpen() ?? true);
+  }
 }
 
 class ServiceState {

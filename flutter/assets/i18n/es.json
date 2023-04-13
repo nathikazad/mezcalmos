@@ -1172,7 +1172,7 @@
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado",
         "add": "Agregar",
-        "waitingForCustomer": "esperando a un cliente"
+        "waitingForCustomer":"esperando a un cliente"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
@@ -1461,7 +1461,8 @@
         "arrivalAtPickup": "Llegada a la recogida :",
         "pickupLoc": "Lugar de recogida",
         "arrivalAtDropoff": "Llegada a la caída :",
-        "noDriver": "No hay controlador asignado todavía"
+        "noDriver": "No hay controlador asignado todavía",
+        "cancelOrder" :"Cancelar orden"
       },
       "DvOpTabsView": {
         "orders": "Pedidos",
