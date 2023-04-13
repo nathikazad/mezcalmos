@@ -6,6 +6,15 @@
       "savedCards": "My cards"
     },
     "components": {
+      "NoOpenServiceComponent" : {
+        "title" : "No open services",
+        "desc" : "There are no open services in your area. Please try again later.",
+        "restaurant" : "restaurants",
+        "deliveryCompany" : "couriers",
+        "laundry" : "laundries",
+        "btn" :"Show closed services"
+      },
+      
       "Menu": {
         "UserMenuComponent": {
           "savedLocations": "My locations",

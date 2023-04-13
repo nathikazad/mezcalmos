@@ -242,6 +242,7 @@ const String mezPackageMarker =
     "assets/images/shared/markers/packageMarker.png";
 const String mezDestinationMarker =
     "assets/images/shared/markers/destinationMarker.png";
+const String mezLookingAsset = "assets/images/shared/looking.png";
 
 Future<void> launchAppStoreLink() async {
   if (kIsWeb) {

@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
@@ -16,7 +18,7 @@ class CustRestaurantListViewController {
   RxList<Item> filteredItems = RxList<Item>.empty();
   List<int> servicesIds = [];
 
-  RestaurantList _restaurants = List<Restaurant>.empty();
+  List<Restaurant> _restaurants = List<Restaurant>.empty();
   Rx<SearchType> searchType = SearchType.searchByRestaurantName.obs;
 
   RxBool isLoading = RxBool(false);
@@ -59,18 +61,18 @@ class CustRestaurantListViewController {
   }
 
   void filter() {
-    RestaurantList newList = new RestaurantList.from(_restaurants);
+    List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
     if (searchType.value == SearchType.searchByRestaurantName) {
       newList = newList
           .searchByName(searchQuery.value)
-          .showOnlyOpen(showOnlyOpen.value);
+          .showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
       newList.sortByOpen();
       filteredRestaurants.value = newList;
     } else {
       servicesIds = newList
           .showOnlyOpen(showOnlyOpen.value)
           .map(
-            (Restaurant e) => e.info.hasuraId,
+            (Service e) => e.info.hasuraId,
           )
           .toList();
       _searchItem();
@@ -101,36 +103,5 @@ class CustRestaurantListViewController {
 
   void dispose() {
     isLoading.value = false;
-  }
-}
-
-typedef RestaurantList = List<Restaurant>;
-
-extension RestaurantFilters on RestaurantList {
-  RestaurantList searchByName(String search) {
-    return where((Restaurant restaurant) =>
-            restaurant.info.name.toLowerCase().contains(search.toLowerCase()))
-        .toList();
-  }
-
-  RestaurantList showOnlyOpen(bool value) {
-    if (value == true) {
-      return where((Restaurant restaurant) => restaurant.isOpen() == true)
-          .toList();
-    } else {
-      return where((Restaurant restaurant) =>
-          restaurant.state.isClosedIndef == false).toList();
-    }
-  }
-
-  void sortByOpen() {
-    sort((Restaurant a, Restaurant b) {
-      if (a.isOpen() && !b.isOpen()) {
-        return -1;
-      } else if (!a.isOpen() && b.isOpen()) {
-        return 1;
-      } else
-        return 0;
-    });
   }
 }

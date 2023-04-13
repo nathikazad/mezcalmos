@@ -1,18 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
+import 'package:mezcalmos/CustomerApp/components/NoOpenServiceComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierServiceView/CustCourierServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourrierServicesListView/controllers/CustCourierServicesListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
@@ -33,24 +34,13 @@ class CustCourierServicesListView extends StatefulWidget {
 
 class _CustCourierServicesListViewState
     extends State<CustCourierServicesListView> {
-  Rxn<List<DeliveryCompany>> companies = Rxn();
+  CustCourierServicesListViewController _controller =
+      CustCourierServicesListViewController();
 
   @override
   void initState() {
-    try {
-      fetchCompanies();
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
+    _controller.init();
     super.initState();
-  }
-
-  Future<void> fetchCompanies() async {
-    companies.value = await get_dv_companies() ?? [];
-    companies.value = companies.value
-        ?.where((DeliveryCompany element) => element.isOpen() == true)
-        .toList();
   }
 
   @override
@@ -62,26 +52,32 @@ class _CustCourierServicesListViewState
           onClick: MezRouter.back),
       body: Obx(
         () {
-          if (companies.value != null) {
+          if (_controller.isLoading == false) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // _searchCoomponent(context),
-                  Text(
-                    "${_i18n()['title']}",
-                    style: context.textTheme.displaySmall,
-                  ),
+                  _searchCoomponent(context),
+                  _sortingSwitcher(),
                   SizedBox(
                     height: 20,
                   ),
-                  Column(
-                    children: List.generate(
-                        companies.value!.length,
-                        (int index) =>
-                            _companyCard(companies.value![index], context)),
-                  )
+                  (_controller.filteredServices.isEmpty)
+                      ? NoOpenServiceComponent(
+                          showOnlyOpen: _controller.showOnlyOpen.value,
+                          onClick: () {
+                            _controller.changeAlwaysOpenSwitch(false);
+                            _controller.filter();
+                          },
+                        )
+                      : Column(
+                          children: List.generate(
+                              _controller.filteredServices.length,
+                              (int index) => _companyCard(
+                                  _controller.filteredServices[index],
+                                  context)),
+                        )
                 ],
               ),
             );
@@ -96,6 +92,16 @@ class _CustCourierServicesListViewState
     );
   }
 
+  Widget _sortingSwitcher() {
+    return Obx(() => CustSwitchOpenService(
+          showOnlyOpen: _controller.showOnlyOpen.value,
+          onChange: (bool value) {
+            _controller.changeAlwaysOpenSwitch(value);
+            _controller.filter();
+          },
+        ));
+  }
+
   Widget _searchCoomponent(BuildContext context) {
     return Row(
       children: [
@@ -106,6 +112,11 @@ class _CustCourierServicesListViewState
             borderRadius: BorderRadius.circular(5),
             child: TextFormField(
               style: context.txt.bodyLarge,
+              onChanged: (String value) {
+                _controller.searchQuery.value = value;
+                _controller.filter();
+                mezDbgPrint(_controller.searchQuery);
+              },
               decoration: InputDecoration(
                   fillColor: Colors.white,
                   hintText: "Search...",
@@ -116,17 +127,17 @@ class _CustCourierServicesListViewState
             ),
           ),
         ),
-        SizedBox(
-          width: 5,
-        ),
-        MezIconButton(
-          icon: Icons.place,
-          padding: const EdgeInsets.all(12),
-          backgroundColor: Colors.white,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(5),
-          onTap: () {},
-        )
+        // SizedBox(
+        //   width: 5,
+        // ),
+        // MezIconButton(
+        //   icon: Icons.place,
+        //   padding: const EdgeInsets.all(12),
+        //   backgroundColor: Colors.white,
+        //   shape: BoxShape.rectangle,
+        //   borderRadius: BorderRadius.circular(5),
+        //   onTap: () {},
+        // )
       ],
     );
   }

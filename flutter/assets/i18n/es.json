@@ -6,6 +6,14 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "NoOpenServiceComponent" : {
+        "title" : "Sin servicios abiertos",
+        "desc" : "No hay servicios abiertos en su área. Vuelva a intentarlo más tarde.",
+        "restaurant" : "restaurantes",
+        "deliveryCompany" : "correos",
+        "laundry" : "lavandería",
+        "btn" :"Mostrar servicios cerrados"
+      },
       "Menu": {
         "UserMenuComponent": {
           "savedLocations": "Mis ubicaciones",
