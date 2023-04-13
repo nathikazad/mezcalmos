@@ -1,11 +1,6 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
-class BusinessCardView {
+class MinimalBusiness {
   int id;
   int detailsId;
   String name;
@@ -14,7 +9,7 @@ class BusinessCardView {
   double? avgRating;
   int? reviewCount;
 
-  BusinessCardView(
+  MinimalBusiness(
       {required this.id,
       required this.detailsId,
       required this.name,
@@ -24,7 +19,7 @@ class BusinessCardView {
       this.reviewCount});
 }
 
-Map<TimeUnit, num> constructBusinessServiceCost(dynamic cost) {
+Map<TimeUnit, num> constructBusinessServiceCost(cost) {
   final Map<TimeUnit, num> _cost = {};
 
   cost?.forEach((String key, data) {

@@ -16,12 +16,12 @@ class ServiceProfileController extends GetxController {
   late int detailsId;
   late int deliveryDetailsId;
   // state vars //
-  Rxn<MainService> _service = Rxn();
+  Rxn<Service> _service = Rxn();
   Rxn<DeliveryCost> _serviceDeliveryCost = Rxn();
 
   RxBool _isAprroved = RxBool(true);
   // getters //
-  MainService get service => _service.value!;
+  Service get service => _service.value!;
   bool get isApproved => _isAprroved.value;
   bool get selfDelivery => _serviceDeliveryCost.value?.selfDelivery ?? false;
   bool get hasData => _service.value != null;

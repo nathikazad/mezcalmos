@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
+import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class HomeRentalController {
   RxList<Rental> homeRentalData = <Rental>[].obs;
-  RxList<BusinessCardView> agencyRentalData = <BusinessCardView>[].obs;
+  RxList<MinimalBusiness> agencyRentalData = <MinimalBusiness>[].obs;
 
   ScrollController get homeScrollController => _homeScrollController;
   ScrollController _homeScrollController = ScrollController();
@@ -64,7 +64,7 @@ class HomeRentalController {
     }
     try {
       _fetchingAgencyData = true;
-      final List<BusinessCardView> newData =
+      final List<MinimalBusiness> newData =
           await get_business_by_rental_category1(
         category1: RentalCategory1.Home,
         distance: 100000,

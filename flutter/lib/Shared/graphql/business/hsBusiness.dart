@@ -11,14 +11,14 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<List<BusinessCardView>> get_business_by_rental_category1(
+Future<List<MinimalBusiness>> get_business_by_rental_category1(
     {required RentalCategory1 category1,
     required double distance,
     required Location fromLocation,
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<BusinessCardView> _businesses = <BusinessCardView>[];
+  final List<MinimalBusiness> _businesses = <MinimalBusiness>[];
 
   final QueryResult<Query$get_business_by_rental_category1> response =
       await _db.graphQLClient.query$get_business_by_rental_category1(
@@ -39,7 +39,7 @@ Future<List<BusinessCardView>> get_business_by_rental_category1(
         (Query$get_business_by_rental_category1$business_business data) async {
       final PaymentInfo _paymentInfo = PaymentInfo.fromData(
           stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
-      _businesses.add(BusinessCardView(
+      _businesses.add(MinimalBusiness(
         id: data.id,
         detailsId: data.details.id,
         name: data.details.name,
