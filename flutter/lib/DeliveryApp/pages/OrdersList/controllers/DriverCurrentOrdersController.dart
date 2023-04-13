@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 
@@ -15,13 +16,14 @@ class DriverCurrentOrdersController {
 
   // vars
   RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
+  RxList<MinimalOrder> openOrders = <MinimalOrder>[].obs;
   RxBool initalized = RxBool(false);
   late int driverId;
   RxBool _isOnline = RxBool(true);
   RxBool onlineClicked = RxBool(false);
 // streams
   StreamSubscription? currentOrdersListener;
+  StreamSubscription? openOrdersListener;
   String? subscriptionId;
 
 // getters
@@ -49,7 +51,7 @@ class DriverCurrentOrdersController {
   Future<void> _initOrders() async {
     currentOrders.value =
         await get_current_driver_orders(driverId: driverId) ?? [];
-    pastOrders.value = await get_past_driver_orders(driverId: driverId) ?? [];
+    openOrders.value = await get_open_driver_orders(driverId: driverId) ?? [];
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =
           listen_on_current_driver_orders(driverId: driverId)
@@ -58,9 +60,17 @@ class DriverCurrentOrdersController {
           currentOrders.value = event;
         }
       });
+      openOrdersListener = listen_on_open_driver_orders(driverId: driverId)
+          .listen((List<MinimalOrder>? event) {
+        if (event != null) {
+          openOrders.value = event;
+        }
+      });
     }, cancel: () {
       currentOrdersListener?.cancel();
       currentOrdersListener = null;
+      openOrdersListener?.cancel();
+      openOrdersListener = null;
     });
   }
 

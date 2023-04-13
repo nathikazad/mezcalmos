@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -10,8 +11,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 
 class OrderDeliveryLocation extends StatelessWidget {
   const OrderDeliveryLocation(
-      {super.key, required this.address, this.margin, this.titleTextStyle});
+      {super.key,
+      this.title,
+      required this.address,
+      this.margin,
+      this.titleTextStyle});
   final String address;
+  final String? title;
   final EdgeInsets? margin;
   final TextStyle? titleTextStyle;
 
@@ -23,14 +29,14 @@ class OrderDeliveryLocation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${_i18n()["title"]}',
-            style: titleTextStyle ?? Get.textTheme.titleLarge,
+            title ?? '${_i18n()["title"]}',
+            style: titleTextStyle ?? context.txt.titleLarge,
           ),
           const SizedBox(
             height: 4,
           ),
           Card(
-            elevation: 1,
+            elevation: .5,
             margin: EdgeInsets.zero,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -48,7 +54,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       address,
-                      style: Get.textTheme.bodyText1?.copyWith(
+                      style: context.txt.bodyLarge?.copyWith(
                         fontSize: 12.sp,
                       ),
                       maxLines: 1,

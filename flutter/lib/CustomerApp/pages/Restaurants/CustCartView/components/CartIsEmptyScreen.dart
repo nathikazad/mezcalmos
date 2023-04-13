@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:sizer/sizer.dart';
 
 //
@@ -29,7 +30,7 @@ class CartIsEmptyScreen extends StatelessWidget {
           Center(
             child: Text(
               "${_i18n()["title"]}",
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
           ),
         ],

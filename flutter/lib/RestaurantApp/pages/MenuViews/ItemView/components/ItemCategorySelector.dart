@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -54,10 +53,9 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
             if (newValue != null) {
               if (newValue.id == "addNew") {
                 // ignore: unawaited_futures
-                final Category? newCat = await MezRouter.toNamed(
-                    getROpCategoryRoute(
-                        restaurantId: widget.viewController.restaurantId),
-                    arguments: {"shouldSave": false}) as Category?;
+                final Category? newCat = await ROpCategoryView.navigate(
+                        restaurantId: widget.viewController.restaurantId)
+                    as Category?;
 
                 if (newCat != null) {
                   widget.viewController.categories.add(newCat);
@@ -88,7 +86,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
                 // enabled: (widget.oppositeLanguageValue != null &&
                 //     widget.oppositeLanguageValue!.value != value),
                 child: Text(value.name![userLanguage] ?? "error",
-                    style: Get.textTheme.bodyText2?.copyWith(
+                    style: context.textTheme.bodyMedium?.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
                     )));

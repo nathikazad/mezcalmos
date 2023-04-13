@@ -18,6 +18,7 @@ class CustomerCartController extends GetxController {
 // instances //
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
   AuthController _auth = Get.find<AuthController>();
+  //
   Rxn<Cart> cart = Rxn<Cart>();
   // streams //
   StreamSubscription<Cart?>? cartStream;
@@ -84,8 +85,6 @@ class CustomerCartController extends GetxController {
       final Cart? value = await get_customer_cart(
         customerId: _auth.hasuraUserId!,
       );
-      mezDbgPrint(
-          "Fetching cart with ===================>${_auth.hasuraUserId!}========>${value?.toFirebaseFormattedJson()}");
       if (value != null) {
         cart.value = value;
         cart.value?.restaurant = value.restaurant;
@@ -158,37 +157,47 @@ class CustomerCartController extends GetxController {
   }
 
   Future<num?> checkout({String? stripePaymentId}) async {
-    try {
-      final Map<String, dynamic> payload = _contructCart(stripePaymentId);
+    bool nameAndImageChecker =
+        await Get.find<AuthController>().nameAndImageChecker();
+    if (nameAndImageChecker == true) {
+      try {
+        final Map<String, dynamic> payload = _contructCart(stripePaymentId);
 
-      mezDbgPrint("[+] -> payload :: $payload");
-      final cloudFunctionModels.CheckoutResponse res =
-          await CloudFunctions.restaurant2_checkoutCart(
-              customerAppType: cloudFunctionModels.CustomerAppType.Native,
-              customerLocation: cloudFunctionModels.Location(
-                  lat: cart.value?.toLocation!.latitude,
-                  lng: cart.value?.toLocation!.longitude,
-                  address: cart.value?.toLocation!.address),
-              deliveryCost: cart.value!.shippingCost!,
-              paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
-              notes: cart.value?.notes,
-              restaurantId: cart.value!.restaurant!.info.hasuraId,
-              tripDistance: cart.value!.getRouteInfo!.distance.distanceInMeters,
-              tripDuration: cart.value!.getRouteInfo!.duration.seconds,
-              tripPolyline: cart.value!.getRouteInfo!.polyline,
-              deliveryType: cloudFunctionModels.DeliveryType.Delivery,
-              scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
-              stripePaymentId: stripePaymentId,
-              stripeFees: cart.value?.stripeFees);
-      return res.orderId;
-    } catch (e, stk) {
-      mezDbgPrint("error function");
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-      showErrorSnackBar(
-        errorTitle: "Server error please try again",
-      );
+        mezDbgPrint("[+] -> payload :: $payload");
+        final cloudFunctionModels.CheckoutResponse res =
+            await CloudFunctions.restaurant2_checkoutCart(
+                customerAppType: cloudFunctionModels.CustomerAppType.Native,
+                customerLocation: cloudFunctionModels.Location(
+                    lat: cart.value?.toLocation!.latitude,
+                    lng: cart.value?.toLocation!.longitude,
+                    address: cart.value?.toLocation!.address),
+                deliveryCost: cart.value!.shippingCost!,
+                paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
+                notes: cart.value?.notes,
+                restaurantId: cart.value!.restaurant!.info.hasuraId,
+                tripDistance:
+                    cart.value!.getRouteInfo!.distance.distanceInMeters,
+                tripDuration: cart.value!.getRouteInfo!.duration.seconds,
+                tripPolyline: cart.value!.getRouteInfo!.polyline,
+                deliveryType: cloudFunctionModels.DeliveryType.Delivery,
+                scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
+                stripePaymentId: stripePaymentId,
+                stripeFees: cart.value?.stripeFees);
+        if (res.success == false) {
+          mezDbgPrint(res.error);
+          showErrorSnackBar(errorText: res.error.toString());
+        }
+        return res.orderId;
+      } catch (e, stk) {
+        mezDbgPrint("error function");
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+        showErrorSnackBar(
+          errorTitle: "Server error please try again",
+        );
+      }
     }
+
     return null;
   }
 

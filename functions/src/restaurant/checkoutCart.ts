@@ -1,7 +1,6 @@
-import { NewRestaurantOrderNotification, RestaurantOrder  } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { NewRestaurantOrderNotification  } from '../shared/models/Services/Restaurant/RestaurantOrder';
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
-import { Location, Language, CustomerAppType } from "../shared/models/Generic/Generic";
-import { HttpsError } from "firebase-functions/v1/auth";
+import { Location, Language, CustomerAppType, MezError } from "../shared/models/Generic/Generic";
 import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";
 import { createRestaurantOrder } from "../shared/graphql/restaurant/order/createRestaurantOrder";
 import { checkCart } from "../shared/graphql/restaurant/cart/checkCart";
@@ -11,16 +10,15 @@ import { getCart } from "../shared/graphql/restaurant/cart/getCart";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Cart } from "../shared/models/Services/Restaurant/Cart";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
-import { deliveryNewOrderMessage } from '../delivery/bgNotificationMessages';
-import { getDeliveryOperators } from '../shared/graphql/delivery/operator/getDeliveryOperator';
-import { OpenStatus, ServiceProvider } from '../shared/models/Services/Service';
+import { ServiceProvider } from '../shared/models/Services/Service';
+import { notifyDeliveryCompany } from '../shared/helper';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
@@ -36,103 +34,117 @@ export interface CheckoutRequest {
   scheduledTime?: string,
   stripePaymentId?: string,
   stripeFees?: number,
+  distanceFromBase?: number
   tax?: number,
   discountValue?: number
 }
 export interface CheckoutResponse {
-  orderId: number,
+  success: boolean,
+  error?: CheckoutResponseError
+  unhandledError?: string,
+  orderId?: number,
+}
+
+enum CheckoutResponseError {
+  UnhandledError = "unhandledError",
+  RestaurantClosed = "restaurantClosed",
+  CartEmpty = "cartEmpty",
+  RestaurantNotApproved = "restaurantNotApproved",
+  NoDeliveryPartner = "noDeliveryPartner",
+  NotAcceptingDeliveryOrders = "notAcceptingDeliveryOrders",
+  RestaurantNotFound = "restaurantNotFound",
+  CartNotFound = "cartNotFound",
+  CustomerNotFound = "customerNotFound",
+  RestaurantIdMismatch = "restaurantIdMismatch",
+  OrderCreationError = "orderCreationError",
+  DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+  ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+  NoStripeAccountOfServiceProvider = "noStripeAccountOfServiceProvider",
+  UpdateOrderStripeError = "updateOrderStripeError"
 }
 
 export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<CheckoutResponse> {
+  try {
+    let response = await Promise.all([getRestaurant(checkoutRequest.restaurantId), getCart(customerId), getCustomer(customerId), getMezAdmins()]);
+    let restaurant: ServiceProvider = response[0];
+    let customerCart: Cart = response[1];
+    let customer: CustomerInfo = response[2];
+    let mezAdmins: MezAdmin[] = response[3];
+    errorChecks(restaurant, checkoutRequest, customerId, customerCart);
 
-  console.log("\n\n[+] CustomerId ==> \n\n", customerId);
-  console.log("\n\n[+] CustomerId ==> \n\n", checkoutRequest.scheduledTime);
-  console.log("\n\n[+] checkoutRequest ==> \n\n", checkoutRequest);
-  console.log("\n\n[+] restaurantId ==> \n\n", checkoutRequest.restaurantId);
-  let restaurantPromise = getRestaurant(checkoutRequest.restaurantId);
-  let customerCartPromise = getCart(customerId);
-  let customerPromise = getCustomer(customerId);
-  let mezAdminsPromise = getMezAdmins();
+    let orderResponse = await createRestaurantOrder(restaurant, checkoutRequest, customerCart, mezAdmins);
 
-  let response = await Promise.all([restaurantPromise, customerCartPromise, customerPromise, mezAdminsPromise])
-  let restaurant: ServiceProvider = response[0];
-  let customerCart: Cart = response[1];
-  let customer: CustomerInfo = response[2];
-  let mezAdmins: MezAdmin[] = response[3];
-  console.log(mezAdmins)
-  errorChecks(restaurant, checkoutRequest, customerId, customerCart);
+    setRestaurantOrderChatInfo(orderResponse.restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
 
-  console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);
-  console.log("+ Items ==> " , customerCart.items);
+    notifyAdmins(mezAdmins, orderResponse.restaurantOrder.orderId, restaurant);
 
-  let orderResponse = await createRestaurantOrder(restaurant, checkoutRequest, customerCart, mezAdmins);
-  console.log("🤑🤑🤑🤑🤑🤑🤑🤑")
-  setRestaurantOrderChatInfo(orderResponse.restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
+    notifyOperators(orderResponse.restaurantOrder.orderId, restaurant);
 
-  notifyAdmins(mezAdmins, orderResponse.restaurantOrder.orderId, restaurant);
+    if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
-  notifyOperators(orderResponse.restaurantOrder.orderId, restaurant);
-
-  if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
-
-    updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, restaurant.deliveryPartnerId!);
-    notifyDeliveryOperators(orderResponse.restaurantOrder, restaurant.deliveryPartnerId!);
-  }
-  
- 
-  if(checkoutRequest.paymentType == PaymentType.Card) {
-    let paymentDetails: PaymentDetails = {
-      orderId: orderResponse.restaurantOrder.orderId,
-      serviceProviderDetailsId: restaurant.serviceProviderDetailsId
+      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, restaurant.deliveryPartnerId!);
+      notifyDeliveryCompany(orderResponse.deliveryOrder);
     }
-    await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
-  }
-  
-  // clear user cart 
-  clearCart(customerId);
-  // return <CheckoutResponse> {
-  //   orderId: restaurantOrder.orderId
-  // }
-  return {
-    orderId: orderResponse.restaurantOrder.orderId
+    
+    if(checkoutRequest.paymentType == PaymentType.Card) {
+      let paymentDetails: PaymentDetails = {
+        orderId: orderResponse.restaurantOrder.orderId,
+        serviceProviderDetailsId: restaurant.serviceProviderDetailsId
+      }
+      //TODO @sanchit: verify that the card has been verified using 3DS and status is not 'requires_action'
+      await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
+    }
+    // clear user cart 
+    clearCart(customerId);
+
+    return {
+      success: true,
+      orderId: orderResponse.restaurantOrder.orderId
+    }
+  } catch (e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(CheckoutResponseError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: CheckoutResponseError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
+
+  } finally {
+    // release the lock
   }
 }
 function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutRequest, customerId: number, cart: Cart) {
 
   checkCart(customerId, checkoutRequest.restaurantId);
   if(restaurant.approved == false) {
-    throw new HttpsError(
-      "internal",
-      "Restaurant is not approved and taking orders right now"
-    );
+    throw new MezError(CheckoutResponseError.RestaurantNotApproved);
   }
-  if(restaurant.openStatus != OpenStatus.Open && checkoutRequest.scheduledTime == null) {
-    throw new HttpsError(
-      "internal",
-      "Restaurant is closed"
-    );
+  if(restaurant.openStatus != "open") {
+    throw new MezError(CheckoutResponseError.RestaurantClosed);
   }
   if((cart.items.length ?? 0) == 0) {
-    throw new HttpsError(
-      "internal",
-      "Empty cart"
-    );
+    throw new MezError(CheckoutResponseError.CartEmpty);
+
   }
   if(checkoutRequest.deliveryType == undefined || checkoutRequest.deliveryType == DeliveryType.Delivery) {
     if(restaurant.deliveryDetails.deliveryAvailable) {
       if(restaurant.deliveryDetails.selfDelivery == false) {
         if(restaurant.deliveryPartnerId == null) {
-          throw new HttpsError(
-            "internal",
-            "No delivery partner"
-          );
+          throw new MezError(CheckoutResponseError.NoDeliveryPartner);
         }
       }
     } else {
-      throw new HttpsError(
-        "internal",
-        "Restaurant not accepting delivery orders"
-      );
+      throw new MezError(CheckoutResponseError.NotAcceptingDeliveryOrders);
     }
   }
 }
@@ -202,24 +214,4 @@ function notifyOperators(orderId: number, restaurant: ServiceProvider) {
       }
     });
   }
-}
-
-async function notifyDeliveryOperators(restaurantOrder: RestaurantOrder, deliveryPartnerId: number) {
-  let deliveryOperators = await getDeliveryOperators(deliveryPartnerId);
-
-    let notification: Notification = {
-        foreground: <OrderNotification>{
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
-        orderType: OrderType.Restaurant,
-        notificationAction: NotificationAction.ShowPopUp,
-        orderId: restaurantOrder.deliveryId
-        },
-        background: deliveryNewOrderMessage,
-        linkUrl: `orders/${restaurantOrder.deliveryId}`
-    }
-
-    deliveryOperators.forEach((d) => {
-        pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
-    });
 }

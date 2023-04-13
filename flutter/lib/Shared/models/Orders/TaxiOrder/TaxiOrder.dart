@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
@@ -8,7 +9,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 enum TaxiOrdersStatus {
@@ -93,7 +93,6 @@ class TaxiOrder extends Order {
 
   TaxiOrder({
     required int orderId,
-    required num cost,
     required this.from,
     required MezLocation to,
     required DateTime orderTime,
@@ -103,6 +102,7 @@ class TaxiOrder extends Order {
     required this.acceptRideTime,
     required this.rideFinishTime,
     required this.rideStartTime,
+    required OrderCosts costs,
     this.scheduledTime,
     required this.status,
     required UserInfo customer,
@@ -113,22 +113,28 @@ class TaxiOrder extends Order {
             orderId: orderId,
             paymentType: paymentType,
             orderType: OrderType.Taxi,
-            cost: cost,
+            costs: costs,
             customer: customer,
-            serviceProvider: driver,
-            to: to,
+            serviceProvider: driver as UserInfo,
+            dropOffLocation: to,
             routeInformation: routeInformation);
   // Get props as list.
-  List<Object> get props =>
-      [orderId, from, to, orderTime, paymentType, routeInformation!];
+  List<Object> get props => [
+        orderId,
+        from,
+        dropOffLocation,
+        orderTime,
+        paymentType,
+        routeInformation!
+      ];
 
   /// Convert [TaxiOrder] object to [TaxiRequest] object.
   TaxiRequest toTaxiRequest() {
     return TaxiRequest(
         from: from,
-        to: to,
+        to: dropOffLocation,
         routeInformation: routeInformation,
-        estimatedPrice: cost.round(),
+        estimatedPrice: costs.orderItemsCost!.round(),
         paymentType: paymentType);
   }
 
@@ -153,12 +159,12 @@ class TaxiOrder extends Order {
         scheduledTime: data['scheduledTime'] == null
             ? null
             : DateTime.parse(data['scheduledTime']).toLocal(),
-        cost: data['cost'] ?? 35,
+        costs: data['costs'] ?? 35,
         // from: Location("", LocationData.fromMap({"lat":})),
         from: MezLocation.fromFirebaseData(data['from']),
         to: MezLocation.fromFirebaseData(data['to']),
         orderTime: DateTime.parse(data["orderTime"]),
-        paymentType: data["paymentType"].toString().convertToPaymentType(),
+        paymentType: data["paymentType"].toString().toPaymentType(),
         routeInformation: RouteInformation(
             polyline: data['routeInformation']['polyline'],
             distance:
@@ -220,10 +226,10 @@ class TaxiOrder extends Order {
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
         "customer": customer,
-        "estimatedPrice": cost,
+        "estimatedPrice": costs,
         "from": from,
         "status": status,
-        "to": to,
+        "to": dropOffLocation,
         "orderTime": orderTime,
         "paymentType": paymentType,
         "routeInformation": routeInformation,

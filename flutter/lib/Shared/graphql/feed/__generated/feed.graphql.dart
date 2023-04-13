@@ -2858,13 +2858,6 @@ const documentNodeQuerygetSubscribedRestaurants = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -3361,25 +3354,20 @@ class _CopyWithStubImpl$Query$getSubscribedRestaurants$service_provider_subscrib
 class Query$getSubscribedRestaurants$service_provider_subscriber$restaurant$details {
   Query$getSubscribedRestaurants$service_provider_subscriber$restaurant$details({
     required this.name,
-    required this.image,
     required this.$__typename,
   });
 
   factory Query$getSubscribedRestaurants$service_provider_subscriber$restaurant$details.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
-    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getSubscribedRestaurants$service_provider_subscriber$restaurant$details(
       name: (l$name as String),
-      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final String name;
-
-  final String image;
 
   final String $__typename;
 
@@ -3387,8 +3375,6 @@ class Query$getSubscribedRestaurants$service_provider_subscriber$restaurant$deta
     final _resultData = <String, dynamic>{};
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3397,11 +3383,9 @@ class Query$getSubscribedRestaurants$service_provider_subscriber$restaurant$deta
   @override
   int get hashCode {
     final l$name = name;
-    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
-      l$image,
       l$$__typename,
     ]);
   }
@@ -3419,11 +3403,6 @@ class Query$getSubscribedRestaurants$service_provider_subscriber$restaurant$deta
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3462,7 +3441,6 @@ abstract class CopyWith$Query$getSubscribedRestaurants$service_provider_subscrib
 
   TRes call({
     String? name,
-    String? image,
     String? $__typename,
   });
 }
@@ -3488,7 +3466,6 @@ class _CopyWithImpl$Query$getSubscribedRestaurants$service_provider_subscriber$r
 
   TRes call({
     Object? name = _undefined,
-    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -3496,9 +3473,6 @@ class _CopyWithImpl$Query$getSubscribedRestaurants$service_provider_subscriber$r
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3517,7 +3491,6 @@ class _CopyWithStubImpl$Query$getSubscribedRestaurants$service_provider_subscrib
 
   call({
     String? name,
-    String? image,
     String? $__typename,
   }) =>
       _res;

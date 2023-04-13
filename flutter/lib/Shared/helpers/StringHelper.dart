@@ -47,9 +47,14 @@ extension StringHelper on String {
 
   String get inCaps =>
       (length > 0) ? '${this[0].toUpperCase()}${substring(1)}' : '';
+  String get unCapFirst =>
+      (length > 0) ? '${this[0].toLowerCase()}${substring(1)}' : '';
   String get allInCaps => toUpperCase();
   String get capitalizeFirstofEach =>
       split(" ").map((String str) => str.capitalize).join(" ");
   String get capitalizeDays =>
       split("-").map((String str) => str.capitalize).join("-");
+
+  String get capitalizeMonthAfterDay => replaceFirst(
+      this[indexOf(' ') + 1], this[indexOf(' ') + 1].toUpperCase());
 }

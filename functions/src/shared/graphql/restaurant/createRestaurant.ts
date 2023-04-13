@@ -1,9 +1,8 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { notification_info_constraint, notification_info_update_column } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { RestaurantDetails } from "../../../restaurant/createNewRestaurant";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
-import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { PaymentType } from '../../models/Generic/Order';
 
@@ -16,7 +15,7 @@ export async function createRestaurant(
 
   let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
 
-  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.RestaurantApp)
+  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Restaurant)
   
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
@@ -81,7 +80,7 @@ export async function createRestaurant(
                 owner: true,
                 status: AuthorizationStatus.Authorized,
                 user_id: restaurantOperatorUserId,
-                app_type_id: AppType.RestaurantApp,
+                app_type_id: AppType.Restaurant,
               }
             },
           }]
@@ -98,13 +97,14 @@ export async function createRestaurant(
   console.log("response: ", response);
 
   if (response.insert_restaurant_restaurant_one == null) {
-    throw new HttpsError("internal", "restaurant creation error");
+
+    throw new MezError("restaurantCreationError");
   }
   if(restaurantDetails.restaurantOperatorNotificationToken) {
     chain.mutation({
       insert_notification_info_one: [{
         object: {
-          app_type_id: AppType.RestaurantApp,
+          app_type_id: AppType.Restaurant,
           token: restaurantDetails.restaurantOperatorNotificationToken,
           user_id: restaurantOperatorUserId
         },

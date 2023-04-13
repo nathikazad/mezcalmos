@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:sizer/sizer.dart';
@@ -15,20 +17,22 @@ class OrderPaymentMethod extends StatelessWidget {
       {super.key,
       required this.paymentType,
       required this.stripeOrderPaymentInfo,
-      this.margin});
+      this.margin = const EdgeInsets.only(top: 15),
+      this.titleStyle});
   final PaymentType paymentType;
   final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
   final EdgeInsets? margin;
+  final TextStyle? titleStyle;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '${_i18n()["paymentMethod"]}',
-            style: Get.textTheme.bodyText1,
+            style: titleStyle ?? context.txt.bodyLarge,
           ),
           const SizedBox(
             height: 4,
@@ -52,7 +56,7 @@ class OrderPaymentMethod extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         "${stripeOrderPaymentInfo?.brand!.toName()}",
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                     ),
                   Flexible(
@@ -60,8 +64,8 @@ class OrderPaymentMethod extends StatelessWidget {
                     child: Text(
                       _getTitle(),
                       style: (stripeOrderPaymentInfo != null)
-                          ? Get.textTheme.bodyText1
-                          : Get.textTheme.bodyText1,
+                          ? context.txt.bodyLarge
+                          : context.txt.bodyLarge,
                     ),
                   ),
                 ],

@@ -3,14 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/components/ROpChoiceAv.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/controllers/ROpChoiceViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 //
@@ -20,6 +22,20 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
 //
 class ROpChoiceView extends StatefulWidget {
   const ROpChoiceView({super.key});
+
+  static Future<void> navigate(
+      {required int? choiceId,
+      required String restaurantId,
+      required int optionId}) {
+    String route = RestaurantAppRoutes.restaurantChoiceRoute
+        .replaceAll(":restaurantId", restaurantId)
+        .replaceAll(":optionId", optionId.toString());
+
+    if (choiceId != null) {
+      route = route.replaceFirst(":choiceId", "$choiceId");
+    }
+    return MezRouter.toPath(route);
+  }
 
   @override
   State<ROpChoiceView> createState() => _ROpChoiceViewState();
@@ -37,15 +53,15 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
 
   @override
   void initState() {
-    choiceId = Get.parameters["choiceId"] ?? null;
-    optionId = Get.parameters["optionId"];
-    restaurantId = Get.parameters["restaurantId"];
+    choiceId = MezRouter.urlArguments["choiceId"].toString();
+    optionId = MezRouter.urlArguments["optionId"].toString();
+    restaurantId = MezRouter.urlArguments["restaurantId"].toString();
     if (restaurantId != null && optionId != null) {
       tabController = TabController(length: 2, vsync: this);
       viewController.init(
-          choiceId: int.tryParse(choiceId!) ?? null,
-          optionId: optionId!,
-          restaurantId: restaurantId!);
+          choiceId: (choiceId != null) ? int.tryParse(choiceId!) : null,
+          optionId: int.parse(optionId!),
+          restaurantId: int.parse(restaurantId!));
     } else {
       MezRouter.back();
     }
@@ -84,14 +100,14 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Text(
                         "${_i18n()['choiceName']}",
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         controller: viewController.prChoiceName,
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -104,14 +120,14 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Text(
                         "${_i18n()['choicePrice']}",
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         controller: viewController.choicePriceText,
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -142,7 +158,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                                   .deleteChoice()
                                   .then((bool? hasBennDeleted) {
                                 if (hasBennDeleted == true) {
-                                  MezRouter.back(result: true);
+                                  MezRouter.back(backResult: true);
                                 }
                               });
                             },
@@ -169,7 +185,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       Obx(
                         () => Text(
                           "${_i18n()['choiceNameIn']} ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyLarge,
                         ),
                       ),
                       SizedBox(
@@ -177,7 +193,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       TextFormField(
                         controller: viewController.scChoiceName,
-                        style: Get.textTheme.bodyText1,
+                        style: context.txt.bodyLarge,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
                             return "${_i18n()['required']}";
@@ -207,7 +223,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
     return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
       onClick: () {
-        MezRouter.back(result: viewController.needToFetch.value);
+        MezRouter.back(backResult: viewController.needToFetch.value);
       },
       tabBar: TabBar(controller: tabController, tabs: [
         Tab(

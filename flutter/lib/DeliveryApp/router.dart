@@ -1,38 +1,56 @@
-import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-const String kCurrentOrdersListRoute = '/currentOrders';
-const String kDriverOrderView = '/orders/:orderId';
-const String kOrderDetailsView = "/orderDetails/:orderId";
-const String kPastOrdersView = "/pastOrders";
-const String kDriverUnAuth = "/driverUnauth";
+class DeliveryAppRoutes {
+  static const String kCurrentOrdersListRoute = '/currentOrders';
+  static const String kDvOrderView = '/orders/:orderId';
+  static const String kOrderDetailsViewRoute = "/orderDetails/:orderId";
+  static const String kPastOrdersViewRoute = "/pastOrders";
+  static const String kDriverUnAuthRoute = "/driverUnauth";
 
-String getDriverOrderRoute(int orderId) {
-  return kDriverOrderView.replaceFirst(":orderId", orderId.toString());
-}
+  static String getDvOrderRoute(int orderId) {
+    return kDvOrderView.replaceFirst(":orderId", "$orderId");
+  }
 
-String getOrderDetailsRoute(int orderId) {
-  return kOrderDetailsView.replaceFirst(":orderId", "$orderId");
-}
-
-// GetX based Router (For navigating)
-class XRouter {
-  static dynamic mainRoutes = [
-        GetPage(
-            name: kCurrentOrdersListRoute,
-            page: () => CurrentOrdersListScreen()),
-        GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
-        //  GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
-        GetPage(name: kDriverOrderView, page: () => DvOrderView()),
-        GetPage(name: kOrderDetailsView, page: () => OrderDetailsScreen()),
-        GetPage(name: kPastOrdersView, page: () => DriverPastOrdersView()),
-        GetPage(name: kDriverUnAuth, page: () => UnAuthorizedDriverView()),
+  static final List<QRoute> mainRoutes = <QRoute>[
+        QRoute(
+          path: kCurrentOrdersListRoute,
+          name: kCurrentOrdersListRoute,
+          builder: () => CurrentOrdersListScreen(),
+        ),
+        QRoute(
+          path: SharedRoutes.kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
+          builder: () => DeliveryWrapper(),
+        ),
+        QRoute(
+          path: kDvOrderView,
+          name: kDvOrderView,
+          builder: () => DvOrderView(),
+        ),
+        QRoute(
+          path: kOrderDetailsViewRoute,
+          name: kOrderDetailsViewRoute,
+          builder: () => OrderDetailsScreen(),
+        ),
+        QRoute(
+          path: kPastOrdersViewRoute,
+          name: kPastOrdersViewRoute,
+          builder: () => DriverPastOrdersView(),
+        ),
+        QRoute(
+          path: kDriverUnAuthRoute,
+          name: kDriverUnAuthRoute,
+          builder: () => UnAuthorizedDriverView(),
+        ),
       ] +
-      SharedRouter.sharedRoutes;
+      SharedRoutes.qRoutes +
+      NativeOnlyRoutes.routes;
 }

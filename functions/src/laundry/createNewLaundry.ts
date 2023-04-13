@@ -1,7 +1,4 @@
-import { Language, Location } from "../shared/models/Generic/Generic";
-import { HttpsError } from "firebase-functions/v1/auth";
-// import * as operatorNodes from "../shared/databaseNodes/operators/operator";
-// import { OrderType } from "../shared/models/Generic/Order";
+import { Language, Location, MezError } from "../shared/models/Generic/Generic";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
 import { getUser } from "../shared/graphql/user/getUser";
@@ -26,46 +23,61 @@ export interface LaundryDetails {
   language: Record<Language, boolean>,
   uniqueId?: string
 }
+export interface LaundryResponse {
+  success: boolean,
+  error?: LaundryError
+  unhandledError?: string,
+}
+export enum LaundryError {
+  UnhandledError = "unhandledError",
+  DeliveryDetailsNotSet = "deliveryDetailsNotSet",
+  NoDeliveryPartner = "noDeliveryPartner",
+  UserNotFound = "userNotFound",
+  DeepLinkError = "deepLinkError",
+  QRGenerationError = "qrGenerationError",
+  LaundryCreationError = "laundryCreationError"
+}
 
-export async function createLaundry(userId: number, laundryDetails: LaundryDetails) {
-
-  if(laundryDetails.deliveryDetails.deliveryAvailable) {
-    if(laundryDetails.deliveryDetails.selfDelivery && !(laundryDetails.deliveryDetails.radius)) {
-      throw new HttpsError(
-        "unknown",
-        "laundry delivery radius or cost is not set for self delivery"
-      );
-    } else if(!(laundryDetails.deliveryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
-      throw new HttpsError(
-        "unknown",
-        "delivery partner not specified"
-      );
+export async function createLaundry(userId: number, laundryDetails: LaundryDetails): Promise<LaundryResponse> {
+  try {
+    if(laundryDetails.deliveryDetails.deliveryAvailable) {
+      if(laundryDetails.deliveryDetails.selfDelivery && !(laundryDetails.deliveryDetails.radius)) {
+        throw new MezError(LaundryError.DeliveryDetailsNotSet);
+      } else if(!(laundryDetails.deliveryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
+        throw new MezError(LaundryError.NoDeliveryPartner);
+      }
+    }
+  
+    let userPromise = getUser(userId);
+    let mezAdminsPromise = getMezAdmins();
+    let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+    let mezAdmins: MezAdmin[] = promiseResponse[1];
+  
+    let laundryStore: ServiceProvider = await createLaundryStore(laundryDetails, userId);
+  
+    notifyAdmins(laundryStore, mezAdmins);  
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(LaundryError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: LaundryError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
     }
   }
-
-  let userPromise = getUser(userId);
-  let mezAdminsPromise = getMezAdmins();
-  let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
-  let mezAdmins: MezAdmin[] = promiseResponse[1];
-
-  // let laundryStore: ServiceProvider = {
-  //   name: laundryDetails.name,
-  //   image: laundryDetails.image,
-  //   location: laundryDetails.location,
-  //   schedule: laundryDetails.schedule,
-  //   selfDelivery: laundryDetails.selfDelivery ?? false,
-  //   customerPickup: laundryDetails.customerPickup,
-  //   delivery: laundryDetails.delivery,
-  //   deliveryPartnerId: laundryDetails.deliveryPartnerId,
-  //   deliveryDetails: laundryDetails.deliveryDetails,
-  //   language: laundryDetails.language,
-  //   firebaseId: laundryDetails.firebaseId
-  // }
-
-  let laundryStore: ServiceProvider = await createLaundryStore(laundryDetails, userId);
-
-  notifyAdmins(laundryStore, mezAdmins);
-
+  
 };
 
 function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
@@ -88,7 +100,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
         body: `There is a new Laundry Store`
       }
     },
-    linkUrl: laundryUrl(laundryStore.id!)
+    linkUrl: laundryUrl(laundryStore.id)
   };
   mezAdmins.forEach((m) => {
     pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

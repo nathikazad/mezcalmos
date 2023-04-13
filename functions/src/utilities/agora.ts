@@ -1,15 +1,15 @@
 
 
 import { Keys } from "../shared/models/Generic/Keys";
-import * as agora from 'agora-access-token';
+import * as agora from 'agora-token';
 import * as fcm from "../utilities/senders/fcm";
 import { EndCallBackgroundNotification, NewCallBackgroundNotification, NotificationType } from "../shared/models/Notification";
 import { chatUrl } from "./senders/appRoutes";
-import { CallNotificationtType, AppTypeToChatInfoAppName, ParticipantType, ChatInfo, getAppTypeFromParticipantType, Participant, ParticipantAgoraDetails, CallNotificationForQueue } from "../shared/models/Generic/Chat";
+import { CallNotificationtType, AppTypeToChatInfoAppName, ParticipantType, ChatInfo, getAppTypeFromParticipantType, Participant, ParticipantAgoraDetails, CallNotificationForQueue, Chat } from "../shared/models/Generic/Chat";
 import { getKeys } from "../shared/keys";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getChat } from "../shared/graphql/chat/getChat";
 import { getNotificationInfo } from "../shared/graphql/notification/getNotificationInfo";
+import { MezError } from "../shared/models/Generic/Generic";
 
 let keys: Keys = getKeys();
 
@@ -18,39 +18,64 @@ export interface CallUserDetails {
   callerParticipantType: ParticipantType
 }
 export interface CallUserResponse {
-  id: number,
-  token: string,
+  success: boolean,
+  error?: CallUserError,
+  unhandledError?: string,
+  id?: number,
+  token?: string,
   name?: string,
   image?: string,
-  expirationTime: string,
-  participantType: ParticipantType,
+  expirationTime?: string,
+  participantType?: ParticipantType,
+}
+enum CallUserError {
+  UnhandledError = "unhandledError",
+  ChatNotFound = "chatNotFound",
+  RecipientNotAvailable = "recipientNotAvailable",
+  CallerNotInParticipants = "callerNotInParticipants"
 }
 export async function callUser(callerUserId: number, callUserDetails: CallUserDetails): Promise<CallUserResponse> {
-  let chat = await getChat(callUserDetails.chatId)
-  let chatInfo: ChatInfo = chat.chatInfo[AppTypeToChatInfoAppName[getAppTypeFromParticipantType(callUserDetails.callerParticipantType)]];
-  
-  let recipient: Participant = getRecipient();
+  try {
+    let chat: Chat = await getChat(callUserDetails.chatId)
+    let chatInfo: ChatInfo = chat.chatInfo[AppTypeToChatInfoAppName[getAppTypeFromParticipantType(callUserDetails.callerParticipantType)]];
+    
+    let recipient: Participant = getRecipient(chat, chatInfo);
 
-  // out of bounds error if caller isnt there in participant 
-  let caller:Participant = chat.participants.filter((p) => p.participantType == callUserDetails.callerParticipantType && p.id == callerUserId)[0]
-  if(!caller) {
-    throw new HttpsError(
-      "internal",
-      "Caller not in participants"
-    );
+    // out of bounds error if caller isnt there in participant 
+    let caller:Participant = chat.participants.filter((p) => p.participantType == callUserDetails.callerParticipantType && p.id == callerUserId)[0]
+    if(!caller) {
+      throw new MezError(CallUserError.CallerNotInParticipants);
+    }
+    let callerAgoraToken = getAgoraDetails(callUserDetails.chatId, caller.id)
+    let recipientAgoraToken = getAgoraDetails(callUserDetails.chatId, recipient.id)
+
+    notifyCallerOfNewCall(callUserDetails.chatId, caller, recipient, recipientAgoraToken)
+    // return agoraToken, recipientId, recipientType
+    return {
+      success: true,
+      ...callerAgoraToken,
+      ...recipient
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(CallUserError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any,
+        }
+      } else {
+        return {
+          success: false,
+          error: CallUserError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
   }
-  let callerAgoraToken = getAgoraDetails(callUserDetails.chatId, caller.id)
-  let recipientAgoraToken = getAgoraDetails(callUserDetails.chatId, recipient.id)
 
-
-  notifyCallerOfNewCall(callUserDetails.chatId, caller, recipient, recipientAgoraToken)
-  // return agoraToken, recipientId, recipientType
-  return {
-    ...callerAgoraToken,
-    ...recipient
-  }
-
-  function getRecipient(): Participant {
+  function getRecipient(chat: Chat, chatInfo: ChatInfo): Participant {
     let correctParticipants: Participant[] = chat.participants.filter((p) => p.participantType == chatInfo.participantType && p.notificationInfo?.turnOffNotifications == false);
     if (correctParticipants.length > 0) {
       return correctParticipants[0]
@@ -59,11 +84,7 @@ export async function callUser(callerUserId: number, callUserDetails: CallUserDe
       if (correctParticipants.length > 0)
         return correctParticipants[0] 
     }
-
-    throw new HttpsError(
-      "internal",
-      "Recipient not avaialable"
-    );
+    throw new MezError(CallUserError.RecipientNotAvailable);
   }
 }
 
@@ -124,7 +145,8 @@ function getAgoraDetails(chatId: number, userId: number): ParticipantAgoraDetail
     chatId.toString(),
     userId,
     agora.RtcRole.PUBLISHER,
-    0
+    600,
+    600
   );
   console.log(token)
   return <ParticipantAgoraDetails> {

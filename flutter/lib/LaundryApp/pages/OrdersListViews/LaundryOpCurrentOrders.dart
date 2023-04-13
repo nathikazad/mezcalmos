@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/controllers/LaundryOpCurrentOrdersController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -133,7 +134,7 @@ class _LaundryOpCurrentOrdersListViewState
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyLarge)),
+                        style: context.txt.bodyLarge)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,
@@ -143,7 +144,8 @@ class _LaundryOpCurrentOrdersListViewState
                     borderRadius: 35,
                     label: '${_i18n()["pastButton"]}'.inCaps,
                     onClick: () async {
-                      await MezRouter.toNamed(kPastOrdersListView);
+                      await MezRouter.toNamed(
+                          LaundryAppRoutes.kPastOrdersListViewRoute);
                     },
                   ),
                 ),
@@ -159,8 +161,9 @@ class _LaundryOpCurrentOrdersListViewState
                         return MinimalOrderCard(
                           order: viewController.currentOrders[index],
                           onTap: () {
-                            MezRouter.toNamed(getLaundryOpOrderRoute(
-                                viewController.currentOrders[index].id));
+                            LaundryOrderView.navigate(
+                                orderId:
+                                    viewController.currentOrders[index].id);
                           },
                         );
                       }),

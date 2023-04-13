@@ -8,19 +8,21 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
   final Function onTurnedOn;
   final Function onTurnedOff;
   bool isLoading;
+  EdgeInsetsGeometry margin;
   TitleWithOnOffSwitcher({
     required this.title,
     this.initialSwitcherValue = false,
     required this.onTurnedOn,
     required this.onTurnedOff,
     this.isLoading = false,
+    this.margin = const EdgeInsets.only(bottom: 10.0),
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
+      padding: margin,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

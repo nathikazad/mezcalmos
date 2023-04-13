@@ -4,21 +4,14 @@ import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
-import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class DeliveryOpAuthController extends GetxController {
   Rxn<Operator> operator = Rxn();
   final int operatorUserId = Get.find<AuthController>().hasuraUserId!;
-  AuthController _authController = Get.find<AuthController>();
-  // RestaurantInfoController _restaurantInfoController =
-  //     Get.find<RestaurantInfoController>();
-  BackgroundNotificationsController _notificationsController =
-      Get.find<BackgroundNotificationsController>();
+
   RxnInt _companyId = RxnInt();
   int? get companyId => _companyId.value;
 
@@ -34,28 +27,26 @@ class DeliveryOpAuthController extends GetxController {
     mezDbgPrint("DeliveryAuthController: init $hashCode");
     mezDbgPrint(
         "DeliveryAuthController: calling handle state change first time");
-    // Todo @m66are remove this restaurant id hard code
 
-    setupDeliveryOperator().then((value) {
-      if (operator.value?.info.hasuraId != null) {
-        unawaited(_authController.saveNotificationToken());
-      }
-    });
+    setupDeliveryOperator();
 
     super.onInit();
   }
 
   Future<void> setupDeliveryOperator() async {
-    // final RestaurantOperatorState? operatorState =
-    //     await get_operator_state(operatorId: operatorUserId, withCache: false);
-    // final UserInfo operatorInfo =
-    //     await get_user_by_hasura_id(hasuraId: operatorUserId);
-    operator.value = await get_delivery_operator(userId: operatorUserId);
-    if (operator.value != null) {
-      _companyId.value = operator.value!.state.serviceProviderId;
-    }
+    try {
+      mezDbgPrint("Gettign dv operator for user id: $operatorUserId");
+      operator.value = await get_delivery_operator(userId: operatorUserId);
+      mezDbgPrint("Operator value  ====>${operator.value}");
+      if (operator.value != null) {
+        _companyId.value = operator.value!.state.serviceProviderId;
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
 
-    mezDbgPrint("👑👑 Delivery Operator :: ${operator.value?.toJson()}");
+      // showErrorSnackBar();
+    }
   }
 
   @override

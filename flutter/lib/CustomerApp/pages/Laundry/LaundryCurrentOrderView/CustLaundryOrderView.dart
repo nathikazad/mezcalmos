@@ -2,24 +2,29 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/CustomerLaundryEstTimes.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/CustomerLaundryEstTimes.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderDriverCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderFooterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderStatusCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/OrderLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -28,6 +33,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 class CustLaundryOrderView extends StatefulWidget {
   const CustLaundryOrderView({Key? key}) : super(key: key);
 
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(constructPath(orderId));
+  }
+
+  static String constructPath(int orderId) {
+    return LaundryRoutes.laundryOrdersRoute
+        .replaceAll(":orderId", orderId.toString());
+  }
+
   @override
   State<CustLaundryOrderView> createState() => _CustLaundryOrderViewState();
 }
@@ -35,24 +49,26 @@ class CustLaundryOrderView extends StatefulWidget {
 class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
   CustLaundryOrderViewController viewController =
       CustLaundryOrderViewController();
-  late int orderId;
+  late int? orderId;
   LaundryOrderPhase? _phaseSnapshot;
 
   // Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
   StreamSubscription<Order?>? _orderListener;
+
   //final OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
+
   @override
   void initState() {
     // Handle Order id from the rooting
-    if (Get.parameters['orderId'] != null) {
-      orderId = int.parse(Get.parameters['orderId']!);
-      viewController.init(orderId: orderId);
+    orderId = int.tryParse(MezRouter.urlArguments['orderId'].toString());
+    if (orderId != null) {
+      viewController.init(orderId: orderId!);
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      MezRouter.back<void>();
+      MezRouter.back();
     }
 
     super.initState();
@@ -81,6 +97,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
+      bottomNavigationBar: _addReviewButton(context),
       body: Obx(
         () {
           if (viewController.order.value != null) {
@@ -106,26 +123,21 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             LaundryOrderDriverCard(
                                 order: viewController.order.value!),
                             if (viewController.order.value!.inDeliveryPhase())
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: OrderMapWidget(
-                                    deliveryOrderId: viewController
-                                        .order.value!.deliveryOrderId,
-                                    updateDriver: viewController.order.value!
-                                        .inDeliveryPhase(),
-                                    polyline: viewController.order.value!
-                                        .routeInformation?.polyline,
-                                    from: viewController
-                                        .order.value!.laundry!.location,
-                                    to: viewController.order.value!.to),
-                              ),
+                              OrderMapWidget(
+                                  margin: const EdgeInsets.only(top: 15),
+                                  deliveryOrderId: viewController
+                                      .order.value!.deliveryOrderId,
+                                  updateDriver: viewController.order.value!
+                                      .inDeliveryPhase(),
+                                  polyline: viewController
+                                      .order.value!.routeInformation?.polyline,
+                                  from: viewController
+                                      .order.value!.pickupLocation,
+                                  to: viewController
+                                      .order.value!.dropOffLocation),
 
-                            if (viewController.order.value!.laundry != null)
-                              OrderLaundryCard(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 12),
-                                  margin: EdgeInsets.only(top: 12.5),
-                                  order: viewController.order.value!),
+                            OrderLaundryCard(
+                                order: viewController.order.value!),
 
                             LaundryOrderPricingComponent(
                                 order: viewController.order.value!),
@@ -135,28 +147,28 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               margin: const EdgeInsets.only(top: 15),
                               child: Text(
                                 '${_i18n()["deliveryDeatils"]}',
-                                style: Get.textTheme.bodyLarge,
+                                style: context.txt.bodyLarge,
                               ),
                             ),
                             OrderDeliveryLocation(
-                              address: viewController.order.value!.to.address,
+                              address: viewController
+                                  .order.value!.dropOffLocation.address,
                               margin: const EdgeInsets.only(top: 8),
                             ),
+                            if (viewController.order.value!.review != null)
+                              ReviewCard(
+                                  margin: const EdgeInsets.only(top: 15),
+                                  showReviewTitle: true,
+                                  review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 margin: const EdgeInsets.only(top: 15),
                                 note: viewController.order.value!.notes),
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
                               divideDeliveryCost: true,
-                              orderCost: viewController
-                                  .order.value!.costsByType?.weighedCost,
-                              refundAmmount:
-                                  viewController.order.value!.refundAmount,
-                              shippingCost:
-                                  viewController.order.value!.shippingCost,
+                              costs: viewController.order.value!.costs,
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
-                              totalCost: viewController.order.value!.totalCost,
                             ),
 
                             //Spacer(),
@@ -192,12 +204,26 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       autoBack: true,
       titleWidget: Obx(
         () => Text(
-          '${viewController.order.value?.laundry?.name ?? ""}',
-          style: Get.textTheme.displaySmall,
+          '${viewController.order.value?.serviceProvider.name ?? ""}',
+          style: context.txt.displaySmall,
         ),
       ),
       showNotifications: true,
-      ordersRoute: kOrdersRoute,
+      ordersRoute: CustomerRoutes.customerOrdersRoute,
     );
+  }
+
+  Widget _addReviewButton(BuildContext context) {
+    return Obx(() {
+      if (viewController.order.value?.canAddReview == true) {
+        return CustAddReviewButton(
+          orderId: viewController.order.value!.orderId,
+          toEntityId: viewController.order.value!.serviceProvider.hasuraId,
+          toEntityType: ServiceProviderType.Laundry,
+        );
+      } else {
+        return SizedBox();
+      }
+    });
   }
 }

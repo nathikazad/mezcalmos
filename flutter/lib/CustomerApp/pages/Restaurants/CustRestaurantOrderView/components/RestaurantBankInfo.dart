@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -13,6 +15,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class RestaurantBankInfoCard extends StatefulWidget {
   const RestaurantBankInfoCard({super.key, required this.restaurantId});
+
   final int restaurantId;
 
   @override
@@ -21,6 +24,7 @@ class RestaurantBankInfoCard extends StatefulWidget {
 
 class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
   Rxn<Restaurant> restaurant = Rxn();
+
   @override
   void initState() {
     _getRest();
@@ -47,7 +51,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                   alignment: Alignment.center,
                   child: Text(
                     '${_i18n()["title"]}',
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 const SizedBox(
@@ -66,7 +70,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${_i18n()["bankName"]}',
-                                    style: Get.textTheme.bodyLarge?.copyWith(
+                                    style: context.txt.bodyLarge?.copyWith(
                                       fontSize: 10.sp,
                                     )),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
@@ -99,7 +103,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               children: [
                                 Text(
                                   '${_i18n()["accountNumber"]}',
-                                  style: Get.textTheme.bodyLarge
+                                  style: context.txt.bodyLarge
                                       ?.copyWith(fontSize: 10.sp),
                                 ),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
@@ -133,25 +137,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
     });
   }
 
-  SnackbarController _copiedSnackBar() {
-    return Get.snackbar("", "",
-        snackStyle: SnackStyle.FLOATING,
-        titleText: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(Icons.check_circle),
-            const SizedBox(width: 5),
-            Text(
-              "Copied",
-              style: Get.textTheme.bodyLarge,
-            ),
-          ],
-        ),
-        snackPosition: SnackPosition.BOTTOM,
-        shouldIconPulse: false,
-        margin: EdgeInsets.zero,
-        padding: EdgeInsets.only(top: 25),
-        maxWidth: 50.w);
+  void _copiedSnackBar() {
+    return customSnackBar(title: "Copied");
   }
 }

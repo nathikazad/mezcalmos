@@ -3374,10 +3374,14 @@ class Variables$Query$get_customer_orders {
   factory Variables$Query$get_customer_orders({
     required int custId,
     required bool inProcess,
+    int? limit,
+    int? offset,
   }) =>
       Variables$Query$get_customer_orders._({
         r'custId': custId,
         r'inProcess': inProcess,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
       });
 
   Variables$Query$get_customer_orders._(this._$data);
@@ -3389,6 +3393,14 @@ class Variables$Query$get_customer_orders {
     result$data['custId'] = (l$custId as int);
     final l$inProcess = data['inProcess'];
     result$data['inProcess'] = (l$inProcess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
     return Variables$Query$get_customer_orders._(result$data);
   }
 
@@ -3396,12 +3408,22 @@ class Variables$Query$get_customer_orders {
 
   int get custId => (_$data['custId'] as int);
   bool get inProcess => (_$data['inProcess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$custId = custId;
     result$data['custId'] = l$custId;
     final l$inProcess = inProcess;
     result$data['inProcess'] = l$inProcess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
     return result$data;
   }
 
@@ -3430,6 +3452,22 @@ class Variables$Query$get_customer_orders {
     if (l$inProcess != lOther$inProcess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
@@ -3437,9 +3475,13 @@ class Variables$Query$get_customer_orders {
   int get hashCode {
     final l$custId = custId;
     final l$inProcess = inProcess;
+    final l$limit = limit;
+    final l$offset = offset;
     return Object.hashAll([
       l$custId,
       l$inProcess,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
     ]);
   }
 }
@@ -3456,6 +3498,8 @@ abstract class CopyWith$Variables$Query$get_customer_orders<TRes> {
   TRes call({
     int? custId,
     bool? inProcess,
+    int? limit,
+    int? offset,
   });
 }
 
@@ -3475,12 +3519,16 @@ class _CopyWithImpl$Variables$Query$get_customer_orders<TRes>
   TRes call({
     Object? custId = _undefined,
     Object? inProcess = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
   }) =>
       _then(Variables$Query$get_customer_orders._({
         ..._instance._$data,
         if (custId != _undefined && custId != null) 'custId': (custId as int),
         if (inProcess != _undefined && inProcess != null)
           'inProcess': (inProcess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
       }));
 }
 
@@ -3493,6 +3541,8 @@ class _CopyWithStubImpl$Variables$Query$get_customer_orders<TRes>
   call({
     int? custId,
     bool? inProcess,
+    int? limit,
+    int? offset,
   }) =>
       _res;
 }
@@ -3684,6 +3734,24 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3713,6 +3781,23 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
                 ]),
               )
             ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
           ),
         ],
         directives: [],
@@ -5108,6 +5193,1803 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_orders$customer_minimal_
     String? payment_type,
     String? status,
     double? total_cost,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateDriverOrderReviewId {
+  factory Variables$Mutation$updateDriverOrderReviewId({
+    required int orderId,
+    required int reviewId,
+  }) =>
+      Variables$Mutation$updateDriverOrderReviewId._({
+        r'orderId': orderId,
+        r'reviewId': reviewId,
+      });
+
+  Variables$Mutation$updateDriverOrderReviewId._(this._$data);
+
+  factory Variables$Mutation$updateDriverOrderReviewId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    final l$reviewId = data['reviewId'];
+    result$data['reviewId'] = (l$reviewId as int);
+    return Variables$Mutation$updateDriverOrderReviewId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  int get reviewId => (_$data['reviewId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    final l$reviewId = reviewId;
+    result$data['reviewId'] = l$reviewId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateDriverOrderReviewId<
+          Variables$Mutation$updateDriverOrderReviewId>
+      get copyWith => CopyWith$Variables$Mutation$updateDriverOrderReviewId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateDriverOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    final l$reviewId = reviewId;
+    final lOther$reviewId = other.reviewId;
+    if (l$reviewId != lOther$reviewId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    final l$reviewId = reviewId;
+    return Object.hashAll([
+      l$orderId,
+      l$reviewId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateDriverOrderReviewId<TRes> {
+  factory CopyWith$Variables$Mutation$updateDriverOrderReviewId(
+    Variables$Mutation$updateDriverOrderReviewId instance,
+    TRes Function(Variables$Mutation$updateDriverOrderReviewId) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateDriverOrderReviewId;
+
+  factory CopyWith$Variables$Mutation$updateDriverOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateDriverOrderReviewId;
+
+  TRes call({
+    int? orderId,
+    int? reviewId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateDriverOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateDriverOrderReviewId _instance;
+
+  final TRes Function(Variables$Mutation$updateDriverOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? orderId = _undefined,
+    Object? reviewId = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateDriverOrderReviewId._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+        if (reviewId != _undefined && reviewId != null)
+          'reviewId': (reviewId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateDriverOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    int? orderId,
+    int? reviewId,
+  }) =>
+      _res;
+}
+
+class Mutation$updateDriverOrderReviewId {
+  Mutation$updateDriverOrderReviewId({
+    this.update_delivery_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateDriverOrderReviewId.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_delivery_order_by_pk = json['update_delivery_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateDriverOrderReviewId(
+      update_delivery_order_by_pk: l$update_delivery_order_by_pk == null
+          ? null
+          : Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+              .fromJson(
+                  (l$update_delivery_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?
+      update_delivery_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    _resultData['update_delivery_order_by_pk'] =
+        l$update_delivery_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_delivery_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateDriverOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    final lOther$update_delivery_order_by_pk =
+        other.update_delivery_order_by_pk;
+    if (l$update_delivery_order_by_pk != lOther$update_delivery_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateDriverOrderReviewId
+    on Mutation$updateDriverOrderReviewId {
+  CopyWith$Mutation$updateDriverOrderReviewId<
+          Mutation$updateDriverOrderReviewId>
+      get copyWith => CopyWith$Mutation$updateDriverOrderReviewId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateDriverOrderReviewId<TRes> {
+  factory CopyWith$Mutation$updateDriverOrderReviewId(
+    Mutation$updateDriverOrderReviewId instance,
+    TRes Function(Mutation$updateDriverOrderReviewId) then,
+  ) = _CopyWithImpl$Mutation$updateDriverOrderReviewId;
+
+  factory CopyWith$Mutation$updateDriverOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateDriverOrderReviewId;
+
+  TRes call({
+    Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?
+        update_delivery_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<TRes>
+      get update_delivery_order_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithImpl$Mutation$updateDriverOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateDriverOrderReviewId _instance;
+
+  final TRes Function(Mutation$updateDriverOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_delivery_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateDriverOrderReviewId(
+        update_delivery_order_by_pk: update_delivery_order_by_pk == _undefined
+            ? _instance.update_delivery_order_by_pk
+            : (update_delivery_order_by_pk
+                as Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<TRes>
+      get update_delivery_order_by_pk {
+    final local$update_delivery_order_by_pk =
+        _instance.update_delivery_order_by_pk;
+    return local$update_delivery_order_by_pk == null
+        ? CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+            local$update_delivery_order_by_pk,
+            (e) => call(update_delivery_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithStubImpl$Mutation$updateDriverOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?
+        update_delivery_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<TRes>
+      get update_delivery_order_by_pk =>
+          CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateDriverOrderReviewId =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateDriverOrderReviewId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'reviewId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_delivery_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'orderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'driver_review_by_customer_id'),
+                value: VariableNode(name: NameNode(value: 'reviewId')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'driver_review_by_customer_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateDriverOrderReviewId _parserFn$Mutation$updateDriverOrderReviewId(
+        Map<String, dynamic> data) =>
+    Mutation$updateDriverOrderReviewId.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateDriverOrderReviewId = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateDriverOrderReviewId?,
+);
+
+class Options$Mutation$updateDriverOrderReviewId
+    extends graphql.MutationOptions<Mutation$updateDriverOrderReviewId> {
+  Options$Mutation$updateDriverOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateDriverOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateDriverOrderReviewId? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateDriverOrderReviewId>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateDriverOrderReviewId(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateDriverOrderReviewId,
+          parserFn: _parserFn$Mutation$updateDriverOrderReviewId,
+        );
+
+  final OnMutationCompleted$Mutation$updateDriverOrderReviewId?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateDriverOrderReviewId
+    extends graphql.WatchQueryOptions<Mutation$updateDriverOrderReviewId> {
+  WatchOptions$Mutation$updateDriverOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateDriverOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateDriverOrderReviewId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateDriverOrderReviewId,
+        );
+}
+
+extension ClientExtension$Mutation$updateDriverOrderReviewId
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateDriverOrderReviewId>>
+      mutate$updateDriverOrderReviewId(
+              Options$Mutation$updateDriverOrderReviewId options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateDriverOrderReviewId>
+      watchMutation$updateDriverOrderReviewId(
+              WatchOptions$Mutation$updateDriverOrderReviewId options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk {
+  Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk({
+    this.driver_review_by_customer_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$driver_review_by_customer_id = json['driver_review_by_customer_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+      driver_review_by_customer_id: (l$driver_review_by_customer_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? driver_review_by_customer_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$driver_review_by_customer_id = driver_review_by_customer_id;
+    _resultData['driver_review_by_customer_id'] =
+        l$driver_review_by_customer_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$driver_review_by_customer_id = driver_review_by_customer_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$driver_review_by_customer_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driver_review_by_customer_id = driver_review_by_customer_id;
+    final lOther$driver_review_by_customer_id =
+        other.driver_review_by_customer_id;
+    if (l$driver_review_by_customer_id != lOther$driver_review_by_customer_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+    on Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk {
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+          Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+    Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk instance,
+    TRes Function(
+            Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk;
+
+  factory CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk;
+
+  TRes call({
+    int? driver_review_by_customer_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? driver_review_by_customer_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+        driver_review_by_customer_id: driver_review_by_customer_id == _undefined
+            ? _instance.driver_review_by_customer_id
+            : (driver_review_by_customer_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? driver_review_by_customer_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateRestaurantOrderReviewId {
+  factory Variables$Mutation$updateRestaurantOrderReviewId({
+    required int orderId,
+    required int reviewId,
+  }) =>
+      Variables$Mutation$updateRestaurantOrderReviewId._({
+        r'orderId': orderId,
+        r'reviewId': reviewId,
+      });
+
+  Variables$Mutation$updateRestaurantOrderReviewId._(this._$data);
+
+  factory Variables$Mutation$updateRestaurantOrderReviewId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    final l$reviewId = data['reviewId'];
+    result$data['reviewId'] = (l$reviewId as int);
+    return Variables$Mutation$updateRestaurantOrderReviewId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  int get reviewId => (_$data['reviewId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    final l$reviewId = reviewId;
+    result$data['reviewId'] = l$reviewId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<
+          Variables$Mutation$updateRestaurantOrderReviewId>
+      get copyWith => CopyWith$Variables$Mutation$updateRestaurantOrderReviewId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateRestaurantOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    final l$reviewId = reviewId;
+    final lOther$reviewId = other.reviewId;
+    if (l$reviewId != lOther$reviewId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    final l$reviewId = reviewId;
+    return Object.hashAll([
+      l$orderId,
+      l$reviewId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<TRes> {
+  factory CopyWith$Variables$Mutation$updateRestaurantOrderReviewId(
+    Variables$Mutation$updateRestaurantOrderReviewId instance,
+    TRes Function(Variables$Mutation$updateRestaurantOrderReviewId) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateRestaurantOrderReviewId;
+
+  factory CopyWith$Variables$Mutation$updateRestaurantOrderReviewId.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateRestaurantOrderReviewId;
+
+  TRes call({
+    int? orderId,
+    int? reviewId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateRestaurantOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateRestaurantOrderReviewId _instance;
+
+  final TRes Function(Variables$Mutation$updateRestaurantOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? orderId = _undefined,
+    Object? reviewId = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateRestaurantOrderReviewId._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+        if (reviewId != _undefined && reviewId != null)
+          'reviewId': (reviewId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateRestaurantOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    int? orderId,
+    int? reviewId,
+  }) =>
+      _res;
+}
+
+class Mutation$updateRestaurantOrderReviewId {
+  Mutation$updateRestaurantOrderReviewId({
+    this.update_restaurant_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantOrderReviewId.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_restaurant_order_by_pk =
+        json['update_restaurant_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantOrderReviewId(
+      update_restaurant_order_by_pk: l$update_restaurant_order_by_pk == null
+          ? null
+          : Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+              .fromJson(
+                  (l$update_restaurant_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?
+      update_restaurant_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    _resultData['update_restaurant_order_by_pk'] =
+        l$update_restaurant_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateRestaurantOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    final lOther$update_restaurant_order_by_pk =
+        other.update_restaurant_order_by_pk;
+    if (l$update_restaurant_order_by_pk !=
+        lOther$update_restaurant_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantOrderReviewId
+    on Mutation$updateRestaurantOrderReviewId {
+  CopyWith$Mutation$updateRestaurantOrderReviewId<
+          Mutation$updateRestaurantOrderReviewId>
+      get copyWith => CopyWith$Mutation$updateRestaurantOrderReviewId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantOrderReviewId<TRes> {
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId(
+    Mutation$updateRestaurantOrderReviewId instance,
+    TRes Function(Mutation$updateRestaurantOrderReviewId) then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantOrderReviewId;
+
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId;
+
+  TRes call({
+    Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?
+        update_restaurant_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+      TRes> get update_restaurant_order_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantOrderReviewId _instance;
+
+  final TRes Function(Mutation$updateRestaurantOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateRestaurantOrderReviewId(
+        update_restaurant_order_by_pk: update_restaurant_order_by_pk ==
+                _undefined
+            ? _instance.update_restaurant_order_by_pk
+            : (update_restaurant_order_by_pk
+                as Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+      TRes> get update_restaurant_order_by_pk {
+    final local$update_restaurant_order_by_pk =
+        _instance.update_restaurant_order_by_pk;
+    return local$update_restaurant_order_by_pk == null
+        ? CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+            local$update_restaurant_order_by_pk,
+            (e) => call(update_restaurant_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?
+        update_restaurant_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+          TRes>
+      get update_restaurant_order_by_pk =>
+          CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateRestaurantOrderReviewId =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateRestaurantOrderReviewId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'reviewId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'orderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'review_id'),
+                value: VariableNode(name: NameNode(value: 'reviewId')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'review_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateRestaurantOrderReviewId
+    _parserFn$Mutation$updateRestaurantOrderReviewId(
+            Map<String, dynamic> data) =>
+        Mutation$updateRestaurantOrderReviewId.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateRestaurantOrderReviewId
+    = FutureOr<void> Function(
+  dynamic,
+  Mutation$updateRestaurantOrderReviewId?,
+);
+
+class Options$Mutation$updateRestaurantOrderReviewId
+    extends graphql.MutationOptions<Mutation$updateRestaurantOrderReviewId> {
+  Options$Mutation$updateRestaurantOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateRestaurantOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateRestaurantOrderReviewId? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateRestaurantOrderReviewId>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateRestaurantOrderReviewId(
+                            data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateRestaurantOrderReviewId,
+          parserFn: _parserFn$Mutation$updateRestaurantOrderReviewId,
+        );
+
+  final OnMutationCompleted$Mutation$updateRestaurantOrderReviewId?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateRestaurantOrderReviewId
+    extends graphql.WatchQueryOptions<Mutation$updateRestaurantOrderReviewId> {
+  WatchOptions$Mutation$updateRestaurantOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateRestaurantOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateRestaurantOrderReviewId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateRestaurantOrderReviewId,
+        );
+}
+
+extension ClientExtension$Mutation$updateRestaurantOrderReviewId
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateRestaurantOrderReviewId>>
+      mutate$updateRestaurantOrderReviewId(
+              Options$Mutation$updateRestaurantOrderReviewId options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateRestaurantOrderReviewId>
+      watchMutation$updateRestaurantOrderReviewId(
+              WatchOptions$Mutation$updateRestaurantOrderReviewId options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk {
+  Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk({
+    this.review_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$review_id = json['review_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+      review_id: (l$review_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? review_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$review_id = review_id;
+    _resultData['review_id'] = l$review_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$review_id = review_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$review_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$review_id = review_id;
+    final lOther$review_id = other.review_id;
+    if (l$review_id != lOther$review_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+    on Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk {
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+          Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+    Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+        instance,
+    TRes Function(
+            Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk;
+
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk;
+
+  TRes call({
+    int? review_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? review_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+        review_id:
+            review_id == _undefined ? _instance.review_id : (review_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? review_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateLaundryOrderReviewId {
+  factory Variables$Mutation$updateLaundryOrderReviewId({
+    required int orderId,
+    required int reviewId,
+  }) =>
+      Variables$Mutation$updateLaundryOrderReviewId._({
+        r'orderId': orderId,
+        r'reviewId': reviewId,
+      });
+
+  Variables$Mutation$updateLaundryOrderReviewId._(this._$data);
+
+  factory Variables$Mutation$updateLaundryOrderReviewId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    final l$reviewId = data['reviewId'];
+    result$data['reviewId'] = (l$reviewId as int);
+    return Variables$Mutation$updateLaundryOrderReviewId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  int get reviewId => (_$data['reviewId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    final l$reviewId = reviewId;
+    result$data['reviewId'] = l$reviewId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateLaundryOrderReviewId<
+          Variables$Mutation$updateLaundryOrderReviewId>
+      get copyWith => CopyWith$Variables$Mutation$updateLaundryOrderReviewId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateLaundryOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    final l$reviewId = reviewId;
+    final lOther$reviewId = other.reviewId;
+    if (l$reviewId != lOther$reviewId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    final l$reviewId = reviewId;
+    return Object.hashAll([
+      l$orderId,
+      l$reviewId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateLaundryOrderReviewId<TRes> {
+  factory CopyWith$Variables$Mutation$updateLaundryOrderReviewId(
+    Variables$Mutation$updateLaundryOrderReviewId instance,
+    TRes Function(Variables$Mutation$updateLaundryOrderReviewId) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateLaundryOrderReviewId;
+
+  factory CopyWith$Variables$Mutation$updateLaundryOrderReviewId.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderReviewId;
+
+  TRes call({
+    int? orderId,
+    int? reviewId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateLaundryOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateLaundryOrderReviewId _instance;
+
+  final TRes Function(Variables$Mutation$updateLaundryOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? orderId = _undefined,
+    Object? reviewId = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateLaundryOrderReviewId._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+        if (reviewId != _undefined && reviewId != null)
+          'reviewId': (reviewId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    int? orderId,
+    int? reviewId,
+  }) =>
+      _res;
+}
+
+class Mutation$updateLaundryOrderReviewId {
+  Mutation$updateLaundryOrderReviewId({
+    this.update_laundry_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryOrderReviewId.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_laundry_order_by_pk = json['update_laundry_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryOrderReviewId(
+      update_laundry_order_by_pk: l$update_laundry_order_by_pk == null
+          ? null
+          : Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+              .fromJson((l$update_laundry_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?
+      update_laundry_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_laundry_order_by_pk = update_laundry_order_by_pk;
+    _resultData['update_laundry_order_by_pk'] =
+        l$update_laundry_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_laundry_order_by_pk = update_laundry_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_laundry_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateLaundryOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_laundry_order_by_pk = update_laundry_order_by_pk;
+    final lOther$update_laundry_order_by_pk = other.update_laundry_order_by_pk;
+    if (l$update_laundry_order_by_pk != lOther$update_laundry_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryOrderReviewId
+    on Mutation$updateLaundryOrderReviewId {
+  CopyWith$Mutation$updateLaundryOrderReviewId<
+          Mutation$updateLaundryOrderReviewId>
+      get copyWith => CopyWith$Mutation$updateLaundryOrderReviewId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryOrderReviewId<TRes> {
+  factory CopyWith$Mutation$updateLaundryOrderReviewId(
+    Mutation$updateLaundryOrderReviewId instance,
+    TRes Function(Mutation$updateLaundryOrderReviewId) then,
+  ) = _CopyWithImpl$Mutation$updateLaundryOrderReviewId;
+
+  factory CopyWith$Mutation$updateLaundryOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId;
+
+  TRes call({
+    Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?
+        update_laundry_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<TRes>
+      get update_laundry_order_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithImpl$Mutation$updateLaundryOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryOrderReviewId _instance;
+
+  final TRes Function(Mutation$updateLaundryOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_laundry_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateLaundryOrderReviewId(
+        update_laundry_order_by_pk: update_laundry_order_by_pk == _undefined
+            ? _instance.update_laundry_order_by_pk
+            : (update_laundry_order_by_pk
+                as Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<TRes>
+      get update_laundry_order_by_pk {
+    final local$update_laundry_order_by_pk =
+        _instance.update_laundry_order_by_pk;
+    return local$update_laundry_order_by_pk == null
+        ? CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+            local$update_laundry_order_by_pk,
+            (e) => call(update_laundry_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?
+        update_laundry_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<TRes>
+      get update_laundry_order_by_pk =>
+          CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateLaundryOrderReviewId =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateLaundryOrderReviewId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'reviewId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_laundry_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'orderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'review_id'),
+                value: VariableNode(name: NameNode(value: 'reviewId')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'review_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateLaundryOrderReviewId
+    _parserFn$Mutation$updateLaundryOrderReviewId(Map<String, dynamic> data) =>
+        Mutation$updateLaundryOrderReviewId.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateLaundryOrderReviewId = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateLaundryOrderReviewId?,
+);
+
+class Options$Mutation$updateLaundryOrderReviewId
+    extends graphql.MutationOptions<Mutation$updateLaundryOrderReviewId> {
+  Options$Mutation$updateLaundryOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateLaundryOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateLaundryOrderReviewId? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateLaundryOrderReviewId>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateLaundryOrderReviewId(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateLaundryOrderReviewId,
+          parserFn: _parserFn$Mutation$updateLaundryOrderReviewId,
+        );
+
+  final OnMutationCompleted$Mutation$updateLaundryOrderReviewId?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateLaundryOrderReviewId
+    extends graphql.WatchQueryOptions<Mutation$updateLaundryOrderReviewId> {
+  WatchOptions$Mutation$updateLaundryOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateLaundryOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateLaundryOrderReviewId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateLaundryOrderReviewId,
+        );
+}
+
+extension ClientExtension$Mutation$updateLaundryOrderReviewId
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateLaundryOrderReviewId>>
+      mutate$updateLaundryOrderReviewId(
+              Options$Mutation$updateLaundryOrderReviewId options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateLaundryOrderReviewId>
+      watchMutation$updateLaundryOrderReviewId(
+              WatchOptions$Mutation$updateLaundryOrderReviewId options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk {
+  Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk({
+    this.review_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$review_id = json['review_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+      review_id: (l$review_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? review_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$review_id = review_id;
+    _resultData['review_id'] = l$review_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$review_id = review_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$review_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$review_id = review_id;
+    final lOther$review_id = other.review_id;
+    if (l$review_id != lOther$review_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+    on Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk {
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+          Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+    Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk instance,
+    TRes Function(
+            Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk;
+
+  factory CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk;
+
+  TRes call({
+    int? review_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? review_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+        review_id:
+            review_id == _undefined ? _instance.review_id : (review_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? review_id,
     String? $__typename,
   }) =>
       _res;

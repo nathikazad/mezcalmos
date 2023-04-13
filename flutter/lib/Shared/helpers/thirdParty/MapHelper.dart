@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["General"];
 
-typedef LocationChangesNotifier = void Function(LocModel.MezLocation location);
+typedef LocationChangesNotifier = void Function(LocModel.MezLocation? location);
 
 class RouteInformation {
   String polyline;
@@ -34,6 +34,10 @@ class RouteInformation {
       ...duration.toJson(),
       "polyline": polyline
     };
+  }
+
+  bool get valid {
+    return duration.seconds > 0;
   }
 }
 
@@ -81,7 +85,7 @@ class RideDuration {
   }
 
   String inMinutesText() {
-    return "${(seconds / 60).round()}min";
+    return "${(seconds / 60).round()} ${_i18n()["min"]}";
   }
 
   RideDuration.fromJson(data)
@@ -110,8 +114,9 @@ Future<LocModel.MezLocation> getCurrentLocation() async {
 }
 
 /// This is for AutoComplete location Search !
-Future<Map<String, String>> getLocationsSuggestions(String search) async {
-  final Map<String, String> _returnedPredictions = <String, String>{};
+Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
+  mezDbgPrint("Getting locations with querry =======>$search");
+  final List<AutoCompleteResult> _returnedPredictions = [];
 
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
@@ -129,9 +134,9 @@ Future<Map<String, String>> getLocationsSuggestions(String search) async {
   // });
 
   final String url =
-      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&strictbounds=true";
 
-  mezDbgPrint("===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
+  mezDbgPrint(" $url \n ===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
   if (loc == null) return _returnedPredictions;
 
   final http.Response resp = await http.get(Uri.parse(url));
@@ -139,30 +144,31 @@ Future<Map<String, String>> getLocationsSuggestions(String search) async {
 
   if (respJson["status"] == "OK") {
     respJson["predictions"].forEach((pred) {
-      mezDbgPrint("===> autocomplete : $pred");
       if (pred["description"].toLowerCase().contains(search.toLowerCase())) {
-        _returnedPredictions[pred["place_id"]] = pred["description"];
+        _returnedPredictions.add(AutoCompleteResult(
+            placeId: pred["place_id"], description: pred["description"]));
       }
     });
   }
+  mezDbgPrint("Returned Auto Complete ====> $_returnedPredictions");
 
   return _returnedPredictions;
 }
 
 /// This calls Places API with a [PlaceID] that can be fetched through [getLocationsSuggestions()] and returns [Location] !
-Future<LocModel.MezLocation?> getLocationFromPlaceId(String placeId) async {
+Future<LocModel.MezLocation?> getLocationFromPlaceId(
+    String placeId, String description) async {
   final String url =
-      "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/place/details/json?placeid=$placeId";
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);
 
   if (respJson["status"] == "OK") {
     final double lat = respJson["result"]["geometry"]["location"]["lat"];
     final double lng = respJson["result"]["geometry"]["location"]["lng"];
-    final String address = respJson["result"]["formatted_address"];
 
     return LocModel.MezLocation.fromFirebaseData(
-        {"address": address, "lat": lat, "lng": lng});
+        {"address": description, "lat": lat, "lng": lng});
   } else {
     return null;
     // in case there is a problem on request!
@@ -174,7 +180,7 @@ Future<LocModel.MezLocation?> getLocationFromPlaceId(String placeId) async {
 Future<String?> getAdressFromLatLng(LatLng latlng) async {
   //TODO: ALL HTTP CALLS MUST BE IMPLEMENTED INSIDE OF A TRY CATCH BLOCK!
   final String url =
-      "https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng.latitude},${latlng.longitude}&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/geocode/json?latlng=${latlng.latitude},${latlng.longitude}";
 
   http.Response? resp = null;
   try {
@@ -209,7 +215,7 @@ Future<Route?> getDurationAndDistance(
   mezDbgPrint(
       "[tt] Called getDurationAndDistance \n- TO :  lat(${to.latitude}) | lng(to(${to.longitude}) \n- FROM :  lat(${from.latitude}) | lng(to(${from.longitude})!");
   final String url =
-      "https://maps.googleapis.com/maps/api/directions/json?units=metric&region=mx&destination=${to.latitude},${to.longitude}&origin=${from.latitude},${from.longitude}&key=$placesApikey";
+      "https://cors-mezc.herokuapp.com/api/directions/json?units=metric&region=mx&destination=${to.latitude},${to.longitude}&origin=${from.latitude},${from.longitude}";
   mezDbgPrint("URL ==> $url");
   final http.Response resp = await http.get(Uri.parse(url));
   final Map<String, dynamic> respJson = json.decode(resp.body);
@@ -335,5 +341,28 @@ extension LocationDataConverter on LocationData {
       return LatLng(latitude!, longitude!);
     }
     return null;
+  }
+}
+
+class AutoCompleteResult {
+  String? placeId;
+  String description;
+  AutoCompleteResult({
+    required this.placeId,
+    required this.description,
+  });
+
+  factory AutoCompleteResult.fromMap(Map<String, dynamic> map) {
+    return AutoCompleteResult(
+      placeId: map['placeId'] as String,
+      description: map['description'] as String,
+    );
+  }
+
+  @override
+  bool operator ==(covariant AutoCompleteResult other) {
+    if (identical(this, other)) return true;
+
+    return other.placeId == placeId && other.description == description;
   }
 }

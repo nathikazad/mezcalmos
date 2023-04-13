@@ -3,20 +3,17 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:gql_exec/gql_exec.dart';
+import 'package:graphql/src/core/query_options.dart' show WithType;
 import 'package:graphql/src/links/gql_links.dart';
 import 'package:graphql/src/utilities/platform.dart';
 import 'package:meta/meta.dart';
-
-import 'package:graphql/src/core/query_options.dart' show WithType;
-import 'package:gql_exec/gql_exec.dart';
-
-import 'package:stream_channel/stream_channel.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as ws_status;
-
 import 'package:rxdart/rxdart.dart';
+import 'package:stream_channel/stream_channel.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
+import 'package:web_socket_channel/status.dart' as ws_status;
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import './websocket_messages.dart';
 
@@ -169,7 +166,7 @@ class SocketClient {
   final Iterable<String>? protocols;
   final SocketClientConfig config;
 
-  final BehaviorSubject<SocketConnectionState> _connectionStateController =
+  final BehaviorSubject<SocketConnectionState> connectionStateController =
       BehaviorSubject<SocketConnectionState>();
 
   final HashMap<String, SubscriptionListener> _subscriptionInitializers =
@@ -189,7 +186,7 @@ class SocketClient {
   @visibleForTesting
   void Function(Object error, StackTrace stackTrace) onStreamError;
 
-  Stream<GraphQLSocketMessage> get _messages => socketChannel!.messages;
+  Stream<GraphQLSocketMessage> get messages => socketChannel!.messages;
 
   StreamSubscription<ConnectionKeepAlive>? _keepAliveSubscription;
   StreamSubscription<GraphQLSocketMessage>? _messageSubscription;
@@ -215,10 +212,9 @@ class SocketClient {
     // state to notConnected prior to closing socket. This ensures we don't
     // attempt to send a message over the channel that we're closing
     // if we are forcefully closing the socket
-    if (!_connectionStateController.isClosed &&
-        _connectionStateController.value !=
-            SocketConnectionState.notConnected) {
-      _connectionStateController.add(SocketConnectionState.notConnected);
+    if (!connectionStateController.isClosed &&
+        connectionStateController.value != SocketConnectionState.notConnected) {
+      connectionStateController.add(SocketConnectionState.notConnected);
     }
     await socketChannel?.sink.close(ws_status.normalClosure);
   }
@@ -229,11 +225,11 @@ class SocketClient {
   Future<void> _connect() async {
     final InitOperation initOperation = await config.initOperation;
 
-    if (_connectionStateController.isClosed || _wasDisposed) {
+    if (connectionStateController.isClosed || _wasDisposed) {
       return;
     }
 
-    _connectionStateController.add(SocketConnectionState.connecting);
+    connectionStateController.add(SocketConnectionState.connecting);
 
     try {
       // Even though config.connect is sync, we call async in order to make the
@@ -241,14 +237,14 @@ class SocketClient {
       var connection =
           await config.connect(uri: Uri.parse(url), protocols: protocols);
       socketChannel = connection.forGraphQL();
-      _connectionStateController.add(SocketConnectionState.connected);
+      connectionStateController.add(SocketConnectionState.connected);
       _write(initOperation);
 
       if (config.inactivityTimeout != null) {
-        _disconnectOnKeepAliveTimeout(_messages);
+        _disconnectOnKeepAliveTimeout(messages);
       }
 
-      _messageSubscription = _messages.listen(
+      _messageSubscription = messages.listen(
         onMessage,
         onDone: onConnectionLost,
         // onDone will not be triggered if the subscription is
@@ -279,7 +275,7 @@ class SocketClient {
     _keepAliveSubscription?.cancel();
     _messageSubscription?.cancel();
 
-    if (_connectionStateController.isClosed || _wasDisposed) {
+    if (connectionStateController.isClosed || _wasDisposed) {
       return;
     }
 
@@ -287,7 +283,7 @@ class SocketClient {
     _subscriptionInitializers.values.forEach((s) => s.hasBeenTriggered = false);
 
     if (config.autoReconnect &&
-        !_connectionStateController.isClosed &&
+        !connectionStateController.isClosed &&
         !_wasDisposed) {
       if (config.delayBetweenReconnectionAttempts != null) {
         _reconnectTimer = Timer(
@@ -319,12 +315,12 @@ class SocketClient {
     await Future.wait([
       _closeSocketChannel(),
       _messageSubscription?.cancel(),
-      _connectionStateController.close(),
+      connectionStateController.close(),
     ].where((future) => future != null).cast<Future<dynamic>>().toList());
   }
 
   void _write(final GraphQLSocketMessage message) {
-    if (_connectionStateController.value == SocketConnectionState.connected) {
+    if (connectionStateController.value == SocketConnectionState.connected) {
       socketChannel!.sink.add(
         json.encode(
           message,
@@ -359,8 +355,8 @@ class SocketClient {
     final onListen = () {
       final Stream<SocketConnectionState> waitForConnectedStateWithoutTimeout =
           (waitForConnection
-                  ? _connectionStateController
-                  : _connectionStateController
+                  ? connectionStateController
+                  : connectionStateController
                       .startWith(SocketConnectionState.connected))
               .where((SocketConnectionState state) =>
                   state == SocketConnectionState.connected)
@@ -379,7 +375,7 @@ class SocketClient {
           : waitForConnectedStateWithoutTimeout;
 
       sub = waitForConnectedState.listen((_) {
-        final Stream<GraphQLSocketMessage> dataErrorComplete = _messages.where(
+        final Stream<GraphQLSocketMessage> dataErrorComplete = messages.where(
           (GraphQLSocketMessage message) {
             if (message is SubscriptionData) {
               return message.id == id;
@@ -445,7 +441,7 @@ class SocketClient {
       _subscriptionInitializers.remove(id);
 
       sub?.cancel();
-      if (_connectionStateController.value == SocketConnectionState.connected &&
+      if (connectionStateController.value == SocketConnectionState.connected &&
           socketChannel != null) {
         _write(StopOperation(id));
       }
@@ -459,7 +455,7 @@ class SocketClient {
   /// These streams will emit done events when the current socket is done.
   /// A stream that emits the last value of the connection state upon subscription.
   Stream<SocketConnectionState> get connectionState =>
-      _connectionStateController.stream;
+      connectionStateController.stream;
 }
 
 void _defaultOnStreamError(Object error, StackTrace st) {

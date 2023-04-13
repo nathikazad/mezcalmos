@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,6 +18,7 @@ class MezButton extends StatefulWidget {
     this.borderRadius = 8,
     this.textStyle,
     this.height = 55,
+    this.border,
     this.width,
     this.icon,
     required this.label,
@@ -33,6 +35,7 @@ class MezButton extends StatefulWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
   final IconData? icon;
+  final BoxBorder? border;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -63,7 +66,6 @@ class _MezButtonState extends State<MezButton> {
                             .whenComplete(() => isLoading.value = false)
                             .onError((Object? e, StackTrace stk) {
                           mezDbgPrint(stk);
-                          // Get.snackbar("Error", "", backgroundColor: Colors.black);
                         });
                       }
                     : null,
@@ -88,8 +90,8 @@ class _MezButtonState extends State<MezButton> {
                 child: (isLoading.value)
                     ? Transform.scale(
                         scale: 0.6,
-                        child: const CircularProgressIndicator(
-                          color: Colors.white,
+                        child: CircularProgressIndicator(
+                          color: widget.textColor ?? Colors.white,
                         ),
                       )
                     : Row(
@@ -106,15 +108,11 @@ class _MezButtonState extends State<MezButton> {
                               ),
                             ),
                           Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 2),
-                              child: Text(
-                                widget.label,
-                                style: widget.textStyle ??
-                                    Get.textTheme.bodyLarge?.copyWith(
-                                        color:
-                                            widget.textColor ?? Colors.white),
-                              ),
+                            child: Text(
+                              widget.label,
+                              style: widget.textStyle ??
+                                  context.txt.bodyLarge?.copyWith(
+                                      color: widget.textColor ?? Colors.white),
                             ),
                           ),
                         ],

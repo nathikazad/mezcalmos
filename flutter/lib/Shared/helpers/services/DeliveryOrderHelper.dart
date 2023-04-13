@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:rive/rive.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["DeliveryOrderHelper"];
 
-extension DeliveryOrderHelper on DeliveryOrder {
+extension DeliveryOrderHelper on DeliveryOrderStatus {
 // getting the order status string
 
-  String orderStatusTitle() {
-    switch (status) {
+  String get title {
+    switch (this) {
       case DeliveryOrderStatus.CancelledByServiceProvider:
       case DeliveryOrderStatus.CancelledByCustomer:
       case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByAdmin:
         return "${_i18n()['status']["canceled"]}";
 
       case DeliveryOrderStatus.OrderReceived:
@@ -26,22 +26,22 @@ extension DeliveryOrderHelper on DeliveryOrder {
         return "${_i18n()["status"]['atPickUp']}";
       case DeliveryOrderStatus.OnTheWayToDropoff:
         return "${_i18n()["status"]['otwDropOff']}";
+      case DeliveryOrderStatus.OnTheWayToPickup:
+        return "${_i18n()["status"]['otwPickup']}";
       case DeliveryOrderStatus.AtDropoff:
         return "${_i18n()["status"]['atDropOff']}";
       case DeliveryOrderStatus.Delivered:
         return "${_i18n()["status"]['delivered']}";
-
-      default:
-        return "${_i18n()["status"]['ready']}";
     }
   }
 
   // getting icons widgets reperesent the current status
 
-  Widget getOrderStatusWidget() {
-    switch (status) {
+  Widget widget({required bool packageReady}) {
+    switch (this) {
       case DeliveryOrderStatus.CancelledByDeliverer:
       case DeliveryOrderStatus.CancelledByServiceProvider:
+      case DeliveryOrderStatus.CancelledByAdmin:
       case DeliveryOrderStatus.CancelledByCustomer:
         return Container(
           padding: const EdgeInsets.all(5),
@@ -55,13 +55,10 @@ extension DeliveryOrderHelper on DeliveryOrder {
         );
 
       case DeliveryOrderStatus.OrderReceived:
-        return Container(
-          // padding: const EdgeInsets.only(right: 10.0),
-          child: Icon(
-            Icons.move_to_inbox_rounded,
-            size: 35,
-            color: primaryBlueColor,
-          ),
+        return Icon(
+          Icons.shopping_bag,
+          size: 35,
+          color: primaryBlueColor,
         );
 
       case DeliveryOrderStatus.AtPickup:
@@ -94,22 +91,26 @@ extension DeliveryOrderHelper on DeliveryOrder {
         );
       case DeliveryOrderStatus.AtDropoff:
         return Container(
-          // padding: const EdgeInsets.only(right: 10.0),
+          margin: const EdgeInsets.only(right: 14),
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
-            Icons.check_circle,
-            size: 35,
+            Icons.check_rounded,
             color: primaryBlueColor,
           ),
         );
 
       case DeliveryOrderStatus.Delivered:
         return Container(
-          padding: const EdgeInsets.all(5),
+          margin: const EdgeInsets.only(right: 14),
+          width: 25,
+          height: 25,
           decoration: BoxDecoration(
               color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
-            Icons.check,
-            size: 25,
+            Icons.check_rounded,
             color: primaryBlueColor,
           ),
         );

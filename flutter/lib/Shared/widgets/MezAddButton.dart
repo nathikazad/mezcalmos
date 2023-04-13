@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 class MezAddButton extends StatelessWidget {
   const MezAddButton({
@@ -46,8 +46,7 @@ class MezAddButton extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 12),
                   child: Text(
                     title!,
-                    style:
-                        Get.textTheme.bodyText1?.copyWith(color: primaryColor),
+                    style: context.txt.bodyLarge?.copyWith(color: primaryColor),
                   ),
                 )
             ],

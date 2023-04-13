@@ -1,29 +1,60 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class CustLaundriesListViewController {
-  // state vars //
-  Rxn<List<Laundry>> laundries = Rxn();
+  RxList<Laundry> filteredServices = RxList<Laundry>.empty();
 
-  bool get hasData =>
-      laundries.value != null && customerCurrentLocation.value != null;
-  Rxn<LocationData> customerCurrentLocation = Rxn();
+  List<Laundry> _services = List<Laundry>.empty();
 
-  // methods //
+  RxBool isLoading = RxBool(false);
+  RxBool showOnlyOpen = RxBool(true);
+  RxString searchQuery = RxString("");
+  LocationData? customerLocation;
 
-  Future<void> init() async {
-    laundries.value = await get_laundries(withCache: false);
-    await _getCustomerCurrentLocation();
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+
+  void init() {
+    isLoading.value = true;
+
+    get_laundries(withCache: false).then((List<Laundry>? list) {
+      if (list != null) {
+        _services = list;
+
+        filter();
+      }
+      _getCustomerCurrentLocation();
+    }).whenComplete(() {
+      isLoading.value = false;
+    });
   }
 
-  Future<LocationData> _getCustomerCurrentLocation() async {
-    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀");
-    LocationData res = await Location().getLocation();
-    customerCurrentLocation.value = res;
-    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀 =====>$res");
-    return res;
+  void _getCustomerCurrentLocation() {
+    Location()
+        .getLocation()
+        .then((LocationData value) => customerLocation = value);
+  }
+
+  void changeAlwaysOpenSwitch(bool value) {
+    showOnlyOpen.value = value;
+  }
+
+  void filter() {
+    List<Laundry> newList = new List<Laundry>.from(_services);
+
+    newList = newList
+        .searchByName(searchQuery.value)
+        .showOnlyOpen(showOnlyOpen.value) as List<Laundry>;
+    newList.sortByOpen();
+    filteredServices.value = newList;
+  }
+
+  void dispose() {
+    isLoading.value = false;
   }
 }

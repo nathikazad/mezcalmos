@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
-import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ClosedServiceProviderWidget.dart';
@@ -60,7 +60,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
           showNotifications: true,
         ),
         key: Get.find<SideMenuDrawerController>().getNewKey(),
-        drawer: ROpDrawer(),
+        drawer: MezSideMenu(),
         body: Obx(() {
           if (viewController.initalized.isFalse) {
             return MezLogoAnimation(
@@ -131,20 +131,20 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyLarge)),
+                        style: context.txt.bodyLarge)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,
                     textColor: primaryBlueColor,
                     height: 32,
                     width: 35.w,
-                    textStyle: Get.textTheme.bodyLarge
+                    textStyle: context.txt.bodyLarge
                         ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
                     // width: ,
                     borderRadius: 35,
                     label: '${_i18n()["pastButton"]}'.inCaps,
                     onClick: () async {
-                      await MezRouter.toNamed(kPastOrdersListView);
+                      await ROpPastOrdersList.navigate();
                     },
                   ),
                 ),
@@ -160,9 +160,9 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                         return MinimalOrderCard(
                           order: viewController.currentOrders[index],
                           onTap: () {
-                            MezRouter.toNamed(getROpOrderRoute(viewController
-                                .currentOrders[index].id
-                                .toString()));
+                            RestaurantOrderView.navigate(
+                                orderId: viewController.currentOrders[index].id
+                                    .toString());
                           },
                         );
                       }),

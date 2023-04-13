@@ -22,6 +22,7 @@ query getServiceDetails($id: Int!) {
     name
     open_status
     phone_number
+    
     service_link_id
     stripe_info {
       charge_fees_on_customer

@@ -1,5 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { MezError } from "../../../models/Generic/Generic";
 
 export async function deleteDeliveryDriver(deliveryDriverId: number)/*: Promise<DeliveryDriver>*/ {
     let chain = getHasura();
@@ -12,9 +12,6 @@ export async function deleteDeliveryDriver(deliveryDriverId: number)/*: Promise<
         }]
     });
     if(!(response.delete_delivery_driver_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "incorrect delivery driver id"
-        );
+        throw new MezError("driverNotFound");
     }
 }

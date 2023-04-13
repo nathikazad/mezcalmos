@@ -9,6 +9,7 @@ functionNamesGroup1 = []
 functionNamesGroup2 = {}
 uniqueTypes = {}
 models = {}
+errors = {}
 
 types = {"number": "num", "string": "String", "boolean": "bool"}
 
@@ -37,7 +38,10 @@ def searchForModel(search):
           if found:
             if ":" in line:
               v = line.split(":")
-              typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace(";","")                   
+              typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace(";","") 
+              if typeDictionary["values"][v[0].strip()] not in ["string", "number", "boolean", "JSON"]:
+                # print(typeDictionary["values"][v[0].strip()])
+                errors[typeDictionary["values"][v[0].strip()]] = True
             if "=" in line:
               v = line.split("=")
               typeDictionary["values"][v[0].strip()] = v[1].strip().replace(",","").replace("\"","").replace(";","")                 
@@ -96,7 +100,7 @@ def getArguments(corresponding):
     print(fileName)
     print()
     sys.exit()
-
+ 
 def getReturnType(corresponding):
   # print(corresponding)
   fileName = getFileName(corresponding)
@@ -227,7 +231,7 @@ extension ParseStringTo#### on String {
   #### to####() {
     return ####.values.firstWhere(
         (#### ****) =>
-            ****.toFirebaseFormatString() == this);
+            ****.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 '''
@@ -373,7 +377,7 @@ def getModels():
           if models[key]["values"][v] in models:
             if models[models[key]["values"][v]]["type"] == "enum":
               toWriteModel = toWriteModel[:-2]
-              toWriteModel += ".toString().to" + models[key]["values"][v] + "(), "
+              toWriteModel += "?.toString().to" + models[key]["values"][v] + "(), "
         toWriteModel = toWriteModel[:-2]
         toWriteModel += ''');
   }'''
@@ -432,6 +436,10 @@ if __name__ == "__main__":
       if matches[0] in ["string", "number", "boolean", "JSON"]:
         continue
     if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key: #and "Array" not in key:
+      # models[key] = 
+      searchForModel(key)
+  for key in errors:
+    if "Error" in key: #and "Array" not in key:
       # models[key] = 
       searchForModel(key)
 

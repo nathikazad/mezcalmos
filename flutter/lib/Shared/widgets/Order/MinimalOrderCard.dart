@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -15,14 +16,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList']["components"]["ROpOrderCard"];
 
 class MinimalOrderCard extends StatefulWidget {
-  const MinimalOrderCard({
-    Key? key,
-    required this.order,
-    required this.onTap,
-  }) : super(key: key);
+  const MinimalOrderCard(
+      {Key? key, required this.order, required this.onTap, this.borderRadius})
+      : super(key: key);
 
   final MinimalOrder order;
-
+  final BorderRadius? borderRadius;
   final Function()? onTap;
   @override
   State<MinimalOrderCard> createState() => _MinimalOrderCardState();
@@ -33,9 +32,12 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
+      ),
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
         onTap: widget.onTap,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -54,7 +56,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       children: <Widget>[
                         Text(
                           widget.order.title.inCaps,
-                          style: Get.textTheme.headlineMedium,
+                          style: context.txt.headlineMedium,
                         ),
                         SizedBox(
                           height: 8,
@@ -62,7 +64,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         if (widget.order.toAdress != null)
                           Text(
                             widget.order.toAdress!.inCaps,
-                            style: Get.textTheme.bodyMedium,
+                            style: context.txt.bodyMedium,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -75,7 +77,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     children: [
                       Text(
                         widget.order.orderTime.getOrderTime(),
-                        style: Get.textTheme.bodyMedium?.copyWith(
+                        style: context.textTheme.bodyMedium?.copyWith(
                           color: blackColor,
                         ),
                       ),
@@ -143,18 +145,16 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     Row(
                       children: <Widget>[
                         Icon(
-                          widget.order.orderType == OrderType.Laundry
-                              ? Icons.local_laundry_service_sharp
-                              : Icons.flatware,
+                          widget.order.orderType.toIcon(),
                           color: blackColor,
-                          size: 16.sp,
+                          size: 27,
                         ),
                         SizedBox(
                           width: 2,
                         ),
                         Text(
                           widget.order.totalCost!.toPriceString(),
-                          style: Get.textTheme.titleSmall?.copyWith(
+                          style: context.txt.titleSmall?.copyWith(
                             color: blackColor,
                           ),
                         )
@@ -169,19 +169,17 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         Icon(
                           Icons.delivery_dining,
                           color: blackColor,
-                          size: 16.sp,
+                          size: 27,
                         ),
                         SizedBox(
                           width: 2,
                         ),
                         Text(
-                          (widget.order.orderType == OrderType.Laundry)
-                              ? "${widget.order.deliveryCost!.toPriceString()} x2"
-                              : widget.order.deliveryCost!.toPriceString(),
-                          style: Get.textTheme.titleSmall?.copyWith(
+                          widget.order.deliveryCost!.toPriceString(),
+                          style: context.txt.titleSmall?.copyWith(
                             color: blackColor,
                           ),
-                        ),
+                        )
                       ],
                     ),
                   Spacer(),
@@ -205,7 +203,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["canceled"]}',
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(color: Colors.red, fontSize: 10.sp),
           ),
         );
@@ -218,7 +216,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["delivered"]}',
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(color: Color(0xFF6779FE), fontSize: 10.sp),
           ),
         );
@@ -230,7 +228,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["waiting"]}',
-            style: Get.textTheme.bodyLarge
+            style: context.txt.bodyLarge
                 ?.copyWith(color: Color(0xFFFF9900), fontSize: 10.sp),
           ),
         );

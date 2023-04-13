@@ -69,7 +69,8 @@ Future<List<DeliveryCompany>> admin_get_dv_companies(
   final List<DeliveryCompany> returnedList = data
       .map((Query$admin_get_dv_companies$delivery_company data) =>
           DeliveryCompany(
-            //  schedule: null,
+              deliveryCost: null,
+              schedule: null,
               languages: convertToLanguages(data.details!.language),
               serviceDetailsId: data.details!.id,
               deliveryDetailsId: data.delivery_details_id,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,7 +32,7 @@ class ClosedServiceProviderWidget extends StatelessWidget {
           ),
           Text(
             "${_i18n()["title"]}",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
           SizedBox(
             height: 10,
@@ -39,7 +40,7 @@ class ClosedServiceProviderWidget extends StatelessWidget {
           Text(
             "${_i18n()["subtitle"]}",
             textAlign: TextAlign.center,
-            style: Get.textTheme.bodyLarge?.copyWith(
+            style: context.txt.bodyLarge?.copyWith(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey.shade800),

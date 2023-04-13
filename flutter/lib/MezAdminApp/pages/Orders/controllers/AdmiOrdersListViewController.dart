@@ -6,6 +6,7 @@ import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsV
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/orders/hsAdminOrders.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -16,12 +17,13 @@ class AdmiOrdersListViewController {
   late AdminTabsViewController adminTabsViewController;
   // obs //
   Rxn<List<MinimalOrder>> restaurantOrders = Rxn();
-  Rxn<List<MinimalOrder>> restaurantPastOrders = Rxn();
-  int restLimit = 10;
-  Rxn<List<MinimalOrder>> laundryPastOrders = Rxn();
-  int laundryLimit = 10;
-  Rxn<List<MinimalOrder>> dvPastOrders = Rxn();
-  int dvLimit = 10;
+  RxList<MinimalOrder> restaurantPastOrders = RxList.empty();
+  int restOffset = 0;
+  RxList<MinimalOrder> laundryPastOrders = RxList.empty();
+  int laundryOffset = 0;
+  RxList<MinimalOrder> dvPastOrders = RxList.empty();
+  int dvOffset = 0;
+  int fetchSize = 10;
   Rxn<List<MinimalOrder>> deliveryOrders = Rxn();
   Rxn<List<MinimalOrder>> laundryOrders = Rxn();
   RxBool isFetching = RxBool(false);
@@ -35,16 +37,20 @@ class AdmiOrdersListViewController {
   List<MinimalOrder> get pastOrders {
     switch (currentService) {
       case ServiceProviderType.Restaurant:
-        return restaurantPastOrders.value ?? [];
+        return restaurantPastOrders;
       case ServiceProviderType.Laundry:
-        return laundryPastOrders.value ?? [];
+        return laundryPastOrders;
       case ServiceProviderType.DeliveryCompany:
-        return dvPastOrders.value ?? [];
+        return dvPastOrders;
 
       default:
         return [];
     }
   }
+
+  bool get enableShowMoreButton =>
+      scrollController.positions.isNotEmpty &&
+      scrollController.position.maxScrollExtent == 0.0;
 
   ServiceProviderType get currentService =>
       adminTabsViewController.selectedServiceProviderType.value;
@@ -96,33 +102,57 @@ class AdmiOrdersListViewController {
       laundryOrderStream?.cancel();
       laundryOrderStream = null;
     });
+
+    scrollController.onBottomReach(fetchServicePastOrders, sensitivity: 200);
   }
 
   Future<void> fetchServicePastOrders() async {
+    if (isFetching.value) return;
+
     isFetching.value = true;
     mezDbgPrint("Fetching service orders 🥹");
-    switch (currentService) {
-      case ServiceProviderType.Restaurant:
-        restLimit += 10;
-        restaurantPastOrders.value = await get_admin_restaurant_orders(
-            inProcess: false, withCache: false, limit: restLimit);
+    try {
+      switch (currentService) {
+        case ServiceProviderType.Restaurant:
+          restaurantPastOrders.addAll((await get_admin_restaurant_orders(
+                  inProcess: false,
+                  withCache: false,
+                  offset: restOffset,
+                  limit: fetchSize)) ??
+              []);
 
-        break;
-      case ServiceProviderType.Laundry:
-        laundryLimit += 10;
-        laundryPastOrders.value = await get_admin_laundry_orders(
-            inProcess: false, withCache: false, limit: laundryLimit);
+          print(
+              '=========Fetching service orders>${restaurantPastOrders.value}');
+          restOffset += 10;
 
-        break;
-      case ServiceProviderType.DeliveryCompany:
-        dvLimit += 10;
-        dvPastOrders.value = await get_admin_dv_orders(
-            inProcess: false, withCache: false, limit: dvLimit);
+          break;
+        case ServiceProviderType.Laundry:
+          laundryPastOrders.addAll((await get_admin_laundry_orders(
+                      inProcess: false,
+                      withCache: false,
+                      offset: laundryOffset,
+                      limit: fetchSize))
+                  ?.toList() ??
+              []);
+          laundryOffset += 10;
 
-        break;
-      default:
+          break;
+        case ServiceProviderType.DeliveryCompany:
+          dvPastOrders.addAll((await get_admin_dv_orders(
+                      inProcess: false,
+                      withCache: false,
+                      offset: dvOffset,
+                      limit: fetchSize))
+                  ?.toList() ??
+              []);
+          dvOffset += 10;
+
+          break;
+        default:
+      }
+    } finally {
+      isFetching.value = false;
     }
-    isFetching.value = false;
   }
 
   void dispose() {

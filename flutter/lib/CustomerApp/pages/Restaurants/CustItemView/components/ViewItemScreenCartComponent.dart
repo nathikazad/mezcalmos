@@ -55,7 +55,7 @@ class _ViewItemScreenCartComponentState
                 child: Text(
                   "${widget.title}" +
                       "${(widget.price == null) ? " " : " +${widget.price}"}",
-                  style: textTheme.bodyText1,
+                  style: textTheme.bodyLarge,
                 ),
               ),
               Theme(

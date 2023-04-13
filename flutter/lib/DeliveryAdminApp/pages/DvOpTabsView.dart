@@ -4,10 +4,11 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpCurrentOrders.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProfileView/ServiceProfileView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -51,16 +52,14 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
 
       case 1:
         return ServiceDriversListView(
-          serviceProviderId: Get.find<DeliveryOpAuthController>().companyId,
+          serviceProviderId: opAuthController.companyId,
           serviceProviderType: ServiceProviderType.DeliveryCompany,
+          serviceLinkId: opAuthController.operator.value!.state.serviceLinkId,
         );
       case 2:
         return DeliveryCostSettingView(
-          deliveryDetailsId: Get.find<DeliveryOpAuthController>()
-              .operator
-              .value!
-              .state
-              .deliveryDetailsId,
+          deliveryDetailsId:
+              opAuthController.operator.value!.state.deliveryDetailsId,
         );
       case 3:
         return ServiceProfileView(
@@ -83,8 +82,8 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
 
   Widget _navBar() {
     return Obx(() => BottomNavigationBar(
-            selectedLabelStyle: Get.textTheme.bodyLarge,
-            unselectedLabelStyle: Get.textTheme.bodyMedium,
+            selectedLabelStyle: context.txt.bodyLarge,
+            unselectedLabelStyle: context.txt.bodyMedium,
             selectedItemColor: primaryBlueColor,
             currentIndex: _index.value,
             onTap: (int v) {

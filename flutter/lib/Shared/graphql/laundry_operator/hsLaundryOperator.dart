@@ -27,6 +27,7 @@ Future<Operator?> get_laundry_operator({required int userId}) async {
         state: OperatorState(
             deliveryDetailsId: data.store.delivery_details_id,
             serviceProviderDetailsId: data.store.details_id,
+             serviceLinkId: data.store.details!.service_link_id,
             operatorState: data.operator_details.status.toAgentStatus(),
             owner: data.operator_details.owner,
             serviceProviderId: data.store_id),
@@ -81,6 +82,7 @@ Future<List<Operator>?> get_laundry_operators(
           state: OperatorState(
               deliveryDetailsId: opData.store.delivery_details_id,
               owner: opData.operator_details.owner,
+               serviceLinkId: opData.store.details!.service_link_id,
               operatorState: opData.operator_details.status.toAgentStatus(),
               serviceProviderId: opData.store_id,
               serviceProviderDetailsId: opData.store.details_id),

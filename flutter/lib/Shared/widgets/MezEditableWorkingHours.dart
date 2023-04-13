@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezWorkingHours"];
@@ -31,7 +31,7 @@ class MezEditableWorkingHours extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
       SizedBox(
@@ -233,7 +233,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                           ":" +
                           schedule.value!.openHours[weekday]!.from[1]
                               .toString(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     )),
               ),
             ),
@@ -275,7 +275,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                       schedule.value!.openHours[weekday]!.to[0].toString() +
                           ":" +
                           schedule.value!.openHours[weekday]!.to[1].toString(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     )),
               ),
             ),

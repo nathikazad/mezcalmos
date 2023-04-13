@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -99,7 +100,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   Container(
                     child: Text(
                       "${_i18n()["itemNotes"]}",
-                      style: Get.textTheme.bodyText1,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   SizedBox(
@@ -108,7 +109,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   Container(
                     child: Text(
                       widget.item.notes!,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                 ],
@@ -167,7 +168,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
                           text: widget.item.name[userLanguage]!,
-                          style: txt.bodyText1?.copyWith(
+                          style: txt.bodyLarge?.copyWith(
                               color: widget.item.unavailable
                                   ? Colors.black.withOpacity(0.5)
                                   : Colors.black,
@@ -177,7 +178,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                           children: <TextSpan>[
                             TextSpan(
                               text: " x${widget.item.quantity}",
-                              style: txt.bodyText1?.copyWith(
+                              style: txt.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w700,
                                   color: widget.item.unavailable
                                       ? Colors.black.withOpacity(0.5)
@@ -196,7 +197,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('\$' + widget.item.totalCost.toInt().toString(),
-                              style: txt.bodyText1?.copyWith(
+                              style: txt.bodyLarge?.copyWith(
                                   color: widget.item.unavailable
                                       ? Colors.black.withOpacity(0.5)
                                       : Colors.black,
@@ -232,7 +233,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         ),
         Text(
           '${_i18n()["itemUnav"]}',
-          style: Get.textTheme.headline6?.copyWith(
+          style: context.txt.headline6?.copyWith(
               color: widget.item.unavailable ? Colors.red : Colors.white),
         ),
         SizedBox(

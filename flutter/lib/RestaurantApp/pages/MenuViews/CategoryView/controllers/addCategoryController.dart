@@ -54,7 +54,7 @@ class AddCategoryController {
 
     await initLanguages();
 
-    if (categoryId != null) {
+    if (categoryId != null && int.tryParse(categoryId) != null) {
       await initEditMode(categoryId);
     }
   }

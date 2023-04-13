@@ -9,32 +9,48 @@ class MezIconButton extends StatelessWidget {
       this.child,
       this.padding,
       this.backgroundColor,
+      this.materialColor,
+      this.shape,
+      this.borderRadius,
       this.iconColor,
-      this.iconSize});
+      this.iconSize,
+      this.elevation});
   final Function()? onTap;
   final Widget? child;
   final IconData? icon;
   final double? iconSize;
+  final double? elevation;
   final Color? backgroundColor;
+  final Color? materialColor;
   final Color? iconColor;
+  final BoxShape? shape;
+  final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      customBorder: CircleBorder(),
-      child: Ink(
-        padding: padding ?? const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-            color: backgroundColor ?? secondaryLightBlueColor,
-            shape: BoxShape.circle),
-        child: child ??
-            Icon(
-              icon,
-              color: iconColor ?? primaryBlueColor,
-              size: iconSize ?? 20,
-            ),
+    return Material(
+      color: materialColor,
+      elevation: elevation ?? 1,
+      borderRadius: borderRadius,
+      shape: shape == null ? CircleBorder() : null,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: borderRadius,
+        customBorder: shape == null ? CircleBorder() : null,
+        child: Ink(
+          padding: padding ?? const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              color: backgroundColor ?? secondaryLightBlueColor,
+              shape: shape ?? BoxShape.circle),
+          child: child ??
+              Icon(
+                icon,
+                color: iconColor ?? primaryBlueColor,
+                size: iconSize,
+              ),
+        ),
       ),
     );
   }

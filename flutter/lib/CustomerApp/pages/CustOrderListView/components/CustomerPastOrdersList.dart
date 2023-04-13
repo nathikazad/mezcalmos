@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -65,14 +66,21 @@ class CustomerPastOrdersList extends StatelessWidget {
           separator: SizedBox(
             height: 5,
           ),
-          itemBuilder: (BuildContext context, MinimalOrder element) {
+          itemBuilder: (BuildContext context, MinimalOrder order) {
             return MinimalOrderCard(
-              order: element,
+              order: order,
               onTap: () {
-                if (element.orderType == OrderType.Laundry) {
-                  MezRouter.toNamed(getLaundryOrderRoute(element.id));
-                } else {
-                  MezRouter.toNamed(getRestaurantOrderRoute(element.id));
+                switch (order.orderType) {
+                  case OrderType.Courier:
+                    CustCourierOrderView.navigate(orderId: order.id);
+                    break;
+                  case OrderType.Restaurant:
+                    ViewRestaurantOrderScreen.navigate(orderId: order.id);
+                    break;
+                  case OrderType.Laundry:
+                    CustLaundryOrderView.navigate(orderId: order.id);
+                    break;
+                  default:
                 }
               },
             );

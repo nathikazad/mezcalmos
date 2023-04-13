@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -36,21 +38,18 @@ class _DvOrderStatusControllButtonsState
 
     return Container(
       height: 70,
-      // color: (order.inDeliveryPhase())
-      //     ? Theme.of(context).primaryColorLight
-      //     : Colors.grey,
-      child: (clicked)
-          ? _loadingPlaceholder()
-          : (!widget.viewController.order.isTimeSetted)
-              ? _waitingDisabledButton(
-                  header:
-                      "${_i18n()["RestaurantControllButtons"]["timeErrorTitle"]}",
-                  body:
-                      "${_i18n()["RestaurantControllButtons"]["timeErrorBody"]}",
-                  child: Icon(
-                    Icons.watch_later,
-                    color: Colors.red,
-                  ))
+      child: (!widget.viewController.order.isDriverAssigned &&
+              widget.viewController.order.inProcess())
+          ? MezButton(
+              label: "${_i18n()['acceptOrder']}",
+              backgroundColor: Colors.green.shade600,
+              borderRadius: 0,
+              onClick: () async {
+                await widget.viewController.acceptOpenOrder();
+              },
+            )
+          : (clicked)
+              ? _loadingPlaceholder()
               : _getFooterComponent(),
     );
   }
@@ -58,7 +57,8 @@ class _DvOrderStatusControllButtonsState
   Widget _getFooterComponent() {
     switch (widget.viewController.order.status) {
       case DeliveryOrderStatus.OrderReceived:
-        if (widget.viewController.isLaundry) {
+        if (widget.viewController.isLaundryPickup ||
+            widget.viewController.isCourier) {
           return _handleBtn();
         } else if (!widget.viewController.order.packageReady) {
           return _waitingDisabledButton(
@@ -85,33 +85,52 @@ class _DvOrderStatusControllButtonsState
       label: _getBtnTitle(),
       borderRadius: 0,
       onClick: () async {
-        switch (widget.viewController.order.status) {
-          case DeliveryOrderStatus.OrderReceived:
-            await widget.viewController.startPickup();
-            break;
-          case DeliveryOrderStatus.OnTheWayToPickup:
-            await widget.viewController.atPickup();
+        if (widget.viewController.order.isTimeSetted &&
+            widget.viewController.order.isDeliveryCostSetted) {
+          switch (widget.viewController.order.status) {
+            case DeliveryOrderStatus.OrderReceived:
+              await widget.viewController.startPickup();
+              break;
+            case DeliveryOrderStatus.OnTheWayToPickup:
+              await widget.viewController.atPickup();
 
-            break;
-          case DeliveryOrderStatus.AtPickup:
-            await widget.viewController.startDropoff();
-            break;
-          case DeliveryOrderStatus.OnTheWayToDropoff:
-            await widget.viewController.atDropoff();
-            break;
-          case DeliveryOrderStatus.AtDropoff:
-            await widget.viewController.finishDelivery();
-            break;
+              break;
+            case DeliveryOrderStatus.AtPickup:
+              await widget.viewController.startDropoff();
+              break;
+            case DeliveryOrderStatus.OnTheWayToDropoff:
+              await widget.viewController.atDropoff();
+              break;
+            case DeliveryOrderStatus.AtDropoff:
+              await widget.viewController.finishDelivery();
+              break;
 
-          default:
+            default:
+          }
+        } else if (!widget.viewController.order.isTimeSetted) {
+          widget.viewController.order.isCourier
+              ? showErrorSnackBar(
+                  errorTitle: "${_i18n()["noDeliveryTimeTitle"]}",
+                  errorText: "${_i18n()["noDeliveryTimeBody"]}")
+              : showErrorSnackBar(
+                  errorTitle: (widget.viewController.pickuSetted)
+                      ? "${_i18n()["noDeliveryTimeTitle"]}"
+                      : "${_i18n()["noPickupTimeTitle"]}",
+                  errorText: (widget.viewController.pickuSetted)
+                      ? "${_i18n()["noDeliveryTimeBody"]}"
+                      : "${_i18n()["noPickupTimeBody"]}");
+        } else if (!widget.viewController.order.isDeliveryCostSetted) {
+          showErrorSnackBar(
+              errorTitle: "${_i18n()["setDvCostTitle"]}",
+              errorText: "${_i18n()["setDvCostBody"]}");
         }
       },
     );
   }
 
   bool shouldDisableBottomButton() {
-    if (widget.viewController.order.estimatedArrivalAtDropoffTime != null &&
-        widget.viewController.order.estimatedArrivalAtPickupTime != null) {
+    if (widget.viewController.order.estimatedArrivalAtDropoff != null &&
+        widget.viewController.order.estimatedArrivalAtPickup != null) {
       return false;
     }
 
@@ -149,12 +168,12 @@ class _DvOrderStatusControllButtonsState
             children: [
               Text(
                 '${_i18n()["orderStatus"]["delivered"]}',
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Text(
                 DateFormat('dd MMM, yy h:m a')
                     .format(widget.viewController.order.orderTime.toLocal()),
-                style: Get.textTheme.titleMedium,
+                style: context.txt.titleMedium,
               )
             ],
           ))
@@ -192,14 +211,14 @@ class _DvOrderStatusControllButtonsState
                 GradientProgressIndicator(
                   radius: 11,
                   duration: 3,
-                  strokeWidth: 1,
+                  strokeWidth: 3,
                   gradientStops: const [
                     0.2,
                     0.8,
                   ],
                   gradientColors: const [
-                    Colors.white,
-                    Colors.grey,
+                    primaryBlueColor,
+                    secondaryLightBlueColor
                   ],
                   child: SizedBox(),
                 ),
@@ -214,11 +233,11 @@ class _DvOrderStatusControllButtonsState
             children: [
               Text(
                 header,
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Text(
                 body,
-                style: Get.textTheme.titleMedium,
+                style: context.txt.titleMedium,
               )
             ],
           ))
@@ -249,47 +268,18 @@ class _DvOrderStatusControllButtonsState
             children: [
               Text(
                 '${_i18n()["orderStatus"]["canceled"]}',
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               Text(
                 DateFormat('dd MMM yy h:m')
                     .format(widget.viewController.order.orderTime.toLocal()),
-                style: Get.textTheme.titleMedium,
+                style: context.txt.titleMedium,
               )
             ],
           ))
         ],
       ),
     );
-  }
-
-  Widget _confirmDeliveryButton() {
-    return InkWell(
-        onTap: () async {
-          setState(() {
-            clicked = true;
-          });
-          // await restaurantOrderController
-          //     .finishRestaurantDelivery(widget.order.orderId)
-          //     .then((ServerResponse value) => setState(() {
-          //           clicked = false;
-          //         }));
-          // MezRouter.back(closeOverlays: true);
-        },
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(gradient: bluePurpleGradient),
-          alignment: Alignment.center,
-          child: Text(
-            '${_i18n()["RestaurantControllButtons"]["confirmDelivery"]}',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 21,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Montserrat',
-            ),
-          ),
-        ));
   }
 
   String _getBtnTitle() {

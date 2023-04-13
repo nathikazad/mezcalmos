@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';

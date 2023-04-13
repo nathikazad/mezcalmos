@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -34,7 +35,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 _i18n()['orders']["onGoingOrders"],
-                style: txt.bodyText1,
+                style: txt.bodyLarge,
               ),
             ),
             ListView.builder(
@@ -48,14 +49,30 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                     order: viewController.currentOrders[index],
                  
                     onTap: () {
-                      if (viewController.currentOrders[index].orderType ==
-                          OrderType.Laundry) {
-                        MezRouter.toNamed(getLaundryOrderRoute(
-                            viewController.currentOrders[index].id));
-                      } else {
-                        MezRouter.toNamed(getRestaurantOrderRoute(
-                            viewController.currentOrders[index].id));
+                      // todo switch case
+                      switch (viewController.currentOrders[index].orderType) {
+                        case OrderType.Courier:
+                          CustCourierOrderView.navigate(
+                              orderId: viewController.currentOrders[index].id);
+                          break;
+                        case OrderType.Restaurant:
+                          ViewRestaurantOrderScreen.navigate(
+                              orderId: viewController.currentOrders[index].id);
+                          break;
+                        case OrderType.Laundry:
+                          CustLaundryOrderView.navigate(
+                              orderId: viewController.currentOrders[index].id);
+                          break;
+                        default:
                       }
+                      // if (viewController.currentOrders[index].orderType ==
+                      //     OrderType.Laundry) {
+                      //   CustLaundryOrderView.navigate(
+                      //       orderId: viewController.currentOrders[index].id);
+                      // } else {
+                      //   ViewRestaurantOrderScreen.navigate(
+                      //       orderId: viewController.currentOrders[index].id);
+                      // }
                     },
                   );
                 }),

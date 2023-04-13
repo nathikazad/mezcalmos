@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedLocationComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedLocationIsEmpty.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/controllers/CustSavedLocationsViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,6 +21,9 @@ class SavedLocationView extends StatefulWidget {
   const SavedLocationView({
     Key? key,
   }) : super(key: key);
+  static Future<void> navigate() {
+    return MezRouter.toPath(CustomerRoutes.savedLocations);
+  }
 
   @override
   _SavedLocationViewState createState() => _SavedLocationViewState();
@@ -47,9 +53,10 @@ class _SavedLocationViewState extends State<SavedLocationView> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: CustomerAppBar(
+      appBar: MezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: MezRouter.back,
         title: "${_i18n()["title"]}",
-        autoBack: true,
       ),
       bottomNavigationBar: MezButton(
         borderRadius: 0,
@@ -57,7 +64,16 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         label: "${_i18n()["addNewLoc"]}",
         onClick: () async {
           // ignore: unawaited_futures
-          MezRouter.toNamed<void>(kPickLocationRoute, arguments: false);
+          MezLocation? newLoc = await PickLocationView.navigate(
+            initialLocation: null,
+            onSaveLocation: ({MezLocation? location}) async {
+              if (location != null) {
+                await savedLocationDailog(
+                    context: context, loc: location, skippable: false);
+              }
+            },
+          );
+          await viewController.fetchLocations();
         },
       ),
       body: Obx(() {

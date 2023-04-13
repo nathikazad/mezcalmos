@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: constant_identifier_names, always_specify_types
 
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -44,21 +43,18 @@ extension ParseStringToOrderStatus on String {
 }
 
 class LaundryOrder extends TwoWayDeliverableOrder {
-  String? notes;
-  ServiceInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
   MezLocation customerLocation;
   MezLocation laundryLocation;
   LaundryOrderCosts? costsByType;
-  DateTime? estimatedLaundryReadyTime;
-  RouteInformation? routeInformation;
+
   int fromCustomerDeliveryId;
   int? toCustomerDeliveryId;
 
   LaundryOrder(
       {required super.orderId,
-      required super.cost,
+      required super.costs,
       required this.laundryLocation,
       required this.customerLocation,
       required super.orderTime,
@@ -66,35 +62,38 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.status,
       required super.customer,
       required super.deliveryProviderType,
-      required this.laundry,
       required this.fromCustomerDeliveryId,
       required this.toCustomerDeliveryId,
       required this.shippingCost,
       this.costsByType,
-      this.estimatedLaundryReadyTime,
-      this.routeInformation,
-      super.dropoffDriver,
-      int? laundryDropOffDriverChatId,
-      super.customerDropOffDriverChatId,
+      super.review,
+      super.stripePaymentInfo,
+      super.scheduleTime,
+      super.serviceProviderId,
+      super.routeInformation,
+      super.driverInfo,
       super.pickupDriver,
-      int? laundryPickupDriverChatId,
       super.customerPickupDriverChatId,
       super.estimatedPickupFromCustomerTime,
+      super.estimatedArrivalAtDropoff,
+      super.estimatedArrivalAtPickup,
+      super.estimatedPackageReadyTime,
       super.estimatedDropoffAtServiceProviderTime,
-      super.estimatedPickupFromServiceProviderTime,
-      super.estimatedDropoffAtCustomerTime,
-      this.notes,
+      super.notes,
       super.orderType = OrderType.Laundry,
       required super.chatId,
       super.notifiedAdmin,
-      super.notifiedOperator})
-      : super(
-            to: customerLocation,
-            totalCost: cost + shippingCost,
-            serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
-            serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            serviceProviderId: laundry?.hasuraId,
-            serviceProvider: laundry);
+      super.notifiedOperator,
+      required super.deliveryDirection,
+      required super.deliveryCompany,
+      required super.serviceProviderPickupDriverChatId,
+      required super.dropOffLocation,
+      required super.deliveryOrderId,
+      required super.driverLocation,
+      required super.serviceProviderDriverChatId,
+      required super.customerDriverChatId,
+      required super.serviceProvider,
+      required super.pickupLocation});
 
   // factory LaundryOrder.fromData(id, data) {
   //   final dynamic _estimatedPickupFromServiceProviderTime =
@@ -181,9 +180,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => <String, dynamic>{
         "customer": customer,
-        "estimatedPrice": cost,
         "status": status,
-        "to": to,
+        "to": dropOffLocation,
         "orderTime": orderTime,
         "paymentType": paymentType,
         "notes": notes,
@@ -195,6 +193,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     // all of them are in /past node
     return status == LaundryOrderStatus.CancelledByCustomer ||
         status == LaundryOrderStatus.CancelledByAdmin;
+  }
+
+  bool get canAddReview {
+    return review == null && status == LaundryOrderStatus.Delivered;
   }
 
   bool afterAtLaundry() {
@@ -209,24 +211,22 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         customerPickupDriverChatId != null) {
       return customerPickupDriverChatId;
-    } else if (customerDropOffDriverChatId != null) {
-      return customerDropOffDriverChatId;
+    } else if (customerDriverChatId != null) {
+      return customerDriverChatId;
     }
     return null;
   }
 
   int get deliveryOrderId {
-    return getCurrentPhase() == LaundryOrderPhase.Pickup
-        ? fromCustomerDeliveryId
-        : toCustomerDeliveryId!;
+    return inPickup ? fromCustomerDeliveryId : toCustomerDeliveryId!;
   }
 
   int? getServiceDriverChatId() {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         serviceProviderPickupDriverChatId != null) {
       return serviceProviderPickupDriverChatId;
-    } else if (serviceProviderDropOffDriverChatId != null) {
-      return serviceProviderDropOffDriverChatId;
+    } else if (serviceProviderDriverChatId != null) {
+      return serviceProviderDriverChatId;
     }
     return null;
   }

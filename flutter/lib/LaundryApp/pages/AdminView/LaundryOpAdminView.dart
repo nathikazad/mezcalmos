@@ -1,17 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/LaundryOpNormalDeliveryTime.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/MinmumCostCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -22,6 +23,11 @@ class LaundryOpAdminView extends StatefulWidget {
   const LaundryOpAdminView({Key? key, this.laundryId}) : super(key: key);
   final int? laundryId;
 
+  static Future<void> navigate({required int laundryId}) {
+    return MezRouter.toPath(LaundryAppRoutes.kAdminViewRoute
+        .replaceAll(":laundryId", laundryId.toString()));
+  }
+
   @override
   State<LaundryOpAdminView> createState() => _LaundryOpAdminViewState();
 }
@@ -29,9 +35,11 @@ class LaundryOpAdminView extends StatefulWidget {
 class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   LaundryOpAdminViewController viewController = LaundryOpAdminViewController();
   int? laundryId;
+
   @override
   void initState() {
-    laundryId = widget.laundryId ?? int.tryParse(Get.parameters["laundryId"]!);
+    laundryId = widget.laundryId ??
+        int.tryParse(MezRouter.urlArguments["laundryId"].toString());
     if (laundryId != null) {
       viewController.init(laundryId: laundryId!);
     }
@@ -44,12 +52,12 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   }
 
   bool get asTab => widget.laundryId != null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LaundryAppAppBar(
-        leftBtnType:
-            (asTab) ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(
+        (asTab) ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
         onClick: (asTab) ? null : MezRouter.back,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
@@ -79,7 +87,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                         alignment: Alignment.center,
                         child: Text(
                           viewController.laundry!.info.name,
-                          style: Get.textTheme.displaySmall
+                          style: context.txt.displaySmall
                               ?.copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -89,7 +97,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                       Container(
                         child: Text(
                           "${_i18n()["categories"]}",
-                          style: Get.textTheme.bodyLarge,
+                          style: context.txt.bodyLarge,
                         ),
                       ),
                       SizedBox(
@@ -155,10 +163,8 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(10),
                     onTap: () async {
-                      bool? shouldRefetch = await MezRouter.toNamed(
-                          getCategoryRoute(
-                              laundryId: laundryId!,
-                              categoryId: null)) as bool?;
+                      bool? shouldRefetch = await LaundrOpCategoryView.navigate(
+                          laundryId: laundryId!, categoryId: null) as bool?;
                       if (shouldRefetch == true) {
                         await viewController.fetchCategories();
                       }

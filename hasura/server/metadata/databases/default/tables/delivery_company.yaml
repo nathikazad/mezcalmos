@@ -22,6 +22,16 @@ array_relationships:
         table:
           name: operator
           schema: delivery
+  - name: drivers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: delivery_company_id
+          service_provider_type: delivery_company_type
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
   - name: reviews
     using:
       manual_configuration:
@@ -33,10 +43,21 @@ array_relationships:
           name: review
           schema: public
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - service_provider_type
+      filter: {}
   - role: customer
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
+        - service_provider_type
       filter: {}
   - role: delivery_driver
     permission:

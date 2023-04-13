@@ -14,13 +14,15 @@ export enum NotificationType {
   AuthorizeOperator = "authorizeOperator",
   NewRestaurant = "newRestaurant",
   NewDriver = "newDriver",
-  DriverApproved = "driverApproved"
+  DriverApproved = "driverApproved",
+  PriceChange = "priceChange"
 }
 
 export enum NotificationAction {
   ShowPopUp = "showPopUp",
   ShowSnackBarAlways = "showSnackbarAlways",
-  ShowSnackbarOnlyIfNotOnPage = "showSnackbarOnlyIfNotOnPage"
+  ShowSnackbarOnlyIfNotOnPage = "showSnackbarOnlyIfNotOnPage",
+  NavigteToLinkUrl = "navigteToLinkUrl"
 }
 
 export interface Notification {

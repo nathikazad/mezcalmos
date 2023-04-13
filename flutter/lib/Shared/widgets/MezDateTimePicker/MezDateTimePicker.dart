@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -65,17 +66,17 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
               margin: const EdgeInsets.all(8),
               child: Text(
                 widget.title ?? '${_i18n()["title"]}',
-                style: Get.textTheme.headline3,
+                style: context.txt.displaySmall,
               ),
             ),
-           // Divider(),
+            // Divider(),
             const SizedBox(
               height: 15,
             ),
             // date picker
             Text(
               '${_i18n()["sDate"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -88,7 +89,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             // date picker
             Text(
               '${_i18n()["sTime"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
 
             const SizedBox(
@@ -132,7 +133,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                   backgroundColor: offRedColor,
                   textColor: Colors.red,
                   onClick: () async {
-                    MezRouter.back();
+                    Navigator.pop(context);
                   },
                 )),
                 const SizedBox(
@@ -143,7 +144,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                   label: widget.confirmBtnText ?? '${_i18n()["confirm"]}',
                   withGradient: true,
                   onClick: () async {
-                    _controller.confirmCallBack();
+                    _controller.confirmCallBack(context);
                   },
                 )),
               ],
@@ -178,7 +179,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
             return DropdownMenuItem<DateTime>(
                 value: value,
                 child: Text(
-                    "${DateFormat.MMMMEEEEd(userLangCode).format(value)}"));
+                    "${DateFormat.MMMMEEEEd(userLangCode).format(value).inCaps}"));
           }).toList(),
         ),
       ),

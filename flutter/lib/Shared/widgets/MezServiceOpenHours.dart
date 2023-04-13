@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
@@ -20,7 +21,7 @@ class MezServiceOpenHours extends StatelessWidget {
         Container(
           child: Text(
             "${_i18n()["openHours"]}",
-            style: Get.textTheme.bodyLarge,
+            style: context.txt.bodyLarge,
           ),
         ),
         SizedBox(
@@ -49,6 +50,7 @@ class MezServiceOpenHours extends StatelessWidget {
                 ),
                 Text(
                   getDayName(v.key).capitalizeDays,
+                  style: context.txt.titleLarge,
                 ),
                 Spacer(),
                 Text(

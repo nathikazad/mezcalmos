@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryScreen.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -23,7 +23,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
     required this.customerLocation,
   }) : super(key: key);
   final Laundry laundry;
-  final LocationData customerLocation;
+  final LocationData? customerLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +33,18 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            MezRouter.toNamed(getLaundryRoute(laundry.info.hasuraId));
+            SingleLaundryScreen.navigate(laundryId: laundry.info.hasuraId);
           },
           child: Container(
-            child: _laundryInfoHeader(),
+            child: _laundryInfoHeader(context),
           ),
         ));
   }
 
-  Widget _laundryInfoHeader() {
+  Widget _laundryInfoHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 10, right: 5, left: 10, bottom: 10),
+      padding:
+          const EdgeInsets.only(top: 12.5, right: 5, left: 12.5, bottom: 12.5),
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,17 +64,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 4,
-                ),
                 Text(
                   laundry.info.name,
-                  style: Get.textTheme.bodyLarge?.copyWith(
+                  style: context.txt.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 SizedBox(
-                  height: 4,
+                  height: 12.5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +95,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             child: ShippingCostComponent(
                                 shippingCost: _getShippingPrice(),
                                 alignment: MainAxisAlignment.start,
-                                textStyle: Get.textTheme.bodySmall),
+                                textStyle: context.txt.bodySmall),
                           ),
                         ],
                       ),
@@ -119,36 +117,56 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Flexible(
                               child: Text(
                                   ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                                  style: Get.textTheme.bodySmall)),
+                                  style: context.txt.bodySmall)),
                         ],
                       ),
                     ),
-                    if (laundry.getCheapestCategory != null)
-                      Flexible(
-                        flex: 5,
-                        fit: FlexFit.tight,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // SizedBox(
-                            //   width: 8,
-                            // ),
-                            Icon(
-                              Icons.north_east,
-                              size: 20,
-                              color: Colors.black,
+                    (laundry.rate != null && laundry.rate != 0)
+                        ? Flexible(
+                            flex: 5,
+                            fit: FlexFit.tight,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 20,
+                                  color: Color(0xFF6779FE),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  laundry.rate!.toStringAsFixed(1),
+                                  style: context.txt.bodySmall,
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              width: 4,
+                          )
+                        : Flexible(
+                            flex: 5,
+                            fit: FlexFit.tight,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // SizedBox(
+                                //   width: 8,
+                                // ),
+                                Icon(
+                                  Icons.north_east,
+                                  size: 20,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                      "${laundry.getCheapestCategory.toPriceString()}/kg",
+                                      style: context.txt.bodySmall),
+                                ),
+                              ],
                             ),
-                            Flexible(
-                              child: Text(
-                                  "${laundry.getCheapestCategory.toPriceString()}/kg",
-                                  style: Get.textTheme.bodySmall),
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
                   ],
                 ),
               ],
@@ -159,13 +177,17 @@ class CustomerLaundrySelectCard extends StatelessWidget {
     );
   }
 
-  num _getShippingPrice() {
-    final num customerDistance = calculateDistance(
-            customerLocation, laundry.info.location.toLocationData()) /
-        1000;
-    final num deliveryCost =
-        ((customerDistance * laundry.deliveryCost.costPerKm) / 5).round() * 5;
-    return max(laundry.deliveryCost.minimumCost, (2 * deliveryCost));
+  num? _getShippingPrice() {
+    if (customerLocation != null) {
+      final num customerDistance = calculateDistance(
+              customerLocation!, laundry.info.location.toLocationData()) /
+          1000;
+      final num deliveryCost =
+          ((customerDistance * laundry.deliveryCost!.costPerKm) / 5).round() *
+              5;
+      return max(laundry.deliveryCost!.minimumCost, (2 * deliveryCost));
+    }
+    return null;
   }
 
   String _getDollarsSign() {

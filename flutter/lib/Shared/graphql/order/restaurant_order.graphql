@@ -7,7 +7,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     stripe_info
     restaurant {
       id
-      
+
       details {
         id
         firebase_id
@@ -65,6 +65,10 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       created_at
       from_entity_id
       from_entity_type
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       id
       note
       rating
@@ -124,12 +128,12 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
-    
+
     scheduled_time
     stripe_info
     restaurant {
       id
-      
+
       details {
         id
         firebase_id
@@ -184,6 +188,10 @@ query get_restaurant_order_by_id($order_id: Int!) {
     status
     review_id
     review {
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       created_at
       from_entity_id
       from_entity_type
@@ -272,7 +280,7 @@ query get_restaurant_current_orders($restaurantId: Int!) {
     id
     order_time
     status
-  delivery {
+    delivery {
       delivery_cost
     }
     total_cost
@@ -285,14 +293,21 @@ query get_restaurant_current_orders($restaurantId: Int!) {
     }
   }
 }
-query get_restaurant_past_orders($restaurantId: Int!) {
+query get_restaurant_past_orders(
+  $restaurantId: Int!
+  $offset: Int
+  $limit: Int
+) {
   restaurant_order(
     where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: false } }
+    order_by: { order_time: desc }
+    offset: $offset
+    limit: $limit
   ) {
     id
     order_time
     status
-  delivery {
+    delivery {
       delivery_cost
     }
     total_cost
@@ -322,23 +337,5 @@ mutation setRestaurantOrderEstFoodReadyTime(
     _set: { estimated_package_ready_time: $time }
   ) {
     estimated_package_ready_time
-  }
-}
-mutation assignRestaurantOrderReview($orderId: Int!, $reviewId: Int!) {
-  update_restaurant_order_by_pk(
-    pk_columns: { id: $orderId }
-    _set: { review_id: $reviewId }
-  ) {
-    review_id
-    review {
-      created_at
-      from_entity_id
-      from_entity_type
-      id
-      note
-      rating
-      to_entity_id
-      to_entity_type
-    }
   }
 }

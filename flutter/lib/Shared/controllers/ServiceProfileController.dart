@@ -63,7 +63,7 @@ class ServiceProfileController extends GetxController {
   }
 
   double get getAppbarHeight {
-    double height = kToolbarHeight;
+    double height = 0;
     if (!isApproved) {
       height += kToolbarHeight;
     }

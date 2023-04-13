@@ -61,7 +61,7 @@ export async function insertRestaurantOperators(data: any) {
                     status: AuthorizationStatus.Authorized,
                     owner: true,
                     app_version: o.appVersion,
-                    app_type_id: AppType.RestaurantApp,
+                    app_type_id: AppType.Restaurant,
                     // notification_info: (o.notificationToken) ? {
                     //     user_id: o.user_id,
                     //     app_type_id: AppType.RestaurantApp,
@@ -79,7 +79,7 @@ export async function insertRestaurantOperators(data: any) {
     let operatorsNotif = operators.map((o: any) => {
         return {
             user_id: o.user_id,
-            app_type_id: AppType.RestaurantApp,
+            app_type_id: AppType.Restaurant,
             token: o.notification_token
         }
     })

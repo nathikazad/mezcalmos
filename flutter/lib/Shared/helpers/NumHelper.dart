@@ -1,8 +1,13 @@
 extension ParseNumber on num {
-  String toPriceString({bool rounded = true}) {
+  num get doubleWithoutDecimalToInt {
+    return this % 1 == 0 ? toInt() : this;
+  }
+
+  String toPriceString(
+      {bool rounded = true, bool hideZero = true, String? label}) {
     final String str =
-        "\$${(rounded) ? round().toStringAsFixed(0) : toStringAsFixed(2)}";
-    return str;
+        "\$${(rounded) ? round().toStringAsFixed(0) : toStringAsFixed(1)}";
+    return (this == 0 && hideZero) ? "-" : str + (label ?? "");
   }
 }
 

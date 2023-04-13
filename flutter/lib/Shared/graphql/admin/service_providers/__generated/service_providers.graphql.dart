@@ -285,6 +285,84 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'delivery_details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'cost_per_km'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'customer_pickup'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_km_range'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'radius'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'self_delivery'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'details'),
             alias: null,
             arguments: [],
@@ -320,6 +398,13 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'schedule'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -527,6 +612,7 @@ extension ClientExtension$Query$admin_get_dv_companies
 
 class Query$admin_get_dv_companies$delivery_company {
   Query$admin_get_dv_companies$delivery_company({
+    required this.delivery_details,
     this.details,
     required this.delivery_details_id,
     required this.id,
@@ -535,11 +621,15 @@ class Query$admin_get_dv_companies$delivery_company {
 
   factory Query$admin_get_dv_companies$delivery_company.fromJson(
       Map<String, dynamic> json) {
+    final l$delivery_details = json['delivery_details'];
     final l$details = json['details'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$id = json['id'];
     final l$$__typename = json['__typename'];
     return Query$admin_get_dv_companies$delivery_company(
+      delivery_details:
+          Query$admin_get_dv_companies$delivery_company$delivery_details
+              .fromJson((l$delivery_details as Map<String, dynamic>)),
       details: l$details == null
           ? null
           : Query$admin_get_dv_companies$delivery_company$details.fromJson(
@@ -549,6 +639,9 @@ class Query$admin_get_dv_companies$delivery_company {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Query$admin_get_dv_companies$delivery_company$delivery_details
+      delivery_details;
 
   final Query$admin_get_dv_companies$delivery_company$details? details;
 
@@ -560,6 +653,8 @@ class Query$admin_get_dv_companies$delivery_company {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$delivery_details_id = delivery_details_id;
@@ -573,11 +668,13 @@ class Query$admin_get_dv_companies$delivery_company {
 
   @override
   int get hashCode {
+    final l$delivery_details = delivery_details;
     final l$details = details;
     final l$delivery_details_id = delivery_details_id;
     final l$id = id;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$delivery_details,
       l$details,
       l$delivery_details_id,
       l$id,
@@ -592,6 +689,11 @@ class Query$admin_get_dv_companies$delivery_company {
     }
     if (!(other is Query$admin_get_dv_companies$delivery_company) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$details = details;
@@ -639,11 +741,15 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company<TRes> {
       _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company;
 
   TRes call({
+    Query$admin_get_dv_companies$delivery_company$delivery_details?
+        delivery_details,
     Query$admin_get_dv_companies$delivery_company$details? details,
     int? delivery_details_id,
     int? id,
     String? $__typename,
   });
+  CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details<TRes>
+      get delivery_details;
   CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes>
       get details;
 }
@@ -662,12 +768,18 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? delivery_details = _undefined,
     Object? details = _undefined,
     Object? delivery_details_id = _undefined,
     Object? id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$admin_get_dv_companies$delivery_company(
+        delivery_details: delivery_details == _undefined ||
+                delivery_details == null
+            ? _instance.delivery_details
+            : (delivery_details
+                as Query$admin_get_dv_companies$delivery_company$delivery_details),
         details: details == _undefined
             ? _instance.details
             : (details
@@ -681,6 +793,13 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details<TRes>
+      get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes>
       get details {
     final local$details = _instance.details;
@@ -699,16 +818,329 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company<TRes>
   TRes _res;
 
   call({
+    Query$admin_get_dv_companies$delivery_company$delivery_details?
+        delivery_details,
     Query$admin_get_dv_companies$delivery_company$details? details,
     int? delivery_details_id,
     int? id,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details<TRes>
+      get delivery_details =>
+          CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details
+              .stub(_res);
   CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes>
       get details =>
           CopyWith$Query$admin_get_dv_companies$delivery_company$details.stub(
               _res);
+}
+
+class Query$admin_get_dv_companies$delivery_company$delivery_details {
+  Query$admin_get_dv_companies$delivery_company$delivery_details({
+    required this.cost_per_km,
+    required this.customer_pickup,
+    required this.delivery_available,
+    this.free_delivery_km_range,
+    this.free_delivery_minimum_cost,
+    required this.id,
+    required this.radius,
+    required this.minimum_cost,
+    required this.self_delivery,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_dv_companies$delivery_company$delivery_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$cost_per_km = json['cost_per_km'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
+    final l$free_delivery_km_range = json['free_delivery_km_range'];
+    final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
+    final l$id = json['id'];
+    final l$radius = json['radius'];
+    final l$minimum_cost = json['minimum_cost'];
+    final l$self_delivery = json['self_delivery'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_dv_companies$delivery_company$delivery_details(
+      cost_per_km: moneyFromJson(l$cost_per_km),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
+      free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
+      free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
+          ? null
+          : moneyFromJson(l$free_delivery_minimum_cost),
+      id: (l$id as int),
+      radius: (l$radius as int),
+      minimum_cost: moneyFromJson(l$minimum_cost),
+      self_delivery: (l$self_delivery as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double cost_per_km;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
+
+  final double? free_delivery_km_range;
+
+  final double? free_delivery_minimum_cost;
+
+  final int id;
+
+  final int radius;
+
+  final double minimum_cost;
+
+  final bool self_delivery;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$cost_per_km = cost_per_km;
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
+    final l$free_delivery_km_range = free_delivery_km_range;
+    _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    _resultData['free_delivery_minimum_cost'] =
+        l$free_delivery_minimum_cost == null
+            ? null
+            : moneyToJson(l$free_delivery_minimum_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$minimum_cost = minimum_cost;
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$cost_per_km = cost_per_km;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final l$id = id;
+    final l$radius = radius;
+    final l$minimum_cost = minimum_cost;
+    final l$self_delivery = self_delivery;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$cost_per_km,
+      l$customer_pickup,
+      l$delivery_available,
+      l$free_delivery_km_range,
+      l$free_delivery_minimum_cost,
+      l$id,
+      l$radius,
+      l$minimum_cost,
+      l$self_delivery,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$admin_get_dv_companies$delivery_company$delivery_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km = cost_per_km;
+    final lOther$cost_per_km = other.cost_per_km;
+    if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final lOther$free_delivery_km_range = other.free_delivery_km_range;
+    if (l$free_delivery_km_range != lOther$free_delivery_km_range) {
+      return false;
+    }
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
+    if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$minimum_cost = minimum_cost;
+    final lOther$minimum_cost = other.minimum_cost;
+    if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_dv_companies$delivery_company$delivery_details
+    on Query$admin_get_dv_companies$delivery_company$delivery_details {
+  CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details<
+          Query$admin_get_dv_companies$delivery_company$delivery_details>
+      get copyWith =>
+          CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details<
+    TRes> {
+  factory CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details(
+    Query$admin_get_dv_companies$delivery_company$delivery_details instance,
+    TRes Function(
+            Query$admin_get_dv_companies$delivery_company$delivery_details)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$delivery_details;
+
+  factory CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$delivery_details;
+
+  TRes call({
+    double? cost_per_km,
+    bool? customer_pickup,
+    bool? delivery_available,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    int? radius,
+    double? minimum_cost,
+    bool? self_delivery,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$delivery_details<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$delivery_details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_dv_companies$delivery_company$delivery_details
+      _instance;
+
+  final TRes Function(
+      Query$admin_get_dv_companies$delivery_company$delivery_details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? cost_per_km = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
+    Object? free_delivery_km_range = _undefined,
+    Object? free_delivery_minimum_cost = _undefined,
+    Object? id = _undefined,
+    Object? radius = _undefined,
+    Object? minimum_cost = _undefined,
+    Object? self_delivery = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_dv_companies$delivery_company$delivery_details(
+        cost_per_km: cost_per_km == _undefined || cost_per_km == null
+            ? _instance.cost_per_km
+            : (cost_per_km as double),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
+        free_delivery_km_range: free_delivery_km_range == _undefined
+            ? _instance.free_delivery_km_range
+            : (free_delivery_km_range as double?),
+        free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
+            ? _instance.free_delivery_minimum_cost
+            : (free_delivery_minimum_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        minimum_cost: minimum_cost == _undefined || minimum_cost == null
+            ? _instance.minimum_cost
+            : (minimum_cost as double),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$delivery_details<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_details<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$delivery_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? cost_per_km,
+    bool? customer_pickup,
+    bool? delivery_available,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    int? radius,
+    double? minimum_cost,
+    bool? self_delivery,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_dv_companies$delivery_company$details {
@@ -718,6 +1150,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     required this.image,
     required this.name,
     required this.language,
+    this.schedule,
     required this.open_status,
     required this.creation_time,
     required this.service_provider_type,
@@ -732,6 +1165,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$image = json['image'];
     final l$name = json['name'];
     final l$language = json['language'];
+    final l$schedule = json['schedule'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
     final l$service_provider_type = json['service_provider_type'];
@@ -743,6 +1177,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
       image: (l$image as String),
       name: (l$name as String),
       language: mapFromJson(l$language),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
@@ -761,6 +1196,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
   final String name;
 
   final dynamic language;
+
+  final dynamic? schedule;
 
   final String open_status;
 
@@ -784,6 +1221,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
     _resultData['name'] = l$name;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$creation_time = creation_time;
@@ -804,6 +1243,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$image = image;
     final l$name = name;
     final l$language = language;
+    final l$schedule = schedule;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
     final l$service_provider_type = service_provider_type;
@@ -815,6 +1255,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
       l$image,
       l$name,
       l$language,
+      l$schedule,
       l$open_status,
       l$creation_time,
       l$service_provider_type,
@@ -855,6 +1296,11 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$open_status = open_status;
@@ -914,6 +1360,7 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$details<
     String? image,
     String? name,
     dynamic? language,
+    dynamic? schedule,
     String? open_status,
     String? creation_time,
     String? service_provider_type,
@@ -945,6 +1392,7 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
     Object? image = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
+    Object? schedule = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
     Object? service_provider_type = _undefined,
@@ -965,6 +1413,9 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -1006,6 +1457,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details<
     String? image,
     String? name,
     dynamic? language,
+    dynamic? schedule,
     String? open_status,
     String? creation_time,
     String? service_provider_type,

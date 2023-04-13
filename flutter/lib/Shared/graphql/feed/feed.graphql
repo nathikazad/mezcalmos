@@ -32,10 +32,7 @@ query getSubscribedRestaurants($_eq: Int) {
   service_provider_subscriber(where: {service_provider_type: {_eq: "restaurant"}, _and: {customer_id: {_eq: $_eq}}}) {
     id
     restaurant {
-      details {
-        name
-        image
-      }
+    details   {name}
     }
   }
 }

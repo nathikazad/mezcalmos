@@ -31,7 +31,7 @@ class OrderItemsCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 3),
           child: Text(
             '${_i18n()["orderItems"]}',
-            style: txt.bodyText1,
+            style: txt.bodyLarge,
           ),
         ),
         Column(

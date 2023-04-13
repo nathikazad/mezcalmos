@@ -26,13 +26,15 @@ subscription admin_listen_on_dv_orders($inProccess: Boolean!) {
     service_provider_type
   }
 }
-query admin_get_dv_orders($inProccess: Boolean!,$limit: Int) {
+query admin_get_dv_orders($inProccess: Boolean!, $limit: Int, $offset: Int) {
   delivery_order(
     limit: $limit
+    offset: $offset
     where: {
       service_provider_type: { _eq: "deliveryCompany" }
       in_process: { _eq: $inProccess }
     }
+    order_by: { order_time: desc }
   ) {
     id
     order_time
@@ -60,7 +62,7 @@ subscription admin_listen_on_restaurant_orders($inProccess: Boolean!) {
     restaurant_id
     order_time
     status
- delivery {
+    delivery {
       delivery_cost
     }
     total_cost
@@ -73,16 +75,24 @@ subscription admin_listen_on_restaurant_orders($inProccess: Boolean!) {
     }
   }
 }
-query admin_get_restaurant_orders($inProccess: Boolean!,$limit: Int) {
-  restaurant_order(limit: $limit,where: { in_process: { _eq: $inProccess } }) {
+query admin_get_restaurant_orders(
+  $inProccess: Boolean!
+  $limit: Int
+  $offset: Int
+) {
+  restaurant_order(
+    limit: $limit
+    offset: $offset
+    where: { in_process: { _eq: $inProccess } }
+    order_by: { order_time: desc }
+  ) {
     id
     restaurant_id
     order_time
     status
-    delivery{
+    delivery {
       delivery_cost
     }
-
     total_cost
     to_location_address
     customer {
@@ -93,6 +103,7 @@ query admin_get_restaurant_orders($inProccess: Boolean!,$limit: Int) {
     }
   }
 }
+
 subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
   laundry_order(where: { in_process: { _eq: $inProccess } }) {
     id
@@ -100,13 +111,10 @@ subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
     order_time
     status
     from_customer_delivery {
-      
       delivery_cost
-    
-    }to_customer_delivery {
-      
+    }
+    to_customer_delivery {
       delivery_cost
-    
     }
 
     total_cost
@@ -119,20 +127,26 @@ subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
     }
   }
 }
-query admin_get_laundry_orders($inProccess: Boolean!,$limit: Int) {
-  laundry_order(limit: $limit,where: { in_process: { _eq: $inProccess } }) {
+query admin_get_laundry_orders(
+  $inProccess: Boolean!
+  $limit: Int
+  $offset: Int
+) {
+  laundry_order(
+    limit: $limit
+    offset: $offset
+    where: { in_process: { _eq: $inProccess } }
+    order_by: { order_time: desc }
+  ) {
     id
     store_id
     order_time
     status
-  from_customer_delivery {
-      
+    from_customer_delivery {
       delivery_cost
-    
-    }to_customer_delivery {
-      
+    }
+    to_customer_delivery {
       delivery_cost
-    
     }
     total_cost
     customer_address
@@ -150,6 +164,7 @@ query admin_get_service__orders(
   $serviceProviderId: Int!
   $inProccess: Boolean!
   $limit: Int!
+  $offset: Int!
 ) {
   delivery_order(
     where: {
@@ -158,6 +173,7 @@ query admin_get_service__orders(
       in_process: { _eq: $inProccess }
     }
     limit: $limit
+    offset: $offset
   ) {
     id
     order_time

@@ -1,10 +1,9 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, Language } from "../../../models/Generic/Generic";
+import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";;
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../../models/Services/Service";
-import { AddDriverDetails } from "../../../../delivery/addDriver";
+import { AddDriverDetails, AddDriverError } from "../../../../delivery/addDriver";
 
 export async function createDeliveryDriver(userId: number, serviceProvider: ServiceProvider, addDriverDetails: AddDriverDetails): Promise<DeliveryDriver> {
     let chain = getHasura();
@@ -30,7 +29,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
                     _eq: userId
                 },
                 app_type_id: {
-                    _eq: AppType.DeliveryApp
+                    _eq: AppType.Delivery
                 }
             }
         }, {
@@ -38,10 +37,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         }]
     })
     if(response.delivery_driver.length) {
-        throw new HttpsError(
-            "internal",
-            "The driver is already working for this delivery company or restaurant or laundry"
-        );
+        throw new MezError(AddDriverError.DriverAlreadyExists);
     }
     let mutationResponse = await chain.mutation({
         insert_delivery_driver_one: [{
@@ -62,16 +58,13 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         }]
     })
     if(mutationResponse.insert_delivery_driver_one == null) {
-        throw new HttpsError(
-            "internal",
-            "driver creation error"
-        );
+        throw new MezError(AddDriverError.DriverCreationError);
     }
     if(!(response.notification_info.length) && addDriverDetails.notificationToken) {
         await chain.mutation({
             insert_notification_info_one: [{
                 object: {
-                    app_type_id: AppType.DeliveryApp,
+                    app_type_id: AppType.Delivery,
                     token: addDriverDetails.notificationToken,
                     user_id: userId
                 }
@@ -92,10 +85,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
             deliveryCompanyType = DeliveryServiceProviderType.DeliveryCompany
             break;
         default:
-            throw new HttpsError(
-                "internal",
-                "invalid service provider type"
-            )
+            throw new MezError(AddDriverError.InvalidServiceProviderType);
     }
     return {
         id: mutationResponse.insert_delivery_driver_one?.id,
@@ -104,7 +94,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         deliveryCompanyId: serviceProvider.id,
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: (addDriverDetails.notificationToken) ? {
-            appType: AppType.DeliveryApp,
+            appType: AppType.Delivery,
             token: addDriverDetails.notificationToken,
             turnOffNotifications: false
         }: undefined,

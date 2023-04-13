@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
+
 Notification customerNotificationHandler(
   String key,
   value,
@@ -22,24 +20,47 @@ Notification customerNotificationHandler(
   switch (notificationType) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
-    case NotificationType.NewCounterOffer:
-      return newCounterOfferNotification(key, value);
+
     case NotificationType.OrderStatusChange:
       final OrderType orderType = value['orderType'].toString().toOrderType();
-      mezDbgPrint(value['orderType']);
       switch (orderType) {
         case OrderType.Restaurant:
           return restaurantOrderStatusChangeNotificationHandler(key, value);
-        case OrderType.Taxi:
-          return taxiOrderStatusChangeNotificationHandler(key, value);
+
         case OrderType.Laundry:
           return laundryOrderStatusChangeNotificationHandler(key, value);
+        case OrderType.Courier:
+          return _courierOrderStatusChangeNotificationHandler(key, value);
         default:
           throw StateError("Invalid Notification Type");
       }
     case NotificationType.Call:
-      //@saad needs to be implemented
       throw StateError("Callllll forgrouned notif!!");
+    case NotificationType.PriceChange:
+    //@saad needs to be implemented
+    // return Notification(
+    //     id: id,
+    //     timestamp: timestamp,
+    //     title: headline6,
+    //     body: body,
+    //     imgUrl: imgUrl,
+    //     linkUrl: linkUrl,
+    //     notificationType: notificationType,
+    //     notificationAction: notificationAction);
+
+    case NotificationType.PriceChange:
+      return Notification(
+          id: key,
+          timestamp: DateTime.parse(value['time']),
+          title: '${_i18n()['priceChange']}',
+          body: '${_i18n()['driverSentYouMessage']}',
+          imgUrl: null,
+          icon: Material.Icons.price_change,
+          linkUrl: value['linkUrl'],
+          notificationType: notificationType,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
 
     default:
       throw StateError("Invalid Notification Type");
@@ -49,14 +70,12 @@ Notification customerNotificationHandler(
 Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   final LaundryOrderStatus newOrdersStatus =
       value['status'].toString().toLaundryOrderStatus();
-  mezDbgPrint(newOrdersStatus);
   final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(dynamicFields);
   return Notification(
     id: key,
     icon: Material.Icons.local_laundry_service,
-    linkUrl: getLaundryOrderRoute(value['orderId']),
+    linkUrl: value["linkUrl"],
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -69,17 +88,15 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   );
 }
 
-Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
-  final TaxiOrdersStatus newOrdersStatus =
-      value['status'].toString().toTaxiOrderStatus();
+Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
+  final DeliveryOrderStatus newOrdersStatus =
+      value['status'].toString().toDeliveryOrderStatus();
   final Map<String, dynamic> dynamicFields =
-      getTaxiOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(dynamicFields);
-  value['icon'] = dynamicFields['icon'];
+      _getCourierOrderStatusFields(newOrdersStatus);
   return Notification(
     id: key,
-    icon: dynamicFields['icon'],
-    linkUrl: getTaxiOrderRoute(value['orderId']),
+    icon: Material.Icons.shopping_bag_rounded,
+    linkUrl: value["linkUrl"],
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -100,8 +117,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.flatware,
-    // todo fix this
-    linkUrl: "getRestaurantOrderRoute(int.parse(value['orderId']))",
+    linkUrl: value["linkUrl"],
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -114,27 +130,6 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   );
 }
 
-// void _handleReview(RestaurantOrderStatus newOrdersStatus, value) {
-//   if (newOrdersStatus == RestaurantOrderStatus.OnTheWay) {
-//     showReviews = true;
-//   }
-
-//   if (newOrdersStatus == RestaurantOrderStatus.Delivered && showReviews) {
-//     showReviews = false;
-//     mezDbgPrint("SHOW REVIEWS 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟");
-//     showReviewDialog(Get.context!,
-//             orderId: value["orderId"],
-//             orderType: value["orderType"].toString().toOrderType())
-//         .whenComplete(() {
-//       Get.find<OrderController>().clearOrderNotifications(value["orderId"]);
-//       mezDbgPrint("ClOSE REVIEWS 🌟🌟");
-
-//       showReviews = true;
-//     });
-//   }
-// }
-
-// TODO: needs to be formatted for laundry
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
   switch (laundryOrderStatus) {
@@ -184,9 +179,54 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
         "imgUrl": "assets/images/shared/notifications/laundry/canceled.png",
       };
     default:
-    // do nothing
   }
   return null;
+}
+
+Map<String, dynamic> _getCourierOrderStatusFields(DeliveryOrderStatus status) {
+  switch (status) {
+    case DeliveryOrderStatus.AtPickup:
+      return <String, dynamic>{
+        "title": "${_i18n()["courier"]["atPickupTitle"]}",
+        "body": "${_i18n()["courier"]["atPickupBody"]}",
+        "imgUrl": "assets/images/shared/notifications/packageChecked.png",
+      };
+    case DeliveryOrderStatus.OnTheWayToPickup:
+      return <String, dynamic>{
+        "title": "${_i18n()["courier"]["onTheWayPickupTitle"]}",
+        "body": "${_i18n()["courier"]["onTheWayPickupBody"]}",
+        "imgUrl": "assets/images/shared/notifications/laundry/onTheWay.png",
+      };
+
+    case DeliveryOrderStatus.OnTheWayToDropoff:
+      return <String, dynamic>{
+        "title": "${_i18n()["courier"]["onTheWayDropoffTitle"]}",
+        "body": "${_i18n()["courier"]["onTheWayDropoffBody"]}",
+        "imgUrl": "assets/images/shared/notifications/laundry/onTheWay.png",
+      };
+    case DeliveryOrderStatus.AtDropoff:
+      return <String, dynamic>{
+        "title": "${_i18n()["courier"]["atDropoffTitle"]}",
+        "body": "${_i18n()["courier"]["atDropoffBody"]}",
+        "imgUrl": "assets/images/shared/notifications/packageChecked.png",
+      };
+
+    case DeliveryOrderStatus.Delivered:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryDeliveredTitle"]}",
+        "body": "${_i18n()["laundryDeliveredTitle"]}",
+        "imgUrl": "assets/images/shared/notifications/laundry/delivered.png",
+      };
+    case DeliveryOrderStatus.CancelledByAdmin:
+    case DeliveryOrderStatus.CancelledByCustomer:
+      return <String, dynamic>{
+        "title": "${_i18n()["LaundryCancelledTitle"]}",
+        "body": "${_i18n()["LaundryCancelledBody"]}",
+        "imgUrl": "assets/images/shared/notifications/laundry/canceled.png",
+      };
+    default:
+      throw StateError("Unhandled Courier Order Status");
+  }
 }
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(
@@ -225,7 +265,6 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
-    // do nothing
   }
   return null;
 }
@@ -293,48 +332,20 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
             "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     default:
-    // do nothing
   }
   return null;
 }
 
 Notification newMessageNotification(String key, value) {
-  // mezDbgPrint("New message notif ==========>>>>>>>>$value");
-  value.forEach((kkey, vv) {
-    mezDbgPrint("$kkey : $vv}");
-  });
   return Notification(
       id: key,
       linkUrl: value["linkUrl"] ??
-          getMessagesRoute(
-            chatId: int.parse(value["chatId"]),
-            orderId:
-                value["orderId"] != null ? int.parse(value["orderId"]) : null,
-            recipientType: value["sender"]["particpantType"]
-                .toString()
-                .convertToParticipantType(),
-          ),
-      // just for backwards compatibility, future make it just value['orderId']
+          SharedRoutes.getMessagesRoute(chatId: int.parse(value["chatId"])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
-      notificationAction:
-          value["notificationAction"]?.toString().toNotificationAction() ??
-              NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-      variableParams: value);
-}
-
-Notification newCounterOfferNotification(String key, value) {
-  return Notification(
-      id: key,
-      linkUrl: getTaxiOrderRoute(value['orderId']),
-      body: "${_i18n()["counterOfferBody"]}${value['driver']['name']}",
-      imgUrl: value['driver']['image'],
-      title: "${_i18n()["counterOfferTitle"]}",
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewCounterOffer,
       notificationAction:
           value["notificationAction"]?.toString().toNotificationAction() ??
               NotificationAction.ShowSnackbarOnlyIfNotOnPage,

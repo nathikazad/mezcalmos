@@ -1,5 +1,5 @@
 import { FirebaseDynamicLinks, ShortLinkRequestBody, ShortLinkResponse } from "firebase-dynamic-links";
-import { AppType } from "../../shared/models/Generic/Generic";
+import { AppType, MezError } from "../../shared/models/Generic/Generic";
 import { generateQr } from "./qr";
 
 export interface IDeepLink {
@@ -9,18 +9,18 @@ export interface IDeepLink {
 
 
 const appPackageIds: Record<AppType, string> =  {
-  [AppType.DeliveryApp]: "com.mezcalmos.delivery",
-  [AppType.RestaurantApp]: "com.mezcalmos.restaurant",
-  [AppType.LaundryApp]: "com.mezcalmos.laundry",
+  [AppType.Delivery]: "com.mezcalmos.delivery",
+  [AppType.Restaurant]: "com.mezcalmos.restaurant",
+  [AppType.Laundry]: "com.mezcalmos.laundry",
   [AppType.Customer]: "com.mezcalmos.customer",
   [AppType.DeliveryAdmin]: "com.mezcalmos.deliveryadmin",
   [AppType.MezAdmin]: "com.mezcalmos.mezadmin",
 }
 
 const appStoreIds: Record<AppType, string | undefined> =  {
-  [AppType.DeliveryApp]: undefined,
-  [AppType.RestaurantApp]: "6443621484",
-  [AppType.LaundryApp]: undefined,
+  [AppType.Delivery]: undefined,
+  [AppType.Restaurant]: "6443621484",
+  [AppType.Laundry]: undefined,
   [AppType.Customer]: "1595882320",
   [AppType.DeliveryAdmin]: undefined,
   [AppType.MezAdmin]: undefined,
@@ -101,8 +101,8 @@ export async function generateDeepLinks(uniqueId: string, appType: AppType): Pro
   }
   let addOperatorLinkResponse = await generateDeepLink(addOperatorRequestBody, uniqueId, "operator");
 
-  packageId = appPackageIds[AppType.DeliveryApp];
-  appStoreId = appStoreIds[AppType.DeliveryApp];
+  packageId = appPackageIds[AppType.Delivery];
+  appStoreId = appStoreIds[AppType.Delivery];
 
   let addDriverDeeplink = `https://mezkala.app/dr/${uniqueId}/`
   // let addDriverParameterisedLink = `${prefix}?link=${addDriverDeeplink}&apn=${packageId}&ibi=${packageId}`;
@@ -145,14 +145,19 @@ export async function generateDeepLink(requestBody: ShortLinkRequestBody, unique
     console.log("response: ", response.shortLink)
   } catch(err: any) {
     console.log("create link Error: ", err)
-    throw Error('create link Error');
+    throw new MezError("deepLinkError");
   }
-
-  let qrUrl: string = await generateQr(`links/${uniqueId}/${fileName}`, response.shortLink)
-  return {
-    url: response.shortLink,
-    urlQrImage: qrUrl
+  try {
+    let qrUrl: string = await generateQr(`links/${uniqueId}/${fileName}`, response.shortLink)
+    return {
+      url: response.shortLink,
+      urlQrImage: qrUrl
+    }
+  } catch(err: any) {
+    console.log("QR image generation error: ", err)
+    throw new MezError("QRGenerationError");
   }
+  
   
   // result = {
   //   url: shortLinkResponse,

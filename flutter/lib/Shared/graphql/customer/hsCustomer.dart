@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/__generated/customer.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
@@ -170,36 +169,38 @@ Future set_notification_token(
 // }
 
 Future<List<MinimalOrder>> get_customer_orders(
-    {required int customerId, required bool inProcess}) async {
+    {required int customerId,
+    required bool inProcess,
+    required int limit,
+    required offest}) async {
   final QueryResult<Query$get_customer_orders> res =
       await _graphClient.query$get_customer_orders(
     Options$Query$get_customer_orders(
       variables: Variables$Query$get_customer_orders(
-        custId: customerId,
-        inProcess: inProcess,
-      ),
+          custId: customerId,
+          inProcess: inProcess,
+          limit: limit,
+          offset: offest),
     ),
   );
   if (res.parsedData?.customer_minimal_orders == null) {
     throwError(res.exception);
   }
   return res.parsedData!.customer_minimal_orders
-      .map<MinimalOrder>((Query$get_customer_orders$customer_minimal_orders
-              order) =>
-          MinimalOrder(
-              id: order.id,
-              toAdress: order.to_address,
-              deliveryCost: order.delivery_cost,
-              orderTime: DateTime.parse(order.order_time),
-              title: order.name,
-              image: order.image,
-              status: (order.order_type.toOrderType() == OrderType.Restaurant)
-                  ? order.status
-                      .toRestaurantOrderStatus()
-                      .toMinimalOrderStatus()
-                  : order.status.toLaundryOrderStatus().toMinimalOrderStatus(),
-              totalCost: order.total_cost,
-              orderType: order.order_type.toOrderType()))
+      .map<MinimalOrder>(
+          (Query$get_customer_orders$customer_minimal_orders order) =>
+              MinimalOrder(
+                  id: order.id,
+                  toAdress: order.to_address,
+                  deliveryCost: order.delivery_cost,
+                  orderTime: DateTime.parse(order.order_time),
+                  title: order.name,
+                  image: order.image,
+                  status: _getStatus(
+                      orderType: order.order_type.toOrderType(),
+                      status: order.status),
+                  totalCost: order.total_cost,
+                  orderType: order.order_type.toOrderType()))
       .toList();
 }
 
@@ -226,14 +227,9 @@ Stream<List<MinimalOrder>?> listen_on_customer_orders(
                   orderTime: DateTime.parse(order.order_time),
                   title: order.name,
                   image: order.image,
-                  status: (order.order_type.toOrderType() ==
-                          OrderType.Restaurant)
-                      ? order.status
-                          .toRestaurantOrderStatus()
-                          .toMinimalOrderStatus()
-                      : order.status
-                          .toLaundryOrderStatus()
-                          .toMinimalOrderStatus(),
+                  status: _getStatus(
+                      orderType: order.order_type.toOrderType(),
+                      status: order.status),
                   totalCost: order.total_cost,
                   orderType: order.order_type.toOrderType()))
           .toList();
@@ -244,4 +240,61 @@ Stream<List<MinimalOrder>?> listen_on_customer_orders(
     }
     return null;
   });
+}
+
+MinimalOrderStatus _getStatus(
+    {required String status, required OrderType orderType}) {
+  switch (orderType) {
+    case OrderType.Restaurant:
+      return status.toRestaurantOrderStatus().toMinimalOrderStatus();
+    case OrderType.Laundry:
+      return status.toLaundryOrderStatus().toMinimalOrderStatus();
+    case OrderType.Courier:
+      return status.toDeliveryOrderStatus().toMinimalOrderStatus();
+
+    default:
+      return status.toRestaurantOrderStatus().toMinimalOrderStatus();
+  }
+}
+
+Future<int?> addRestaurantOrderReviewId(
+    {required int orderId, required int reviewId}) async {
+  QueryResult<Mutation$updateRestaurantOrderReviewId> res =
+      await _graphClient.mutate$updateRestaurantOrderReviewId(
+          Options$Mutation$updateRestaurantOrderReviewId(
+              variables: Variables$Mutation$updateRestaurantOrderReviewId(
+                  orderId: orderId, reviewId: reviewId)));
+  if (res.parsedData?.update_restaurant_order_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.update_restaurant_order_by_pk?.review_id;
+}
+
+Future<int?> addLaundryOrderReviewId(
+    {required int orderId, required int reviewId}) async {
+  mezDbgPrint("Order id ====================>$orderId");
+  QueryResult<Mutation$updateLaundryOrderReviewId> res =
+      await _graphClient.mutate$updateLaundryOrderReviewId(
+          Options$Mutation$updateLaundryOrderReviewId(
+              variables: Variables$Mutation$updateLaundryOrderReviewId(
+                  orderId: orderId, reviewId: reviewId)));
+  if (res.parsedData?.update_laundry_order_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.update_laundry_order_by_pk?.review_id;
+}
+
+Future<int?> addDriverOrderReviewId(
+    {required int orderId, required int reviewId}) async {
+  mezDbgPrint("Order id ====================>$orderId");
+  QueryResult<Mutation$updateDriverOrderReviewId> res =
+      await _graphClient.mutate$updateDriverOrderReviewId(
+          Options$Mutation$updateDriverOrderReviewId(
+              variables: Variables$Mutation$updateDriverOrderReviewId(
+                  orderId: orderId, reviewId: reviewId)));
+  if (res.parsedData?.update_delivery_order_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res
+      .parsedData?.update_delivery_order_by_pk?.driver_review_by_customer_id;
 }

@@ -82,10 +82,20 @@ select_permissions:
         - id
         - stripe_info
       filter:
-        delivery:
-          delivery_driver:
-            user_id:
-              _eq: X-Hasura-User-Id
+        _or:
+          - delivery:
+              delivery_driver:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - _and:
+              - delivery:
+                  delivery_driver_id:
+                    _is_null: true
+              - delivery:
+                  delivery_company:
+                    drivers:
+                      user_id:
+                        _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:

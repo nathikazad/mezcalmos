@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -86,7 +88,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         ),
         Text(
           "${_i18n()["noNotifTitle"]}",
-          style: Get.textTheme.bodyLarge,
+          style: context.txt.bodyLarge,
         ),
         SizedBox(
           height: 2.h,
@@ -95,7 +97,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           margin: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             "${_i18n()["noNotifBody"]}",
-            style: Get.textTheme.bodyMedium,
+            style: context.txt.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),
@@ -134,7 +136,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     : (element.timestamp.isYesterday)
                         ? _i18n()['yesterday']
                         : DateFormat('dd MMM').format(element.timestamp),
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               indexNotification == 1 ? _deleteButton() : SizedBox()
             ],
@@ -155,8 +157,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-
-              MezRouter.toNamed(notification.linkUrl);
+          MezRouter.toPath(notification.linkUrl);
         },
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
@@ -171,14 +172,14 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                   children: [
                     Text(
                       notification.title,
-                      style: Get.textTheme.bodyLarge!,
+                      style: context.txt.bodyLarge!,
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text(
                       notification.body,
-                      style: Get.textTheme.titleMedium?.copyWith(
+                      style: context.txt.titleMedium?.copyWith(
                         fontSize: 12.sp,
                       ),
                     ),
@@ -200,19 +201,30 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     padding: const EdgeInsets.only(top: 5),
                     child: (notification.notifWidget != null)
                         ? notification.notifWidget
-                        : (notification.imgUrl!.isURL)
+                        : (notification.imgUrl?.isURL == true)
                             ? CircleAvatar(
                                 radius: 23,
                                 backgroundColor: Colors.transparent,
                                 backgroundImage: CachedNetworkImageProvider(
                                     notification.imgUrl!),
                               )
-                            : CircleAvatar(
-                                radius: 23,
-                                backgroundColor: Colors.transparent,
-                                backgroundImage:
-                                    AssetImage(notification.imgUrl!),
-                              ),
+                            : (notification.imgUrl != null)
+                                ? CircleAvatar(
+                                    radius: 23,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        AssetImage(notification.imgUrl!),
+                                  )
+                                : (notification.icon != null)
+                                    ? CircleAvatar(
+                                        radius: 23,
+                                        backgroundColor:
+                                            secondaryLightBlueColor,
+                                        child: Icon(
+                                          notification.icon,
+                                          color: primaryBlueColor,
+                                        ))
+                                    : SizedBox(),
                   )
                 ],
               ),
@@ -235,7 +247,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                 primaryButtonText: "${_i18n()["clear"]}",
                 secondaryButtonText: "${_i18n()["no"]}", onYesClick: () async {
               controller.clearAllNotification();
-              MezRouter.back();
+              await MezRouter.back();
             });
           },
           child: Ink(

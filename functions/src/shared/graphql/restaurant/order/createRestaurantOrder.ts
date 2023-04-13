@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { AppType } from "../../../models/Generic/Generic";
+import { AppType, MezError } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { Cart } from "../../../models/Services/Restaurant/Cart";
@@ -18,7 +17,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   let restaurantOperatorsDetails = restaurant.operators!.map((v) => {
     return {
       participant_id: v.userId,
-      app_type_id: AppType.RestaurantApp
+      app_type_id: AppType.Restaurant
     };
   });
   let mezAdminDetails = mezAdmins!.map((v) => {
@@ -84,14 +83,18 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             delivery_cost: checkoutReq.deliveryCost,
           
             status: DeliveryOrderStatus.OrderReceived,
-            service_provider_id: checkoutReq.restaurantId,
-            service_provider_type: DeliveryServiceProviderType.Restaurant,
-            
+            service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
+              ? restaurant.id 
+              : restaurant.deliveryPartnerId,
+            service_provider_type: (restaurant.deliveryDetails.selfDelivery) 
+              ? DeliveryServiceProviderType.Restaurant
+              : DeliveryServiceProviderType.DeliveryCompany,
             scheduled_time: checkoutReq.scheduledTime,
             trip_distance: checkoutReq.tripDistance,
             trip_duration: checkoutReq.tripDuration,
             trip_polyline: checkoutReq.tripPolyline,
-            package_cost: customerCart.cost
+            package_cost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
+            distance_from_base: checkoutReq.distanceFromBase
           }
         }: undefined,
         payment_type: checkoutReq.paymentType,
@@ -127,7 +130,6 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       id: true,
       chat_id: true,
       order_time: true,
-      items_cost: true,
       delivery: {
         id: true,
         chat_with_customer_id: true,
@@ -137,10 +139,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   });
 
   if(response.insert_restaurant_order_one == null) {
-    throw new HttpsError(
-      "internal",
-      "order creation error"
-    );
+    throw new MezError("orderCreationError");
   }
   let orderItems: OrderItem[] = customerCart.items.map((i) => {
     return {
@@ -174,10 +173,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   let deliveryOrder: DeliveryOrder;
   if(checkoutReq.deliveryType == DeliveryType.Delivery) {
     if(response.insert_restaurant_order_one.delivery == null) {
-      throw new HttpsError(
-        "internal",
-        "order creation error"
-      );
+      throw new MezError("orderCreationError");
     }
     restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
     deliveryOrder = {
@@ -191,15 +187,20 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       status: DeliveryOrderStatus.OrderReceived,
       customerId: customerCart.customerId,
       deliveryCost: checkoutReq.deliveryCost,
-      packageCost: checkoutReq.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
+      packageCost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
       orderTime: response.insert_restaurant_order_one.order_time,
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
-      serviceProviderId: checkoutReq.restaurantId,
-      serviceProviderType: DeliveryServiceProviderType.Restaurant,
+      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? DeliveryServiceProviderType.DeliveryCompany 
+        : DeliveryServiceProviderType.Restaurant,
+      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? restaurant.deliveryPartnerId 
+        : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
+      distanceFromBase: checkoutReq.distanceFromBase
     }
   } else {
     deliveryOrder = {
@@ -213,13 +214,17 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       status: DeliveryOrderStatus.OrderReceived,
       customerId: customerCart.customerId,
       deliveryCost: checkoutReq.deliveryCost,
-      packageCost: checkoutReq.paymentType == PaymentType.Cash ? response.insert_restaurant_order_one.items_cost : 0,
+      packageCost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
       orderTime: response.insert_restaurant_order_one.order_time,
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
-      serviceProviderId: checkoutReq.restaurantId,
-      serviceProviderType: DeliveryServiceProviderType.Restaurant,
+      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? DeliveryServiceProviderType.DeliveryCompany 
+        : DeliveryServiceProviderType.Restaurant,
+      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+        ? restaurant.deliveryPartnerId 
+        : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
     }

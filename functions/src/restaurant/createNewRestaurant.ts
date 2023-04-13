@@ -1,4 +1,4 @@
-import { Language, Location } from "../shared/models/Generic/Generic";
+import { Language, Location, MezError } from "../shared/models/Generic/Generic";
 import { NewRestaurantNotification } from "../shared/models/Services/Restaurant/Restaurant";
 import { createRestaurant } from "../shared/graphql/restaurant/createRestaurant";
 import { getUser } from "../shared/graphql/user/getUser";
@@ -8,7 +8,6 @@ import { NotificationType, NotificationAction, Notification } from "../shared/mo
 import { restaurantUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
 import { ServiceProvider } from "../shared/models/Services/Service";
 
@@ -24,52 +23,81 @@ export interface RestaurantDetails {
   language: Record<Language, boolean>,
   uniqueId?: string
 }
+export interface RestaurantResponse {
+  success: boolean,
+  error?: RestaurantError
+  unhandledError?: string,
+}
+export enum RestaurantError {
+  UnhandledError = "unhandledError",
+  DeliveryDetailsNotSet = "deliveryDetailsNotSet",
+  NoDeliveryPartner = "noDeliveryPartner",
+  UserNotFound = "userNotFound",
+  DeepLinkError = "deepLinkError",
+  QRGenerationError = "qrGenerationError",
+  RestaurantCreationError = "restaurantCreationError"
+}
 
-export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
+export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails): Promise<RestaurantResponse> {
+  try {
+    if(restaurantDetails.deliveryDetails.deliveryAvailable) {
+      if(restaurantDetails.deliveryDetails.selfDelivery && restaurantDetails.deliveryDetails.radius == 0) {
+        throw new MezError(RestaurantError.DeliveryDetailsNotSet);
+      } else if(!(restaurantDetails.deliveryDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
+        throw new MezError(RestaurantError.NoDeliveryPartner);
+      }
+    }
+    let userPromise = getUser(userId);
+    let mezAdminsPromise = getMezAdmins();
+    let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+    let mezAdmins: MezAdmin[] = promiseResponse[1];
 
-  if(restaurantDetails.deliveryDetails.deliveryAvailable) {
-    if(restaurantDetails.deliveryDetails.selfDelivery && restaurantDetails.deliveryDetails.radius == 0) {
-      throw new HttpsError(
-        "unknown",
-        "Restaurant delivery details not set"
-      );
-    } else if(!(restaurantDetails.deliveryDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
-      throw new HttpsError(
-        "unknown",
-        "delivery partner not specified"
-      );
+      
+    let restaurant: ServiceProvider = await createRestaurant(restaurantDetails, userId);
+    
+    let notification: Notification = {
+      foreground: <NewRestaurantNotification>{
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.NewOrder,
+        notificationAction: NotificationAction.ShowSnackBarAlways,
+        name: restaurant.name,
+        image: restaurant.image,
+        id: restaurant.id
+      },
+      background: {
+        [Language.ES]: {
+          title: "Nuevo restaurante",
+          body: `Hay un nuevo restaurante`
+        },
+        [Language.EN]: {
+          title: "New Restaurant",
+          body: `There is a new restaurant`
+        }
+      },
+      linkUrl: restaurantUrl(restaurant.id!)
+    }
+    mezAdmins.forEach((m) => {
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+    });
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(RestaurantError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: RestaurantError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
     }
   }
-  let userPromise = getUser(userId);
-  let mezAdminsPromise = getMezAdmins();
-  let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
-  let mezAdmins: MezAdmin[] = promiseResponse[1];
-
-    
-  let restaurant: ServiceProvider = await createRestaurant(restaurantDetails, userId);
-  
-  let notification: Notification = {
-    foreground: <NewRestaurantNotification>{
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.NewOrder,
-      notificationAction: NotificationAction.ShowSnackBarAlways,
-      name: restaurant.name,
-      image: restaurant.image,
-      id: restaurant.id
-    },
-    background: {
-      [Language.ES]: {
-        title: "Nuevo restaurante",
-        body: `Hay un nuevo restaurante`
-      },
-      [Language.EN]: {
-        title: "New Restaurant",
-        body: `There is a new restaurant`
-      }
-    },
-    linkUrl: restaurantUrl(restaurant.id!)
-  }
-  mezAdmins.forEach((m) => {
-    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
-  });
 }

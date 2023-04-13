@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
 import { Operator, ServiceProvider } from "../../../models/Services/Service";
-import { AddOperatorDetails } from "../../../operator/addOperator";
+import { AddOperatorDetails, AddOperatorError } from "../../../operator/addOperator";
 
 export async function createRestaurantOperator(operatorUserId: number, addOpDetails: AddOperatorDetails, restaurant: ServiceProvider): Promise<Operator> {
 
@@ -26,7 +25,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
                 _eq: operatorUserId
             },
             app_type_id: {
-                _eq: AppType.RestaurantApp
+                _eq: AppType.Restaurant
             }
         }
     }, {
@@ -34,10 +33,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
     }]
   })
   if(response.restaurant_operator.length) {
-      throw new HttpsError(
-          "internal",
-          "The operator is already working for this restaurant"
-      );
+    throw new MezError(AddOperatorError.UserAlreadyAnOperator);
   }
 
   let mutationResponse = await chain.mutation({
@@ -48,7 +44,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
         operator_details: {
           data: {
             user_id: operatorUserId,
-            app_type_id: AppType.RestaurantApp,
+            app_type_id: AppType.Restaurant,
             app_version: addOpDetails.appVersion,
             notification_info: (addOpDetails.notificationToken) 
               ? {
@@ -56,7 +52,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
                   token: addOpDetails.notificationToken,
                   user_id: operatorUserId,
                   turn_off_notifications: false,
-                  app_type_id: AppType.RestaurantApp
+                  app_type_id: AppType.Restaurant
                 }
               }: undefined,
             status: AuthorizationStatus.AwaitingApproval,
@@ -69,10 +65,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
     }]
   });
   if(mutationResponse.insert_restaurant_operator_one == null) {
-    throw new HttpsError(
-      "internal",
-      "operator creation error"
-    );
+    throw new MezError(AddOperatorError.OperatorCreationError);
   }
   return {
     id: mutationResponse.insert_restaurant_operator_one.id,
@@ -82,7 +75,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
     serviceProviderId: restaurant.id,
     status: AuthorizationStatus.AwaitingApproval,
     notificationInfo: (addOpDetails.notificationToken) ? {
-      appType: AppType.RestaurantApp,
+      appType: AppType.Restaurant,
       token: addOpDetails.notificationToken,
       turnOffNotifications: false
     }: undefined,

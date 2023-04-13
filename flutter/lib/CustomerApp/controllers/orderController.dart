@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CustomerOrderController extends GetxController {
@@ -15,8 +15,6 @@ class CustomerOrderController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
 
   RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
-
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
 
   // streams //
   StreamSubscription<List<MinimalOrder>?>? currentOrdersStream;
@@ -39,14 +37,11 @@ class CustomerOrderController extends GetxController {
 
   Future<void> fetchCurrentOrders() async {
     currentOrders.value = await get_customer_orders(
-        customerId: _authController.hasuraUserId!, inProcess: true);
+        limit: 10,
+        offest: 0 /* To LATER */,
+        customerId: _authController.hasuraUserId!,
+        inProcess: true);
     currentOrders.refresh();
-  }
-
-  Future<void> fetchPastOrders() async {
-    pastOrders.value = await get_customer_orders(
-        customerId: _authController.hasuraUserId!, inProcess: false);
-    pastOrders.refresh();
   }
 
   void _listenOnOrders() {
@@ -129,7 +124,6 @@ class CustomerOrderController extends GetxController {
 
     currentOrdersStream?.cancel();
     currentOrders.close();
-    pastOrders.close();
 
     super.onClose();
   }

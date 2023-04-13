@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -15,29 +13,25 @@ class ShippingCostComponent extends StatelessWidget {
       {Key? key,
       required this.shippingCost,
       this.textStyle,
+      this.showPerKm = false,
       this.formattedShippingCost,
       this.alignment = MainAxisAlignment.end})
       : super(key: key);
-  final num shippingCost;
+  final num? shippingCost;
   final String? formattedShippingCost;
   final MainAxisAlignment alignment;
+  final bool showPerKm;
   final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: (shippingCost == 0)
-          ? Flexible(
-              child: Text(
-                "${_i18n()["free"]}",
-                style: Get.textTheme.bodyLarge
-                    ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
-              ),
-            )
-          : Text(
-              formattedShippingCost ?? shippingCost.toPriceString(),
-              style: textStyle,
-            ),
+      child: Text(
+        formattedShippingCost ??
+            shippingCost?.toPriceString(label: showPerKm ? "/km" : null) ??
+            "-",
+        style: textStyle,
+      ),
     );
   }
 }

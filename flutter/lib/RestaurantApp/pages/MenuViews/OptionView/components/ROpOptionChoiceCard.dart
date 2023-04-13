@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -16,10 +18,12 @@ class ROpOptionChoiceCard extends StatelessWidget {
       required this.viewController,
       required this.optionId,
       required this.restaurantId});
+
   final Choice choice;
   final int optionId;
   final String restaurantId;
   final ROpOptionViewController viewController;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -37,16 +41,17 @@ class ROpOptionChoiceCard extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       choice.name[userLanguage] ?? "Choice name error",
-                      style: Get.textTheme.bodyLarge,
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   MezIconButton(
                       onTap: () async {
-                        final bool? needToRefetch = await MezRouter.toNamed(
-                            getROpChoiceRoute(
-                                choiceId: choice.id,
-                                optionId: optionId,
-                                restaurantId: restaurantId)) as bool?;
+                        final bool? needToRefetch =
+                            await ROpChoiceView.navigate(
+                          choiceId: choice.id,
+                          restaurantId: restaurantId,
+                          optionId: optionId,
+                        ) as bool?;
                         if (needToRefetch == true) {
                           await viewController.fetchOption();
                         }
@@ -66,7 +71,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     choice.cost.toPriceString(),
-                    style: Get.textTheme.bodyLarge,
+                    style: context.txt.bodyLarge,
                   ),
                 ),
                 Text("Available"),

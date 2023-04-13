@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
@@ -44,7 +45,7 @@ class CardSummaryCard extends StatelessWidget {
                 width: Get.width,
                 child: Text(
                   "${_i18n()["orderSummary"]}",
-                  style: Get.textTheme.bodyText1,
+                  style: context.txt.bodyLarge,
                 ),
               ),
               SizedBox(height: 4),
@@ -56,15 +57,15 @@ class CardSummaryCard extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        child:
-                            Text("${_i18n()["orderCost"]}", style: txt.bodyText2),
+                        child: Text("${_i18n()["orderCost"]}",
+                            style: txt.bodyMedium),
                       ),
                     ),
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
                         child: Text(controller.cart.itemsCost().toPriceString(),
-                            style: txt.bodyText2),
+                            style: txt.bodyMedium),
                       ),
                     )
                   ],
@@ -82,7 +83,7 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         child: Text("${_i18n()["deliveryCost"]}",
-                            style: txt.bodyText2),
+                            style: txt.bodyMedium),
                       ),
                     ),
                     (controller.cart.shippingCost != null &&
@@ -103,7 +104,7 @@ class CardSummaryCard extends StatelessWidget {
                                         color: primaryBlueColor,
                                       )),
                                   Text('${_i18n()["toBeCalc"]}',
-                                      style: txt.bodyText2?.copyWith(
+                                      style: txt.bodyMedium?.copyWith(
                                           fontStyle: FontStyle.italic)),
                                 ],
                               )
@@ -123,14 +124,15 @@ class CardSummaryCard extends StatelessWidget {
                       Expanded(
                         child: Container(
                           child: Text("${_i18n()["stripeFees"]}",
-                              style: txt.bodyText2),
+                              style: txt.bodyMedium),
                         ),
                       ),
                       Expanded(
                         child: Container(
                           alignment: Alignment.centerRight,
-                          child: Text(controller.cart.stripeFees.toPriceString(),
-                              style: txt.bodyText2),
+                          child: Text(
+                              controller.cart.stripeFees.toPriceString(),
+                              style: txt.bodyMedium),
                         ),
                       )
                     ],

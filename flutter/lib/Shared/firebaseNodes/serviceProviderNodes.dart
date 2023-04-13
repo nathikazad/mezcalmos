@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 String _serviceProviderNode({required OrderType orderType}) {

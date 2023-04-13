@@ -11,7 +11,8 @@ enum NotificationType {
   DriverApproved,
   OperatorApproved,
   NewDriver,
-  Call
+  Call,
+  PriceChange
 }
 
 extension ParseNotificationTypeToString on NotificationType {
@@ -31,7 +32,8 @@ extension ParseStringToNotificationType on String {
 enum NotificationAction {
   ShowPopUp,
   ShowSnackBarAlways,
-  ShowSnackbarOnlyIfNotOnPage
+  ShowSnackbarOnlyIfNotOnPage,
+  NavigteToLinkUrl
 }
 
 extension ParseNotificationActionToString on NotificationAction {
@@ -72,7 +74,7 @@ class Notification {
     return null;
   }
 
-  int? get orderId => int.tryParse(variableParams['orderId']);
+  int? get orderId => variableParams['orderId'];
   String? get orderType => variableParams['orderType'];
   Notification(
       {required this.id,

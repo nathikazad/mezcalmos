@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() =>
@@ -37,19 +36,15 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                 child: TextButton(
                   onPressed: () {
                     showConfirmationDialog(context, onYesClick: () async {
-                      final bool resp =
-                          await widget.cancelOrderFunction.call();
+                      final bool resp = await widget.cancelOrderFunction.call();
                       if (resp) {
-                        MezRouter.untill(
-                          (Route<dynamic> route) =>
-                              route.settings.name == kHomeRoute,
-                        );
+                        await MezRouter.popEverythingTillBeforeHome();
                         MezSnackbar(
                           _i18n()["titleSuccess"],
                           _i18n()["orderCancelSuccess"],
-                          position: SnackPosition.TOP,
+                          position: Alignment.topCenter,
                         );
-                      } 
+                      }
                     });
                   },
                   style: TextButton.styleFrom(
@@ -59,7 +54,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                     alignment: Alignment.center,
                     child: Text(
                       '${_i18n()["cancelOrder"]}',
-                      style: Get.textTheme.bodyText1
+                      style: context.txt.bodyLarge
                           ?.copyWith(color: Color(0XFFE21132)),
                     ),
                   ),

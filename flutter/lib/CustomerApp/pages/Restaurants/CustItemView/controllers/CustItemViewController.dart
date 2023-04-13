@@ -120,6 +120,10 @@ class CustItemViewController {
     await cartController?.updateCartItem(cartItem.value!);
   }
 
+  // bool showRestaurant() {
+  //   return MezRouter.isRouteInStack(RestaurantRouter.restaurantItemViewRoute);
+  // }
+
   Future<int?> handleAddItem() async {
     cartItem.value?.notes = notesController.text;
     if (Get.find<AuthController>().isUserSignedIn) {

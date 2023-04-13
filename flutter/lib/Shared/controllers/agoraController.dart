@@ -8,7 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_callkit_incoming/entities/entities.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -19,7 +19,9 @@ import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
+
+import 'package:mezcalmos/env.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
@@ -185,7 +187,6 @@ class Sagora extends GetxController {
   }
 
   void _startListeningOnCallEvents() {
-    mezDbgPrint("🤑🤑🤑🤑🤑🤑 Flutter listening");
     FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
       mezDbgPrint("CallEvent ===>  $event");
 
@@ -206,7 +207,7 @@ class Sagora extends GetxController {
           callStatus.value = CallStatus.none;
           await FlutterCallkitIncoming.endAllCalls();
           // change to decline to update view parts.
-          // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back<void>();
+          // if (Get.currentRoute == kAgoraCallScreen) MezRouter.back();
           break;
         case Event.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
@@ -257,28 +258,31 @@ class Sagora extends GetxController {
                 id: int.parse(event.body['extra']['callerId']),
               ),
             };
-            if (Get.currentRoute == kAgoraCallScreen) {
-              Future<void>.microtask(
-                () => MezRouter.offAndToNamed<void>(kAgoraCallScreen,
-                    arguments: <String, dynamic>{
-                      "chatId": int.parse(event.body?['extra']?['chatId']),
-                      "talkingTo": Participant(
-                        image: event.body?['avatar'],
-                        name: event.body?['nameCaller'],
-                        participantType: event.body['extra']['callerType']
-                            .toString()
-                            .convertToParticipantType(),
-                        // wrong actual user id, it's more like an agora generated id
-                        id: event.body['extra']['callerId'],
-                      ),
-                    }),
-              );
-            } else {
-              // Pushing to call screen + awaiting in case we wanna return with value.
-              // ignore: unawaited_futures
-              Future.microtask(() =>
-                  MezRouter.toNamed<void>(kAgoraCallScreen, arguments: args));
-            }
+            // if (MezRouter.currentRoute().name ==
+            //     NativeOnlyRoutes.kAgoraCallScreenRoute) {
+            //   Future<void>.microtask(() => MezRouter.back().then(
+            //         (_) => AgoraCall.navigate(
+            //             chatId: event.body?['extra']?['chatId'],
+            //             participantId:
+            //                 int.parse(event.body['extra']['callerId']),
+            //             participantImage: event.body?['avatar'],
+            //             participantName: event.body?['nameCaller'],
+            //             participantType: event.body['extra']['callerType']
+            //                 .toString()
+            //                 .convertToParticipantType()),
+            //       ));
+            // } else {
+            // Pushing to call screen + awaiting in case we wanna return with value.
+            // ignore: unawaited_futures
+            Future.microtask(() => AgoraCall.navigate(
+                chatId: int.parse(event.body?['extra']?['chatId']),
+                participantId: int.parse(event.body['extra']['callerId']),
+                participantImage: event.body?['avatar'],
+                participantName: event.body?['nameCaller'],
+                participantType: event.body['extra']['callerType']
+                    .toString()
+                    .convertToParticipantType()));
+            // }
           }
           break;
         default:
@@ -344,8 +348,8 @@ class Sagora extends GetxController {
         .set(CallNotificationForQueue(
                 chatId: chatId,
                 callerId: _authController.hasuraUserId!,
-                callerParticipantType: _settingsController.appType
-                    .convertParticipantTypefromAppType(),
+                callerParticipantType:
+                    MezEnv.appType.convertParticipantTypefromAppType(),
                 calleeId: callee.id,
                 calleeParticipantType: callee.participantType,
                 callNotificationType: callNotificationType)

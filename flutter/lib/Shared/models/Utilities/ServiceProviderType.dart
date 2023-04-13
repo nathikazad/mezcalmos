@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-enum ServiceProviderType { Customer, Restaurant, Laundry, DeliveryCompany }
+enum ServiceProviderType {
+  Customer,
+  Restaurant,
+  Laundry,
+  DeliveryCompany,
+  DeliveryDriver
+}
 
 extension ParseServiceProviderTypeToString on ServiceProviderType {
   String toFirebaseFormatString() {
@@ -33,7 +38,6 @@ extension ParseServiceProviderTypeToString on ServiceProviderType {
 
 extension ParseStringToServiceProviderType on String {
   ServiceProviderType toServiceProviderType() {
-   
     return ServiceProviderType.values.firstWhere(
         (ServiceProviderType e) => e.toFirebaseFormatString() == this);
   }

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AutoCompleteTextView extends StatefulWidget {
@@ -100,13 +102,11 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
     getActiveFocusNode().addListener(() {
       if (getActiveFocusNode().hasFocus) {
         _overlayEntry = _createOverlayEntry();
-        Overlay.of(context).insert(_overlayEntry);
+        Overlay.of(context)?.insert(_overlayEntry);
         widget.focusGained();
       } else {
-        if (_overlayEntry != null) {
-          _overlayEntry.remove();
-          widget.focusLost();
-        }
+        _overlayEntry.remove();
+        widget.focusLost();
       }
     });
     widget.controller.addListener(_onSearchChanged);
@@ -132,8 +132,10 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
   }
 
   OverlayEntry _createOverlayEntry() {
+    mezDbgPrint("Context ================================>${QR.context}");
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
     Size size = renderBox.size;
+
     return OverlayEntry(
         builder: (BuildContext context) => Positioned(
               width: widget.dropDownWidth ?? size.width,
@@ -144,57 +146,67 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
                     size.height + 10), //Offset(100, size.height + 5.0),
                 child: Material(
                   elevation: 4.0,
-                  child: StreamBuilder<Object>(
-                      stream: suggestionsStreamController.stream,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Object> suggestionData) {
-                        if (suggestionData.hasData &&
-                            widget.controller.text.isNotEmpty) {
-                          suggestionShowList =
-                              suggestionData.data as List<String>;
-                          return ConstrainedBox(
-                            constraints: new BoxConstraints(
-                              maxHeight: 250,
-                            ),
-                            child: ListView.builder(
-                                controller: scrollController,
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: suggestionShowList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ListTile(
-                                    minLeadingWidth: 10,
-                                    leading: Icon(Icons.search_rounded),
-                                    title: Text(
-                                      suggestionShowList[index],
-                                      style: widget.suggestionStyle,
-                                      textAlign: widget.suggestionTextAlign,
-                                    ),
-                                    onTap: () {
-                                      isSearching = false;
-                                      widget.controller.text =
-                                          suggestionShowList[index];
+                  child: InkWell(
+                    onTap: () {
+                      mezDbgPrint("👋 clicked");
+                    },
+                    child: StreamBuilder<Object>(
+                        stream: suggestionsStreamController.stream,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<Object> suggestionData) {
+                          if (suggestionData.hasData &&
+                              widget.controller.text.isNotEmpty) {
+                            suggestionShowList =
+                                suggestionData.data as List<String>;
 
-                                      final String placeId = idWithDescription
-                                          .keys
-                                          .firstWhere((String placeId) {
-                                        return idWithDescription[placeId] ==
+                            return ConstrainedBox(
+                              constraints: new BoxConstraints(
+                                maxHeight: 250,
+                              ),
+                              child: ListView.builder(
+                                  controller: scrollController,
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: suggestionShowList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ListTile(
+                                      minLeadingWidth: 10,
+                                      leading: Icon(Icons.search_rounded),
+                                      title: Text(
+                                        suggestionShowList[index],
+                                        style: widget.suggestionStyle,
+                                        textAlign: widget.suggestionTextAlign,
+                                      ),
+                                      onTap: () {
+                                        mezDbgPrint(
+                                            "Card clicked =============== oooooooooooooooo");
+                                        isSearching = false;
+                                        widget.controller.text =
                                             suggestionShowList[index];
-                                      });
 
-                                      suggestionsStreamController.sink.add([]);
-                                      // placeId along with name.
-                                      getActiveFocusNode().unfocus();
-                                      widget.onTapCallback(
-                                          placeId, widget.controller.text);
-                                    },
-                                  );
-                                }),
-                          );
-                        } else {
-                          return Container();
-                        }
-                      }),
+                                        final String placeId = idWithDescription
+                                            .keys
+                                            .firstWhere((String placeId) {
+                                          return idWithDescription[placeId] ==
+                                              suggestionShowList[index];
+                                        });
+
+                                        suggestionsStreamController.sink
+                                            .add([]);
+                                        // placeId along with name.
+                                        getActiveFocusNode().unfocus();
+                                        widget.onTapCallback(
+                                            placeId, widget.controller.text);
+                                      },
+                                    );
+                                  }),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        }),
+                  ),
                 ),
               ),
             ));

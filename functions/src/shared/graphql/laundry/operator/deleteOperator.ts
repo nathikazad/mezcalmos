@@ -1,5 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { MezError } from "../../../models/Generic/Generic";
 import { Operator } from "../../../models/Services/Service";
 
 export async function deleteLaundryOperator(operator: Operator) {
@@ -18,9 +18,6 @@ export async function deleteLaundryOperator(operator: Operator) {
         }]
     });
     if(!(response.delete_laundry_operator_by_pk)) {
-        throw new HttpsError(
-            "internal",
-            "incorrect laundry operator id"
-        );
+        throw new MezError("incorrectOperatorId");
     }
 }

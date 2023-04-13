@@ -4,8 +4,9 @@ import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/controllers/UnauthDrive
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 
@@ -48,13 +49,13 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
           margin: const EdgeInsets.all(8),
           child: (viewController.status == AgentStatus.AwaitingApproval)
               ? ServiceWaitingForApproval()
-              : _invitNedded(),
+              : _invitNedded(context),
         ),
       ),
     );
   }
 
-  Widget _invitNedded() {
+  Widget _invitNedded(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,7 +79,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()['title']}",
-            style: Get.textTheme.displaySmall,
+            style: context.txt.displaySmall,
             textAlign: TextAlign.center,
           ),
         ),
@@ -89,7 +90,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()['subtitle']}",
-            style: Get.textTheme.bodyMedium,
+            style: context.txt.bodyMedium,
             textAlign: TextAlign.center,
           ),
         )

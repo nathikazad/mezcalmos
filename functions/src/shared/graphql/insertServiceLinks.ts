@@ -29,10 +29,10 @@ export async function insertServiceLinks() {
         let appType: AppType
         switch (d.service_provider_type) {
             case ServiceProviderType.Restaurant:
-                appType = AppType.RestaurantApp
+                appType = AppType.Restaurant
                 break;
             case ServiceProviderType.Laundry:
-                appType = AppType.LaundryApp
+                appType = AppType.Laundry
                 break;
             // case ServiceProviderType.DeliveryCompany:
             //     appType = AppType.
@@ -43,7 +43,6 @@ export async function insertServiceLinks() {
         }
         console.log("id: ", d.id)
         if(d.unique_id == null) {
-            continue;
             console.log("Error: unique id not found")
             break;
         }

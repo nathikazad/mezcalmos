@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustRestaurantOrderViewController {
   final MGoogleMapController mGoogleMapController = MGoogleMapController(
@@ -29,6 +32,13 @@ class CustRestaurantOrderViewController {
   String? subscriptionId;
 
   Future<void> init({required int orderId}) async {
+    mezDbgPrint(
+        '======================================================================> $orderId');
+    MezRouter.registerReturnToViewCallback(
+        ViewRestaurantOrderScreen.constructPath(orderId), () {
+      clearNotifications(orderId);
+    });
+    clearNotifications(orderId);
     try {
       order.value =
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
@@ -48,7 +58,9 @@ class CustRestaurantOrderViewController {
             .listen((RestaurantOrder? event) {
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+
+            order.value = null;
             order.value = event;
           }
         });
@@ -57,6 +69,11 @@ class CustRestaurantOrderViewController {
         orderStream = null;
       });
     }
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Restaurant, orderId: orderId);
   }
 
   Future<ServerResponse> addReview({
@@ -88,9 +105,14 @@ class CustRestaurantOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      await CloudFunctions.restaurant2_cancelOrderFromCustomer(
-          orderId: order.value!.orderId);
-      return true;
+      final CancelRestaurantOrderResponse res =
+          await CloudFunctions.restaurant2_cancelOrderFromCustomer(
+              orderId: order.value!.orderId);
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success;
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(stk);

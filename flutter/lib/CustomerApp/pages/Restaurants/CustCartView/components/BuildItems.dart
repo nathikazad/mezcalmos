@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/components/itemChosenChoices.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/ItemInformationCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 
@@ -69,7 +70,8 @@ class CartItemsBuilder extends StatelessWidget {
                   ],
                   onEdit: () {
                     if (cartItem.idInCart != null)
-                      MezRouter.toNamed(editCartItemRoute(cartItem.idInCart!));
+                      CustItemView.navigateToCartItem(
+                          cartItemId: cartItem.idInCart!);
                   },
                 ),
               ));
@@ -93,7 +95,7 @@ class CartItemsBuilder extends StatelessWidget {
           Container(
             child: Text(
               "${_i18n()["itemNotes"]}",
-              style: Get.textTheme.bodyLarge,
+              style: context.txt.bodyLarge,
             ),
           ),
           SizedBox(

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -63,11 +63,12 @@ Future<String?> get_service_link({required String uniqueId}) async {
   switch (response
       .parsedData?.service_provider_details.first.service_provider_type) {
     case "restaurant":
-      return getRestaurantRoute(
-          response.parsedData!.service_provider_details.first.restaurant!.id);
+    // todo handle properly the routing
+    // return getRestaurantRoute(
+    //     response.parsedData!.service_provider_details.first.restaurant!.id);
     case "laundry":
-      return getLaundryRoute(response
-          .parsedData!.service_provider_details.first.laundry_store!.id);
+    // return getLaundryRoute(response
+    //     .parsedData!.service_provider_details.first.laundry_store!.id);
     default:
       return null;
   }
@@ -95,6 +96,7 @@ Future<MainService?> get_service_details_by_id(
       acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
 
   return MainService(
+      deliveryCost: null,
       info: ServiceInfo(
           descriptionId: data.description_id,
           description: (data.description?.translations != null)

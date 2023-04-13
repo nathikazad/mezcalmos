@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { Language, NotificationInfo } from "../../../models/Generic/Generic";
+import { Language, MezError, NotificationInfo } from "../../../models/Generic/Generic";
 import { MezAdmin } from "../../../models/Generic/User";
 
 export async function getMezAdmins(): Promise<MezAdmin[]> {
@@ -54,10 +53,7 @@ export async function getMezAdmin(userId: number): Promise<MezAdmin> {
         }]
     });
     if (response.mez_admin_by_pk == null) {
-        throw new HttpsError(
-          "internal",
-          "user is not a Mez Admin"
-        );
+        throw new MezError("mezAdminNotFound");
       }
     return {
         id: userId,

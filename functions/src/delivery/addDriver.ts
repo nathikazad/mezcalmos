@@ -2,34 +2,61 @@ import { createDeliveryDriver } from "../shared/graphql/delivery/driver/createDe
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { MezError } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator, ServiceProvider, ServiceProviderType } from "../shared/models/Services/Service";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { getServiceProviderFromUniqueId } from "../shared/graphql/getServiceProvider";
-import { HttpsError } from "firebase-functions/v1/auth";
 
 export interface AddDriverDetails {
     uniqueId: string,
     notificationToken?: string,
 }
+export interface AddDriverResponse {
+    success: boolean,
+    error?: AddDriverError
+    unhandledError?: string
+}
+export enum AddDriverError {
+    UnhandledError = "unhandledError",
+    DriverAlreadyExists = "driverAlreadyExists",
+    DriverCreationError = "driverCreationError",
+    InvalidServiceProviderType = "invalidServiceProviderType"
+}
 
-export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {
+export async function addDriver(userId: number, addDriverDetails: AddDriverDetails): Promise<AddDriverResponse> {
     //first mutation
     //second notify operators of the company
     try {
         let serviceProvider: ServiceProvider = await getServiceProviderFromUniqueId(addDriverDetails.uniqueId)
         let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, serviceProvider, addDriverDetails);
-    
+
         await notify(deliveryDriver, serviceProvider);
-    } catch(err) {
-        console.log("Error: ", err);
-        throw new HttpsError(
-            "internal",
-            "Error in add driver"
-        );
+
+        return {
+            success: true
+        }
+    } catch (e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(AddDriverError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: AddDriverError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
     }
+    
 }
 
 async function notify(deliveryDriver: DeliveryDriver, serviceProvider: ServiceProvider) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -35,7 +36,7 @@ class ServiceWaitingForApproval extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   "${_i18n()['title']}",
-                  style: Get.textTheme.displaySmall,
+                  style: context.txt.displaySmall,
                   textAlign: TextAlign.center,
                 ),
               ),

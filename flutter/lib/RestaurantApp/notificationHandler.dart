@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['notificationHandler'];
@@ -16,10 +17,12 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getROpOrderRoute(value["orderId"].toString()),
+          linkUrl:
+              RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/shared/notifications/readyOrderNotificationIcon.png', // needs to be changed
+              'assets/images/shared/notifications/readyOrderNotificationIcon.png',
+          // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewOrder,
@@ -29,13 +32,14 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.OperatorApproved:
       return Notification(
           id: key,
-          linkUrl: kWrapperRoute,
+          linkUrl: SharedRoutes.kWrapperRoute,
           body: (value["approved"] == true)
               ? 'You have been approved'
               : "You have been rejected",
           imgUrl: (value["approved"] == true)
               ? 'assets/images/shared/notifications/delivered.png'
-              : 'assets/images/shared/notifications/cancel.png', // needs to be changed
+              : 'assets/images/shared/notifications/cancel.png',
+          // needs to be changed
           title:
               (value["approved"] == true) ? "Congrats !!" : "Unfortunately !",
           timestamp: DateTime.parse(value['time']),
@@ -48,7 +52,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
-      return _restaurantOpOrderChangesNotifier(key, value);
+      return restaurantOpOrderChangesNotifier(key, value);
     default:
       throw StateError("Invalid Notification Type $value");
   }
@@ -65,7 +69,7 @@ Notification restaurantNotificationHandler(String key, value) {
 //   }
 // }
 
-Notification _restaurantOpOrderChangesNotifier(String key, value) {
+Notification restaurantOpOrderChangesNotifier(String key, value) {
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic>? dynamicFields =
@@ -73,7 +77,8 @@ Notification _restaurantOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getROpOrderRoute(value["orderId"].toString()),
+      linkUrl:
+          RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
       body: dynamicFields?["body"],
@@ -93,8 +98,7 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["canceledOrderTitle"]}",
         "body": "${_i18n()["canceledOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/cancel.png",
       };
     // case RestaurantOrderStatus.Preparing:
     //   return <String, dynamic>{
@@ -132,9 +136,8 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
-          chatId: int.parse(value['chatId']),
-          orderLink: getROpOrderRoute(value['orderId'].toString())),
+      linkUrl:
+          SharedRoutes.getMessagesRoute(chatId: int.parse(value['chatId'])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
@@ -148,7 +151,7 @@ Notification newMessageNotification(String key, value) {
 Notification newDriverNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: kDriversList,
+      linkUrl: SharedServiceProviderRoutes.kDriversRoute,
       body: "${value["newDriverName"]} has request join your drivers",
       imgUrl: value['newDriverImage'],
       title: "New driver request",

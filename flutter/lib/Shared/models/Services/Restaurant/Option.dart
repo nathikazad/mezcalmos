@@ -52,6 +52,11 @@ class Option {
     );
     return option;
   }
+  bool get haveAtLeastOneChoiceAvailable {
+    return choices
+            .firstWhereOrNull((Choice element) => element.available == true) !=
+        null;
+  }
 
   void sortChoices() {
     choices.sort((Choice a, Choice b) => a.position.compareTo(b.position));

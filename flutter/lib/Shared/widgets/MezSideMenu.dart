@@ -1,20 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
@@ -25,51 +27,38 @@ class MezSideMenu extends GetWidget<AuthController> {
 
   final LanguageController languageController = Get.find<LanguageController>();
 
-  final String appName = getAppName();
-  static final AppLaunchMode lmd = getAppLaunchMode();
-
-  final String? version = GetStorage().read<String>(getxAppVersion);
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Obx(
         () => Container(
+          margin: EdgeInsets.only(left: 20.sp, top: 20.sp),
           padding: const EdgeInsets.all(5),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 50),
-                      _drawerHeader(),
-                      // SizedBox(height: 43),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Divider(
-                          color: Color.fromRGBO(196, 196, 196, 0.29),
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Flexible(flex: 1, child: _drawerHeader()),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                      child: Divider(
+                        color: Color.fromRGBO(196, 196, 196, 0.29),
                       ),
-                      SizedBox(height: 10),
-                      _buildSideMenuItem(),
-                      _basicSideMenuItems(context),
-                    ],
-                  ),
+                    ),
+                    _buildSideMenuItem(),
+                    _basicSideMenuItems(context),
+                  ],
                 ),
               ),
-              if (version != null)
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    version! +
-                        (lmd != AppLaunchMode.prod
-                            ? " ${lmd.toShortString()}"
-                            : ""),
-                  ),
-                ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                    "${PlatformOSHelper.getAppVersion} ${MezEnv.appLaunchMode.toShortString()}"),
+              )
             ],
           ),
         ),
@@ -91,9 +80,9 @@ class MezSideMenu extends GetWidget<AuthController> {
           onClick: () {
             _drawerController.closeMenu();
             if (controller.isUserSignedIn) {
-              MezRouter.toNamed<void>(kUserNewProfile);
+              UserProfileView.navigate();
             } else
-              MezRouter.toNamed<void>(kSignInRouteOptional);
+              SignInView.navigateAtOrderTime();
           },
         ),
         if (_drawerController.pastOrdersRoute != null)
@@ -103,7 +92,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toNamed<void>(_drawerController.pastOrdersRoute!);
+              MezRouter.toPath(_drawerController.pastOrdersRoute!);
             },
           ),
         SideMenuItem(
@@ -124,7 +113,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             children: [
               Text(
                 "${_i18n()["language"]}",
-                style: Get.textTheme.bodyLarge,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 5,
@@ -164,7 +153,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             icon: Icons.privacy_tip,
 
             title: _i18n()["legal"], // _i18n()["userInfo"],
-            onClick: () => launch(GetStorage().read(getxPrivacyPolicyLink)),
+            onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
           ),
         ),
         if (controller.isUserSignedIn)
@@ -182,79 +171,74 @@ class MezSideMenu extends GetWidget<AuthController> {
     );
   }
 
-  Container _drawerHeader() {
-    return Container(
-      padding: EdgeInsets.only(left: 21, top: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 136,
-            width: 136,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: secondaryLightBlueColor,
-              // border: Border.all(color: Colors.black),
-            ),
-            child: ClipOval(
-              clipBehavior: Clip.antiAlias,
-              child: controller.user?.image == null ||
-                      controller.user?.image == ""
-                  ? Icon(
-                      Icons.person,
-                      size: 70,
-                      color: primaryBlueColor,
-                    )
-                  : CachedNetworkImage(
-                      imageUrl: controller.user!.image,
-                      fit: BoxFit.cover,
-                      imageBuilder: (BuildContext context,
-                              ImageProvider<Object> imageProvider) =>
-                          Container(
-                        width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: imageProvider, fit: BoxFit.cover),
-                        ),
+  Column _drawerHeader() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          height: 100.sp,
+          width: 100.sp,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: secondaryLightBlueColor,
+            // border: Border.all(color: Colors.black),
+          ),
+          child: ClipOval(
+            clipBehavior: Clip.antiAlias,
+            child: controller.user?.image == null ||
+                    controller.user?.image == ""
+                ? Icon(
+                    Icons.person,
+                    size: 70,
+                    color: primaryBlueColor,
+                  )
+                : CachedNetworkImage(
+                    imageUrl: controller.user!.image,
+                    fit: BoxFit.cover,
+                    imageBuilder: (BuildContext context,
+                            ImageProvider<Object> imageProvider) =>
+                        Container(
+                      width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
                       ),
-                      placeholder: (BuildContext context, String url) =>
-                          Container(
-                        width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                      errorWidget: (BuildContext context, String url, error) =>
-                          Container(
-                              width:
-                                  getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                              height:
-                                  getSizeRelativeToScreen(300, 100.w, 100.h).sp,
-                              child: Center(child: Icon(Icons.error))),
                     ),
-            ),
+                    placeholder: (BuildContext context, String url) =>
+                        Container(
+                      width: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      height: getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    errorWidget: (BuildContext context, String url, error) =>
+                        Container(
+                            width:
+                                getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                            height:
+                                getSizeRelativeToScreen(300, 100.w, 100.h).sp,
+                            child: Center(child: Icon(Icons.error))),
+                  ),
           ),
-          const SizedBox(height: 15),
-          Container(
-            padding: const EdgeInsets.only(left: 5),
-            child: Text(
-              controller.user?.name ?? "",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: blackColor),
-            ),
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 2.h, left: 5),
+          child: Text(
+            controller.user?.name ?? "",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: blackColor),
           ),
-          const SizedBox(height: 30),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -264,7 +248,7 @@ class MezSideMenu extends GetWidget<AuthController> {
         children: _drawerController.sideMenuItems,
       );
     } else
-      return Container();
+      return SizedBox.shrink();
   }
 }
 
@@ -290,12 +274,9 @@ class SideMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        margin: EdgeInsets.symmetric(vertical: 1.h),
         child: Row(
           children: [
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               icon,
               color: Colors.grey.shade400,
@@ -310,7 +291,7 @@ class SideMenuItem extends StatelessWidget {
                       (isI18nPath)
                           ? Get.find<LanguageController>().getLMap(title!)
                           : title!,
-                      style: Get.textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     )
                   : titleWidget ?? Container(),
             )

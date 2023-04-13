@@ -1,7 +1,6 @@
 import * as firebase from "firebase-admin";
 import * as functions from "firebase-functions";
-import { HttpsError } from "firebase-functions/v1/auth";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { MezError } from "../shared/models/Generic/Generic";
 import * as sms from "./senders/sms";
 
 interface SendOtpInterface {
@@ -9,159 +8,150 @@ interface SendOtpInterface {
   phoneNumber: string
 }
 
+interface SendOtpResponse {
+  success: boolean,
+  error?: SendOtpError
+  unhandledError?: string,
+  secondsLeft?: number,
+}
+enum SendOtpError {
+  UnhandledError = "unhandledError",
+  UserNotFound = "userNotFound",
+  OTPAskedTooSoon = "oTPAskedTooSoon",
+  SMSSendError = "sMSSendError"
+}
+
+export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<SendOtpResponse> {
+  try {
+    let user;
+    try {
+      user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
+    } catch (a) {
+      let e: any = a;
+      if (e.errorInfo.code == "auth/user-not-found") {
+        try {
+          user = await firebase.auth().createUser({
+            phoneNumber: data.phoneNumber
+          })
+          firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
+        } catch (a) {
+          let e: any = a;
+          throw new MezError(e.errorInfo.message);
+        }
+      } else {
+        throw new MezError(SendOtpError.UserNotFound);
+      }
+    }
+    await sendOTP(data, user.uid);
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+        if (Object.values(SendOtpError).includes(e.message as any)) {
+            return {
+                success: false,
+                error: e.message as any,
+                ...e.details
+            }
+        } else {
+            return {
+                success: false,
+                error: SendOtpError.UnhandledError,
+                unhandledError: e.message as any
+            }
+        }
+    } else {
+        throw e
+    }
+  }
+}
 interface VerifyOtpInterface {
   phoneNumber: string,
   OTPCode: string
 }
-
-interface SendOtpResponse {
-  errorMessage?: string,
-  secondsLeft?: number,
-  status: ServerResponseStatus
-}
-
-export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<SendOtpResponse> {
-  if (!data.phoneNumber) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: "Required phone number"
-    // }
-    throw new HttpsError(
-      "internal",
-      "Required phone number"
-    );
-  }
-
-  let user;
-  try {
-    user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
-  } catch (a) {
-    let e: any = a;
-    if (e.errorInfo.code == "auth/user-not-found") {
-      try {
-        user = await firebase.auth().createUser({
-          phoneNumber: data.phoneNumber
-        })
-        firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
-      } catch (a) {
-        let e: any = a;
-        // return {
-        //   status: ServerResponseStatus.Error,
-        //   errorMessage: e.errorInfo.message,
-        // }
-        throw new HttpsError(
-          "internal",
-          e.errorInfo.message
-        );
-      }
-    } else {
-      // return {
-      //   status: ServerResponseStatus.Error,
-      //   errorMessage: "User not found",
-      // }
-      throw new HttpsError(
-        "internal",
-        "User not found"
-      );
-    }
-  }
-
-  let response = await sendOTP(data, user.uid);
-  if (response != undefined) {
-    return response
-  } else {
-    return <SendOtpResponse>{
-      status: ServerResponseStatus.Error
-    }
-  }
-}
-
 export interface AuthResponse {
-  token: string | undefined
+  success: boolean,
+  error?: AuthOtpError
+  unhandledError?: string,
+  token?: string | undefined
+}
+enum AuthOtpError {
+  UnhandledError = "unhandledError",
+  InvalidOTPCode = "invalidOTPCode",
+  ExceededNumberOfTries = "exceededNumberOfTries",
 }
 export async function getAuthUsingOTP(_:any, data: VerifyOtpInterface): Promise<AuthResponse> {
-  if (!data.phoneNumber || !data.OTPCode) {
-    // return {
-    //   status: "Error",
-    //   errorMessage: "Required phone number and OTPCode"
-    // }
-    throw new HttpsError(
-      "internal",
-      "Required phone number and OTPCode"
-    );
-  }
-  let user
   try {
-    user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber)
-  } catch (a) {
-    let e: any = a;
-    if (e.errorInfo.code == 'auth/user-not-found') {
-      // return {
-      //   status: 'Error',
-      //   errorMessage: 'Invalid OTP Code'
-      // }
-      throw new HttpsError(
-        "internal",
-        "Invalid OTP Code"
-      );
+    let user;
+    try {
+      user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber)
+    } catch (a) {
+      let e: any = a;
+      if (e.errorInfo.code == 'auth/user-not-found') {
+
+        throw new MezError(AuthOtpError.InvalidOTPCode);
+      } else {
+        throw new MezError(e.errorInfo.message);
+      }
+    }
+
+    // this condition for google to gain instant Access.
+    if (data.phoneNumber != "+21650914839" && user.uid != "tSG0eSFZNGNA7grjBPFEBbpYwjE3" && user.uid != "xlS6U3OW10P30kgSF6htS63ChHD3") {
+      
+      await confirmOTP(data, user.uid);
+    }
+    else {
+      if (data.OTPCode != "111111") {
+        throw new MezError(AuthOtpError.InvalidOTPCode);
+      }
+    }
+
+    let customToken;
+    if (process.env.FUNCTIONS_EMULATOR != "true") {
+      customToken = await firebase.auth().createCustomToken(user.uid);
+    }
+    firebase.database().ref(`users/${user.uid}/auth`).remove()
+
+    return {
+      success: true,
+      token: customToken
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(AuthOtpError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any,
+        }
+      } else {
+        return {
+          success: false,
+          error: AuthOtpError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
     } else {
-      // return {
-      //   status: ServerResponseStatus.Error,
-      //   errorMessage: e.errorInfo.message
-      // }
-      throw new HttpsError(
-        "internal",
-        e.errorInfo.message
-      );
+      throw e
     }
-  }
-
-  // this condition for google to gain instant Access.
-  if (data.phoneNumber != "+21650914839" && user.uid != "tSG0eSFZNGNA7grjBPFEBbpYwjE3" && user.uid != "xlS6U3OW10P30kgSF6htS63ChHD3") {
-    // let response = 
-    await confirmOTP(data, user.uid);
-    // if (response) {
-    //   return response;
-    // }
-  }
-  else {
-    if (data.OTPCode != "111111") {
-      // return {
-      //   status: ServerResponseStatus.Error,
-      //   errorMessage: "Invalid OTP Code"
-      // }
-      throw new HttpsError(
-        "internal",
-        "Invalid OTP Code"
-      );
-    }
-  }
-
-  let customToken;
-  if (process.env.FUNCTIONS_EMULATOR != "true") {
-    customToken = await firebase.auth().createCustomToken(user.uid);
-  }
-  firebase.database().ref(`users/${user.uid}/auth`).remove()
-
-  return {
-    token: customToken
   }
 }
 
+async function sendOTP(data: SendOtpInterface, userId: string) {
 
-
-async function sendOTP(data: SendOtpInterface, userId: string): Promise<SendOtpResponse|undefined> {
   let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
   if (auth && auth.codeGeneratedTime) {
     let lastCodeGeneratedTime = new Date(auth.codeGeneratedTime);
     let validTimeForNextCodeGeneration = new Date(lastCodeGeneratedTime.getTime() + 60 * 1000);
     if (new Date() < validTimeForNextCodeGeneration) {
       let secondsLeft = (validTimeForNextCodeGeneration.getTime() - Date.now()) / 1000;
-      return {
-        errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
-        secondsLeft: secondsLeft,
-        status: ServerResponseStatus.Error
-      }
+
+      throw new MezError(SendOtpError.OTPAskedTooSoon, {secondsLeft});
+      // return {
+      //   success: false,
+      //   errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
+      //   secondsLeft: secondsLeft,
+      // }
     }
   }
   let randomNumber: number = Math.trunc(Math.random() * 1000000)
@@ -176,15 +166,7 @@ async function sendOTP(data: SendOtpInterface, userId: string): Promise<SendOtpR
     await sms.send(payload)
   } catch (error) {
     functions.logger.error(error);
-    // console.log(error)
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: `SMS Send Error`
-    // }
-    throw new HttpsError(
-      "internal",
-      `SMS Send Error`
-    );
+    throw new MezError(SendOtpError.SMSSendError);
   }
 
   let newCodeEntry = {
@@ -193,9 +175,6 @@ async function sendOTP(data: SendOtpInterface, userId: string): Promise<SendOtpR
     attempts: 0
   }
   firebase.database().ref(`users/${userId}/auth`).set(newCodeEntry)
-  return {
-    status: ServerResponseStatus.Success
-  }
 }
 
 
@@ -203,25 +182,12 @@ async function confirmOTP(data: VerifyOtpInterface, userId: string) {
 
   let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
   if (!auth || !auth.OTPCode || !auth.codeGeneratedTime) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: "Invalid OTP Code"
-    // }
-    throw new HttpsError(
-      "internal",
-      "Invalid OTP Code"
-    );
+
+    throw new MezError(AuthOtpError.InvalidOTPCode);
   }
 
   if (parseInt(auth.attempts) > 3) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: "Exceeded number of tries"
-    // }
-    throw new HttpsError(
-      "internal",
-      "Exceeded number of tries"
-    );
+    throw new MezError(AuthOtpError.ExceededNumberOfTries);
   }
 
   firebase.database().ref(`users/${userId}/auth/attempts`).set(parseInt(auth.attempts + 1))
@@ -229,24 +195,11 @@ async function confirmOTP(data: VerifyOtpInterface, userId: string) {
   let generatedTime = new Date(auth.codeGeneratedTime)
   let expirationTime = new Date(generatedTime.getTime() + 10 * 60 * 1000)
   if (new Date() > expirationTime) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: "Invalid OTP Code"
-    // }
-    throw new HttpsError(
-      "internal",
-      "Invalid OTP Code"
-    );
-  }
 
+    throw new MezError(AuthOtpError.InvalidOTPCode);
+  }
   if (auth.OTPCode != data.OTPCode) {
-    // return {
-    //   status: ServerResponseStatus.Error,
-    //   errorMessage: "Invalid OTP Code"
-    // }
-    throw new HttpsError(
-      "internal",
-      "Invalid OTP Code"
-    );
+
+    throw new MezError(AuthOtpError.InvalidOTPCode);
   }
 }

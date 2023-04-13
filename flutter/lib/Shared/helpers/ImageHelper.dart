@@ -1,35 +1,41 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_compression_flutter/image_compression_flutter.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
 
-/// this compresses the Original Image using jpeg format Since it's much ligher.
-///
-/// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
-Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
-  final Uint8List result = await FlutterImageCompress.compressWithList(
-      originalImg,
-      quality: nQualityCompressionOfUserImage);
-  return result;
+Future<Uint8List> compressImageBytes(Uint8List uint8list, String path,
+    {int compressLevel = 10}) async {
+  Configuration config = Configuration(
+    outputType: ImageOutputType.jpg,
+    useJpgPngNativeCompressor: true,
+    quality: compressLevel,
+  );
+  mezDbgPrint("🖼️🖼️🖼️🖼️🖼️🖼️🖼️🖼️ the path is image.path $path");
+  final ImageFileConfiguration param = ImageFileConfiguration(
+      input: ImageFile(filePath: path, rawBytes: uint8list), config: config);
+  final ImageFile output = await compressor.compress(param);
+  return output.rawBytes;
 }
 
 Future<File> writeFileFromBytesAndReturnIt(
@@ -94,7 +100,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromCamera"]}",
-                                style: Get.textTheme.bodyText1),
+                                style: context.txt.bodyLarge),
                           ),
                         ],
                       ),
@@ -117,7 +123,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Flexible(
                             child: Text("${_i18n()["fromGallery"]}",
-                                style: Get.textTheme.bodyText1),
+                                style: context.txt.bodyLarge),
                           ),
                         ],
                       ),
@@ -185,23 +191,24 @@ Future<imPicker.XFile?> imagePicker(
     return await picker.pickImage(
       source: source,
       preferredCameraDevice: imPicker.CameraDevice.front,
-      imageQuality: nQualityCompressionOfUserImage,
     );
   } on PlatformException catch (exception) {
     if (exception.code == 'camera_access_denied') {
       MezSnackbar(
           _i18n()['cameraAccessOffTitle'], _i18n()['cameraAccessOffBody'],
-          position: SnackPosition.TOP);
+          position: Alignment.topCenter);
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(_i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
-          position: SnackPosition.TOP);
-    } else {
-      return await picker.pickImage(
-        source: source,
-        preferredCameraDevice: imPicker.CameraDevice.front,
-        imageQuality: nQualityCompressionOfUserImage,
-      );
+          position: Alignment.topCenter);
     }
+    //else {
+    //   return await picker.pickImage(
+    //     source: source,
+    //     preferredCameraDevice: imPicker.CameraDevice.front,
+    //     imageQuality: nQualityCompressionOfUserImage,
+    //     requestFullMetadata: true,
+    //   );
+    // }
     return null;
   }
 }
@@ -211,7 +218,7 @@ Image mLoadImage({
   Uint8List? memoryImage,
   double? height,
   double? width,
-  fit: BoxFit.cover,
+  fit = BoxFit.cover,
   String assetInCaseFailed = aNoImgAsset,
 }) {
   Image _img;
@@ -321,4 +328,31 @@ Future<List<int>> cropRonded(Uint8List bytes) async {
       await cropped.toByteData(format: ui.ImageByteFormat.png);
 
   return byteData!.buffer.asUint8List();
+}
+
+Future<String> uploadImgToFbStorage(
+    {required XFile imageFile,
+    required String pathPrefix,
+    int compressLevel = 10}) async {
+  String? _uploadedImgUrl;
+
+  mezDbgPrint("::::: log {{{{ ${imageFile.path}  }}}}}");
+  final List<String> splitted = imageFile.path.split('.');
+  final String imgPath = "pathPrefix/${splitted[splitted.length - 1]}";
+  mezDbgPrint("::::: log {{{{ $imgPath  }}}}}");
+  final Uint8List uint8list = await compressImageBytes(
+      await imageFile.readAsBytes(), imageFile.path,
+      compressLevel: compressLevel);
+  try {
+    await firebase_storage.FirebaseStorage.instance.ref(imgPath).putData(
+          uint8list,
+        );
+  } on firebase_core.FirebaseException catch (e) {
+    mezDbgPrint(e.message.toString());
+  } finally {
+    _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+        .ref(imgPath)
+        .getDownloadURL();
+  }
+  return _uploadedImgUrl;
 }

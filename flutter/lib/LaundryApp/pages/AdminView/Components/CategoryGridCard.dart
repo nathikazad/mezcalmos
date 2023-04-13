@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
@@ -24,6 +25,7 @@ class CategoryGridCard extends StatefulWidget {
   final LaundryCostLineItem item;
   final Laundry laundry;
   final LaundryOpAdminViewController viewController;
+
   @override
   State<CategoryGridCard> createState() => _CategoryGridCardState();
 }
@@ -35,6 +37,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   late LanguageType primaryLang;
   RxBool nameMissing = RxBool(false);
   late LanguageType? secondaryLang;
+
   @override
   void initState() {
     primaryLang = widget.laundry.primaryLanguage;
@@ -54,7 +57,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
           children: [
             Text(
               _getRightName().inCaps,
-              style: Get.textTheme.displaySmall?.copyWith(fontSize: 12.sp),
+              style: context.txt.displaySmall?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
@@ -66,9 +69,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () async {
-                    bool? refetch = await MezRouter.toNamed(getCategoryRoute(
+                    bool? refetch = await LaundrOpCategoryView.navigate(
                         laundryId: widget.laundry.info.hasuraId,
-                        categoryId: widget.item.id)) as bool?;
+                        categoryId: widget.item.id);
 
                     mezDbgPrint("RESULT ======>$refetch");
                     if (refetch == true) {

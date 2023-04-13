@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -25,7 +26,7 @@ class OrderMapWidgetController {
       {required int deliveryOrderId,
       required bool updateDriver,
       required String? polyline,
-      required MezLocation from,
+      required MezLocation? from,
       required MezLocation to}) async {
     this.deliveryOrderId = deliveryOrderId;
     driver.value = await get_order_driver_info(orderId: deliveryOrderId);
@@ -49,7 +50,7 @@ class OrderMapWidgetController {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     await mGoogleMapController.addOrUpdatePackageMarkerMarker(
-      latLng: from.toLatLng(),
+      latLng: from?.toLatLng(),
       markerId: "from",
       fitWithinBounds: true,
     );

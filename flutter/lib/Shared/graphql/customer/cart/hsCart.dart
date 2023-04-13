@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -38,8 +36,6 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
     throw Exception(
         "[🛑] get_customer_cart :: exception ===> ${getCartResp.exception}!");
   }
-  mezDbgPrint(
-      "[✅] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
 
   final Query$getCustomerCart$restaurant_cart? cartData =
       getCartResp.parsedData?.restaurant_cart.isNotEmpty == true
@@ -151,8 +147,6 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
       if (cartitem.selected_options != null) {
         (cartitem.selected_options as Map<String, dynamic>)
             .forEach((String key, value) {
-          mezDbgPrint("Key ✅========>$key");
-          mezDbgPrint("Value ✅========>$value");
           final List<Choice> choices = [];
           value['choices'].forEach((key, value) {
             choices.add(
@@ -184,8 +178,6 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
 }
 
 Future<int?> create_customer_cart({int? restaurant_id}) async {
-  mezDbgPrint(
-      "[🗿🗿🗿🗿🗿🗿🗿] Called :: create_customer_cart! =======>${Get.find<AuthController>().hasuraUserId!}");
   final QueryResult<Mutation$create_customer_cart> res =
       await _hasuraDb.graphQLClient.mutate$create_customer_cart(
     Options$Mutation$create_customer_cart(
@@ -222,11 +214,6 @@ extension HasuraCartItem on CartItem {
 
 /// Returns Item Id
 Future<int> add_item_to_cart({required CartItem cartItem}) async {
-  mezDbgPrint("🤣 Calling add item  ${cartItem.item.id}");
-  mezDbgPrint(
-      "Encoooodedd ==> ${jsonEncode(cartItem.selectedOptionsToJson().toString())}");
-  mezDbgPrint(
-      "Adding Item :: selected_options ${cartItem.selectedOptionsToJson()}");
   final QueryResult<Mutation$addItemToCart> addItemResult =
       await _hasuraDb.graphQLClient.mutate$addItemToCart(
     Options$Mutation$addItemToCart(
@@ -240,8 +227,6 @@ Future<int> add_item_to_cart({required CartItem cartItem}) async {
     throw Exception(
         "🚨 graphql::add_item_to_cart::exception :: ${addItemResult.exception}");
   } else {
-    mezDbgPrint(
-        "✅ _add_item_result :: success :D Item Id --> ${addItemResult.parsedData?.insert_restaurant_cart_item_one?.toJson()}");
     return addItemResult.parsedData!.insert_restaurant_cart_item_one!.id;
   }
 }
@@ -249,8 +234,6 @@ Future<int> add_item_to_cart({required CartItem cartItem}) async {
 /// Returns Item Id
 Future<int> update_cart_item(
     {required CartItem cartItem, required int id}) async {
-  mezDbgPrint(
-      "Sending data ======= > 😔 ${cartItem.toFirebaseFunctionFormattedJson()}");
   final QueryResult<Mutation$updateRestaurantCartItem> result =
       await _hasuraDb.graphQLClient.mutate$updateRestaurantCartItem(
     Options$Mutation$updateRestaurantCartItem(
@@ -270,7 +253,6 @@ Future<int> update_cart_item(
     throw Exception(
         "🚨 graphql::update_item_to_cart::exception :: ${result.exception}");
   } else {
-    mezDbgPrint("✅ _update_item_result :: success :D}");
     return result.parsedData!.update_restaurant_cart_item_by_pk!.id;
   }
 }
@@ -284,8 +266,6 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
     ),
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
-    mezDbgPrint(
-        "✅ From stream ============>>>>${cart.parsedData?.restaurant_cart}");
     final Cart _cartEvent = Cart();
     final Subscription$listen_on_customer_cart$restaurant_cart? parsedCart =
         (cart.parsedData?.restaurant_cart.isNotEmpty == true)
@@ -413,7 +393,6 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
 }
 
 Future<int> delete_cart_item({required int item_id}) async {
-  mezDbgPrint("CustomerId ==> ${Get.find<AuthController>().hasuraUserId}");
   final QueryResult<Mutation$removeItemFromCart> rmItemResult =
       await _hasuraDb.graphQLClient.mutate$removeItemFromCart(
     Options$Mutation$removeItemFromCart(
@@ -478,9 +457,6 @@ Future<int> set_cart_restaurant_id({
     throw Exception(
         "[🛑] called :: set_cart_restaurant_id :: exception :: ${_cart.hasException}");
   } else {
-    mezDbgPrint(
-        "[✅] called :: set_cart_restaurant_id :: cus_id ($customer_id) :: rest_id($restaurant_id) SUCESS  !");
-
     final int newRestId =
         _cart.parsedData!.update_restaurant_cart_by_pk!.restaurant_id!;
     return newRestId;

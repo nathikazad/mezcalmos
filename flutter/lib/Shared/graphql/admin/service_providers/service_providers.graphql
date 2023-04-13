@@ -1,11 +1,23 @@
 query admin_get_dv_companies($limit: Int!) {
   delivery_company(limit: $limit) {
+     delivery_details {
+      cost_per_km
+      customer_pickup
+      delivery_available
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      radius
+      minimum_cost
+      self_delivery
+    }
     details {
       id
       approved
       image
       name
       language
+      schedule
       open_status
       creation_time
       service_provider_type

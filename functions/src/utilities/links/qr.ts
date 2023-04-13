@@ -78,7 +78,7 @@ async function uploadQrImg(path:string , qrExternalUrl: string): Promise<string>
         const b64 = Buffer.from(response.data, 'binary');
         console.log("[+] b64 :: ", b64);
 
-        const bucket = storage().bucket('gs://mezcalmos-31f1c.appspot.com/')
+        const bucket = storage().bucket()
         // const imageByteArray = new Uint8Array(b64);
         const file = bucket.file(`${path}-qr.png`);
 

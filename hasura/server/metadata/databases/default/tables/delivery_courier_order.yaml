@@ -13,3 +13,150 @@ array_relationships:
         table:
           name: courier_order_item
           schema: delivery
+computed_fields:
+  - name: actual_items_cost
+    definition:
+      function:
+        name: actualitemscost
+        schema: delivery
+  - name: total_cost
+    definition:
+      function:
+        name: totalcost
+        schema: delivery
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - bill_image
+        - cancellation_time
+        - customer_app_type
+        - customer_id
+        - delivery_order_id
+        - discount_value
+        - from_location_gps
+        - from_location_text
+        - id
+        - order_time
+        - payment_type
+        - refund_amount
+        - stripe_fees
+        - stripe_info
+        - tax
+        - to_location_address
+        - to_location_gps
+      computed_fields:
+        - actual_items_cost
+        - total_cost
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - from_location_gps
+        - to_location_gps
+        - customer_id
+        - delivery_order_id
+        - id
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - bill_image
+        - customer_app_type
+        - from_location_text
+        - payment_type
+        - to_location_address
+        - cancellation_time
+        - order_time
+        - stripe_info
+      computed_fields:
+        - actual_items_cost
+        - total_cost
+      filter:
+        _or:
+          - delivery_order:
+              delivery_driver_id:
+                _eq: X-Hasura-User-Id
+          - delivery_order:
+              delivery_company:
+                drivers:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - from_location_gps
+        - to_location_gps
+        - customer_id
+        - delivery_order_id
+        - id
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - bill_image
+        - customer_app_type
+        - from_location_text
+        - payment_type
+        - to_location_address
+        - cancellation_time
+        - order_time
+        - stripe_info
+      computed_fields:
+        - actual_items_cost
+        - total_cost
+      filter:
+        delivery_order:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - from_location_gps
+        - to_location_gps
+        - customer_id
+        - delivery_order_id
+        - id
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - bill_image
+        - customer_app_type
+        - from_location_text
+        - payment_type
+        - to_location_address
+        - cancellation_time
+        - order_time
+        - stripe_info
+      computed_fields:
+        - actual_items_cost
+        - total_cost
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - bill_image
+        - tax
+      filter:
+        delivery_order:
+          delivery_driver:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        delivery_order:
+          delivery_driver:
+            user_id:
+              _eq: X-Hasura-User-Id

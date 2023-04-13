@@ -31,7 +31,7 @@ export async function insertDeliveryDrivers(data: any) {
     let driversNotif = drivers.map((d: any) => {
         return {
             user_id: d.user_id,
-            app_type_id: AppType.DeliveryApp,
+            app_type_id: AppType.Delivery,
             token: d.notification_token
         }
     })

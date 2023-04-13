@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -29,7 +30,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["estTimes"]}'.inCaps,
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
           ),
           SizedBox(
@@ -44,10 +45,11 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                     SizedBox(
                       height: 9,
                     ),
-                    if (_showFoodReadyTime()) _foodReadyTimeWidget(),
+                    if (_showFoodReadyTime()) _foodReadyTimeWidget(context),
                     if (_showFoodReadyTime() && _getDeliveryTime() != null)
                       Divider(),
-                    if (_getDeliveryTime() != null) _deliveryTimeWidget(),
+                    if (_getDeliveryTime() != null)
+                      _deliveryTimeWidget(context),
                     SizedBox(
                       height: 9,
                     ),
@@ -60,7 +62,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
       return SizedBox();
   }
 
-  Container _deliveryTimeWidget() {
+  Container _deliveryTimeWidget(BuildContext context) {
     return Container(
       child: Row(
         children: [
@@ -128,12 +130,12 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 children: [
                   Text(
                     "${_i18n()["delivery"]}".inCaps,
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyLarge,
                     maxLines: 2,
                   ),
                   Text(
                     _getDeliveryTime()!.inCaps,
-                    style: Get.textTheme.bodyText2,
+                    style: context.txt.bodyMedium,
                     maxLines: 2,
                   ),
                 ],
@@ -149,7 +151,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
         _getFoodReadyTime() != null;
   }
 
-  Widget _foodReadyTimeWidget() {
+  Widget _foodReadyTimeWidget(BuildContext context) {
     return Container(
       child: Row(
         children: [
@@ -217,12 +219,12 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 children: [
                   Text(
                     "${_i18n()["foodReady"]}".inCaps,
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyLarge,
                     maxLines: 1,
                   ),
                   Text(
                     _getFoodReadyTime()!.inCaps,
-                    style: Get.textTheme.bodyText2,
+                    style: context.txt.bodyMedium,
                     maxLines: 2,
                   ),
                 ],
@@ -233,15 +235,15 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
   }
 
   String? _getFoodReadyTime() {
-    if (order.estimatedFoodReadyTime != null) {
-      return "${order.estimatedFoodReadyTime!.getEstimatedTime()}";
+    if (order.estimatedPackageReadyTime != null) {
+      return "${order.estimatedPackageReadyTime!.getEstimatedTime()}";
     } else
       return null;
   }
 
   String? _getDeliveryTime() {
-    if (order.estDropOffTime != null) {
-      return "${order.estDropOffTime!.getEstimatedTime()}";
+    if (order.estimatedArrivalAtDropoff != null) {
+      return "${order.estimatedArrivalAtDropoff!.getEstimatedTime()}";
     } else
       return null;
   }

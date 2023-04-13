@@ -1,8 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
-import { LaundryDetails } from "../../../laundry/createNewLaundry";
+import { LaundryDetails, LaundryError } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
-import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
@@ -14,7 +13,7 @@ export async function createLaundryStore(
 
     let uniqueId: string = laundryDetails.uniqueId ?? generateString();
 
-    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.LaundryApp)
+    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Laundry)
 
 
     let response = await chain.mutation({
@@ -78,7 +77,7 @@ export async function createLaundryStore(
                                 user_id: laundryOperatorUserId,
                                 status: AuthorizationStatus.Authorized,
                                 owner: true,
-                                app_type_id: AppType.LaundryApp,
+                                app_type_id: AppType.Laundry,
                                 // notification_info: (laundryDetails.laundryOperatorNotificationToken)? {
                                 //     data: {
                                 //       user_id: laundryOperatorUserId,
@@ -103,10 +102,7 @@ export async function createLaundryStore(
     console.log("response: ", response);
     
     if(response.insert_laundry_store_one == null) {
-      throw new HttpsError(
-        "internal",
-        "laundry creation error"
-      );
+        throw new MezError(LaundryError.LaundryCreationError);
     }
     let laundryStore: ServiceProvider = {
         id: response.insert_laundry_store_one.id,
@@ -140,7 +136,7 @@ export async function createLaundryStore(
             insert_notification_info_one: [{
                 object: {
                     user_id: laundryOperatorUserId,
-                    app_type_id: AppType.LaundryApp,
+                    app_type_id: AppType.Laundry,
                     token: laundryDetails.laundryOperatorNotificationToken
                 }
             }, {

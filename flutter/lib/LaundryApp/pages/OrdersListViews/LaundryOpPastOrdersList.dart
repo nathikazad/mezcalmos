@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/controllers/LaundryOpPastOrdersViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -21,17 +23,19 @@ class LaundryOpPastOrdersList extends StatefulWidget {
 }
 
 class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
-  LaundryOpPastOrdersController viewController =
+  LaundryOpPastOrdersController _viewController =
       LaundryOpPastOrdersController();
+
   @override
   void initState() {
-    viewController.init();
+    _viewController.init();
 
     super.initState();
   }
 
   @override
   void dispose() {
+    _viewController.dispose();
     super.dispose();
   }
 
@@ -55,16 +59,17 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
                 ),
                 const SizedBox(height: 5),
                 ListView.builder(
+                  controller: _viewController.scrollController,
                   shrinkWrap: true,
                   reverse: true,
-                  itemCount: viewController.pastOrders.length,
+                  itemCount: _viewController.pastOrders.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, int index) {
                     return MinimalOrderCard(
-                      order: viewController.pastOrders[index],
+                      order: _viewController.pastOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(getLaundryOpOrderRoute(
-                            viewController.pastOrders[index].id));
+                        LaundryOrderView.navigate(
+                            orderId: _viewController.pastOrders[index].id);
                       },
                     );
                   },

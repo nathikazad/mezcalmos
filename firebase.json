@@ -5,23 +5,37 @@
   "emulators": {
     "auth": {
       "port": 9099,
-      "host" : "0.0.0.0"
+      "host": "0.0.0.0"
     },
     "functions": {
       "port": 5001,
-      "host" : "0.0.0.0"
+      "host": "0.0.0.0"
     },
     "database": {
       "port": 9000,
-      "host" : "0.0.0.0"
+      "host": "0.0.0.0"
     },
     "hosting": {
       "port": 5000,
-      "host" : "0.0.0.0"
+      "host": "0.0.0.0"
     },
     "ui": {
       "enabled": true
     },
     "singleProjectMode": true
+  },
+  "hosting": {
+    "public": "flutter/build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

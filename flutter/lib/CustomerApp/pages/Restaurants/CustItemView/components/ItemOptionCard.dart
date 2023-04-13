@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -44,34 +45,35 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      child: (widget.option.haveAtLeastOnChoiceAvailable)
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.option.name[userLanguage].toString().inCaps,
-                    style: Get.theme.textTheme.bodyLarge),
-                if (widget.option.optionType == OptionType.Custom)
-                  Container(
-                    child: Text(
-                      "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                      style: Get.textTheme.titleLarge
-                          ?.copyWith(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                Column(
-                  children: List.generate(
-                    widget.option.choices.length,
-                    (int index) => optionChoiceCard(
-                      choice: widget.option.choices[index],
-                    ),
-                  ),
+    if (widget.option.haveAtLeastOneChoiceAvailable) {
+      return Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.option.name[userLanguage].toString().inCaps,
+                textAlign: TextAlign.left, style: context.txt.bodyLarge),
+            if (widget.option.optionType == OptionType.Custom)
+              Container(
+                child: Text(
+                  "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
+                  style: context.txt.titleLarge
+                      ?.copyWith(fontStyle: FontStyle.italic),
                 ),
-              ],
-            )
-          : SizedBox(),
-    );
+              ),
+            Column(
+              children: List.generate(
+                widget.option.choices.length,
+                (int index) => optionChoiceCard(
+                  choice: widget.option.choices[index],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else
+      return SizedBox();
   }
 
   // Single choice card  //
@@ -86,11 +88,12 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               flex: 3,
               fit: FlexFit.tight,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     choice.name[userLanguage].toString().inCaps,
-                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                    style: context.txt.bodyMedium?.copyWith(
                       color: (widget.cartItem.value!.chosenChoices[optionId]
                                   ?.contains(choice) ??
                               false)
@@ -110,7 +113,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   ),
                   Text(
                     (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
-                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                    style: context.txt.bodyMedium!.copyWith(
                       color: Get.theme.primaryColorLight,
                       fontWeight: (widget
                                   .cartItem.value!.chosenChoices[optionId]

@@ -1,24 +1,22 @@
 // ignore_for_file: constant_identifier_names, avoid_annotating_with_dynamic
 
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cf;
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 
-enum ParticipantType {
-  Customer,
-  Taxi,
-  TaxiAdmin,
-  Laundry,
-  DeliveryAdmin,
-  Restaurant,
-  DeliveryDriver,
-  LaundryOperator,
-  RestaurantOperator,
-  MezAdmin
-}
+// enum ParticipantType {
+//   Customer,
+//   Taxi,
+//   TaxiAdmin,
+//   Laundry,
+//   DeliveryAdmin,
+//   Restaurant,
+//   DeliveryDriver,
+//   LaundryOperator,
+//   RestaurantOperator,
+//   MezAdmin
+// }
 
 extension HasuraAppTypeIdParser on String {
   ParticipantType toParticipantTypeFromHasuraAppTypeId() {
@@ -27,8 +25,8 @@ extension HasuraAppTypeIdParser on String {
       case 'customer':
         return ParticipantType.Customer;
       case 'restaurant':
-        return ParticipantType.Restaurant;
-      case 'mez_admin':
+        return ParticipantType.RestaurantOperator;
+      case 'mezAdmin':
         return ParticipantType.MezAdmin;
       case 'delivery':
         return ParticipantType.DeliveryDriver;
@@ -38,29 +36,27 @@ extension HasuraAppTypeIdParser on String {
   }
 }
 
-extension ParseParticipantTypeToString on ParticipantType {
-  String toFirebaseFormattedString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
+// extension ParseParticipantTypeToString on ParticipantType {
+//   String toFirebaseFormattedString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toLowerCase() + str.substring(1);
+//   }
+// }
 
 extension AppTypeToParticipantType on AppType {
   ParticipantType convertParticipantTypefromAppType() {
     switch (this) {
-      case AppType.CustomerApp:
+      case AppType.Customer:
         return ParticipantType.Customer;
-      case AppType.TaxiApp:
-        return ParticipantType.Taxi;
-      case AppType.DeliveryApp:
+      case AppType.Delivery:
         return ParticipantType.DeliveryDriver;
-      case AppType.DeliveryAdminApp:
-        return ParticipantType.DeliveryAdmin;
-      case AppType.LaundryApp:
+      case AppType.DeliveryAdmin:
+        return ParticipantType.DeliveryOperator;
+      case AppType.Laundry:
         return ParticipantType.LaundryOperator;
-      case AppType.RestaurantApp:
+      case AppType.Restaurant:
         return ParticipantType.RestaurantOperator;
-      case AppType.MezAdminApp:
+      case AppType.MezAdmin:
         return ParticipantType.MezAdmin;
       default:
         throw Exception(
@@ -69,35 +65,34 @@ extension AppTypeToParticipantType on AppType {
   }
 }
 
-extension AppTypeToCFParticipantType on AppType {
-  cf.ParticipantType toCFParticipantTypefromAppType() {
-    switch (this) {
-      case AppType.CustomerApp:
-        return cf.ParticipantType.Customer;
-      case AppType.TaxiApp:
-        return cf.ParticipantType.Taxi;
-      case AppType.DeliveryApp:
-        return cf.ParticipantType.DeliveryDriver;
-      case AppType.DeliveryAdminApp:
-        return cf.ParticipantType.DeliveryOperator;
-      case AppType.MezAdminApp:
-        return cf.ParticipantType.MezAdmin;
-      case AppType.LaundryApp:
-        return cf.ParticipantType.LaundryOperator;
-      case AppType.RestaurantApp:
-        return cf.ParticipantType.RestaurantOperator;
-      default:
-        throw Exception(
-            "App type $this cannot be converted to participantType");
-    }
-  }
-}
+// extension AppTypeToCFParticipantType on AppType {
+//   ParticipantType toCFParticipantTypefromAppType() {
+//     switch (this) {
+//       case AppType.Customer:
+//         return ParticipantType.Customer;
+
+//       case AppType.DeliveryApp:
+//         return ParticipantType.DeliveryDriver;
+//       case AppType.DeliveryAdmin:
+//         return ParticipantType.DeliveryOperator;
+//       case AppType.MezAdmin:
+//         return ParticipantType.MezAdmin;
+//       case AppType.LaundryApp:
+//         return ParticipantType.LaundryOperator;
+//       case AppType.RestaurantApp:
+//         return ParticipantType.RestaurantOperator;
+//       default:
+//         throw Exception(
+//             "App type $this cannot be converted to participantType");
+//     }
+//   }
+// }
 
 extension ParseStringToParticipantType on String {
   ParticipantType convertToParticipantType() {
     return ParticipantType.values.firstWhere(
         (ParticipantType participantType) =>
-            participantType.toFirebaseFormattedString() == this);
+            participantType.toFirebaseFormatString() == this);
   }
 }
 
@@ -306,7 +301,7 @@ class MessageNotificationForQueue extends NotificationForQueue {
         ...super.toFirebaseFormatJson(),
         "chatId": chatId,
         "messageId": messageId,
-        "participantType": participantType.toFirebaseFormattedString(),
+        "participantType": participantType.toFirebaseFormatString(),
         "userId": userId,
         "message": message,
         "orderId": orderId
@@ -353,11 +348,9 @@ class CallNotificationForQueue extends NotificationForQueue {
         ...super.toFirebaseFormatJson(),
         "chatId": chatId,
         "callerId": callerId,
-        "callerParticipantType":
-            callerParticipantType.toFirebaseFormattedString(),
+        "callerParticipantType": callerParticipantType.toFirebaseFormatString(),
         "calleeId": calleeId,
-        "calleeParticipantType":
-            calleeParticipantType.toFirebaseFormattedString(),
+        "calleeParticipantType": calleeParticipantType.toFirebaseFormatString(),
         "callNotificationType":
             callNotificationType.toFirebaseFormattedString(),
       };

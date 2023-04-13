@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType, AuthorizationStatus, Language } from "../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, Language, MezError } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
@@ -32,6 +31,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       trip_distance: true,
       trip_duration: true,
       trip_polyline: true,
+      change_price_request: [{}, true],
       delivery_driver: {
         id: true,
         delivery_company_type: true,
@@ -61,21 +61,18 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     }]
   });
   if (response.delivery_order_by_pk == null) {
-    throw new HttpsError(
-      "internal",
-      "No order with that id found"
-    );
+    throw new MezError("orderNotFound");
   }
   let delivery: DeliveryOrder = {
     packageReady: response.delivery_order_by_pk.package_ready,
     deliveryId: deliveryId,
     serviceProviderId: response.delivery_order_by_pk.service_provider_id,
     orderType: response.delivery_order_by_pk.order_type as OrderType,
-    pickupLocation: {
+    pickupLocation:  (response.delivery_order_by_pk.pickup_gps && response.delivery_order_by_pk.pickup_gps.coordinates && response.delivery_order_by_pk.pickup_address ) ? {
       lat: response.delivery_order_by_pk.pickup_gps.coordinates[1],
       lng: response.delivery_order_by_pk.pickup_gps.coordinates[0],
       address: response.delivery_order_by_pk.pickup_address,
-    },
+    }: undefined,
     dropoffLocation: {
       lat: response.delivery_order_by_pk.dropoff_gps.coordinates[1],
       lng: response.delivery_order_by_pk.dropoff_gps.coordinates[0],
@@ -95,6 +92,9 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     tripDistance: response.delivery_order_by_pk.trip_distance,
     tripDuration: response.delivery_order_by_pk.trip_duration,
     tripPolyline: response.delivery_order_by_pk.trip_polyline,
+    changePriceRequest: (response.delivery_order_by_pk.change_price_request)
+      ? JSON.parse(response.delivery_order_by_pk.change_price_request)
+      : undefined,
     deliveryDriver: (response.delivery_order_by_pk.delivery_driver) ? {
       id: response.delivery_order_by_pk.delivery_driver.id,
       deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
@@ -107,7 +107,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         language: response.delivery_order_by_pk.delivery_driver.user.language_id as Language
       },
       notificationInfo: (response.delivery_order_by_pk.delivery_driver.notification_info) ? {
-        appType: AppType.DeliveryApp,
+        appType: AppType.Delivery,
         token: response.delivery_order_by_pk.delivery_driver.notification_info.token,
         turnOffNotifications: response.delivery_order_by_pk.delivery_driver.notification_info.turn_off_notifications,
       } : undefined,
@@ -161,10 +161,10 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
     let delivery: DeliveryOrder = {
       packageReady: d.package_ready,
       deliveryId: d.id,
-      pickupLocation: {
-        lat: d.pickup_gps.coordinates[1],
-        lng: d.pickup_gps.coordinates[0],
-      },
+      // pickupLocation: {
+      //   lat: d.pickup_gps.coordinates[1],
+      //   lng: d.pickup_gps.coordinates[0],
+      // },
       dropoffLocation: {
         lat: d.dropoff_gps.coordinates[1],
         lng: d.dropoff_gps.coordinates[0],
@@ -189,7 +189,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
           language: d.delivery_driver.user.language_id as Language
         },
         notificationInfo: (d.delivery_driver.notification_info) ? {
-          appType: AppType.DeliveryApp,
+          appType: AppType.Delivery,
           token: d.delivery_driver.notification_info.token,
           turnOffNotifications: d.delivery_driver.notification_info.turn_off_notifications
         } : undefined,

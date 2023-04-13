@@ -4,20 +4,22 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
@@ -136,6 +138,10 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
         await CloudFunctions.stripe2_getPaymentIntent(
             paymentAmount: paymentAmount,
             serviceProviderDetailsId: serviceProviderDetailsId);
+    if (res.success == false) {
+      showErrorSnackBar(errorText: res.error.toString());
+      mezDbgPrint(res.error);
+    }
     return res;
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message.toString());
@@ -152,6 +158,10 @@ Future<String?> addCard({required String paymentMethod}) async {
   try {
     cModel.AddCardResponse res =
         await CloudFunctions.stripe2_addCard(paymentMethod: paymentMethod);
+    if (res.success == false) {
+      showErrorSnackBar(errorText: res.error.toString());
+      mezDbgPrint(res.error);
+    }
     return res.cardId;
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message ?? "");
@@ -185,6 +195,10 @@ Future<String?> acceptPaymentWithSavedCard(
         serviceProviderDetailsId: serviceProviderDetailsId,
         cardId: card.cardId,
         paymentAmount: paymentAmount);
+    if (res.success == false) {
+      showErrorSnackBar(errorText: res.error.toString());
+      mezDbgPrint(res.error);
+    }
     return extractPaymentIdFromIntent(res.paymentIntent.toString());
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message.toString());
@@ -247,19 +261,21 @@ Future<bool> isApplePaySupported() {
 
 Future<bool> isGooglePaySupported() {
   return Stripe.instance.isGooglePaySupported(IsGooglePaySupportedParams(
-      testEnv: getAppLaunchMode() == AppLaunchMode.prod ? false : true,
+      testEnv: MezEnv.appLaunchMode == AppLaunchMode.prod ? false : true,
       existingPaymentMethodRequired: true));
 }
 
 Future<void> acceptPaymentWithApplePay(
-    {required cModel.PaymentIntentResponse paymentIntentData,
+    {required String publishableKey,
+    required String paymentIntent,
+    required String stripeAccountId,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData.publishableKey;
+    Stripe.publishableKey = publishableKey;
     Stripe.merchantIdentifier = "merchant.mezcalmos";
-    final String clientSecret = paymentIntentData.paymentIntent!;
-    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
+    final String clientSecret = paymentIntent;
+    Stripe.stripeAccountId = stripeAccountId;
     await Stripe.instance.applySettings();
     // 1. Present Apple Pay sheet
     await Stripe.instance.presentApplePay(
@@ -283,18 +299,20 @@ Future<void> acceptPaymentWithApplePay(
 }
 
 Future<void> acceptPaymentWithGooglePay(
-    {required cModel.PaymentIntentResponse paymentIntentData,
+    {required String publishableKey,
+    required String paymentIntent,
+    required String stripeAccountId,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData.publishableKey;
+    Stripe.publishableKey = publishableKey;
     Stripe.merchantIdentifier = "BCR2DN4T4C3I3XDF";
-    final String clientSecret = paymentIntentData.paymentIntent!;
-    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
+    final String clientSecret = paymentIntent;
+    Stripe.stripeAccountId = stripeAccountId;
     await Stripe.instance.applySettings();
 
     await Stripe.instance.initGooglePay(GooglePayInitParams(
-        testEnv: getAppLaunchMode() == AppLaunchMode.prod ? false : true,
+        testEnv: MezEnv.appLaunchMode == AppLaunchMode.prod ? false : true,
         merchantName: "Mezcalmos",
         countryCode: 'US'));
 
@@ -312,7 +330,7 @@ String extractPaymentIdFromIntent(String a) {
   return a.split('_').sublist(0, 2).join('_');
 }
 
-Future<cModel.SetupResponse> onboardServiceProvider(
+Future<cModel.SetupStripeResponse> onboardServiceProvider(
   int serviceProviderDetailsId,
   ServiceProviderType orderType,
 ) async {
@@ -326,13 +344,17 @@ Future<cModel.SetupResponse> onboardServiceProvider(
 Future<void> updateServiceProvider(
     int serviceProviderDetailsId,
     ServiceProviderType orderType,
-    Map<PaymentType, bool> acceptedPayments) async {
+    Map<cModel.PaymentType, bool> acceptedPayments) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  await CloudFunctions.stripe2_updateServiceProvider(
+  cModel.UpdateStripeResponse res =
+      await CloudFunctions.stripe2_updateServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
-
+  if (res.success == false) {
+    showErrorSnackBar(errorText: res.error.toString());
+    mezDbgPrint(res.error);
+  }
   // return serviceProviderFunctions(
   //     "updateServiceProvider", serviceProviderId, orderType, acceptedPayments);
 }
@@ -341,7 +363,7 @@ Future<ServerResponse> serviceProviderFunctions(
     String functionName,
     int serviceProviderId,
     ServiceProviderType orderType,
-    Map<PaymentType, bool> acceptedPayments) async {
+    Map<cModel.PaymentType, bool> acceptedPayments) async {
   final HttpsCallable cloudFunction =
       FirebaseFunctions.instance.httpsCallable('stripe-$functionName');
   try {
@@ -359,10 +381,10 @@ Future<ServerResponse> serviceProviderFunctions(
   }
 }
 
-Future<dynamic> addCardSheet() {
+Future<dynamic> addCardSheet(BuildContext context) {
   return showModalBottomSheet(
       isScrollControlled: true,
-      context: Get.context!,
+      context: context,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
         topLeft: Radius.circular(15),
@@ -387,8 +409,8 @@ Future<dynamic> addCardSheet() {
                         fit: FlexFit.tight,
                         child: Text(
                           '${_i18n()["addCard"]}',
-                          style: Get.textTheme.displaySmall
-                              ?.copyWith(fontSize: 17.sp),
+                          style:
+                              ctx.txt.displaySmall?.copyWith(fontSize: 17.sp),
                         ),
                       ),
                       Get.find<LanguageController>().userLanguageKey ==
@@ -468,7 +490,7 @@ class _CardFormState extends State<CardForm> {
       String? res = await addCard(paymentMethod: paymentMethod.id);
       mezDbgPrint("Response ====> $res");
       if (res != null) {
-        MezRouter.back(result: res);
+        await MezRouter.back(backResult: res);
       }
     } on StripeException catch (e) {
       mezDbgPrint("Error add stripe ======>>>>$e");

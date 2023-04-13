@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/controllers/addCategoryController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -15,6 +16,20 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 
 class ROpCategoryView extends StatefulWidget {
   const ROpCategoryView({Key? key}) : super(key: key);
+
+  static Future<void> navigate({required int restaurantId}) {
+    return MezRouter.toPath(
+        RestaurantAppRoutes.restaurantCategoryRoute
+            .replaceAll(":restaurantId", restaurantId.toString()),
+        arguments: <String, dynamic>{"shouldSave": false});
+  }
+
+  static Future<void> navigateWithCategory(
+      {required int categoryId, required int restaurantId}) {
+    return MezRouter.toPath(RestaurantAppRoutes.restaurantEditCategoryRoute
+        .replaceAll(":categoryId", categoryId.toString())
+        .replaceAll(":restaurantId", restaurantId.toString()));
+  }
 
   @override
   State<ROpCategoryView> createState() => _ROpCategoryViewState();
@@ -33,11 +48,13 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
 
   @override
   void initState() {
-    _categoryId = Get.parameters["categoryId"];
-    restaurantId = Get.parameters["restaurantId"];
+    _categoryId = MezRouter.urlArguments["categoryId"].toString();
+    restaurantId = MezRouter.urlArguments["restaurantId"].toString();
     mezDbgPrint("Restif =======>$restaurantId");
-    if (Get.arguments != null) {
-      shouldSave = Get.arguments["shouldSave"] as bool;
+    if (MezRouter.bodyArguments != null) {
+      shouldSave = MezRouter.bodyArguments?["shouldSave"].toString() == 'true'
+          ? true
+          : false;
     }
 
     if (restaurantId != null) {
@@ -82,10 +99,11 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
             if (shouldSave) {
               final bool hasSaved = await _viewController.saveCategory();
               if (hasSaved) {
-                MezRouter.back(result: true);
+                await MezRouter.back(backResult: true);
               }
             } else {
-              MezRouter.back(result: _viewController.constructCategory());
+              await MezRouter.back(
+                  backResult: _viewController.constructCategory());
             }
           }
         },
@@ -95,8 +113,8 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   }
 
   PreferredSizeWidget _addCategoryAppBar() {
-    return ROpAppBar(
-      leftBtnType: AppBarLeftButtonType.Back,
+    return MezcalmosAppBar(
+      AppBarLeftButtonType.Back,
       onClick: MezRouter.back,
       title: (_viewController.editMode.value)
           ? _viewController.category.value?.name![userLanguage]
@@ -116,7 +134,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               const SizedBox(height: 8),
               Text(
                 "${_i18n()["categoryName"]}",
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
@@ -127,7 +145,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
@@ -138,7 +156,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["catDesc"]}",
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 10,
@@ -146,7 +164,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
                 controller: _viewController.primaryCatDesc,
                 decoration: InputDecoration(
                   hintText: '${_i18n()["categoryDescHint"]}',
@@ -157,7 +175,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["catDescIn"]} ${_viewController.secondaryLang.value!.toLanguageName()}",
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 10,
@@ -165,7 +183,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
                 controller: _viewController.secondaryCatDesc,
                 decoration: InputDecoration(
                   hintText: '${_i18n()["categoryDescHint"]}',
@@ -183,7 +201,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       required LanguageType languageType}) {
     return TextFormField(
       controller: controller,
-      style: Get.textTheme.bodyText1,
+      style: context.txt.bodyLarge,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? v) {
         mezDbgPrint(v?.trim().toLowerCase());

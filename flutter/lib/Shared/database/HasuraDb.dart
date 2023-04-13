@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart' as gqClient;
 import 'package:jaguar_jwt/jaguar_jwt.dart';
@@ -14,6 +16,7 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart'
     show logLongString, logToken, mezDbgPrint;
+import 'package:mezcalmos/env.dart';
 
 class MyParser extends gqClient.ResponseParser {
   @override
@@ -40,9 +43,8 @@ class HasuraDb {
   gqClient.GraphQLClient get graphQLClient => _graphQLClient;
   String? tokenSnapshot;
   gqClient.WebSocketLink? _wsLink;
-  AppLaunchMode appLaunchMode;
   // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  HasuraDb(this.appLaunchMode) {
+  HasuraDb() {
     _appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
       cancelJWTExpirationCheckTimer();
       pauseAllSubscriptions();
@@ -78,7 +80,7 @@ class HasuraDb {
     late String hasuraDbLink;
     late String hasuraDbSocketLink;
 
-    switch (appLaunchMode) {
+    switch (MezEnv.appLaunchMode) {
       case AppLaunchMode.prod:
         hasuraDbLink = hasuraProdLink;
         hasuraDbSocketLink =
@@ -107,13 +109,12 @@ class HasuraDb {
       mezDbgPrint("[777] USER-> ${fireAuth.FirebaseAuth.instance.currentUser}");
       final String hasuraAuthToken = await _getAuthorizationToken(
         fireAuth.FirebaseAuth.instance.currentUser!,
-        appLaunchMode == AppLaunchMode.dev,
+        MezEnv.appLaunchMode == AppLaunchMode.dev,
       );
       tokenSnapshot = hasuraAuthToken;
-      // logToken(hasuraAuthToken);
 
-      // mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
-      // mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
+      mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
+      logLongString("✅ TOKKEN ✅: \n $hasuraAuthToken");
 
       headers = <String, String>{
         'Authorization': 'Bearer $hasuraAuthToken',
@@ -157,8 +158,16 @@ class HasuraDb {
         },
       );
       // _wsLink?.config.connect(uri: hasuraDbSocketLink, headers: headers);
-      _wsLink?.connectOrReconnect();
     }
+    _wsLink!.connectOrReconnect();
+    // _wsLink!.client!.connectionStateController.listen((value) {
+    //   // mezDbgPrint("🔒🔒🔒🔒🔒🔒🔒🔒${value.toString()}");
+    //   if (value == gqClient.SocketConnectionState.connected) {
+    //     _wsLink!.client!.messages.listen((event) {
+    //       // mezDbgPrint("🩲🩲 ${event.type}");
+    //     });
+    //   }
+    // });
 
     _link = gqClient.Link.split(
         (gqClient.Request request) => request.isSubscription, _wsLink!, _link);
@@ -221,21 +230,20 @@ class HasuraDb {
 
   /// this return by default customer we are not handling all app types
   String _getRoleBasedOnApp() {
-    final AppType appType = Get.find<SettingsController>().appType;
-    switch (appType) {
-      case AppType.CustomerApp:
+    switch (MezEnv.appType) {
+      case AppType.Customer:
         return "customer";
       // case AppType.DeliveryAdminApp:
       //   return "mez_admin";
-      case AppType.DeliveryApp:
+      case AppType.Delivery:
         return "delivery_driver";
-      case AppType.RestaurantApp:
+      case AppType.Restaurant:
         return "restaurant_operator";
-      case AppType.DeliveryAdminApp:
+      case AppType.DeliveryAdmin:
         return "delivery_operator";
-      case AppType.MezAdminApp:
+      case AppType.MezAdmin:
         return "mez_admin";
-      case AppType.LaundryApp:
+      case AppType.Laundry:
         return "laundry_operator";
       default:
         return "customer";

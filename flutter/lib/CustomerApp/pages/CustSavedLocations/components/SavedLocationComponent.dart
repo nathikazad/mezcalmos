@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -48,53 +50,83 @@ class SavedLocationComponent extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(savelocation.name.capitalizeFirst.toString(),
-                      style: Get.textTheme.headlineMedium),
+                      style: context.txt.headlineMedium),
                 ),
-                InkWell(
-                  onTap: () {
-                    Get.find<CustomerAuthController>()
-                        .setAsDefaultLocation(savelocation);
-                  },
-                  //borderRadius: BorderRadius.circular(16),
-                  child: Ink(
-                    height: 3.2.h,
-                    //width: 59.sp,
-                    // width: Get.find<LanguageController>().userLanguageKey ==
-                    //         LanguageType.EN
-                    //     ? 20.w
-                    //     : 28.w,
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(
-                        color: (savelocation.defaultLocation)
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        backgroundColor: (savelocation.defaultLocation)
                             ? primaryBlueColor
                             : backgroundShadeColor,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: Center(
-                      child: Text(
-                        '${_i18n()["defaultAddressText"]}',
-                        style: TextStyle(
-                          fontFamily: "Montserrat",
-                          color: (savelocation.defaultLocation)
-                              ? Colors.white
-                              : Color(0xFF787878),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11.sp,
-                        ),
+                        shadowColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4.25),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        minimumSize: Size.zero),
+                    onPressed: () {
+                      Get.find<CustomerAuthController>()
+                          .setAsDefaultLocation(savelocation);
+                    },
+                    child: Text(
+                      '${_i18n()["defaultAddressText"]}',
+                      style: TextStyle(
+                        fontFamily: "Montserrat",
+                        color: (savelocation.defaultLocation)
+                            ? Colors.white
+                            : Color(0xFF787878),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11.sp,
                       ),
-                    ),
-                  ),
-                ),
+                    )),
+                // InkWell(
+                //   onTap: () {
+                //     Get.find<CustomerAuthController>()
+                //         .setAsDefaultLocation(savelocation);
+                //   },
+                //   //borderRadius: BorderRadius.circular(16),
+                //   child: Ink(
+                //     height: 3.2.h,
+                //     //width: 59.sp,
+                //     // width: Get.find<LanguageController>().userLanguageKey ==
+                //     //         LanguageType.EN
+                //     //     ? 20.w
+                //     //     : 28.w,
+                //     padding: EdgeInsets.symmetric(horizontal: 12),
+                //     decoration: BoxDecoration(
+                //         color: (savelocation.defaultLocation)
+                //             ? primaryBlueColor
+                //             : backgroundShadeColor,
+                //         borderRadius: BorderRadius.all(Radius.circular(50))),
+                //     child: Center(
+                //       child: Text(
+                //         '${_i18n()["defaultAddressText"]}',
+                //         style: TextStyle(
+                //           fontFamily: "Montserrat",
+                //           color: (savelocation.defaultLocation)
+                //               ? Colors.white
+                //               : Color(0xFF787878),
+                //           fontWeight: FontWeight.w600,
+                //           fontSize: 11.sp,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   width: 11,
                 ),
                 InkWell(
-                  onTap: () {
-                    MezRouter.toNamed<void>(
-                      kPickLocationEditRoute,
-                      parameters: <String, String>{
-                        // TODO:544D-HASURA
-// added to.String()
-                        "id": savelocation.id!.toString()
+                  onTap: () async {
+                    MezLocation? newLoc = await PickLocationView.navigate(
+                      initialLocation: savelocation.location.toLatLng(),
+                      onSaveLocation: ({MezLocation? location}) async {
+                        if (location != null) {
+                          await savedLocationDailog(
+                              context: context,
+                              loc: location,
+                              savedLoc: savelocation,
+                              skippable: false);
+                        }
                       },
                     );
                   },
@@ -144,11 +176,13 @@ class SavedLocationComponent extends StatelessWidget {
             SizedBox(
               height: 9,
             ),
-            Text(
-              savelocation.location.address,
-              style: Get.textTheme.titleMedium?.copyWith(
-                color: offShadeGreyColor,
-                fontWeight: FontWeight.w600,
+            Container(
+              child: Text(
+                savelocation.location.address,
+                style: context.txt.titleMedium?.copyWith(
+                  color: offShadeGreyColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
