@@ -532,7 +532,8 @@ class Launcher:
 
 
     def __launch__(self):        
-        open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=open('patches/pubspec_ref.yaml').read()))
+        patchable_pub_file=open('../pubspec.yaml').read()
+        open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=patchable_pub_file))
         PRINTLN(f"App =--> {self.user_args['app']}")
         if self.user_args['app'] != "WebApp":
             self.__patcher__()
