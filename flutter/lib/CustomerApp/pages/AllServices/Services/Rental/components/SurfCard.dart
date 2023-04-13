@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AssetServiceView/AssetServiceView.dart';
 
 class SurfCard extends StatelessWidget {
   const SurfCard({
@@ -27,7 +27,7 @@ class SurfCard extends StatelessWidget {
         "\$${perHourPrice.toStringAsFixed(2)}/hour",
       ),
       onClick: () {
-        AssetServiceView.navigate();
+        // AssetServiceView.navigate();
       },
     );
   }

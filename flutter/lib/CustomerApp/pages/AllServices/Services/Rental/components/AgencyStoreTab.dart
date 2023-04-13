@@ -5,9 +5,12 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/contr
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/AgencyController.dart';
 
 class AgencyStoreTab extends StatefulWidget {
-  const AgencyStoreTab({super.key});
+  const AgencyStoreTab({super.key, required this.agencyController});
+
+  final AgencyController agencyController;
 
   @override
   State<AgencyStoreTab> createState() => _AgencyStoreTabState();

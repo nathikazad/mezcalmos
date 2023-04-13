@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class HomeRentalController {
-  RxList<Rental> homeRentalData = <Rental>[].obs;
+  RxList<HomeRentalWithBusiness> homeRentalData = <HomeRentalWithBusiness>[].obs;
   RxList<BusinessCardView> agencyRentalData = <BusinessCardView>[].obs;
 
   ScrollController get homeScrollController => _homeScrollController;
@@ -31,6 +31,8 @@ class HomeRentalController {
     await fetchHomeRentals();
     await fetchHomeAgency();
 
+    // TODO : scroll on different tabs
+
     _homeScrollController.onBottomReach(fetchHomeRentals, sensitivity: 200);
 
     _agencyScrollController.onBottomReach(fetchHomeAgency, sensitivity: 200);
@@ -42,15 +44,14 @@ class HomeRentalController {
     }
     try {
       _fetchingHomeData = true;
-      final List<Rental> newData = await get_rental_by_category(
-        category1: RentalCategory1.Home,
+      final List<HomeRentalWithBusiness> newData = await get_home_rentals(
         distance: 100000,
         fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
         withCache: true,
         limit: _fetchHomeSize,
         offset: _fetchHomeOffset,
       );
-      mezDbgPrint("fetchHomeRentals ${newData.length}");
+      mezDbgPrint("get_home_rentals ${newData.length}");
       homeRentalData.value += newData;
       _fetchHomeOffset += _fetchHomeSize;
     } finally {
@@ -73,7 +74,7 @@ class HomeRentalController {
         limit: _fetchAgencySize,
         offset: _fetchAgencyOffset,
       );
-      mezDbgPrint("fetchHomeRentals ${newData.length}");
+      mezDbgPrint("get_business_by_rental_category1 ${newData.length}");
       agencyRentalData.value += newData;
       _fetchAgencyOffset += _fetchAgencySize;
     } finally {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/OtherRentalController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -14,10 +15,10 @@ import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
-import '../Homes/HomeAssetList/HomeAssetList.dart';
+import 'AssetList/OtherAssetList.dart';
 import '../components/ButtonSwitcher.dart';
 import '../../controller/AssetController.dart';
-import '../Homes/AgencyListView/AgencyListView.dart';
+import 'AgencyLists/OtherAgencyList.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'dart:developer';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
@@ -44,6 +45,7 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
       Get.find<AllServiceListViewController>();
   AssetController assetController = Get.find<AssetController>();
   MGoogleMapController mGoogleMapController = MGoogleMapController();
+  late OtherRentalController otherRentalController;
 
   @override
   void initState() {
@@ -52,27 +54,14 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
         MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
     log("viewName $viewName ${viewName.runtimeType}");
     assetController.init(viewEnum: viewName);
+    otherRentalController = OtherRentalController(viewName: viewName);
+    otherRentalController.init();
   }
 
   @override
   void dispose() {
     assetController.dispose();
     super.dispose();
-  }
-
-  bool doesNeedButtonSwitcher() {
-    if (allServiceListViewController.currentSelectedService.value.name ==
-            RentalViewEnum.Wellness.name ||
-        allServiceListViewController.currentSelectedService.value.name ==
-            RentalViewEnum.Volunteer.name ||
-        assetController.viewName.name == RentalViewEnum.Activities.name ||
-        assetController.viewName.name == RentalViewEnum.Tour.name ||
-        assetController.viewName.name == RentalViewEnum.Parties.name ||
-        assetController.viewName.name == RentalViewEnum.Dance.name ||
-        assetController.viewName.name == RentalViewEnum.GetTogether.name) {
-      return false;
-    }
-    return true;
   }
 
   @override
@@ -107,46 +96,46 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                     ),
                   ),
                 ),
-                !doesNeedButtonSwitcher()
-                    ? const Offstage()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Obx(
-                          () => ButtonSwitcher(
-                            lButtonText: _i18n()[allServiceListViewController
-                                            .currentSelectedService.value.name
-                                            .toLowerCase()]
-                                        [assetController.getViewNameString][
-                                    assetController
-                                        .currentSelectedViewName.first
-                                        .toLowerCase()]
-                                .toString(),
-                            rButtonText: _i18n()[allServiceListViewController
-                                            .currentSelectedService.value.name
-                                            .toLowerCase()]
-                                        [assetController.getViewNameString][
-                                    assetController.currentSelectedViewName.last
-                                        .toLowerCase()]
-                                .toString(),
-                            iconList: assetController.iconList,
-                            values: assetController.currentSelectedViewList,
-                            selectedValue:
-                                assetController.currentSelectedView.value,
-                            onClick: (Enum value) {
-                              assetController.toggleView(value);
-                            },
-                          ),
-                        ),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Obx(
+                    () => ButtonSwitcher(
+                      lButtonText: _i18n()[allServiceListViewController
+                                      .currentSelectedService.value.name
+                                      .toLowerCase()]
+                                  [assetController.getViewNameString][
+                              assetController.currentSelectedViewName.first
+                                  .toLowerCase()]
+                          .toString(),
+                      rButtonText: _i18n()[allServiceListViewController
+                                      .currentSelectedService.value.name
+                                      .toLowerCase()]
+                                  [assetController.getViewNameString][
+                              assetController.currentSelectedViewName.last
+                                  .toLowerCase()]
+                          .toString(),
+                      iconList: assetController.iconList,
+                      values: assetController.currentSelectedViewList,
+                      selectedValue: assetController.currentSelectedView.value,
+                      onClick: (Enum value) {
+                        assetController.toggleView(value);
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          // Obx(
-          //   () => assetController.currentSelectedView.value ==
-          //           assetController.currentSelectedViewList.first
-          //       ? AgencyListView()
-          //       : AgencyListView(),
-          // ),
+          Obx(
+            () => assetController.currentSelectedView.value ==
+                    assetController.currentSelectedViewList.first
+                ? OtherAssetList(
+                    otherRentalController: otherRentalController,
+                  )
+                : OtherAgencyList(
+                    otherRentalController: otherRentalController,
+                  ),
+          ),
         ],
       ),
     );

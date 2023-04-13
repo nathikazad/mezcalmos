@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AssetServiceView/AssetServiceView.dart';
 
 class VolunteerCard extends StatelessWidget {
   const VolunteerCard({
@@ -40,7 +40,7 @@ class VolunteerCard extends StatelessWidget {
       needDivider: false,
       needBottomTitleText: false,
       onClick: () {
-        AssetServiceView.navigate();
+        // AssetServiceView.navigate();
       },
     );
   }

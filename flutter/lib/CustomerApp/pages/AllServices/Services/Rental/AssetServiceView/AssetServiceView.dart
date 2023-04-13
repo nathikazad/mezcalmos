@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyListTile.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/AgencyController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CartViewPage/cart_view_page.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -8,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/componen
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/OrderViewPage/order_view_page.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/AssetDetailsController.dart';
 
 class AssetServiceView extends StatefulWidget {
   const AssetServiceView({super.key});
@@ -15,12 +18,17 @@ class AssetServiceView extends StatefulWidget {
   @override
   State<AssetServiceView> createState() => _AssetServiceViewState();
 
-  static Future<void> navigate() {
-    return MezRouter.toPath(RentalRoutes.assetServiceRoute);
+  static Future<void> navigate({required String serviceId}) {
+    return MezRouter.toPath(RentalRoutes.assetServiceRoute, arguments: {
+      "serviceId": serviceId,
+    });
   }
 }
 
 class _AssetServiceViewState extends State<AssetServiceView> {
+  final AssetDetailsController assetController = AssetDetailsController();
+  late String serviceId;
+
   final List<IconData> priceRangeIcons = [
     Icons.hourglass_top,
     Icons.event,
@@ -33,6 +41,13 @@ class _AssetServiceViewState extends State<AssetServiceView> {
     "\$243/week",
     "\$874/month",
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    serviceId = MezRouter.bodyArguments!["serviceId"];
+    assetController.getAssetById(serviceId);
+  }
 
   @override
   Widget build(BuildContext context) {

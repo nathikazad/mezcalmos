@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AssetServiceView/AssetServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/AgencyController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 class HomeCard extends StatelessWidget {
@@ -12,6 +13,7 @@ class HomeCard extends StatelessWidget {
     required this.roomSpace,
     required this.agencyName,
     required this.image,
+    required this.serviceId,
   });
 
   final String title;
@@ -20,6 +22,7 @@ class HomeCard extends StatelessWidget {
   final double roomSpace;
   final String agencyName;
   final NetworkImage image;
+  final String serviceId;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class HomeCard extends StatelessWidget {
         "${roomSpace}m²",
       ],
       onClick: () {
-        AssetServiceView.navigate();
+        AssetServiceView.navigate(serviceId: serviceId);
       },
     );
   }

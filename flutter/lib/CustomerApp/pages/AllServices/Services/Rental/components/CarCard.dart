@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AssetServiceView/AssetServiceView.dart';
 
 class CarCard extends StatelessWidget {
   const CarCard({
@@ -27,7 +27,7 @@ class CarCard extends StatelessWidget {
         "\$${perdayPrice.toStringAsFixed(2)}/day",
       ),
       onClick: () {
-        AssetServiceView.navigate();
+        // AssetServiceView.navigate();
       },
     );
   }

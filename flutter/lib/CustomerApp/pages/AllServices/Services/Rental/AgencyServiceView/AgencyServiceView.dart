@@ -9,6 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyStoreTab.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/CustomAppBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/AgencyController.dart';
 
 class AgencyServiceView extends StatefulWidget {
   const AgencyServiceView({super.key});
@@ -16,19 +17,27 @@ class AgencyServiceView extends StatefulWidget {
   @override
   State<AgencyServiceView> createState() => _AgencyServiceViewState();
 
-  static Future<void> navigate() {
-    return MezRouter.toPath(RentalRoutes.homeServiceRoute);
+  static Future<void> navigate({
+    required String businessId,
+  }) {
+    return MezRouter.toPath(RentalRoutes.homeServiceRoute, arguments: {
+      "businessId": businessId,
+    });
   }
 }
 
 class _AgencyServiceViewState extends State<AgencyServiceView>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
+  late String businessId;
+  AgencyController agencyController = AgencyController();
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 3, vsync: this);
+    businessId = MezRouter.bodyArguments!["businessId"];
+    agencyController.getAgencyStoreData(businessId);
   }
 
   @override
@@ -70,8 +79,12 @@ class _AgencyServiceViewState extends State<AgencyServiceView>
               Expanded(
                 child: TabBarView(
                   children: [
-                    AgencyStoreTab(),
-                    AgencyInfoTab(),
+                    AgencyStoreTab(
+                      agencyController: agencyController,
+                    ),
+                    AgencyInfoTab(
+                      agencyController: agencyController,
+                    ),
                   ],
                 ),
               ),

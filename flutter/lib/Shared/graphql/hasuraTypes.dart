@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Geography {
@@ -55,6 +56,7 @@ Map<Language, bool> convertToLanguages(languages) {
 
 /// Decode a jsonString into a Map<String, dynamic>
 T mapFromJson<T>(jsonString) {
+  mezDbgPrint("mapFromJson: $jsonString");
   return jsonDecode(jsonString.toString()) as T;
 }
 

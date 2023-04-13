@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AssetServiceView/AssetServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
 
 class ClassCard extends StatelessWidget {
@@ -30,7 +30,7 @@ class ClassCard extends StatelessWidget {
       rBottomText: groupName,
       subtitleWidget: Text("\$$price/$unitTime"),
       onClick: () {
-        AssetServiceView.navigate();
+        // AssetServiceView.navigate();
       },
     );
   }

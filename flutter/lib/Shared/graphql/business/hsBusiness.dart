@@ -66,7 +66,7 @@ Future<Business?> get_business_by_id(
     ),
   );
 
-  mezDbgPrint("[+] -> id : $id");
+  mezDbgPrint("[+] -> id : $id $response");
   if (response.parsedData?.business_business_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {

@@ -92,8 +92,8 @@ Future<RentalWithBusiness?> get_rental_by_id(
                   businessId: data.business.id,
                   available: data.service.available,
                   cost: constructBusinessServiceCost(data.service.cost),
-                  image: data.service.image?.entries
-                          .map((e) => e.value)
+                  image: data.service.image
+                          ?.map<String>((e) => e.toString())
                           .toList() ??
                       [],
                   additionalParameters: data.service.additional_parameters,
@@ -146,8 +146,8 @@ Future<List<HomeRentalWithBusiness>> get_home_rentals(
                   position: data.rental.service.position,
                   businessId: data.rental.business.id,
                   available: data.rental.service.available,
-                  image: data.rental.service.image?.entries
-                          .map((e) => e.value)
+                  image: data.rental.service.image
+                          ?.map<String>((e) => e.toString())
                           .toList() ??
                       [],
                   cost: constructBusinessServiceCost(data.rental.service.cost),

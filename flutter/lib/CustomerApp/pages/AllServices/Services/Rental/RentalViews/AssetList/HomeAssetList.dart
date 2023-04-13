@@ -40,7 +40,6 @@ class _HomeAssetListState extends State<HomeAssetList> {
   Widget build(BuildContext context) {
     final HomeRentalController homeRentalController =
         widget.homeRentalController;
-    var txt = Theme.of(context).textTheme;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -55,20 +54,46 @@ class _HomeAssetListState extends State<HomeAssetList> {
                   itemBuilder: (BuildContext context, int index) {
                     final String title = homeRentalController
                             .homeRentalData[index]
+                            .rental
                             .details
                             .name[languageController.userLanguageKey] ??
-                        homeRentalController
-                            .homeRentalData[index].details.name[Language.EN]
+                        homeRentalController.homeRentalData[index].rental
+                            .details.name[Language.EN]
                             .toString();
-                    mezDbgPrint(
-                        "homeRentalController ${homeRentalController.homeRentalData[index].details.toFirebaseFormattedJson()}");
+                    final String agencyName =
+                        homeRentalController.homeRentalData[index].businessName;
+                    final double perDayPrice = homeRentalController
+                        .homeRentalData[index]
+                        .rental
+                        .details
+                        .cost[TimeUnit.PerDay]!
+                        .toDouble();
+                    final double roomSpace = homeRentalController
+                            .homeRentalData[index]
+                            .rental
+                            .details
+                            .additionalParameters?["roomSpace"] ??
+                        0.0;
+                    final int totalRooms = homeRentalController
+                        .homeRentalData[index].bedrooms
+                        .toInt();
+                    final String image = homeRentalController
+                            .homeRentalData[index]
+                            .rental
+                            .details
+                            .image
+                            ?.first ??
+                        customImageUrl;
                     return HomeCard(
                       title: title,
-                      agencyName: "Puerto Estate",
-                      image: NetworkImage(customImageUrl),
-                      perDayPrice: 234,
-                      roomSpace: 330,
-                      totalRooms: 3,
+                      agencyName: agencyName,
+                      image: NetworkImage(image),
+                      perDayPrice: perDayPrice,
+                      roomSpace: roomSpace,
+                      totalRooms: totalRooms,
+                      serviceId: homeRentalController
+                          .homeRentalData[index].rental.details.id
+                          .toString(),
                     );
                     // switch (assetController.viewName) {
                     //   case RentalViewEnum.Surf:

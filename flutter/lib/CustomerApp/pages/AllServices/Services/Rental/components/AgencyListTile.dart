@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
@@ -10,7 +11,7 @@ class AgencyListTile extends StatelessWidget {
     required this.rating,
     required this.reviewCount,
     required this.iconsList,
-    required this.image,
+    required this.imageUrl,
     required this.onClick,
     this.needMessageButton = false,
     this.onMessageClick = null,
@@ -20,7 +21,7 @@ class AgencyListTile extends StatelessWidget {
   final double rating;
   final int reviewCount;
   final Map<PaymentType, bool> iconsList;
-  final NetworkImage image;
+  final String imageUrl;
   final Function onClick;
   final bool needMessageButton;
   final void Function()? onMessageClick;
@@ -31,7 +32,8 @@ class AgencyListTile extends StatelessWidget {
 
     List<IconData> iconListGenerator() {
       final List<IconData> iconData = [];
-      if (iconsList[PaymentType.Card] ?? false) {
+      mezDbgPrint("iconsList $iconsList");
+      if (iconsList[PaymentType.Cash] ?? false) {
         iconData.add(Icons.payments);
       }
       if (iconsList[PaymentType.Card] ?? false) {
@@ -50,7 +52,13 @@ class AgencyListTile extends StatelessWidget {
         onClick: () {
           onClick();
         },
-        firstAvatarBgImage: image,
+        firstAvatarBgImage: imageUrl == "null" || imageUrl.isEmpty
+            ? NetworkImage(
+                customImageUrl,
+              )
+            : NetworkImage(
+                imageUrl,
+              ),
         action: needMessageButton
             ? IconButton(
                 icon: Icon(

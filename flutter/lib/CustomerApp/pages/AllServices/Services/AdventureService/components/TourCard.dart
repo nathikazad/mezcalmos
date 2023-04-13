@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AssetServiceView/AssetServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AssetServiceView/AssetServiceView.dart';
 
 class TourCard extends StatelessWidget {
   const TourCard({
@@ -67,7 +67,7 @@ class TourCard extends StatelessWidget {
       needDivider: false,
       needBottomTitleText: false,
       onClick: () {
-        AssetServiceView.navigate();
+        // AssetServiceView.navigate();
       },
     );
   }

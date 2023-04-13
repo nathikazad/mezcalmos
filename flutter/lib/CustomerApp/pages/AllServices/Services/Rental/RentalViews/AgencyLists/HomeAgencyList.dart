@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/HomeRentalController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyListTile.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/Homes/AgencyServiceView/AgencyServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AgencyServiceView/AgencyServiceView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class AgencyListView extends StatefulWidget {
-  const AgencyListView({
+class HomeAgencyList extends StatefulWidget {
+  const HomeAgencyList({
     super.key,
     required this.homeRentalController,
   });
@@ -16,10 +16,10 @@ class AgencyListView extends StatefulWidget {
   final HomeRentalController homeRentalController;
 
   @override
-  State<AgencyListView> createState() => _AgencyListViewState();
+  State<HomeAgencyList> createState() => _HomeAgencyListState();
 }
 
-class _AgencyListViewState extends State<AgencyListView> {
+class _HomeAgencyListState extends State<HomeAgencyList> {
   late HomeRentalController homeRentalController;
   LanguageController languageController = Get.find<LanguageController>();
   @override
@@ -46,7 +46,11 @@ class _AgencyListViewState extends State<AgencyListView> {
                         homeRentalController.agencyRentalData[index].image;
                     return AgencyListTile(
                       onClick: () {
-                        AgencyServiceView.navigate();
+                        AgencyServiceView.navigate(
+                          businessId: homeRentalController
+                              .agencyRentalData[index].id
+                              .toString(),
+                        );
                       },
                       titleText:
                           homeRentalController.agencyRentalData[index].name,
@@ -56,11 +60,7 @@ class _AgencyListViewState extends State<AgencyListView> {
                       reviewCount: homeRentalController
                               .agencyRentalData[index].reviewCount ??
                           0,
-                      image: NetworkImage(
-                        image == "null" || image.isEmpty
-                            ? customImageUrl
-                            : image,
-                      ),
+                      imageUrl: image,
                       iconsList: homeRentalController
                           .agencyRentalData[index].acceptedPayments,
                     );

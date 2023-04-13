@@ -15,10 +15,10 @@ import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
-import 'HomeAssetList/HomeAssetList.dart';
+import 'AssetList/HomeAssetList.dart';
 import '../components/ButtonSwitcher.dart';
 import '../../controller/AssetController.dart';
-import 'AgencyListView/AgencyListView.dart';
+import 'AgencyLists/HomeAgencyList.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'dart:developer';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
@@ -34,9 +34,7 @@ class HomeAssetListsView extends StatefulWidget {
   State<HomeAssetListsView> createState() => _HomeAssetListsViewState();
 
   static Future<void> navigate({required RentalViewEnum viewEnum}) {
-    return MezRouter.toPath(RentalRoutes.homeAssetRoute, arguments: {
-      "viewEnum": viewEnum,
-    });
+    return MezRouter.toPath(RentalRoutes.homeAssetRoute);
   }
 }
 
@@ -49,13 +47,10 @@ class _HomeAssetListsViewState extends State<HomeAssetListsView> {
   @override
   void initState() {
     super.initState();
-    final RentalViewEnum viewName =
-        MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
-    log("viewName $viewName ${viewName.runtimeType}");
     Get.put(AssetController());
     allServiceListViewController = Get.find<AllServiceListViewController>();
     assetController = Get.find<AssetController>();
-    assetController.init(viewEnum: viewName);
+    assetController.init(viewEnum: RentalViewEnum.Homes);
     homeRentalController.init();
   }
 
@@ -148,7 +143,7 @@ class _HomeAssetListsViewState extends State<HomeAssetListsView> {
                 ? HomeAssetList(
                     homeRentalController: homeRentalController,
                   )
-                : AgencyListView(
+                : HomeAgencyList(
                     homeRentalController: homeRentalController,
                   ),
           ),
