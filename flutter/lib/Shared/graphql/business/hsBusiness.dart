@@ -80,31 +80,17 @@ Future<Business?> get_business_by_id(
           (Query$get_business_by_id$business_business_by_pk$rentals
               rental) async {
         _rentals.add(Rental(
-            category1: rental.service.category1.toRentalCategory1(),
-            details: BusinessService(
-                id: rental.id,
-                name: toLanguageMap(
-                    translations: rental.service.name.translations),
-                position: rental.service.position,
-                businessId: data.id,
-                available: rental.service.available,
-                cost: constructBusinessServiceCost(rental.service.cost))));
-      });
-      final List<Class> _classes = <Class>[];
-      data.classes.forEach(
-          (Query$get_business_by_id$business_business_by_pk$classes
-              _class) async {
-        _classes.add(Class(
-            category1: _class.service.category1.toClassCategory1(),
-            scheduleType: _class.schedule_type.toScheduleType(),
-            details: BusinessService(
-                id: _class.id,
-                name: toLanguageMap(
-                    translations: _class.service.name.translations),
-                position: _class.service.position,
-                businessId: data.id,
-                available: _class.service.available,
-                cost: constructBusinessServiceCost(_class.service.cost))));
+          category1: rental.service.category1.toRentalCategory1(),
+          details: BusinessService(
+              id: rental.id,
+              name:
+                  toLanguageMap(translations: rental.service.name.translations),
+              position: rental.service.position,
+              businessId: data.id,
+              available: rental.service.available,
+              cost: constructBusinessServiceCost(rental.service.cost)),
+          // bathrooms: rental.
+        ));
       });
       final List<Event> _events = <Event>[];
       data.events.forEach(
@@ -138,7 +124,6 @@ Future<Business?> get_business_by_id(
                   selfDelivery: false),
               serviceProviderType: ServiceProviderType.Business),
           rentals: _rentals,
-          classes: _classes,
           events: _events);
     }
   } else

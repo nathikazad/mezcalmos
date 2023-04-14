@@ -144,8 +144,12 @@ type business_business {
     """filter the rows returned"""
     where: business_operator_bool_exp
   ): business_operator_aggregate!
-  points: Int!
+
+  """
+  surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
+  """
   profile: String!
+  referral_points: Int!
 
   """An array relationship"""
   referrals(
@@ -286,7 +290,7 @@ type business_business_aggregate_fields {
 type business_business_avg_fields {
   details_id: Float
   id: Float
-  points: Float
+  referral_points: Float
 }
 
 """
@@ -305,8 +309,8 @@ input business_business_bool_exp {
   id: Int_comparison_exp
   operators: business_operator_bool_exp
   operators_aggregate: business_operator_aggregate_bool_exp
-  points: Int_comparison_exp
   profile: String_comparison_exp
+  referral_points: Int_comparison_exp
   referrals: business_referral_bool_exp
   referrals_aggregate: business_referral_aggregate_bool_exp
   rentals: business_rental_bool_exp
@@ -337,7 +341,7 @@ input type for incrementing numeric columns in table "business.business"
 input business_business_inc_input {
   details_id: Int
   id: Int
-  points: Int
+  referral_points: Int
 }
 
 """
@@ -350,8 +354,12 @@ input business_business_insert_input {
   events: business_event_arr_rel_insert_input
   id: Int
   operators: business_operator_arr_rel_insert_input
-  points: Int
+
+  """
+  surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
+  """
   profile: String
+  referral_points: Int
   referrals: business_referral_arr_rel_insert_input
   rentals: business_rental_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
@@ -362,8 +370,12 @@ input business_business_insert_input {
 type business_business_max_fields {
   details_id: Int
   id: Int
-  points: Int
+
+  """
+  surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
+  """
   profile: String
+  referral_points: Int
   service_provider_type: String
 }
 
@@ -371,8 +383,12 @@ type business_business_max_fields {
 type business_business_min_fields {
   details_id: Int
   id: Int
-  points: Int
+
+  """
+  surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
+  """
   profile: String
+  referral_points: Int
   service_provider_type: String
 }
 
@@ -414,8 +430,8 @@ input business_business_order_by {
   events_aggregate: business_event_aggregate_order_by
   id: order_by
   operators_aggregate: business_operator_aggregate_order_by
-  points: order_by
   profile: order_by
+  referral_points: order_by
   referrals_aggregate: business_referral_aggregate_order_by
   rentals_aggregate: business_rental_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
@@ -438,10 +454,10 @@ enum business_business_select_column {
   id
 
   """column name"""
-  points
+  profile
 
   """column name"""
-  profile
+  referral_points
 
   """column name"""
   service_provider_type
@@ -453,8 +469,12 @@ input type for updating data in table "business.business"
 input business_business_set_input {
   details_id: Int
   id: Int
-  points: Int
+
+  """
+  surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
+  """
   profile: String
+  referral_points: Int
   service_provider_type: String
 }
 
@@ -462,21 +482,21 @@ input business_business_set_input {
 type business_business_stddev_fields {
   details_id: Float
   id: Float
-  points: Float
+  referral_points: Float
 }
 
 """aggregate stddev_pop on columns"""
 type business_business_stddev_pop_fields {
   details_id: Float
   id: Float
-  points: Float
+  referral_points: Float
 }
 
 """aggregate stddev_samp on columns"""
 type business_business_stddev_samp_fields {
   details_id: Float
   id: Float
-  points: Float
+  referral_points: Float
 }
 
 """
@@ -494,8 +514,12 @@ input business_business_stream_cursor_input {
 input business_business_stream_cursor_value_input {
   details_id: Int
   id: Int
-  points: Int
+
+  """
+  surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
+  """
   profile: String
+  referral_points: Int
   service_provider_type: String
 }
 
@@ -503,7 +527,7 @@ input business_business_stream_cursor_value_input {
 type business_business_sum_fields {
   details_id: Int
   id: Int
-  points: Int
+  referral_points: Int
 }
 
 """
@@ -517,10 +541,10 @@ enum business_business_update_column {
   id
 
   """column name"""
-  points
+  profile
 
   """column name"""
-  profile
+  referral_points
 
   """column name"""
   service_provider_type
@@ -539,21 +563,21 @@ input business_business_updates {
 type business_business_var_pop_fields {
   details_id: Float
   id: Float
-  points: Float
+  referral_points: Float
 }
 
 """aggregate var_samp on columns"""
 type business_business_var_samp_fields {
   details_id: Float
   id: Float
-  points: Float
+  referral_points: Float
 }
 
 """aggregate variance on columns"""
 type business_business_variance_fields {
   details_id: Float
   id: Float
-  points: Float
+  referral_points: Float
 }
 
 """
@@ -2442,6 +2466,16 @@ type business_home_rental_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [business_home_rental!]!
+}
+
+"""
+input type for inserting object relation for remote table "business.home_rental"
+"""
+input business_home_rental_obj_rel_insert_input {
+  data: business_home_rental_insert_input!
+
+  """upsert condition"""
+  on_conflict: business_home_rental_on_conflict
 }
 
 """
@@ -4340,6 +4374,9 @@ type business_rental {
   """An object relationship"""
   business: business_business!
   business_id: Int!
+
+  """An object relationship"""
+  home_rental: business_home_rental
   id: Int!
 
   """An object relationship"""
@@ -4435,6 +4472,7 @@ input business_rental_bool_exp {
   _or: [business_rental_bool_exp!]
   business: business_business_bool_exp
   business_id: Int_comparison_exp
+  home_rental: business_home_rental_bool_exp
   id: Int_comparison_exp
   service: business_service_bool_exp
   service_id: Int_comparison_exp
@@ -4470,6 +4508,7 @@ input type for inserting data into table "business.rental"
 input business_rental_insert_input {
   business: business_business_obj_rel_insert_input
   business_id: Int
+  home_rental: business_home_rental_obj_rel_insert_input
   id: Int
   service: business_service_obj_rel_insert_input
   service_id: Int
@@ -4541,6 +4580,7 @@ input business_rental_on_conflict {
 input business_rental_order_by {
   business: business_business_order_by
   business_id: order_by
+  home_rental: business_home_rental_order_by
   id: order_by
   service: business_service_order_by
   service_id: order_by
@@ -4737,7 +4777,7 @@ type business_service {
   ): jsonb
   available: Boolean!
   category1: String!
-  category2: String
+  category2: String!
   cost(
     """JSON select path"""
     path: String

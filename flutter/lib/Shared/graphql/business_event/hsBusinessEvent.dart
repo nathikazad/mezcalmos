@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<List<EventWithBusiness>> get_event_by_category(
+Future<List<EventCard>> get_event_by_category(
     {required List<EventCategory1> categories1,
     required double distance,
     required Location fromLocation,
@@ -19,7 +19,7 @@ Future<List<EventWithBusiness>> get_event_by_category(
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<EventWithBusiness> _events = <EventWithBusiness>[];
+  final List<EventCard> _events = <EventCard>[];
 
   final QueryResult<Query$get_event_by_category> response = await _db
       .graphQLClient
@@ -41,7 +41,7 @@ Future<List<EventWithBusiness>> get_event_by_category(
   if (response.parsedData?.business_event != null) {
     response.parsedData?.business_event
         .forEach((Query$get_event_by_category$business_event data) async {
-      _events.add(EventWithBusiness(
+      _events.add(EventCard(
           businessName: data.business.details.name,
           event: Event(
             category1: data.service.category1.toEventCategory1(),
@@ -72,7 +72,7 @@ Future<List<EventWithBusiness>> get_event_by_category(
   }
 }
 
-Future<EventWithBusiness?> get_event_by_id(
+Future<EventWithBusinessCard?> get_event_by_id(
     {required int id, required bool withCache}) async {
   final QueryResult<Query$get_event_by_id> response = await _db.graphQLClient
       .query$get_event_by_id(Options$Query$get_event_by_id(
@@ -89,8 +89,7 @@ Future<EventWithBusiness?> get_event_by_id(
         response.parsedData?.business_event_by_pk!;
 
     if (data != null) {
-      return EventWithBusiness(
-          businessName: data.business.details.name,
+      return EventWithBusinessCard(
           event: Event(
               category1: data.service.category1.toEventCategory1(),
               gpsLocation: data.gps_location != null
@@ -115,21 +114,20 @@ Future<EventWithBusiness?> get_event_by_id(
                         [],
               ),
               scheduleType: data.schedule_type.toScheduleType(),
-              schedule: data.schedule));
+              schedule: data.schedule),
+          business: BusinessCardView(
+            id: data.business.id,
+            detailsId: data.business.details.id,
+            name: data.business.details.name,
+            image: data.business.details.image,
+            acceptedPayments: data.business.details.accepted_payments,
+            avgRating: double.tryParse(
+                data.business.reviews_aggregate.aggregate?.avg.toString() ??
+                    '0.0'),
+            reviewCount: data.business.reviews_aggregate.aggregate?.count,
+          ));
     }
   } else
     return null;
   return null;
-}
-
-class EventWithBusiness extends Event {
-  final String businessName;
-  EventWithBusiness({
-    required Event event,
-    required this.businessName,
-  }) : super(
-          scheduleType: event.scheduleType,
-          category1: event.category1,
-          details: event.details,
-        );
 }

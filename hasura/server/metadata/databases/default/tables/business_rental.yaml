@@ -5,6 +5,13 @@ object_relationships:
   - name: business
     using:
       foreign_key_constraint_on: business_id
+  - name: home_rental
+    using:
+      foreign_key_constraint_on:
+        column: rental_id
+        table:
+          name: home_rental
+          schema: business
   - name: service
     using:
       foreign_key_constraint_on: service_id
