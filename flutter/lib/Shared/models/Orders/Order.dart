@@ -126,8 +126,8 @@ extension OrderTypeHelper on cModels.OrderType {
         return cModels.ServiceProviderType.DeliveryCompany;
       case cModels.OrderType.Business:
         return cModels.ServiceProviderType.Business;
-      case cModels.OrderType.Taxi:
-        return cModels.ServiceProviderType.Taxi;
+      default:
+        throw StateError("No service provider type for this order type $this");
     }
   }
 
