@@ -66,18 +66,6 @@ export interface DeliveryDriver {
   notificationInfo?: NotificationInfo;
 }
 
-export interface DeliveryOperator {
-    id: number,
-    userId: number,
-    operatorDetailsId: number,
-    deliveryCompanyId: number,
-    status: AuthorizationStatus,
-    owner: boolean,
-    appVersion?: string,
-    online: boolean,
-    notificationInfo?: NotificationInfo,
-    user?: UserInfo
-}
 // export interface DeliveryCompany extends ServiceProvider {
 //   deliveryoperators?: DeliveryOperator[];
 // }

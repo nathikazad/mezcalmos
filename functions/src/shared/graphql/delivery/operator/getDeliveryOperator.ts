@@ -1,9 +1,9 @@
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, MezError, NotificationInfo } from "../../../models/Generic/Generic";
-import { DeliveryOperator } from "../../../models/Generic/Delivery";
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
+import { Operator } from "../../../models/Services/Service";
 
-export async function getDeliveryOperators(deliveryCompanyId: number): Promise<DeliveryOperator[]> {
+export async function getDeliveryOperators(deliveryCompanyId: number): Promise<Operator[]> {
     let chain = getHasura();
 
     let response = await chain.query({
@@ -40,8 +40,8 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
         return {
             id: d.id,
             userId: d.user_id,
-            operatorDetailsId: d.operator_details.id,
-            deliveryCompanyId: deliveryCompanyId,
+            detailsId: d.operator_details.id,
+            serviceProviderId: deliveryCompanyId,
             status: d.operator_details.status as AuthorizationStatus,
             owner: d.operator_details.owner,
             online: d.operator_details.online,
@@ -60,7 +60,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
     })
 }
 
-export async function getDeliveryOperator(deliveryOperatorId: number): Promise<DeliveryOperator> {
+export async function getDeliveryOperator(deliveryOperatorId: number): Promise<Operator> {
     let chain = getHasura();
 
     let response = await chain.query({
@@ -93,9 +93,9 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
 
     return {
         id: response.delivery_operator_by_pk.id,
-        operatorDetailsId: response.delivery_operator_by_pk.operator_details.id,
+        detailsId: response.delivery_operator_by_pk.operator_details.id,
         userId: response.delivery_operator_by_pk.user_id,
-        deliveryCompanyId: response.delivery_operator_by_pk.delivery_company_id,
+        serviceProviderId: response.delivery_operator_by_pk.delivery_company_id,
         status: response.delivery_operator_by_pk.operator_details.status as AuthorizationStatus,
         owner: response.delivery_operator_by_pk.operator_details.owner,
         online: response.delivery_operator_by_pk.operator_details.online,
@@ -113,7 +113,7 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
     }
 }
 
-export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number): Promise<DeliveryOperator> {
+export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number): Promise<Operator> {
     let chain = getHasura();
 
     let response = await chain.query({
@@ -151,8 +151,8 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
     return {
         id: response.delivery_operator[0].id,
         userId: response.delivery_operator[0].user_id,
-        operatorDetailsId: response.delivery_operator[0].operator_details.id,
-        deliveryCompanyId: response.delivery_operator[0].delivery_company_id,
+        detailsId: response.delivery_operator[0].operator_details.id,
+        serviceProviderId: response.delivery_operator[0].delivery_company_id,
         status: response.delivery_operator[0].operator_details.status as AuthorizationStatus,
         owner: response.delivery_operator[0].operator_details.owner,
         online: response.delivery_operator[0].operator_details.online,

@@ -11,7 +11,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus, DeliveryOrderStatusChangeNotification } from "../shared/models/Generic/Delivery";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -115,7 +115,7 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
     if (order.deliveryType == DeliveryType.Delivery && order.fromCustomerDeliveryId) {
 
       let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId);
-      let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(fromCustomerDeliveryOrder.serviceProviderId);
+      let deliveryOperators: Operator[] = await getDeliveryOperators(fromCustomerDeliveryOrder.serviceProviderId);
 
       // switch (prevStatus) {
       //   case LaundryOrderStatus.OrderReceived:

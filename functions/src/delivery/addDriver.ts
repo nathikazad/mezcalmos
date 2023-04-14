@@ -4,7 +4,7 @@ import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/g
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { MezError } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator } from "../shared/models/Generic/Delivery";
+import { AuthorizeDriverNotification, DeliveryDriver } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator, ServiceProvider, ServiceProviderType } from "../shared/models/Services/Service";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
@@ -82,7 +82,7 @@ async function notify(deliveryDriver: DeliveryDriver, serviceProvider: ServicePr
     };
     switch (serviceProvider.serviceProviderType) {
         case ServiceProviderType.DeliveryCompany:
-            let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(serviceProvider.id);
+            let deliveryOperators: Operator[] = await getDeliveryOperators(serviceProvider.id);
             deliveryOperators.forEach((d) => {
                 if (d.user) {
                     pushNotification(

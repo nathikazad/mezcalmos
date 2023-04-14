@@ -2,7 +2,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType, DeliveryOperator } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -124,8 +124,8 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder:
 async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: number) {
   switch (deliveryOrder.serviceProviderType) {
     case DeliveryServiceProviderType.DeliveryCompany:
-      let deliveryOperator: DeliveryOperator = await getDeliveryOperatorByUserId(userId);
-      if (deliveryOperator.status != AuthorizationStatus.Authorized || deliveryOperator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
+      let deliveryOperator: Operator = await getDeliveryOperatorByUserId(userId);
+      if (deliveryOperator.status != AuthorizationStatus.Authorized || deliveryOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
         throw new MezError(AssignDriverError.InvalidOperator);
       }
       break;

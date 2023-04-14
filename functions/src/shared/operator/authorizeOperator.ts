@@ -8,7 +8,7 @@ import { deleteRestaurantOperator } from "../graphql/restaurant/operators/delete
 import { getRestaurantOperator, getRestaurantOperatorByUserId } from "../graphql/restaurant/operators/getRestaurantOperators";
 import { isMezAdmin } from "../helper";
 import { ParticipantType } from "../models/Generic/Chat";
-import { DeliveryOperator, DeliveryOperatorApprovedNotification } from "../models/Generic/Delivery";
+import { DeliveryOperatorApprovedNotification } from "../models/Generic/Delivery";
 import { MezError } from "../models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../models/Notification";
 import { Operator, OperatorApprovedNotification } from "../models/Services/Service";
@@ -50,10 +50,10 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
                 notifyOperator(ParticipantType.RestaurantOperator, operator);
                 break;
             case ParticipantType.DeliveryOperator:
-                let deliveryOperator: DeliveryOperator = await getDeliveryOperator(authorizeDetails.newOperatorId);
+                let deliveryOperator: Operator = await getDeliveryOperator(authorizeDetails.newOperatorId);
 
                 if(authorizeDetails.approved) {
-                    operatorDetailsId = deliveryOperator.operatorDetailsId;
+                    operatorDetailsId = deliveryOperator.detailsId;
                 } else {
                     await deleteDeliveryOperator(deliveryOperator);
                 }
@@ -141,7 +141,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
         }
     }
 
-    function notifyDeliveryOperator(deliveryOperator: DeliveryOperator) {
+    function notifyDeliveryOperator(deliveryOperator: Operator) {
         let notification: Notification = {
             foreground: <DeliveryOperatorApprovedNotification>{
                 operatorId: authorizeDetails.newOperatorId,
@@ -186,24 +186,21 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
         if((await isMezAdmin(ownerUserId)) == true)
             return;
         
-        let owner: boolean = true;
+        let owner: Operator;
         switch (authorizeDetails.participantType) {
             case ParticipantType.RestaurantOperator:
-                let restaurantOwner: Operator = await getRestaurantOperatorByUserId(ownerUserId);
-                owner = restaurantOwner.owner ?? false;
+                owner = await getRestaurantOperatorByUserId(ownerUserId);
                 break;
             case ParticipantType.DeliveryOperator:
-                let deliveryOwner: DeliveryOperator = await getDeliveryOperatorByUserId(ownerUserId);
-                owner = deliveryOwner.owner;
+                owner = await getDeliveryOperatorByUserId(ownerUserId);
                 break;
             case ParticipantType.LaundryOperator:
-                let laundryOwner: Operator = await getLaundryOperatorByUserId(ownerUserId);
-                owner = laundryOwner.owner ?? false;
+                owner = await getLaundryOperatorByUserId(ownerUserId);
                 break;
             default:
-                break;
+                throw new MezError(AuthOperatorError.UnauthorizedAccess);
         }
-        if (!owner) {
+        if (!owner.owner) {
             throw new MezError(AuthOperatorError.UnauthorizedAccess);
         }
     }

@@ -4,9 +4,10 @@ import { getDeliveryDrivers } from "./graphql/delivery/driver/getDeliveryDriver"
 import { getDeliveryOperators } from "./graphql/delivery/operator/getDeliveryOperator";
 import { getMezAdmin } from "./graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "./models/Generic/Chat";
-import { DeliveryOrder, DeliveryOperator, DeliveryDriver } from "./models/Generic/Delivery";
+import { DeliveryOrder, DeliveryDriver } from "./models/Generic/Delivery";
 import { AuthorizationStatus } from "./models/Generic/Generic";
 import { OrderNotification, NotificationType, NotificationAction, Notification } from "./models/Notification";
+import { Operator } from "./models/Services/Service";
 
 export async function isMezAdmin(userId: number): Promise<boolean> {
     try {
@@ -18,7 +19,7 @@ export async function isMezAdmin(userId: number): Promise<boolean> {
 }
 
 export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder) {
-    let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(deliveryOrder.serviceProviderId);
+    let deliveryOperators: Operator[] = await getDeliveryOperators(deliveryOrder.serviceProviderId);
     let deliveryDrivers: DeliveryDriver[] = await getDeliveryDrivers(deliveryOrder.serviceProviderId);
   
     let notification: Notification = {

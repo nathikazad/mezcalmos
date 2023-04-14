@@ -3,12 +3,13 @@ import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDel
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryOperator, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { CourierOrder, CourierOrderStatusChangeNotification, orderInProcess } from "../shared/models/Services/Courier/Courier"
+import { Operator } from "../shared/models/Services/Service";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 
@@ -68,7 +69,7 @@ export async function cancelCourierFromCustomer(userId: number, cancelOrderDetai
 async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrderDetails, deliveryId: number) {
     let promiseResponse = await Promise.all([getMezAdmins(), getDeliveryOperators(courierOrder.deliveryOrder.serviceProviderId)]);
     let mezAdmins: MezAdmin[] = promiseResponse[0];
-    let deliveryOperators: DeliveryOperator[] = promiseResponse[1];
+    let deliveryOperators: Operator[] = promiseResponse[1];
 
     let adminNotification: Notification = {
         foreground: <CourierOrderStatusChangeNotification>{

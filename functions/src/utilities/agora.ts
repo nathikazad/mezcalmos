@@ -36,9 +36,11 @@ enum CallUserError {
 }
 export async function callUser(callerUserId: number, callUserDetails: CallUserDetails): Promise<CallUserResponse> {
   try {
-    let chat: Chat = await getChat(callUserDetails.chatId)
+    let chat: Chat = await getChat(callUserDetails.chatId);
     let chatInfo: ChatInfo | undefined = chat.chatInfo[AppTypeToChatInfoAppName[getAppTypeFromParticipantType(callUserDetails.callerParticipantType)]];
-    
+    if(!chatInfo) {
+      throw new MezError(CallUserError.CallerNotInParticipants);
+    }
     let recipient: Participant = getRecipient(chat, chatInfo);
 
     // out of bounds error if caller isnt there in participant 

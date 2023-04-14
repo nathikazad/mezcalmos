@@ -1,4 +1,4 @@
-import { DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType, DriverApprovedNotification } from "../shared/models/Generic/Delivery";
+import { DeliveryDriver, DeliveryServiceProviderType, DriverApprovedNotification } from "../shared/models/Generic/Delivery";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { updateDriverStatustoAuthorized } from "../shared/graphql/delivery/driver/updateDriverStatus";
 import { deleteDeliveryDriver } from "../shared/graphql/delivery/driver/deleteDriver";
@@ -83,7 +83,7 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
         }
         break;
       case DeliveryServiceProviderType.DeliveryCompany:
-        let deliveryOperator: DeliveryOperator = await getDeliveryOperatorByUserId(userId);
+        let deliveryOperator: Operator = await getDeliveryOperatorByUserId(userId);
         if (!deliveryOperator.owner || deliveryOperator.status != AuthorizationStatus.Authorized) {
           throw new MezError(AuthorizeDriverError.UnauthorizedAccess);
         }

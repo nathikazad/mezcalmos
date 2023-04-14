@@ -11,7 +11,7 @@ import { getRestaurantOrder, getRestaurantOrderFromDelivery } from "../shared/gr
 import { updateRestaurantOrderDeliveryCost } from "../shared/graphql/restaurant/order/updateOrder";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { ChangePriceStatus, DeliveryDriver, DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType, PriceChangeApprovalNotification } from "../shared/models/Generic/Delivery";
+import { ChangePriceStatus, DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType, PriceChangeApprovalNotification } from "../shared/models/Generic/Delivery";
 import { MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo } from "../shared/models/Generic/User";
@@ -288,7 +288,7 @@ async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
     };
     switch (deliveryOrder.serviceProviderType) {
         case DeliveryServiceProviderType.DeliveryCompany:
-            let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(deliveryOrder.serviceProviderId);
+            let deliveryOperators: Operator[] = await getDeliveryOperators(deliveryOrder.serviceProviderId);
             deliveryOperators.forEach((d) => {
                 if (d.user) {
                     pushNotification(

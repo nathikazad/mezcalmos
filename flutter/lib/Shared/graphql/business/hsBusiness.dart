@@ -136,3 +136,47 @@ Future<Business?> get_business_by_id(
     return null;
   return null;
 }
+
+Future<List<BusinessCard>> get_business_by_event_category1(
+    {required EventCategory1 category1,
+    required double distance,
+    required Location fromLocation,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<BusinessCard> _businesses = <BusinessCard>[];
+
+  final QueryResult<Query$get_business_by_event_category1> response =
+      await _db.graphQLClient.query$get_business_by_event_category1(
+          Options$Query$get_business_by_event_category1(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$get_business_by_event_category1(
+                  category1: category1.toFirebaseFormatString(),
+                  distance: distance,
+                  from: Geography(
+                      fromLocation.lat as double, fromLocation.lng as double),
+                  offset: offset,
+                  limit: limit)));
+
+  if (response.parsedData?.business_business != null) {
+    response.parsedData?.business_business.forEach(
+        (Query$get_business_by_event_category1$business_business data) async {
+      final PaymentInfo _paymentInfo = PaymentInfo.fromData(
+          stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
+      _businesses.add(BusinessCard(
+        id: data.id,
+        detailsId: data.details.id,
+        name: data.details.name,
+        image: data.details.image,
+        acceptedPayments: _paymentInfo.acceptedPayments,
+        avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
+        reviewCount: data.reviews_aggregate.aggregate?.count,
+      ));
+    });
+    return _businesses;
+  } else {
+    return [];
+  }
+}

@@ -2,6 +2,7 @@ import { getHasura } from "../../../utilities/hasura";
 import { AppType, AuthorizationStatus, Language, MezError } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { Operator, ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -197,4 +198,70 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
     }
     return delivery;
   })
+}
+export async function getDeliveryCompany(deliveryCompanyId: number): Promise<ServiceProvider> {
+  let chain = getHasura();
+
+  let response = await chain.query({
+    delivery_company_by_pk: [{
+      id: deliveryCompanyId,
+    }, {
+      details: {
+        id: true,
+        name: true,
+        image: true,
+        location: {
+          gps: true,
+        },
+        language: [{}, true],
+      },
+      delivery_operators: [{}, {
+        id: true,
+        details_id: true,
+        delivery_company_id: true,
+        user_id: true,
+        operator_details: {
+            status: true,
+            online: true,
+        },
+        user: {
+            firebase_id: true,
+            language_id: true
+        }
+      }]
+    }]
+  });
+
+  if(response.delivery_company_by_pk == null || response.delivery_company_by_pk.details == null) {
+    throw new MezError("deliveryCompanyNotFound");
+  } 
+  let operators: Operator[] = response.delivery_company_by_pk.delivery_operators.map((o) => {
+    return {
+      id: o.id,
+      detailsId: o.details_id,
+      serviceProviderId: deliveryCompanyId,
+      userId: o.user_id,
+      status: o.operator_details.status as AuthorizationStatus,
+      online: o.operator_details.online,
+    }
+  })
+
+  return {
+    id: deliveryCompanyId,
+    serviceProviderDetailsId: response.delivery_company_by_pk.details.id,
+    name: response.delivery_company_by_pk.details.name,
+    image: response.delivery_company_by_pk.details.image,
+    location: {
+      lat: response.delivery_company_by_pk?.details?.location.gps.coordinates[1],
+      lng: response.delivery_company_by_pk?.details?.location.gps.coordinates[0],
+    },
+    language: response.delivery_company_by_pk?.details?.language,
+    deliveryDetails: {
+      deliveryAvailable: true,
+      customerPickup: false,
+      selfDelivery: true,
+    },
+    serviceProviderType: ServiceProviderType.DeliveryCompany,
+    operators
+  }
 }

@@ -8,7 +8,6 @@ import { createRestaurantOperator } from "../graphql/restaurant/operators/create
 import { getRestaurantOperators } from "../graphql/restaurant/operators/getRestaurantOperators";
 import { getUser } from "../graphql/user/getUser";
 import { ParticipantType } from "../models/Generic/Chat";
-import { DeliveryOperator } from "../models/Generic/Delivery";
 import { MezError } from "../models/Generic/Generic";
 import { UserInfo } from "../models/Generic/User";
 import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../models/Notification";
@@ -101,51 +100,32 @@ async function notify(operatorUserInfo: UserInfo, serviceProvider: ServiceProvid
         linkUrl: `/`
     };
     let operators: Operator[];
+    let participantType: ParticipantType;
     switch (serviceProvider.serviceProviderType) {
         case ServiceProviderType.Restaurant:
             operators = await getRestaurantOperators(serviceProvider.id);
-            operators.forEach((o) => {
-                if (o.owner && o.user) {
-                    pushNotification(
-                        o.user.firebaseId,
-                        notification,
-                        o.notificationInfo,
-                        ParticipantType.RestaurantOperator,
-                        o.user.language
-                    );
-                }
-            });
+            participantType = ParticipantType.RestaurantOperator;
             break;
         case ServiceProviderType.DeliveryCompany:
-            let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(serviceProvider.id);
-            deliveryOperators.forEach((o) => {
-                if (o.owner && o.user) {
-                    pushNotification(
-                        o.user.firebaseId,
-                        notification,
-                        o.notificationInfo,
-                        ParticipantType.DeliveryOperator,
-                        o.user.language
-                    );
-                }
-            });
+            operators = await getDeliveryOperators(serviceProvider.id);
+            participantType = ParticipantType.DeliveryOperator;
             break;
         case ServiceProviderType.Laundry:
             operators = await getLaundryOperators(serviceProvider.id);
-            operators.forEach((o) => {
-                if (o.owner && o.user) {
-                    pushNotification(
-                        o.user.firebaseId,
-                        notification,
-                        o.notificationInfo,
-                        ParticipantType.LaundryOperator,
-                        o.user.language
-                    );
-                }
-            });
+            participantType = ParticipantType.LaundryOperator;
             break;
         default:
-            break;
+            return;
     }
-
+    operators.forEach((o) => {
+        if (o.owner && o.user) {
+            pushNotification(
+                o.user.firebaseId,
+                notification,
+                o.notificationInfo,
+                participantType,
+                o.user.language
+            );
+        }
+    });
 }

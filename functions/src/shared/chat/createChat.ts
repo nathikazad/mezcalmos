@@ -1,6 +1,7 @@
 import { getBusiness } from "../graphql/business/getBusiness";
 import { createDirectChat, createMezAdminChat, createServiceProviderCustomerChat } from "../graphql/chat/createChat";
 import { getServiceProviderCustomerChat } from "../graphql/chat/getChat";
+import { getDeliveryCompany } from "../graphql/delivery/getDelivery";
 import { getLaundryStore } from "../graphql/laundry/getLaundry";
 import { getRestaurant } from "../graphql/restaurant/getRestaurant";
 import { getCustomer } from "../graphql/user/customer/getCustomer";
@@ -32,7 +33,7 @@ export async function createServiceProviderChat(customerId: number, serviceProvi
         case ServiceProviderType.Business:
             serviceProvider = (await getBusiness(serviceProviderDetails.serviceProviderId)).details;
         case ServiceProviderType.DeliveryCompany:
-            //add delivery company
+            serviceProvider = await getDeliveryCompany(serviceProviderDetails.serviceProviderId);
         default:
             throw new MezError("invalidServiceProviderType");
     }

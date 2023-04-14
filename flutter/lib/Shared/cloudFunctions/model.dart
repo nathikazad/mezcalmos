@@ -1358,44 +1358,6 @@ class DeliveryDriver {
   }
 }
 
-class DeliveryOperator {
-  num id;
-  num userId;
-  num operatorDetailsId;
-  num deliveryCompanyId;
-  AuthorizationStatus status;
-  bool owner;
-  String? appVersion;
-  bool online;
-  NotificationInfo? notificationInfo;
-  UserInfo? user;
-  DeliveryOperator(
-      {required this.id,
-      required this.userId,
-      required this.operatorDetailsId,
-      required this.deliveryCompanyId,
-      required this.status,
-      required this.owner,
-      this.appVersion,
-      required this.online,
-      this.notificationInfo,
-      this.user});
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "id": id,
-      "userId": userId,
-      "operatorDetailsId": operatorDetailsId,
-      "deliveryCompanyId": deliveryCompanyId,
-      "status": status,
-      "owner": owner,
-      "appVersion": appVersion,
-      "online": online,
-      "notificationInfo": notificationInfo,
-      "user": user,
-    };
-  }
-}
-
 class DeliveryChangePriceRequest {
   ChangePriceStatus status;
   num newPrice;

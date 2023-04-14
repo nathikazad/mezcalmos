@@ -1,8 +1,8 @@
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOperator } from "../../../models/Generic/Delivery";
 import { MezError } from "../../../models/Generic/Generic";
+import { Operator } from "../../../models/Services/Service";
 
-export async function deleteDeliveryOperator(deliveryOperator: DeliveryOperator) {
+export async function deleteDeliveryOperator(deliveryOperator: Operator) {
     let chain = getHasura();
 
     let response = await chain.mutation({
@@ -12,7 +12,7 @@ export async function deleteDeliveryOperator(deliveryOperator: DeliveryOperator)
             id: true,
         }],
         delete_service_provider_operator_details_by_pk: [{
-            id: deliveryOperator.operatorDetailsId
+            id: deliveryOperator.detailsId
         }, {
             id: true
         }]
