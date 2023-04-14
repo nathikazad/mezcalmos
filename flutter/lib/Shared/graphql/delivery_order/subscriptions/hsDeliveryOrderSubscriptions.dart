@@ -127,11 +127,13 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
                   orderData.customer_review_by_driver!.created_at,
                 ))
             : null,
-        serviceReviewByDriver: (orderData.service_provider_review_by_driver != null)
+        serviceReviewByDriver: (orderData.service_provider_review_by_driver !=
+                null)
             ? Review(
                 comment: orderData.service_provider_review_by_driver!.note,
                 rating: orderData.service_provider_review_by_driver!.rating,
-                toEntityId: orderData.service_provider_review_by_driver!.to_entity_id,
+                toEntityId:
+                    orderData.service_provider_review_by_driver!.to_entity_id,
                 toEntityType: orderData
                     .service_provider_review_by_driver!.to_entity_type
                     .toServiceProviderType(),

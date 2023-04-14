@@ -64,8 +64,7 @@ Notification _newOrderNotification(String key, value) {
       icon: (value['orderType'].toString().toOrderType() == OrderType.Laundry)
           ? mat.Icons.local_laundry_service
           : mat.Icons.flatware,
-      linkUrl: DeliveryAppRoutes.kDvOrderView
-          .replaceFirst(":orderId", value["orderId"].toString()),
+      linkUrl: value["linkUrl"],
 
       // needs to be changed, need to add laundry
       body: '${_i18n()['driverNotifBody']}', // needs to be changed

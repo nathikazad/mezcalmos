@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -74,7 +73,7 @@ Future<String?> get_service_link({required String uniqueId}) async {
   }
 }
 
-Future<MainService?> get_service_details_by_id(
+Future<Service?> get_service_details_by_id(
     {required int serviceDetailsId,
     required int serviceId,
     bool withCache = true}) async {

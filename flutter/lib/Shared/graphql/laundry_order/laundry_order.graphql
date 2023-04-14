@@ -72,6 +72,10 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     tax
 
     review {
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       created_at
       from_entity_id
       from_entity_type
@@ -187,6 +191,10 @@ query get_laundry_order_by_id($orderId: Int!) {
     tax
     to_customer_delivery_id
     review {
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       created_at
       from_entity_id
       from_entity_type

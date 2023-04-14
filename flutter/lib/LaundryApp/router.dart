@@ -15,7 +15,7 @@ class LaundryAppRoutes {
   static const String kAdminViewRoute = '/admin/:laundryId';
   static const String kEditInfoView = '/editInfo/:laundryId';
   static const String kCategoryViewRoute =
-      '/categoryScreen/:laundryId/:categoryId';
+      '/laundryCategoryScreen/:laundryId/:categoryId';
   static const String kOrderViewRoute = '/laundryOrders/:orderId';
   static const String kLaundryTabsViewRoute = '/dashboard';
 

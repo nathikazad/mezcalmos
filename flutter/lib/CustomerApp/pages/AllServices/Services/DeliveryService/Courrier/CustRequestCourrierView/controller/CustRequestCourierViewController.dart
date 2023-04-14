@@ -130,7 +130,14 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _makeOrder() async {
-    mezDbgPrint("Making a courier order ========> ${fromLocText.text.length}");
+    bool nameAndImageChecker =
+        await Get.find<AuthController>().nameAndImageChecker();
+    if (nameAndImageChecker) {
+      await _callCloudFunc();
+    }
+  }
+
+  Future<void> _callCloudFunc() async {
     try {
       await _uploadItemsImages();
       cModels.CreateCourierResponse res =

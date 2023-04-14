@@ -16,6 +16,8 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class DvOrderViewcontroller {
@@ -215,5 +217,45 @@ class DvOrderViewcontroller {
   void clearNotifications(int orderId) {
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
         orderType: cModels.OrderType.Courier, orderId: orderId);
+  }
+
+  Future<int?> addServiceReview(int reviewId) async {
+    try {
+      int? res = await dv_update_review_id(
+          orderId: order.orderId,
+          reviewId: reviewId,
+          serviceProviderType: order.orderType.toServiceProviderType());
+      if (res != null) {
+        return res;
+      }
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+    return null;
+  }
+
+  Future<int?> addCustomerReview(int reviewId) async {
+    try {
+      int? res = await dv_update_review_id(
+          orderId: order.orderId,
+          reviewId: reviewId,
+          serviceProviderType: cModels.ServiceProviderType.Customer);
+      if (res != null) {
+        return res;
+      }
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+    return null;
   }
 }

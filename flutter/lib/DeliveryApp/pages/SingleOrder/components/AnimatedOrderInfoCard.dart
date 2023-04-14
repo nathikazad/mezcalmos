@@ -5,13 +5,16 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAva
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -270,18 +273,51 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         if (order.status == cModels.DeliveryOrderStatus.Delivered &&
             order.serviceReviewByDriver == null)
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              int? resviewId = await addReviewDialog(
+                  context: context,
+                  toEntityId: order.serviceProvider.hasuraId,
+                  toEntityType: order.orderType.toServiceProviderType(),
+                  fromEntityId: Get.find<AuthController>().hasuraUserId!,
+                  fromEntityType: cModels.ServiceProviderType.DeliveryDriver,
+                  orderId: order.orderId);
+              if (resviewId != null) {
+                await viewController.addServiceReview(resviewId);
+              }
+            },
+            borderRadius: BorderRadius.circular(15),
             child: Ink(
               padding: const EdgeInsets.all(3),
               decoration: BoxDecoration(
                 color: secondaryLightBlueColor,
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(15),
               ),
               child: Text(
-                "Add review",
+                "${_i18n()['addReview']}",
                 style: context.textTheme.bodyLarge
                     ?.copyWith(color: primaryBlueColor),
               ),
+            ),
+          ),
+        if (order.serviceReviewByDriver != null)
+          Container(
+            padding: const EdgeInsets.all(3),
+            // decoration: BoxDecoration(
+            //   color: secondaryLightBlueColor,
+            //   borderRadius: BorderRadius.circular(15),
+            // ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  color: primaryBlueColor,
+                  size: 25,
+                ),
+                Text(
+                  "${order.serviceReviewByDriver!.rating.toStringAsFixed(1)}",
+                  style: context.textTheme.bodyLarge,
+                ),
+              ],
             ),
           ),
       ],
@@ -328,18 +364,52 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         if (order.status == cModels.DeliveryOrderStatus.Delivered &&
             order.customerReviewByDriver == null)
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              int? resviewId = await addReviewDialog(
+                  context: context,
+                  toEntityId: order.customer.hasuraId,
+                  toEntityType: cModels.ServiceProviderType.Customer,
+                  fromEntityId: Get.find<AuthController>().hasuraUserId!,
+                  fromEntityType: cModels.ServiceProviderType.DeliveryDriver,
+                  orderId: order.orderId);
+              mezDbgPrint("resviewId: $resviewId");
+              if (resviewId != null) {
+                await viewController.addCustomerReview(resviewId);
+              }
+            },
+            borderRadius: BorderRadius.circular(15),
             child: Ink(
-              padding: const EdgeInsets.all(3),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               decoration: BoxDecoration(
                 color: secondaryLightBlueColor,
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(15),
               ),
               child: Text(
-                "Add review",
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(color: primaryBlueColor),
+                "${_i18n()['addReview']}",
+                style: context.textTheme.bodyMedium?.copyWith(
+                    color: primaryBlueColor, fontWeight: FontWeight.bold),
               ),
+            ),
+          ),
+        if (order.customerReviewByDriver != null)
+          Container(
+            padding: const EdgeInsets.all(3),
+            // decoration: BoxDecoration(
+            //   color: secondaryLightBlueColor,
+            //   borderRadius: BorderRadius.circular(15),
+            // ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  color: primaryBlueColor,
+                  size: 25,
+                ),
+                Text(
+                  "${order.customerReviewByDriver!.rating.toStringAsFixed(1)}",
+                  style: context.textTheme.bodyLarge,
+                ),
+              ],
             ),
           ),
       ],

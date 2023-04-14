@@ -20,7 +20,7 @@ const String localhost = "http://127.0.0.1";
 const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const int functionPort = 5001;
-const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
+const String proxyUrl = "https://cors-mezc.herokuapp.com";
 const String stripePubTestKey =
     "pk_test_51KxdsRDV5wKm9SNKkEwYTuMUdxRAULh7UUy2w42pV27dDtUc9CBNioU426ftPLzxU5dRd8sZv3UnGgpt8RsDF9xf000oUAmiZS";
 const String stripePubProdKey =
@@ -270,6 +270,7 @@ const String mezPackageMarker =
     "assets/images/shared/markers/packageMarker.png";
 const String mezDestinationMarker =
     "assets/images/shared/markers/destinationMarker.png";
+const String mezLookingAsset = "assets/images/shared/looking.png";
 
 const String customImageUrl =
     "https://villaexperience.com/wp-content/uploads/2019/09/zacilna-rivieramaya-1-3.jpg";

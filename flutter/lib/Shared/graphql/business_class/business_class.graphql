@@ -46,7 +46,49 @@ query get_class_by_id($id: Int!) {
 }
 
 query get_class_by_category($categories1: [String!], $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $categories2: [String!], $schedule_type: [String!]) {
-  business_class(where: {_and: {service: {_and: {category1: {_in: $categories1}, category2: {_in: $categories2}}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, schedule_type: {_in: $schedule_type}}}, limit: $limit, offset: $offset) {
+  business_class(
+    where: {
+      _and: {
+        service: {
+          _and: {
+            category1: {
+              _in: $categories1
+            }, 
+            category2: {
+              _in: $categories2
+            }
+          }
+        }, 
+        schedule_type: {
+          _in: $schedule_type
+        }, 
+        _or: {
+          gps_location: {
+            _st_d_within: {
+              distance: $distance, 
+              from: $from
+            }
+          }, 
+          _and: {
+            business: {
+              details: {
+                location: {
+                  gps: {
+                    _st_d_within: {
+                      distance: $distance, 
+                      from: $from
+                    }
+                  }
+                }
+              }
+            }, 
+            gps_location: {
+              _is_null: true
+            }
+          }
+        }
+      }
+    }, limit: $limit, offset: $offset) {
     service {
       id
       name {
@@ -64,6 +106,8 @@ query get_class_by_category($categories1: [String!], $distance: Float!, $from: g
     }
     id
     gps_location
+    schedule_type
+    schedule
     time
     business {
       id
@@ -76,7 +120,5 @@ query get_class_by_category($categories1: [String!], $distance: Float!, $from: g
         }
       }
     }
-    schedule_type
-    schedule
   }
 }

@@ -4,14 +4,12 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
@@ -72,7 +70,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                   onTap: () async {
                     bool? refetch = await LaundrOpCategoryView.navigate(
                         laundryId: widget.laundry.info.hasuraId,
-                        categoryId: widget.item.id) as bool?;
+                        categoryId: widget.item.id);
 
                     mezDbgPrint("RESULT ======>$refetch");
                     if (refetch == true) {

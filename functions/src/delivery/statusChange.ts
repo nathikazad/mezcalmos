@@ -162,7 +162,7 @@ async function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer:
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Courier,
       notificationAction: NotificationAction.ShowSnackBarAlways,
-      orderId: deliveryOrder.deliveryId
+      orderId: courierOrder.id
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: deliveryOrderStatusChangeMessages[deliveryOrder.status],

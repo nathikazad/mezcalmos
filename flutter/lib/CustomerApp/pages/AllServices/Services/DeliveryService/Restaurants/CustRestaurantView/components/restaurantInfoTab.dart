@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
-import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -178,8 +176,9 @@ class RestaurantInfoTab extends StatelessWidget {
                   InkWell(
                     // borderRadius: BorderRadius.circular(8),
                     onTap: () {
-                      MezRouter.toNamed(CustomerRoutes.getReviewsListRoute(
-                          restaurant.restaurantId));
+                      CustReviewsListView.navigate(
+                          serviceId: restaurant.restaurantId,
+                          serviceType: ServiceProviderType.Restaurant);
                     },
                     child: Ink(
                       color: Colors.transparent,

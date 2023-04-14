@@ -297,6 +297,7 @@ Future<LaundryCostLineItem?> update_laundry_category(
   QueryResult<Mutation$updateLaundryCategory> res =
       await _db.graphQLClient.mutate$updateLaundryCategory(
     Options$Mutation$updateLaundryCategory(
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$updateLaundryCategory(
         categoryId: newCategory.id,
         data: Input$laundry_category_set_input(
@@ -306,6 +307,7 @@ Future<LaundryCostLineItem?> update_laundry_category(
   );
 
   if (res.parsedData?.update_laundry_category_by_pk == null) {
+    mezDbgPrint("🛑Error =======>${res.data}");
     throwError(res.exception);
   }
   Mutation$updateLaundryCategory$update_laundry_category_by_pk data =

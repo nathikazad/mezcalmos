@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
@@ -13,6 +12,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -27,6 +27,7 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -56,7 +57,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     mezDbgPrint("MezRouter.urlArguments ===> $orderId");
     if (int.tryParse(orderId) != null) {
       viewController.init(orderId: int.parse(orderId));
-      
     }
 
     super.initState();
@@ -178,7 +178,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   OrderSummaryCard(
                     margin: EdgeInsets.only(top: 20),
                     costs: viewController.orderCosts!,
-                   
                     setTaxCallBack:
                         (viewController.order.value?.isDriverAssigned == true)
                             ? () {
@@ -194,6 +193,26 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         : null,
                     stripeOrderPaymentInfo:
                         viewController.order.value!.stripePaymentInfo,
+                  ),
+                if (viewController.order.value!.status ==
+                        cModels.DeliveryOrderStatus.OrderReceived &&
+                    viewController.order.value!.isDriverAssigned)
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: MezButton(
+                      label: '${_i18n()["cancelOrder"]}',
+                      onClick: () async {
+                        await showConfirmationDialog(context,
+                            onYesClick: () async {
+                          final bool resp = await viewController.cancelOrder();
+                          if (resp) {
+                            Navigator.pop(context);
+                          }
+                        });
+                      },
+                      backgroundColor: offRedColor,
+                      textColor: Colors.redAccent,
+                    ),
                   )
               ],
             ),
@@ -356,7 +375,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         size: 18.sp,
                       ),
                       Text(
-                        "4.7",
+                        "${viewController.customerReview.value?.toStringAsFixed(1) ?? '-'}",
                         style: context.txt.bodyMedium
                             ?.copyWith(color: Colors.black),
                       ),
@@ -430,7 +449,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         size: 18.sp,
                       ),
                       Text(
-                        "4.5",
+                        "${viewController.serviceReview.value?.toStringAsFixed(1) ?? '-'}",
                         style: context.txt.bodyMedium
                             ?.copyWith(color: Colors.black),
                       ),

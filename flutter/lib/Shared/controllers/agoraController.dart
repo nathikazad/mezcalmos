@@ -21,7 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 
-import 'package:mezcalmos/env_example.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 

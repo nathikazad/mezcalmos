@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpReviewsView'];
 
 class CustReviewsListView extends StatefulWidget {
   const CustReviewsListView({super.key});
+  static Future<void> navigate(
+      {required int serviceId,
+      required cModels.ServiceProviderType serviceType}) {
+    return MezRouter.toPath(
+        CustomerRoutes.customerReviewRoute
+            .replaceFirst(":serviceId", "$serviceId"),
+        arguments: {"serviceType": serviceType});
+  }
 
   @override
   State<CustReviewsListView> createState() => _CustReviewsListViewState();
@@ -25,11 +37,14 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
   RxnNum rating = RxnNum();
   Rxn<List<Review>> reviews = Rxn();
   int? serviceId;
+  cModels.ServiceProviderType? serviceProviderType;
   bool get hasData => rating.value != null && reviews.value != null;
   @override
   void initState() {
     serviceId = int.tryParse(MezRouter.urlArguments["serviceId"].toString());
-    if (serviceId != null) {
+    serviceProviderType =
+        MezRouter.bodyArguments?["serviceType"] as cModels.ServiceProviderType?;
+    if (serviceId != null && serviceProviderType != null) {
       fetchReviews();
     } else
       MezRouter.back();
@@ -43,11 +58,15 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
   }
 
   Future<void> fetchReviews() async {
-    reviews.value =
-        await get_service_reviews(serviceId: serviceId!, withCache: false) ??
-            [];
+    reviews.value = await get_service_reviews(
+            serviceId: serviceId!,
+            serviceProviderType: serviceProviderType!,
+            withCache: false) ??
+        [];
     rating.value = await get_service_review_average(
-            serviceId: serviceId!, withCache: false) ??
+            serviceId: serviceId!,
+            serviceProviderType: serviceProviderType!,
+            withCache: false) ??
         0;
   }
 
@@ -122,7 +141,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
             height: 4,
           ),
           Text(
-              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["review"].toPlural(isPlural: reviews.value?.length == 1)}")
+              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["review"].toString().toPlural(isPlural: reviews.value?.length == 1)}")
         ],
       ),
     );

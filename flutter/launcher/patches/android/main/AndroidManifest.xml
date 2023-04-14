@@ -11,6 +11,7 @@
 
 
     <mez-permissions>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 
     <application
       android:label="@string/appName"
@@ -99,7 +100,6 @@
               <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
 
     </application>
 </manifest>
