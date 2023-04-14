@@ -165,10 +165,52 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                               fontSize: 12.mezSp,
                                             )),
                                       ),
-                                Icon(
-                                  Icons.chevron_right,
-                                  color: Colors.black,
-                                ),
+                                if (widget.deliveryTime == null)
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.black,
+                                  ),
+                                if (widget.deliveryTime != null)
+                                  InkWell(
+                                    onTap: () {
+                                      _pickDeliveryTime(context, field);
+                                    },
+                                    customBorder: CircleBorder(),
+                                    child: Ink(
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                          color: secondaryLightBlueColor,
+                                          shape: BoxShape.circle),
+                                      child: Icon(
+                                        Icons.edit,
+                                        size: 20,
+                                        color: primaryBlueColor,
+                                      ),
+                                    ),
+                                  ),
+                                if (widget.deliveryTime != null &&
+                                    widget.shoudSchedule == false)
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: InkWell(
+                                      customBorder: CircleBorder(),
+                                      onTap: () {
+                                        widget.onClear.call();
+                                        field.setValue(null);
+                                      },
+                                      child: Ink(
+                                        padding: const EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                            color: offRedColor,
+                                            shape: BoxShape.circle),
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 20,
+                                          color: redAccentColor,
+                                        ),
+                                      ),
+                                    ),
+                                  )
                               ],
                             ),
                           ),
