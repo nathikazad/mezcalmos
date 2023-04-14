@@ -12,7 +12,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/contr
 
 class OtherRentalController {
   RxList<RentalWithBusiness> homeRentalData = <RentalWithBusiness>[].obs;
-  RxList<BusinessCardView> agencyRentalData = <BusinessCardView>[].obs;
+  RxList<MinimalBusiness> agencyRentalData = <MinimalBusiness>[].obs;
   late Rx<RentalCategory1> category1;
   RxMap<RentalCategory2, bool> category2 = {
     RentalCategory2.Motorcycle: true,
@@ -125,7 +125,7 @@ class OtherRentalController {
     }
     try {
       _fetchingAgencyData = true;
-      final List<BusinessCardView> newData =
+      final List<MinimalBusiness> newData =
           await get_business_by_rental_category1(
         category1: category1.value,
         distance: 100000,
