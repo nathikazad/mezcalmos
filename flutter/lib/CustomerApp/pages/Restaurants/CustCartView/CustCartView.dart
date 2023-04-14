@@ -149,6 +149,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         ),
         const SizedBox(height: 9),
         DropDownLocationList(
+          elevation: 1,
           onValueChangeCallback: (MezLocation location) {
             viewController.switchLocation(location);
           },

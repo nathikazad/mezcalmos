@@ -274,7 +274,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'psb',
-                              fontSize: 10,
+                              fontSize: 15,
                               letterSpacing: 1),
                         ),
                       )),

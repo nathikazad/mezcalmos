@@ -129,6 +129,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       style: context.txt.bodyLarge,
                     ),
                   ),
+                  OrderScheduledTimeCard(
+                      time: viewController.order.scheduleTime,
+                      margin: const EdgeInsets.only(top: 8)),
                   if (viewController.order.pickupLocation != null)
                     OrderDeliveryLocation(
                       title: "${_i18n()['pickupLoc']}",
@@ -145,9 +148,6 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         viewController.order.stripePaymentInfo,
                     paymentType: viewController.order.paymentType,
                   ),
-                  OrderScheduledTimeCard(
-                      time: viewController.order.scheduleTime,
-                      margin: const EdgeInsets.only(top: 8)),
                   if (viewController.order.billImage != null)
                     OrderBillImage(
                       billImage: viewController.order.billImage,

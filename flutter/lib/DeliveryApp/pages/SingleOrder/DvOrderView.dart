@@ -27,7 +27,8 @@ class DvOrderView extends StatefulWidget {
     return MezRouter.toPath(DeliveryAppRoutes.kDvOrderView
         .replaceAll(":orderId", orderId.toString()));
   }
-    static String constructPath(int orderId) {
+
+  static String constructPath(int orderId) {
     return DeliveryAppRoutes.kDvOrderView
         .replaceFirst(":orderId", orderId.toString());
   }
@@ -76,9 +77,12 @@ class _DvOrderViewState extends State<DvOrderView> {
         AppBarLeftButtonType.Back,
         autoBack: true,
         showNotifications: true,
-        titleWidget: Obx(() => Text((viewController.hasData)
-            ? '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"]}'
-            : "")),
+        titleWidget: Obx(() => Text(
+              (viewController.hasData)
+                  ? '${_i18n()[viewController.order.orderType.toFirebaseFormatString()]} ${_i18n()["title"].toString().toLowerCase()}'
+                  : "",
+              style: TextStyle(fontFamily: 'Montserrat'),
+            )),
       ),
       bottomNavigationBar: Obx(
         () => (viewController.hasData)

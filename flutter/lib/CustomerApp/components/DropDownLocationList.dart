@@ -121,67 +121,69 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   @override
   Widget build(BuildContext context) {
-    return EnsureVisibleWhenFocused(
-      focusNode: _focusNode,
-      child: DropdownButtonFormField<SavedLocation>(
-          selectedItemBuilder: (BuildContext context) {
-            return dropDownSelectedItemBuilder();
-          },
-          autovalidateMode: AutovalidateMode.always,
-          iconDisabledColor: Colors.grey.shade800,
-          iconEnabledColor: Colors.grey.shade800,
-          decoration: InputDecoration(
-              fillColor: Colors.white, filled: true, errorMaxLines: 2),
-          value: dropDownListValue,
-          dropdownColor: widget.bgColor,
-          isDense: true,
-          focusNode: _focusNode,
-          isExpanded: true,
-          icon: Icon(
-            Icons.expand_more,
-            color: Colors.black,
-          ),
-          hint: Text(
-            '${_i18n()["chooseLoc"]}',
-            style: context.txt.bodyLarge,
-          ),
-          items: listOfSavedLoacations
-              .map<DropdownMenuItem<SavedLocation>>(
-                  (SavedLocation e) => buildItems(e))
-              .toList(),
-          validator: (SavedLocation? value) {
-            if (value == null) {
-              _focusNode.requestFocus();
-              return "${_i18n()['noLocError']}";
+    return Card(
+      child: EnsureVisibleWhenFocused(
+        focusNode: _focusNode,
+        child: DropdownButtonFormField<SavedLocation>(
+            selectedItemBuilder: (BuildContext context) {
+              return dropDownSelectedItemBuilder();
+            },
+            autovalidateMode: AutovalidateMode.always,
+            iconDisabledColor: Colors.grey.shade800,
+            iconEnabledColor: Colors.grey.shade800,
+            decoration: InputDecoration(
+                fillColor: Colors.white, filled: true, errorMaxLines: 2),
+            value: dropDownListValue,
+            dropdownColor: widget.bgColor,
+            isDense: true,
+            focusNode: _focusNode,
+            isExpanded: true,
+            icon: Icon(
+              Icons.expand_more,
+              color: Colors.black,
+            ),
+            hint: Text(
+              '${_i18n()["chooseLoc"]}',
+              style: context.txt.bodyLarge,
+            ),
+            items: listOfSavedLoacations
+                .map<DropdownMenuItem<SavedLocation>>(
+                    (SavedLocation e) => buildItems(e))
+                .toList(),
+            validator: (SavedLocation? value) {
+              if (value == null) {
+                _focusNode.requestFocus();
+                return "${_i18n()['noLocError']}";
+              }
+              if (value.location.isValidLocation() == false) {
+                _focusNode.requestFocus();
+
+                return "${_i18n()['noLocError']}";
+              } else if (_checkDistance() && !_lessTenTenKm(value.location)) {
+                _focusNode.requestFocus();
+
+                return "${_i18n()['distanceError']}";
+              } else {
+                return null;
+              }
+            },
+            onChanged: (SavedLocation? v) async {
+              if (v?.id == -1) {
+                await _navigateToPickLoc();
+              } else if (v != null) {
+                dropDownListValue = v;
+                widget.passedInLocation = dropDownListValue?.location;
+              }
+
+              if (isValid) {
+                widget.onValueChangeCallback?.call(dropDownListValue!.location);
+              }
             }
-            if (value.location.isValidLocation() == false) {
-              _focusNode.requestFocus();
 
-              return "${_i18n()['noLocError']}";
-            } else if (_checkDistance() && !_lessTenTenKm(value.location)) {
-              _focusNode.requestFocus();
+            // await locationChangedHandler(v!);
 
-              return "${_i18n()['distanceError']}";
-            } else {
-              return null;
-            }
-          },
-          onChanged: (SavedLocation? v) async {
-            if (v?.id == -1) {
-              await _navigateToPickLoc();
-            } else if (v != null) {
-              dropDownListValue = v;
-              widget.passedInLocation = dropDownListValue?.location;
-            }
-
-            if (isValid) {
-              widget.onValueChangeCallback?.call(dropDownListValue!.location);
-            }
-          }
-
-          // await locationChangedHandler(v!);
-
-          ),
+            ),
+      ),
     );
   }
 

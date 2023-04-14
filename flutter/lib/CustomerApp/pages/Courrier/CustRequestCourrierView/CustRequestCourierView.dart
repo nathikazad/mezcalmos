@@ -99,7 +99,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Delivery company',
+            '${_i18n()["deliveryCompany"]}',
             style: context.txt.bodyLarge,
           ),
           SizedBox(
