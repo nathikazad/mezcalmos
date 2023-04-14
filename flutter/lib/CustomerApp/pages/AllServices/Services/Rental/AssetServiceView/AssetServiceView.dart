@@ -106,6 +106,13 @@ class _AssetServiceViewState extends State<AssetServiceView> {
                   "icon": Icons.equalizer,
                 });
                 break;
+              case TimeUnit.PerPerson:
+                data.add({
+                  "cost": double.parse("$value"),
+                  "unit": removePerFromUnit(key),
+                  "icon": Icons.person,
+                });
+                break;
             }
             return MapEntry(key, value);
           });
