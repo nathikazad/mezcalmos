@@ -700,7 +700,7 @@ class Config:
 
         
         _res  = _res[0]
-        print(f"[+] pubspec.yaml :\n\t|_ old_version = {_pubspec[_res].strip()}\n\t|_ new_applied_version = {v.strip()}")
+        print(f"[+] pubspec.yaml :\n\t|_ applied_version = {v.strip()}")
         _pubspec[_res] = f"version: {v.strip()}\n"
         open(original_pubspec , 'w+').write(''.join(_pubspec))
         PRINTLN("[+] Checked and Patched pubspec.yaml successfully !")
@@ -724,7 +724,7 @@ class Config:
         _versionName  = _versionName[0]
         _versionCode  = _versionCode[0]
 
-        print(f"[+] local.properties :\n\t|_ old_version :\n\t|\t|__ {_localProperties[_versionName].strip()}\n\t|\t|__ {_localProperties[_versionCode].strip()}\n\t|_ new_applied_version = {v}")
+        print(f"[+] local.properties :\n\t|__ {_localProperties[_versionCode].strip()}\n\t|_ version = {v}")
         
         _localProperties[_versionName] = f"flutter.versionName={__v[0]}\n"
         _localProperties[_versionCode] = f"flutter.versionCode={__v[-1]}\n"
@@ -820,6 +820,8 @@ class Config:
         _ = self.__get_arg_value__('version=')
         if _:
             self.__patch_version__(_)
+        else:
+            self.__patch_version__("0.0.0+0")
             #exit(DW_EXIT_REASONS.NORMAL)
                 # Cmd to fix Pods Problems
         _ = self.__get_arg_value__('--upgrade-env')
