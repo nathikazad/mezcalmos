@@ -218,8 +218,7 @@ class _AssetServiceViewState extends State<AssetServiceView> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: AgencyListTile(
-                              titleText: "null",
-                              // rentalData?.businessName ?? "",
+                              titleText: rentalData?.business.name ?? "",
                               rating: 0.0,
                               reviewCount: 0,
                               onClick: () {},

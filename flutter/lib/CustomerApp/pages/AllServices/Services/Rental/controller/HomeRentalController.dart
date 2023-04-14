@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class HomeRentalController {
-  RxList<Rental> homeRentalData = <Rental>[].obs;
+  RxList<RentalCard> homeRentalData = <RentalCard>[].obs;
   RxList<BusinessCard> agencyRentalData = <BusinessCard>[].obs;
 
   ScrollController get homeScrollController => _homeScrollController;

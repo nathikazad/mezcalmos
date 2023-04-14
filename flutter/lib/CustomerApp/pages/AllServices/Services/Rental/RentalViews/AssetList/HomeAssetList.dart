@@ -59,8 +59,8 @@ class _HomeAssetListState extends State<HomeAssetList> {
                         homeRentalController
                             .homeRentalData[index].details.name[Language.EN]
                             .toString();
-                    final String agencyName = "null";
-                    // homeRentalController.homeRentalData[index].businessName;
+                    final String agencyName =
+                        homeRentalController.homeRentalData[index].businessName;
                     final double perDayPrice = homeRentalController
                         .homeRentalData[index].details.cost[TimeUnit.PerDay]!
                         .toDouble();

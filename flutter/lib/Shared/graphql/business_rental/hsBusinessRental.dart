@@ -191,23 +191,6 @@ Future<List<RentalCard>> get_home_rentals(
                 lat: data.gps_location.latitude,
                 lng: data.gps_location.longitude),
             homeType: data.home_type,
-            rental: Rental(
-                category1: data.rental.service.category1.toRentalCategory1(),
-                details: BusinessService(
-                  id: data.rental.id,
-                  name: toLanguageMap(
-                      translations: data.rental.service.name.translations),
-                  position: data.rental.service.position,
-                  businessId: data.rental.business.id,
-                  available: data.rental.service.available,
-                  image: data.rental.service.image?.entries
-                          .map((e) => e.value)
-                          .toList() ??
-                      [],
-                  cost: constructBusinessServiceCost(data.rental.service.cost),
-                  additionalParameters:
-                      data.rental.service.additional_parameters,
-                )),
           )));
     });
     return _homes;
