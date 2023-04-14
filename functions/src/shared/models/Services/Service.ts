@@ -61,12 +61,6 @@ export enum OpenStatus {
 //   paymentInfo: PaymentInfo;
 // }
 
-// export interface Service {
-//   state: State;
-//   info: UserInfo;
-//   details: Details
-// }
-
 // export interface PaymentInfo {
 //   stripe: ServiceProviderStripeInfo;
 //   acceptedPayments: Record<PaymentType, boolean>;

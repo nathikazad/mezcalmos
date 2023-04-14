@@ -7,9 +7,11 @@ export interface Business {
     details: ServiceProvider;
     rentals?: Array<Rental>;
     events?: Array<Event>;
+    services?: Array<Service>;
+    products?: Array<Product>;
 }
 
-export interface BusinessService {
+export interface BusinessItemDetails {
     id: number;
     name: Record<Language, string>;
     description?: Record<Language, string>;
@@ -18,7 +20,8 @@ export interface BusinessService {
     available: boolean;
     image?: Array<string>;
     cost: Record<TimeUnit, number>;
-    additionalParameters?: Record<string, any>
+    additionalParameters?: Record<string, any>;
+    tags?: Array<string>;
 }
 
 export enum TimeUnit {
@@ -26,13 +29,14 @@ export enum TimeUnit {
     PerDay = "perDay",
     PerWeek = "perWeek",
     PerMonth = "perMonth",
+    PerPerson = "perPerson",
     Total = "total",
 }
 export interface Rental {
     category1: RentalCategory1;
     category2?: RentalCategory2;
     category3?: string;
-    details: BusinessService;
+    details: BusinessItemDetails;
     bedrooms?: number;
     bathrooms?: number;
     gpsLocation?: Location,
@@ -42,10 +46,17 @@ export interface Event {
     category1: EventCategory1;
     scheduleType: ScheduleType;
     schedule?: any;
-    details: BusinessService;
+    details: BusinessItemDetails;
     gpsLocation?: Location;
     time?: string;
 }
+export interface Service {
+    category1: string;
+}
+export interface Product {
+    category1: string;
+}
+
 export enum RentalCategory1 {
     Surf = "surf",
     Vehicle = "vehicle",

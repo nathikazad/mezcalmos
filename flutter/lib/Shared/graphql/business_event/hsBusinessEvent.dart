@@ -44,23 +44,25 @@ Future<List<EventCard>> get_event_by_category(
       _events.add(EventCard(
           businessName: data.business.details.name,
           event: Event(
-            category1: data.service.category1.toEventCategory1(),
+            category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null
                 ? Location(
                     lat: data.gps_location!.latitude,
                     lng: data.gps_location!.longitude)
                 : null,
             time: data.time,
-            details: BusinessService(
+            details: BusinessItemDetails(
               id: data.id,
-              name: toLanguageMap(translations: data.service.name.translations),
-              position: data.service.position,
+              name: toLanguageMap(translations: data.details.name.translations),
+              position: data.details.position,
               businessId: data.business.id,
-              available: data.service.available,
-              image: data.service.image?.entries.map((e) => e.value).toList() ??
+              available: data.details.available,
+              image: data.details.image?.entries.map((e) => e.value).toList() ??
                   [],
-              cost: constructBusinessServiceCost(data.service.cost),
-              additionalParameters: data.service.additional_parameters,
+              cost: constructBusinessServiceCost(data.details.cost),
+              additionalParameters: data.details.additional_parameters,
+              tags:
+                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: data.schedule,
@@ -91,31 +93,33 @@ Future<EventWithBusinessCard?> get_event_by_id(
     if (data != null) {
       return EventWithBusinessCard(
           event: Event(
-              category1: data.service.category1.toEventCategory1(),
+              category1: data.details.category1.toEventCategory1(),
               gpsLocation: data.gps_location != null
                   ? Location(
                       lat: data.gps_location!.latitude,
                       lng: data.gps_location!.longitude)
                   : null,
               time: data.time,
-              details: BusinessService(
+              details: BusinessItemDetails(
                 id: id,
                 name:
-                    toLanguageMap(translations: data.service.name.translations),
-                position: data.service.position,
+                    toLanguageMap(translations: data.details.name.translations),
+                position: data.details.position,
                 businessId: data.business.id,
-                available: data.service.available,
-                cost: constructBusinessServiceCost(data.service.cost),
+                available: data.details.available,
+                cost: constructBusinessServiceCost(data.details.cost),
                 description: toLanguageMap(
-                    translations: data.service.description?.translations ?? []),
-                additionalParameters: data.service.additional_parameters,
+                    translations: data.details.description?.translations ?? []),
+                additionalParameters: data.details.additional_parameters,
                 image:
-                    data.service.image?.entries.map((e) => e.value).toList() ??
+                    data.details.image?.entries.map((e) => e.value).toList() ??
                         [],
+                tags: data.details.tags?.entries.map((e) => e.value).toList() ??
+                    [],
               ),
               scheduleType: data.schedule_type.toScheduleType(),
               schedule: data.schedule),
-          business: BusinessCardView(
+          business: BusinessCard(
             id: data.business.id,
             detailsId: data.business.details.id,
             name: data.business.details.name,

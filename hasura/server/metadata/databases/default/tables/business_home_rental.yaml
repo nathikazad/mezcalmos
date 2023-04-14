@@ -13,5 +13,5 @@ select_permissions:
         - bedrooms
         - bathrooms
         - gps_location
-        - homeType
+        - home_type
       filter: {}

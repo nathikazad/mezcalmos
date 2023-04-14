@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class HomeRentalController {
   RxList<Rental> homeRentalData = <Rental>[].obs;
-  RxList<MinimalBusiness> agencyRentalData = <MinimalBusiness>[].obs;
+  RxList<BusinessCard> agencyRentalData = <BusinessCard>[].obs;
 
   ScrollController get homeScrollController => _homeScrollController;
   ScrollController _homeScrollController = ScrollController();
@@ -64,7 +64,7 @@ class HomeRentalController {
     }
     try {
       _fetchingAgencyData = true;
-      final List<MinimalBusiness> newData =
+      final List<BusinessCard> newData =
           await get_business_by_rental_category1(
         category1: RentalCategory1.Home,
         distance: 100000,

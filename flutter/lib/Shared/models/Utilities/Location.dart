@@ -85,7 +85,7 @@ class MezLocation {
   }
 }
 
-cModels.Location constructLocation(Geography locationData, address) {
+cModels.Location constructLocation(Geography locationData, String? address) {
   return cModels.Location(
       lat: locationData.latitude,
       lng: locationData.longitude,

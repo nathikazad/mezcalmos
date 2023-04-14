@@ -1827,22 +1827,28 @@ class Business {
   ServiceProvider details;
   List<Rental>? rentals;
   List<Event>? events;
+  List<Service>? services;
+  List<Product>? products;
   Business(
       {required this.profile,
       required this.details,
       this.rentals,
-      this.events});
+      this.events,
+      this.services,
+      this.products});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "profile": profile,
       "details": details,
       "rentals": rentals,
       "events": events,
+      "services": services,
+      "products": products,
     };
   }
 }
 
-class BusinessService {
+class BusinessItemDetails {
   num id;
   Map<Language, String> name;
   Map<Language, String>? description;
@@ -1852,7 +1858,8 @@ class BusinessService {
   List<String>? image;
   Map<TimeUnit, num> cost;
   Map<String, dynamic>? additionalParameters;
-  BusinessService(
+  List<String>? tags;
+  BusinessItemDetails(
       {required this.id,
       required this.name,
       this.description,
@@ -1861,7 +1868,8 @@ class BusinessService {
       required this.available,
       this.image,
       required this.cost,
-      this.additionalParameters});
+      this.additionalParameters,
+      this.tags});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -1873,11 +1881,12 @@ class BusinessService {
       "image": image,
       "cost": cost,
       "additionalParameters": additionalParameters,
+      "tags": tags,
     };
   }
 }
 
-enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth, Total }
+enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth, PerPerson, Total }
 
 extension ParseTimeUnitToString on TimeUnit {
   String toFirebaseFormatString() {
@@ -1897,7 +1906,7 @@ class Rental {
   RentalCategory1 category1;
   RentalCategory2? category2;
   String? category3;
-  BusinessService details;
+  BusinessItemDetails details;
   num? bedrooms;
   num? bathrooms;
   Location? gpsLocation;
@@ -1929,7 +1938,7 @@ class Event {
   EventCategory1 category1;
   ScheduleType scheduleType;
   dynamic? schedule;
-  BusinessService details;
+  BusinessItemDetails details;
   Location? gpsLocation;
   String? time;
   Event(
@@ -1947,6 +1956,26 @@ class Event {
       "details": details,
       "gpsLocation": gpsLocation,
       "time": time,
+    };
+  }
+}
+
+class Service {
+  String category1;
+  Service({required this.category1});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "category1": category1,
+    };
+  }
+}
+
+class Product {
+  String category1;
+  Product({required this.category1});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "category1": category1,
     };
   }
 }
@@ -2072,7 +2101,7 @@ class BusinessOrderRequestItem {
   ServiceType serviceType;
   num id;
   bool? available;
-  BusinessService? service;
+  BusinessItemDetails? service;
   BusinessItemCost cost;
   BusinessOrderRequestItem(
       {required this.serviceId,

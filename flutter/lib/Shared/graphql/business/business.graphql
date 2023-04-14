@@ -1,24 +1,5 @@
 query get_business_by_id($id: Int!) {
   business_business_by_pk(id: $id) {
-    classes {
-      id
-      schedule_type
-      service {
-        additional_parameters
-        available
-        category1
-        cost
-        name {
-          translations {
-            language_id
-            value
-          }
-        }
-        image
-        id
-        position
-      }
-    }
     details {
       accepted_payments
       approved
@@ -44,13 +25,14 @@ query get_business_by_id($id: Int!) {
     events {
       id
       schedule_type
-      service {
+      details {
         additional_parameters
         available
         category1
         cost
         image
         id
+        tags
         name {
           translations {
             language_id
@@ -64,13 +46,14 @@ query get_business_by_id($id: Int!) {
     profile
     rentals {
       id
-      service {
+      details {
         additional_parameters
         available
         category1
         cost
         id
         image
+        tags
         name {
           translations {
             language_id
@@ -83,7 +66,7 @@ query get_business_by_id($id: Int!) {
         bathrooms
         bedrooms
         gps_location
-        homeType
+        home_type
       }
     }
   }
@@ -92,26 +75,6 @@ query get_business_by_id($id: Int!) {
 
 query get_business_by_rental_category1($distance: Float!, $from: geography!, $category1: String, $offset: Int, $limit: Int) {
   business_business(where: {_and: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}, rentals: {service: {category1: {_eq: $category1}}}}}, offset: $offset, limit: $limit) {
-    id
-    details {
-      id
-      accepted_payments
-      image
-      name
-    }
-    reviews_aggregate {
-      aggregate {
-        avg {
-          rating
-        }
-        count
-      }
-    }
-  }
-}
-
-query get_business_by_class_category1($distance: Float!, $from: geography!, $category1: String, $offset: Int, $limit: Int) {
-  business_business(where: {_and: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}, classes: {service: {category1: {_eq: $category1}}}}}, offset: $offset, limit: $limit) {
     id
     details {
       id

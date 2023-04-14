@@ -1,25 +1,6 @@
 query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category1: String, $categories2: [String!]) {
-  business_rental(
-    where: {
-      _and: {
-        service: {
-          _and: {
-            category1: {_eq: $category1}, 
-            category2: {_in: $categories2}
-          }
-        }, 
-        business: {
-          details: {
-            location: {
-              gps: {
-                _st_d_within: {distance: $distance, from: $from}
-              }
-            }
-          }
-        }
-      }
-    }, limit: $limit, offset: $offset) {
-    service {
+  business_rental(where: {_and: {details: {_and: {category1: {_eq: $category1}, category2: {_in: $categories2}}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
+    details {
       id
       name {
         translations {
@@ -30,11 +11,14 @@ query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, 
       additional_parameters
       available
       category1
+      category2
       cost
       image
       position
+      tags
     }
     id
+    category3
     business {
       id
       details {
@@ -45,6 +29,12 @@ query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, 
           address
         }
       }
+    }
+    home_rental {
+      bathrooms
+      bedrooms
+      gps_location
+      home_type
     }
   }
 }
@@ -72,10 +62,12 @@ query get_rental_by_id($id: Int!) {
         }
       }
     }
-    service {
+    details {
       additional_parameters
       available
+      tags
       category1
+      category2
       cost
       description {
         translations {
@@ -93,6 +85,13 @@ query get_rental_by_id($id: Int!) {
       }
       position
     }
+    category3
+    home_rental {
+      bathrooms
+      bedrooms
+      gps_location
+      home_type
+    }
   }
 }
 
@@ -101,10 +100,11 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
     bathrooms
     bedrooms
     gps_location
-    homeType
+    home_type
     rental {
       id
-      service {
+      category3
+      details {
         id
         name {
           translations {
@@ -118,9 +118,11 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
             value
           }
         }
+        tags
         additional_parameters
         available
         category1
+        category2
         cost
         image
         position
@@ -130,72 +132,6 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
         details {
           id
           name
-        }
-      }
-    }
-  }
-}
-
-query get_home_rental_by_id($rental_id: Int!) {
-  business_home_rental_by_pk(rental_id: $rental_id) {
-    bathrooms
-    bedrooms
-    gps_location
-    homeType
-    rental {
-      business {
-        id
-        details {
-          id
-          accepted_payments
-          image
-          name
-        }
-        reviews_aggregate {
-          aggregate {
-            avg {
-              rating
-            }
-            count
-          }
-        }
-      }
-      service {
-        additional_parameters
-        available
-        category1
-        cost
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        image
-        id
-        name {
-          translations {
-            language_id
-            value
-          }
-        }
-        position
-      }
-      business {
-        id
-        details {
-          accepted_payments
-          id
-          name
-          image
-        }
-        reviews_aggregate {
-          aggregate {
-            avg {
-              rating
-            }
-            count
-          }
         }
       }
     }

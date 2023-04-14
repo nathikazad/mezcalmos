@@ -1,7 +1,7 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class MinimalBusiness {
+class BusinessCard {
   int id;
   int detailsId;
   String name;
@@ -10,7 +10,7 @@ class MinimalBusiness {
   double? avgRating;
   int? reviewCount;
 
-  MinimalBusiness(
+  BusinessCard(
       {required this.id,
       required this.detailsId,
       required this.name,
@@ -58,7 +58,7 @@ class EventCard extends Event {
 }
 
 class RentalWithBusinessCard extends Rental {
-  final BusinessCardView business;
+  final BusinessCard business;
   RentalWithBusinessCard({
     required Rental rental,
     required this.business,
@@ -73,7 +73,7 @@ class RentalWithBusinessCard extends Rental {
 }
 
 class EventWithBusinessCard extends Event {
-  final BusinessCardView business;
+  final BusinessCard business;
   EventWithBusinessCard({
     required Event event,
     required this.business,

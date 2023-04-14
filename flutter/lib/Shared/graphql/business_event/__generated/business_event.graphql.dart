@@ -426,7 +426,7 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'service'),
+            name: NameNode(value: 'details'),
             alias: null,
             arguments: [],
             directives: [],
@@ -454,6 +454,13 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -706,7 +713,7 @@ class Query$get_event_by_id$business_event_by_pk {
     required this.schedule_type,
     this.gps_location,
     this.time,
-    required this.service,
+    required this.details,
     required this.$__typename,
   });
 
@@ -718,7 +725,7 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule_type = json['schedule_type'];
     final l$gps_location = json['gps_location'];
     final l$time = json['time'];
-    final l$service = json['service'];
+    final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$get_event_by_id$business_event_by_pk(
       business: Query$get_event_by_id$business_event_by_pk$business.fromJson(
@@ -729,8 +736,8 @@ class Query$get_event_by_id$business_event_by_pk {
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
       time: (l$time as String?),
-      service: Query$get_event_by_id$business_event_by_pk$service.fromJson(
-          (l$service as Map<String, dynamic>)),
+      details: Query$get_event_by_id$business_event_by_pk$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -747,7 +754,7 @@ class Query$get_event_by_id$business_event_by_pk {
 
   final String? time;
 
-  final Query$get_event_by_id$business_event_by_pk$service service;
+  final Query$get_event_by_id$business_event_by_pk$details details;
 
   final String $__typename;
 
@@ -766,8 +773,8 @@ class Query$get_event_by_id$business_event_by_pk {
         l$gps_location == null ? null : geographyToJson(l$gps_location);
     final l$time = time;
     _resultData['time'] = l$time;
-    final l$service = service;
-    _resultData['service'] = l$service.toJson();
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -781,7 +788,7 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule_type = schedule_type;
     final l$gps_location = gps_location;
     final l$time = time;
-    final l$service = service;
+    final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$business,
@@ -790,7 +797,7 @@ class Query$get_event_by_id$business_event_by_pk {
       l$schedule_type,
       l$gps_location,
       l$time,
-      l$service,
+      l$details,
       l$$__typename,
     ]);
   }
@@ -834,9 +841,9 @@ class Query$get_event_by_id$business_event_by_pk {
     if (l$time != lOther$time) {
       return false;
     }
-    final l$service = service;
-    final lOther$service = other.service;
-    if (l$service != lOther$service) {
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -874,12 +881,12 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk<TRes> {
     String? schedule_type,
     Geography? gps_location,
     String? time,
-    Query$get_event_by_id$business_event_by_pk$service? service,
+    Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
   });
   CopyWith$Query$get_event_by_id$business_event_by_pk$business<TRes>
       get business;
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service<TRes> get service;
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details<TRes> get details;
 }
 
 class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
@@ -902,7 +909,7 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     Object? schedule_type = _undefined,
     Object? gps_location = _undefined,
     Object? time = _undefined,
-    Object? service = _undefined,
+    Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_event_by_id$business_event_by_pk(
@@ -920,9 +927,9 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
             ? _instance.gps_location
             : (gps_location as Geography?),
         time: time == _undefined ? _instance.time : (time as String?),
-        service: service == _undefined || service == null
-            ? _instance.service
-            : (service as Query$get_event_by_id$business_event_by_pk$service),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as Query$get_event_by_id$business_event_by_pk$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -934,11 +941,11 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
         local$business, (e) => call(business: e));
   }
 
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service<TRes>
-      get service {
-    final local$service = _instance.service;
-    return CopyWith$Query$get_event_by_id$business_event_by_pk$service(
-        local$service, (e) => call(service: e));
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_event_by_id$business_event_by_pk$details(
+        local$details, (e) => call(details: e));
   }
 }
 
@@ -955,7 +962,7 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     String? schedule_type,
     Geography? gps_location,
     String? time,
-    Query$get_event_by_id$business_event_by_pk$service? service,
+    Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
   }) =>
       _res;
@@ -963,9 +970,9 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk<TRes>
       get business =>
           CopyWith$Query$get_event_by_id$business_event_by_pk$business.stub(
               _res);
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service<TRes>
-      get service =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service.stub(
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details<TRes>
+      get details =>
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details.stub(
               _res);
 }
 
@@ -1876,12 +1883,13 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$business$revi
       _res;
 }
 
-class Query$get_event_by_id$business_event_by_pk$service {
-  Query$get_event_by_id$business_event_by_pk$service({
+class Query$get_event_by_id$business_event_by_pk$details {
+  Query$get_event_by_id$business_event_by_pk$details({
     this.additional_parameters,
     required this.available,
     required this.category1,
     required this.cost,
+    this.tags,
     this.description,
     required this.id,
     this.image,
@@ -1890,32 +1898,34 @@ class Query$get_event_by_id$business_event_by_pk$service {
     required this.$__typename,
   });
 
-  factory Query$get_event_by_id$business_event_by_pk$service.fromJson(
+  factory Query$get_event_by_id$business_event_by_pk$details.fromJson(
       Map<String, dynamic> json) {
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
     final l$cost = json['cost'];
+    final l$tags = json['tags'];
     final l$description = json['description'];
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
     final l$position = json['position'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_id$business_event_by_pk$service(
+    return Query$get_event_by_id$business_event_by_pk$details(
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
       available: (l$available as bool),
       category1: (l$category1 as String),
       cost: mapFromJson(l$cost),
+      tags: l$tags == null ? null : mapFromJson(l$tags),
       description: l$description == null
           ? null
-          : Query$get_event_by_id$business_event_by_pk$service$description
+          : Query$get_event_by_id$business_event_by_pk$details$description
               .fromJson((l$description as Map<String, dynamic>)),
       id: (l$id as int),
       image: l$image == null ? null : mapFromJson(l$image),
-      name: Query$get_event_by_id$business_event_by_pk$service$name.fromJson(
+      name: Query$get_event_by_id$business_event_by_pk$details$name.fromJson(
           (l$name as Map<String, dynamic>)),
       position: (l$position as int),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1930,14 +1940,16 @@ class Query$get_event_by_id$business_event_by_pk$service {
 
   final dynamic cost;
 
-  final Query$get_event_by_id$business_event_by_pk$service$description?
+  final dynamic? tags;
+
+  final Query$get_event_by_id$business_event_by_pk$details$description?
       description;
 
   final int id;
 
   final dynamic? image;
 
-  final Query$get_event_by_id$business_event_by_pk$service$name name;
+  final Query$get_event_by_id$business_event_by_pk$details$name name;
 
   final int position;
 
@@ -1955,6 +1967,8 @@ class Query$get_event_by_id$business_event_by_pk$service {
     _resultData['category1'] = l$category1;
     final l$cost = cost;
     _resultData['cost'] = mapToJson(l$cost);
+    final l$tags = tags;
+    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$id = id;
@@ -1976,6 +1990,7 @@ class Query$get_event_by_id$business_event_by_pk$service {
     final l$available = available;
     final l$category1 = category1;
     final l$cost = cost;
+    final l$tags = tags;
     final l$description = description;
     final l$id = id;
     final l$image = image;
@@ -1987,6 +2002,7 @@ class Query$get_event_by_id$business_event_by_pk$service {
       l$available,
       l$category1,
       l$cost,
+      l$tags,
       l$description,
       l$id,
       l$image,
@@ -2001,7 +2017,7 @@ class Query$get_event_by_id$business_event_by_pk$service {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_event_by_id$business_event_by_pk$service) ||
+    if (!(other is Query$get_event_by_id$business_event_by_pk$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2023,6 +2039,11 @@ class Query$get_event_by_id$business_event_by_pk$service {
     final l$cost = cost;
     final lOther$cost = other.cost;
     if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
       return false;
     }
     final l$description = description;
@@ -2059,57 +2080,58 @@ class Query$get_event_by_id$business_event_by_pk$service {
   }
 }
 
-extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$service
-    on Query$get_event_by_id$business_event_by_pk$service {
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service<
-          Query$get_event_by_id$business_event_by_pk$service>
+extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$details
+    on Query$get_event_by_id$business_event_by_pk$details {
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details<
+          Query$get_event_by_id$business_event_by_pk$details>
       get copyWith =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service(
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$service<
+abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$details<
     TRes> {
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service(
-    Query$get_event_by_id$business_event_by_pk$service instance,
-    TRes Function(Query$get_event_by_id$business_event_by_pk$service) then,
-  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service;
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details(
+    Query$get_event_by_id$business_event_by_pk$details instance,
+    TRes Function(Query$get_event_by_id$business_event_by_pk$details) then,
+  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details;
 
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service.stub(
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service;
+      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details;
 
   TRes call({
     dynamic? additional_parameters,
     bool? available,
     String? category1,
     dynamic? cost,
-    Query$get_event_by_id$business_event_by_pk$service$description? description,
+    dynamic? tags,
+    Query$get_event_by_id$business_event_by_pk$details$description? description,
     int? id,
     dynamic? image,
-    Query$get_event_by_id$business_event_by_pk$service$name? name,
+    Query$get_event_by_id$business_event_by_pk$details$name? name,
     int? position,
     String? $__typename,
   });
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$description<TRes>
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$description<TRes>
       get description;
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$name<TRes>
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$name<TRes>
       get name;
 }
 
-class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service<TRes>
+class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service<TRes> {
-  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service(
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details<TRes> {
+  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_id$business_event_by_pk$service _instance;
+  final Query$get_event_by_id$business_event_by_pk$details _instance;
 
-  final TRes Function(Query$get_event_by_id$business_event_by_pk$service) _then;
+  final TRes Function(Query$get_event_by_id$business_event_by_pk$details) _then;
 
   static const _undefined = {};
 
@@ -2118,6 +2140,7 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service<TRes>
     Object? available = _undefined,
     Object? category1 = _undefined,
     Object? cost = _undefined,
+    Object? tags = _undefined,
     Object? description = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
@@ -2125,7 +2148,7 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service<TRes>
     Object? position = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_event_by_id$business_event_by_pk$service(
+      _then(Query$get_event_by_id$business_event_by_pk$details(
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -2138,15 +2161,16 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service<TRes>
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as dynamic),
+        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
         description: description == _undefined
             ? _instance.description
             : (description
-                as Query$get_event_by_id$business_event_by_pk$service$description?),
+                as Query$get_event_by_id$business_event_by_pk$details$description?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as dynamic?),
         name: name == _undefined || name == null
             ? _instance.name
-            : (name as Query$get_event_by_id$business_event_by_pk$service$name),
+            : (name as Query$get_event_by_id$business_event_by_pk$details$name),
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
@@ -2154,28 +2178,28 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$description<TRes>
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$description<TRes>
       get description {
     final local$description = _instance.description;
     return local$description == null
-        ? CopyWith$Query$get_event_by_id$business_event_by_pk$service$description
+        ? CopyWith$Query$get_event_by_id$business_event_by_pk$details$description
             .stub(_then(_instance))
-        : CopyWith$Query$get_event_by_id$business_event_by_pk$service$description(
+        : CopyWith$Query$get_event_by_id$business_event_by_pk$details$description(
             local$description, (e) => call(description: e));
   }
 
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$name<TRes>
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$name<TRes>
       get name {
     final local$name = _instance.name;
-    return CopyWith$Query$get_event_by_id$business_event_by_pk$service$name(
+    return CopyWith$Query$get_event_by_id$business_event_by_pk$details$name(
         local$name, (e) => call(name: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service<TRes>
+class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service<TRes> {
-  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service(
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details<TRes> {
+  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details(
       this._res);
 
   TRes _res;
@@ -2185,38 +2209,39 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service<TRes>
     bool? available,
     String? category1,
     dynamic? cost,
-    Query$get_event_by_id$business_event_by_pk$service$description? description,
+    dynamic? tags,
+    Query$get_event_by_id$business_event_by_pk$details$description? description,
     int? id,
     dynamic? image,
-    Query$get_event_by_id$business_event_by_pk$service$name? name,
+    Query$get_event_by_id$business_event_by_pk$details$name? name,
     int? position,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$description<TRes>
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$description<TRes>
       get description =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service$description
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details$description
               .stub(_res);
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$name<TRes>
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$name<TRes>
       get name =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service$name.stub(
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details$name.stub(
               _res);
 }
 
-class Query$get_event_by_id$business_event_by_pk$service$description {
-  Query$get_event_by_id$business_event_by_pk$service$description({
+class Query$get_event_by_id$business_event_by_pk$details$description {
+  Query$get_event_by_id$business_event_by_pk$details$description({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_event_by_id$business_event_by_pk$service$description.fromJson(
+  factory Query$get_event_by_id$business_event_by_pk$details$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_id$business_event_by_pk$service$description(
+    return Query$get_event_by_id$business_event_by_pk$details$description(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_event_by_id$business_event_by_pk$service$description$translations
+              Query$get_event_by_id$business_event_by_pk$details$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2224,7 +2249,7 @@ class Query$get_event_by_id$business_event_by_pk$service$description {
   }
 
   final List<
-          Query$get_event_by_id$business_event_by_pk$service$description$translations>
+          Query$get_event_by_id$business_event_by_pk$details$description$translations>
       translations;
 
   final String $__typename;
@@ -2255,7 +2280,7 @@ class Query$get_event_by_id$business_event_by_pk$service$description {
       return true;
     }
     if (!(other
-            is Query$get_event_by_id$business_event_by_pk$service$description) ||
+            is Query$get_event_by_id$business_event_by_pk$details$description) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2280,58 +2305,58 @@ class Query$get_event_by_id$business_event_by_pk$service$description {
   }
 }
 
-extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$service$description
-    on Query$get_event_by_id$business_event_by_pk$service$description {
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$description<
-          Query$get_event_by_id$business_event_by_pk$service$description>
+extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$details$description
+    on Query$get_event_by_id$business_event_by_pk$details$description {
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$description<
+          Query$get_event_by_id$business_event_by_pk$details$description>
       get copyWith =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service$description(
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details$description(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$service$description<
+abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$details$description<
     TRes> {
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$description(
-    Query$get_event_by_id$business_event_by_pk$service$description instance,
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$description(
+    Query$get_event_by_id$business_event_by_pk$details$description instance,
     TRes Function(
-            Query$get_event_by_id$business_event_by_pk$service$description)
+            Query$get_event_by_id$business_event_by_pk$details$description)
         then,
-  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$description;
+  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$description;
 
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$description.stub(
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$description.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$description;
+      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$description;
 
   TRes call({
-    List<Query$get_event_by_id$business_event_by_pk$service$description$translations>?
+    List<Query$get_event_by_id$business_event_by_pk$details$description$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_event_by_id$business_event_by_pk$service$description$translations> Function(
+      Iterable<Query$get_event_by_id$business_event_by_pk$details$description$translations> Function(
               Iterable<
-                  CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations<
-                      Query$get_event_by_id$business_event_by_pk$service$description$translations>>)
+                  CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations<
+                      Query$get_event_by_id$business_event_by_pk$details$description$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$description<
+class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$description<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$description<
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$description<
             TRes> {
-  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$description(
+  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$description(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_id$business_event_by_pk$service$description
+  final Query$get_event_by_id$business_event_by_pk$details$description
       _instance;
 
   final TRes Function(
-      Query$get_event_by_id$business_event_by_pk$service$description) _then;
+      Query$get_event_by_id$business_event_by_pk$details$description) _then;
 
   static const _undefined = {};
 
@@ -2339,41 +2364,41 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$descripti
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_event_by_id$business_event_by_pk$service$description(
+      _then(Query$get_event_by_id$business_event_by_pk$details$description(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_event_by_id$business_event_by_pk$service$description$translations>),
+                Query$get_event_by_id$business_event_by_pk$details$description$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_event_by_id$business_event_by_pk$service$description$translations> Function(
+          Iterable<Query$get_event_by_id$business_event_by_pk$details$description$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations<
-                          Query$get_event_by_id$business_event_by_pk$service$description$translations>>)
+                      CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations<
+                          Query$get_event_by_id$business_event_by_pk$details$description$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations(
+              CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$description<
+class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$description<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$description<
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$description<
             TRes> {
-  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$description(
+  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$description(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_event_by_id$business_event_by_pk$service$description$translations>?
+    List<Query$get_event_by_id$business_event_by_pk$details$description$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -2381,19 +2406,19 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$descr
   translations(_fn) => _res;
 }
 
-class Query$get_event_by_id$business_event_by_pk$service$description$translations {
-  Query$get_event_by_id$business_event_by_pk$service$description$translations({
+class Query$get_event_by_id$business_event_by_pk$details$description$translations {
+  Query$get_event_by_id$business_event_by_pk$details$description$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_event_by_id$business_event_by_pk$service$description$translations.fromJson(
+  factory Query$get_event_by_id$business_event_by_pk$details$description$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_id$business_event_by_pk$service$description$translations(
+    return Query$get_event_by_id$business_event_by_pk$details$description$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2435,7 +2460,7 @@ class Query$get_event_by_id$business_event_by_pk$service$description$translation
       return true;
     }
     if (!(other
-            is Query$get_event_by_id$business_event_by_pk$service$description$translations) ||
+            is Query$get_event_by_id$business_event_by_pk$details$description$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2458,30 +2483,30 @@ class Query$get_event_by_id$business_event_by_pk$service$description$translation
   }
 }
 
-extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$service$description$translations
-    on Query$get_event_by_id$business_event_by_pk$service$description$translations {
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations<
-          Query$get_event_by_id$business_event_by_pk$service$description$translations>
+extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$details$description$translations
+    on Query$get_event_by_id$business_event_by_pk$details$description$translations {
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations<
+          Query$get_event_by_id$business_event_by_pk$details$description$translations>
       get copyWith =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations(
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations<
+abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations<
     TRes> {
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations(
-    Query$get_event_by_id$business_event_by_pk$service$description$translations
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations(
+    Query$get_event_by_id$business_event_by_pk$details$description$translations
         instance,
     TRes Function(
-            Query$get_event_by_id$business_event_by_pk$service$description$translations)
+            Query$get_event_by_id$business_event_by_pk$details$description$translations)
         then,
-  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$description$translations;
+  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$description$translations;
 
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations.stub(
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$description$translations;
+      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$description$translations;
 
   TRes call({
     String? language_id,
@@ -2490,21 +2515,21 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$service$descr
   });
 }
 
-class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$description$translations<
+class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$description$translations<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations<
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations<
             TRes> {
-  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$description$translations(
+  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$description$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_id$business_event_by_pk$service$description$translations
+  final Query$get_event_by_id$business_event_by_pk$details$description$translations
       _instance;
 
   final TRes Function(
-          Query$get_event_by_id$business_event_by_pk$service$description$translations)
+          Query$get_event_by_id$business_event_by_pk$details$description$translations)
       _then;
 
   static const _undefined = {};
@@ -2515,7 +2540,7 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$descripti
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$get_event_by_id$business_event_by_pk$service$description$translations(
+          Query$get_event_by_id$business_event_by_pk$details$description$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -2528,12 +2553,12 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$descripti
       ));
 }
 
-class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$description$translations<
+class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$description$translations<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$description$translations<
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$description$translations<
             TRes> {
-  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$description$translations(
+  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$description$translations(
       this._res);
 
   TRes _res;
@@ -2546,20 +2571,20 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$descr
       _res;
 }
 
-class Query$get_event_by_id$business_event_by_pk$service$name {
-  Query$get_event_by_id$business_event_by_pk$service$name({
+class Query$get_event_by_id$business_event_by_pk$details$name {
+  Query$get_event_by_id$business_event_by_pk$details$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_event_by_id$business_event_by_pk$service$name.fromJson(
+  factory Query$get_event_by_id$business_event_by_pk$details$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_id$business_event_by_pk$service$name(
+    return Query$get_event_by_id$business_event_by_pk$details$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_event_by_id$business_event_by_pk$service$name$translations
+              Query$get_event_by_id$business_event_by_pk$details$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2567,7 +2592,7 @@ class Query$get_event_by_id$business_event_by_pk$service$name {
   }
 
   final List<
-          Query$get_event_by_id$business_event_by_pk$service$name$translations>
+          Query$get_event_by_id$business_event_by_pk$details$name$translations>
       translations;
 
   final String $__typename;
@@ -2597,7 +2622,7 @@ class Query$get_event_by_id$business_event_by_pk$service$name {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_event_by_id$business_event_by_pk$service$name) ||
+    if (!(other is Query$get_event_by_id$business_event_by_pk$details$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2622,53 +2647,53 @@ class Query$get_event_by_id$business_event_by_pk$service$name {
   }
 }
 
-extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$service$name
-    on Query$get_event_by_id$business_event_by_pk$service$name {
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$name<
-          Query$get_event_by_id$business_event_by_pk$service$name>
+extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$details$name
+    on Query$get_event_by_id$business_event_by_pk$details$name {
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$name<
+          Query$get_event_by_id$business_event_by_pk$details$name>
       get copyWith =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service$name(
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$service$name<
+abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$details$name<
     TRes> {
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$name(
-    Query$get_event_by_id$business_event_by_pk$service$name instance,
-    TRes Function(Query$get_event_by_id$business_event_by_pk$service$name) then,
-  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name;
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$name(
+    Query$get_event_by_id$business_event_by_pk$details$name instance,
+    TRes Function(Query$get_event_by_id$business_event_by_pk$details$name) then,
+  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$name;
 
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$name.stub(
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$name;
+      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name;
 
   TRes call({
-    List<Query$get_event_by_id$business_event_by_pk$service$name$translations>?
+    List<Query$get_event_by_id$business_event_by_pk$details$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_event_by_id$business_event_by_pk$service$name$translations> Function(
+      Iterable<Query$get_event_by_id$business_event_by_pk$details$name$translations> Function(
               Iterable<
-                  CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations<
-                      Query$get_event_by_id$business_event_by_pk$service$name$translations>>)
+                  CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations<
+                      Query$get_event_by_id$business_event_by_pk$details$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name<
+class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$name<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$name<TRes> {
-  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name(
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$name<TRes> {
+  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$name(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_id$business_event_by_pk$service$name _instance;
+  final Query$get_event_by_id$business_event_by_pk$details$name _instance;
 
-  final TRes Function(Query$get_event_by_id$business_event_by_pk$service$name)
+  final TRes Function(Query$get_event_by_id$business_event_by_pk$details$name)
       _then;
 
   static const _undefined = {};
@@ -2677,40 +2702,40 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name<
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_event_by_id$business_event_by_pk$service$name(
+      _then(Query$get_event_by_id$business_event_by_pk$details$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_event_by_id$business_event_by_pk$service$name$translations>),
+                Query$get_event_by_id$business_event_by_pk$details$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_event_by_id$business_event_by_pk$service$name$translations> Function(
+          Iterable<Query$get_event_by_id$business_event_by_pk$details$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations<
-                          Query$get_event_by_id$business_event_by_pk$service$name$translations>>)
+                      CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations<
+                          Query$get_event_by_id$business_event_by_pk$details$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations(
+              CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$name<
+class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$name<TRes> {
-  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$name(
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$name<TRes> {
+  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_event_by_id$business_event_by_pk$service$name$translations>?
+    List<Query$get_event_by_id$business_event_by_pk$details$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -2718,19 +2743,19 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$name<
   translations(_fn) => _res;
 }
 
-class Query$get_event_by_id$business_event_by_pk$service$name$translations {
-  Query$get_event_by_id$business_event_by_pk$service$name$translations({
+class Query$get_event_by_id$business_event_by_pk$details$name$translations {
+  Query$get_event_by_id$business_event_by_pk$details$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_event_by_id$business_event_by_pk$service$name$translations.fromJson(
+  factory Query$get_event_by_id$business_event_by_pk$details$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_id$business_event_by_pk$service$name$translations(
+    return Query$get_event_by_id$business_event_by_pk$details$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2772,7 +2797,7 @@ class Query$get_event_by_id$business_event_by_pk$service$name$translations {
       return true;
     }
     if (!(other
-            is Query$get_event_by_id$business_event_by_pk$service$name$translations) ||
+            is Query$get_event_by_id$business_event_by_pk$details$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2795,30 +2820,30 @@ class Query$get_event_by_id$business_event_by_pk$service$name$translations {
   }
 }
 
-extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$service$name$translations
-    on Query$get_event_by_id$business_event_by_pk$service$name$translations {
-  CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations<
-          Query$get_event_by_id$business_event_by_pk$service$name$translations>
+extension UtilityExtension$Query$get_event_by_id$business_event_by_pk$details$name$translations
+    on Query$get_event_by_id$business_event_by_pk$details$name$translations {
+  CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations<
+          Query$get_event_by_id$business_event_by_pk$details$name$translations>
       get copyWith =>
-          CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations(
+          CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations<
+abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations<
     TRes> {
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations(
-    Query$get_event_by_id$business_event_by_pk$service$name$translations
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations(
+    Query$get_event_by_id$business_event_by_pk$details$name$translations
         instance,
     TRes Function(
-            Query$get_event_by_id$business_event_by_pk$service$name$translations)
+            Query$get_event_by_id$business_event_by_pk$details$name$translations)
         then,
-  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name$translations;
+  ) = _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$name$translations;
 
-  factory CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations.stub(
+  factory CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$name$translations;
+      _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name$translations;
 
   TRes call({
     String? language_id,
@@ -2827,21 +2852,21 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$
   });
 }
 
-class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name$translations<
+class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations<
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations<
             TRes> {
-  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name$translations(
+  _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_id$business_event_by_pk$service$name$translations
+  final Query$get_event_by_id$business_event_by_pk$details$name$translations
       _instance;
 
   final TRes Function(
-          Query$get_event_by_id$business_event_by_pk$service$name$translations)
+          Query$get_event_by_id$business_event_by_pk$details$name$translations)
       _then;
 
   static const _undefined = {};
@@ -2852,7 +2877,7 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name$tran
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$get_event_by_id$business_event_by_pk$service$name$translations(
+          Query$get_event_by_id$business_event_by_pk$details$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -2865,12 +2890,12 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$service$name$tran
       ));
 }
 
-class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$name$translations<
+class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_event_by_id$business_event_by_pk$service$name$translations<
+        CopyWith$Query$get_event_by_id$business_event_by_pk$details$name$translations<
             TRes> {
-  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$service$name$translations(
+  _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name$translations(
       this._res);
 
   TRes _res;
@@ -3437,7 +3462,7 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                 name: NameNode(value: '_and'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'service'),
+                    name: NameNode(value: 'details'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
                         name: NameNode(value: '_and'),
@@ -3570,7 +3595,7 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'service'),
+            name: NameNode(value: 'details'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3649,6 +3674,13 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -3918,7 +3950,7 @@ extension ClientExtension$Query$get_event_by_category on graphql.GraphQLClient {
 
 class Query$get_event_by_category$business_event {
   Query$get_event_by_category$business_event({
-    required this.service,
+    required this.details,
     required this.id,
     this.gps_location,
     required this.schedule_type,
@@ -3930,7 +3962,7 @@ class Query$get_event_by_category$business_event {
 
   factory Query$get_event_by_category$business_event.fromJson(
       Map<String, dynamic> json) {
-    final l$service = json['service'];
+    final l$details = json['details'];
     final l$id = json['id'];
     final l$gps_location = json['gps_location'];
     final l$schedule_type = json['schedule_type'];
@@ -3939,8 +3971,8 @@ class Query$get_event_by_category$business_event {
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$get_event_by_category$business_event(
-      service: Query$get_event_by_category$business_event$service.fromJson(
-          (l$service as Map<String, dynamic>)),
+      details: Query$get_event_by_category$business_event$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
@@ -3953,7 +3985,7 @@ class Query$get_event_by_category$business_event {
     );
   }
 
-  final Query$get_event_by_category$business_event$service service;
+  final Query$get_event_by_category$business_event$details details;
 
   final int id;
 
@@ -3971,8 +4003,8 @@ class Query$get_event_by_category$business_event {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$service = service;
-    _resultData['service'] = l$service.toJson();
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$gps_location = gps_location;
@@ -3993,7 +4025,7 @@ class Query$get_event_by_category$business_event {
 
   @override
   int get hashCode {
-    final l$service = service;
+    final l$details = details;
     final l$id = id;
     final l$gps_location = gps_location;
     final l$schedule_type = schedule_type;
@@ -4002,7 +4034,7 @@ class Query$get_event_by_category$business_event {
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$service,
+      l$details,
       l$id,
       l$gps_location,
       l$schedule_type,
@@ -4022,9 +4054,9 @@ class Query$get_event_by_category$business_event {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$service = service;
-    final lOther$service = other.service;
-    if (l$service != lOther$service) {
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
       return false;
     }
     final l$id = id;
@@ -4086,7 +4118,7 @@ abstract class CopyWith$Query$get_event_by_category$business_event<TRes> {
       _CopyWithStubImpl$Query$get_event_by_category$business_event;
 
   TRes call({
-    Query$get_event_by_category$business_event$service? service,
+    Query$get_event_by_category$business_event$details? details,
     int? id,
     Geography? gps_location,
     String? schedule_type,
@@ -4095,7 +4127,7 @@ abstract class CopyWith$Query$get_event_by_category$business_event<TRes> {
     Query$get_event_by_category$business_event$business? business,
     String? $__typename,
   });
-  CopyWith$Query$get_event_by_category$business_event$service<TRes> get service;
+  CopyWith$Query$get_event_by_category$business_event$details<TRes> get details;
   CopyWith$Query$get_event_by_category$business_event$business<TRes>
       get business;
 }
@@ -4114,7 +4146,7 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? service = _undefined,
+    Object? details = _undefined,
     Object? id = _undefined,
     Object? gps_location = _undefined,
     Object? schedule_type = _undefined,
@@ -4124,9 +4156,9 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_event_by_category$business_event(
-        service: service == _undefined || service == null
-            ? _instance.service
-            : (service as Query$get_event_by_category$business_event$service),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as Query$get_event_by_category$business_event$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         gps_location: gps_location == _undefined
             ? _instance.gps_location
@@ -4145,11 +4177,11 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_event_by_category$business_event$service<TRes>
-      get service {
-    final local$service = _instance.service;
-    return CopyWith$Query$get_event_by_category$business_event$service(
-        local$service, (e) => call(service: e));
+  CopyWith$Query$get_event_by_category$business_event$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_event_by_category$business_event$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_event_by_category$business_event$business<TRes>
@@ -4167,7 +4199,7 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event<TRes>
   TRes _res;
 
   call({
-    Query$get_event_by_category$business_event$service? service,
+    Query$get_event_by_category$business_event$details? details,
     int? id,
     Geography? gps_location,
     String? schedule_type,
@@ -4177,9 +4209,9 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event<TRes>
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_event_by_category$business_event$service<TRes>
-      get service =>
-          CopyWith$Query$get_event_by_category$business_event$service.stub(
+  CopyWith$Query$get_event_by_category$business_event$details<TRes>
+      get details =>
+          CopyWith$Query$get_event_by_category$business_event$details.stub(
               _res);
   CopyWith$Query$get_event_by_category$business_event$business<TRes>
       get business =>
@@ -4187,20 +4219,21 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event<TRes>
               _res);
 }
 
-class Query$get_event_by_category$business_event$service {
-  Query$get_event_by_category$business_event$service({
+class Query$get_event_by_category$business_event$details {
+  Query$get_event_by_category$business_event$details({
     required this.id,
     required this.name,
     this.additional_parameters,
     required this.available,
     required this.category1,
     required this.cost,
+    this.tags,
     this.image,
     required this.position,
     required this.$__typename,
   });
 
-  factory Query$get_event_by_category$business_event$service.fromJson(
+  factory Query$get_event_by_category$business_event$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -4208,12 +4241,13 @@ class Query$get_event_by_category$business_event$service {
     final l$available = json['available'];
     final l$category1 = json['category1'];
     final l$cost = json['cost'];
+    final l$tags = json['tags'];
     final l$image = json['image'];
     final l$position = json['position'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_category$business_event$service(
+    return Query$get_event_by_category$business_event$details(
       id: (l$id as int),
-      name: Query$get_event_by_category$business_event$service$name.fromJson(
+      name: Query$get_event_by_category$business_event$details$name.fromJson(
           (l$name as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
@@ -4221,6 +4255,7 @@ class Query$get_event_by_category$business_event$service {
       available: (l$available as bool),
       category1: (l$category1 as String),
       cost: mapFromJson(l$cost),
+      tags: l$tags == null ? null : mapFromJson(l$tags),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4229,7 +4264,7 @@ class Query$get_event_by_category$business_event$service {
 
   final int id;
 
-  final Query$get_event_by_category$business_event$service$name name;
+  final Query$get_event_by_category$business_event$details$name name;
 
   final dynamic? additional_parameters;
 
@@ -4238,6 +4273,8 @@ class Query$get_event_by_category$business_event$service {
   final String category1;
 
   final dynamic cost;
+
+  final dynamic? tags;
 
   final dynamic? image;
 
@@ -4261,6 +4298,8 @@ class Query$get_event_by_category$business_event$service {
     _resultData['category1'] = l$category1;
     final l$cost = cost;
     _resultData['cost'] = mapToJson(l$cost);
+    final l$tags = tags;
+    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
     final l$image = image;
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
@@ -4278,6 +4317,7 @@ class Query$get_event_by_category$business_event$service {
     final l$available = available;
     final l$category1 = category1;
     final l$cost = cost;
+    final l$tags = tags;
     final l$image = image;
     final l$position = position;
     final l$$__typename = $__typename;
@@ -4288,6 +4328,7 @@ class Query$get_event_by_category$business_event$service {
       l$available,
       l$category1,
       l$cost,
+      l$tags,
       l$image,
       l$position,
       l$$__typename,
@@ -4299,7 +4340,7 @@ class Query$get_event_by_category$business_event$service {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_event_by_category$business_event$service) ||
+    if (!(other is Query$get_event_by_category$business_event$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4333,6 +4374,11 @@ class Query$get_event_by_category$business_event$service {
     if (l$cost != lOther$cost) {
       return false;
     }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
@@ -4352,54 +4398,55 @@ class Query$get_event_by_category$business_event$service {
   }
 }
 
-extension UtilityExtension$Query$get_event_by_category$business_event$service
-    on Query$get_event_by_category$business_event$service {
-  CopyWith$Query$get_event_by_category$business_event$service<
-          Query$get_event_by_category$business_event$service>
+extension UtilityExtension$Query$get_event_by_category$business_event$details
+    on Query$get_event_by_category$business_event$details {
+  CopyWith$Query$get_event_by_category$business_event$details<
+          Query$get_event_by_category$business_event$details>
       get copyWith =>
-          CopyWith$Query$get_event_by_category$business_event$service(
+          CopyWith$Query$get_event_by_category$business_event$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_category$business_event$service<
+abstract class CopyWith$Query$get_event_by_category$business_event$details<
     TRes> {
-  factory CopyWith$Query$get_event_by_category$business_event$service(
-    Query$get_event_by_category$business_event$service instance,
-    TRes Function(Query$get_event_by_category$business_event$service) then,
-  ) = _CopyWithImpl$Query$get_event_by_category$business_event$service;
+  factory CopyWith$Query$get_event_by_category$business_event$details(
+    Query$get_event_by_category$business_event$details instance,
+    TRes Function(Query$get_event_by_category$business_event$details) then,
+  ) = _CopyWithImpl$Query$get_event_by_category$business_event$details;
 
-  factory CopyWith$Query$get_event_by_category$business_event$service.stub(
+  factory CopyWith$Query$get_event_by_category$business_event$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_category$business_event$service;
+      _CopyWithStubImpl$Query$get_event_by_category$business_event$details;
 
   TRes call({
     int? id,
-    Query$get_event_by_category$business_event$service$name? name,
+    Query$get_event_by_category$business_event$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
     dynamic? cost,
+    dynamic? tags,
     dynamic? image,
     int? position,
     String? $__typename,
   });
-  CopyWith$Query$get_event_by_category$business_event$service$name<TRes>
+  CopyWith$Query$get_event_by_category$business_event$details$name<TRes>
       get name;
 }
 
-class _CopyWithImpl$Query$get_event_by_category$business_event$service<TRes>
+class _CopyWithImpl$Query$get_event_by_category$business_event$details<TRes>
     implements
-        CopyWith$Query$get_event_by_category$business_event$service<TRes> {
-  _CopyWithImpl$Query$get_event_by_category$business_event$service(
+        CopyWith$Query$get_event_by_category$business_event$details<TRes> {
+  _CopyWithImpl$Query$get_event_by_category$business_event$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_category$business_event$service _instance;
+  final Query$get_event_by_category$business_event$details _instance;
 
-  final TRes Function(Query$get_event_by_category$business_event$service) _then;
+  final TRes Function(Query$get_event_by_category$business_event$details) _then;
 
   static const _undefined = {};
 
@@ -4410,15 +4457,16 @@ class _CopyWithImpl$Query$get_event_by_category$business_event$service<TRes>
     Object? available = _undefined,
     Object? category1 = _undefined,
     Object? cost = _undefined,
+    Object? tags = _undefined,
     Object? image = _undefined,
     Object? position = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_event_by_category$business_event$service(
+      _then(Query$get_event_by_category$business_event$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
-            : (name as Query$get_event_by_category$business_event$service$name),
+            : (name as Query$get_event_by_category$business_event$details$name),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -4431,6 +4479,7 @@ class _CopyWithImpl$Query$get_event_by_category$business_event$service<TRes>
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as dynamic),
+        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
         image: image == _undefined ? _instance.image : (image as dynamic?),
         position: position == _undefined || position == null
             ? _instance.position
@@ -4439,54 +4488,55 @@ class _CopyWithImpl$Query$get_event_by_category$business_event$service<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_event_by_category$business_event$service$name<TRes>
+  CopyWith$Query$get_event_by_category$business_event$details$name<TRes>
       get name {
     final local$name = _instance.name;
-    return CopyWith$Query$get_event_by_category$business_event$service$name(
+    return CopyWith$Query$get_event_by_category$business_event$details$name(
         local$name, (e) => call(name: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_event_by_category$business_event$service<TRes>
+class _CopyWithStubImpl$Query$get_event_by_category$business_event$details<TRes>
     implements
-        CopyWith$Query$get_event_by_category$business_event$service<TRes> {
-  _CopyWithStubImpl$Query$get_event_by_category$business_event$service(
+        CopyWith$Query$get_event_by_category$business_event$details<TRes> {
+  _CopyWithStubImpl$Query$get_event_by_category$business_event$details(
       this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Query$get_event_by_category$business_event$service$name? name,
+    Query$get_event_by_category$business_event$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
     dynamic? cost,
+    dynamic? tags,
     dynamic? image,
     int? position,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_event_by_category$business_event$service$name<TRes>
+  CopyWith$Query$get_event_by_category$business_event$details$name<TRes>
       get name =>
-          CopyWith$Query$get_event_by_category$business_event$service$name.stub(
+          CopyWith$Query$get_event_by_category$business_event$details$name.stub(
               _res);
 }
 
-class Query$get_event_by_category$business_event$service$name {
-  Query$get_event_by_category$business_event$service$name({
+class Query$get_event_by_category$business_event$details$name {
+  Query$get_event_by_category$business_event$details$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_event_by_category$business_event$service$name.fromJson(
+  factory Query$get_event_by_category$business_event$details$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_category$business_event$service$name(
+    return Query$get_event_by_category$business_event$details$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_event_by_category$business_event$service$name$translations
+              Query$get_event_by_category$business_event$details$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4494,7 +4544,7 @@ class Query$get_event_by_category$business_event$service$name {
   }
 
   final List<
-          Query$get_event_by_category$business_event$service$name$translations>
+          Query$get_event_by_category$business_event$details$name$translations>
       translations;
 
   final String $__typename;
@@ -4524,7 +4574,7 @@ class Query$get_event_by_category$business_event$service$name {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_event_by_category$business_event$service$name) ||
+    if (!(other is Query$get_event_by_category$business_event$details$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4549,53 +4599,53 @@ class Query$get_event_by_category$business_event$service$name {
   }
 }
 
-extension UtilityExtension$Query$get_event_by_category$business_event$service$name
-    on Query$get_event_by_category$business_event$service$name {
-  CopyWith$Query$get_event_by_category$business_event$service$name<
-          Query$get_event_by_category$business_event$service$name>
+extension UtilityExtension$Query$get_event_by_category$business_event$details$name
+    on Query$get_event_by_category$business_event$details$name {
+  CopyWith$Query$get_event_by_category$business_event$details$name<
+          Query$get_event_by_category$business_event$details$name>
       get copyWith =>
-          CopyWith$Query$get_event_by_category$business_event$service$name(
+          CopyWith$Query$get_event_by_category$business_event$details$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_category$business_event$service$name<
+abstract class CopyWith$Query$get_event_by_category$business_event$details$name<
     TRes> {
-  factory CopyWith$Query$get_event_by_category$business_event$service$name(
-    Query$get_event_by_category$business_event$service$name instance,
-    TRes Function(Query$get_event_by_category$business_event$service$name) then,
-  ) = _CopyWithImpl$Query$get_event_by_category$business_event$service$name;
+  factory CopyWith$Query$get_event_by_category$business_event$details$name(
+    Query$get_event_by_category$business_event$details$name instance,
+    TRes Function(Query$get_event_by_category$business_event$details$name) then,
+  ) = _CopyWithImpl$Query$get_event_by_category$business_event$details$name;
 
-  factory CopyWith$Query$get_event_by_category$business_event$service$name.stub(
+  factory CopyWith$Query$get_event_by_category$business_event$details$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_category$business_event$service$name;
+      _CopyWithStubImpl$Query$get_event_by_category$business_event$details$name;
 
   TRes call({
-    List<Query$get_event_by_category$business_event$service$name$translations>?
+    List<Query$get_event_by_category$business_event$details$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_event_by_category$business_event$service$name$translations> Function(
+      Iterable<Query$get_event_by_category$business_event$details$name$translations> Function(
               Iterable<
-                  CopyWith$Query$get_event_by_category$business_event$service$name$translations<
-                      Query$get_event_by_category$business_event$service$name$translations>>)
+                  CopyWith$Query$get_event_by_category$business_event$details$name$translations<
+                      Query$get_event_by_category$business_event$details$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_event_by_category$business_event$service$name<
+class _CopyWithImpl$Query$get_event_by_category$business_event$details$name<
         TRes>
     implements
-        CopyWith$Query$get_event_by_category$business_event$service$name<TRes> {
-  _CopyWithImpl$Query$get_event_by_category$business_event$service$name(
+        CopyWith$Query$get_event_by_category$business_event$details$name<TRes> {
+  _CopyWithImpl$Query$get_event_by_category$business_event$details$name(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_category$business_event$service$name _instance;
+  final Query$get_event_by_category$business_event$details$name _instance;
 
-  final TRes Function(Query$get_event_by_category$business_event$service$name)
+  final TRes Function(Query$get_event_by_category$business_event$details$name)
       _then;
 
   static const _undefined = {};
@@ -4604,40 +4654,40 @@ class _CopyWithImpl$Query$get_event_by_category$business_event$service$name<
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_event_by_category$business_event$service$name(
+      _then(Query$get_event_by_category$business_event$details$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_event_by_category$business_event$service$name$translations>),
+                Query$get_event_by_category$business_event$details$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_event_by_category$business_event$service$name$translations> Function(
+          Iterable<Query$get_event_by_category$business_event$details$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_event_by_category$business_event$service$name$translations<
-                          Query$get_event_by_category$business_event$service$name$translations>>)
+                      CopyWith$Query$get_event_by_category$business_event$details$name$translations<
+                          Query$get_event_by_category$business_event$details$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_event_by_category$business_event$service$name$translations(
+              CopyWith$Query$get_event_by_category$business_event$details$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_event_by_category$business_event$service$name<
+class _CopyWithStubImpl$Query$get_event_by_category$business_event$details$name<
         TRes>
     implements
-        CopyWith$Query$get_event_by_category$business_event$service$name<TRes> {
-  _CopyWithStubImpl$Query$get_event_by_category$business_event$service$name(
+        CopyWith$Query$get_event_by_category$business_event$details$name<TRes> {
+  _CopyWithStubImpl$Query$get_event_by_category$business_event$details$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_event_by_category$business_event$service$name$translations>?
+    List<Query$get_event_by_category$business_event$details$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -4645,19 +4695,19 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event$service$name<
   translations(_fn) => _res;
 }
 
-class Query$get_event_by_category$business_event$service$name$translations {
-  Query$get_event_by_category$business_event$service$name$translations({
+class Query$get_event_by_category$business_event$details$name$translations {
+  Query$get_event_by_category$business_event$details$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_event_by_category$business_event$service$name$translations.fromJson(
+  factory Query$get_event_by_category$business_event$details$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_event_by_category$business_event$service$name$translations(
+    return Query$get_event_by_category$business_event$details$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4699,7 +4749,7 @@ class Query$get_event_by_category$business_event$service$name$translations {
       return true;
     }
     if (!(other
-            is Query$get_event_by_category$business_event$service$name$translations) ||
+            is Query$get_event_by_category$business_event$details$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4722,30 +4772,30 @@ class Query$get_event_by_category$business_event$service$name$translations {
   }
 }
 
-extension UtilityExtension$Query$get_event_by_category$business_event$service$name$translations
-    on Query$get_event_by_category$business_event$service$name$translations {
-  CopyWith$Query$get_event_by_category$business_event$service$name$translations<
-          Query$get_event_by_category$business_event$service$name$translations>
+extension UtilityExtension$Query$get_event_by_category$business_event$details$name$translations
+    on Query$get_event_by_category$business_event$details$name$translations {
+  CopyWith$Query$get_event_by_category$business_event$details$name$translations<
+          Query$get_event_by_category$business_event$details$name$translations>
       get copyWith =>
-          CopyWith$Query$get_event_by_category$business_event$service$name$translations(
+          CopyWith$Query$get_event_by_category$business_event$details$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_event_by_category$business_event$service$name$translations<
+abstract class CopyWith$Query$get_event_by_category$business_event$details$name$translations<
     TRes> {
-  factory CopyWith$Query$get_event_by_category$business_event$service$name$translations(
-    Query$get_event_by_category$business_event$service$name$translations
+  factory CopyWith$Query$get_event_by_category$business_event$details$name$translations(
+    Query$get_event_by_category$business_event$details$name$translations
         instance,
     TRes Function(
-            Query$get_event_by_category$business_event$service$name$translations)
+            Query$get_event_by_category$business_event$details$name$translations)
         then,
-  ) = _CopyWithImpl$Query$get_event_by_category$business_event$service$name$translations;
+  ) = _CopyWithImpl$Query$get_event_by_category$business_event$details$name$translations;
 
-  factory CopyWith$Query$get_event_by_category$business_event$service$name$translations.stub(
+  factory CopyWith$Query$get_event_by_category$business_event$details$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_event_by_category$business_event$service$name$translations;
+      _CopyWithStubImpl$Query$get_event_by_category$business_event$details$name$translations;
 
   TRes call({
     String? language_id,
@@ -4754,21 +4804,21 @@ abstract class CopyWith$Query$get_event_by_category$business_event$service$name$
   });
 }
 
-class _CopyWithImpl$Query$get_event_by_category$business_event$service$name$translations<
+class _CopyWithImpl$Query$get_event_by_category$business_event$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_event_by_category$business_event$service$name$translations<
+        CopyWith$Query$get_event_by_category$business_event$details$name$translations<
             TRes> {
-  _CopyWithImpl$Query$get_event_by_category$business_event$service$name$translations(
+  _CopyWithImpl$Query$get_event_by_category$business_event$details$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_event_by_category$business_event$service$name$translations
+  final Query$get_event_by_category$business_event$details$name$translations
       _instance;
 
   final TRes Function(
-          Query$get_event_by_category$business_event$service$name$translations)
+          Query$get_event_by_category$business_event$details$name$translations)
       _then;
 
   static const _undefined = {};
@@ -4779,7 +4829,7 @@ class _CopyWithImpl$Query$get_event_by_category$business_event$service$name$tran
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$get_event_by_category$business_event$service$name$translations(
+          Query$get_event_by_category$business_event$details$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -4792,12 +4842,12 @@ class _CopyWithImpl$Query$get_event_by_category$business_event$service$name$tran
       ));
 }
 
-class _CopyWithStubImpl$Query$get_event_by_category$business_event$service$name$translations<
+class _CopyWithStubImpl$Query$get_event_by_category$business_event$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_event_by_category$business_event$service$name$translations<
+        CopyWith$Query$get_event_by_category$business_event$details$name$translations<
             TRes> {
-  _CopyWithStubImpl$Query$get_event_by_category$business_event$service$name$translations(
+  _CopyWithStubImpl$Query$get_event_by_category$business_event$details$name$translations(
       this._res);
 
   TRes _res;

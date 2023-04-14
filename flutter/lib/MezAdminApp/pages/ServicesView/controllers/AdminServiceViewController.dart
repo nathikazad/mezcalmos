@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/hsAdminServiceProviders.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class AdminServicesViewController {
   late AdminTabsViewController adminTabsViewController;
@@ -26,7 +25,7 @@ class AdminServicesViewController {
   RxInt laundryLimit = RxInt(5);
 // getters //
   bool get hasData => _dvCompanies.value != null && _restaurants.value != null;
-  ServiceProviderType get currentService =>
+  cModels.ServiceProviderType get currentService =>
       adminTabsViewController.selectedServiceProviderType.value;
   List<Restaurant>? get restaurants => _restaurants.value;
   List<DeliveryCompany>? get companies => _dvCompanies.value;
@@ -62,7 +61,7 @@ class AdminServicesViewController {
 
   Future<void> switchServiceStatus(
       {required int serviceDetailsId,
-      required ServiceProviderType providerType,
+      required cModels.ServiceProviderType providerType,
       required bool value}) async {
     await update_service_state(
         status: value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily,
@@ -73,15 +72,15 @@ class AdminServicesViewController {
 
   void fetchCurrent({int? increaseLimit}) {
     switch (currentService) {
-      case ServiceProviderType.Laundry:
+      case cModels.ServiceProviderType.Laundry:
         laundryLimit.value += increaseLimit ?? 0;
         unawaited(fetchLaundries());
         break;
-      case ServiceProviderType.Restaurant:
+      case cModels.ServiceProviderType.Restaurant:
         restLimit.value += increaseLimit ?? 0;
         unawaited(fetchRestaurants());
         break;
-      case ServiceProviderType.DeliveryCompany:
+      case cModels.ServiceProviderType.DeliveryCompany:
         dvLimit.value += increaseLimit ?? 0;
         unawaited(fetchCompanies());
         break;
@@ -91,13 +90,13 @@ class AdminServicesViewController {
 
   List<Service>? get getCurrentService {
     switch (currentService) {
-      case ServiceProviderType.Laundry:
+      case cModels.ServiceProviderType.Laundry:
         return _laundries.value;
-      case ServiceProviderType.Restaurant:
+      case cModels.ServiceProviderType.Restaurant:
         return _restaurants.value;
-      case ServiceProviderType.DeliveryCompany:
+      case cModels.ServiceProviderType.DeliveryCompany:
         return _dvCompanies.value;
-      case ServiceProviderType.Customer:
+      case cModels.ServiceProviderType.Customer:
         return null;
     }
   }
