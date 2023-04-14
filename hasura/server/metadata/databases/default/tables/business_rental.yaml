@@ -5,14 +5,21 @@ object_relationships:
   - name: business
     using:
       foreign_key_constraint_on: business_id
-  - name: service
+  - name: details
     using:
-      foreign_key_constraint_on: service_id
+      foreign_key_constraint_on: details_id
+  - name: home_rental
+    using:
+      foreign_key_constraint_on:
+        column: rental_id
+        table:
+          name: home_rental
+          schema: business
 select_permissions:
   - role: customer
     permission:
       columns:
         - business_id
         - id
-        - service_id
+        - details_id
       filter: {}

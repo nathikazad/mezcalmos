@@ -6,11 +6,12 @@ export interface Business {
     profile: BusinessProfile;
     details: ServiceProvider;
     rentals?: Array<Rental>;
-    classes?: Array<Class>;
     events?: Array<Event>;
+    services?: Array<Service>;
+    products?: Array<Product>;
 }
 
-export interface BusinessService {
+export interface BusinessItemDetails {
     id: number;
     name: Record<Language, string>;
     description?: Record<Language, string>;
@@ -19,7 +20,8 @@ export interface BusinessService {
     available: boolean;
     image?: Array<string>;
     cost: Record<TimeUnit, number>;
-    additionalParameters?: Record<string, any>
+    additionalParameters?: Record<string, any>;
+    tags?: Array<string>;
 }
 
 export enum TimeUnit {
@@ -27,40 +29,44 @@ export enum TimeUnit {
     PerDay = "perDay",
     PerWeek = "perWeek",
     PerMonth = "perMonth",
+    PerPerson = "perPerson",
+    Total = "total",
 }
 export interface Rental {
     category1: RentalCategory1;
     category2?: RentalCategory2;
-    details: BusinessService;
-}
-export interface Class {
-    category1: ClassCategory1;
-    scheduleType: ScheduleType;
-    schedule?: any;
-    details: BusinessService;
-    gpsLocation?: Location;
-    time?: string;
+    category3?: string;
+    details: BusinessItemDetails;
+    bedrooms?: number;
+    bathrooms?: number;
+    gpsLocation?: Location,
+    homeType?: string,
 }
 export interface Event {
     category1: EventCategory1;
     scheduleType: ScheduleType;
     schedule?: any;
-    details: BusinessService;
+    details: BusinessItemDetails;
     gpsLocation?: Location;
     time?: string;
 }
+export interface Service {
+    category1: string;
+}
+export interface Product {
+    category1: string;
+}
+
 export enum RentalCategory1 {
     Surf = "surf",
     Vehicle = "vehicle",
     Home = "home",
     Uncategorized = "uncategorized"
 }
-export enum ClassCategory1 {
+export enum EventCategory1 {
     Yoga = "yoga",
     Surf = "surf",
     MartialArt = "martialArt",
-}
-export enum EventCategory1 {
     Party = "party",
     Dance = "dance",
     GetTogether = "getTogether"
@@ -84,16 +90,10 @@ export enum BusinessProfile {
     Volunteer = "volunteer",
     TourAgency = "tourAgency"
 }
-export interface HomeRental {
-    rental: Rental;
-    bedrooms: number;
-    bathrooms: number;
-    gpsLocation: Location,
-    homeType: string,
-}
 export enum RentalCategory2 {
     Motorcycle = "motorcycle",
     Car = "car",
+    Uncategorized = "uncategorized"
 }
 export interface NewBusinessNotification extends ForegroundNotification {
     name: string,

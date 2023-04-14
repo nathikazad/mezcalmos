@@ -1,6 +1,6 @@
 import { Order } from "../../Generic/Order";
 import { OrderNotification } from "../../Notification";
-import { Business, BusinessService, ServiceType, TimeUnit } from "./Business";
+import { Business, BusinessItemDetails, ServiceType, TimeUnit } from "./Business";
 
 export interface BusinessOrder {
     businessId: number;
@@ -18,7 +18,7 @@ export interface BusinessOrderRequestItem {
     serviceType: ServiceType;
     id: number;
     available?: boolean;
-    service?: BusinessService;
+    service?: BusinessItemDetails;
     cost: BusinessItemCost;
 }
 export interface BusinessItemCost {

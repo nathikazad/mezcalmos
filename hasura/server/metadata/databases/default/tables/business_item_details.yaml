@@ -1,0 +1,25 @@
+table:
+  name: item_details
+  schema: business
+object_relationships:
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+  - name: name
+    using:
+      foreign_key_constraint_on: name_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - additional_parameters
+        - available
+        - category1
+        - category2
+        - cost
+        - description_id
+        - id
+        - image
+        - name_id
+        - position
+      filter: {}

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -27,7 +27,7 @@ class Laundry extends Service {
     required super.serviceDetailsId,
     required this.selfDelivery,
     required this.laundryCosts,
-    required Map<Language, bool> languages,
+    required Map<cModels.Language, bool> languages,
   }) : super(
             info: userInfo,
             schedule: schedule,
@@ -138,7 +138,7 @@ class LaundryCosts {
 
 class LaundryCostLineItem {
   int id;
-  Map<Language, String> name;
+  Map<cModels.Language, String> name;
   num cost;
   int? nameId;
   int? storeId;
@@ -168,7 +168,7 @@ class LaundryCostLineItem {
   }
 
   String getRightNameForUser() {
-    final Language userLanguage =
+    final cModels.Language userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     final String availableName = name[name.keys.first]!;
     if (name[userLanguage] != null) {
@@ -179,7 +179,7 @@ class LaundryCostLineItem {
   }
 
   LaundryCostLineItem copyWith({
-    Map<Language, String>? name,
+    Map<cModels.Language, String>? name,
     num? cost,
   }) {
     return LaundryCostLineItem(

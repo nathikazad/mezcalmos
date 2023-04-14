@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<List<EventWithBusiness>> get_event_by_category(
+Future<List<EventCard>> get_event_by_category(
     {required List<EventCategory1> categories1,
     required double distance,
     required Location fromLocation,
@@ -19,7 +19,7 @@ Future<List<EventWithBusiness>> get_event_by_category(
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<EventWithBusiness> _events = <EventWithBusiness>[];
+  final List<EventCard> _events = <EventCard>[];
 
   final QueryResult<Query$get_event_by_category> response = await _db
       .graphQLClient
@@ -41,26 +41,28 @@ Future<List<EventWithBusiness>> get_event_by_category(
   if (response.parsedData?.business_event != null) {
     response.parsedData?.business_event
         .forEach((Query$get_event_by_category$business_event data) async {
-      _events.add(EventWithBusiness(
+      _events.add(EventCard(
           businessName: data.business.details.name,
           event: Event(
-            category1: data.service.category1.toEventCategory1(),
+            category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null
                 ? Location(
                     lat: data.gps_location!.latitude,
                     lng: data.gps_location!.longitude)
                 : null,
             time: data.time,
-            details: BusinessService(
+            details: BusinessItemDetails(
               id: data.id,
-              name: toLanguageMap(translations: data.service.name.translations),
-              position: data.service.position,
+              name: toLanguageMap(translations: data.details.name.translations),
+              position: data.details.position,
               businessId: data.business.id,
-              available: data.service.available,
-              image: data.service.image?.entries.map((e) => e.value).toList() ??
+              available: data.details.available,
+              image: data.details.image?.entries.map((e) => e.value).toList() ??
                   [],
-              cost: constructBusinessServiceCost(data.service.cost),
-              additionalParameters: data.service.additional_parameters,
+              cost: constructBusinessServiceCost(data.details.cost),
+              additionalParameters: data.details.additional_parameters,
+              tags:
+                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: data.schedule,
@@ -72,7 +74,7 @@ Future<List<EventWithBusiness>> get_event_by_category(
   }
 }
 
-Future<EventWithBusiness?> get_event_by_id(
+Future<EventWithBusinessCard?> get_event_by_id(
     {required int id, required bool withCache}) async {
   final QueryResult<Query$get_event_by_id> response = await _db.graphQLClient
       .query$get_event_by_id(Options$Query$get_event_by_id(
@@ -89,47 +91,47 @@ Future<EventWithBusiness?> get_event_by_id(
         response.parsedData?.business_event_by_pk!;
 
     if (data != null) {
-      return EventWithBusiness(
-          businessName: data.business.details.name,
+      return EventWithBusinessCard(
           event: Event(
-              category1: data.service.category1.toEventCategory1(),
+              category1: data.details.category1.toEventCategory1(),
               gpsLocation: data.gps_location != null
                   ? Location(
                       lat: data.gps_location!.latitude,
                       lng: data.gps_location!.longitude)
                   : null,
               time: data.time,
-              details: BusinessService(
+              details: BusinessItemDetails(
                 id: id,
                 name:
-                    toLanguageMap(translations: data.service.name.translations),
-                position: data.service.position,
+                    toLanguageMap(translations: data.details.name.translations),
+                position: data.details.position,
                 businessId: data.business.id,
-                available: data.service.available,
-                cost: constructBusinessServiceCost(data.service.cost),
+                available: data.details.available,
+                cost: constructBusinessServiceCost(data.details.cost),
                 description: toLanguageMap(
-                    translations: data.service.description?.translations ?? []),
-                additionalParameters: data.service.additional_parameters,
+                    translations: data.details.description?.translations ?? []),
+                additionalParameters: data.details.additional_parameters,
                 image:
-                    data.service.image?.entries.map((e) => e.value).toList() ??
+                    data.details.image?.entries.map((e) => e.value).toList() ??
                         [],
+                tags: data.details.tags?.entries.map((e) => e.value).toList() ??
+                    [],
               ),
               scheduleType: data.schedule_type.toScheduleType(),
-              schedule: data.schedule));
+              schedule: data.schedule),
+          business: BusinessCard(
+            id: data.business.id,
+            detailsId: data.business.details.id,
+            name: data.business.details.name,
+            image: data.business.details.image,
+            acceptedPayments: data.business.details.accepted_payments,
+            avgRating: double.tryParse(
+                data.business.reviews_aggregate.aggregate?.avg.toString() ??
+                    '0.0'),
+            reviewCount: data.business.reviews_aggregate.aggregate?.count,
+          ));
     }
   } else
     return null;
   return null;
-}
-
-class EventWithBusiness extends Event {
-  final String businessName;
-  EventWithBusiness({
-    required Event event,
-    required this.businessName,
-  }) : super(
-          scheduleType: event.scheduleType,
-          category1: event.category1,
-          details: event.details,
-        );
 }

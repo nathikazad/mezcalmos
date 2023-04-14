@@ -11,8 +11,8 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 
 class OtherRentalController {
-  RxList<RentalWithBusiness> homeRentalData = <RentalWithBusiness>[].obs;
-  RxList<MinimalBusiness> agencyRentalData = <MinimalBusiness>[].obs;
+  RxList<RentalCard> homeRentalData = <RentalCard>[].obs;
+  RxList<BusinessCard> agencyRentalData = <BusinessCard>[].obs;
   late Rx<RentalCategory1> category1;
   RxMap<RentalCategory2, bool> category2 = {
     RentalCategory2.Motorcycle: true,
@@ -94,7 +94,7 @@ class OtherRentalController {
       if (filterRequest) {
         _fetchAssetOffset = 0;
       }
-      final List<RentalWithBusiness> newData = await get_rental_by_category(
+      final List<RentalCard> newData = await get_rental_by_category(
         category1: category1.value,
         categories2: category2.entries
             .where((entry) => entry.value)
@@ -125,7 +125,7 @@ class OtherRentalController {
     }
     try {
       _fetchingAgencyData = true;
-      final List<MinimalBusiness> newData =
+      final List<BusinessCard> newData =
           await get_business_by_rental_category1(
         category1: category1.value,
         distance: 100000,

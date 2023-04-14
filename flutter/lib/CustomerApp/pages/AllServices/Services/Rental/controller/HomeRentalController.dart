@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class HomeRentalController {
-  RxList<HomeRentalWithBusiness> homeRentalData = <HomeRentalWithBusiness>[].obs;
-  RxList<MinimalBusiness> agencyRentalData = <MinimalBusiness>[].obs;
+  RxList<Rental> homeRentalData = <Rental>[].obs;
+  RxList<BusinessCard> agencyRentalData = <BusinessCard>[].obs;
 
   ScrollController get homeScrollController => _homeScrollController;
   ScrollController _homeScrollController = ScrollController();
@@ -44,7 +44,7 @@ class HomeRentalController {
     }
     try {
       _fetchingHomeData = true;
-      final List<HomeRentalWithBusiness> newData = await get_home_rentals(
+      final List<RentalCard> newData = await get_home_rentals(
         distance: 100000,
         fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
         withCache: true,
@@ -65,7 +65,7 @@ class HomeRentalController {
     }
     try {
       _fetchingAgencyData = true;
-      final List<MinimalBusiness> newData =
+      final List<BusinessCard> newData =
           await get_business_by_rental_category1(
         category1: RentalCategory1.Home,
         distance: 100000,

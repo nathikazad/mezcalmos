@@ -14,7 +14,7 @@ class SendOtpResponse {
     };
   }
 
-  factory SendOtpResponse.fromFirebaseFormattedJson(json) {
+  factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) {
     return SendOtpResponse(
         json["success"],
         json["error"]?.toString().toSendOtpError(),
@@ -38,7 +38,7 @@ class AuthResponse {
     };
   }
 
-  factory AuthResponse.fromFirebaseFormattedJson(json) {
+  factory AuthResponse.fromFirebaseFormattedJson(dynamic json) {
     return AuthResponse(
         json["success"],
         json["error"]?.toString().toAuthOtpError(),
@@ -78,7 +78,7 @@ class PaymentIntentResponse {
     };
   }
 
-  factory PaymentIntentResponse.fromFirebaseFormattedJson(json) {
+  factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) {
     return PaymentIntentResponse(
         json["success"],
         json["error"]?.toString().toPaymentIntentError(),
@@ -106,7 +106,7 @@ class AddCardResponse {
     };
   }
 
-  factory AddCardResponse.fromFirebaseFormattedJson(json) {
+  factory AddCardResponse.fromFirebaseFormattedJson(dynamic json) {
     return AddCardResponse(
         json["success"],
         json["error"]?.toString().toAddCardError(),
@@ -143,7 +143,7 @@ class ChargeCardResponse {
     };
   }
 
-  factory ChargeCardResponse.fromFirebaseFormattedJson(json) {
+  factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) {
     return ChargeCardResponse(
         json["success"],
         json["error"]?.toString().toChargeCardError(),
@@ -168,7 +168,7 @@ class RemoveCardResponse {
     };
   }
 
-  factory RemoveCardResponse.fromFirebaseFormattedJson(json) {
+  factory RemoveCardResponse.fromFirebaseFormattedJson(dynamic json) {
     return RemoveCardResponse(json["success"],
         json["error"]?.toString().toRemoveCardError(), json["unhandledError"]);
   }
@@ -196,7 +196,7 @@ class SetupStripeResponse {
     };
   }
 
-  factory SetupStripeResponse.fromFirebaseFormattedJson(json) {
+  factory SetupStripeResponse.fromFirebaseFormattedJson(dynamic json) {
     return SetupStripeResponse(
         json["success"],
         json["error"]?.toString().toSetupStripeError(),
@@ -221,7 +221,7 @@ class UpdateStripeResponse {
     };
   }
 
-  factory UpdateStripeResponse.fromFirebaseFormattedJson(json) {
+  factory UpdateStripeResponse.fromFirebaseFormattedJson(dynamic json) {
     return UpdateStripeResponse(
         json["success"],
         json["error"]?.toString().toUpdateStripeError(),
@@ -242,7 +242,7 @@ enum ParticipantType {
 
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -290,7 +290,7 @@ class CallUserResponse {
     };
   }
 
-  factory CallUserResponse.fromFirebaseFormattedJson(json) {
+  factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) {
     return CallUserResponse(
         json["success"],
         json["error"]?.toString().toCallUserError(),
@@ -317,7 +317,7 @@ class AddOperatorResponse {
     };
   }
 
-  factory AddOperatorResponse.fromFirebaseFormattedJson(json) {
+  factory AddOperatorResponse.fromFirebaseFormattedJson(dynamic json) {
     return AddOperatorResponse(json["success"],
         json["error"]?.toString().toAddOperatorError(), json["unhandledError"]);
   }
@@ -336,7 +336,7 @@ class AuthOperatorResponse {
     };
   }
 
-  factory AuthOperatorResponse.fromFirebaseFormattedJson(json) {
+  factory AuthOperatorResponse.fromFirebaseFormattedJson(dynamic json) {
     return AuthOperatorResponse(
         json["success"],
         json["error"]?.toString().toAuthOperatorError(),
@@ -357,7 +357,7 @@ class AddDriverResponse {
     };
   }
 
-  factory AddDriverResponse.fromFirebaseFormattedJson(json) {
+  factory AddDriverResponse.fromFirebaseFormattedJson(dynamic json) {
     return AddDriverResponse(json["success"],
         json["error"]?.toString().toAddDriverError(), json["unhandledError"]);
   }
@@ -368,7 +368,7 @@ enum DeliveryServiceProviderType { Restaurant, DeliveryCompany, Laundry }
 extension ParseDeliveryServiceProviderTypeToString
     on DeliveryServiceProviderType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -397,7 +397,7 @@ class AuthorizeDriverResponse {
     };
   }
 
-  factory AuthorizeDriverResponse.fromFirebaseFormattedJson(json) {
+  factory AuthorizeDriverResponse.fromFirebaseFormattedJson(dynamic json) {
     return AuthorizeDriverResponse(
         json["success"],
         json["error"]?.toString().toAuthorizeDriverError(),
@@ -464,7 +464,7 @@ class RestaurantResponse {
     };
   }
 
-  factory RestaurantResponse.fromFirebaseFormattedJson(json) {
+  factory RestaurantResponse.fromFirebaseFormattedJson(dynamic json) {
     return RestaurantResponse(json["success"],
         json["error"]?.toString().toRestaurantError(), json["unhandledError"]);
   }
@@ -474,7 +474,7 @@ enum CustomerAppType { Native, Web }
 
 extension ParseCustomerAppTypeToString on CustomerAppType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -492,7 +492,7 @@ enum PaymentType { Cash, Card, BankTransfer }
 
 extension ParsePaymentTypeToString on PaymentType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -508,7 +508,7 @@ enum DeliveryType { Pickup, Delivery }
 
 extension ParseDeliveryTypeToString on DeliveryType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -535,7 +535,7 @@ class CheckoutResponse {
     };
   }
 
-  factory CheckoutResponse.fromFirebaseFormattedJson(json) {
+  factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) {
     return CheckoutResponse(
         json["success"],
         json["error"]?.toString().toCheckoutResponseError(),
@@ -557,7 +557,8 @@ class ChangeRestaurantStatusResponse {
     };
   }
 
-  factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(json) {
+  factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(
+      dynamic json) {
     return ChangeRestaurantStatusResponse(
         json["success"],
         json["error"]?.toString().toChangeRestaurantStatusError(),
@@ -578,7 +579,8 @@ class CancelRestaurantOrderResponse {
     };
   }
 
-  factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(json) {
+  factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(
+      dynamic json) {
     return CancelRestaurantOrderResponse(json["success"],
         json["error"]?.toString().toCancelOrderError(), json["unhandledError"]);
   }
@@ -596,7 +598,7 @@ enum BusinessProfile {
 
 extension ParseBusinessProfileToString on BusinessProfile {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -623,7 +625,7 @@ class BusinessResponse {
     };
   }
 
-  factory BusinessResponse.fromFirebaseFormattedJson(json) {
+  factory BusinessResponse.fromFirebaseFormattedJson(dynamic json) {
     return BusinessResponse(json["success"],
         json["error"]?.toString().toBusinessError(), json["unhandledError"]);
   }
@@ -644,7 +646,7 @@ class OrderReqResponse {
     };
   }
 
-  factory OrderReqResponse.fromFirebaseFormattedJson(json) {
+  factory OrderReqResponse.fromFirebaseFormattedJson(dynamic json) {
     return OrderReqResponse(
         json["success"],
         json["error"]?.toString().toOrderReqError(),
@@ -669,7 +671,7 @@ class HandleRequestResponse {
     };
   }
 
-  factory HandleRequestResponse.fromFirebaseFormattedJson(json) {
+  factory HandleRequestResponse.fromFirebaseFormattedJson(dynamic json) {
     return HandleRequestResponse(
         json["success"],
         json["error"]?.toString().toHandleRequestError(),
@@ -691,7 +693,8 @@ class CustomerHandleRequestResponse {
     };
   }
 
-  factory CustomerHandleRequestResponse.fromFirebaseFormattedJson(json) {
+  factory CustomerHandleRequestResponse.fromFirebaseFormattedJson(
+      dynamic json) {
     return CustomerHandleRequestResponse(
         json["success"],
         json["error"]?.toString().toCustomerHandleRequestError(),
@@ -712,7 +715,7 @@ class LaundryResponse {
     };
   }
 
-  factory LaundryResponse.fromFirebaseFormattedJson(json) {
+  factory LaundryResponse.fromFirebaseFormattedJson(dynamic json) {
     return LaundryResponse(json["success"],
         json["error"]?.toString().toLaundryError(), json["unhandledError"]);
   }
@@ -734,7 +737,7 @@ class ReqLaundryResponse {
     };
   }
 
-  factory ReqLaundryResponse.fromFirebaseFormattedJson(json) {
+  factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
     return ReqLaundryResponse(
         json["success"],
         json["error"]?.toString().toReqLaundryError(),
@@ -756,7 +759,7 @@ class ChangeLaundryStatusResponse {
     };
   }
 
-  factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(json) {
+  factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(dynamic json) {
     return ChangeLaundryStatusResponse(
         json["success"],
         json["error"]?.toString().toChangeLaundryStatusError(),
@@ -777,7 +780,7 @@ class CancelLaundryResponse {
     };
   }
 
-  factory CancelLaundryResponse.fromFirebaseFormattedJson(json) {
+  factory CancelLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
     return CancelLaundryResponse(
         json["success"],
         json["error"]?.toString().toCancelLaundryError(),
@@ -798,7 +801,7 @@ class AssignDriverResponse {
     };
   }
 
-  factory AssignDriverResponse.fromFirebaseFormattedJson(json) {
+  factory AssignDriverResponse.fromFirebaseFormattedJson(dynamic json) {
     return AssignDriverResponse(
         json["success"],
         json["error"]?.toString().toAssignDriverError(),
@@ -821,7 +824,7 @@ enum DeliveryOrderStatus {
 
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -848,7 +851,7 @@ class ChangeDeliveryStatusResponse {
     };
   }
 
-  factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(json) {
+  factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(dynamic json) {
     return ChangeDeliveryStatusResponse(
         json["success"],
         json["error"]?.toString().toChangeDeliveryStatusError(),
@@ -904,7 +907,7 @@ class CreateCourierResponse {
     };
   }
 
-  factory CreateCourierResponse.fromFirebaseFormattedJson(json) {
+  factory CreateCourierResponse.fromFirebaseFormattedJson(dynamic json) {
     return CreateCourierResponse(
         json["success"],
         json["error"]?.toString().toCreateCourierError(),
@@ -926,7 +929,7 @@ class ChangePriceReqResponse {
     };
   }
 
-  factory ChangePriceReqResponse.fromFirebaseFormattedJson(json) {
+  factory ChangePriceReqResponse.fromFirebaseFormattedJson(dynamic json) {
     return ChangePriceReqResponse(json["success"],
         json["error"]?.toString().toChangePriceError(), json["unhandledError"]);
   }
@@ -936,7 +939,7 @@ enum OrderType { Taxi, Restaurant, Laundry, Courier, Business }
 
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -961,7 +964,7 @@ class ChangePriceResResponse {
     };
   }
 
-  factory ChangePriceResResponse.fromFirebaseFormattedJson(json) {
+  factory ChangePriceResResponse.fromFirebaseFormattedJson(dynamic json) {
     return ChangePriceResResponse(json["success"],
         json["error"]?.toString().toChangePriceError(), json["unhandledError"]);
   }
@@ -980,7 +983,7 @@ class CancelCourierResponse {
     };
   }
 
-  factory CancelCourierResponse.fromFirebaseFormattedJson(json) {
+  factory CancelCourierResponse.fromFirebaseFormattedJson(dynamic json) {
     return CancelCourierResponse(
         json["success"],
         json["error"]?.toString().toCancelCourierError(),
@@ -1015,7 +1018,7 @@ enum Language { EN, ES }
 
 extension ParseLanguageToString on Language {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str.toLowerCase();
   }
 }
@@ -1074,7 +1077,7 @@ enum StripePaymentStatus { Authorized, Captured, Cancelled }
 
 extension ParseStripePaymentStatusToString on StripePaymentStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1133,7 +1136,7 @@ enum StripeStatus { InProcess, IsWorking, Inactive }
 
 extension ParseStripeStatusToString on StripeStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1303,7 +1306,7 @@ enum DeliveryDirection { FromCustomer, ToCustomer }
 
 extension ParseDeliveryDirectionToString on DeliveryDirection {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1417,7 +1420,7 @@ enum ChangePriceStatus { Requested, Accepted, Rejected }
 
 extension ParseChangePriceStatusToString on ChangePriceStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1483,7 +1486,7 @@ enum AppType {
 
 extension ParseAppTypeToString on AppType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1499,7 +1502,7 @@ enum TokenType { DeviceNotificationToken }
 
 extension ParseTokenTypeToString on TokenType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1520,7 +1523,7 @@ enum AuthorizationStatus {
 
 extension ParseAuthorizationStatusToString on AuthorizationStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1753,7 +1756,7 @@ enum OpenStatus { Open, ClosedTemporarily, ClosedIndefinitely }
 
 extension ParseOpenStatusToString on OpenStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1805,7 +1808,7 @@ enum ServiceProviderType {
 
 extension ParseServiceProviderTypeToString on ServiceProviderType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1823,26 +1826,29 @@ class Business {
   BusinessProfile profile;
   ServiceProvider details;
   List<Rental>? rentals;
-  List<Class>? classes;
   List<Event>? events;
+  List<Service>? services;
+  List<Product>? products;
   Business(
       {required this.profile,
       required this.details,
       this.rentals,
-      this.classes,
-      this.events});
+      this.events,
+      this.services,
+      this.products});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "profile": profile,
       "details": details,
       "rentals": rentals,
-      "classes": classes,
       "events": events,
+      "services": services,
+      "products": products,
     };
   }
 }
 
-class BusinessService {
+class BusinessItemDetails {
   num id;
   Map<Language, String> name;
   Map<Language, String>? description;
@@ -1852,7 +1858,8 @@ class BusinessService {
   List<String>? image;
   Map<TimeUnit, num> cost;
   Map<String, dynamic>? additionalParameters;
-  BusinessService(
+  List<String>? tags;
+  BusinessItemDetails(
       {required this.id,
       required this.name,
       this.description,
@@ -1861,7 +1868,8 @@ class BusinessService {
       required this.available,
       this.image,
       required this.cost,
-      this.additionalParameters});
+      this.additionalParameters,
+      this.tags});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -1873,66 +1881,55 @@ class BusinessService {
       "image": image,
       "cost": cost,
       "additionalParameters": additionalParameters,
+      "tags": tags,
     };
   }
 }
 
-enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth, Total }
+enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth, PerPerson, Total }
+
 extension ParseTimeUnitToString on TimeUnit {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 extension ParseStringToTimeUnit on String {
   TimeUnit toTimeUnit() {
-    return TimeUnit.values.firstWhere(
-      (TimeUnit timeUnit) =>
-          timeUnit.toFirebaseFormatString().toLowerCase() == toLowerCase(),
-      orElse: () {
-        throw StateError("TimeUnit not found for $this");
-      },
-    );
+    return TimeUnit.values.firstWhere((TimeUnit timeUnit) =>
+        timeUnit.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
 class Rental {
   RentalCategory1 category1;
   RentalCategory2? category2;
-  BusinessService details;
-  Rental({required this.category1, this.category2, required this.details});
+  String? category3;
+  BusinessItemDetails details;
+  num? bedrooms;
+  num? bathrooms;
+  Location? gpsLocation;
+  String? homeType;
+  Rental(
+      {required this.category1,
+      this.category2,
+      this.category3,
+      required this.details,
+      this.bedrooms,
+      this.bathrooms,
+      this.gpsLocation,
+      this.homeType});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "category1": category1,
       "category2": category2,
+      "category3": category3,
       "details": details,
-    };
-  }
-}
-
-class Class {
-  ClassCategory1 category1;
-  ScheduleType scheduleType;
-  dynamic? schedule;
-  BusinessService details;
-  Location? gpsLocation;
-  String? time;
-  Class(
-      {required this.category1,
-      required this.scheduleType,
-      this.schedule,
-      required this.details,
-      this.gpsLocation,
-      this.time});
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "category1": category1,
-      "scheduleType": scheduleType,
-      "schedule": schedule,
-      "details": details,
+      "bedrooms": bedrooms,
+      "bathrooms": bathrooms,
       "gpsLocation": gpsLocation,
-      "time": time,
+      "homeType": homeType,
     };
   }
 }
@@ -1941,7 +1938,7 @@ class Event {
   EventCategory1 category1;
   ScheduleType scheduleType;
   dynamic? schedule;
-  BusinessService details;
+  BusinessItemDetails details;
   Location? gpsLocation;
   String? time;
   Event(
@@ -1963,11 +1960,31 @@ class Event {
   }
 }
 
+class Service {
+  String category1;
+  Service({required this.category1});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "category1": category1,
+    };
+  }
+}
+
+class Product {
+  String category1;
+  Product({required this.category1});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "category1": category1,
+    };
+  }
+}
+
 enum RentalCategory1 { Surf, Vehicle, Home, Uncategorized }
 
 extension ParseRentalCategory1ToString on RentalCategory1 {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1981,27 +1998,11 @@ extension ParseStringToRentalCategory1 on String {
   }
 }
 
-enum ClassCategory1 { Yoga, Surf, MartialArt }
-
-extension ParseClassCategory1ToString on ClassCategory1 {
-  String toFirebaseFormatString() {
-    String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToClassCategory1 on String {
-  ClassCategory1 toClassCategory1() {
-    return ClassCategory1.values.firstWhere((ClassCategory1 classCategory1) =>
-        classCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
-
-enum EventCategory1 { Party, Dance, GetTogether }
+enum EventCategory1 { Yoga, Surf, MartialArt, Party, Dance, GetTogether }
 
 extension ParseEventCategory1ToString on EventCategory1 {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2017,7 +2018,7 @@ enum ServiceType { Rental, Class, Event }
 
 extension ParseServiceTypeToString on ServiceType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2033,7 +2034,7 @@ enum ScheduleType { Scheduled, OnDemand, OneTime }
 
 extension ParseScheduleTypeToString on ScheduleType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2045,34 +2046,11 @@ extension ParseStringToScheduleType on String {
   }
 }
 
-class HomeRental {
-  Rental rental;
-  num bedrooms;
-  num bathrooms;
-  Location gpsLocation;
-  String homeType;
-  HomeRental(
-      {required this.rental,
-      required this.bedrooms,
-      required this.bathrooms,
-      required this.gpsLocation,
-      required this.homeType});
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "rental": rental,
-      "bedrooms": bedrooms,
-      "bathrooms": bathrooms,
-      "gpsLocation": gpsLocation,
-      "homeType": homeType,
-    };
-  }
-}
-
-enum RentalCategory2 { Motorcycle, Car }
+enum RentalCategory2 { Motorcycle, Car, Uncategorized }
 
 extension ParseRentalCategory2ToString on RentalCategory2 {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2123,7 +2101,7 @@ class BusinessOrderRequestItem {
   ServiceType serviceType;
   num id;
   bool? available;
-  BusinessService? service;
+  BusinessItemDetails? service;
   BusinessItemCost cost;
   BusinessOrderRequestItem(
       {required this.serviceId,
@@ -2183,7 +2161,7 @@ enum BusinessOrderRequestStatus {
 extension ParseBusinessOrderRequestStatusToString
     on BusinessOrderRequestStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2467,7 +2445,7 @@ enum LaundryOrderStatus {
 
 extension ParseLaundryOrderStatusToString on LaundryOrderStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2540,7 +2518,7 @@ enum ItemType { Daily, Special }
 
 extension ParseItemTypeToString on ItemType {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2819,7 +2797,7 @@ enum RestaurantOrderStatus {
 
 extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2842,7 +2820,7 @@ enum SendOtpError {
 
 extension ParseSendOtpErrorToString on SendOtpError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2858,7 +2836,7 @@ enum AuthOtpError { UnhandledError, InvalidOTPCode, ExceededNumberOfTries }
 
 extension ParseAuthOtpErrorToString on AuthOtpError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2882,7 +2860,7 @@ enum PaymentIntentError {
 
 extension ParsePaymentIntentErrorToString on PaymentIntentError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2905,7 +2883,7 @@ enum AddCardError {
 
 extension ParseAddCardErrorToString on AddCardError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2930,7 +2908,7 @@ enum ChargeCardError {
 
 extension ParseChargeCardErrorToString on ChargeCardError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2956,7 +2934,7 @@ enum RemoveCardError {
 
 extension ParseRemoveCardErrorToString on RemoveCardError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2980,7 +2958,7 @@ enum SetupStripeError {
 
 extension ParseSetupStripeErrorToString on SetupStripeError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3004,7 +2982,7 @@ enum UpdateStripeError {
 
 extension ParseUpdateStripeErrorToString on UpdateStripeError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3027,7 +3005,7 @@ enum CallUserError {
 
 extension ParseCallUserErrorToString on CallUserError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3052,7 +3030,7 @@ enum AddOperatorError {
 
 extension ParseAddOperatorErrorToString on AddOperatorError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3076,7 +3054,7 @@ enum AuthOperatorError {
 
 extension ParseAuthOperatorErrorToString on AuthOperatorError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3099,7 +3077,7 @@ enum AddDriverError {
 
 extension ParseAddDriverErrorToString on AddDriverError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3120,7 +3098,7 @@ enum AuthorizeDriverError {
 
 extension ParseAuthorizeDriverErrorToString on AuthorizeDriverError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3146,7 +3124,7 @@ enum RestaurantError {
 
 extension ParseRestaurantErrorToString on RestaurantError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3180,7 +3158,7 @@ enum CheckoutResponseError {
 
 extension ParseCheckoutResponseErrorToString on CheckoutResponseError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3211,7 +3189,7 @@ enum ChangeRestaurantStatusError {
 extension ParseChangeRestaurantStatusErrorToString
     on ChangeRestaurantStatusError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3241,7 +3219,7 @@ enum CancelOrderError {
 
 extension ParseCancelOrderErrorToString on CancelOrderError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3259,7 +3237,7 @@ enum BusinessError { UnhandledError, UserNotFound, BusinessCreationError }
 
 extension ParseBusinessErrorToString on BusinessError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3284,7 +3262,7 @@ enum OrderReqError {
 
 extension ParseOrderReqErrorToString on OrderReqError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3309,7 +3287,7 @@ enum HandleRequestError {
 
 extension ParseHandleRequestErrorToString on HandleRequestError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3335,7 +3313,7 @@ enum CustomerHandleRequestError {
 extension ParseCustomerHandleRequestErrorToString
     on CustomerHandleRequestError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3361,7 +3339,7 @@ enum LaundryError {
 
 extension ParseLaundryErrorToString on LaundryError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3392,7 +3370,7 @@ enum ReqLaundryError {
 
 extension ParseReqLaundryErrorToString on ReqLaundryError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3422,7 +3400,7 @@ enum ChangeLaundryStatusError {
 
 extension ParseChangeLaundryStatusErrorToString on ChangeLaundryStatusError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3451,7 +3429,7 @@ enum CancelLaundryError {
 
 extension ParseCancelLaundryErrorToString on CancelLaundryError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3479,7 +3457,7 @@ enum AssignDriverError {
 
 extension ParseAssignDriverErrorToString on AssignDriverError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3516,7 +3494,7 @@ enum ChangeDeliveryStatusError {
 
 extension ParseChangeDeliveryStatusErrorToString on ChangeDeliveryStatusError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3540,7 +3518,7 @@ enum CreateCourierError {
 
 extension ParseCreateCourierErrorToString on CreateCourierError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3571,7 +3549,7 @@ enum ChangePriceError {
 
 extension ParseChangePriceErrorToString on ChangePriceError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3594,7 +3572,7 @@ enum CancelCourierError {
 
 extension ParseCancelCourierErrorToString on CancelCourierError {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }

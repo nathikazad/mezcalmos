@@ -11,14 +11,14 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<List<MinimalBusiness>> get_business_by_rental_category1(
+Future<List<BusinessCard>> get_business_by_rental_category1(
     {required RentalCategory1 category1,
     required double distance,
     required Location fromLocation,
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<MinimalBusiness> _businesses = <MinimalBusiness>[];
+  final List<BusinessCard> _businesses = <BusinessCard>[];
 
   final QueryResult<Query$get_business_by_rental_category1> response =
       await _db.graphQLClient.query$get_business_by_rental_category1(
@@ -39,7 +39,7 @@ Future<List<MinimalBusiness>> get_business_by_rental_category1(
         (Query$get_business_by_rental_category1$business_business data) async {
       final PaymentInfo _paymentInfo = PaymentInfo.fromData(
           stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
-      _businesses.add(MinimalBusiness(
+      _businesses.add(BusinessCard(
         id: data.id,
         detailsId: data.details.id,
         name: data.details.name,
@@ -80,47 +80,39 @@ Future<Business?> get_business_by_id(
           (Query$get_business_by_id$business_business_by_pk$rentals
               rental) async {
         _rentals.add(Rental(
-            category1: rental.service.category1.toRentalCategory1(),
-            details: BusinessService(
-                id: rental.id,
-                name: toLanguageMap(
-                    translations: rental.service.name.translations),
-                position: rental.service.position,
-                businessId: data.id,
-                available: rental.service.available,
-                cost: constructBusinessServiceCost(rental.service.cost))));
-      });
-      final List<Class> _classes = <Class>[];
-      data.classes.forEach(
-          (Query$get_business_by_id$business_business_by_pk$classes
-              _class) async {
-        _classes.add(Class(
-            category1: _class.service.category1.toClassCategory1(),
-            scheduleType: _class.schedule_type.toScheduleType(),
-            details: BusinessService(
-                id: _class.id,
-                name: toLanguageMap(
-                    translations: _class.service.name.translations),
-                position: _class.service.position,
-                businessId: data.id,
-                available: _class.service.available,
-                cost: constructBusinessServiceCost(_class.service.cost))));
+          category1: rental.details.category1.toRentalCategory1(),
+          details: BusinessItemDetails(
+            id: rental.id,
+            name: toLanguageMap(translations: rental.details.name.translations),
+            position: rental.details.position,
+            businessId: data.id,
+            available: rental.details.available,
+            cost: constructBusinessServiceCost(rental.details.cost),
+            image: rental.details.image?.entries.map((e) => e.value).toList() ??
+                [],
+          ),
+          // bathrooms: rental.
+        ));
       });
       final List<Event> _events = <Event>[];
       data.events.forEach(
           (Query$get_business_by_id$business_business_by_pk$events
               event) async {
         _events.add(Event(
-            category1: event.service.category1.toEventCategory1(),
+            category1: event.details.category1.toEventCategory1(),
             scheduleType: event.schedule_type.toScheduleType(),
-            details: BusinessService(
-                id: event.id,
-                name: toLanguageMap(
-                    translations: event.service.name.translations),
-                position: event.service.position,
-                businessId: data.id,
-                available: event.service.available,
-                cost: constructBusinessServiceCost(event.service.cost))));
+            details: BusinessItemDetails(
+              id: event.id,
+              name:
+                  toLanguageMap(translations: event.details.name.translations),
+              position: event.details.position,
+              businessId: data.id,
+              available: event.details.available,
+              cost: constructBusinessServiceCost(event.details.cost),
+              image:
+                  event.details.image?.entries.map((e) => e.value).toList() ??
+                      [],
+            )));
       });
       return Business(
           profile: data.profile.toBusinessProfile(),
@@ -138,7 +130,6 @@ Future<Business?> get_business_by_id(
                   selfDelivery: false),
               serviceProviderType: ServiceProviderType.Business),
           rentals: _rentals,
-          classes: _classes,
           events: _events);
     }
   } else

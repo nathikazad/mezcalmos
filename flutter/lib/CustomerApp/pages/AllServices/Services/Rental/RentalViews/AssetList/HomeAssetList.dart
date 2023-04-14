@@ -54,35 +54,27 @@ class _HomeAssetListState extends State<HomeAssetList> {
                   itemBuilder: (BuildContext context, int index) {
                     final String title = homeRentalController
                             .homeRentalData[index]
-                            .rental
                             .details
                             .name[languageController.userLanguageKey] ??
-                        homeRentalController.homeRentalData[index].rental
-                            .details.name[Language.EN]
+                        homeRentalController
+                            .homeRentalData[index].details.name[Language.EN]
                             .toString();
-                    final String agencyName =
-                        homeRentalController.homeRentalData[index].businessName;
+                    final String agencyName = "null";
+                    // homeRentalController.homeRentalData[index].businessName;
                     final double perDayPrice = homeRentalController
-                        .homeRentalData[index]
-                        .rental
-                        .details
-                        .cost[TimeUnit.PerDay]!
+                        .homeRentalData[index].details.cost[TimeUnit.PerDay]!
                         .toDouble();
                     final double roomSpace = homeRentalController
                             .homeRentalData[index]
-                            .rental
                             .details
                             .additionalParameters?["roomSpace"] ??
                         0.0;
                     final int totalRooms = homeRentalController
-                        .homeRentalData[index].bedrooms
-                        .toInt();
+                            .homeRentalData[index].bedrooms
+                            ?.toInt() ??
+                        0;
                     final String image = homeRentalController
-                            .homeRentalData[index]
-                            .rental
-                            .details
-                            .image
-                            ?.first ??
+                            .homeRentalData[index].details.image?.first ??
                         customImageUrl;
                     return HomeCard(
                       title: title,
@@ -92,7 +84,7 @@ class _HomeAssetListState extends State<HomeAssetList> {
                       roomSpace: roomSpace,
                       totalRooms: totalRooms,
                       serviceId: homeRentalController
-                          .homeRentalData[index].rental.details.id
+                          .homeRentalData[index].details.id
                           .toString(),
                     );
                     // switch (assetController.viewName) {
