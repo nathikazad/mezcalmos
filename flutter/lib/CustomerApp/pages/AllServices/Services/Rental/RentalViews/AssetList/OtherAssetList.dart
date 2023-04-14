@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/SurfCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/VehicleCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/OtherRentalController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -35,31 +37,68 @@ class _OtherAssetListState extends State<OtherAssetList> {
                   controller: otherRentalController.assetScrollController,
                   itemCount: otherRentalController.homeRentalData.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final String title = otherRentalController
-                            .homeRentalData[index]
-                            .details
-                            .name[languageController.userLanguageKey] ??
-                        otherRentalController
-                            .homeRentalData[index].details.name[Language.EN]
-                            .toString();
-                    final String agencyName = otherRentalController
-                            .homeRentalData[index]
-                            .details
-                            .name[languageController.userLanguageKey] ??
-                        otherRentalController
-                            .homeRentalData[index].details.name[Language.EN]
-                            .toString();
-                    return HomeCard(
-                      title: title,
-                      agencyName: agencyName,
-                      image: NetworkImage(customImageUrl),
-                      perDayPrice: 234,
-                      roomSpace: 330,
-                      totalRooms: 3,
-                      serviceId: otherRentalController
-                          .homeRentalData[index].details.id
-                          .toString(),
-                    );
+                    switch (otherRentalController.category1.value) {
+                      case RentalCategory1.Vehicle:
+                        final String title = otherRentalController
+                                .homeRentalData[index]
+                                .details
+                                .name[languageController.userLanguageKey] ??
+                            otherRentalController
+                                .homeRentalData[index].details.name[Language.EN]
+                                .toString();
+                        final String agencyName = otherRentalController
+                            .homeRentalData[index].businessName;
+                        final TimeUnit priceUnit = otherRentalController
+                            .homeRentalData[index].details.cost.keys.first;
+                        final double perDayPrice = otherRentalController
+                                .homeRentalData[index].details.cost[priceUnit]
+                                ?.toDouble() ??
+                            0.0;
+                        return VehicleCard(
+                          title: title,
+                          agencyName: agencyName,
+                          image: NetworkImage(customImageUrl),
+                          perPrice: perDayPrice,
+                          priceUnit: priceUnit.name
+                              .toLowerCase()
+                              .replaceAll("per", ""),
+                          serviceId: otherRentalController
+                              .homeRentalData[index].details.id
+                              .toString(),
+                        );
+                      case RentalCategory1.Surf:
+                        final String title = otherRentalController
+                                .homeRentalData[index]
+                                .details
+                                .name[languageController.userLanguageKey] ??
+                            otherRentalController
+                                .homeRentalData[index].details.name[Language.EN]
+                                .toString();
+                        final String agencyName = otherRentalController
+                            .homeRentalData[index].businessName;
+                        final TimeUnit priceUnit = otherRentalController
+                            .homeRentalData[index].details.cost.keys.first;
+                        final double perDayPrice = otherRentalController
+                                .homeRentalData[index].details.cost[priceUnit]
+                                ?.toDouble() ??
+                            0.0;
+                        return SurfCard(
+                          title: title,
+                          agencyName: agencyName,
+                          image: NetworkImage(customImageUrl),
+                          perPrice: perDayPrice,
+                          perPriceUnit: priceUnit.name
+                              .toLowerCase()
+                              .replaceAll("per", ""),
+                          serviceId: otherRentalController
+                              .homeRentalData[index].details.id
+                              .toString(),
+                        );
+                      case RentalCategory1.Home:
+                        return const Offstage();
+                      case RentalCategory1.Uncategorized:
+                        return const Offstage();
+                    }
                   },
                 ),
         ),

@@ -23,6 +23,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/contr
 import 'dart:developer';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:location_platform_interface/location_platform_interface.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -46,12 +47,12 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
   AssetController assetController = Get.find<AssetController>();
   MGoogleMapController mGoogleMapController = MGoogleMapController();
   late OtherRentalController otherRentalController;
+  late RentalViewEnum viewName;
 
   @override
   void initState() {
     super.initState();
-    final RentalViewEnum viewName =
-        MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
+    viewName = MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
     log("viewName $viewName ${viewName.runtimeType}");
     assetController.init(viewEnum: viewName);
     otherRentalController = OtherRentalController(viewName: viewName);
@@ -64,8 +65,127 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
     super.dispose();
   }
 
+  void openFilterModalSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          final Map<RentalCategory2, bool> checkBoxListValue = {
+            RentalCategory2.Motorcycle:
+                otherRentalController.category2[RentalCategory2.Motorcycle] ??
+                    false,
+            RentalCategory2.Car:
+                otherRentalController.category2[RentalCategory2.Car] ?? false,
+          };
+          final style = Theme.of(context).textTheme;
+          return SizedBox(
+            height: 250,
+            child: StatefulBuilder(builder: (context, setState) {
+              return Scaffold(
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text("Filter",
+                            style: style.titleMedium!.copyWith(
+                              fontWeight: FontWeight.w600,
+                            )),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        _i18n()[allServiceListViewController
+                                    .currentSelectedService.value.name
+                                    .toLowerCase()]
+                                [assetController.getViewNameString]["title"]
+                            .toString(),
+                        style: style.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: checkBoxListValue.length,
+                        itemBuilder: (context, index) {
+                          return CheckboxListTile(
+                            activeColor: primaryBlueColor,
+                            onChanged: (value) {
+                              setState(() {
+                                checkBoxListValue[checkBoxListValue.keys
+                                    .toList()[index]] = value ?? false;
+                                mezDbgPrint(
+                                    "CheckboxListTile: $value $checkBoxListValue");
+                              });
+                            },
+                            value: checkBoxListValue[
+                                checkBoxListValue.keys.toList()[index]],
+                            title: Text(
+                                checkBoxListValue.keys.toList()[index].name),
+                          );
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: MezButton(
+                                  label: "Cancel",
+                                  onClick: () async {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: MezButton(
+                                  label: "Confirm",
+                                  withGradient: true,
+                                  onClick: () async {
+                                    if (checkBoxListValue.values
+                                        .contains(true)) {
+                                      otherRentalController.changeVehicleFilter(
+                                        value: checkBoxListValue,
+                                      );
+                                      Navigator.pop(context);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text("Add atleast 1 filter"),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).textTheme;
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
@@ -96,8 +216,47 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                     ),
                   ),
                 ),
+                Obx(
+                  () => assetController.currentSelectedView.value ==
+                              assetController.currentSelectedViewList.first &&
+                          viewName == RentalViewEnum.Vehicle
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4.0),
+                          child: MezCard(
+                            onClick: () {
+                              openFilterModalSheet();
+                            },
+                            content: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.filter_alt,
+                                ),
+                                Text("Filter: "),
+                                Obx(
+                                  () => Text(
+                                    otherRentalController.filterString.value,
+                                    style: style.titleMedium!.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Icon(
+                                    Icons.keyboard_arrow_down_outlined,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : const Offstage(),
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 4.0),
                   child: Obx(
                     () => ButtonSwitcher(
                       lButtonText: _i18n()[allServiceListViewController

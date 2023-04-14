@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class AgencyController {
-  Rx<Business?>? agencyStoreData = null;
+  Rx<Business?> agencyStoreData = Rx<Business?>(null);
 
   Future<void> getAgencyStoreData(String id) async {
     var data = await get_business_by_id(
@@ -13,10 +13,10 @@ class AgencyController {
     );
     mezDbgPrint(
         "get_business_by_id ${data?.rentals?.map((e) => mezDbgPrint(e.category1.name))}");
-    if (agencyStoreData == null) {
-      agencyStoreData = data.obs;
+    if (agencyStoreData.value == null) {
+      agencyStoreData.value = data;
     } else {
-      agencyStoreData!.value = data;
+      agencyStoreData.value = data;
     }
   }
 

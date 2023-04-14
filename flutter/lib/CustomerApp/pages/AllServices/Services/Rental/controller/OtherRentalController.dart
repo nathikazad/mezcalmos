@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
@@ -10,10 +11,14 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 
 class OtherRentalController {
-  RxList<Rental> homeRentalData = <Rental>[].obs;
+  RxList<RentalWithBusiness> homeRentalData = <RentalWithBusiness>[].obs;
   RxList<BusinessCardView> agencyRentalData = <BusinessCardView>[].obs;
   late Rx<RentalCategory1> category1;
-  RxList<RentalCategory2> category2 = <RentalCategory2>[].obs;
+  RxMap<RentalCategory2, bool> category2 = {
+    RentalCategory2.Motorcycle: true,
+    RentalCategory2.Car: true,
+  }.obs;
+  RxString filterString = "All".obs;
 
   OtherRentalController({
     required RentalViewEnum viewName,
@@ -21,13 +26,17 @@ class OtherRentalController {
     mezDbgPrint("INSIDE $viewName");
     if (viewName == RentalViewEnum.Vehicle) {
       category1 = RentalCategory1.Vehicle.obs;
-      category2.value = <RentalCategory2>[
-        RentalCategory2.Car,
-        RentalCategory2.Motorcycle
-      ];
+      category2.value = {
+        RentalCategory2.Motorcycle: true,
+        RentalCategory2.Car: true,
+      }.obs;
+      filterString.value = "All";
     } else {
       category1 = RentalCategory1.Surf.obs;
-      category2.value = <RentalCategory2>[];
+      category2.value = {
+        RentalCategory2.Motorcycle: false,
+        RentalCategory2.Car: false,
+      }.obs;
     }
   }
 
@@ -50,7 +59,7 @@ class OtherRentalController {
   Future<void> initOtherRentals() async {
     await fetchOtherRentals();
     await fetchOtherAgency();
-    
+
     // TODO : scroll on different tabs
 
     _assetScrollController.onBottomReach(fetchOtherRentals, sensitivity: 200);
@@ -58,15 +67,39 @@ class OtherRentalController {
     _agencyScrollController.onBottomReach(fetchOtherAgency, sensitivity: 200);
   }
 
-  Future<void> fetchOtherRentals() async {
+  void changeVehicleFilter({
+    required Map<RentalCategory2, bool> value,
+  }) {
+    category2.value = value;
+    if (!value.containsValue(false)) {
+      filterString.value = "All";
+    } else {
+      filterString.value = value.entries
+          .where((entry) => entry.value)
+          .map((entry) => entry.key.name)
+          .toList()
+          .join("");
+    }
+
+    fetchOtherRentals(filterRequest: true);
+  }
+
+  Future<void> fetchOtherRentals({bool filterRequest = false}) async {
     if (_fetchingAssetData) {
       return;
     }
     try {
       _fetchingAssetData = true;
-      final List<Rental> newData = await get_rental_by_category(
+      // resetting offset coz of filtering
+      if (filterRequest) {
+        _fetchAssetOffset = 0;
+      }
+      final List<RentalWithBusiness> newData = await get_rental_by_category(
         category1: category1.value,
-        categories2: category2,
+        categories2: category2.entries
+            .where((entry) => entry.value)
+            .map((entry) => entry.key)
+            .toList(),
         distance: 100000,
         fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
         withCache: true,
@@ -74,7 +107,12 @@ class OtherRentalController {
         offset: _fetchAssetOffset,
       );
       mezDbgPrint("get_rental_by_category ${newData.length}");
-      homeRentalData.value += newData;
+      if (filterRequest) {
+        // not adding data into list just placing all the new data only
+        homeRentalData.value = newData;
+      } else {
+        homeRentalData.value += newData;
+      }
       _fetchAssetOffset += _fetchAssetSize;
     } finally {
       _fetchingAssetData = false;

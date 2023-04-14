@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/componen
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AgencyStoreTab.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/CustomAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/AgencyController.dart';
+import 'package:get/get.dart';
 
 class AgencyServiceView extends StatefulWidget {
   const AgencyServiceView({super.key});
@@ -60,7 +61,22 @@ class _AgencyServiceViewState extends State<AgencyServiceView>
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
-              CustomAppBar(),
+              Obx(
+                () => agencyController.agencyStoreData.value == null
+                    ? const SliverToBoxAdapter()
+                    : CustomAppBar(
+                        title: agencyController
+                                .agencyStoreData.value?.details.name ??
+                            "",
+                        imageUrl: agencyController
+                                    .agencyStoreData.value?.details.image ==
+                                "null"
+                            ? customImageUrl
+                            : agencyController
+                                    .agencyStoreData.value?.details.image ??
+                                customImageUrl,
+                      ),
+              ),
             ];
           },
           body: Column(

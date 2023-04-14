@@ -6,15 +6,18 @@ class SurfCard extends StatelessWidget {
   const SurfCard({
     super.key,
     required this.title,
-    required this.perHourPrice,
+    required this.perPrice,
     required this.agencyName,
     required this.image,
+    required this.perPriceUnit, required this.serviceId,
   });
 
   final String title;
-  final double perHourPrice;
+  final double perPrice;
+  final String perPriceUnit;
   final String agencyName;
   final NetworkImage image;
+  final String serviceId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,10 @@ class SurfCard extends StatelessWidget {
       needCustomSubtitle: true,
       lBottomText: agencyName,
       subtitleWidget: Text(
-        "\$${perHourPrice.toStringAsFixed(2)}/hour",
+        "\$${perPrice.toStringAsFixed(2)}/$perPriceUnit",
       ),
       onClick: () {
-        // AssetServiceView.navigate();
+        AssetServiceView.navigate(serviceId: serviceId);
       },
     );
   }

@@ -8,7 +8,14 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class CustomAppBar extends StatefulWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+  });
+
+  final String title;
+  final String imageUrl;
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -52,7 +59,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 0.0),
                     child: Text(
-                      "Puetro Estate",
+                      widget.title,
                       style: style.displaySmall?.copyWith(
                         color: Colors.white,
                         fontSize: 14.sp,
@@ -74,7 +81,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   Widget _backgroundImageComponent() {
     return CachedNetworkImage(
-      imageUrl: customImageUrl,
+      imageUrl: widget.imageUrl,
       fit: BoxFit.cover,
       imageBuilder: (BuildContext context, ImageProvider<Object> image) =>
           Container(

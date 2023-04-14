@@ -1485,7 +1485,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
-enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth }
+enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth, Total }
 extension ParseTimeUnitToString on TimeUnit {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -1577,7 +1577,7 @@ extension ParseStringToRentalCategory1 on String {
 }
 
 
-enum ClassCategory1 { Yoga, MartialArt }
+enum ClassCategory1 { Yoga, MartialArt, Surf }
 extension ParseClassCategory1ToString on ClassCategory1 {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;

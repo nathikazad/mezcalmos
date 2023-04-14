@@ -6,15 +6,19 @@ class VehicleCard extends StatelessWidget {
   const VehicleCard({
     super.key,
     required this.title,
-    required this.perdayPrice,
+    required this.perPrice,
     required this.agencyName,
     required this.image,
+    required this.serviceId,
+    required this.priceUnit,
   });
 
   final String title;
-  final double perdayPrice;
+  final double perPrice;
+  final String priceUnit;
   final String agencyName;
   final NetworkImage image;
+  final String serviceId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +28,10 @@ class VehicleCard extends StatelessWidget {
       needCustomSubtitle: true,
       lBottomText: agencyName,
       subtitleWidget: Text(
-        "\$${perdayPrice.toStringAsFixed(2)}/day",
+        "\$${perPrice.toStringAsFixed(2)}/$priceUnit",
       ),
       onClick: () {
-        // AssetServiceView.navigate();
+        AssetServiceView.navigate(serviceId: serviceId);
       },
     );
   }
