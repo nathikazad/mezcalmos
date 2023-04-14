@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
     deferred as savedLocation;
 import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart'
     deferred as customerReviewListView;
-import 'package:mezcalmos/CustomerApp/pages/stBusinessView/custBusinessView.dart'
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart'
     deferred as businessRoute;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -30,7 +30,7 @@ class CustomerRoutes {
     QRoute(
         path: custBusinessRoute,
         name: custBusinessRoute,
-        middleware: <QMiddleware>[DefferedLoader(customerOrders.loadLibrary)],
+        middleware: <QMiddleware>[DefferedLoader(businessRoute.loadLibrary)],
         builder: () => businessRoute.CustBusinessView()),
     QRoute(
         path: customerOrdersRoute,
