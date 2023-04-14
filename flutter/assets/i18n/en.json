@@ -194,7 +194,7 @@
           "ListRestaurantScreen": {
             "restaurants": "Restaurants",
             "search": "Search",
-            "showOnlyOpen": "Show only open restaurants",
+            "showOnlyOpen": "Show only open service",
             "emptRestaurantList": "Sorry no restaurant found.",
             "noOpenRestaurant": "No open restaurants founds",
             "meal": "Meal",

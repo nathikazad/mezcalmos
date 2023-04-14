@@ -139,6 +139,7 @@ class _CustLaundryOrderRequestViewState
                                 ? Form(
                                     key: viewController.formKey,
                                     child: DropDownLocationList(
+                                      ensureVisible: false,
                                       onValueChangeCallback:
                                           (MezLocation location) {
                                         mezDbgPrint(

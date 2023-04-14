@@ -191,7 +191,7 @@
           "ListRestaurantScreen": {
             "restaurants": "Restaurantes",
             "search": "Búsqueda",
-            "showOnlyOpen": "Mostrar solo restaurantes abiertos",
+            "showOnlyOpen": "Mostrar solo servicio abierto",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
             "noOpenRestaurant": "No hay restaurantes abiertos",
             "meal": "Comida",

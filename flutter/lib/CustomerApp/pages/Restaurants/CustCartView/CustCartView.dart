@@ -154,6 +154,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           },
           bgColor: Colors.white,
           checkDistance: true,
+          ensureVisible: false,
           serviceProviderLocation:
               viewController.cart.restaurant?.info.location,
         ),
