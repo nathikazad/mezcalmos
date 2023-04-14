@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/custServiceView/controllers/custServiceViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
-class CustServiceViewAppbar extends StatelessWidget {
-  const CustServiceViewAppbar({super.key, required this.viewController});
-  final CustServiceViewController viewController;
+class CustBusinessViewAppbar extends StatelessWidget {
+  const CustBusinessViewAppbar({super.key, required this.viewController});
+  final CustBusinessViewController viewController;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class CustServiceViewAppbar extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     //  margin: const EdgeInsets.only(bottom: 3),
                     child: Text(
-                      viewController.service!.info.name,
+                      viewController.business!.details.name,
                       style: context.textTheme.displaySmall
                           ?.copyWith(color: Colors.white, fontSize: 14.sp),
                       maxLines: 1,
@@ -78,7 +78,7 @@ class CustServiceViewAppbar extends StatelessWidget {
 
   Widget _backgroundImageComponent() {
     return CachedNetworkImage(
-      imageUrl: viewController.service!.info.image,
+      imageUrl: viewController.business!.details.image,
       fit: BoxFit.cover,
       imageBuilder: (BuildContext context, ImageProvider<Object> image) =>
           Container(
@@ -124,7 +124,7 @@ class CustServiceViewAppbar extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Text(
-            viewController.service!.info.name.generateTwoFirstLetters(),
+            viewController.business!.details.name.generateTwoFirstLetters(),
             style: const TextStyle(
               color: Color.fromRGBO(172, 89, 252, 0.8),
               fontSize: 18.0,
