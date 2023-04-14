@@ -1,8 +1,17 @@
+import 'package:badges/badges.dart' as badge;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,51 +25,53 @@ class CustBusinessViewAppbar extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
       centerTitle: true,
-      expandedHeight: 270,
+      expandedHeight: 250,
       leadingWidth: 35,
       automaticallyImplyLeading: false,
       bottom: getBottom(context),
-      // leading: _BackButtonAppBar(),
-      // actions: <Widget>[
-      //   getAppbarIconsButton(),
-      // ],
+      leading: _BackButtonAppBar(),
+      actions: <Widget>[
+        getAppbarIconsButton(),
+      ],
       pinned: true,
-      flexibleSpace: FlexibleSpaceBar(
-        expandedTitleScale: 1.6,
-        //  titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
-        centerTitle: true,
-        collapseMode: CollapseMode.pin,
-        title: Container(
-          alignment: Alignment.bottomCenter,
-          width: 55.w,
-          // padding: EdgeInsets.only(
-          //     bottom: controller.showInfo.isTrue ? 5 : 12, left: 5, right: 5),
-          child: FittedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Container(
-                    alignment: Alignment.bottomCenter,
-                    //  margin: const EdgeInsets.only(bottom: 3),
-                    child: Text(
-                      viewController.business!.details.name,
-                      style: context.textTheme.displaySmall
-                          ?.copyWith(color: Colors.white, fontSize: 14.sp),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+      flexibleSpace: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        bool isCollapsed = constraints.biggest.height -
+                (MediaQuery.of(context).padding.top + kToolbarHeight + 50) >=
+            0.0;
+
+        return FlexibleSpaceBar(
+          centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              AnimatedOpacity(
+                  duration: Duration(milliseconds: 300),
+                  opacity: isCollapsed ? 1.0 : 0.0,
+                  // opacity: 1.0,
+                  child: MezIconButton(
+                    icon: Icons.favorite_border,
+                    iconSize: 16.sp,
+                    iconColor: Colors.white,
+                    backgroundColor: Colors.transparent,
+                    materialColor: Colors.transparent,
+                    onTap: () {},
+                  )),
+              //  Spacer(),
+              Text(
+                viewController.business!.details.name,
+                style:
+                    context.textTheme.bodyLarge?.copyWith(color: Colors.white),
+              ),
+              SizedBox(width: 23.sp),
+              // Spacer(),
+            ],
           ),
-        ),
-        background: _backgroundImageComponent(),
-      ),
+          background: _backgroundImageComponent(),
+        );
+      }),
     );
   }
 
@@ -133,6 +144,129 @@ class CustBusinessViewAppbar extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _BackButtonAppBar() {
+    return Container(
+      margin: EdgeInsets.only(left: 5),
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: InkWell(
+          onTap: () {
+            MezRouter.back();
+          },
+          child: Ink(
+            width: 25,
+            height: 25,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), color: Colors.white),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: primaryBlueColor,
+                size: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _ordersAppBarIcon() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 12),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          MezRouter.toNamed(CustomerRoutes.customerOrdersRoute);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Icon(
+            Icons.watch_later,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _noUserButton() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 16),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          SignInView.navigateAtOrderTime();
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Icon(
+            Icons.person,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _notificationAppBarIcon() {
+    return Obx(() {
+      if (Get.find<ForegroundNotificationsController>().notifications.length >
+          0) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 3, right: 7),
+          child: InkWell(
+            customBorder: CircleBorder(),
+            onTap: () {
+              MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
+            },
+            child: badge.Badge(
+              badgeColor: Colors.red,
+              showBadge: true,
+              position: badge.BadgePosition.topEnd(top: 0, end: 0),
+              child: Ink(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Icon(
+                  Icons.notifications,
+                  color: primaryBlueColor,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        return Container();
+      }
+    });
+  }
+
+  Widget getAppbarIconsButton() {
+    return Row(
+      children: [
+        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+        if (Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+      ],
     );
   }
 }

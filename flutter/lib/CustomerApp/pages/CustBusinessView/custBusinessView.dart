@@ -42,14 +42,28 @@ class _CustBusinessViewState extends State<CustBusinessView> {
     return Scaffold(body: Obx(() {
       if (viewController.isBusinessLoaded) {
         return CustomScrollView(
-          slivers: [CustBusinessViewAppbar(viewController: viewController)],
+          slivers: [
+            CustBusinessViewAppbar(viewController: viewController),
+            SliverToBoxAdapter(
+              child: Container(
+                height: 1200,
+              ),
+            )
+          ],
         );
       } else {
-        return Column(
-          children: [
-            CircularProgressIndicator(),
-            Text('loading'),
-          ],
+        return Container(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 10),
+              Text('Loading', style: context.textTheme.bodyMedium
+                  //   ?.copyWith(color: pr),
+                  ),
+            ],
+          ),
         );
       }
     }));

@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class MinimalBusiness {
   int id;
@@ -20,6 +21,7 @@ class MinimalBusiness {
 }
 
 Map<TimeUnit, num> constructBusinessServiceCost(cost) {
+  mezDbgPrint("log constructBusinessServiceCost $cost");
   final Map<TimeUnit, num> _cost = {};
 
   cost?.forEach((String key, data) {
