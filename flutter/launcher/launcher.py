@@ -531,10 +531,11 @@ class Launcher:
         return patchable_pub_file.replace('<mez-dependencies>' , deps).replace('<mez-assets>', assets).replace('<mez-fonts>', fonts).replace(" 	path: ./packages/graphql", "\n    path: ./packages/graphql")
 
 
-    def __launch__(self):        
+    def __launch__(self):  
         patchable_pub_file=open('../pubspec.yaml').read()
         open(self.conf['settings']['pubspec.yaml'], 'w+').write(self.__patch_dependencies__(patchable_pub_file=patchable_pub_file))
         PRINTLN(f"App =--> {self.user_args['app']}")
+        self.__set_flutter_args__()
         if self.user_args['app'] != "WebApp":
             self.__patcher__()
             self.__patch_gs__()
@@ -547,8 +548,7 @@ class Launcher:
             PRINTLN(f"[+] Building the app::{self.user_args['build']} for you ...")
             self.__build_temp()
             exit(DW_EXIT_REASONS.NORMAL)
-
-        self.__set_flutter_args__()
+        
 class Config:
     
     possible_args = ['--pipeline','--upgrade-env', '--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
@@ -700,7 +700,7 @@ class Config:
 
         
         _res  = _res[0]
-        print(f"[+] pubspec.yaml :\n\t|_ old_version = {_pubspec[_res].strip()}\n\t|_ new_applied_version = {v.strip()}")
+        print(f"[+] pubspec.yaml :\n\t|_ applied_version = {v.strip()}")
         _pubspec[_res] = f"version: {v.strip()}\n"
         open(original_pubspec , 'w+').write(''.join(_pubspec))
         PRINTLN("[+] Checked and Patched pubspec.yaml successfully !")
@@ -724,7 +724,7 @@ class Config:
         _versionName  = _versionName[0]
         _versionCode  = _versionCode[0]
 
-        print(f"[+] local.properties :\n\t|_ old_version :\n\t|\t|__ {_localProperties[_versionName].strip()}\n\t|\t|__ {_localProperties[_versionCode].strip()}\n\t|_ new_applied_version = {v}")
+        print(f"[+] local.properties :\n\t|__ {_localProperties[_versionCode].strip()}\n\t|_ version = {v}")
         
         _localProperties[_versionName] = f"flutter.versionName={__v[0]}\n"
         _localProperties[_versionCode] = f"flutter.versionCode={__v[-1]}\n"
@@ -820,6 +820,8 @@ class Config:
         _ = self.__get_arg_value__('version=')
         if _:
             self.__patch_version__(_)
+        else:
+            self.__patch_version__("0.0.0+0")
             #exit(DW_EXIT_REASONS.NORMAL)
                 # Cmd to fix Pods Problems
         _ = self.__get_arg_value__('--upgrade-env')

@@ -848,7 +848,7 @@
         "openService": "Open service",
         "closeService": "Close service",
         "serviceClosed": "Service is closed indefinitely",
-        "restaurantReview": "Your restaurant is under review, you’ll be notifiedonce it’s approved."
+        "restaurantReview": "Your restaurant is under review, you’ll be notified, once it’s approved."
       },
       "CreateServiceView": {
         "pages": {
