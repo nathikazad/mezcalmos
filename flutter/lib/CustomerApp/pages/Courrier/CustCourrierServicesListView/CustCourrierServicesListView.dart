@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -159,7 +160,7 @@ class _CustCourierServicesListViewState
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 25,
+                        radius: 21.mezSp,
                         backgroundImage:
                             CachedNetworkImageProvider(company.info.image),
                       ),
@@ -194,11 +195,12 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               Icons.delivery_dining,
               color: Colors.black,
-              size: 22,
+              size: 17.5.mezSp,
             ),
             SizedBox(
               width: 3,
@@ -250,7 +252,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               children: [
                 Icon(
                   Icons.star,
-                  size: 22,
+                  size: 17.5.mezSp,
                   color: Color(0xFF6779FE),
                 ),
                 SizedBox(

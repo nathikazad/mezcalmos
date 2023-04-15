@@ -57,10 +57,10 @@
         }
       },
       "courrier": {
-        "CustCourierServicesListView" : {
-          "title" : "Delivery companies arround you",
-          "courier" : "Courier",
-          "min" : "Min"
+        "CustCourierServicesListView": {
+          "title": "Delivery companies arround you",
+          "courier": "Courier",
+          "min": "Min"
         },
 
         "CustCourierServiceView": {
@@ -197,7 +197,7 @@
             "showOnlyOpen": "Show only open service",
             "emptRestaurantList": "Sorry no restaurant found.",
             "noOpenRestaurant": "No open restaurants founds",
-            "meal": "Meal",
+            "meals": "Meals",
             "noItemTitle": "No result found",
             "noItemDesc": "Sorry, we couldn’t find what you’re looking for please try a new keyword."
           }
@@ -414,7 +414,7 @@
               "codText": "Cash on delivery",
               "debitCreditText": "Credit/Debit Card",
               "reviews": "Reviews",
-              "viewAll" :"View All",
+              "viewAll": "View All",
               "paymentMethod": "Payment Method",
               "workingHours": "Working hours",
               "weekDays": {
@@ -424,8 +424,7 @@
                 "thursday": "Thursday",
                 "friday": "Friday",
                 "saturday": "Saturday",
-                "sunday": "Sunday",
-                "viewAll": "View All"
+                "sunday": "Sunday"
               }
             },
             "workinHoursCart": {
@@ -641,7 +640,6 @@
           }
         },
         "LaundriesListView": {
-
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -789,7 +787,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Saved",
-        "routeError" : "Error getting your location and route informations",
+        "routeError": "Error getting your location and route informations",
         "writeReview": "Write review",
         "savedTitle": "Your information has been saved",
         "yesCancel": "Yes, cancel order",

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
@@ -82,7 +83,7 @@ class CustRequestCourierItems extends StatelessWidget {
                         Text(
                           '${_i18n()["remove"]}',
                           style: context.txt.bodyLarge?.copyWith(
-                              color: redAccentColor, fontSize: 11.sp),
+                              color: redAccentColor, fontSize: 11.mezSp),
                         )
                       ],
                     ),

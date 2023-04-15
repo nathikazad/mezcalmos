@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
@@ -75,7 +76,7 @@ class _RestaurantsListOfItemsComponentState
                       Text(
                         "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
                         style: context.txt.displaySmall?.copyWith(
-                          fontSize: 13.sp,
+                          fontSize: 13.mezSp,
                         ),
                       ),
                       if (widget.item.isSpecial)

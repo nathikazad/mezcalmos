@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -120,7 +121,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
           Text(
             rating.value!.toStringAsFixed(1),
             style: context.txt.bodyLarge
-                ?.copyWith(fontSize: 25.sp, fontWeight: FontWeight.w700),
+                ?.copyWith(fontSize: 25.mezSp, fontWeight: FontWeight.w700),
           ),
           const SizedBox(
             height: 2,

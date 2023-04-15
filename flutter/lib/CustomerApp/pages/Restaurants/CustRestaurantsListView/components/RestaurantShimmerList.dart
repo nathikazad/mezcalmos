@@ -3,8 +3,8 @@
 * On 3/25/2022.
 */
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sizer/sizer.dart';
 
 class RestaurantShimmerCard extends StatelessWidget {
   const RestaurantShimmerCard({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class RestaurantShimmerCard extends StatelessWidget {
                         baseColor: Colors.grey[300]!,
                         child: Container(
                           height: 10,
-                          width: 120,
+                          width: 40.mezW,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(2),
                             color: Colors.grey,
@@ -76,8 +76,8 @@ class RestaurantShimmerCard extends StatelessWidget {
                               highlightColor: Colors.grey[400]!,
                               baseColor: Colors.grey[300]!,
                               child: Container(
-                                height: 15,
-                                width: 15,
+                                height: 10.mezSp,
+                                width: 10.mezSp,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(2),
                                   color: Colors.grey,
@@ -90,7 +90,7 @@ class RestaurantShimmerCard extends StatelessWidget {
                               baseColor: Colors.grey[300]!,
                               child: Container(
                                 height: 10,
-                                width: 80,
+                                width: 32.5.mezW,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(2),
                                   color: Colors.grey,
@@ -109,7 +109,7 @@ class RestaurantShimmerCard extends StatelessWidget {
                 baseColor: Colors.grey[300]!,
                 child: Container(
                   height: double.infinity,
-                  width: 35.w,
+                  width: 35.mezW,
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.only(
