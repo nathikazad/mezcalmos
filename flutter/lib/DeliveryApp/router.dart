@@ -10,7 +10,6 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class DeliveryAppRoutes {
   static const String kCurrentOrdersListRoute = '/currentOrders';
-  static const String kLaundryOrderViewRoute = '/laundryOrders/:orderId';
   static const String kDvOrderView = '/orders/:orderId';
   static const String kOrderDetailsViewRoute = "/orderDetails/:orderId";
   static const String kPastOrdersViewRoute = "/pastOrders";

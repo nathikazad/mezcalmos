@@ -69,6 +69,18 @@ rentals_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["business_rental_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["business_rental_bool_exp"]},ValueTypes["business_rental_aggregate"]],
+reviews?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+reviews_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 	service_provider_type?:true,
 		__typename?: true
 }>;
@@ -116,6 +128,8 @@ count?: [{	columns?:ValueTypes["business_business_select_column"][],	distinct?:b
 	profile?:ValueTypes["String_comparison_exp"],
 	rentals?:ValueTypes["business_rental_bool_exp"],
 	rentals_aggregate?:ValueTypes["business_rental_aggregate_bool_exp"],
+	reviews?:ValueTypes["review_bool_exp"],
+	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "business.business" */
@@ -135,6 +149,7 @@ count?: [{	columns?:ValueTypes["business_business_select_column"][],	distinct?:b
 	operators?:ValueTypes["business_operator_arr_rel_insert_input"],
 	profile?:string,
 	rentals?:ValueTypes["business_rental_arr_rel_insert_input"],
+	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	service_provider_type?:string
 };
 	/** aggregate max on columns */
@@ -183,6 +198,7 @@ count?: [{	columns?:ValueTypes["business_business_select_column"][],	distinct?:b
 	operators_aggregate?:ValueTypes["business_operator_aggregate_order_by"],
 	profile?:ValueTypes["order_by"],
 	rentals_aggregate?:ValueTypes["business_rental_aggregate_order_by"],
+	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	service_provider_type?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: business.business */
@@ -18672,11 +18688,19 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	customer?:ValueTypes["customer_customer"],
 	from_entity_id?:true,
 	from_entity_type?:true,
+	/** A computed field, executes function "fromimage" */
+	from_image?:true,
+	/** A computed field, executes function "fromname" */
+	from_name?:true,
 	id?:true,
 	note?:true,
 	rating?:true,
 	to_entity_id?:true,
 	to_entity_type?:true,
+	/** A computed field, executes function "toimage" */
+	to_image?:true,
+	/** A computed field, executes function "toname" */
+	to_name?:true,
 		__typename?: true
 }>;
 	/** aggregated selection of "review" */
@@ -18753,11 +18777,15 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	customer?:ValueTypes["customer_customer_bool_exp"],
 	from_entity_id?:ValueTypes["Int_comparison_exp"],
 	from_entity_type?:ValueTypes["String_comparison_exp"],
+	from_image?:ValueTypes["String_comparison_exp"],
+	from_name?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	note?:ValueTypes["String_comparison_exp"],
 	rating?:ValueTypes["Int_comparison_exp"],
 	to_entity_id?:ValueTypes["Int_comparison_exp"],
-	to_entity_type?:ValueTypes["String_comparison_exp"]
+	to_entity_type?:ValueTypes["String_comparison_exp"],
+	to_image?:ValueTypes["String_comparison_exp"],
+	to_name?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "review" */
 ["review_constraint"]:review_constraint;
@@ -18852,11 +18880,15 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	customer?:ValueTypes["customer_customer_order_by"],
 	from_entity_id?:ValueTypes["order_by"],
 	from_entity_type?:ValueTypes["order_by"],
+	from_image?:ValueTypes["order_by"],
+	from_name?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	note?:ValueTypes["order_by"],
 	rating?:ValueTypes["order_by"],
 	to_entity_id?:ValueTypes["order_by"],
-	to_entity_type?:ValueTypes["order_by"]
+	to_entity_type?:ValueTypes["order_by"],
+	to_image?:ValueTypes["order_by"],
+	to_name?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: review */
 ["review_pk_columns_input"]: {
@@ -23312,6 +23344,10 @@ export type PartialObjects = {
 	rentals?:PartialObjects["business_rental"][],
 			/** An aggregate relationship */
 	rentals_aggregate?:PartialObjects["business_rental_aggregate"],
+			/** An array relationship */
+	reviews?:PartialObjects["review"][],
+			/** An aggregate relationship */
+	reviews_aggregate?:PartialObjects["review_aggregate"],
 			service_provider_type?:string
 	},
 	/** aggregated selection of "business.business" */
@@ -23358,6 +23394,8 @@ export type PartialObjects = {
 	profile?:PartialObjects["String_comparison_exp"],
 	rentals?:PartialObjects["business_rental_bool_exp"],
 	rentals_aggregate?:PartialObjects["business_rental_aggregate_bool_exp"],
+	reviews?:PartialObjects["review_bool_exp"],
+	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "business.business" */
@@ -23377,6 +23415,7 @@ export type PartialObjects = {
 	operators?:PartialObjects["business_operator_arr_rel_insert_input"],
 	profile?:string,
 	rentals?:PartialObjects["business_rental_arr_rel_insert_input"],
+	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	service_provider_type?:string
 },
 	/** aggregate max on columns */
@@ -23425,6 +23464,7 @@ export type PartialObjects = {
 	operators_aggregate?:PartialObjects["business_operator_aggregate_order_by"],
 	profile?:PartialObjects["order_by"],
 	rentals_aggregate?:PartialObjects["business_rental_aggregate_order_by"],
+	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	service_provider_type?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: business.business */
@@ -40683,11 +40723,19 @@ the end). throws an error if top level container is not an array */
 	customer?:PartialObjects["customer_customer"],
 			from_entity_id?:number,
 			from_entity_type?:string,
+			/** A computed field, executes function "fromimage" */
+	from_image?:string,
+			/** A computed field, executes function "fromname" */
+	from_name?:string,
 			id?:number,
 			note?:string,
 			rating?:number,
 			to_entity_id?:number,
-			to_entity_type?:string
+			to_entity_type?:string,
+			/** A computed field, executes function "toimage" */
+	to_image?:string,
+			/** A computed field, executes function "toname" */
+	to_name?:string
 	},
 	/** aggregated selection of "review" */
 ["review_aggregate"]: {
@@ -40763,11 +40811,15 @@ the end). throws an error if top level container is not an array */
 	customer?:PartialObjects["customer_customer_bool_exp"],
 	from_entity_id?:PartialObjects["Int_comparison_exp"],
 	from_entity_type?:PartialObjects["String_comparison_exp"],
+	from_image?:PartialObjects["String_comparison_exp"],
+	from_name?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	note?:PartialObjects["String_comparison_exp"],
 	rating?:PartialObjects["Int_comparison_exp"],
 	to_entity_id?:PartialObjects["Int_comparison_exp"],
-	to_entity_type?:PartialObjects["String_comparison_exp"]
+	to_entity_type?:PartialObjects["String_comparison_exp"],
+	to_image?:PartialObjects["String_comparison_exp"],
+	to_name?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "review" */
 ["review_constraint"]:review_constraint,
@@ -40862,11 +40914,15 @@ the end). throws an error if top level container is not an array */
 	customer?:PartialObjects["customer_customer_order_by"],
 	from_entity_id?:PartialObjects["order_by"],
 	from_entity_type?:PartialObjects["order_by"],
+	from_image?:PartialObjects["order_by"],
+	from_name?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	note?:PartialObjects["order_by"],
 	rating?:PartialObjects["order_by"],
 	to_entity_id?:PartialObjects["order_by"],
-	to_entity_type?:PartialObjects["order_by"]
+	to_entity_type?:PartialObjects["order_by"],
+	to_image?:PartialObjects["order_by"],
+	to_name?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: review */
 ["review_pk_columns_input"]: {
@@ -44675,6 +44731,10 @@ export type business_business = {
 	rentals:business_rental[],
 	/** An aggregate relationship */
 	rentals_aggregate:business_rental_aggregate,
+	/** An array relationship */
+	reviews:review[],
+	/** An aggregate relationship */
+	reviews_aggregate:review_aggregate,
 	service_provider_type:string
 }
 
@@ -44725,6 +44785,8 @@ export type business_business_bool_exp = {
 	profile?:String_comparison_exp,
 	rentals?:business_rental_bool_exp,
 	rentals_aggregate?:business_rental_aggregate_bool_exp,
+	reviews?:review_bool_exp,
+	reviews_aggregate?:review_aggregate_bool_exp,
 	service_provider_type?:String_comparison_exp
 }
 
@@ -44750,6 +44812,7 @@ export type business_business_insert_input = {
 	operators?:business_operator_arr_rel_insert_input,
 	profile?:string,
 	rentals?:business_rental_arr_rel_insert_input,
+	reviews?:review_arr_rel_insert_input,
 	service_provider_type?:string
 }
 
@@ -44804,6 +44867,7 @@ export type business_business_order_by = {
 	operators_aggregate?:business_operator_aggregate_order_by,
 	profile?:order_by,
 	rentals_aggregate?:business_rental_aggregate_order_by,
+	reviews_aggregate?:review_aggregate_order_by,
 	service_provider_type?:order_by
 }
 
@@ -64926,11 +64990,19 @@ export type review = {
 	customer?:customer_customer,
 	from_entity_id:number,
 	from_entity_type:string,
+	/** A computed field, executes function "fromimage" */
+	from_image?:string,
+	/** A computed field, executes function "fromname" */
+	from_name?:string,
 	id:number,
 	note?:string,
 	rating:number,
 	to_entity_id:number,
-	to_entity_type:string
+	to_entity_type:string,
+	/** A computed field, executes function "toimage" */
+	to_image?:string,
+	/** A computed field, executes function "toname" */
+	to_name?:string
 }
 
 /** aggregated selection of "review" */
@@ -65015,11 +65087,15 @@ export type review_bool_exp = {
 	customer?:customer_customer_bool_exp,
 	from_entity_id?:Int_comparison_exp,
 	from_entity_type?:String_comparison_exp,
+	from_image?:String_comparison_exp,
+	from_name?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	note?:String_comparison_exp,
 	rating?:Int_comparison_exp,
 	to_entity_id?:Int_comparison_exp,
-	to_entity_type?:String_comparison_exp
+	to_entity_type?:String_comparison_exp,
+	to_image?:String_comparison_exp,
+	to_name?:String_comparison_exp
 }
 
 /** unique or primary key constraints on table "review" */
@@ -65127,11 +65203,15 @@ export type review_order_by = {
 	customer?:customer_customer_order_by,
 	from_entity_id?:order_by,
 	from_entity_type?:order_by,
+	from_image?:order_by,
+	from_name?:order_by,
 	id?:order_by,
 	note?:order_by,
 	rating?:order_by,
 	to_entity_id?:order_by,
-	to_entity_type?:order_by
+	to_entity_type?:order_by,
+	to_image?:order_by,
+	to_name?:order_by
 }
 
 /** primary key columns input for table: review */
@@ -69915,6 +69995,70 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		reviews:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		reviews_aggregate:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	business_business_aggregate_fields:{
@@ -70024,6 +70168,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		reviews:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		service_provider_type:{
 			type:"String_comparison_exp",
 			array:false,
@@ -70091,6 +70247,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		rentals:{
 			type:"business_rental_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews:{
+			type:"review_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -70181,6 +70343,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		rentals_aggregate:{
 			type:"business_rental_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -120402,6 +120570,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		from_image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_name:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -120427,6 +120607,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		to_entity_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_name:{
 			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
@@ -120675,6 +120867,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		from_image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_name:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -120700,6 +120904,18 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		to_entity_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_name:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -133388,6 +133604,8 @@ export const ReturnTypes: Record<string,any> = {
 		profile:"String",
 		rentals:"business_rental",
 		rentals_aggregate:"business_rental_aggregate",
+		reviews:"review",
+		reviews_aggregate:"review_aggregate",
 		service_provider_type:"String"
 	},
 	business_business_aggregate:{
@@ -139017,11 +139235,15 @@ export const ReturnTypes: Record<string,any> = {
 		customer:"customer_customer",
 		from_entity_id:"Int",
 		from_entity_type:"String",
+		from_image:"String",
+		from_name:"String",
 		id:"Int",
 		note:"String",
 		rating:"Int",
 		to_entity_id:"Int",
-		to_entity_type:"String"
+		to_entity_type:"String",
+		to_image:"String",
+		to_name:"String"
 	},
 	review_aggregate:{
 		aggregate:"review_aggregate_fields",

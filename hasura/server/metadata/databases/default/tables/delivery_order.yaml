@@ -435,8 +435,10 @@ update_permissions:
   - role: delivery_driver
     permission:
       columns:
+        - customer_review_by_driver_id
         - estimated_arrival_at_dropoff_time
         - estimated_arrival_at_pickup_time
+        - service_provider_review_by_driver_id
       filter:
         delivery_driver:
           user_id:

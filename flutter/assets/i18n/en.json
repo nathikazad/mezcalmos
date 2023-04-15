@@ -6,6 +6,15 @@
       "savedCards": "My cards"
     },
     "components": {
+      "NoOpenServiceComponent" : {
+        "title" : "No open services",
+        "desc" : "There are no open services in your area. Please try again later.",
+        "restaurant" : "restaurants",
+        "deliveryCompany" : "couriers",
+        "laundry" : "laundries",
+        "btn" :"Show closed services"
+      },
+      
       "Menu": {
         "UserMenuComponent": {
           "savedLocations": "My locations",
@@ -185,7 +194,7 @@
           "ListRestaurantScreen": {
             "restaurants": "Restaurants",
             "search": "Search",
-            "showOnlyOpen": "Show only open restaurants",
+            "showOnlyOpen": "Show only open service",
             "emptRestaurantList": "Sorry no restaurant found.",
             "noOpenRestaurant": "No open restaurants founds",
             "meals": "Meals",
@@ -744,7 +753,8 @@
   "Shared": {
     "controllers": {
       "authController": {
-        "failedOTPConfirmRequest": "OTP Code confirmation failed :("
+        "failedOTPConfirmRequest": "OTP Code confirmation failed :(",
+        "setNameAndImage" : "Please set your name and image before proceeding"
       }
     },
     "helpers": {
@@ -835,7 +845,7 @@
         "openService": "Open service",
         "closeService": "Close service",
         "serviceClosed": "Service is closed indefinitely",
-        "restaurantReview": "Your restaurant is under review, you’ll be notifiedonce it’s approved."
+        "restaurantReview": "Your restaurant is under review, you’ll be notified, once it’s approved."
       },
       "CreateServiceView": {
         "pages": {
@@ -1167,7 +1177,8 @@
         "refundAmount": "Refund amount",
         "tax": "Tax",
         "toBeCalc": "To be calculated",
-        "add": "Add"
+        "add": "Add",
+        "waitingForCustomer":"Waiting for customer"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Payment method",
@@ -1456,7 +1467,8 @@
         "packageReady": "Package ready :",
         "arrivalAtPickup": "Arrival at pickup :",
         "arrivalAtDropoff": "Arrival at dropoff :",
-        "noDriver": "No driver assigned yet"
+        "noDriver": "No driver assigned yet",
+        "cancelOrder" :"Cancel Order"
       },
       "DvOpTabsView": {
         "orders": "Orders",
@@ -1738,6 +1750,7 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
+        "cancelOrder" :"Cancel Order",
         "service": "Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
@@ -1844,7 +1857,8 @@
               "updatePrice": "New price",
               "save": "Request price change",
               "cancel": "cancel",
-              "card": "Card"
+              "card": "Card",
+              "addReview" : "Add review"
             },
             "DriverBottomLaundryOrderCard": {
               "oops": "Oops",

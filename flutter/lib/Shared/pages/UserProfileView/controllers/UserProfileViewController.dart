@@ -54,10 +54,10 @@ class UserProfileViewController {
   }
   // methods //
 
-  void initProfileView() {
+  void initProfileView(UserProfileViewMode intialMode) {
     name.value = user?.name ?? "";
     newImageUrl.value = user?.image;
-    mode.value = UserProfileViewMode.None;
+    mode.value = intialMode;
   }
 
   void switchMode(UserProfileViewMode mode) {

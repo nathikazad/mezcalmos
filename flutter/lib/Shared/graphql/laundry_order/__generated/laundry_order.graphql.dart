@@ -781,6 +781,34 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'from_name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'from_image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'created_at'),
                 alias: null,
                 arguments: [],
@@ -3964,6 +3992,10 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
 
 class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
   Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review({
+    this.from_name,
+    this.from_image,
+    this.to_name,
+    this.to_image,
     required this.created_at,
     required this.from_entity_id,
     required this.from_entity_type,
@@ -3978,6 +4010,10 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
 
   factory Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review.fromJson(
       Map<String, dynamic> json) {
+    final l$from_name = json['from_name'];
+    final l$from_image = json['from_image'];
+    final l$to_name = json['to_name'];
+    final l$to_image = json['to_image'];
     final l$created_at = json['created_at'];
     final l$from_entity_id = json['from_entity_id'];
     final l$from_entity_type = json['from_entity_type'];
@@ -3989,6 +4025,10 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
     return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review(
+      from_name: (l$from_name as String?),
+      from_image: (l$from_image as String?),
+      to_name: (l$to_name as String?),
+      to_image: (l$to_image as String?),
       created_at: (l$created_at as String),
       from_entity_id: (l$from_entity_id as int),
       from_entity_type: (l$from_entity_type as String),
@@ -4004,6 +4044,14 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? from_name;
+
+  final String? from_image;
+
+  final String? to_name;
+
+  final String? to_image;
 
   final String created_at;
 
@@ -4028,6 +4076,14 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$from_name = from_name;
+    _resultData['from_name'] = l$from_name;
+    final l$from_image = from_image;
+    _resultData['from_image'] = l$from_image;
+    final l$to_name = to_name;
+    _resultData['to_name'] = l$to_name;
+    final l$to_image = to_image;
+    _resultData['to_image'] = l$to_image;
     final l$created_at = created_at;
     _resultData['created_at'] = l$created_at;
     final l$from_entity_id = from_entity_id;
@@ -4053,6 +4109,10 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
 
   @override
   int get hashCode {
+    final l$from_name = from_name;
+    final l$from_image = from_image;
+    final l$to_name = to_name;
+    final l$to_image = to_image;
     final l$created_at = created_at;
     final l$from_entity_id = from_entity_id;
     final l$from_entity_type = from_entity_type;
@@ -4064,6 +4124,10 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
     final l$customer = customer;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$from_name,
+      l$from_image,
+      l$to_name,
+      l$to_image,
       l$created_at,
       l$from_entity_id,
       l$from_entity_type,
@@ -4085,6 +4149,26 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
     if (!(other
             is Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$from_name = from_name;
+    final lOther$from_name = other.from_name;
+    if (l$from_name != lOther$from_name) {
+      return false;
+    }
+    final l$from_image = from_image;
+    final lOther$from_image = other.from_image;
+    if (l$from_image != lOther$from_image) {
+      return false;
+    }
+    final l$to_name = to_name;
+    final lOther$to_name = other.to_name;
+    if (l$to_name != lOther$to_name) {
+      return false;
+    }
+    final l$to_image = to_image;
+    final lOther$to_image = other.to_image;
+    if (l$to_image != lOther$to_image) {
       return false;
     }
     final l$created_at = created_at;
@@ -4167,6 +4251,10 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
       _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review;
 
   TRes call({
+    String? from_name,
+    String? from_image,
+    String? to_name,
+    String? to_image,
     String? created_at,
     int? from_entity_id,
     String? from_entity_type,
@@ -4203,6 +4291,10 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
   static const _undefined = {};
 
   TRes call({
+    Object? from_name = _undefined,
+    Object? from_image = _undefined,
+    Object? to_name = _undefined,
+    Object? to_image = _undefined,
     Object? created_at = _undefined,
     Object? from_entity_id = _undefined,
     Object? from_entity_type = _undefined,
@@ -4216,6 +4308,16 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
   }) =>
       _then(
           Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review(
+        from_name: from_name == _undefined
+            ? _instance.from_name
+            : (from_name as String?),
+        from_image: from_image == _undefined
+            ? _instance.from_image
+            : (from_image as String?),
+        to_name:
+            to_name == _undefined ? _instance.to_name : (to_name as String?),
+        to_image:
+            to_image == _undefined ? _instance.to_image : (to_image as String?),
         created_at: created_at == _undefined || created_at == null
             ? _instance.created_at
             : (created_at as String),
@@ -4267,6 +4369,10 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
   TRes _res;
 
   call({
+    String? from_name,
+    String? from_image,
+    String? to_name,
+    String? to_image,
     String? created_at,
     int? from_entity_id,
     String? from_entity_type,
@@ -6563,6 +6669,34 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'from_name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'from_image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'to_image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
               FieldNode(
                 name: NameNode(value: 'created_at'),
                 alias: null,
@@ -9718,6 +9852,10 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$
 
 class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
   Query$get_laundry_order_by_id$laundry_order_by_pk$review({
+    this.from_name,
+    this.from_image,
+    this.to_name,
+    this.to_image,
     required this.created_at,
     required this.from_entity_id,
     required this.from_entity_type,
@@ -9732,6 +9870,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
 
   factory Query$get_laundry_order_by_id$laundry_order_by_pk$review.fromJson(
       Map<String, dynamic> json) {
+    final l$from_name = json['from_name'];
+    final l$from_image = json['from_image'];
+    final l$to_name = json['to_name'];
+    final l$to_image = json['to_image'];
     final l$created_at = json['created_at'];
     final l$from_entity_id = json['from_entity_id'];
     final l$from_entity_type = json['from_entity_type'];
@@ -9743,6 +9885,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
     return Query$get_laundry_order_by_id$laundry_order_by_pk$review(
+      from_name: (l$from_name as String?),
+      from_image: (l$from_image as String?),
+      to_name: (l$to_name as String?),
+      to_image: (l$to_image as String?),
       created_at: (l$created_at as String),
       from_entity_id: (l$from_entity_id as int),
       from_entity_type: (l$from_entity_type as String),
@@ -9758,6 +9904,14 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? from_name;
+
+  final String? from_image;
+
+  final String? to_name;
+
+  final String? to_image;
 
   final String created_at;
 
@@ -9782,6 +9936,14 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$from_name = from_name;
+    _resultData['from_name'] = l$from_name;
+    final l$from_image = from_image;
+    _resultData['from_image'] = l$from_image;
+    final l$to_name = to_name;
+    _resultData['to_name'] = l$to_name;
+    final l$to_image = to_image;
+    _resultData['to_image'] = l$to_image;
     final l$created_at = created_at;
     _resultData['created_at'] = l$created_at;
     final l$from_entity_id = from_entity_id;
@@ -9807,6 +9969,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
 
   @override
   int get hashCode {
+    final l$from_name = from_name;
+    final l$from_image = from_image;
+    final l$to_name = to_name;
+    final l$to_image = to_image;
     final l$created_at = created_at;
     final l$from_entity_id = from_entity_id;
     final l$from_entity_type = from_entity_type;
@@ -9818,6 +9984,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
     final l$customer = customer;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$from_name,
+      l$from_image,
+      l$to_name,
+      l$to_image,
       l$created_at,
       l$from_entity_id,
       l$from_entity_type,
@@ -9838,6 +10008,26 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
     }
     if (!(other is Query$get_laundry_order_by_id$laundry_order_by_pk$review) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$from_name = from_name;
+    final lOther$from_name = other.from_name;
+    if (l$from_name != lOther$from_name) {
+      return false;
+    }
+    final l$from_image = from_image;
+    final lOther$from_image = other.from_image;
+    if (l$from_image != lOther$from_image) {
+      return false;
+    }
+    final l$to_name = to_name;
+    final lOther$to_name = other.to_name;
+    if (l$to_name != lOther$to_name) {
+      return false;
+    }
+    final l$to_image = to_image;
+    final lOther$to_image = other.to_image;
+    if (l$to_image != lOther$to_image) {
       return false;
     }
     final l$created_at = created_at;
@@ -9918,6 +10108,10 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$review
       _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$review;
 
   TRes call({
+    String? from_name,
+    String? from_image,
+    String? to_name,
+    String? to_image,
     String? created_at,
     int? from_entity_id,
     String? from_entity_type,
@@ -9951,6 +10145,10 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$review<
   static const _undefined = {};
 
   TRes call({
+    Object? from_name = _undefined,
+    Object? from_image = _undefined,
+    Object? to_name = _undefined,
+    Object? to_image = _undefined,
     Object? created_at = _undefined,
     Object? from_entity_id = _undefined,
     Object? from_entity_type = _undefined,
@@ -9963,6 +10161,16 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$review<
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_laundry_order_by_id$laundry_order_by_pk$review(
+        from_name: from_name == _undefined
+            ? _instance.from_name
+            : (from_name as String?),
+        from_image: from_image == _undefined
+            ? _instance.from_image
+            : (from_image as String?),
+        to_name:
+            to_name == _undefined ? _instance.to_name : (to_name as String?),
+        to_image:
+            to_image == _undefined ? _instance.to_image : (to_image as String?),
         created_at: created_at == _undefined || created_at == null
             ? _instance.created_at
             : (created_at as String),
@@ -10014,6 +10222,10 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$review
   TRes _res;
 
   call({
+    String? from_name,
+    String? from_image,
+    String? to_name,
+    String? to_image,
     String? created_at,
     int? from_entity_id,
     String? from_entity_type,

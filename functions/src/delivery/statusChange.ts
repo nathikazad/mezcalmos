@@ -15,6 +15,7 @@ import { isMezAdmin, notifyDeliveryCompany } from "../shared/helper";
 import { MezError } from "../shared/models/Generic/Generic";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
+import { cancelCourierFromDelivery } from "../shared/models/Services/Courier/updateCourier";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
@@ -95,11 +96,17 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
         changeLaundryOrderStatus(customer, deliveryOrder)
         break;
       case OrderType.Courier:
-        if(deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer) {
-          unassignDriver(deliveryOrder.deliveryId);
-          notifyDeliveryCompany(deliveryOrder)
-        } else
-          notifyCourierStatusChange(deliveryOrder, customer);
+        switch (deliveryOrder.status) {
+          case DeliveryOrderStatus.CancelledByDeliverer:
+            unassignDriver(deliveryOrder.deliveryId);
+            notifyDeliveryCompany(deliveryOrder)
+            break;
+          case DeliveryOrderStatus.CancelledByAdmin:
+            cancelCourierFromDelivery(deliveryOrder.deliveryId);
+          default:
+            notifyCourierStatusChange(deliveryOrder, customer);
+            break;
+        }
       default:
         break;
     }
@@ -128,9 +135,6 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
 }
 
 async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStatus: DeliveryOrderStatus) {
-  if (deliveryOrder.deliveryDriver == null) {
-    throw new MezError(ChangeDeliveryStatusError.DriverNotAssigned);
-  }
   if (deliveryOrder.status == DeliveryOrderStatus.Delivered
     || deliveryOrder.status == DeliveryOrderStatus.CancelledByCustomer
     || deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer
@@ -139,6 +143,9 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStat
     throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
   }
   if (!(await isMezAdmin(userId))) {
+    if (deliveryOrder.deliveryDriver == null) {
+      throw new MezError(ChangeDeliveryStatusError.DriverNotAssigned);
+    }
     if(userId != deliveryOrder.deliveryDriver.userId)
       throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
     else if(newStatus == DeliveryOrderStatus.CancelledByDeliverer && deliveryOrder.orderType != OrderType.Courier)
@@ -155,7 +162,7 @@ async function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer:
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Courier,
       notificationAction: NotificationAction.ShowSnackBarAlways,
-      orderId: deliveryOrder.deliveryId
+      orderId: courierOrder.id
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: deliveryOrderStatusChangeMessages[deliveryOrder.status],

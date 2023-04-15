@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class CustCourierServiceViewController {
   // instances //
@@ -21,15 +22,21 @@ class CustCourierServiceViewController {
   Future<void> init({required int companyId}) async {
     _deliveryCompany.value = await get_delivery_company(companyId: companyId);
 
-    unawaited(get_service_reviews(serviceId: companyId, withCache: false)
+    unawaited(get_service_reviews(
+            serviceId: companyId,
+            serviceProviderType: ServiceProviderType.DeliveryCompany,
+            withCache: false)
         .then((List<Review>? value) {
       if (value != null) {
         _deliveryCompany.value?.reviews = value;
       }
     }));
 
-    unawaited(get_service_review_average(serviceId: companyId, withCache: false)
-        .then((double? value) {
+    unawaited(get_service_review_average(
+            serviceId: companyId,
+            serviceProviderType: ServiceProviderType.DeliveryCompany,
+            withCache: false)
+        .then((num? value) {
       if (value != null) {
         _deliveryCompany.value?.rate = value;
         _deliveryCompany.refresh();

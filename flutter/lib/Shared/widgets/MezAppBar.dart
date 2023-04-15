@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
@@ -198,10 +199,12 @@ PreferredSize _installAppButton() {
           onClick: launchAppStoreLink));
 }
 
-bool get showIntallAppBtn =>
-    kIsWeb &&
-    (defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS);
+bool get showIntallAppBtn {
+  return kIsWeb &&
+      ((defaultTargetPlatform == TargetPlatform.android &&
+              Get.find<SettingsController>().isGooglePlayServiceAvailable) ||
+          defaultTargetPlatform == TargetPlatform.iOS);
+}
 
 Widget _backButton({required VoidCallback? click}) {
   return Transform.scale(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/CustomerRestaurantOrderEst.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderRestaurantCard.dart';
@@ -13,12 +14,11 @@ import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
@@ -199,11 +199,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   Widget _addReviewButton(BuildContext context) {
     return Obx(() {
       if (viewController.order.value?.canAddReview == true) {
-        return customerAddReviewButton(context,
-            orderId: viewController.order.value!.orderId,
-            serviceProviderId: viewController.order.value!.restaurantId,
-            serviceProviderType: ServiceProviderType.Restaurant,
-            orderType: OrderType.Restaurant);
+        return CustAddReviewButton(
+          orderId: viewController.order.value!.orderId,
+          toEntityId: viewController.order.value!.serviceProvider.hasuraId,
+          toEntityType: ServiceProviderType.Restaurant,
+        );
       } else {
         return SizedBox();
       }

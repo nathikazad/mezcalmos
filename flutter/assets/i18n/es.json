@@ -6,6 +6,14 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "NoOpenServiceComponent" : {
+        "title" : "Sin servicios abiertos",
+        "desc" : "No hay servicios abiertos en su área. Vuelva a intentarlo más tarde.",
+        "restaurant" : "restaurantes",
+        "deliveryCompany" : "correos",
+        "laundry" : "lavandería",
+        "btn" :"Mostrar servicios cerrados"
+      },
       "Menu": {
         "UserMenuComponent": {
           "savedLocations": "Mis ubicaciones",
@@ -183,7 +191,7 @@
           "ListRestaurantScreen": {
             "restaurants": "Restaurantes",
             "search": "Búsqueda",
-            "showOnlyOpen": "Mostrar solo restaurantes abiertos",
+            "showOnlyOpen": "Mostrar solo servicio abierto",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
             "noOpenRestaurant": "No hay restaurantes abiertos",
             "meals": "Comidas",
@@ -400,6 +408,7 @@
             "restaurantInfoTab": {
               "description": "Descripción",
               "location": "Dirección",
+              "viewAll" : "Ver Todo",
               "codText": "Efectivo en la entrega",
               "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",
@@ -741,7 +750,8 @@
   "Shared": {
     "controllers": {
       "authController": {
-        "failedOTPConfirmRequest": "La confirmación del código OTP falló :("
+        "failedOTPConfirmRequest": "La confirmación del código OTP falló :(",
+        "setNameAndImage" : "Establezca su nombre e imagen antes de continuar "
       }
     },
     "helpers": {
@@ -1170,7 +1180,7 @@
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado",
         "add": "Agregar",
-        "waitingForCustomer": "esperando a un cliente"
+        "waitingForCustomer":"esperando a un cliente"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
@@ -1459,7 +1469,8 @@
         "arrivalAtPickup": "Llegada a la recogida :",
         "pickupLoc": "Lugar de recogida",
         "arrivalAtDropoff": "Llegada a la caída :",
-        "noDriver": "No hay controlador asignado todavía"
+        "noDriver": "No hay controlador asignado todavía",
+        "cancelOrder" :"Cancelar orden"
       },
       "DvOpTabsView": {
         "orders": "Pedidos",
@@ -1727,6 +1738,8 @@
         "subtitle": "Necesita una invitación para usar nuestra aplicación de entrega"
       },
       "OrderDetailsScreen": {
+
+      "cancelOrder" :"Cancelar el pedido",
         "service": "Servicio",
         "cancelled": "Cancelada",
         "approved": "Aprobada",
@@ -1811,7 +1824,8 @@
               "updateReason": "Razón del cambio de precios",
               "updatePrice": "Nuevo precio",
               "save": "Solicitar cambio de precio",
-              "cancel": "Cancelar"
+              "cancel": "Cancelar",
+              "addReview" : "Añadir reseña"
             },
             "DriverBottomLaundryOrderCard": {
               "orderStatus": {

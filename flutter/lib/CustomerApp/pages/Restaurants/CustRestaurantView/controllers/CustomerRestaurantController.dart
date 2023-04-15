@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -45,14 +46,18 @@ class CustomerRestaurantController {
       {required int restaurantId, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
     restaurant.value = await get_restaurant_by_id(id: restaurantId);
-    unawaited(get_service_reviews(serviceId: restaurantId)
+    unawaited(get_service_reviews(
+            serviceId: restaurantId,
+            serviceProviderType: ServiceProviderType.Restaurant)
         .then((List<Review>? value) {
       if (value != null) {
         restaurant.value!.reviews = value;
       }
     }));
-    unawaited(get_service_review_average(serviceId: restaurantId)
-        .then((double? value) {
+    unawaited(get_service_review_average(
+            serviceId: restaurantId,
+            serviceProviderType: ServiceProviderType.Restaurant)
+        .then((num? value) {
       if (value != null) {
         restaurant.value!.rate = value;
       }

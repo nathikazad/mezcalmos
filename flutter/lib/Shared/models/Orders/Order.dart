@@ -128,10 +128,8 @@ extension OrderTypeHelper on OrderType {
         return ServiceProviderType.Laundry;
       case OrderType.Courier:
         return ServiceProviderType.DeliveryCompany;
-
-        break;
       default:
-        return ServiceProviderType.DeliveryCompany;
+        throw StateError("Error Can't get service provider type 🛑");
     }
   }
 

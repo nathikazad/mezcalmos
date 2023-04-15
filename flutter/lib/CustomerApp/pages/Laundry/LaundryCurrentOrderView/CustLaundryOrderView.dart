@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/CustomerLaundryEstTimes.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/components/LaundryOrderFooterCard.dart';
@@ -10,11 +11,9 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -217,12 +216,11 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
   Widget _addReviewButton(BuildContext context) {
     return Obx(() {
       if (viewController.order.value?.canAddReview == true) {
-        return customerAddReviewButton(context,
-            orderId: viewController.order.value!.orderId,
-            serviceProviderId:
-                viewController.order.value!.serviceProvider.hasuraId,
-            serviceProviderType: ServiceProviderType.Laundry,
-            orderType: OrderType.Laundry);
+        return CustAddReviewButton(
+          orderId: viewController.order.value!.orderId,
+          toEntityId: viewController.order.value!.serviceProvider.hasuraId,
+          toEntityType: ServiceProviderType.Laundry,
+        );
       } else {
         return SizedBox();
       }

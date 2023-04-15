@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
+import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -105,6 +106,12 @@ class DvOrderDetailsViewController {
     customerOrdersCount.value = await fetch_delivery_orders_count(
         entityId: order.value!.customer.hasuraId,
         serviceProviderType: ServiceProviderType.Customer);
+    customerReview.value = await get_service_review_average(
+        serviceId: order.value!.customer.hasuraId,
+        serviceProviderType: ServiceProviderType.Customer);
+    serviceReview.value = await get_service_review_average(
+        serviceId: order.value!.serviceProvider.hasuraId,
+        serviceProviderType: order.value!.orderType.toServiceProviderType());
   }
 
   Future<void> markItemAvailable(
@@ -195,6 +202,26 @@ class DvOrderDetailsViewController {
         mezDbgPrint(stk);
       }
     }
+  }
+
+  Future<bool> cancelOrder() async {
+    try {
+      ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery2_changeStatus(
+        deliveryId: order.value!.orderId,
+        newStatus: DeliveryOrderStatus.CancelledByDeliverer,
+      );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success == true;
+    } on FirebaseFunctionsException catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.message.toString());
+    }
+    return false;
   }
 
   void dispose() {

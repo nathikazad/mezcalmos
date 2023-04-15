@@ -19,9 +19,10 @@ class RestaurantAppRoutes {
   static const String createRestaurantRoute = '/createRestaurant';
   static const String unAuthorizedRoute = '/unauth';
   static const String menuViewRoute = '/menu/:restaurantId';
-  static const String restaurantCategoryRoute = '/categoryScreen/:restaurantId';
+  static const String restaurantCategoryRoute =
+      '/restaurantCategoryScreen/:restaurantId';
   static const String restaurantEditCategoryRoute =
-      '/categoryScreen/:categoryId/:restaurantId';
+      '/restaurantCategoryScreen/:categoryId/:restaurantId';
 
   static const String restaurantItemRoute =
       '/itemView/:restaurantId/:itemId/:categoryId';

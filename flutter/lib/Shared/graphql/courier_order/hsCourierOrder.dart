@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -50,14 +49,14 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
                   orderData.delivery_order.driver_review_by_customer!.rating,
               toEntityId: orderData
                   .delivery_order.driver_review_by_customer!.to_entity_id,
-              customer: UserInfo(
-                name: orderData.delivery_order.driver_review_by_customer
-                    ?.customer?.user.name,
-                image: orderData.delivery_order.driver_review_by_customer
-                    ?.customer?.user.image,
-                hasuraId: orderData.delivery_order.driver_review_by_customer!
-                    .customer!.user.id,
-              ),
+              fromImage: orderData
+                  .delivery_order.driver_review_by_customer!.from_image,
+              fromName:
+                  orderData.delivery_order.driver_review_by_customer!.from_name,
+              toImage:
+                  orderData.delivery_order.driver_review_by_customer!.to_image,
+              toName:
+                  orderData.delivery_order.driver_review_by_customer!.to_name,
               toEntityType: orderData
                   .delivery_order.driver_review_by_customer!.to_entity_type
                   .toServiceProviderType(),
@@ -219,14 +218,14 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                     orderData.delivery_order.driver_review_by_customer!.rating,
                 toEntityId: orderData
                     .delivery_order.driver_review_by_customer!.to_entity_id,
-                customer: UserInfo(
-                  name: orderData.delivery_order.driver_review_by_customer
-                      ?.customer?.user.name,
-                  image: orderData.delivery_order.driver_review_by_customer
-                      ?.customer?.user.image,
-                  hasuraId: orderData.delivery_order.driver_review_by_customer!
-                      .customer!.user.id,
-                ),
+                fromImage: orderData
+                    .delivery_order.driver_review_by_customer!.from_image,
+                fromName: orderData
+                    .delivery_order.driver_review_by_customer!.from_name,
+                toImage: orderData
+                    .delivery_order.driver_review_by_customer!.to_image,
+                toName:
+                    orderData.delivery_order.driver_review_by_customer!.to_name,
                 toEntityType: orderData
                     .delivery_order.driver_review_by_customer!.to_entity_type
                     .toServiceProviderType(),
@@ -298,7 +297,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         serviceProviderDriverChatId:
             orderData.delivery_order.chat_with_service_provider_id,
         paymentType: orderData.payment_type.toPaymentType(),
-       
+
         packageReady: orderData.delivery_order.package_ready,
         stripePaymentInfo: _paymentInfo,
         serviceProvider: ServiceInfo(
@@ -343,11 +342,11 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             deliveryCost: orderData.delivery_order.delivery_cost,
             refundAmmount: orderData.refund_amount,
             tax: orderData.tax,
-             changePriceRequest:
-            (orderData.delivery_order.change_price_request != null)
-                ? ChangePriceRequest.fromMap(
-                    orderData.delivery_order.change_price_request)
-                : null,
+            changePriceRequest:
+                (orderData.delivery_order.change_price_request != null)
+                    ? ChangePriceRequest.fromMap(
+                        orderData.delivery_order.change_price_request)
+                    : null,
             orderItemsCost: orderData.actual_items_cost,
             totalCost: orderData.total_cost),
       );
@@ -355,8 +354,6 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
     return null;
   });
 }
-
-
 
 Future<List<CourierOrdeItem>?> get_courier_order_items(
     {required int orderId, bool withCache = true}) async {
