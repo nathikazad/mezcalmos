@@ -25,10 +25,10 @@ class CustBusinessViewAppbar extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
       centerTitle: true,
-      expandedHeight: 250,
+      expandedHeight: 280,
       leadingWidth: 35,
       automaticallyImplyLeading: false,
-      bottom: getBottom(context),
+      bottom: _tabbar(),
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         getAppbarIconsButton(),
@@ -37,11 +37,12 @@ class CustBusinessViewAppbar extends StatelessWidget {
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         bool isCollapsed = constraints.biggest.height -
-                (MediaQuery.of(context).padding.top + kToolbarHeight + 50) >=
+                (MediaQuery.of(context).padding.top + kToolbarHeight + 100) >=
             0.0;
 
         return FlexibleSpaceBar(
           centerTitle: true,
+          titlePadding: EdgeInsets.only(bottom: kToolbarHeight + 5),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,16 +76,29 @@ class CustBusinessViewAppbar extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget? getBottom(BuildContext context) {
-    // if (viewController.s == false) {
-    //   return PreferredSize(
-    //     preferredSize: Size.fromHeight(15),
-    //     child: LinearProgressIndicator(color: primaryBlueColor),
-    //   );
-    // } else if (controller.showInfo.isFalse) {
-    //   return bottomFilters(context);
-    // }
-    return null;
+  PreferredSize _tabbar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(kTextTabBarHeight),
+      child: Container(
+        color: Colors.white,
+        child: TabBar(
+            padding: EdgeInsets.zero,
+            indicatorColor: primaryBlueColor,
+            indicatorPadding: EdgeInsets.zero,
+            controller: viewController.tabController,
+            tabs: [
+              Tab(
+                icon: Icon(Icons.store_outlined),
+              ),
+              Tab(
+                icon: Icon(Icons.feed_outlined),
+              ),
+              Tab(
+                icon: Icon(Icons.info_outline),
+              ),
+            ]),
+      ),
+    );
   }
 
   Widget _backgroundImageComponent() {

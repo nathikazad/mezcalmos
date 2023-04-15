@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
@@ -11,6 +12,7 @@ class CustBusinessViewController {
   // variables //
 
   late int _businessId;
+  late TabController tabController;
 
   // states variables //
   Rxn<Business> _business = Rxn<Business>();
@@ -25,8 +27,10 @@ class CustBusinessViewController {
   // methods //
   Future<void> init({
     required int businessId,
+    required TickerProvider vsync,
   }) async {
     _businessId = businessId;
+    tabController = TabController(length: 3, vsync: vsync);
     mezDbgPrint('businessId: $businessId');
     _business.value =
         await get_business_by_id(id: businessId, withCache: false);
