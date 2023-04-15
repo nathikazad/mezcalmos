@@ -195,29 +195,29 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   Future<void> _navigateToPickLoc() async {
     await PickLocationView.navigate(
       initialLocation: dropDownListValue?.location.toLatLng(),
-      // onSaveLocation: ({locModel.MezLocation? location}) async {
-      //   SavedLocation? newSavedLoc;
+      onSaveLocation: ({locModel.MezLocation? location}) async {
+        SavedLocation? newSavedLoc;
 
-      //   newSavedLoc =
-      //       await savedLocationDailog(context: context, loc: location!);
+        newSavedLoc =
+            await savedLocationDailog(context: context, loc: location!);
 
-      //   if (newSavedLoc != null) {
-      //     setState(() {
-      //       listOfSavedLoacations.add(newSavedLoc!);
-      //       dropDownListValue =
-      //           listOfSavedLoacations[listOfSavedLoacations.length - 1];
-      //     });
-      //     mezDbgPrint(
-      //         " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
-      //   } else {
-      //     setState(() {
-      //       listOfSavedLoacations.add(SavedLocation(
-      //           name: location.address, id: null, location: location));
-      //       dropDownListValue =
-      //           listOfSavedLoacations[listOfSavedLoacations.length - 1];
-      //     });
-      //   }
-      // },
+        if (newSavedLoc != null) {
+          setState(() {
+            listOfSavedLoacations.add(newSavedLoc!);
+            dropDownListValue =
+                listOfSavedLoacations[listOfSavedLoacations.length - 1];
+          });
+          mezDbgPrint(
+              " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
+        } else {
+          setState(() {
+            listOfSavedLoacations.add(SavedLocation(
+                name: location.address, id: null, location: location));
+            dropDownListValue =
+                listOfSavedLoacations[listOfSavedLoacations.length - 1];
+          });
+        }
+      },
     );
   }
 
