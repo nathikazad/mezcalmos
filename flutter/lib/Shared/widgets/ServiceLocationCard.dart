@@ -12,10 +12,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["restaurantInfoTab"];
 
 class ServiceLocationCard extends StatefulWidget {
-  const ServiceLocationCard({Key? key, required this.location})
+  const ServiceLocationCard({Key? key, required this.location, this.textStyle})
       : super(key: key);
 
   final MezLocation location;
+  final TextStyle? textStyle;
 
   @override
   State<ServiceLocationCard> createState() => _ServiceLocationCardState();
@@ -52,7 +53,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
           Container(
             child: Text(
               widget.location.address,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: widget.textStyle ?? Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           SizedBox(

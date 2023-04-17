@@ -11,6 +11,7 @@ class MyExpansionPanelComponent extends StatefulWidget {
   final bool maintainState;
   final GestureTapCallback? onEdit;
   final bool showExpandButton;
+  final String? itemPrice;
 
   const MyExpansionPanelComponent(
       {required this.child,
@@ -19,7 +20,8 @@ class MyExpansionPanelComponent extends StatefulWidget {
       this.initiallyExpanded = false,
       this.maintainState = false,
       this.onEdit,
-      this.showExpandButton = false});
+      this.showExpandButton = false,
+      this.itemPrice});
 
   @override
   _MyExpansionPanelComponentState createState() =>
@@ -105,6 +107,9 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(color: Colors.grey.shade300, offset: Offset(1, 1))
+              ],
               borderRadius: !_isExpanded
                   ? BorderRadius.circular(8)
                   : BorderRadius.only(

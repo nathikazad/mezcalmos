@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-
-dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
 
 class CustSwitchOpenService extends StatelessWidget {
   const CustSwitchOpenService({
     super.key,
+    required this.label,
     required this.showOnlyOpen,
     required this.onChange,
   });
+  final String label;
   final bool showOnlyOpen;
   final Function(bool) onChange;
 
@@ -23,7 +21,7 @@ class CustSwitchOpenService extends StatelessWidget {
       activeColor: primaryBlueColor,
       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
       title: Text(
-        "${_i18n()["showOnlyOpen"]}",
+        label,
         style:
             context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
       ),

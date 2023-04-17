@@ -246,7 +246,20 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       break;
 
                     case false:
-                      MezSnackbar("Oops ..", _resp!.error.toString());
+                      switch (_resp?.error) {
+                        case AuthOtpError.InvalidOTPCode:
+                          MezSnackbar(
+                              "Oops ..", '${_i18n()['invalidOTPCode']}');
+                          break;
+                        case AuthOtpError.ExceededNumberOfTries:
+                          MezSnackbar(
+                              "Oops ..", '${_i18n()['exceededNumberOfTries']}');
+                          break;
+                        default:
+                          MezSnackbar(
+                              "Oops ..", '${_i18n()['unhandledError']}');
+                      }
+
                       clickedSignInOtp.value = false;
                       break;
                   }

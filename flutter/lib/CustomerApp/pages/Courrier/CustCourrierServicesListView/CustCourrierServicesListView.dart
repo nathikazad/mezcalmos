@@ -55,15 +55,12 @@ class _CustCourierServicesListViewState
         () {
           if (_controller.isLoading == false) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _searchCoomponent(context),
                   _sortingSwitcher(),
-                  SizedBox(
-                    height: 20,
-                  ),
                   (_controller.filteredServices.isEmpty)
                       ? NoOpenServiceComponent(
                           showOnlyOpen: _controller.showOnlyOpen.value,
@@ -95,6 +92,7 @@ class _CustCourierServicesListViewState
 
   Widget _sortingSwitcher() {
     return Obx(() => CustSwitchOpenService(
+          label: '${_i18n()["showOnlyOpenCompanies"]}',
           showOnlyOpen: _controller.showOnlyOpen.value,
           onChange: (bool value) {
             _controller.changeAlwaysOpenSwitch(value);
@@ -206,14 +204,13 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               width: 3,
             ),
             ShippingCostComponent(
-              shippingCost: company.deliveryCost?.minimumCost,
-              formattedShippingCost: company.deliveryCost != null
-                  ? "Min : ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
-                  : null,
-              showPerKm: true,
-              alignment: MainAxisAlignment.start,
-              textStyle: context.textTheme.bodyMedium,
-            ),
+                shippingCost: company.deliveryCost?.minimumCost,
+                formattedShippingCost: company.deliveryCost != null
+                    ? "Min : ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
+                    : null,
+                showPerKm: true,
+                alignment: MainAxisAlignment.start,
+                textStyle: context.txt.bodySmall),
           ],
         ),
         // SizedBox(
