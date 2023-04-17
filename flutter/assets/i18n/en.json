@@ -6,15 +6,15 @@
       "savedCards": "My cards"
     },
     "components": {
-      "NoOpenServiceComponent" : {
-        "title" : "No open services",
-        "desc" : "There are no open services in your area. Please try again later.",
-        "restaurant" : "restaurants",
-        "deliveryCompany" : "couriers",
-        "laundry" : "laundries",
-        "btn" :"Show closed services"
+      "NoOpenServiceComponent": {
+        "title": "No open services",
+        "desc": "There are no open services in your area. Please try again later.",
+        "restaurant": "restaurants",
+        "deliveryCompany": "couriers",
+        "laundry": "laundries",
+        "btn": "Show closed services"
       },
-      
+
       "Menu": {
         "UserMenuComponent": {
           "savedLocations": "My locations",
@@ -414,7 +414,7 @@
               "codText": "Cash on delivery",
               "debitCreditText": "Credit/Debit Card",
               "reviews": "Reviews",
-              "viewAll" :"View All",
+              "viewAll": "View All",
               "paymentMethod": "Payment Method",
               "workingHours": "Working hours",
               "weekDays": {
@@ -837,7 +837,7 @@
     "controllers": {
       "authController": {
         "failedOTPConfirmRequest": "OTP Code confirmation failed :(",
-        "setNameAndImage" : "Please set your name and image before proceeding"
+        "setNameAndImage": "Please set your name and image before proceeding"
       }
     },
     "helpers": {
@@ -1261,15 +1261,18 @@
         "tax": "Tax",
         "toBeCalc": "To be calculated",
         "add": "Add",
-        "waitingForCustomer":"Waiting for customer"
+        "waitingForCustomer": "Waiting for customer"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Payment method",
         "cash": "Cash",
+        "card": "Card",
         "newcard": "New Card",
         "applepay": "Apple Pay",
         "googlepay": "Google Pay",
-        "banktransfer": "Bank Transfer"
+        "banktransfer": "Bank Transfer",
+        "cashOnDelivery": "Cash on delivery",
+        "creditCard": "Credit card"
       },
       "OrderDeliveryLocation": {
         "title": "Delivery location",
@@ -1551,7 +1554,7 @@
         "arrivalAtPickup": "Arrival at pickup :",
         "arrivalAtDropoff": "Arrival at dropoff :",
         "noDriver": "No driver assigned yet",
-        "cancelOrder" :"Cancel Order"
+        "cancelOrder": "Cancel Order"
       },
       "DvOpTabsView": {
         "orders": "Orders",
@@ -1833,7 +1836,7 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
-        "cancelOrder" :"Cancel Order",
+        "cancelOrder": "Cancel Order",
         "service": "Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
@@ -1941,7 +1944,7 @@
               "save": "Request price change",
               "cancel": "cancel",
               "card": "Card",
-              "addReview" : "Add review"
+              "addReview": "Add review"
             },
             "DriverBottomLaundryOrderCard": {
               "oops": "Oops",

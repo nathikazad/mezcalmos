@@ -6,13 +6,13 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
-      "NoOpenServiceComponent" : {
-        "title" : "Sin servicios abiertos",
-        "desc" : "No hay servicios abiertos en su área. Vuelva a intentarlo más tarde.",
-        "restaurant" : "restaurantes",
-        "deliveryCompany" : "correos",
-        "laundry" : "lavandería",
-        "btn" :"Mostrar servicios cerrados"
+      "NoOpenServiceComponent": {
+        "title": "Sin servicios abiertos",
+        "desc": "No hay servicios abiertos en su área. Vuelva a intentarlo más tarde.",
+        "restaurant": "restaurantes",
+        "deliveryCompany": "correos",
+        "laundry": "lavandería",
+        "btn": "Mostrar servicios cerrados"
       },
       "Menu": {
         "UserMenuComponent": {
@@ -408,7 +408,7 @@
             "restaurantInfoTab": {
               "description": "Descripción",
               "location": "Dirección",
-              "viewAll" : "Ver Todo",
+              "viewAll": "Ver Todo",
               "codText": "Efectivo en la entrega",
               "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",
@@ -833,7 +833,7 @@
     "controllers": {
       "authController": {
         "failedOTPConfirmRequest": "La confirmación del código OTP falló :(",
-        "setNameAndImage" : "Establezca su nombre e imagen antes de continuar "
+        "setNameAndImage": "Establezca su nombre e imagen antes de continuar "
       }
     },
     "helpers": {
@@ -866,7 +866,7 @@
       },
       "GeneralPurposeHelper": {
         "saved": "Guardado",
-        "routeError" : "Error a obtener su información de ubicación e ruta",
+        "routeError": "Error a obtener su información de ubicación e ruta",
         "writeReview": "Escribir un comentario",
         "savedTitle": "tu información ha sido guardada",
         "yesCancel": "Sí, cancelar pedido",
@@ -1262,15 +1262,18 @@
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado",
         "add": "Agregar",
-        "waitingForCustomer":"esperando a un cliente"
+        "waitingForCustomer": "esperando a un cliente"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
         "cash": "Efectivo",
+        "card": "Tarjeta",
         "newcard": "Nueva tarjeta",
         "applepay": "Apple Pay",
         "googlepay": "Google Pay",
-        "banktransfer": "Transferencia bancaria"
+        "banktransfer": "Transferencia bancaria",
+        "cashOnDelivery": "Efectivo en la entrega",
+        "creditCard": "Tarjeta de crédito"
       },
       "OrderDeliveryLocation": {
         "title": "Lugar de entrega",
@@ -1552,7 +1555,7 @@
         "pickupLoc": "Lugar de recogida",
         "arrivalAtDropoff": "Llegada a la caída :",
         "noDriver": "No hay controlador asignado todavía",
-        "cancelOrder" :"Cancelar orden"
+        "cancelOrder": "Cancelar orden"
       },
       "DvOpTabsView": {
         "orders": "Pedidos",
@@ -1820,8 +1823,7 @@
         "subtitle": "Necesita una invitación para usar nuestra aplicación de entrega"
       },
       "OrderDetailsScreen": {
-
-      "cancelOrder" :"Cancelar el pedido",
+        "cancelOrder": "Cancelar el pedido",
         "service": "Servicio",
         "cancelled": "Cancelada",
         "approved": "Aprobada",
@@ -1907,7 +1909,7 @@
               "updatePrice": "Nuevo precio",
               "save": "Solicitar cambio de precio",
               "cancel": "Cancelar",
-              "addReview" : "Añadir reseña"
+              "addReview": "Añadir reseña"
             },
             "DriverBottomLaundryOrderCard": {
               "orderStatus": {
