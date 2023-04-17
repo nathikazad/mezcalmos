@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/components/ClassCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/controller/ClassesController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/OtherRentalController.dart';
@@ -24,6 +26,8 @@ import 'dart:developer';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:location_platform_interface/location_platform_interface.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/VehicleFilterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/ClassFilterCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -49,138 +53,56 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
   late OtherRentalController otherRentalController;
   late RentalViewEnum viewName;
 
+  late ClassesController classesController;
+
   @override
   void initState() {
     super.initState();
     viewName = MezRouter.bodyArguments!["viewEnum"] as RentalViewEnum;
     log("viewName $viewName ${viewName.runtimeType}");
     assetController.init(viewEnum: viewName);
-    otherRentalController = OtherRentalController(viewName: viewName);
-    otherRentalController.init();
+    fetchDataForCurrentView();
+  }
+
+  void fetchDataForCurrentView() {
+    switch (viewName) {
+      case RentalViewEnum.Surf:
+      case RentalViewEnum.Vehicle:
+      case RentalViewEnum.Homes:
+      case RentalViewEnum.Classes:
+        otherRentalController = OtherRentalController(viewName: viewName);
+        otherRentalController.init();
+        classesController = ClassesController();
+        classesController.init();
+        break;
+      case RentalViewEnum.Wellness:
+        // TODO: Handle this case.
+        break;
+      case RentalViewEnum.Volunteer:
+        // TODO: Handle this case.
+        break;
+      case RentalViewEnum.Tour:
+        // TODO: Handle this case.
+        break;
+      case RentalViewEnum.Activities:
+        // TODO: Handle this case.
+        break;
+      case RentalViewEnum.Parties:
+        // TODO: Handle this case.
+        break;
+      case RentalViewEnum.Dance:
+        // TODO: Handle this case.
+        break;
+      case RentalViewEnum.GetTogether:
+        // TODO: Handle this case.
+        break;
+    }
   }
 
   @override
   void dispose() {
     assetController.dispose();
     super.dispose();
-  }
-
-  void openFilterModalSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          final Map<RentalCategory2, bool> checkBoxListValue = {
-            RentalCategory2.Motorcycle:
-                otherRentalController.category2[RentalCategory2.Motorcycle] ??
-                    false,
-            RentalCategory2.Car:
-                otherRentalController.category2[RentalCategory2.Car] ?? false,
-          };
-          final style = Theme.of(context).textTheme;
-          return SizedBox(
-            height: 250,
-            child: StatefulBuilder(builder: (context, setState) {
-              return Scaffold(
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("Filter",
-                            style: style.titleMedium!.copyWith(
-                              fontWeight: FontWeight.w600,
-                            )),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        _i18n()[allServiceListViewController
-                                    .currentSelectedService.value.name
-                                    .toLowerCase()]
-                                [assetController.getViewNameString]["title"]
-                            .toString(),
-                        style: style.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: checkBoxListValue.length,
-                        itemBuilder: (context, index) {
-                          return CheckboxListTile(
-                            activeColor: primaryBlueColor,
-                            onChanged: (value) {
-                              setState(() {
-                                checkBoxListValue[checkBoxListValue.keys
-                                    .toList()[index]] = value ?? false;
-                                mezDbgPrint(
-                                    "CheckboxListTile: $value $checkBoxListValue");
-                              });
-                            },
-                            value: checkBoxListValue[
-                                checkBoxListValue.keys.toList()[index]],
-                            title: Text(
-                                checkBoxListValue.keys.toList()[index].name),
-                          );
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 4.0),
-                                child: MezButton(
-                                  label: "Cancel",
-                                  onClick: () async {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 4.0),
-                                child: MezButton(
-                                  label: "Confirm",
-                                  withGradient: true,
-                                  onClick: () async {
-                                    if (checkBoxListValue.values
-                                        .contains(true)) {
-                                      otherRentalController.changeVehicleFilter(
-                                        value: checkBoxListValue,
-                                      );
-                                      Navigator.pop(context);
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text("Add atleast 1 filter"),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          );
-        });
   }
 
   @override
@@ -216,44 +138,34 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                     ),
                   ),
                 ),
-                Obx(
-                  () => assetController.currentSelectedView.value ==
-                              assetController.currentSelectedViewList.first &&
-                          viewName == RentalViewEnum.Vehicle
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
-                          child: MezCard(
-                            onClick: () {
-                              openFilterModalSheet();
-                            },
-                            content: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.filter_alt,
-                                ),
-                                Text("Filter: "),
-                                Obx(
-                                  () => Text(
-                                    otherRentalController.filterString.value,
-                                    style: style.titleMedium!.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_down_outlined,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      : const Offstage(),
-                ),
+
+                /// Filter card switch logic
+                Builder(builder: (context) {
+                  switch (assetController.viewName) {
+                    case RentalViewEnum.Vehicle:
+                      return VehicleFilterCard(
+                        assetController: assetController,
+                        viewName: viewName,
+                        otherRentalController: otherRentalController,
+                        allServiceListViewController:
+                            allServiceListViewController,
+                      );
+                    case RentalViewEnum.Classes:
+                      return ClassFilterCard(
+                        classesController: classesController,
+                      );
+                    case RentalViewEnum.Surf:
+                    case RentalViewEnum.Homes:
+                    case RentalViewEnum.Wellness:
+                    case RentalViewEnum.Volunteer:
+                    case RentalViewEnum.Tour:
+                    case RentalViewEnum.Activities:
+                    case RentalViewEnum.Parties:
+                    case RentalViewEnum.Dance:
+                    case RentalViewEnum.GetTogether:
+                      return Offstage();
+                  }
+                }),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
@@ -285,15 +197,111 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
               ],
             ),
           ),
-          Obx(
-            () => assetController.currentSelectedView.value ==
-                    assetController.currentSelectedViewList.first
-                ? OtherAssetList(
-                    otherRentalController: otherRentalController,
-                  )
-                : OtherAgencyList(
-                    otherRentalController: otherRentalController,
-                  ),
+          Builder(
+            builder: (context) {
+              switch (assetController.viewName) {
+                /// Handling all three cases for Rentals Service
+                case RentalViewEnum.Surf:
+                case RentalViewEnum.Vehicle:
+                case RentalViewEnum.Homes:
+                  return Obx(
+                    () => assetController.currentSelectedView.value ==
+                            assetController.currentSelectedViewList.first
+                        ? OtherAssetList(
+                            otherRentalController: otherRentalController,
+                          )
+                        : OtherAgencyList(
+                            otherRentalController: otherRentalController,
+                          ),
+                  );
+
+                /// Handling case of Classes Service
+                case RentalViewEnum.Classes:
+                  var tempSchedule = {
+                    "Friday": {
+                      "from": "10am",
+                      "to": "10pm",
+                    },
+                    "Saturday": {
+                      "from": "9am",
+                      "to": "9pm",
+                    },
+                    "Sunday": {
+                      "from": "11am",
+                      "to": "8pm",
+                    },
+                  };
+                  return Obx(
+                    () => assetController.currentSelectedView.value ==
+                            assetController.currentSelectedViewList.first
+                        ? Expanded(
+                            child: ListView(
+                              children: [
+                                ClassCard(
+                                  cardType: ScheduleType.Scheduled,
+                                  title: "Scheduled Card",
+                                  imageUrl: customImageUrl,
+                                  groupName: "groupName",
+                                  price: 100,
+                                  priceUnit: null,
+                                  needAgencyName: true,
+                                  agencyName: "Puetro Class",
+                                  schedule: tempSchedule,
+                                ),
+                                ClassCard(
+                                  cardType: ScheduleType.OnDemand,
+                                  title: "On Demand Card",
+                                  imageUrl: customImageUrl,
+                                  groupName: "groupName",
+                                  price: 100,
+                                  priceUnit: "hour",
+                                  agencyName: "Puetro Class",
+                                  needAgencyName: true,
+                                ),
+                                ClassCard(
+                                  cardType: ScheduleType.OneTime,
+                                  title: "On Time Card",
+                                  imageUrl: customImageUrl,
+                                  groupName: "groupName",
+                                  price: 100,
+                                  priceUnit: null,
+                                  agencyName: "Puetro Class",
+                                  needAgencyName: true,
+                                  schedule: Map<String,
+                                          Map<String, String>>.fromEntries(
+                                      [tempSchedule.entries.first]),
+                                ),
+                              ],
+                            ),
+                          )
+                        : OtherAgencyList(
+                            otherRentalController: otherRentalController,
+                          ),
+                  );
+
+                ///
+                case RentalViewEnum.Wellness:
+                  return Offstage();
+
+                case RentalViewEnum.Volunteer:
+                  return Offstage();
+
+                case RentalViewEnum.Tour:
+                  return Offstage();
+
+                case RentalViewEnum.Activities:
+                  return Offstage();
+
+                case RentalViewEnum.Parties:
+                  return Offstage();
+
+                case RentalViewEnum.Dance:
+                  return Offstage();
+
+                case RentalViewEnum.GetTogether:
+                  return Offstage();
+              }
+            },
           ),
         ],
       ),
