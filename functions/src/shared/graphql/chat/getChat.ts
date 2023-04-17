@@ -2,7 +2,6 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { Chat, Participant, AppParticipant, ChatType } from "../../models/Generic/Chat";
 import { AppType, Language, MezError } from "../../models/Generic/Generic";
-import { ServiceProviderType } from "../../models/Services/Service";
 
 export async function getChatParticipant(chatId: number): Promise<Participant> {
     const chain = getHasura();
@@ -100,45 +99,47 @@ export async function getChat(chatId: number): Promise<Chat> {
     };
 }
 
-export async function getServiceProviderCustomerChat(
-    customerId: number, 
-    serviceProviderId: number, 
-    serviceProviderType: ServiceProviderType
-): Promise<Chat | undefined> {
-    const chain = getHasura();
+// export async function getServiceProviderCustomerChat(
+//     customerId: number, 
+//     serviceProviderId: number, 
+//     serviceProviderType: ServiceProviderType
+// ): Promise<Chat | undefined> {
+//     const chain = getHasura();
 
-    let response = await chain.query({
-        service_provider_customer_chat: [{
-            where: {
-                _and: [{
-                    customer_id: {
-                        _eq: customerId
-                    }
-                }, {
-                    service_provider_id: {
-                        _eq: serviceProviderId
-                    }
-                }, {
-                    service_provider_type: {
-                        _eq: serviceProviderType
-                    }
-                }]
-            }
-        }, {
-            chat: {
-                id: true,
-                chat_info: [{}, true],
-                messages: [{}, true],
-            }
-        }]
-    });
-    if (response.service_provider_customer_chat.length == 0) {
-        return undefined;
-    }
-    return {
-        chatId: response.service_provider_customer_chat[0].chat.id,
-        chatInfo: JSON.parse(response.service_provider_customer_chat[0].chat.chat_info),
-        chatType:  ChatType.Group,
-        messages: JSON.parse(response.service_provider_customer_chat[0].chat.messages)
-    };
-}
+//     let response = await chain.query({
+//         service_provider_customer_chat: [{
+//             where: {
+//                 _and: [{
+//                     customer_id: {
+//                         _eq: customerId
+//                     }
+//                 }, {
+//                     service_provider_id: {
+//                         _eq: serviceProviderId
+//                     }
+//                 }, {
+//                     service_provider_type: {
+//                         _eq: serviceProviderType
+//                     }
+//                 }]
+//             }
+//         }, {
+//             chat: {
+//                 id: true,
+//                 chat_info: [{}, true],
+//                 messages: [{}, true],
+//             }
+//         }]
+//     });
+//     if (response.service_provider_customer_chat.length == 0) {
+//         return undefined;
+//     }
+//     return {
+//         chatId: response.service_provider_customer_chat[0].chat.id,
+//         chatInfo: JSON.parse(response.service_provider_customer_chat[0].chat.chat_info),
+//         chatType:  ChatType.Group,
+//         messages: (response.service_provider_customer_chat[0].chat.messages.length) 
+//             ? JSON.parse(response.service_provider_customer_chat[0].chat.messages)
+//             : undefined
+//     };
+// }
