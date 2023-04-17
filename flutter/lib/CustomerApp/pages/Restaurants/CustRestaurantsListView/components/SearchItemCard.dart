@@ -1,12 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]["Restaurants"]["ListRestaurantsScreen"]["components"]
+    ["SearchItemCard"];
 
 class SearchItemCard extends StatelessWidget {
   const SearchItemCard({Key? key, required this.item}) : super(key: key);
@@ -38,7 +44,7 @@ class SearchItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      item.name[userLanguage]!,
+                      item.name[userLanguage] ?? '${_i18n()['noName']}',
                       maxLines: 2,
                       style: context.txt.bodyLarge,
                     ),

@@ -6,15 +6,15 @@
       "savedCards": "My cards"
     },
     "components": {
-      "NoOpenServiceComponent" : {
-        "title" : "No open services",
-        "desc" : "There are no open services in your area. Please try again later.",
-        "restaurant" : "restaurants",
-        "deliveryCompany" : "couriers",
-        "laundry" : "laundries",
-        "btn" :"Show closed services"
+      "NoOpenServiceComponent": {
+        "title": "No open services",
+        "desc": "There are no open services in your area. Please try again later.",
+        "restaurant": "restaurants",
+        "deliveryCompany": "couriers",
+        "laundry": "laundries",
+        "btn": "Show closed services"
       },
-      
+
       "Menu": {
         "UserMenuComponent": {
           "savedLocations": "My locations",
@@ -189,7 +189,8 @@
             },
             "searchField": {
               "search": "Search"
-            }
+            },
+            "SearchItemCard": { "noName": "No name" }
           },
           "ListRestaurantScreen": {
             "restaurants": "Restaurants",
@@ -754,7 +755,7 @@
     "controllers": {
       "authController": {
         "failedOTPConfirmRequest": "OTP Code confirmation failed :(",
-        "setNameAndImage" : "Please set your name and image before proceeding"
+        "setNameAndImage": "Please set your name and image before proceeding"
       }
     },
     "helpers": {
@@ -1178,7 +1179,7 @@
         "tax": "Tax",
         "toBeCalc": "To be calculated",
         "add": "Add",
-        "waitingForCustomer":"Waiting for customer"
+        "waitingForCustomer": "Waiting for customer"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Payment method",
@@ -1468,7 +1469,7 @@
         "arrivalAtPickup": "Arrival at pickup :",
         "arrivalAtDropoff": "Arrival at dropoff :",
         "noDriver": "No driver assigned yet",
-        "cancelOrder" :"Cancel Order"
+        "cancelOrder": "Cancel Order"
       },
       "DvOpTabsView": {
         "orders": "Orders",
@@ -1750,7 +1751,7 @@
         "subtitle": "You need an invitation to use our delivery app"
       },
       "OrderDetailsScreen": {
-        "cancelOrder" :"Cancel Order",
+        "cancelOrder": "Cancel Order",
         "service": "Service",
         "cancelled": "Cancelled",
         "approved": "Approved",
@@ -1858,7 +1859,7 @@
               "save": "Request price change",
               "cancel": "cancel",
               "card": "Card",
-              "addReview" : "Add review"
+              "addReview": "Add review"
             },
             "DriverBottomLaundryOrderCard": {
               "oops": "Oops",
