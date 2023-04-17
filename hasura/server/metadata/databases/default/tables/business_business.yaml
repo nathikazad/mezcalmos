@@ -51,5 +51,6 @@ select_permissions:
         - details_id
         - id
         - profile
+        - referral_points
         - service_provider_type
       filter: {}

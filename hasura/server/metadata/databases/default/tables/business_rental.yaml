@@ -20,6 +20,7 @@ select_permissions:
     permission:
       columns:
         - business_id
-        - id
+        - category3
         - details_id
+        - id
       filter: {}

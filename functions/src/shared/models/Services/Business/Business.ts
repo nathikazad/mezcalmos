@@ -71,7 +71,9 @@ export enum EventCategory1 {
     MartialArt = "martialArt",
     Party = "party",
     Dance = "dance",
-    GetTogether = "getTogether"
+    GetTogether = "getTogether",
+    Therapy = "therapy",
+    Fitness = "fitness",
 }
 export enum ServiceType {
     Rental = "rental",
@@ -90,7 +92,9 @@ export enum BusinessProfile {
     WellnessClass = "wellnessClass",
     Party = "party",
     Volunteer = "volunteer",
-    TourAgency = "tourAgency"
+    TourAgency = "tourAgency",
+    DanceClass = "danceClass",
+    Therapy = "therapy",
 }
 export enum RentalCategory2 {
     Motorcycle = "motorcycle",
