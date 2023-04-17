@@ -257,11 +257,6 @@ class CreateServiceViewController {
     }
   }
 
-  // bool get _infoIsValid =>
-  //     serviceName.text.length > 3 &&
-  //     newLocation.value != null &&
-  //     newImageUrl.value != null;
-
   bool get _isDeliveryCostValid {
     return costFormKey.currentState?.validate() == true;
   }
@@ -282,7 +277,7 @@ class CreateServiceViewController {
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
       final RestaurantResponse res =
-          await CloudFunctions.restaurant2_createRestaurant(
+          await CloudFunctions.restaurant3_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
         image: serviceInput.value.serviceInfo!.image,
         location: cModel.Location(
@@ -318,19 +313,6 @@ class CreateServiceViewController {
       throwError(stk);
       return false;
     }
-    // final HttpsCallable cloudFunction = FirebaseFunctions.instance
-    //     .httpsCallable('restaurant2-createRestaurant');
-    // try {
-    //   final HttpsCallableResult response =
-    //       await cloudFunction.call(_constructServiceDetails());
-    //   mezDbgPrint("Response : ${response.data}");
-
-    //   return ServerResponse.fromJson(response.data);
-    // } catch (e, stk) {
-    //   mezDbgPrint("Errrooooooooor =======> $e,$stk");
-    //   return ServerResponse(ResponseStatus.Error,
-    //       errorMessage: "Server Error", errorCode: "serverError");
-    // }
   }
 
   Map<String, Object?> _constructServiceDetails() {
@@ -348,38 +330,4 @@ class CreateServiceViewController {
       "deliveryDetails": serviceInput.value.selfDeliveryCost?.toJson(),
     };
   }
-
-  // Future<String> uploadServiceImgToFbStorage({
-  //   required File imageFile,
-  //   bool isCompressed = false,
-  // }) async {
-  //   File compressedFile = imageFile;
-  //   if (isCompressed == false) {
-  //     // this holds userImgBytes of the original
-  //     final Uint8List originalBytes = await imageFile.readAsBytes();
-  //     // this is the bytes of our compressed image .
-  //     final Uint8List _compressedVersion =
-  //         await compressImageBytes(originalBytes);
-  //     // Get the actual File compressed
-  //     compressedFile = await writeFileFromBytesAndReturnIt(
-  //         filePath: imageFile.path, imgBytes: _compressedVersion);
-  //   }
-  //   String _uploadedImgUrl;
-  //   final List<String> splitted = imageFile.path.split('.');
-  //   final String imgPath =
-  //       "restaurants/$serviceName/avatar/$serviceName.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
-  //   try {
-  //     await firebase_storage.FirebaseStorage.instance
-  //         .ref(imgPath)
-  //         .putFile(compressedFile);
-  //   } on firebase_core.FirebaseException catch (e) {
-  //     mezDbgPrint(e.message.toString());
-  //   } finally {
-  //     _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
-  //         .ref(imgPath)
-  //         .getDownloadURL();
-  //   }
-
-  //   return _uploadedImgUrl;
-  // }
 }

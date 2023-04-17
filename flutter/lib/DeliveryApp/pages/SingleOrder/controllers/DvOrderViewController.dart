@@ -142,7 +142,7 @@ class DvOrderViewcontroller {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
       ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery2_changeStatus(
+          await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.orderId,
         newStatus: status,
       );
@@ -195,7 +195,7 @@ class DvOrderViewcontroller {
 
   Future<void> acceptOpenOrder() async {
     try {
-      AssignDriverResponse res = await CloudFunctions.delivery2_assignDriver(
+      AssignDriverResponse res = await CloudFunctions.delivery3_assignDriver(
           deliveryOrderId: order.orderId,
           deliveryDriverId:
               deliveryAuthAuthController.driver!.deliveryDriverId);

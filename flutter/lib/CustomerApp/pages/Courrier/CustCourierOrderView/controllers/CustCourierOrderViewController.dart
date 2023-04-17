@@ -196,7 +196,7 @@ class CustCourierOrderViewController {
   Future<void> _priceChangeResponse({required bool accepted}) async {
     try {
       ChangePriceResResponse res =
-          await CloudFunctions.delivery2_changeDeliveryPriceResponse(
+          await CloudFunctions.delivery3_changeDeliveryPriceResponse(
               accepted: accepted,
               orderId: order.orderId,
               orderType: OrderType.Courier);
@@ -224,7 +224,7 @@ class CustCourierOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      await CloudFunctions.delivery2_cancelCourierFromCustomer(
+      await CloudFunctions.delivery3_cancelCourierFromCustomer(
           orderId: order.orderId);
       return true;
     } on FirebaseFunctionsException catch (e, stk) {
