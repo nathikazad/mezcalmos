@@ -524,8 +524,6 @@ Future<void> showStatusInfoDialog(
       });
 }
 
-
-
 Future<int?> addReviewDialog(
     {required BuildContext context,
     required int toEntityId,
@@ -786,10 +784,13 @@ void showErrorSnackBar(
       title: errorTitle,
       subTitle: errorText,
       duration: duration,
-      icon: Icon(
-        Icons.cancel,
-        size: 40,
-        color: Colors.redAccent,
+      icon: CircleAvatar(
+        radius: 19,
+        backgroundColor: offRedColor,
+        child: Icon(
+          Icons.close,
+          color: redAccentColor,
+        ),
       ));
 }
 

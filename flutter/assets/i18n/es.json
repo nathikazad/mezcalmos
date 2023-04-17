@@ -59,7 +59,8 @@
         "CustCourierServicesListView": {
           "title": "Empresas de entrega a su alrededor",
           "courier": "Mensajera",
-          "min": "Min"
+          "min": "Min",
+          "showOnlyOpenCompanies": "Mostrar solo compañías abiertas"
         },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
@@ -192,7 +193,7 @@
           "ListRestaurantScreen": {
             "restaurants": "Restaurantes",
             "search": "Búsqueda",
-            "showOnlyOpen": "Mostrar solo servicio abierto",
+            "showOnlyOpenRestaurants": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
             "noOpenRestaurant": "No hay restaurantes abiertos",
             "meals": "Comidas",
@@ -243,7 +244,7 @@
             },
             "OrderSummaryCard": {
               "add": "Agregar",
-              "waitingForCustomer": "esperando a un cliente",
+              "waitingForCustomer": "Esperando aceptar",
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
@@ -653,6 +654,7 @@
           "laundries": "Lavanderías",
           "title": "Lavanderías a tu alrededor",
           "noLaundaryFound": "No se encontró lavandería",
+          "showOnlyOpenLaundries": "Mostrar solo lavas abiertas",
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -984,7 +986,12 @@
             "resendAfter": "Reenviar después",
             "seconds": "segundos",
             "wrongOTPCode": "El código de confirmación es incorrecto, inténtelo de nuevo.",
-            "confirm": "Confirmar"
+            "confirm": "Confirmar",
+            "exceptionMessages": {
+              "invalidOTPCode": "Código OTP no válido",
+              "exceededNumberOfTries": "Superado el número de intentos",
+              "unhandledError": "Error no controlado"
+            }
           },
           "PhoneNumberScreen": {
             "otpCode": "OTP código",
@@ -997,7 +1004,11 @@
           "title": "Inicie sesión con su proveedor preferido!",
           "loginWithApple": "INICIAR CON APPLE",
           "loginWithSms": "INICIAR CON SMS",
-          "fbBtn": "INICIAR CON FACEBOOK"
+          "fbBtn": "INICIAR CON FACEBOOK",
+          "loginAs": "INICIAR SESIÓN COMO",
+          "customer": "CLIENTE",
+          "driver": "CONDUCTORA",
+          "mezadmin": "MEZADMIN"
         },
         "UnauthorizedScreen": {
           "unauthorized": "No autorizado",
@@ -1181,7 +1192,7 @@
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado",
         "add": "Agregar",
-        "waitingForCustomer": "esperando a un cliente"
+        "waitingForCustomer": "Esperando aceptar"
       },
       "OrderPaymentMethod": {
         "paymentMethod": "Método de pago",
@@ -1780,6 +1791,8 @@
           "currentOrders": "Órdenes actuales",
           "openOrders": "Ordenes abiertas",
           "offlineTitle": "Estas desconectado",
+          "today": "Hoy",
+          "yesterday": "Ayer",
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Hoy",
           "title": "Órdenes entrantes",

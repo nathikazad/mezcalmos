@@ -9,9 +9,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezServiceOpenHours"];
 
 class MezServiceOpenHours extends StatelessWidget {
-  const MezServiceOpenHours({Key? key, required this.schedule})
+  const MezServiceOpenHours({Key? key, required this.schedule, this.textStyle})
       : super(key: key);
   final Schedule schedule;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +51,14 @@ class MezServiceOpenHours extends StatelessWidget {
                 ),
                 Text(
                   getDayName(v.key).capitalizeDays,
-                  style: context.txt.titleLarge,
+                  style: textStyle?.copyWith(fontWeight: FontWeight.w600) ??
+                      context.txt.titleLarge,
                 ),
                 Spacer(),
                 Text(
-                    "${convertToAmPm(v.value.from[0], v.value.from[1])} - ${convertToAmPm(v.value.to[0], v.value.to[1])}"),
+                  "${convertToAmPm(v.value.from[0], v.value.from[1])} - ${convertToAmPm(v.value.to[0], v.value.to[1])}",
+                  style: textStyle,
+                ),
               ],
             ),
           );

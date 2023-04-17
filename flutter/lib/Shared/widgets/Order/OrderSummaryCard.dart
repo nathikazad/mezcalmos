@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
@@ -73,7 +74,7 @@ class OrderSummaryCard extends StatelessWidget {
                             (costs.orderItemsCost == 0)
                                 ? "-"
                                 : costs.orderItemsCost?.toPriceString() ?? "-",
-                            style: txt.bodyMedium?.copyWith()),
+                            style: txt.bodyMedium),
                       ],
                     ),
                   ),
@@ -108,11 +109,20 @@ class OrderSummaryCard extends StatelessWidget {
                             if (setDeliveryCallBack != null)
                               Container(
                                 child: (costs.requested)
-                                    ? Text("${_i18n()['waitingForCustomer']}")
+                                    ? Text(
+                                        "${_i18n()['waitingForCustomer']}",
+                                        style: context.txt.bodyLarge?.copyWith(
+                                            color: redAccentColor,
+                                            fontSize: 10.sp),
+                                      )
                                     : (costs.changePriceRequest == null)
                                         ? MezIconButton(
+                                            backgroundColor:
+                                                backgroundShadeColor,
+                                            iconColor: offShadeGreyColor,
+                                            elevation: 0,
                                             icon: costs.deliveryCost != null
-                                                ? Icons.edit
+                                                ? Icons.edit_outlined
                                                 : Icons.add,
                                             iconSize: 17,
                                             padding: const EdgeInsets.all(3),
@@ -167,11 +177,14 @@ class OrderSummaryCard extends StatelessWidget {
                               ? InkWell(
                                   onTap: setTaxCallBack,
                                   child: Text("${_i18n()['add']}",
-                                      style: context.txt.bodyLarge
+                                      style: txt.bodyMedium
                                           ?.copyWith(color: primaryBlueColor)),
                                 )
                               : MezIconButton(
-                                  icon: Icons.edit,
+                                  elevation: 0,
+                                  icon: Icons.edit_outlined,
+                                  backgroundColor: backgroundShadeColor,
+                                  iconColor: offShadeGreyColor,
                                   iconSize: 17,
                                   padding: const EdgeInsets.all(3),
                                   onTap: setTaxCallBack,
