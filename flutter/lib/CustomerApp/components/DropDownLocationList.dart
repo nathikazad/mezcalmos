@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
@@ -245,8 +246,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                 e.name.capitalizeFirst.toString(),
                 overflow: TextOverflow.ellipsis,
                 style: context.txt.bodyLarge?.copyWith(
-                  fontSize: 12.sp,
-                ),
+                  fontSize: 12.mezSp,
+                ), //for dropdownItems
               ),
             ),
           ),
@@ -279,8 +280,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                       item.name.capitalizeFirst.toString(),
                       overflow: TextOverflow.ellipsis,
                       style: context.txt.bodyLarge?.copyWith(
-                        fontSize: 12.sp,
-                      ),
+                        fontSize: 12.mezSp,
+                      ), //for dropDownShownValue
                     ),
                   ),
                 ],

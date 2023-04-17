@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -126,11 +127,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   children: [
                     Card(
                       child: InkWell(
-                        onTap: (widget.deliveryTime != null)
-                            ? null
-                            : () async {
-                                await _pickDeliveryTime(context, field);
-                              },
+                        onTap: () async => _pickDeliveryTime(context, field),
                         //  borderRadius: BorderRadius.circular(10),
                         child: Obx(
                           () => Container(
@@ -157,7 +154,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                                 : '${_i18n()["now"]}',
                                             style:
                                                 context.txt.bodyLarge?.copyWith(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.mezSp,
                                             )),
                                       )
                                     : Flexible(
@@ -165,7 +162,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                         child: Text(_formattedTime,
                                             style:
                                                 context.txt.bodyLarge?.copyWith(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.mezSp,
                                             )),
                                       ),
                                 if (widget.deliveryTime == null)
@@ -288,7 +285,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
             child: Text(
               title ?? '${_i18n()["timeError"]}',
               style: context.txt.bodyLarge
-                  ?.copyWith(color: Colors.red, fontSize: 10.sp),
+                  ?.copyWith(color: Colors.red, fontSize: 10.mezSp),
             ),
           ),
         ],

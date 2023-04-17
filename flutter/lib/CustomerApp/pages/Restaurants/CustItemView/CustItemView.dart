@@ -251,7 +251,7 @@ class _CustItemViewState extends State<CustItemView> {
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               controller: viewController.notesController,
-              minLines: 2,
+              minLines: 5,
               maxLines: 7,
               style: context.txt.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,

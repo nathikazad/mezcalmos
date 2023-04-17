@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/controller/LocationPermissionController.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/widgets/LocationPermissionsWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -244,13 +245,13 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                   SizedBox(
                     height: getSizeRelativeToScreen(25, Get.height, Get.width),
                   ),
-                  GestureDetector(
+                  InkWell(
                     onTap: viewController.onGivePermissionsClick,
-                    child: Container(
-                      height:
-                          getSizeRelativeToScreen(25, Get.height, Get.width),
-                      width:
-                          getSizeRelativeToScreen(100, Get.height, Get.width),
+                    child: Ink(
+                      width: getSizeRelativeToScreen(100, Get.height, Get.width,
+                          fixedMin: 150),
+                      height: getSizeRelativeToScreen(25, Get.height, Get.width,
+                          fixedMin: 30),
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: <Color>[
@@ -269,13 +270,12 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                       child: Center(
                           child: Obx(
                         () => Text(
-                          _i18n()['permissionBtn'],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                          '${_i18n()['permissionBtn']}',
+                          style: context.textTheme.displaySmall?.copyWith(
                               color: Colors.white,
-                              fontFamily: 'psb',
-                              fontSize: 15,
-                              letterSpacing: 1),
+                              fontSize: 9.mezSp,
+                              fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
                         ),
                       )),
                     ),

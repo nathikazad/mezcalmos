@@ -176,7 +176,11 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),
             backgroundColor: Colors.transparent),
-        child: Text("${_i18n()["sendMyLaundry"]}"),
+        child: Text(
+          '${_i18n()['sendMyLaundry']}',
+          textAlign: TextAlign.center,
+          style: context.txt.bodyLarge?.copyWith(color: Colors.white),
+        ),
         onPressed: () {
           CustLaundryOrderRequestView.navigate(laundryId: laundryId!);
         },

@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -148,7 +149,7 @@ Future<SavedLocation?> savedLocationDailog({
                         _i18n()["addLocationDialogSkip"],
                         style: context.txt.headlineMedium?.copyWith(
                           color: offShadeGreyColor,
-                          fontSize: 11.sp,
+                          fontSize: 11.mezSp,
                         ),
                       ),
                     ),

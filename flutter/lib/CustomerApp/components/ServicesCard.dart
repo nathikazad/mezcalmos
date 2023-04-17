@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -33,11 +34,11 @@ class ServicesCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 17.5),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(width: 5),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,10 +56,9 @@ class ServicesCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 15),
               Container(
-                width: 25.w,
-                height: 20.w,
+                width: 25.mezW,
+                height: 20.mezW,
                 child: Image.asset(
                   url,
                   fit: BoxFit.fill,
