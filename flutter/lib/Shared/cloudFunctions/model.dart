@@ -1814,7 +1814,7 @@ class BusinessItemDetails {
   num id;
   Map<Language, String> name;
   Map<Language, String>? description;
-  num position;
+  num? position;
   num businessId;
   bool available;
   List<String>? image;
@@ -1825,7 +1825,7 @@ class BusinessItemDetails {
       {required this.id,
       required this.name,
       this.description,
-      required this.position,
+      this.position,
       required this.businessId,
       required this.available,
       this.image,
@@ -1924,20 +1924,24 @@ class Event {
 
 class Service {
   String category1;
-  Service({required this.category1});
+  BusinessItemDetails details;
+  Service({required this.category1, required this.details});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "category1": category1,
+      "details": details,
     };
   }
 }
 
 class Product {
   String category1;
-  Product({required this.category1});
+  BusinessItemDetails details;
+  Product({required this.category1, required this.details});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "category1": category1,
+      "details": details,
     };
   }
 }

@@ -10,6 +10,7 @@ class Variables$Query$get_rental_by_category {
     int? offset,
     String? category1,
     List<String>? categories2,
+    List<String>? tags,
   }) =>
       Variables$Query$get_rental_by_category._({
         r'distance': distance,
@@ -18,6 +19,7 @@ class Variables$Query$get_rental_by_category {
         if (offset != null) r'offset': offset,
         if (category1 != null) r'category1': category1,
         if (categories2 != null) r'categories2': categories2,
+        if (tags != null) r'tags': tags,
       });
 
   Variables$Query$get_rental_by_category._(this._$data);
@@ -46,6 +48,11 @@ class Variables$Query$get_rental_by_category {
       result$data['categories2'] =
           (l$categories2 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
+    if (data.containsKey('tags')) {
+      final l$tags = data['tags'];
+      result$data['tags'] =
+          (l$tags as List<dynamic>?)?.map((e) => (e as String)).toList();
+    }
     return Variables$Query$get_rental_by_category._(result$data);
   }
 
@@ -57,6 +64,7 @@ class Variables$Query$get_rental_by_category {
   int? get offset => (_$data['offset'] as int?);
   String? get category1 => (_$data['category1'] as String?);
   List<String>? get categories2 => (_$data['categories2'] as List<String>?);
+  List<String>? get tags => (_$data['tags'] as List<String>?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$distance = distance;
@@ -78,6 +86,10 @@ class Variables$Query$get_rental_by_category {
     if (_$data.containsKey('categories2')) {
       final l$categories2 = categories2;
       result$data['categories2'] = l$categories2?.map((e) => e).toList();
+    }
+    if (_$data.containsKey('tags')) {
+      final l$tags = tags;
+      result$data['tags'] = l$tags?.map((e) => e).toList();
     }
     return result$data;
   }
@@ -152,6 +164,25 @@ class Variables$Query$get_rental_by_category {
     } else if (l$categories2 != lOther$categories2) {
       return false;
     }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (_$data.containsKey('tags') != other._$data.containsKey('tags')) {
+      return false;
+    }
+    if (l$tags != null && lOther$tags != null) {
+      if (l$tags.length != lOther$tags.length) {
+        return false;
+      }
+      for (int i = 0; i < l$tags.length; i++) {
+        final l$tags$entry = l$tags[i];
+        final lOther$tags$entry = lOther$tags[i];
+        if (l$tags$entry != lOther$tags$entry) {
+          return false;
+        }
+      }
+    } else if (l$tags != lOther$tags) {
+      return false;
+    }
     return true;
   }
 
@@ -163,6 +194,7 @@ class Variables$Query$get_rental_by_category {
     final l$offset = offset;
     final l$category1 = category1;
     final l$categories2 = categories2;
+    final l$tags = tags;
     return Object.hashAll([
       l$distance,
       l$from,
@@ -173,6 +205,11 @@ class Variables$Query$get_rental_by_category {
           ? l$categories2 == null
               ? null
               : Object.hashAll(l$categories2.map((v) => v))
+          : const {},
+      _$data.containsKey('tags')
+          ? l$tags == null
+              ? null
+              : Object.hashAll(l$tags.map((v) => v))
           : const {},
     ]);
   }
@@ -194,6 +231,7 @@ abstract class CopyWith$Variables$Query$get_rental_by_category<TRes> {
     int? offset,
     String? category1,
     List<String>? categories2,
+    List<String>? tags,
   });
 }
 
@@ -217,6 +255,7 @@ class _CopyWithImpl$Variables$Query$get_rental_by_category<TRes>
     Object? offset = _undefined,
     Object? category1 = _undefined,
     Object? categories2 = _undefined,
+    Object? tags = _undefined,
   }) =>
       _then(Variables$Query$get_rental_by_category._({
         ..._instance._$data,
@@ -228,6 +267,7 @@ class _CopyWithImpl$Variables$Query$get_rental_by_category<TRes>
         if (category1 != _undefined) 'category1': (category1 as String?),
         if (categories2 != _undefined)
           'categories2': (categories2 as List<String>?),
+        if (tags != _undefined) 'tags': (tags as List<String>?),
       }));
 }
 
@@ -244,6 +284,7 @@ class _CopyWithStubImpl$Variables$Query$get_rental_by_category<TRes>
     int? offset,
     String? category1,
     List<String>? categories2,
+    List<String>? tags,
   }) =>
       _res;
 }
@@ -467,6 +508,18 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'tags')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -503,6 +556,16 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
                                 name: NameNode(value: '_in'),
                                 value: VariableNode(
                                     name: NameNode(value: 'categories2')),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'tags'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_has_keys_all'),
+                                value:
+                                    VariableNode(name: NameNode(value: 'tags')),
                               )
                             ]),
                           ),

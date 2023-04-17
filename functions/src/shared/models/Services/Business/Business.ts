@@ -15,7 +15,7 @@ export interface BusinessItemDetails {
     id: number;
     name: Record<Language, string>;
     description?: Record<Language, string>;
-    position: number;
+    position?: number;
     businessId: number;
     available: boolean;
     image?: Array<string>;
@@ -52,9 +52,11 @@ export interface Event {
 }
 export interface Service {
     category1: string;
+    details: BusinessItemDetails;
 }
 export interface Product {
     category1: string;
+    details: BusinessItemDetails;
 }
 
 export enum RentalCategory1 {

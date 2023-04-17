@@ -15,6 +15,7 @@ Future<List<RentalCard>> get_rental_by_category(
     required double distance,
     required Location fromLocation,
     List<RentalCategory2>? categories2,
+    List<String>? tags,
     int? offset,
     int? limit,
     required bool withCache}) async {
@@ -31,6 +32,7 @@ Future<List<RentalCard>> get_rental_by_category(
                       ?.map((e) => e.toFirebaseFormatString())
                       .toList() ??
                   [],
+              tags: tags ?? [],
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),

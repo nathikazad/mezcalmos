@@ -4,11 +4,12 @@ import { getDeliveryOperators } from "../../functions/src/shared/graphql/deliver
 import { ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { Language } from "../../functions/src/shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Notification";
-import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderNotification } from "../../functions/src/shared/models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus, NewDeliveryOrderNotification } from "../../functions/src/shared/models/Generic/Delivery";
 import { pushNotification } from "../../functions/src/utilities/senders/notifyUser";
 import * as firebase from "firebase-admin";
 import { MezAdmin } from "../../functions/src/shared/models/Generic/User";
 import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmin";
+import { Operator } from "../../functions/src/shared/models/Services/Service";
 
 const checkOrdersInterval: number = 10 //seconds 60
 
@@ -23,7 +24,7 @@ async function checkDeliveryOrders() {
   deliveryOrders.forEach(async(o) => {
     if((new Date()).getTime() - (new Date(o.orderTime!)).getTime() < 60 * 1000) {
 
-        let operators: DeliveryOperator[] = await getDeliveryOperators(o.serviceProviderId!);
+        let operators: Operator[] = await getDeliveryOperators(o.serviceProviderId!);
         let mezAdmins: MezAdmin[] = await getMezAdmins();
 
         let notification: Notification = buildNotification()
