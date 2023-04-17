@@ -120,11 +120,16 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  MezServiceOpenHours(schedule: laundry.value!.schedule!),
+                  MezServiceOpenHours(
+                    schedule: laundry.value!.schedule!,
+                    textStyle: context.txt.titleSmall,
+                  ),
                   // SizedBox(
                   //   height: 15,
                   // ),
-                  ServiceLocationCard(location: laundry.value!.info.location),
+                  ServiceLocationCard(
+                      textStyle: context.txt.titleSmall,
+                      location: laundry.value!.info.location),
                 ],
               ),
             ),
@@ -155,7 +160,8 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
           Text(
             "${item.cost.toPriceString()}/kg",
-            style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
+            style: context.txt.titleSmall?.copyWith(
+                color: primaryBlueColor, fontWeight: FontWeight.w600),
           )
         ],
       ),
@@ -170,7 +176,11 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),
             backgroundColor: Colors.transparent),
-        child: Text("${_i18n()["sendMyLaundry"]}"),
+        child: Text(
+          '${_i18n()['sendMyLaundry']}',
+          textAlign: TextAlign.center,
+          style: context.txt.bodyLarge?.copyWith(color: Colors.white),
+        ),
         onPressed: () {
           CustLaundryOrderRequestView.navigate(laundryId: laundryId!);
         },
@@ -196,48 +206,37 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
       runSpacing: 2.0,
       children: [
         Text(
-          "${_i18n()["minimumCost"].toString().inCaps} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
-          //maxLines: 1,
-          textAlign: TextAlign.start,
-          style: context.txt.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: primaryBlueColor,
-              fontSize: 14),
-        ),
+            "${_i18n()["minimumCost"].toString().inCaps} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
+            //maxLines: 1,
+            textAlign: TextAlign.start,
+            style: context.txt.titleSmall?.copyWith(
+                color: primaryBlueColor, fontWeight: FontWeight.w600)),
         Container(
-          margin: EdgeInsets.only(top: 8),
-          child: Icon(
-            Icons.circle,
-            size: 6,
-            color: primaryBlueColor,
-          ),
-        ),
-        Text(
-          "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toString().toPlural(isPlural: laundry.value!.averageNumberOfDays != 1).inCaps} ${_i18n()["return"].toString()}",
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          style: context.txt.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
+            margin: EdgeInsets.only(top: 8),
+            child: Icon(
+              Icons.circle,
+              size: 6,
               color: primaryBlueColor,
-              fontSize: 14),
-        ),
+            )),
+        Text(
+            "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toString().toPlural(isPlural: laundry.value!.averageNumberOfDays != 1).inCaps} ${_i18n()["return"].toString()}",
+            maxLines: 1,
+            textAlign: TextAlign.center,
+            style: context.txt.titleSmall?.copyWith(
+                color: primaryBlueColor, fontWeight: FontWeight.w600)),
         Container(
-          margin: EdgeInsets.only(top: 8),
-          child: Icon(
-            Icons.circle,
-            size: 6,
-            color: primaryBlueColor,
-          ),
-        ),
-        Text(
-          "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory.toPriceString()}/kg",
-          //maxLines: 2,
-          textAlign: TextAlign.center,
-          style: context.txt.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
+            margin: EdgeInsets.only(top: 8),
+            child: Icon(
+              Icons.circle,
+              size: 6,
               color: primaryBlueColor,
-              fontSize: 14),
-        ),
+            )),
+        Text(
+            "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory.toPriceString()}/kg",
+            //maxLines: 2,
+            textAlign: TextAlign.center,
+            style: context.txt.titleSmall?.copyWith(
+                color: primaryBlueColor, fontWeight: FontWeight.w600))
       ],
     );
   }

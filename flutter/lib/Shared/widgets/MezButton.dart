@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:sizer/sizer.dart';
 
 class MezButton extends StatefulWidget {
@@ -104,7 +105,7 @@ class _MezButtonState extends State<MezButton> {
                               child: Icon(
                                 widget.icon,
                                 color: widget.textColor ?? Colors.white,
-                                size: 15.sp,
+                                size: 15.mezSp,
                               ),
                             ),
                           Flexible(

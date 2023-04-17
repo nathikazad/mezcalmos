@@ -107,6 +107,7 @@ class _CustItemViewState extends State<CustItemView> {
                                 (int index) => Column(
                                   children: [
                                     ItemOptionCard(
+                                      margin: EdgeInsets.only(bottom: 15),
                                       cartItem: viewController.cartItem,
                                       editMode: viewController.currentMode ==
                                           ViewItemScreenMode.EditItemMode,
@@ -137,7 +138,7 @@ class _CustItemViewState extends State<CustItemView> {
 
   Widget _specialInfo() {
     return Container(
-      margin: const EdgeInsets.only(top: 8),
+      margin: const EdgeInsets.only(top: 8, bottom: 15),
       child: Column(
         children: [
           Row(
@@ -219,12 +220,11 @@ class _CustItemViewState extends State<CustItemView> {
 
   Container _itemDescription(BuildContext context, Item item) {
     return Container(
-      margin: const EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("${_i18n()["itemDescription"]}", style: context.txt.bodyLarge),
-          SizedBox(height: 5),
           Text(
             "${item.description![userLanguage]?.inCaps}",
             textAlign: TextAlign.left,
@@ -237,7 +237,7 @@ class _CustItemViewState extends State<CustItemView> {
 
   Widget _itemNotesComponent() {
     return Container(
-      margin: const EdgeInsets.only(top: 25),
+      margin: const EdgeInsets.only(bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -251,7 +251,7 @@ class _CustItemViewState extends State<CustItemView> {
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               controller: viewController.notesController,
-              minLines: 2,
+              minLines: 5,
               maxLines: 7,
               style: context.txt.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,

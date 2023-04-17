@@ -207,7 +207,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                         ),
                         Flexible(
                           child: Text(
-                            '${_i18n()["meal"]}',
+                            '${_i18n()["meals"]}',
                             style: context.txt.bodyLarge?.copyWith(
                               color: viewController.byRestaurants
                                   ? Colors.grey.shade700
@@ -272,6 +272,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
   Widget _sortingSwitcher() {
     return Obx(() => CustSwitchOpenService(
+          label: '${_i18n()["showOnlyOpenRestaurants"]}',
           showOnlyOpen: viewController.showOnlyOpen.value,
           onChange: (bool value) {
             viewController.changeAlwaysOpenSwitch(value);

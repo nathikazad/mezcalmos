@@ -68,6 +68,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
   @override
   void dispose() {
     // _controller.dispose();
+    _focusNode?.dispose();
     super.dispose();
   }
 
@@ -105,7 +106,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
         _focusNode = focusNode;
         return TextFormField(
           controller: _controller,
-          focusNode: focusNode,
+          focusNode: _focusNode,
           decoration: _inputDecoration(),
           onChanged: (String v) {
             if (v.length.isEven == true && v.length > 3) {

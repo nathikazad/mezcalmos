@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
@@ -74,7 +75,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                             ? "${_i18n()["info"]}"
                             : controller.restaurant.value!.info.name,
                         style: context.txt.displaySmall
-                            ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                            ?.copyWith(color: Colors.white, fontSize: 14.mezSp),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,

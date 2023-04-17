@@ -666,30 +666,35 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      MezButton(
-                        height: 50,
-                        label: "${_i18n()['save']}",
-                        onClick: () async {
-                          await viewController.requestPriceChange(ctx);
-                          // await viewController.editTax();
-                          // await MezRouter.back();
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      MezButton(
-                        height: 45,
-                        label: "${_i18n()['cancel']}",
-                        backgroundColor: offRedColor,
-                        textColor: Colors.red,
-                        onClick: () async {
-                          Navigator.pop(context);
-                          // await MezRouter.back();
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MezButton(
+                              height: 45,
+                              label: "${_i18n()['save']}",
+                              onClick: () async {
+                                await viewController.requestPriceChange(ctx);
+                                // await viewController.editTax();
+                                // await MezRouter.back();
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: MezButton(
+                              height: 45,
+                              label: "${_i18n()['cancel']}",
+                              backgroundColor: offRedColor,
+                              textColor: Colors.red,
+                              onClick: () async {
+                                Navigator.pop(context);
+                                // await MezRouter.back();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

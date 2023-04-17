@@ -20,11 +20,13 @@ class ItemOptionCard extends StatefulWidget {
       {Key? key,
       required this.option,
       required this.cartItem,
+      this.margin = const EdgeInsets.only(bottom: 15),
       this.editMode = false})
       : super(key: key);
   final Option option;
   final bool editMode;
   final Rxn<CartItem> cartItem;
+  final EdgeInsetsGeometry margin;
 
   @override
   State<ItemOptionCard> createState() => _ItemOptionCardState();
@@ -49,7 +51,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   Widget build(BuildContext context) {
     if (widget.option.haveAtLeastOneChoiceAvailable) {
       return Container(
-        margin: const EdgeInsets.only(bottom: 15),
+        margin: widget.margin,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -116,7 +118,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   Text(
                     (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
                     style: context.txt.bodyMedium!.copyWith(
-                      color: Get.theme.primaryColorLight,
+                      color: primaryBlueColor,
                       fontWeight: (widget
                                   .cartItem.value!.chosenChoices[optionId]
                                   ?.contains(choice) ??

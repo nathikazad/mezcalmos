@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -54,15 +55,12 @@ class _CustCourierServicesListViewState
         () {
           if (_controller.isLoading == false) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _searchCoomponent(context),
                   _sortingSwitcher(),
-                  SizedBox(
-                    height: 20,
-                  ),
                   (_controller.filteredServices.isEmpty)
                       ? NoOpenServiceComponent(
                           showOnlyOpen: _controller.showOnlyOpen.value,
@@ -94,6 +92,7 @@ class _CustCourierServicesListViewState
 
   Widget _sortingSwitcher() {
     return Obx(() => CustSwitchOpenService(
+          label: '${_i18n()["showOnlyOpenCompanies"]}',
           showOnlyOpen: _controller.showOnlyOpen.value,
           onChange: (bool value) {
             _controller.changeAlwaysOpenSwitch(value);
@@ -159,7 +158,7 @@ class _CustCourierServicesListViewState
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 25,
+                        radius: 21.mezSp,
                         backgroundImage:
                             CachedNetworkImageProvider(company.info.image),
                       ),
@@ -194,24 +193,24 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               Icons.delivery_dining,
               color: Colors.black,
-              size: 22,
+              size: 17.5.mezSp,
             ),
             SizedBox(
               width: 3,
             ),
             ShippingCostComponent(
-              shippingCost: company.deliveryCost?.minimumCost,
-              formattedShippingCost: company.deliveryCost != null
-                  ? "Min : ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
-                  : null,
-              showPerKm: true,
-              alignment: MainAxisAlignment.start,
-              textStyle: context.textTheme.bodyMedium,
-            ),
+                shippingCost: company.deliveryCost?.minimumCost,
+                formattedShippingCost: company.deliveryCost != null
+                    ? "Min : ${company.deliveryCost?.minimumCost.toPriceString()} + ${company.deliveryCost?.costPerKm.toPriceString()}/km"
+                    : null,
+                showPerKm: true,
+                alignment: MainAxisAlignment.start,
+                textStyle: context.txt.bodySmall),
           ],
         ),
         // SizedBox(
@@ -250,7 +249,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
               children: [
                 Icon(
                   Icons.star,
-                  size: 22,
+                  size: 17.5.mezSp,
                   color: Color(0xFF6779FE),
                 ),
                 SizedBox(

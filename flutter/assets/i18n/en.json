@@ -60,7 +60,8 @@
         "CustCourierServicesListView": {
           "title": "Delivery companies arround you",
           "courier": "Courier",
-          "min": "Min"
+          "min": "Min",
+          "showOnlyOpenCompanies": "Show only open companies"
         },
 
         "CustCourierServiceView": {
@@ -189,15 +190,16 @@
             },
             "searchField": {
               "search": "Search"
-            }
+            },
+            "SearchItemCard": { "noName": "No name" }
           },
           "ListRestaurantScreen": {
             "restaurants": "Restaurants",
             "search": "Search",
-            "showOnlyOpen": "Show only open restaurants",
+            "showOnlyOpenRestaurants": "Show only open restaurants",
             "emptRestaurantList": "Sorry no restaurant found.",
             "noOpenRestaurant": "No open restaurants founds",
-            "meal": "Meal",
+            "meals": "Meals",
             "noItemTitle": "No result found",
             "noItemDesc": "Sorry, we couldn’t find what you’re looking for please try a new keyword."
           }
@@ -245,7 +247,7 @@
             },
             "OrderSummaryCard": {
               "add": "Add",
-              "waitingForCustomer": "Waiting for customer",
+              "waitingForCustomer": "Waiting to accept",
               "orderSummary": "Summary",
               "orderCost": "Order cost",
               "deliveryCost": "Delivery cost",
@@ -382,7 +384,7 @@
               "free": "Free",
               "total": "Total",
               "deliveryLocation": "Delivery location",
-              "waitingForCustomer": "Waiting for customer"
+              "waitingForCustomer": "Waiting to accept"
             },
             "RestaurantBankInfoCard": {
               "title": "Restaurant bank account",
@@ -424,8 +426,7 @@
                 "thursday": "Thursday",
                 "friday": "Friday",
                 "saturday": "Saturday",
-                "sunday": "Sunday",
-                "viewAll": "View All"
+                "sunday": "Sunday"
               }
             },
             "workinHoursCart": {
@@ -735,7 +736,8 @@
           },
           "laundries": "Laundries",
           "title": "Laundries arround you ",
-          "noLaundaryFound": "No laundry found"
+          "noLaundaryFound": "No laundry found",
+          "showOnlyOpenLaundries": "Show only open laundries"
         },
         "SingleLaundryScreen": {
           "startingFrom": "Starting from ",
@@ -1069,7 +1071,12 @@
             "resendAfter": "Resend after",
             "seconds": "seconds",
             "wrongOTPCode": "The Confirmation code is Wrong, please try again.",
-            "confirm": "Confirm"
+            "confirm": "Confirm",
+            "exceptionMessages": {
+              "invalidOTPCode": "Invalid OTP code",
+              "exceededNumberOfTries": "Exceeded number of tries",
+              "unhandledError": "Unhandled error"
+            }
           },
           "PhoneNumberScreen": {
             "otpCode": "OTP Code",
@@ -1082,7 +1089,11 @@
           "title": "Sign in using your preferred provider!",
           "loginWithApple": "SIGN IN WITH APPLE",
           "loginWithSms": "LOGIN WITH SMS",
-          "fbBtn": "LOGIN WITH FACEBOOK"
+          "fbBtn": "LOGIN WITH FACEBOOK",
+          "loginAs": "LOGIN AS",
+          "customer": "CUSTOMER",
+          "driver": "DRIVER",
+          "mezadmin": "MEZADMIN"
         },
         "UnauthorizedScreen": {
           "unauthorized": "Unauthorized",
@@ -1902,6 +1913,8 @@
           "currentOrders": "Current orders",
           "openOrders": "Open orders",
           "pastOrders": "Past orders",
+          "today": "Today",
+          "yesterday": "Yesterday",
           "title": "Incoming orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",

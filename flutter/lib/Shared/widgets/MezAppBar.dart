@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -174,7 +175,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
               style: TextStyle(
                 fontFamily: "Montserrat",
                 fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
+                fontSize: 16.mezSp,
                 color: Colors.black,
               ),
               textAlign: TextAlign.center,

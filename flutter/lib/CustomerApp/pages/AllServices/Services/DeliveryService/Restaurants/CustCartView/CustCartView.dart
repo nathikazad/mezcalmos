@@ -149,11 +149,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         ),
         const SizedBox(height: 9),
         DropDownLocationList(
+          elevation: 1,
           onValueChangeCallback: (MezLocation location) {
             viewController.switchLocation(location);
           },
           bgColor: Colors.white,
           checkDistance: true,
+          ensureVisible: false,
           serviceProviderLocation:
               viewController.cart.restaurant?.info.location,
         ),

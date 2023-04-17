@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:sizer/sizer.dart';
@@ -46,7 +47,7 @@ class OrderPaymentMethod extends StatelessWidget {
                   Icon(
                     _getIcon() ?? Icons.payments,
                     color: Colors.black,
-                    size: 13.sp,
+                    size: 13.mezSp,
                   ),
                   const SizedBox(
                     width: 8,
