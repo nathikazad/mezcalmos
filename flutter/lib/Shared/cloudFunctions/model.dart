@@ -1870,6 +1870,8 @@ class BusinessItemDetails {
       "tags": tags,
     };
   }
+
+  String? get firstImage => (image?.isNotEmpty == true) ? image!.first : null;
 }
 
 enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth, PerPerson, Total }

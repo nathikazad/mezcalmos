@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/__generated/business_event.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/business_event/__generated/business_event.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
@@ -29,19 +28,21 @@ Future<List<EventCard>> get_event_by_category(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_event_by_category(
-              categories1:
-                  categories1.map((e) => e.toFirebaseFormatString()).toList(),
-              distance: distance,
-              from: Geography(
-                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2:
-                  categories2?.map((e) => e.toFirebaseFormatString()).toList() ?? ["uncategorized"],
-              schedule_type:
-                  scheduleType.map((e) => e.toFirebaseFormatString()).toList(),
+              categories1: categories1
+                  .map((EventCategory1 e) => e.toFirebaseFormatString())
+                  .toList(),
+              // distance: distance,
+              // from: Geography(
+              //     fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              // categories2:
+              //     categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+              schedule_type: scheduleType
+                  .map((ScheduleType e) => e.toFirebaseFormatString())
+                  .toList(),
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
-
+  mezDbgPrint("Event response ======>${response.data}");
   if (response.parsedData?.business_event != null) {
     response.parsedData?.business_event
         .forEach((Query$get_event_by_category$business_event data) async {
@@ -74,7 +75,7 @@ Future<List<EventCard>> get_event_by_category(
     });
     return _events;
   } else {
-    return [];
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   }
 }
 
