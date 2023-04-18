@@ -26,6 +26,7 @@ query get_event_by_id($id: Int!) {
       additional_parameters
       available
       category1
+      category2
       cost
       tags
       description {
@@ -129,5 +130,12 @@ query get_event_by_category($categories1: [String!],
         }
       }
     }
+  }
+}
+
+mutation add_event($object: business_event_insert_input!) {
+  insert_business_event_one(object: $object) {
+    details_id
+    id
   }
 }

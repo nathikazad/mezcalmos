@@ -1,3 +1,5 @@
+import '../../__generated/schema.graphql.dart';
+import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -5139,6 +5141,547 @@ class _CopyWithStubImpl$Query$get_product_by_category$business_product$business$
   call({
     Geography? gps,
     String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$add_product {
+  factory Variables$Mutation$add_product(
+          {required Input$business_product_insert_input object}) =>
+      Variables$Mutation$add_product._({
+        r'object': object,
+      });
+
+  Variables$Mutation$add_product._(this._$data);
+
+  factory Variables$Mutation$add_product.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$object = data['object'];
+    result$data['object'] = Input$business_product_insert_input.fromJson(
+        (l$object as Map<String, dynamic>));
+    return Variables$Mutation$add_product._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$business_product_insert_input get object =>
+      (_$data['object'] as Input$business_product_insert_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$object = object;
+    result$data['object'] = l$object.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$add_product<Variables$Mutation$add_product>
+      get copyWith => CopyWith$Variables$Mutation$add_product(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$add_product) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$object = object;
+    return Object.hashAll([l$object]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$add_product<TRes> {
+  factory CopyWith$Variables$Mutation$add_product(
+    Variables$Mutation$add_product instance,
+    TRes Function(Variables$Mutation$add_product) then,
+  ) = _CopyWithImpl$Variables$Mutation$add_product;
+
+  factory CopyWith$Variables$Mutation$add_product.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$add_product;
+
+  TRes call({Input$business_product_insert_input? object});
+}
+
+class _CopyWithImpl$Variables$Mutation$add_product<TRes>
+    implements CopyWith$Variables$Mutation$add_product<TRes> {
+  _CopyWithImpl$Variables$Mutation$add_product(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$add_product _instance;
+
+  final TRes Function(Variables$Mutation$add_product) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? object = _undefined}) =>
+      _then(Variables$Mutation$add_product._({
+        ..._instance._$data,
+        if (object != _undefined && object != null)
+          'object': (object as Input$business_product_insert_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$add_product<TRes>
+    implements CopyWith$Variables$Mutation$add_product<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$add_product(this._res);
+
+  TRes _res;
+
+  call({Input$business_product_insert_input? object}) => _res;
+}
+
+class Mutation$add_product {
+  Mutation$add_product({
+    this.insert_business_product_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_product.fromJson(Map<String, dynamic> json) {
+    final l$insert_business_product_one = json['insert_business_product_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_product(
+      insert_business_product_one: l$insert_business_product_one == null
+          ? null
+          : Mutation$add_product$insert_business_product_one.fromJson(
+              (l$insert_business_product_one as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$add_product$insert_business_product_one?
+      insert_business_product_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_business_product_one = insert_business_product_one;
+    _resultData['insert_business_product_one'] =
+        l$insert_business_product_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_business_product_one = insert_business_product_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_business_product_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_product) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_business_product_one = insert_business_product_one;
+    final lOther$insert_business_product_one =
+        other.insert_business_product_one;
+    if (l$insert_business_product_one != lOther$insert_business_product_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_product on Mutation$add_product {
+  CopyWith$Mutation$add_product<Mutation$add_product> get copyWith =>
+      CopyWith$Mutation$add_product(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$add_product<TRes> {
+  factory CopyWith$Mutation$add_product(
+    Mutation$add_product instance,
+    TRes Function(Mutation$add_product) then,
+  ) = _CopyWithImpl$Mutation$add_product;
+
+  factory CopyWith$Mutation$add_product.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_product;
+
+  TRes call({
+    Mutation$add_product$insert_business_product_one?
+        insert_business_product_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$add_product$insert_business_product_one<TRes>
+      get insert_business_product_one;
+}
+
+class _CopyWithImpl$Mutation$add_product<TRes>
+    implements CopyWith$Mutation$add_product<TRes> {
+  _CopyWithImpl$Mutation$add_product(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_product _instance;
+
+  final TRes Function(Mutation$add_product) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_business_product_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_product(
+        insert_business_product_one: insert_business_product_one == _undefined
+            ? _instance.insert_business_product_one
+            : (insert_business_product_one
+                as Mutation$add_product$insert_business_product_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$add_product$insert_business_product_one<TRes>
+      get insert_business_product_one {
+    final local$insert_business_product_one =
+        _instance.insert_business_product_one;
+    return local$insert_business_product_one == null
+        ? CopyWith$Mutation$add_product$insert_business_product_one.stub(
+            _then(_instance))
+        : CopyWith$Mutation$add_product$insert_business_product_one(
+            local$insert_business_product_one,
+            (e) => call(insert_business_product_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$add_product<TRes>
+    implements CopyWith$Mutation$add_product<TRes> {
+  _CopyWithStubImpl$Mutation$add_product(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$add_product$insert_business_product_one?
+        insert_business_product_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$add_product$insert_business_product_one<TRes>
+      get insert_business_product_one =>
+          CopyWith$Mutation$add_product$insert_business_product_one.stub(_res);
+}
+
+const documentNodeMutationadd_product = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'add_product'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'business_product_insert_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_business_product_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$add_product _parserFn$Mutation$add_product(
+        Map<String, dynamic> data) =>
+    Mutation$add_product.fromJson(data);
+typedef OnMutationCompleted$Mutation$add_product = FutureOr<void> Function(
+  dynamic,
+  Mutation$add_product?,
+);
+
+class Options$Mutation$add_product
+    extends graphql.MutationOptions<Mutation$add_product> {
+  Options$Mutation$add_product({
+    String? operationName,
+    required Variables$Mutation$add_product variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$add_product? onCompleted,
+    graphql.OnMutationUpdate<Mutation$add_product>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null ? null : _parserFn$Mutation$add_product(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationadd_product,
+          parserFn: _parserFn$Mutation$add_product,
+        );
+
+  final OnMutationCompleted$Mutation$add_product? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$add_product
+    extends graphql.WatchQueryOptions<Mutation$add_product> {
+  WatchOptions$Mutation$add_product({
+    String? operationName,
+    required Variables$Mutation$add_product variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationadd_product,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$add_product,
+        );
+}
+
+extension ClientExtension$Mutation$add_product on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$add_product>> mutate$add_product(
+          Options$Mutation$add_product options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$add_product> watchMutation$add_product(
+          WatchOptions$Mutation$add_product options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$add_product$insert_business_product_one {
+  Mutation$add_product$insert_business_product_one({
+    required this.details_id,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_product$insert_business_product_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$details_id = json['details_id'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_product$insert_business_product_one(
+      details_id: (l$details_id as int),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int details_id;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details_id = details_id;
+    _resultData['details_id'] = l$details_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details_id = details_id;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details_id,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_product$insert_business_product_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details_id = details_id;
+    final lOther$details_id = other.details_id;
+    if (l$details_id != lOther$details_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_product$insert_business_product_one
+    on Mutation$add_product$insert_business_product_one {
+  CopyWith$Mutation$add_product$insert_business_product_one<
+          Mutation$add_product$insert_business_product_one>
+      get copyWith => CopyWith$Mutation$add_product$insert_business_product_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$add_product$insert_business_product_one<TRes> {
+  factory CopyWith$Mutation$add_product$insert_business_product_one(
+    Mutation$add_product$insert_business_product_one instance,
+    TRes Function(Mutation$add_product$insert_business_product_one) then,
+  ) = _CopyWithImpl$Mutation$add_product$insert_business_product_one;
+
+  factory CopyWith$Mutation$add_product$insert_business_product_one.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$add_product$insert_business_product_one;
+
+  TRes call({
+    int? details_id,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$add_product$insert_business_product_one<TRes>
+    implements CopyWith$Mutation$add_product$insert_business_product_one<TRes> {
+  _CopyWithImpl$Mutation$add_product$insert_business_product_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_product$insert_business_product_one _instance;
+
+  final TRes Function(Mutation$add_product$insert_business_product_one) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details_id = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_product$insert_business_product_one(
+        details_id: details_id == _undefined || details_id == null
+            ? _instance.details_id
+            : (details_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$add_product$insert_business_product_one<TRes>
+    implements CopyWith$Mutation$add_product$insert_business_product_one<TRes> {
+  _CopyWithStubImpl$Mutation$add_product$insert_business_product_one(this._res);
+
+  TRes _res;
+
+  call({
+    int? details_id,
+    int? id,
     String? $__typename,
   }) =>
       _res;

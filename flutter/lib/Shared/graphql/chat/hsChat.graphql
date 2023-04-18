@@ -16,6 +16,16 @@ query get_chat_info($chat_id :Int!) {
   }
 }
 
+query get_service_provider_customer_chat($customer_id: Int, $service_provider_id: Int, $service_provider_type: String) {
+  service_provider_customer_chat(where: {customer_id: {_eq: $customer_id}, service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+    }
+  }
+}
 
 
 # Get chat infos

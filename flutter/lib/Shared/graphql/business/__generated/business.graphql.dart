@@ -4484,7 +4484,7 @@ const documentNodeQueryget_business_by_rental_category1 =
                     name: NameNode(value: 'rentals'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'service'),
+                        name: NameNode(value: 'details'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
                             name: NameNode(value: 'category1'),
@@ -6132,7 +6132,7 @@ const documentNodeQueryget_business_by_event_category1 =
                     name: NameNode(value: 'events'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'service'),
+                        name: NameNode(value: 'details'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
                             name: NameNode(value: 'category1'),
