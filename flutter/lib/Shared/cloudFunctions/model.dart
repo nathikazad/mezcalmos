@@ -1845,6 +1845,8 @@ class BusinessItemDetails {
       "tags": tags,
     };
   }
+
+  String? get firstImage => (image?.isNotEmpty == true) ? image!.first : null;
 }
 
 enum TimeUnit { PerHour, PerDay, PerWeek, PerMonth, PerPerson, Total }
@@ -1971,7 +1973,8 @@ enum EventCategory1 {
   Dance,
   GetTogether,
   Therapy,
-  Fitness
+  Fitness,
+  Social
 }
 
 extension ParseEventCategory1ToString on EventCategory1 {

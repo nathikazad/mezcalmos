@@ -47,7 +47,12 @@ query get_event_by_id($id: Int!) {
   }
 }
 
-query get_event_by_category($categories1: [String!], $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $categories2: [String!], $schedule_type: [String!], $tags: [String!]) {
+query get_event_by_category($categories1: [String!],
+#  $distance: Float!, $from: geography!,
+  $limit: Int, $offset: Int, 
+  # $categories2: [String!],
+   $schedule_type: [String!],
+   $tags: [String!]) {
   business_event(
     where: {
       _and: {
@@ -56,40 +61,40 @@ query get_event_by_category($categories1: [String!], $distance: Float!, $from: g
             category1: {
               _in: $categories1
             }, 
-            category2: {
-              _in: $categories2
-            },
-            tags: {_has_keys_all: $tags}
+            # category2: {
+            #   _in: $categories2
+            # },
+             tags: {_has_keys_all: $tags}
           }
         }, 
         schedule_type: {
           _in: $schedule_type
         }, 
-        _or: {
-          gps_location: {
-            _st_d_within: {
-              distance: $distance, 
-              from: $from
-            }
-          }, 
-          _and: {
-            business: {
-              details: {
-                location: {
-                  gps: {
-                    _st_d_within: {
-                      distance: $distance, 
-                      from: $from
-                    }
-                  }
-                }
-              }
-            }, 
-            gps_location: {
-              _is_null: true
-            }
-          }
-        }
+        # _or: { 
+        #   gps_location: {
+        #     _st_d_within: {
+        #       distance: $distance, 
+        #       from: $from
+        #     }
+        #   }, 
+        #   _and: {
+        #     business: {
+        #       details: {
+        #         location: {
+        #           gps: {
+        #             _st_d_within: {
+        #               distance: $distance, 
+        #               from: $from
+        #             }
+        #           }
+        #         }
+        #       }
+        #     }, 
+        #     gps_location: {
+        #       _is_null: true
+        #     }
+        #   }
+        # }
       }
     }, limit: $limit, offset: $offset) {
     details {
