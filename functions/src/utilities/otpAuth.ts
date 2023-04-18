@@ -96,15 +96,11 @@ export async function getAuthUsingOTP(_:any, data: VerifyOtpInterface): Promise<
       }
     }
 
-    // this condition for google to gain instant Access.
-    if (data.phoneNumber != "+21650914839" && user.uid != "tSG0eSFZNGNA7grjBPFEBbpYwjE3" && user.uid != "xlS6U3OW10P30kgSF6htS63ChHD3") {
-      
+    
+    if (data.phoneNumber == "+12098628445" && data.OTPCode == "111111") {
+    // this condition for google and apple to gain instant Access.  
+    } else {
       await confirmOTP(data, user.uid);
-    }
-    else {
-      if (data.OTPCode != "111111") {
-        throw new MezError(AuthOtpError.InvalidOTPCode);
-      }
     }
 
     let customToken;
