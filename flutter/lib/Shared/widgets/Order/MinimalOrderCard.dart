@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -204,7 +205,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
           child: Text(
             '${_i18n()["canceled"]}',
             style: context.txt.bodyLarge
-                ?.copyWith(color: Colors.red, fontSize: 10.sp),
+                ?.copyWith(color: Colors.red, fontSize: 10.mezSp),
           ),
         );
 
@@ -217,7 +218,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
           child: Text(
             '${_i18n()["delivered"]}',
             style: context.txt.bodyLarge
-                ?.copyWith(color: Color(0xFF6779FE), fontSize: 10.sp),
+                ?.copyWith(color: Color(0xFF6779FE), fontSize: 10.mezSp),
           ),
         );
       default:
@@ -229,7 +230,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
           child: Text(
             '${_i18n()["waiting"]}',
             style: context.txt.bodyLarge
-                ?.copyWith(color: Color(0xFFFF9900), fontSize: 10.sp),
+                ?.copyWith(color: Color(0xFFFF9900), fontSize: 10.mezSp),
           ),
         );
     }

@@ -77,41 +77,49 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
     mezDbgPrint("✅✅✅✅ Hasura query success ");
-    final Query$get_service_by_id$business_service_by_pk? data =
-        response.parsedData?.business_service_by_pk!;
 
-    if (data != null) {
-      return ServiceWithBusinessCard(
-          service: Service(
-              category1: data.details.category1,
-              details: BusinessItemDetails(
-                id: id,
-                name:
-                    toLanguageMap(translations: data.details.name.translations),
-                businessId: data.business.id,
-                available: data.details.available,
-                cost: constructBusinessServiceCost(data.details.cost),
-                description: toLanguageMap(
-                    translations: data.details.description?.translations ?? []),
-                additionalParameters: data.details.additional_parameters,
-                image:
-                    data.details.image?.entries.map((e) => e.value).toList() ??
-                        [],
-                tags: data.details.tags?.entries.map((e) => e.value).toList() ??
-                    [],
-              )),
-          business: BusinessCard(
-            id: data.business.id,
-            detailsId: data.business.details.id,
-            name: data.business.details.name,
-            image: data.business.details.image,
-            acceptedPayments: data.business.details.accepted_payments,
-            avgRating: double.tryParse(
-                data.business.reviews_aggregate.aggregate?.avg.toString() ??
-                    '0.0'),
-            reviewCount: data.business.reviews_aggregate.aggregate?.count,
-          ));
-    }
+    final Query$get_service_by_id$business_service_by_pk data =
+        response.parsedData!.business_service_by_pk!;
+    Map<PaymentType, bool> _acceptedPayments = {};
+    data.business.details.accepted_payments.forEach((k, v) {
+      _acceptedPayments[k.toString().toPaymentType()] = v;
+    });
+    List<String> images =
+        data.details.image.map<String>((e) => e.toString()).toList();
+    return ServiceWithBusinessCard(
+        service: Service(
+            category1: data.details.category1,
+            details: BusinessItemDetails(
+              id: id,
+              name: toLanguageMap(translations: data.details.name.translations),
+              businessId: data.business.id,
+              available: data.details.available,
+              cost: constructBusinessServiceCost(data.details.cost),
+              description: toLanguageMap(
+                  translations: data.details.description?.translations ?? []),
+              additionalParameters: data.details.additional_parameters,
+              image:
+                  data.details.image?.map<String>((e) => e.toString()).toList(),
+
+              // data.details.image?.entries.map((e) => e.value).toList() ??
+              //     [],
+              tags:
+                  data.details.tags?.map<String>((e) => e.toString()).toList(),
+            )),
+        business: BusinessCard(
+          id: data.business.id,
+          detailsId: data.business.details.id,
+          name: data.business.details.name,
+          image: data.business.details.image,
+          acceptedPayments: _acceptedPayments,
+          // acceptedPayments: data.business.details.accepted_payments?.map(
+          //     (k, v) => MapEntry<PaymentType, bool>(
+          //         k.toString().toPaymentType(), v as bool)),
+          avgRating: double.tryParse(
+              data.business.reviews_aggregate.aggregate?.avg.toString() ??
+                  '0.0'),
+          reviewCount: data.business.reviews_aggregate.aggregate?.count,
+        ));
   } else
     return null;
   return null;

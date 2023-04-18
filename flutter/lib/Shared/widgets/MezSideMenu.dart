@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/CustOrderListView/CustomerOrdersListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -31,9 +31,10 @@ class MezSideMenu extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 75.mezW,
       child: Obx(
         () => Container(
-          margin: EdgeInsets.only(left: 20.sp, top: 20.sp),
+          margin: EdgeInsets.only(left: 7.5.mezW, top: 20.sp),
           padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,8 +180,8 @@ class MezSideMenu extends GetWidget<AuthController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          height: 100.sp,
-          width: 100.sp,
+          height: 100.mezSp,
+          width: 100.mezSp,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: secondaryLightBlueColor,
@@ -228,7 +229,7 @@ class MezSideMenu extends GetWidget<AuthController> {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(top: 2.h, left: 5),
+          padding: EdgeInsets.only(top: 15),
           child: Text(
             controller.user?.name ?? "",
             textAlign: TextAlign.center,

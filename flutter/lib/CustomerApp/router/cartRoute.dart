@@ -1,6 +1,6 @@
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:mezcalmos/CustomerApp/pages/CartViewPage/cart_view_page.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/CartViewPage/cart_view_page.dart'
     deferred as cartViewPage;
 
 class CartRoute {

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/AssetServiceView/AssetServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-class ClassCard extends StatelessWidget {
-  const ClassCard({
+class CustClassCard extends StatelessWidget {
+  const CustClassCard({
     super.key,
     required this.cardType,
     required this.title,
     required this.imageUrl,
-    this.agencyName = "",
-    required this.groupName,
+    required this.agencyName,
     required this.price,
     required this.priceUnit,
     required this.needAgencyName,
@@ -22,7 +19,6 @@ class ClassCard extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String agencyName;
-  final String groupName;
   final double price;
   final String? priceUnit;
   final bool needAgencyName;
@@ -30,37 +26,22 @@ class ClassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (cardType) {
-      case ScheduleType.Scheduled:
-        return _DefaultClassCard(
-          title: title,
-          imageUrl: imageUrl,
-          needAgencyName: true,
-          agencyName: agencyName,
-          price: price,
-          priceUnit: priceUnit,
-          schedule: schedule,
-        );
-      case ScheduleType.OnDemand:
-        return _DefaultClassCard(
-          title: title,
-          imageUrl: imageUrl,
-          needAgencyName: true,
-          agencyName: agencyName,
-          price: price,
-          priceUnit: priceUnit,
-        );
-      case ScheduleType.OneTime:
-        return _DefaultClassCard(
-          title: title,
-          imageUrl: imageUrl,
-          needAgencyName: true,
-          agencyName: agencyName,
-          price: price,
-          priceUnit: priceUnit,
-          schedule: schedule,
-        );
-    }
+    return _DefaultClassCard(
+      title: title,
+      imageUrl: imageUrl,
+      needAgencyName: true,
+      agencyName: agencyName,
+      price: price,
+      priceUnit: priceUnit,
+      schedule: _getSchedule(),
+    );
+  }
+
+  Map<String, Map<String, String>>? _getSchedule() {
+    return cardType == ScheduleType.Scheduled ||
+            cardType == ScheduleType.OneTime
+        ? schedule
+        : null;
   }
 }
 
@@ -85,6 +66,7 @@ class _DefaultClassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // todo @ChiragKr04 refactor : DONT Create variables in build method
     final List<String> days = schedule?.keys.toList() ?? [];
     final List<Map<String, String>> time = schedule?.values.toList() ?? [];
     return Padding(
