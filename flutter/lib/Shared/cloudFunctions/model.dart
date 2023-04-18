@@ -1879,6 +1879,12 @@ extension ParseTimeUnitToString on TimeUnit {
     String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
+
+  String toStringDuration() {
+    final String duration = toString().split('.').last;
+
+    return duration.contains('Per') ? duration.replaceAll('Per', '') : duration;
+  }
 }
 
 extension ParseStringToTimeUnit on String {

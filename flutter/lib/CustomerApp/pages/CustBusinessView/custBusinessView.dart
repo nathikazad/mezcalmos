@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessEventCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessEventCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessPaymentMethods.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessRentCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPaymentMethods.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -181,14 +183,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
         Text('Rentals',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         for (Rental rental in _viewController.business!.rentals!)
-          CustBusinessRentCard(
-            imageUrl: (rental.details.image != null &&
-                    rental.details.image!.isNotEmpty)
-                ? rental.details.image![0]
-                : null,
+          CustBusinessRentalCard(
+            rental: rental,
             elevation: 0,
-            label: rental.details.name[userLanguage] ?? "",
-            price: rental.details.cost[TimeUnit.PerHour].toString(),
           )
       ],
     );
@@ -205,15 +202,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         for (Event event in _viewController.business!.events!)
           CustBusinessEventCard(
-              elevation: 0,
-              label: event.details.name[userLanguage] ?? "",
-              imageUrl: (event.details.image != null &&
-                      event.details.image!.isNotEmpty)
-                  ? event.details.image![0]
-                  : null,
-              price: event.details.cost[TimeUnit.PerHour].toString(),
-              schedule: Schedule(
-                  openHours: _viewController.business!.details.schedule))
+            elevation: 0,
+            event: event,
+          )
       ],
     );
   }
@@ -225,15 +216,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
         Text('Products',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         for (Product product in _viewController.business!.products!)
-          CustBusinessRentCard(
-            imageUrl: (product.details.image != null &&
-                    product.details.image!.isNotEmpty)
-                ? product.details.image![0]
-                : null,
-            elevation: 0,
-            label: product.details.name[userLanguage] ?? "",
-            price: product.details.cost[TimeUnit.PerHour].toString(),
-          )
+          CustBusinessProductCard(elevation: 0, product: product)
       ],
     );
   }
@@ -245,14 +228,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
         Text('Services',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         for (Service service in _viewController.business!.services!)
-          CustBusinessRentCard(
-            imageUrl: (service.details.image != null &&
-                    service.details.image!.isNotEmpty)
-                ? service.details.image![0]
-                : null,
+          CustBusinessServiceCard(
+            service: service,
             elevation: 0,
-            label: service.details.name[userLanguage] ?? "",
-            price: service.details.cost[TimeUnit.PerHour].toString(),
           )
       ],
     );

@@ -1,28 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:sizer/sizer.dart';
 
 class CustBusinessEventCard extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry contentPadding;
-  final String label;
-  final String price;
-  final String? imageUrl;
-  final Schedule schedule;
+  final Event event;
   final double? elevation;
 
   const CustBusinessEventCard(
       {super.key,
       this.margin = const EdgeInsets.only(top: 5),
       this.contentPadding = const EdgeInsets.all(8),
-      required this.label,
-      required this.price,
-      required this.imageUrl,
-      required this.schedule,
+      required this.event,
       this.elevation});
 
   @override
@@ -37,9 +32,10 @@ class CustBusinessEventCard extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               CircleAvatar(
                 radius: 17.5.sp,
-                backgroundImage: imageUrl == null
-                    ? null
-                    : CachedNetworkImageProvider(imageUrl!),
+                backgroundImage: (event.details.image != null &&
+                        event.details.image!.isNotEmpty)
+                    ? CachedNetworkImageProvider(event.details.image![0])
+                    : null,
                 backgroundColor: backgroundShadeColor,
               ),
               SizedBox(
@@ -48,7 +44,7 @@ class CustBusinessEventCard extends StatelessWidget {
               Flexible(
                 flex: 7,
                 child: Text(
-                  label,
+                  event.details.name[userLanguage] ?? "",
                   style:
                       context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
                   overflow: TextOverflow.ellipsis,
@@ -56,12 +52,12 @@ class CustBusinessEventCard extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '\$$price/hour',
+                '\$${event.details.cost.values.first.toString()}/${event.details.cost.keys.first.toStringDuration()}',
                 style: context.textTheme.bodyLarge,
               )
             ]),
             Divider(),
-            MezServiceOpenHours(schedule: schedule),
+            MezServiceOpenHours(schedule: event.schedule),
           ],
         ),
       ),
