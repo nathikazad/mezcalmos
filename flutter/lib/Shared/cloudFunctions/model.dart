@@ -591,7 +591,9 @@ enum BusinessProfile {
   WellnessClass,
   Party,
   Volunteer,
-  TourAgency
+  TourAgency,
+  DanceClass,
+  Therapy
 }
 
 extension ParseBusinessProfileToString on BusinessProfile {
@@ -1961,7 +1963,16 @@ extension ParseStringToRentalCategory1 on String {
   }
 }
 
-enum EventCategory1 { Yoga, Surf, MartialArt, Party, Dance, GetTogether }
+enum EventCategory1 {
+  Yoga,
+  Surf,
+  MartialArt,
+  Party,
+  Dance,
+  GetTogether,
+  Therapy,
+  Fitness
+}
 
 extension ParseEventCategory1ToString on EventCategory1 {
   String toFirebaseFormatString() {
