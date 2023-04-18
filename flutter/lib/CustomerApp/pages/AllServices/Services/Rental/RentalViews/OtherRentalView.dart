@@ -1,33 +1,26 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/components/ClassCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/ClassesService/controller/ClassesController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/AgencyLists/OtherAgencyList.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/AssetList/OtherAssetList.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/ButtonSwitcher.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/OtherRentalController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/ClassFilterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/VehicleFilterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
+import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/AppBarActionButton.dart';
-import 'AssetList/OtherAssetList.dart';
-import '../components/ButtonSwitcher.dart';
-import '../../controller/AssetController.dart';
-import 'AgencyLists/OtherAgencyList.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'dart:developer';
-import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:location_platform_interface/location_platform_interface.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/VehicleFilterCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/ClassFilterCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -107,7 +100,7 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme;
+    final TextTheme style = Theme.of(context).textTheme;
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
@@ -140,7 +133,7 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                 ),
 
                 /// Filter card switch logic
-                Builder(builder: (context) {
+                Builder(builder: (BuildContext context) {
                   switch (assetController.viewName) {
                     case RentalViewEnum.Vehicle:
                       return VehicleFilterCard(
@@ -198,7 +191,7 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
             ),
           ),
           Builder(
-            builder: (context) {
+            builder: (BuildContext context) {
               switch (assetController.viewName) {
                 /// Handling all three cases for Rentals Service
                 case RentalViewEnum.Surf:
@@ -217,7 +210,7 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
 
                 /// Handling case of Classes Service
                 case RentalViewEnum.Classes:
-                  var tempSchedule = {
+                  Map<String, Map<String, String>> tempSchedule = {
                     "Friday": {
                       "from": "10am",
                       "to": "10pm",
@@ -237,32 +230,29 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                         ? Expanded(
                             child: ListView(
                               children: [
-                                ClassCard(
+                                CustClassCard(
                                   cardType: ScheduleType.Scheduled,
                                   title: "Scheduled Card",
                                   imageUrl: customImageUrl,
-                                  groupName: "groupName",
                                   price: 100,
                                   priceUnit: null,
                                   needAgencyName: true,
                                   agencyName: "Puetro Class",
                                   schedule: tempSchedule,
                                 ),
-                                ClassCard(
+                                CustClassCard(
                                   cardType: ScheduleType.OnDemand,
                                   title: "On Demand Card",
                                   imageUrl: customImageUrl,
-                                  groupName: "groupName",
                                   price: 100,
                                   priceUnit: "hour",
                                   agencyName: "Puetro Class",
                                   needAgencyName: true,
                                 ),
-                                ClassCard(
+                                CustClassCard(
                                   cardType: ScheduleType.OneTime,
                                   title: "On Time Card",
                                   imageUrl: customImageUrl,
-                                  groupName: "groupName",
                                   price: 100,
                                   priceUnit: null,
                                   agencyName: "Puetro Class",

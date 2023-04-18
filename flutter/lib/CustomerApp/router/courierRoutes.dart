@@ -1,10 +1,10 @@
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustCourierOrderView/CustCourierOrderView.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart'
     deferred as viewCourierOrder;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustCourierServiceView/CustCourierServiceView.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierServiceView/CustCourierServiceView.dart'
     deferred as courierService;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart'
     deferred as courierList;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Courrier/CustRequestCourrierView/CustRequestCourierView.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/CustRequestCourierView.dart'
     deferred as requestCourier;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
