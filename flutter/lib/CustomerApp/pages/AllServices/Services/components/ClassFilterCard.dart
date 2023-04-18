@@ -74,8 +74,8 @@ class _ClassFilterCardState extends State<ClassFilterCard> {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          final Map<ClassCategory, bool> category2 = {
-            ...classesController.category2
+          final Map<EventCategory1, bool> category1 = {
+            ...classesController.category1
           };
           final Map<ScheduleType, bool> scheduleType = {
             ...classesController.scheduleType
@@ -161,20 +161,20 @@ class _ClassFilterCardState extends State<ClassFilterCard> {
                                       activeColor: primaryBlueColor,
                                       onChanged: (value) {
                                         setState(() {
-                                          category2[category2.keys
+                                          category1[category1.keys
                                                   .toList()[index]] =
                                               value ?? false;
                                           mezDbgPrint(
-                                              "CheckboxListTile: $value $category2");
+                                              "CheckboxListTile: $value $category1");
                                         });
                                       },
-                                      value: category2[
-                                          category2.keys.toList()[index]],
+                                      value: category1[
+                                          category1.keys.toList()[index]],
                                       title: Text(
-                                          category2.keys.toList()[index].name),
+                                          category1.keys.toList()[index].name),
                                     );
                                   },
-                                  childCount: category2.length,
+                                  childCount: category1.length,
                                 ),
                               ),
                               SliverToBoxAdapter(
@@ -202,13 +202,13 @@ class _ClassFilterCardState extends State<ClassFilterCard> {
                                             label: "Confirm",
                                             withGradient: true,
                                             onClick: () async {
-                                              if (category2.values
+                                              if (category1.values
                                                   .contains(true)) {
                                                 classesController
                                                     .changeClassFilter(
                                                   scheduleTypeValue:
                                                       scheduleType,
-                                                  category2Value: category2,
+                                                  category1Value: category1,
                                                 );
                                                 Navigator.pop(context);
                                               } else {

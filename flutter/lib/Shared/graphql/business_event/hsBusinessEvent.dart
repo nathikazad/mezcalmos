@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/business_event/__generated/business_eve
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -59,12 +60,18 @@ Future<List<EventCard>> get_event_by_category(
               position: data.details.position,
               businessId: data.business.id,
               available: data.details.available,
-              image: data.details.image?.entries.map((e) => e.value).toList() ??
+              image: data.details.image
+                      ?.map((e) => e.toString())
+                      .toList()
+                      .cast<String>() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
-              tags:
-                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
+              tags: data.details.tags
+                      ?.map((e) => e.toString())
+                      .toList()
+                      .cast<String>() ??
+                  [],
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: data.schedule,
@@ -113,10 +120,15 @@ Future<EventWithBusinessCard?> get_event_by_id(
                 description: toLanguageMap(
                     translations: data.details.description?.translations ?? []),
                 additionalParameters: data.details.additional_parameters,
-                image:
-                    data.details.image?.entries.map((e) => e.value).toList() ??
-                        [],
-                tags: data.details.tags?.entries.map((e) => e.value).toList() ??
+                image: data.details.image
+                        ?.map((e) => e.toString())
+                        .toList()
+                        .cast<String>() ??
+                    [],
+                tags: data.details.tags
+                        ?.map((e) => e.toString())
+                        .toList()
+                        .cast<String>() ??
                     [],
               ),
               scheduleType: data.schedule_type.toScheduleType(),
@@ -126,7 +138,10 @@ Future<EventWithBusinessCard?> get_event_by_id(
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,
-            acceptedPayments: data.business.details.accepted_payments,
+            acceptedPayments: PaymentInfo.fromData(
+                    stripeInfo: {},
+                    acceptedPayments: data.business.details.accepted_payments)
+                .acceptedPayments,
             avgRating: double.tryParse(
                 data.business.reviews_aggregate.aggregate?.avg.toString() ??
                     '0.0'),
