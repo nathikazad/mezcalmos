@@ -47,10 +47,12 @@ Notification _driverAprrovedNotification(String key, value) {
       icon: mat.Icons.delete_forever_rounded,
       linkUrl: DeliveryAppRoutes
           .kCurrentOrdersListRoute, // needs to be changed, need to add laundry
-      body: 'You have been approved', // needs to be changed
+      body: value["approved"]
+          ? 'Has sido aprobado'
+          : 'Has sido rechazado', // needs to be changed
       imgUrl:
           'assets/images/shared/notifications/delivered.png', // needs to be changed
-      title: 'Congrats ',
+      title: value["approved"] ? 'Felicidades' : 'Lo siento',
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.DriverApproved,
       notificationAction:

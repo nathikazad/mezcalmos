@@ -168,7 +168,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 DvOrderItems(
                   viewController: viewController,
                 ),
-                if (viewController.order.value?.isDriverAssigned == true)
+                if (viewController.showBillAndTax)
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: _billCard(context),
@@ -177,14 +177,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   OrderSummaryCard(
                     margin: EdgeInsets.only(top: 20),
                     costs: viewController.orderCosts!,
-                    setTaxCallBack:
-                        (viewController.order.value?.isDriverAssigned == true)
-                            ? () {
-                                viewController.taxText.text =
-                                    viewController.tax.value?.toString() ?? "";
-                                _showTaxSheet(context);
-                              }
-                            : null,
+                    setTaxCallBack: (viewController.showBillAndTax == true)
+                        ? () {
+                            viewController.taxText.text =
+                                viewController.tax.value?.toString() ?? "";
+                            _showTaxSheet(context);
+                          }
+                        : null,
                     setDeliveryCallBack: (viewController.showEditPrice)
                         ? () {
                             _showPriceSheet(context);
