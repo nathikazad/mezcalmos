@@ -1,3 +1,5 @@
+import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart'
+    deferred as custEventsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart'
     deferred as custProducView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart'
@@ -8,6 +10,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class CustBusinessRoutes {
   static String custServiceRoute = "/service/:id";
   static String custProductRoute = "/product/:id";
+  static String custEventsListRoute = "/customer/events";
 
   final List<QRoute> routes = [
     QRoute(
@@ -23,6 +26,13 @@ class CustBusinessRoutes {
         builder: () => custProducView.CustProductView(),
         middleware: <QMiddleware>[
           DefferedLoader(custProducView.loadLibrary),
+        ]),
+    QRoute(
+        name: custEventsListRoute,
+        path: custEventsListRoute,
+        builder: () => custEventsListView.CustEventsListView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(custEventsListView.loadLibrary),
         ]),
   ];
 }
