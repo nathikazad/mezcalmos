@@ -220,7 +220,7 @@
               "newcard": "New Card",
               "applepay": "Apple Pay",
               "googlepay": "Google Pay",
-              "banktransfer": "Bank Transfer"
+              "banktransfer": "Bank transfer"
             },
             "BuildCart": {
               "inCart": "My orders",
@@ -1007,7 +1007,7 @@
             "confirm": "Confirm",
             "cancel": "Cancel",
             "error": "Error",
-            "bankTransfer": "Bank Transfer",
+            "bankTransfer": "Bank transfer",
             "bankError": "Account number is not valid",
             "cash": "Cash",
             "card": "Card",
@@ -1281,7 +1281,7 @@
         "newcard": "New Card",
         "applepay": "Apple Pay",
         "googlepay": "Google Pay",
-        "banktransfer": "Bank Transfer",
+        "banktransfer": "Bank transfer",
         "cashOnDelivery": "Cash on delivery",
         "creditCard": "Credit card"
       },
@@ -2591,7 +2591,7 @@
             "confirm": "Confirm",
             "cancel": "Cancel",
             "error": "Error",
-            "bankTransfer": "Bank Transfer",
+            "bankTransfer": "Bank transfer",
             "bankError": "Account number is not valid",
             "cash": "Cash",
             "card": "Card",
