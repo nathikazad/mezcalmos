@@ -44,7 +44,7 @@ class CustEventsListViewController {
           categories1: _categories,
           distance: 1000000000000,
           fromLocation: _fromLocation!,
-          tags: [],
+          tags: ["class"],
           scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
           withCache: false);
     }

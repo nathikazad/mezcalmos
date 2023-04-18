@@ -31,7 +31,7 @@ Future<List<ServiceCard>> get_service_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2: categories2,
+              categories2: categories2 ?? ["uncategorized"],
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
@@ -39,6 +39,12 @@ Future<List<ServiceCard>> get_service_by_category(
   if (response.parsedData?.business_service != null) {
     response.parsedData?.business_service
         .forEach((Query$get_service_by_category$business_service data) async {
+      List<String> _images = <String>[];
+      mezDbgPrint("images ============>${data.details.image}");
+      data.details.image?.forEach((e) {
+        mezDbgPrint(e);
+        _images.add(e.toString());
+      });
       _services.add(ServiceCard(
           businessName: data.business.details.name,
           service: Service(
@@ -49,18 +55,22 @@ Future<List<ServiceCard>> get_service_by_category(
               position: data.details.position,
               businessId: data.business.id,
               available: data.details.available,
-              image: data.details.image?.entries.map((e) => e.value).toList() ??
+              image: data.details.image
+                      ?.map<String>((e) => e.value.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
-              tags:
-                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
+              tags: data.details.tags
+                      ?.map<String>((e) => e.value.toString())
+                      .toList() ??
+                  [],
             ),
           )));
     });
     return _services;
   } else {
-    return [];
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   }
 }
 
