@@ -35,7 +35,7 @@ Future<List<EventCard>> get_event_by_category(
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               categories2:
-                  categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+                  categories2?.map((e) => e.toFirebaseFormatString()).toList() ?? ["uncategorized"],
               schedule_type:
                   scheduleType.map((e) => e.toFirebaseFormatString()).toList(),
               tags: tags ?? [],
