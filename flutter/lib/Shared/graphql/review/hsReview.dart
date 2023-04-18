@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/review/__generated/review.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -58,7 +57,7 @@ Future<num?> get_service_review_average(
   }
 }
 
-Future<List<Review>?> get_service_reviews(
+Future<List<Review>> get_service_reviews(
     {required int serviceId,
     required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {

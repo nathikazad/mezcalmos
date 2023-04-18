@@ -1,10 +1,10 @@
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Laundry/LaundriesList/CustLaundriesListView.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/CustLaundriesListView.dart'
     deferred as laundriesListView;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart'
     deferred as laundryOrderView;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Laundry/LaundryRequestView/LaundryOrderRequestView.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryRequestView/LaundryOrderRequestView.dart'
     deferred as LaundryOrderRequestView;
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService/Laundry/SingleLaundry/SingleLaundryScreen.dart'
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/SingleLaundry/SingleLaundryScreen.dart'
     deferred as singleLaundryView;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';

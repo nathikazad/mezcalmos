@@ -15,25 +15,63 @@ export interface ServiceProviderDetails {
     serviceProviderId: number,
     serviceProviderType: ServiceProviderType
 }
-export async function createServiceProviderChat(customerId: number, serviceProviderDetails: ServiceProviderDetails): Promise<Chat> {
-
-    let customer: CustomerInfo = await getCustomer(customerId);
-    let serviceProvider: ServiceProvider;
-    switch (serviceProviderDetails.serviceProviderType) {
-        case ServiceProviderType.Restaurant:
-            serviceProvider = await getRestaurant(serviceProviderDetails.serviceProviderId);
-            break;
-        case ServiceProviderType.Laundry:
-            serviceProvider = await getLaundryStore(serviceProviderDetails.serviceProviderId);
-            break;
-        case ServiceProviderType.Business:
-            serviceProvider = (await getBusiness(serviceProviderDetails.serviceProviderId)).details;
-        case ServiceProviderType.DeliveryCompany:
-            serviceProvider = await getDeliveryCompany(serviceProviderDetails.serviceProviderId);
-        default:
-            throw new MezError("invalidServiceProviderType");
+export interface ServiceProviderChatResponse {
+    success: boolean,
+    error?: ServiceProviderChatError
+    unhandledError?: string,
+    chat?: any
+}
+export enum ServiceProviderChatError {
+    UnhandledError = "unhandledError",
+    CustomerNotFound = "customerNotFound",
+    RestaurantNotFound = "restaurantNotFound",
+    LaundryStoreNotfound = "laundryStoreNotfound",
+    BusinessNotFound = "businessNotFound",
+    DeliveryCompanyNotFound = "deliveryCompanyNotFound",
+    InvalidServiceProviderType = "invalidServiceProviderType",
+    ChatCreationError = "chatCreationError"
+}
+export async function createServiceProviderChat(customerId: number, serviceProviderDetails: ServiceProviderDetails): Promise<ServiceProviderChatResponse> {
+    try {
+        let customer: CustomerInfo = await getCustomer(customerId);
+        let serviceProvider: ServiceProvider;
+        switch (serviceProviderDetails.serviceProviderType) {
+            case ServiceProviderType.Restaurant:
+                serviceProvider = await getRestaurant(serviceProviderDetails.serviceProviderId);
+                break;
+            case ServiceProviderType.Laundry:
+                serviceProvider = await getLaundryStore(serviceProviderDetails.serviceProviderId);
+                break;
+            case ServiceProviderType.Business:
+                serviceProvider = (await getBusiness(serviceProviderDetails.serviceProviderId)).details;
+            case ServiceProviderType.DeliveryCompany:
+                serviceProvider = await getDeliveryCompany(serviceProviderDetails.serviceProviderId);
+            default:
+                throw new MezError(ServiceProviderChatError.InvalidServiceProviderType);
+        }
+        let chat: Chat = await createServiceProviderCustomerChat(serviceProvider, customer);
+        return {
+            success: true,
+            chat: chat
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(ServiceProviderChatError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: ServiceProviderChatError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
     }
-    return createServiceProviderCustomerChat(serviceProvider, customer);
 }
 
 export interface DirectChatDetails {

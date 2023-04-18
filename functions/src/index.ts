@@ -29,6 +29,7 @@ import { createNewBusiness } from "./business/createNewBusiness";
 import { requestOrder } from "./business/orderRequest";
 import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
 import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
+import { createServiceProviderChat } from "./shared/chat/createChat";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -67,6 +68,7 @@ export const serviceProvider = {
   authorizeOperator: authenticatedCall((userId, data) => authorizeOperator(userId, data)),
   addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
   authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
+  createServiceProviderChat: authenticatedCall((userId, data) => createServiceProviderChat(userId, data)),
 }
 
 export const restaurant2 = {

@@ -18,3 +18,14 @@ object_relationships:
         remote_table:
           name: restaurant
           schema: restaurant
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - chat_id
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
