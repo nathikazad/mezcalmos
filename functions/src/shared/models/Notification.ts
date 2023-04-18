@@ -15,7 +15,8 @@ export enum NotificationType {
   NewRestaurant = "newRestaurant",
   NewDriver = "newDriver",
   DriverApproved = "driverApproved",
-  PriceChange = "priceChange"
+  PriceChange = "priceChange",
+  DriverRemoved = "driverRemoved",
 }
 
 export enum NotificationAction {

@@ -25,6 +25,7 @@ import { authorizeOperator } from "./shared/operator/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
 import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
+import { removeDriver } from "./delivery/removeDriver";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -63,6 +64,7 @@ export const serviceProvider = {
   authorizeOperator: authenticatedCall((userId, data) => authorizeOperator(userId, data)),
   addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
   authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
+  removeDriver: authenticatedCall((userId, data) => removeDriver(userId, data)),
 }
 
 export const restaurant3 = {
