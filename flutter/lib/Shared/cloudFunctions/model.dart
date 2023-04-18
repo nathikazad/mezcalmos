@@ -405,6 +405,56 @@ class AuthorizeDriverResponse {
   }
 }
 
+enum ServiceProviderType {
+  Restaurant,
+  Laundry,
+  Business,
+  DeliveryCompany,
+  Customer,
+  DeliveryDriver
+}
+
+extension ParseServiceProviderTypeToString on ServiceProviderType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToServiceProviderType on String {
+  ServiceProviderType toServiceProviderType() {
+    return ServiceProviderType.values.firstWhere(
+        (ServiceProviderType serviceProviderType) =>
+            serviceProviderType.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+class ServiceProviderChatResponse {
+  bool success;
+  ServiceProviderChatError? error;
+  String? unhandledError;
+  dynamic? chat;
+  ServiceProviderChatResponse(
+      this.success, this.error, this.unhandledError, this.chat);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+      "chat": chat,
+    };
+  }
+
+  factory ServiceProviderChatResponse.fromFirebaseFormattedJson(dynamic json) {
+    return ServiceProviderChatResponse(
+        json["success"],
+        json["error"]?.toString().toServiceProviderChatError(),
+        json["unhandledError"],
+        json["chat"]);
+  }
+}
+
 class Location {
   num lat;
   num lng;
@@ -1761,31 +1811,6 @@ class ServiceLink {
   }
 }
 
-enum ServiceProviderType {
-  Restaurant,
-  Laundry,
-  Business,
-  DeliveryCompany,
-  Customer,
-  DeliveryDriver
-}
-
-extension ParseServiceProviderTypeToString on ServiceProviderType {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToServiceProviderType on String {
-  ServiceProviderType toServiceProviderType() {
-    return ServiceProviderType.values.firstWhere(
-        (ServiceProviderType serviceProviderType) =>
-            serviceProviderType.toFirebaseFormatString().toLowerCase() ==
-            toLowerCase());
-  }
-}
-
 class Business {
   BusinessProfile profile;
   ServiceProvider details;
@@ -1900,6 +1925,7 @@ class Rental {
 
 class Event {
   EventCategory1 category1;
+  EventCategory2? category2;
   ScheduleType scheduleType;
   dynamic? schedule;
   BusinessItemDetails details;
@@ -1907,6 +1933,7 @@ class Event {
   String? time;
   Event(
       {required this.category1,
+      this.category2,
       required this.scheduleType,
       this.schedule,
       required this.details,
@@ -1915,6 +1942,7 @@ class Event {
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "category1": category1,
+      "category2": category2,
       "scheduleType": scheduleType,
       "schedule": schedule,
       "details": details,
@@ -1972,9 +2000,11 @@ enum EventCategory1 {
   MartialArt,
   Party,
   Dance,
-  GetTogether,
+  Social,
   Therapy,
-  Fitness
+  Fitness,
+  Adventure,
+  Volunteer
 }
 
 extension ParseEventCategory1ToString on EventCategory1 {
@@ -1988,6 +2018,22 @@ extension ParseStringToEventCategory1 on String {
   EventCategory1 toEventCategory1() {
     return EventCategory1.values.firstWhere((EventCategory1 eventCategory1) =>
         eventCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+enum EventCategory2 { Salsa, Zumba, HIIT, Ecstatic, Spin, Jiujitsu, Karate }
+
+extension ParseEventCategory2ToString on EventCategory2 {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToEventCategory2 on String {
+  EventCategory2 toEventCategory2() {
+    return EventCategory2.values.firstWhere((EventCategory2 eventCategory2) =>
+        eventCategory2.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -2023,7 +2069,7 @@ extension ParseStringToScheduleType on String {
   }
 }
 
-enum RentalCategory2 { Motorcycle, Car, Uncategorized }
+enum RentalCategory2 { Motorcycle, Car, ATB, Bicycle, Uncategorized }
 
 extension ParseRentalCategory2ToString on RentalCategory2 {
   String toFirebaseFormatString() {
@@ -3085,6 +3131,33 @@ extension ParseStringToAuthorizeDriverError on String {
     return AuthorizeDriverError.values.firstWhere(
         (AuthorizeDriverError authorizeDriverError) =>
             authorizeDriverError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum ServiceProviderChatError {
+  UnhandledError,
+  CustomerNotFound,
+  RestaurantNotFound,
+  LaundryStoreNotfound,
+  BusinessNotFound,
+  DeliveryCompanyNotFound,
+  InvalidServiceProviderType,
+  ChatCreationError
+}
+
+extension ParseServiceProviderChatErrorToString on ServiceProviderChatError {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToServiceProviderChatError on String {
+  ServiceProviderChatError toServiceProviderChatError() {
+    return ServiceProviderChatError.values.firstWhere(
+        (ServiceProviderChatError serviceProviderChatError) =>
+            serviceProviderChatError.toFirebaseFormatString().toLowerCase() ==
             toLowerCase());
   }
 }

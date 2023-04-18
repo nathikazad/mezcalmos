@@ -101,3 +101,10 @@ query get_product_by_category($categories1: [String!], $distance: Float!, $from:
     }
   }
 }
+
+mutation add_product($object: business_product_insert_input!) {
+  insert_business_product_one(object: $object) {
+    details_id
+    id
+  }
+}

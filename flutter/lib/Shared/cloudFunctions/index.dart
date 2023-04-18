@@ -165,6 +165,17 @@ class CloudFunctions {
       }));
   }
 
+  static Future<ServiceProviderChatResponse> serviceProvider_createServiceProviderChat(
+      {required num serviceProviderId,
+      required ServiceProviderType serviceProviderType}  ) async {
+    return ServiceProviderChatResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-createServiceProviderChat",
+      parameters: <String, dynamic>{
+        "serviceProviderId": serviceProviderId,
+        "serviceProviderType":serviceProviderType.toFirebaseFormatString(),
+      }));
+  }
+
   static Future<RestaurantResponse> restaurant2_createRestaurant(
       {required String name,
       required String image,

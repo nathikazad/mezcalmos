@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/__generated/business_service.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -113,5 +114,77 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
     }
   } else
     return null;
+  return null;
+}
+
+Future<int?> add_one_service({required Service service}) async {
+  // mezDbgPrint("Adding this service 🇹🇳 ${service.toJson()}");
+
+  final QueryResult<Mutation$add_service> response = await _db.graphQLClient
+      .mutate$add_service(Options$Mutation$add_service(
+          variables: Variables$Mutation$add_service(
+              object: Input$business_service_insert_input(
+                  business_id: service.details.businessId.toInt(),
+                  details: Input$business_item_details_obj_rel_insert_input(
+                      data: Input$business_item_details_insert_input(
+                          available: service.details.available,
+                          category1: service.category1,
+                          // category2: service.category2?.toFirebaseFormatString(),
+                          cost: service.details.cost,
+                          image: service.details.image,
+                          name: Input$translation_obj_rel_insert_input(
+                              data: Input$translation_insert_input(
+                                  service_provider_id:
+                                      service.details.businessId.toInt(),
+                                  service_provider_type: ServiceProviderType
+                                      .Business.toFirebaseFormatString(),
+                                  translations:
+                                      Input$translation_value_arr_rel_insert_input(
+                                          data: <
+                                              Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: service
+                                                .details.name[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: service
+                                                .details.name[Language.ES])
+                                      ]))),
+                          position: service.details.position?.toInt(),
+                          additional_parameters:
+                              service.details.additionalParameters,
+                          description: (service.details.description != null)
+                              ? Input$translation_obj_rel_insert_input(
+                                  data: Input$translation_insert_input(
+                                      service_provider_id:
+                                          service.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType
+                                          .Business.toFirebaseFormatString(),
+                                      translations:
+                                          Input$translation_value_arr_rel_insert_input(
+                                              data: <Input$translation_value_insert_input>[
+                                            Input$translation_value_insert_input(
+                                                language_id: Language.EN
+                                                    .toFirebaseFormatString(),
+                                                value: service.details
+                                                    .description?[Language.EN]),
+                                            Input$translation_value_insert_input(
+                                                language_id: Language.ES
+                                                    .toFirebaseFormatString(),
+                                                value: service.details
+                                                    .description?[Language.ES])
+                                          ])))
+                              : null,
+                          tags: service.details.tags))))));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura add service mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura add service mutation success => ${response.data}");
+    return response.parsedData?.insert_business_service_one?.id;
+  }
   return null;
 }
