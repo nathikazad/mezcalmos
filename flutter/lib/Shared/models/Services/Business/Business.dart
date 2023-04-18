@@ -57,6 +57,28 @@ class EventCard extends Event {
         );
 }
 
+class ProductCard extends Product {
+  final String businessName;
+  ProductCard({
+    required Product product,
+    required this.businessName,
+  }) : super(
+          category1: product.category1,
+          details: product.details,
+        );
+}
+
+class ServiceCard extends Service {
+  final String businessName;
+  ServiceCard({
+    required Service service,
+    required this.businessName,
+  }) : super(
+          category1: service.category1,
+          details: service.details,
+        );
+}
+
 class RentalWithBusinessCard extends Rental {
   final BusinessCard business;
   RentalWithBusinessCard({
@@ -81,5 +103,26 @@ class EventWithBusinessCard extends Event {
           scheduleType: event.scheduleType,
           category1: event.category1,
           details: event.details,
+        );
+}
+
+class ProductWithBusinessCard extends Product {
+  final BusinessCard business;
+  ProductWithBusinessCard({
+    required Product product,
+    required this.business,
+  }) : super(
+          category1: product.category1,
+          details: product.details,
+        );
+}
+class ServiceWithBusinessCard extends Service {
+  final BusinessCard business;
+  ServiceWithBusinessCard({
+    required Service service,
+    required this.business,
+  }) : super(
+          category1: service.category1,
+          details: service.details,
         );
 }

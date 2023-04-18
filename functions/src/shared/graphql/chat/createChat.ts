@@ -1,3 +1,4 @@
+import { service_provider_customer_chat_constraint } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../utilities/hasura";
 import { DirectChatDetails } from "../../chat/createChat";
 import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, Chat, ChatInfo } from "../../models/Generic/Chat";
@@ -43,6 +44,9 @@ export async function createServiceProviderCustomerChat(serviceProvider: Service
                         }
                     }
                 }
+            }, on_conflict: {
+                constraint: service_provider_customer_chat_constraint.service_provider_customer_cha_customer_id_service_provider__key,
+                update_columns: []
             }
         },{
             chat_id: true,

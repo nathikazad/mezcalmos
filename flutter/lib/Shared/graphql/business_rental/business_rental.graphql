@@ -1,5 +1,5 @@
-query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category1: String, $categories2: [String!]) {
-  business_rental(where: {_and: {details: {_and: {category1: {_eq: $category1}, category2: {_in: $categories2}}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
+query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category1: String, $categories2: [String!], $tags: [String!]) {
+  business_rental(where: {_and: {details: {_and: {category1: {_eq: $category1}, category2: {_in: $categories2}, tags: {_has_keys_all: $tags}}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
     details {
       id
       name {

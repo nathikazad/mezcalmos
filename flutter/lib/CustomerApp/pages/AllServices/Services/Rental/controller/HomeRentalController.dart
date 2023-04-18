@@ -6,8 +6,11 @@ import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 
 class HomeRentalController {
+  final AssetController assetController = Get.find<AssetController>();
+
   RxList<RentalCard> homeRentalData = <RentalCard>[].obs;
   RxList<BusinessCard> agencyRentalData = <BusinessCard>[].obs;
 
@@ -65,8 +68,7 @@ class HomeRentalController {
     }
     try {
       _fetchingAgencyData = true;
-      final List<BusinessCard> newData =
-          await get_business_by_rental_category1(
+      final List<BusinessCard> newData = await get_business_by_rental_category1(
         category1: RentalCategory1.Home,
         distance: 100000,
         withCache: true,

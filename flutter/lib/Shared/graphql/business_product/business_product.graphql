@@ -1,5 +1,5 @@
-query get_event_by_id($id: Int!) {
-  business_event_by_pk(id: $id) {
+query get_product_by_id($id: Int!) {
+  business_product_by_pk(id: $id) {
     business {
       id
       details {
@@ -17,15 +17,11 @@ query get_event_by_id($id: Int!) {
         }
       }
     }
-    id
-    schedule
-    schedule_type
-    gps_location
-    time
     details {
       additional_parameters
       available
       category1
+      category2
       cost
       tags
       description {
@@ -42,13 +38,12 @@ query get_event_by_id($id: Int!) {
           value
         }
       }
-      position
     }
   }
 }
 
-query get_event_by_category($categories1: [String!], $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $categories2: [String!], $schedule_type: [String!], $tags: [String!]) {
-  business_event(
+query get_product_by_category($categories1: [String!], $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $categories2: [String!], $tags: [String!]) {
+  business_product(
     where: {
       _and: {
         details: {
@@ -61,32 +56,16 @@ query get_event_by_category($categories1: [String!], $distance: Float!, $from: g
             },
             tags: {_has_keys_all: $tags}
           }
-        }, 
-        schedule_type: {
-          _in: $schedule_type
-        }, 
-        _or: {
-          gps_location: {
-            _st_d_within: {
-              distance: $distance, 
-              from: $from
-            }
-          }, 
-          _and: {
-            business: {
-              details: {
-                location: {
-                  gps: {
-                    _st_d_within: {
-                      distance: $distance, 
-                      from: $from
-                    }
-                  }
+        },
+        business: {
+          details: {
+            location: {
+              gps: {
+                _st_d_within: {
+                  distance: $distance, 
+                  from: $from
                 }
               }
-            }, 
-            gps_location: {
-              _is_null: true
             }
           }
         }
@@ -109,10 +88,6 @@ query get_event_by_category($categories1: [String!], $distance: Float!, $from: g
       position
     }
     id
-    gps_location
-    schedule_type
-    schedule
-    time
     business {
       id
       details {

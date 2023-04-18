@@ -1,6 +1,5 @@
 import { getBusiness } from "../graphql/business/getBusiness";
 import { createDirectChat, createMezAdminChat, createServiceProviderCustomerChat } from "../graphql/chat/createChat";
-import { getServiceProviderCustomerChat } from "../graphql/chat/getChat";
 import { getDeliveryCompany } from "../graphql/delivery/getDelivery";
 import { getLaundryStore } from "../graphql/laundry/getLaundry";
 import { getRestaurant } from "../graphql/restaurant/getRestaurant";
@@ -17,10 +16,7 @@ export interface ServiceProviderDetails {
     serviceProviderType: ServiceProviderType
 }
 export async function createServiceProviderChat(customerId: number, serviceProviderDetails: ServiceProviderDetails): Promise<Chat> {
-    let chat: Chat | undefined = await getServiceProviderCustomerChat(customerId, serviceProviderDetails.serviceProviderId, serviceProviderDetails.serviceProviderType);
-    if(chat) {
-        return chat;
-    }
+
     let customer: CustomerInfo = await getCustomer(customerId);
     let serviceProvider: ServiceProvider;
     switch (serviceProviderDetails.serviceProviderType) {

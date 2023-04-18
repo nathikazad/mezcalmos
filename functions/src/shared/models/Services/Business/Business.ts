@@ -15,7 +15,7 @@ export interface BusinessItemDetails {
     id: number;
     name: Record<Language, string>;
     description?: Record<Language, string>;
-    position: number;
+    position?: number;
     businessId: number;
     available: boolean;
     image?: Array<string>;
@@ -52,9 +52,11 @@ export interface Event {
 }
 export interface Service {
     category1: string;
+    details: BusinessItemDetails;
 }
 export interface Product {
     category1: string;
+    details: BusinessItemDetails;
 }
 
 export enum RentalCategory1 {
@@ -69,7 +71,9 @@ export enum EventCategory1 {
     MartialArt = "martialArt",
     Party = "party",
     Dance = "dance",
-    GetTogether = "getTogether"
+    GetTogether = "getTogether",
+    Therapy = "therapy",
+    Fitness = "fitness",
 }
 export enum ServiceType {
     Rental = "rental",
@@ -88,7 +92,9 @@ export enum BusinessProfile {
     WellnessClass = "wellnessClass",
     Party = "party",
     Volunteer = "volunteer",
-    TourAgency = "tourAgency"
+    TourAgency = "tourAgency",
+    DanceClass = "danceClass",
+    Therapy = "therapy",
 }
 export enum RentalCategory2 {
     Motorcycle = "motorcycle",

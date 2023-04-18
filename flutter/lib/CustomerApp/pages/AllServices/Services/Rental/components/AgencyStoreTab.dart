@@ -85,7 +85,7 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                                 ],
                                 subtitleIconString: [
                                   perDayPrice.toStringAsFixed(2),
-                                  "null",
+                                  rental[index].bedrooms.toString(),
                                   "null",
                                 ],
                               ),
