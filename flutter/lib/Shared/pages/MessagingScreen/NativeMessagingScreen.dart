@@ -48,7 +48,7 @@ class MessagingScreenStateForApps extends BaseMessagingScreenState {
       final SettingsController _settingsController =
           Get.find<SettingsController>();
       CloudFunctionsModels.CallUserResponse response =
-          await CloudFunctions.agora_callChatUser(
+          await CloudFunctions.agora2_callChatUser(
               chatId: chatId,
               callerParticipantType:
                   MezEnv.appType.convertParticipantTypefromAppType());

@@ -183,7 +183,7 @@ class DvOrderDetailsViewController {
     if (updatePriceFormKey.currentState?.validate() == true) {
       try {
         ChangePriceReqResponse res =
-            await CloudFunctions.delivery2_changeDeliveryPrice(
+            await CloudFunctions.delivery3_changeDeliveryPrice(
                 deliveryOrderId: order.value!.orderId,
                 newPrice: double.parse(openOrderPriceText.text),
                 reason: openOrderReasonText.text);
@@ -211,7 +211,7 @@ class DvOrderDetailsViewController {
   Future<bool> cancelOrder() async {
     try {
       ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery2_changeStatus(
+          await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.value!.orderId,
         newStatus: DeliveryOrderStatus.CancelledByDeliverer,
       );

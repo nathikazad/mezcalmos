@@ -153,37 +153,10 @@ class LaundryOrderViewController {
 
 // Order status change methods
 
-  Future<ServerResponse> addReview({
-    required int orderId,
-    required int serviceId,
-    required String comment,
-    required OrderType orderType,
-    required num rate,
-  }) async {
-    final HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
-    try {
-      final HttpsCallableResult<dynamic> response =
-          await cancelOrder.call(<String, dynamic>{
-        "orderId": orderId,
-        "serviceProviderId": serviceId,
-        "rating": rate,
-        "comment": comment,
-        "orderType": orderType.toFirebaseFormatString(),
-      });
-      mezDbgPrint(response.toString());
-      print(response.data);
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
   Future<void> cancelOrder() async {
     try {
       ChangeLaundryStatusResponse res =
-          await CloudFunctions.laundry2_cancelFromAdmin(orderId: order.orderId);
+          await CloudFunctions.laundry3_cancelFromAdmin(orderId: order.orderId);
       showSavedSnackBar(
           title: "Cancelled", subtitle: "Order cancelled successfuly");
       if (res.success == false) {
@@ -315,7 +288,7 @@ class LaundryOrderViewController {
   Future<void> sertOrderReady() async {
     try {
       ChangeLaundryStatusResponse res =
-          await CloudFunctions.laundry2_readyForDeliveryOrder(
+          await CloudFunctions.laundry3_readyForDeliveryOrder(
               orderId: _order.value!.orderId);
       if (res.success == false) {
         mezDbgPrint(res.error);

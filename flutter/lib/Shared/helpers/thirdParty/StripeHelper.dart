@@ -135,7 +135,7 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
 }) async {
   try {
     cModel.PaymentIntentResponse res =
-        await CloudFunctions.stripe2_getPaymentIntent(
+        await CloudFunctions.stripe3_getPaymentIntent(
             paymentAmount: paymentAmount,
             serviceProviderDetailsId: serviceProviderDetailsId);
     if (res.success == false) {
@@ -157,7 +157,7 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
 Future<String?> addCard({required String paymentMethod}) async {
   try {
     cModel.AddCardResponse res =
-        await CloudFunctions.stripe2_addCard(paymentMethod: paymentMethod);
+        await CloudFunctions.stripe3_addCard(paymentMethod: paymentMethod);
     if (res.success == false) {
       showErrorSnackBar(errorText: res.error.toString());
       mezDbgPrint(res.error);
@@ -191,7 +191,7 @@ Future<String?> acceptPaymentWithSavedCard(
   mezDbgPrint("Payment with saved Card ============> ${card.toString()}");
 
   try {
-    cModel.ChargeCardResponse res = await CloudFunctions.stripe2_chargeCard(
+    cModel.ChargeCardResponse res = await CloudFunctions.stripe3_chargeCard(
         serviceProviderDetailsId: serviceProviderDetailsId,
         cardId: card.cardId,
         paymentAmount: paymentAmount);
@@ -209,30 +209,6 @@ Future<String?> acceptPaymentWithSavedCard(
     mezDbgPrint(stk);
   }
   return null;
-  // final HttpsCallable addCardFunction =
-  //     FirebaseFunctions.instance.httpsCallable("stripe-chargeCard");
-  // try {
-  //   final HttpsCallableResult<dynamic> response =
-  //       await addCardFunction.call(<String, dynamic>{
-  //     "serviceProviderId": serviceProviderId,
-  //     "cardId": card.cardId,
-  //     "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-  //     "paymentAmount": paymentAmount
-  //   });
-  //   final ServerResponse serverResponse =
-  //       ServerResponse.fromJson(response.data);
-  //   if (serverResponse.success) {
-  //     return extractPaymentIdFromIntent(
-  //         serverResponse.data['paymentIntent'].toString());
-  //   } else {
-  //     MezSnackbar(
-  //         "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
-  //     throw Exception(serverResponse.errorMessage ?? "Unknown Error");
-  //   }
-  // } catch (e) {
-  //   MezSnackbar("Add Card Error", "Server side error");
-  //   throw e;
-  // }
 }
 
 Future<void> acceptPaymentWithSheet(
@@ -336,7 +312,7 @@ Future<cModel.SetupStripeResponse> onboardServiceProvider(
 ) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  return await CloudFunctions.stripe2_setupServiceProvider(
+  return await CloudFunctions.stripe3_setupServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
 }
@@ -348,7 +324,7 @@ Future<void> updateServiceProvider(
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
   cModel.UpdateStripeResponse res =
-      await CloudFunctions.stripe2_updateServiceProvider(
+      await CloudFunctions.stripe3_updateServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
   if (res.success == false) {

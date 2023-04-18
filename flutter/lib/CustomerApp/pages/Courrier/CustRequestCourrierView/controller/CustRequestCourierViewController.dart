@@ -141,7 +141,7 @@ class CustRequestCourierViewController {
     try {
       await _uploadItemsImages();
       cModel.CreateCourierResponse res =
-          await CloudFunctions.delivery2_createCourierOrder(
+          await CloudFunctions.delivery3_createCourierOrder(
         toLocation: cModel.Location(
             lat: toLoc.value!.position.latitude!,
             lng: toLoc.value!.position.longitude!,

@@ -55,7 +55,7 @@ class PickDriverViewController {
 
     try {
       mezDbgPrint("calling assign driver....");
-      AssignDriverResponse res = await CloudFunctions.delivery2_assignDriver(
+      AssignDriverResponse res = await CloudFunctions.delivery3_assignDriver(
         deliveryOrderId: orderId,
         deliveryDriverId: driver.deliveryDriverId,
         changeDriver: order.value!.isDriverAssigned,
@@ -76,28 +76,6 @@ class PickDriverViewController {
       mezDbgPrint(stk);
       screenLoading.value = false;
     }
-
-    // final HttpsCallable cloudFunction =
-    //     FirebaseFunctions.instance.httpsCallable('delivery2-assignDriver');
-    // try {
-    //   final HttpsCallableResult response = await cloudFunction.call({
-    //     "orderType": order.value!.orderType.toFirebaseFormatString(),
-    //     "deliveryOrderId": order.value!.id,
-    //     "deliveryDriverId": driver.deliveryDriverId,
-    //     "deliveryCompanyId": driver.deliveryDriverState.deliveryCompanyId,
-    //     "deliveryDriverType":
-    //         DeliveryDriverType.Delivery_driver.toFirebaseFormatString(),
-    //     "changeDriver": order.value!.driverAssigned
-    //   });
-    //   mezDbgPrint("Response : ${response.data}");
-    //   screenLoading.value = false;
-    //   return ServerResponse.fromJson(response.data);
-    // } catch (e) {
-    //   mezDbgPrint("Errrooooooooor =======> $e");
-    //   screenLoading.value = false;
-    //   return ServerResponse(ResponseStatus.Error,
-    //       errorMessage: "Server Error", errorCode: "serverError");
-    // }
   }
 
   Future<void> _initMap() async {

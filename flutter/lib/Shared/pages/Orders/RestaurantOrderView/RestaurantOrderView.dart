@@ -186,7 +186,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                             showConfirmationDialog(context,
                                 onYesClick: () async {
                               await viewController.cancelOrder().then(
-                                  (ServerResponse value) => MezRouter.back());
+                                  (ChangeRestaurantStatusResponse value) =>
+                                      MezRouter.back());
                             });
                           },
                           child: Container(

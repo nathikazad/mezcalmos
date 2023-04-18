@@ -63,33 +63,6 @@ class CustomerOrderController extends GetxController {
     });
   }
 
-  Future<ServerResponse> addReview({
-    required int orderId,
-    required int serviceId,
-    required String comment,
-    required OrderType orderType,
-    required num rate,
-  }) async {
-    final HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
-    try {
-      final HttpsCallableResult<dynamic> response =
-          await cancelOrder.call(<String, dynamic>{
-        "orderId": orderId,
-        "serviceProviderId": serviceId,
-        "rating": rate,
-        "comment": comment,
-        "orderType": orderType.toFirebaseFormatString(),
-      });
-      mezDbgPrint(response.toString());
-      print(response.data);
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
   bool get hasOneOrder {
     return currentOrders.length == 1;
   }

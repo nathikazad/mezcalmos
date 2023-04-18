@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -72,136 +73,23 @@ class RestaurantOrderViewController {
         orderStream = null;
       });
     }
-    // first time init map
-    //mGoogleMapController.animateMarkersPolyLinesBounds(true);
-    // if (order.value != null) {
-    //   await _initMap();
-    // }
   }
-
-//   Future<void> _initMap() async {
-//     // first time init map
-//     mGoogleMapController.minMaxZoomPrefs =
-//         MinMaxZoomPreference.unbounded; // LEZEM
-//     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
-//     mGoogleMapController.periodicRerendering.value = true;
-
-//     // mGoogleMapController.periodicRerendering.value = true;
-//     if (order.value?.routeInformation?.polyline != null)
-//       mGoogleMapController.decodeAndAddPolyline(
-//         encodedPolylineString: order.value!.routeInformation!.polyline,
-//       );
-
-//     _updateMapByPhaseAndStatus();
-
-//     await waitForOrderIfNotLoaded().then((void value) {
-//       if (order.value == null) {
-//         // ignore: inference_failure_on_function_invocation
-//         Future<Null>.delayed(Duration.zero, () {
-//           MezRouter.back<Null>();
-//           MezSnackbar("Error", "Order does not exist");
-//         });
-//       } else {
-//         // controller.setNotifiedAsTrue(order.value!);
-//       }
-//     });
-//   }
-
-// // Map methods //
-//   void _updateMapByPhaseAndStatus() {
-//     if (order.value!.inDeliveryPhase()) {
-//       mezDbgPrint(
-//           "PICK UP PHASE snapshot [$_statusSnapshot] - [${order.value!.status}]");
-//       if (_statusSnapshot != order.value!.status) {
-//         if (order.value?.restaurant.location != null) {
-//           mGoogleMapController.setLocation(
-//             LocModel.MezLocation(
-//               "_",
-//               LocationData.fromMap(
-//                 <String, dynamic>{
-//                   "latitude": order.value!.restaurant.location.latitude,
-//                   "longitude": order.value!.restaurant.location.longitude
-//                 },
-//               ),
-//             ),
-//           );
-//         }
-
-//         _statusSnapshot = order.value?.status;
-//         // add laundry marker
-//         mGoogleMapController.addOrUpdateUserMarker(
-//           latLng: order.value?.restaurant.location.toLatLng(),
-//           customImgHttpUrl: order.value?.restaurant.image,
-//           fitWithinBounds: true,
-//           markerId: order.value?.restaurant.firebaseId,
-//         );
-//         // add customer's marker - destination
-//         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-//           latLng: order.value?.to.toLatLng(),
-//           fitWithinBounds: true,
-//         );
-//       }
-//       // keep updating driver's marker
-//       mezDbgPrint("Updating driver location");
-//       mGoogleMapController.addOrUpdateUserMarker(
-//         latLng: order.value?.dropoffDriver?.location,
-//         customImgHttpUrl: order.value?.dropoffDriver?.image,
-//         fitWithinBounds: true,
-//         markerId: "dropOff_driver",
-//       );
-
-//       mGoogleMapController.animateAndUpdateBounds();
-//     }
-//   }
-
-//   Future<void> waitForOrderIfNotLoaded() {
-//     if (order.value != null) {
-//       return Future<void>.value(null);
-//     } else {
-//       final Completer<void> completer = Completer<void>();
-//       Timer(Duration(seconds: 5), () {
-//         completer.complete();
-//       });
-//       return completer.future;
-//     }
-//   }
 
 // Order status change methods
 
-  Future<ServerResponse> setReadyForDelivery() async {
-    return _callRestaurantCloudFunction(
-        'readyForOrderPickup', order.value!.orderId);
+  Future<ChangeRestaurantStatusResponse> setReadyForDelivery() async {
+    return CloudFunctions.restaurant3_readyForOrderPickup(
+        orderId: order.value!.orderId);
   }
 
-  Future<ServerResponse> prepareOrder() async {
-    return _callRestaurantCloudFunction('prepareOrder', order.value!.orderId);
+  Future<ChangeRestaurantStatusResponse> prepareOrder() async {
+    return CloudFunctions.restaurant3_prepareOrder(
+        orderId: order.value!.orderId);
   }
 
-  Future<ServerResponse> cancelOrder() async {
-    return _callRestaurantCloudFunction(
-        "cancelOrderFromAdmin", order.value!.orderId);
-  }
-
-  Future<ServerResponse> _callRestaurantCloudFunction(
-      String functionName, int orderId,
-      {Map<String, dynamic>? optionalParams}) async {
-    mezDbgPrint("calling cloud func");
-    final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('restaurant2-$functionName');
-    try {
-      final HttpsCallableResult response = await cloudFunction.call({
-        "orderId": orderId,
-        "fromRestaurantOperator": true,
-        ...optionalParams ?? {}
-      });
-      mezDbgPrint("Response : ${response.data}");
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      mezDbgPrint("Errrooooooooor =======> $e");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
+  Future<ChangeRestaurantStatusResponse> cancelOrder() async =>
+      CloudFunctions.restaurant3_cancelOrderFromAdmin(
+          orderId: order.value!.orderId);
 
 // dispose
   void dispose() {

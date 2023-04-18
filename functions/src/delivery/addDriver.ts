@@ -81,7 +81,7 @@ async function notify(deliveryDriver: DeliveryDriver, serviceProvider: ServicePr
         linkUrl: `/`
     };
     switch (serviceProvider.serviceProviderType) {
-        case ServiceProviderType.Delivery:
+        case ServiceProviderType.DeliveryCompany:
             let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(serviceProvider.id);
             deliveryOperators.forEach((d) => {
                 if (d.user) {

@@ -84,37 +84,10 @@ class CustLaundryOrderViewController {
 
 // Order status change methods
 
-  Future<ServerResponse> addReview({
-    required int orderId,
-    required int serviceId,
-    required String comment,
-    required OrderType orderType,
-    required num rate,
-  }) async {
-    final HttpsCallable cancelOrder =
-        FirebaseFunctions.instance.httpsCallable('restaurant-addReview');
-    try {
-      final HttpsCallableResult<dynamic> response =
-          await cancelOrder.call(<String, dynamic>{
-        "orderId": orderId,
-        "serviceProviderId": serviceId,
-        "rating": rate,
-        "comment": comment,
-        "orderType": orderType.toFirebaseFormatString(),
-      });
-      mezDbgPrint(response.toString());
-      print(response.data);
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
   Future<bool> cancelOrder() async {
     try {
       CancelLaundryResponse res =
-          await CloudFunctions.laundry2_cancelFromCustomer(
+          await CloudFunctions.laundry3_cancelFromCustomer(
               orderId: order.value!.orderId);
       if (res.success == false) {
         mezDbgPrint(res.error);

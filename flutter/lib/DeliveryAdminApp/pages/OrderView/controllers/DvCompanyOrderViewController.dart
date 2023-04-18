@@ -246,7 +246,7 @@ class DvCompanyOrderViewController {
   Future<bool> cancelOrder() async {
     try {
       ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery2_changeStatus(
+          await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.value!.orderId,
         newStatus: DeliveryOrderStatus.CancelledByAdmin,
       );

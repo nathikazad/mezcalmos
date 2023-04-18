@@ -93,6 +93,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
 
   Widget _sortingSwitcher() {
     return Obx(() => CustSwitchOpenService(
+          label: '${_i18n()["showOnlyOpenLaundries"]}',
           showOnlyOpen: viewController.showOnlyOpen.value,
           onChange: (bool value) {
             viewController.changeAlwaysOpenSwitch(value);

@@ -25,6 +25,7 @@ import { authorizeOperator } from "./shared/operator/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
 import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
+import { removeDriver } from "./delivery/removeDriver";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -41,12 +42,12 @@ export const user2 = {
   addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid, null))
 }
 
-export const otp2 = {
+export const otp3 = {
   sendOTPForLogin: functions.https.onCall((data) => sendOTPForLogin(null, data)),
   getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(null, data)),
 }
 
-export const stripe2 = {
+export const stripe3 = {
   getPaymentIntent: authenticatedCall((userId, data) => stripePaymentFunctions.getPaymentIntent(userId, data)),
   addCard: authenticatedCall((userId, data) => stripeCardFunctions.addCard(userId, data)),
   chargeCard: authenticatedCall((userId, data) => stripeCardFunctions.chargeCard(userId, data)),
@@ -55,7 +56,7 @@ export const stripe2 = {
   updateServiceProvider: authenticatedCall((userId, data) => stripeServiceProvderFunctions.updateServiceProvider(userId, data)),
 }
 
-export const agora = {
+export const agora2 = {
   callChatUser: authenticatedCall((userId, data) => callUser(userId, data))
 }
 export const serviceProvider = {
@@ -63,9 +64,10 @@ export const serviceProvider = {
   authorizeOperator: authenticatedCall((userId, data) => authorizeOperator(userId, data)),
   addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
   authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
+  removeDriver: authenticatedCall((userId, data) => removeDriver(userId, data)),
 }
 
-export const restaurant2 = {
+export const restaurant3 = {
   createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
   checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
@@ -78,7 +80,7 @@ export const restaurant2 = {
 
 
 
-export const laundry2 = {
+export const laundry3 = {
   createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
   requestLaundry: authenticatedCall((userId, data) => requestLaundry(userId, data)),
   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
@@ -86,7 +88,7 @@ export const laundry2 = {
   cancelFromAdmin: authenticatedCall((userId, data) => laundryStatusChange.cancelOrder(userId, data)),
 }
 
-export const delivery2 = {
+export const delivery3 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   createCourierOrder: authenticatedCall((userId, data) => createCourierOrder(userId, data)),

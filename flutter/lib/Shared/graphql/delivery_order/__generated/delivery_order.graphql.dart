@@ -18592,7 +18592,16 @@ const documentNodeSubscriptionlisten_on_inprocess_driver_orders =
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -22609,7 +22618,16 @@ const documentNodeQueryget_inprocess_driver_orders = DocumentNode(definitions: [
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -24590,7 +24608,16 @@ const documentNodeQueryget_open_driver_orders = DocumentNode(definitions: [
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -26551,7 +26578,16 @@ const documentNodeSubscriptionlisten_open_driver_orders =
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

@@ -129,7 +129,7 @@ function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutReque
   if(restaurant.approved == false) {
     throw new MezError(CheckoutResponseError.RestaurantNotApproved);
   }
-  if(restaurant.openStatus != "open") {
+  if(restaurant.openStatus != "open" && checkoutRequest.scheduledTime == null) {
     throw new MezError(CheckoutResponseError.RestaurantClosed);
   }
   if((cart.items.length ?? 0) == 0) {

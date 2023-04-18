@@ -167,7 +167,7 @@ class _SignInViewState extends State<SignInView> {
                       child: Icon(Ionicons.log_in)),
                   Spacer(),
                   Text(
-                    "Login as ${credential.identifier.capitalize}",
+                    "${_i18n()['loginAs']} ${_i18n()[credential.identifier.toLowerCase()]}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Spacer()

@@ -73,7 +73,7 @@ Future<void> signOut() async {
 
 Future<SendOtpResponse?> sendOTPForLogin(String phoneNumber) async {
   try {
-    SendOtpResponse res = await CloudFunctions.otp2_sendOTPForLogin(
+    SendOtpResponse res = await CloudFunctions.otp3_sendOTPForLogin(
         language: sDefaultLanguage.toFirebaseFormatString(),
         phoneNumber: phoneNumber);
     return res;
@@ -91,14 +91,9 @@ Future<SendOtpResponse?> sendOTPForLogin(String phoneNumber) async {
 Future<AuthResponse?> signInUsingOTP(String phoneNumber, String otpCode) async {
   mezDbgPrint("$phoneNumber  < phone ------ otp > $otpCode");
 
-  // final HttpsCallable getAuthUsingOTPFunction =
-  //     FirebaseFunctions.instance.httpsCallable('otp2-getAuthUsingOTP');
-  // HttpsCallableResult? response;
-  // ServerResponse? serverResponse;
-
   try {
     // _waitingResponse.value = true;
-    AuthResponse response = await CloudFunctions.otp2_getAuthUsingOTP(
+    AuthResponse response = await CloudFunctions.otp3_getAuthUsingOTP(
       phoneNumber: phoneNumber,
       OTPCode: otpCode,
       // 'language': _settings.appLanguage.userLanguageKey,
