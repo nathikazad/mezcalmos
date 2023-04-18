@@ -90,9 +90,6 @@ class StartingPointBaseState extends State<StartingPointBase> {
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
-    const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "stage");
-    _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
     initializeSetup();
