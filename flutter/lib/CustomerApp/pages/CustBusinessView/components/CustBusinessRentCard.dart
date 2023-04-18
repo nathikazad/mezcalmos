@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 class CustBusinessRentCard extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry contentPadding;
+  final String imageUrl;
   final String label;
   final String price;
   final double? elevation;
@@ -14,6 +15,7 @@ class CustBusinessRentCard extends StatelessWidget {
       {super.key,
       this.margin = const EdgeInsets.only(top: 5),
       this.contentPadding = const EdgeInsets.all(8),
+      required this.imageUrl,
       required this.label,
       required this.price,
       this.elevation});
@@ -29,8 +31,7 @@ class CustBusinessRentCard extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           CircleAvatar(
               radius: 17.5.sp,
-              backgroundImage: CachedNetworkImageProvider(
-                  'https://cdn-icons-png.flaticon.com/512/4333/4333609.png')),
+              backgroundImage: CachedNetworkImageProvider(imageUrl)),
           SizedBox(
             width: 5,
           ),

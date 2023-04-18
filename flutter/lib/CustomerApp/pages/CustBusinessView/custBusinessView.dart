@@ -11,12 +11,14 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
 
 class CustBusinessView extends StatefulWidget {
   const CustBusinessView({Key? key}) : super(key: key);
@@ -72,10 +74,11 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   child: ListView(
                 padding: EdgeInsets.all(16),
                 children: [
-                  _rent(context),
-                  _privateLesson(context),
-                  if (_viewController.business!.details.schedule != null)
-                    _camp(context)
+                  _rentals(context),
+                  _events(context),
+                  //if (_viewController.business!.details.schedule != null)
+                  // _camp(context)
+                  // _services(context)
                   // Column(
                   //   children: List.generate(
                   //       viewController.business.events.length,
@@ -91,22 +94,31 @@ class _CustBusinessViewState extends State<CustBusinessView>
                 children: [
                   // todo @iyadh implements info tab view
                   __headerButtons(),
-                  //  ServiceLocationCard(
-                  //           location: _viewController.business!.details.location),
+                  if (_viewController.business!.details.schedule != null)
+                    MezServiceOpenHours(
+                        schedule: _viewController.business!.details.schedule),
+                  ServiceLocationCard(
+                      location: MezLocation(
+                          _viewController.business!.details.location.address!,
+                          MezLocation.buildLocationData(
+                              _viewController.business!.details.location.lat
+                                  .toDouble(),
+                              _viewController.business!.details.location.lat
+                                  .toDouble()))),
                   if (_viewController.business!.details.acceptedPayments !=
                       null)
                     CustBusinessPaymentMethods(
                         margin: EdgeInsets.only(top: 10),
                         paymentsMethods: _viewController
                             .business!.details.acceptedPayments!),
-                  // CustBusinessPaymentMethods(
-                  //     margin: EdgeInsets.only(top: 10),
-                  //     paymentsMethods: {
-                  //       PaymentType.Card: true,
-                  //       PaymentType.Cash: true,
-                  //       PaymentType.BankTransfer: true
-                  //     }),
-                  // _reviewsList(context),
+                  CustBusinessPaymentMethods(
+                      margin: EdgeInsets.only(top: 10),
+                      paymentsMethods: {
+                        PaymentType.Card: true,
+                        PaymentType.Cash: true,
+                        PaymentType.BankTransfer: true
+                      }),
+                  _reviewsList(context),
                 ],
               )),
             ],
@@ -155,56 +167,77 @@ class _CustBusinessViewState extends State<CustBusinessView>
     }));
   }
 
-  Column _camp(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 15,
-        ),
-        Text('Camp',
-            style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
-        for (int i = 0; i < 5; i++)
-          CustBusinessEventCard(
-              elevation: 0,
-              label: 'Surfboard + wetsuit rental',
-              price: '27',
-              schedule: Schedule(
-                  openHours: _viewController.business!.details.schedule))
-      ],
-    );
-  }
+  // Column _camp(BuildContext context) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       SizedBox(
+  //         height: 15,
+  //       ),
+  //       Text('Camp',
+  //           style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+  //       for (int i = 0; i < 5; i++)
+  //         CustBusinessEventCard(
+  //             elevation: 0,
+  //             label: 'Surfboard + wetsuit rental',
+  //             price: '27',
+  //             schedule: Schedule(
+  //                 openHours: _viewController.business!.details.schedule))
+  //     ],
+  //   );
+  // }
 
-  Column _privateLesson(BuildContext context) {
+  Column _rentals(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 15,
-        ),
-        Text('Private lesson',
+        Text('Rentals',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
-        for (int i = 0; i < 5; i++)
+        for (Rental rental in _viewController.business!.rentals!)
           CustBusinessRentCard(
+            imageUrl:
+                'https://cdn-icons-png.flaticon.com/512/4333/4333609.png', //rental.details.image![0], // in case of null image is there an alt image
             elevation: 0,
-            label: 'Surfboard + wetsuit rental',
-            price: '27',
+            label: rental.details.name[userLanguage] ?? "",
+            price: rental.details.cost[TimeUnit.PerHour].toString(),
           )
       ],
     );
   }
 
-  Column _rent(BuildContext context) {
+  Column _events(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Rent',
+        SizedBox(
+          height: 15,
+        ),
+        Text('Events',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
-        for (int i = 0; i < 5; i++)
+        for (Event event in _viewController.business!.events!)
           CustBusinessRentCard(
+            imageUrl: 'https://cdn-icons-png.flaticon.com/512/4333/4333609.png',
             elevation: 0,
-            label: 'Surfboard + wetsuit rental',
-            price: '27',
+            label: event.details.name[userLanguage] ?? "",
+            price: event.details.cost[TimeUnit.PerHour].toString(),
+          )
+      ],
+    );
+  }
+
+  Column _products(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Products',
+            style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        for (Product product in _viewController.business!.products!)
+          CustBusinessRentCard(
+            imageUrl:
+                'https://cdn-icons-png.flaticon.com/512/4333/4333609.png', //rental.details.image![0], // in case of null image is there an alt image
+            elevation: 0,
+            label: "",
+            price: 'cost[TimeUnit.PerHour].toString()',
           )
       ],
     );
@@ -277,75 +310,76 @@ class _CustBusinessViewState extends State<CustBusinessView>
     );
   }
 
-//   Widget _reviewsList(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         SizedBox(
-//           height: 5,
-//         ),
-//         Row(
-//           children: [
-//             Text(
-//               'Reviews',
-//               style: Theme.of(context).textTheme.bodyLarge,
-//             ),
-//             const SizedBox(
-//               width: 5,
-//             ),
-//             Icon(
-//               Icons.star,
-//               color: primaryBlueColor,
-//             ),
-//             const SizedBox(
-//               width: 2,
-//             ),
-//             Text(
-//               _viewController.company.rate!.toStringAsFixed(1),
-//               style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
-//             ),
-//             const SizedBox(
-//               width: 5,
-//             ),
-//             Container(
-//               padding: const EdgeInsets.only(bottom: 1),
-//               child: Text(
-//                 "(${_viewController.company.reviews.length})",
-//                 style: context.txt.titleSmall
-//                     ?.copyWith(color: offLightShadeGreyColor),
-//               ),
-//             ),
-//             Spacer(),
-//             InkWell(
-//               onTap: () {
-//                 CustReviewsListView.navigate(
-//                     serviceId: _viewController.company.info.hasuraId,
-//                     serviceType: cModels.ServiceProviderType.DeliveryCompany);
-//               },
-//               child: Ink(
-//                 color: Colors.transparent,
-//                 padding: const EdgeInsets.all(10),
-//                 child: Text(
-//                   'View all',
-//                   style:
-//                       context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
-//                 ),
-//               ),
-//             )
-//           ],
-//         ),
-//         ListView.builder(
-//             padding: EdgeInsets.zero,
-//             physics: NeverScrollableScrollPhysics(),
-//             shrinkWrap: true,
-//             itemCount: _viewController.company.reviews.length,
-//             itemBuilder: (BuildContext ctx, int index) {
-//               return ReviewCard(
-//                 review: _viewController.company.reviews[index],
-//                 showUserImage: false,
-//               );
-//             }),
-//       ],
-//     );
-//   }
+  Widget _reviewsList(BuildContext context) {
+    return Obx(
+      () => _viewController.reviews.isEmpty
+          ? SizedBox.shrink()
+          : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Reviews',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.star,
+                    color: primaryBlueColor,
+                  ),
+                  const SizedBox(
+                    width: 2,
+                  ),
+                  if (_viewController.ratingAverage.value != null)
+                    Text(
+                      _viewController.ratingAverage.value!.toStringAsFixed(1),
+                      style: context.txt.bodyLarge
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Text(
+                      _viewController.reviews.length.toString(),
+                      style: context.txt.titleSmall
+                          ?.copyWith(color: offLightShadeGreyColor),
+                    ),
+                  ),
+                  Spacer(),
+                  InkWell(
+                    onTap: () {},
+                    child: Ink(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'View all',
+                        style: context.txt.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              for (review.Review rev in _viewController.reviews)
+                ReviewCard(
+                    review: review.Review(
+                        rating: rev.rating,
+                        fromEntityId: rev.fromEntityId,
+                        comment: rev.comment,
+                        toEntityId: rev.toEntityId,
+                        toEntityType: rev.toEntityType,
+                        toImage: rev.toImage,
+                        toName: rev.toName,
+                        reviewTime: rev.reviewTime,
+                        fromEntityType: rev.fromEntityType),
+                    showUserImage: false)
+            ]),
+    );
+  }
 }
