@@ -9,10 +9,12 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/fakeCreds.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
@@ -90,7 +92,7 @@ class _SignInViewState extends State<SignInView> {
                     ),
                     SizedBox(height: 10),
                     MezcalmosSharedWidgets.mezcalmosTitle(
-                        textSize: 35.sp, isBold: true),
+                        textSize: 35.mezSp, isBold: true),
                     Spacer(),
                     Text(_i18n()["title"],
                         overflow: TextOverflow.visible,
@@ -213,31 +215,21 @@ class _SignInViewState extends State<SignInView> {
   }
 
   Widget smsLoginBtn() {
-    return Container(
-      width: double.infinity,
-      child: TextButton(
-          onPressed: () => MezRouter.toNamed(SharedRoutes.kOtpRoute),
-          style: TextButton.styleFrom(
-              backgroundColor: Colors.blue,
-              fixedSize: Size(double.infinity, 50)),
-          child: Container(
-            alignment: Alignment.center,
-            child: Row(
-              children: [
-                Container(
-                    padding: EdgeInsets.only(
-                        left: Get.width * 0.05, right: Get.width * 0.05),
-                    child: Icon(Ionicons.chatbox)),
-                Spacer(),
-                Text(
-                  _i18n()["loginWithSms"],
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-              ],
+    return TextButton(
+        onPressed: () => MezRouter.toNamed(SharedRoutes.kOtpRoute),
+        style: TextButton.styleFrom(
+            backgroundColor: Colors.blue, fixedSize: Size(double.infinity, 50)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Ionicons.chatbox),
+            SizedBox(width: 9.mezW),
+            Text(
+              _i18n()["loginWithSms"],
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          )),
-    );
+          ],
+        ));
   }
 
   Widget facebookLoginBtn(AppLaunchMode lmode) {

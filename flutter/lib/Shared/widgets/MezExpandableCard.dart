@@ -101,9 +101,6 @@ class _MezExpandableCardState extends State<MezExpandableCard> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 8,
-          ),
           if (widget.showImage && widget.imageUrl != null)
             Container(
               //  padding: const EdgeInsets.all(5),

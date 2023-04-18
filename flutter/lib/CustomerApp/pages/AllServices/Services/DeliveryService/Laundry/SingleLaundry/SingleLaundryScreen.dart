@@ -170,7 +170,11 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),
             backgroundColor: Colors.transparent),
-        child: Text("${_i18n()["sendMyLaundry"]}"),
+        child: Text(
+          '${_i18n()['sendMyLaundry']}',
+          textAlign: TextAlign.center,
+          style: context.txt.bodyLarge?.copyWith(color: Colors.white),
+        ),
         onPressed: () {
           CustLaundryOrderRequestView.navigate(laundryId: laundryId!);
         },
@@ -199,16 +203,13 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${_i18n()["minimumCost"].toString().inCaps} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
           //maxLines: 1,
           textAlign: TextAlign.start,
-          style: context.txt.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: primaryBlueColor,
-              fontSize: 14),
+          style: context.txt.titleSmall?.copyWith(color: primaryBlueColor),
         ),
         Container(
           margin: EdgeInsets.only(top: 8),
           child: Icon(
             Icons.circle,
-            size: 6,
+            size: 10,
             color: primaryBlueColor,
           ),
         ),
@@ -216,16 +217,13 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${laundry.value!.averageNumberOfDays} ${_i18n()["day"].toString().toPlural(isPlural: laundry.value!.averageNumberOfDays != 1).inCaps} ${_i18n()["return"].toString()}",
           maxLines: 1,
           textAlign: TextAlign.center,
-          style: context.txt.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: primaryBlueColor,
-              fontSize: 14),
+          style: context.txt.titleSmall?.copyWith(color: primaryBlueColor),
         ),
         Container(
           margin: EdgeInsets.only(top: 8),
           child: Icon(
             Icons.circle,
-            size: 6,
+            size: 10,
             color: primaryBlueColor,
           ),
         ),
@@ -233,10 +231,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory.toPriceString()}/kg",
           //maxLines: 2,
           textAlign: TextAlign.center,
-          style: context.txt.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: primaryBlueColor,
-              fontSize: 14),
+          style: context.txt.titleSmall?.copyWith(color: primaryBlueColor),
         ),
       ],
     );

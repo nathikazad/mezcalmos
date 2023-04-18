@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -45,7 +45,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                   Icon(
                     Icons.fmd_good,
                     color: Colors.black,
-                    size: 13.sp,
+                    size: 13.mezSp,
                   ),
                   const SizedBox(
                     width: 5,
@@ -55,7 +55,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                     child: Text(
                       address,
                       style: context.txt.bodyLarge?.copyWith(
-                        fontSize: 12.sp,
+                        fontSize: 12.mezSp,
                       ),
                       maxLines: 1,
                     ),

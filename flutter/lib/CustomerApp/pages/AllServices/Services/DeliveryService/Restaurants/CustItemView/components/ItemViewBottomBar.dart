@@ -84,7 +84,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           Flexible(
             flex: 7,
             child: MezButton(
-              height: 32,
+              height: 40,
               label: widget.viewController.currentMode ==
                       ViewItemScreenMode.AddItemMode
                   ? _i18n()['addToCart']

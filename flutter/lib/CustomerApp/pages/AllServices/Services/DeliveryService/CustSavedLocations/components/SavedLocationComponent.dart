@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/DeliveryService
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:sizer/sizer.dart';
@@ -75,7 +76,7 @@ class SavedLocationComponent extends StatelessWidget {
                             ? Colors.white
                             : Color(0xFF787878),
                         fontWeight: FontWeight.w600,
-                        fontSize: 11.sp,
+                        fontSize: 11.mezSp,
                       ),
                     )),
                 // InkWell(

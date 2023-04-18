@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -71,7 +72,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               children: [
                                 Text('${_i18n()["bankName"]}',
                                     style: context.txt.bodyLarge?.copyWith(
-                                      fontSize: 10.sp,
+                                      fontSize: 10.mezSp,
                                     )),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
                                         ?.bankName ??
@@ -104,7 +105,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                                 Text(
                                   '${_i18n()["accountNumber"]}',
                                   style: context.txt.bodyLarge
-                                      ?.copyWith(fontSize: 10.sp),
+                                      ?.copyWith(fontSize: 10.mezSp),
                                 ),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
                                         ?.accountNumber

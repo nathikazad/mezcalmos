@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/RestaurantOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
@@ -54,7 +55,7 @@ class OrderStatusCard extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .displaySmall
-                  ?.copyWith(fontSize: 14.sp),
+                  ?.copyWith(fontSize: 14.mezSp),
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
