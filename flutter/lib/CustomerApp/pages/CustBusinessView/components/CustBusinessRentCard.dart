@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
 class CustBusinessRentCard extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry contentPadding;
-  final String imageUrl;
+  final String? imageUrl;
   final String label;
   final String price;
   final double? elevation;
@@ -30,8 +31,11 @@ class CustBusinessRentCard extends StatelessWidget {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           CircleAvatar(
-              radius: 17.5.sp,
-              backgroundImage: CachedNetworkImageProvider(imageUrl)),
+            radius: 17.5.sp,
+            backgroundImage:
+                imageUrl == null ? null : CachedNetworkImageProvider(imageUrl!),
+            backgroundColor: backgroundShadeColor,
+          ),
           SizedBox(
             width: 5,
           ),

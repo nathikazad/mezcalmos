@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:sizer/sizer.dart';
@@ -10,6 +11,7 @@ class CustBusinessEventCard extends StatelessWidget {
   final EdgeInsetsGeometry contentPadding;
   final String label;
   final String price;
+  final String? imageUrl;
   final Schedule schedule;
   final double? elevation;
 
@@ -19,6 +21,7 @@ class CustBusinessEventCard extends StatelessWidget {
       this.contentPadding = const EdgeInsets.all(8),
       required this.label,
       required this.price,
+      required this.imageUrl,
       required this.schedule,
       this.elevation});
 
@@ -33,9 +36,12 @@ class CustBusinessEventCard extends StatelessWidget {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               CircleAvatar(
-                  radius: 17.5.sp,
-                  backgroundImage: CachedNetworkImageProvider(
-                      'https://cdn-icons-png.flaticon.com/512/4333/4333609.png')),
+                radius: 17.5.sp,
+                backgroundImage: imageUrl == null
+                    ? null
+                    : CachedNetworkImageProvider(imageUrl!),
+                backgroundColor: backgroundShadeColor,
+              ),
               SizedBox(
                 width: 5,
               ),

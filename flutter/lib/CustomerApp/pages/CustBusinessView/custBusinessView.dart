@@ -74,11 +74,18 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   child: ListView(
                 padding: EdgeInsets.all(16),
                 children: [
-                  _rentals(context),
-                  _events(context),
-                  //if (_viewController.business!.details.schedule != null)
-                  // _camp(context)
-                  // _services(context)
+                  if (_viewController.business!.rentals != null &&
+                      _viewController.business!.rentals!.isNotEmpty)
+                    _rentals(context),
+                  if (_viewController.business!.events != null &&
+                      _viewController.business!.events!.isNotEmpty)
+                    _events(context),
+                  if (_viewController.business!.products != null &&
+                      _viewController.business!.products!.isNotEmpty)
+                    _products(context),
+                  if (_viewController.business!.services != null &&
+                      _viewController.business!.services!.isNotEmpty)
+                    _services(context)
                   // Column(
                   //   children: List.generate(
                   //       viewController.business.events.length,
@@ -167,26 +174,6 @@ class _CustBusinessViewState extends State<CustBusinessView>
     }));
   }
 
-  // Column _camp(BuildContext context) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       SizedBox(
-  //         height: 15,
-  //       ),
-  //       Text('Camp',
-  //           style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
-  //       for (int i = 0; i < 5; i++)
-  //         CustBusinessEventCard(
-  //             elevation: 0,
-  //             label: 'Surfboard + wetsuit rental',
-  //             price: '27',
-  //             schedule: Schedule(
-  //                 openHours: _viewController.business!.details.schedule))
-  //     ],
-  //   );
-  // }
-
   Column _rentals(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,8 +182,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         for (Rental rental in _viewController.business!.rentals!)
           CustBusinessRentCard(
-            imageUrl:
-                'https://cdn-icons-png.flaticon.com/512/4333/4333609.png', //rental.details.image![0], // in case of null image is there an alt image
+            imageUrl: (rental.details.image != null &&
+                    rental.details.image!.isNotEmpty)
+                ? rental.details.image![0]
+                : null,
             elevation: 0,
             label: rental.details.name[userLanguage] ?? "",
             price: rental.details.cost[TimeUnit.PerHour].toString(),
@@ -215,12 +204,16 @@ class _CustBusinessViewState extends State<CustBusinessView>
         Text('Events',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         for (Event event in _viewController.business!.events!)
-          CustBusinessRentCard(
-            imageUrl: 'https://cdn-icons-png.flaticon.com/512/4333/4333609.png',
-            elevation: 0,
-            label: event.details.name[userLanguage] ?? "",
-            price: event.details.cost[TimeUnit.PerHour].toString(),
-          )
+          CustBusinessEventCard(
+              elevation: 0,
+              label: event.details.name[userLanguage] ?? "",
+              imageUrl: (event.details.image != null &&
+                      event.details.image!.isNotEmpty)
+                  ? event.details.image![0]
+                  : null,
+              price: event.details.cost[TimeUnit.PerHour].toString(),
+              schedule: Schedule(
+                  openHours: _viewController.business!.details.schedule))
       ],
     );
   }
@@ -233,11 +226,33 @@ class _CustBusinessViewState extends State<CustBusinessView>
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         for (Product product in _viewController.business!.products!)
           CustBusinessRentCard(
-            imageUrl:
-                'https://cdn-icons-png.flaticon.com/512/4333/4333609.png', //rental.details.image![0], // in case of null image is there an alt image
+            imageUrl: (product.details.image != null &&
+                    product.details.image!.isNotEmpty)
+                ? product.details.image![0]
+                : null,
             elevation: 0,
-            label: "",
-            price: 'cost[TimeUnit.PerHour].toString()',
+            label: product.details.name[userLanguage] ?? "",
+            price: product.details.cost[TimeUnit.PerHour].toString(),
+          )
+      ],
+    );
+  }
+
+  Column _services(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Services',
+            style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        for (Service service in _viewController.business!.services!)
+          CustBusinessRentCard(
+            imageUrl: (service.details.image != null &&
+                    service.details.image!.isNotEmpty)
+                ? service.details.image![0]
+                : null,
+            elevation: 0,
+            label: service.details.name[userLanguage] ?? "",
+            price: service.details.cost[TimeUnit.PerHour].toString(),
           )
       ],
     );

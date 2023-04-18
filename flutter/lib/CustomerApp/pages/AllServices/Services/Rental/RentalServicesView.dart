@@ -45,14 +45,14 @@ class _RentalViewState extends State<RentalView> {
       ),
       body: Column(
         children: [
-          // MezButton(
-          //   label: "Go to business",
-          //   onClick: () async {
-          //     await CustBusinessView.navigate(
-          //       businessId: 3,
-          //     );
-          //   },
-          // ),
+          MezButton(
+            label: "Go to business",
+            onClick: () async {
+              await CustBusinessView.navigate(
+                businessId: 3,
+              );
+            },
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: rentalController
