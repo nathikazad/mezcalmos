@@ -170,6 +170,8 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                           // case RentalViewEnum.GetTogether:
                           //   // GetTogether screen not going to navigate here thats why no UI needed
                           //   return Offstage();
+                          case BusinessProfile.Cleaning:
+                            return Offstage();
                         }
                       },
                       childCount: agencyController

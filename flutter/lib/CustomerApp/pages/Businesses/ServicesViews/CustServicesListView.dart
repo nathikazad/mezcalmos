@@ -91,7 +91,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                     viewController.services.length,
                     (int index) => MezCard(
                         firstAvatarBgImage: CachedNetworkImageProvider(
-                            viewController.services[index].details.firstImage ??
+                            viewController.services[index].details.image?.first ??
                                 ""),
                         content: Text(viewController
                                 .services[index].details.name[userLanguage] ??
