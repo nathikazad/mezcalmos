@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -55,18 +56,18 @@ class MezPeriodPickerController {
   /// called once when the period passed to component is null
   void _initDefaultValues() {
     pickedDate.value = _getTheCLosestOpenDay();
-    startHours.value = selectedWorkDay.value.from.first;
-    startMinutes.value = selectedWorkDay.value.from[1];
-    endtHours.value = selectedWorkDay.value.to.first;
+    startHours.value = selectedWorkDay.value.from.first.toInt();
+    startMinutes.value = selectedWorkDay.value.from[1].toInt();
+    endtHours.value = selectedWorkDay.value.to.first.toInt();
     endMinutes.value = 0;
   }
 
   // Basic methods when changes date hours or minutes //
   void changeDate(DateTime newValue) {
     pickedDate.value = newValue;
-    startHours.value = selectedWorkDay.value.from.first;
-    startMinutes.value = selectedWorkDay.value.from[1];
-    endtHours.value = selectedWorkDay.value.to.first;
+    startHours.value = selectedWorkDay.value.from.first.toInt();
+    startMinutes.value = selectedWorkDay.value.from[1].toInt();
+    endtHours.value = selectedWorkDay.value.to.first.toInt();
     endMinutes.value = 0;
     _setPeriodOfTime();
 
@@ -151,7 +152,7 @@ class MezPeriodPickerController {
   // HOURS HANDLERS //
   List<int> getStartHours() {
     final List<int> hours = [];
-    for (int i = selectedWorkDay.value.from.first;
+    for (int i = selectedWorkDay.value.from.first.toInt();
         i <= selectedWorkDay.value.to.first - 1;
         i++) {
       hours.add(i);
@@ -175,7 +176,7 @@ class MezPeriodPickerController {
   List<int> getEndMinutes() {
     final List<int> data = [];
     if (endtHours.value == selectedWorkDay.value.from.first) {
-      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
+      for (int i = selectedWorkDay.value.from[1].toInt(); i <= 59; i = i + 5) {
         data.add(i);
       }
     } else if (endtHours.value == selectedWorkDay.value.to.first) {
@@ -197,7 +198,7 @@ class MezPeriodPickerController {
   List<int> getStartMinutes() {
     final List<int> data = [];
     if (startHours.value == selectedWorkDay.value.from.first) {
-      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
+      for (int i = selectedWorkDay.value.from[1].toInt(); i <= 59; i = i + 5) {
         data.add(i);
       }
     } else if (startHours.value == selectedWorkDay.value.to.first) {
@@ -254,7 +255,7 @@ class MezPeriodPickerController {
 
   /// this getter will return null if the pickedDate value is null
   MapEntry<Weekday, OpenHours> get selectedWorkDay {
-    return serviceSchedule.getOpenHours.entries.firstWhere(
+    return serviceSchedule.openHours.entries.firstWhere(
         (MapEntry<Weekday, OpenHours> element) =>
             element.key.toFirebaseFormatString() ==
             DateFormat("EEEE")

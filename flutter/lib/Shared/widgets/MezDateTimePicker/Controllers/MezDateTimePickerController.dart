@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
@@ -56,10 +57,10 @@ class MezDateTimePickerController {
           initialDate?.toLocal().month ??
               _getTheCLosestOpenDay().toLocal().month,
           initialDate?.toLocal().day ?? _getTheCLosestOpenDay().toLocal().day);
-      hours.value =
-          initialDate?.toLocal().hour ?? selectedWorkDay.value.from.first;
-      minutes.value =
-          initialDate?.toLocal().minute ?? selectedWorkDay.value.from[1];
+      hours.value = initialDate?.toLocal().hour ??
+          selectedWorkDay.value.from.first.toInt();
+      minutes.value = initialDate?.toLocal().minute ??
+          selectedWorkDay.value.from[1].toInt();
     } else {
       periodOfTime.value = initPeriod.toLocal();
       pickedDate.value = DateTime(
@@ -94,8 +95,8 @@ class MezDateTimePickerController {
   void changeDate(DateTime newValue) {
     pickedDate.value = newValue;
     if (!pickFromPeriod) {
-      hours.value = selectedWorkDay.value.from.first;
-      minutes.value = selectedWorkDay.value.from[1];
+      hours.value = selectedWorkDay.value.from.first.toInt();
+      minutes.value = selectedWorkDay.value.from[1].toInt();
     } else {
       hours.value = minHours.value;
       minutes.value = minMinutes.value;
@@ -158,7 +159,7 @@ class MezDateTimePickerController {
   List<int> getHours() {
     final List<int> hours = [];
 
-    for (int i = minHours.value ?? selectedWorkDay.value.from.first;
+    for (int i = minHours.value ?? selectedWorkDay.value.from.first.toInt();
         i <= (maxHours.value ?? selectedWorkDay.value.to.first);
         i++) {
       hours.add(i);
@@ -176,7 +177,7 @@ class MezDateTimePickerController {
         data.add(i);
       }
     } else if (hours.value == selectedWorkDay.value.from.first) {
-      for (int i = selectedWorkDay.value.from[1]; i <= 59; i = i + 5) {
+      for (int i = selectedWorkDay.value.from[1].toInt(); i <= 59; i = i + 5) {
         data.add(i);
       }
     } else if (hours.value == selectedWorkDay.value.to.first) {
@@ -213,7 +214,7 @@ class MezDateTimePickerController {
 
   /// return the selected date on Weekday format
   MapEntry<Weekday, OpenHours> get selectedWorkDay {
-    return serviceSchedule.getOpenHours.entries.firstWhere(
+    return serviceSchedule.openHours.entries.firstWhere(
         (MapEntry<Weekday, OpenHours> element) =>
             element.key.toFirebaseFormatString() ==
             DateFormat("EEEE")

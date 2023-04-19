@@ -10,12 +10,13 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
 import { ServiceProvider } from "../shared/models/Services/Service";
+import { Schedule } from "../shared/models/Generic/Schedule";
 
 export interface RestaurantDetails {
   name: string,
   image: string,
   location: Location,
-  schedule:JSON,
+  schedule: Schedule,
   restaurantOperatorNotificationToken?: string,
   firebaseId?: string,
   deliveryPartnerId?: number,

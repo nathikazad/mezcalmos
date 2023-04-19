@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -101,7 +102,8 @@ Widget _workingHourCard(
               child: openHours.isOpen
                   ? Column(children: [
                       Text(
-                        convertToAmPm(openHours.from[0], openHours.from[1])
+                        convertToAmPm(openHours.from[0].toInt(),
+                            openHours.from[1].toInt())
 
                         //     "${openHours.from[0]} : ${openHours.from[1]}  "
 

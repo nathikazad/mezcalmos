@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -54,7 +55,7 @@ class MezServiceOpenHours extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                    "${convertToAmPm(v.value.from[0], v.value.from[1])} - ${convertToAmPm(v.value.to[0], v.value.to[1])}"),
+                    "${convertToAmPm(v.value.from[0].toInt(), v.value.from[1].toInt())} - ${convertToAmPm(v.value.to[0].toInt(), v.value.to[1].toInt())}"),
               ],
             ),
           );

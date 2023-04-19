@@ -59,9 +59,9 @@ class CreateServiceViewController {
   final RxBool imageLoading = RxBool(false);
 
   // schedule //
-  final Rx<Schedule> newSchedule = Rx(Schedule.fromData(defaultSchedule));
-  final Rx<Schedule> schedulePreview = Rx(Schedule.fromData(defaultSchedule));
-  final Rx<Schedule> oldSchedule = Rx(Schedule.fromData(defaultSchedule));
+  final Rx<Schedule> newSchedule = Rx(scheduleFromData(defaultSchedule));
+  final Rx<Schedule> schedulePreview = Rx(scheduleFromData(defaultSchedule));
+  final Rx<Schedule> oldSchedule = Rx(scheduleFromData(defaultSchedule));
 
   // vars
   late ServiceProviderType serviceType;
