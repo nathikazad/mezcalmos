@@ -9,6 +9,8 @@ enum AllServiceViewEnum {
   Event,
   Volunteer,
   Adventure,
+  Service,
+  LocallyMade
 }
 
 class AllServiceListViewController {

@@ -7,7 +7,9 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalVi
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
@@ -46,7 +48,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         DeliveryServiceView.navigate();
         return;
       case AllServiceViewEnum.Rental:
-        RentalView.navigate();
+        CustRentalsListView.navigate(category: RentalCategory1.Home);
         return;
       case AllServiceViewEnum.Class:
         OtherAssetListsView.navigate(viewEnum: RentalViewEnum.Classes);

@@ -127,7 +127,13 @@ class CustomerAppTheme {
             fontSize: 14.mezSp,
             color: Colors.white),
       ),
-
+      bottomSheetTheme: BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        )),
+      ),
       //---------------------------------------------------- TYPOGRAPHY ------------------------------------------------------------------------//
       //---------------------------------------------------- Typography ------------------------------------------------------------------------//
       textTheme: TextTheme(

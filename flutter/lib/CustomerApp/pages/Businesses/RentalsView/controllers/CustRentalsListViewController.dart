@@ -3,14 +3,14 @@ import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/BusinessListHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
-import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
+import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
-class CustEventsListViewController {
+class CustRentalsListViewController {
   // variables //
-  RxList<EventCard> _events = <EventCard>[].obs;
-  RxList<EventCard> _filtredEvents = <EventCard>[].obs;
+  RxList<RentalCard> _rentals = <RentalCard>[].obs;
+  RxList<RentalCard> _filtredRentals = <RentalCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
   RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
 
@@ -19,20 +19,22 @@ class CustEventsListViewController {
   Location? _fromLocation;
   String searchQuery = "";
 
-  List<EventCategory1> filterCategories = <EventCategory1>[
-    EventCategory1.Dance,
-    EventCategory1.Party,
-    EventCategory1.Social,
-  ];
+  List<RentalCategory2> filterCategories = <RentalCategory2>[];
 
-  RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+  RxList<RentalCategory2> selectedCategories = <RentalCategory2>[].obs;
 
   // getters //
   bool get isLoading => _isLoading.value;
-  List<EventCard> get events => _filtredEvents.value;
+  List<RentalCard> get rentals => _filtredRentals.value;
   List<BusinessCard> get businesses => _filtredBusiness.value;
 
-  Future<void> init() async {
+  /// return current view rental category (Home, Surf, etc)
+  RentalCategory1 get rentalCategory => _currentRentalCategory;
+  //
+  late RentalCategory1 _currentRentalCategory;
+
+  Future<void> init({required RentalCategory1 rentalCategory}) async {
+    _currentRentalCategory = rentalCategory;
     try {
       _isLoading.value = true;
       selectedCategories.value = List.from(filterCategories);
@@ -43,7 +45,7 @@ class CustEventsListViewController {
         await _fetchEvents();
         await _fetchBusinesses();
         _filtredBusiness.value.addAll(_businesses.value);
-        _filtredEvents.value.addAll(_events.value);
+        _filtredRentals.value.addAll(_rentals.value);
       }
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -54,37 +56,33 @@ class CustEventsListViewController {
   }
 
   Future<void> _fetchEvents() async {
-    mezDbgPrint("Getting events  =====>${filterCategories.length}");
-    _events.value.clear();
-    _events.value = await get_event_by_category(
-        categories1: selectedCategories,
+    mezDbgPrint("Getting rentals  =====>${filterCategories.length}");
+    _rentals.value.clear();
+    _rentals.value = await get_rental_by_category(
+        category1: rentalCategory,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         tags: [],
-        scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false);
-    mezDbgPrint(_events.value.length);
+    mezDbgPrint(_rentals.value.length);
   }
 
   Future<void> _fetchBusinesses() async {
-    mezDbgPrint("Getting events businesses  =====>$_fromLocation");
+    mezDbgPrint("Getting rentals businesses  =====>$_fromLocation");
     _businesses.clear();
-    _businesses.value = await get_business_by_event_category1(
-        category1: filterCategories.first,
+    _businesses.value = await get_business_by_rental_category1(
+        category1: rentalCategory,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
-
-        // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false);
   }
 
   void filter() {
     if (showBusiness.isFalse) {
-      List<EventCard> newList = new List<EventCard>.from(_events);
-      newList = newList
-          .searchByName(searchQuery)
-          .filterByCategory(selectedCategories);
-      _filtredEvents.value = newList;
+      List<RentalCard> newList = new List<RentalCard>.from(_rentals);
+      newList = newList.searchByName(searchQuery);
+      //  .filterByCategory(selectedCategories);
+      _filtredRentals.value = newList;
     } else {
       List<BusinessCard> newList = new List<BusinessCard>.from(_businesses);
       newList = newList.searchByName(searchQuery);
