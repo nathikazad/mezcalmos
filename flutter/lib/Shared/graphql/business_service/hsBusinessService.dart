@@ -39,12 +39,6 @@ Future<List<ServiceCard>> get_service_by_category(
   if (response.parsedData?.business_service != null) {
     response.parsedData?.business_service
         .forEach((Query$get_service_by_category$business_service data) async {
-      List<String> _images = <String>[];
-      mezDbgPrint("images ============>${data.details.image}");
-      data.details.image?.forEach((e) {
-        mezDbgPrint(e);
-        _images.add(e.toString());
-      });
       _services.add(ServiceCard(
           businessName: data.business.details.name,
           service: Service(
@@ -56,7 +50,7 @@ Future<List<ServiceCard>> get_service_by_category(
               businessId: data.business.id,
               available: data.details.available,
               image: data.details.image
-                      ?.map<String>((e) => e.value.toString())
+                      ?.map<String>((e) => e.toString())
                       .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),

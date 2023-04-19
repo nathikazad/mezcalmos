@@ -945,7 +945,7 @@ void showErrorSnackBar(
   return customSnackBar(
       title: errorTitle,
       subTitle: errorText,
-      duration: duration,
+      duration: duration ?? Duration(seconds: 2),
       icon: Icon(
         Icons.cancel,
         size: 40,

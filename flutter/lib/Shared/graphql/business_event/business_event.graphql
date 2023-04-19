@@ -49,9 +49,9 @@ query get_event_by_id($id: Int!) {
 }
 
 query get_event_by_category($categories1: [String!],
-#  $distance: Float!, $from: geography!,
+# $distance: Float!, $from: geography!,
   $limit: Int, $offset: Int, 
-  # $categories2: [String!],
+   $categories2: [String!],
    $schedule_type: [String!],
    $tags: [String!]) {
   business_event(
@@ -62,9 +62,9 @@ query get_event_by_category($categories1: [String!],
             category1: {
               _in: $categories1
             }, 
-            # category2: {
-            #   _in: $categories2
-            # },
+            category2: {
+              _in: $categories2
+            },
              tags: {_has_keys_all: $tags}
           }
         }, 

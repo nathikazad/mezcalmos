@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+
 class SendOtpResponse {
   bool success;
   SendOtpError? error;
@@ -416,7 +418,7 @@ enum ServiceProviderType {
 
 extension ParseServiceProviderTypeToString on ServiceProviderType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -446,7 +448,7 @@ class ServiceProviderChatResponse {
     };
   }
 
-  factory ServiceProviderChatResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory ServiceProviderChatResponse.fromFirebaseFormattedJson(json) {
     return ServiceProviderChatResponse(
         json["success"],
         json["error"]?.toString().toServiceProviderChatError(),
@@ -1926,7 +1928,7 @@ class Event {
   EventCategory1 category1;
   EventCategory2? category2;
   ScheduleType scheduleType;
-  dynamic? schedule;
+  Schedule? schedule;
   BusinessItemDetails details;
   Location? gpsLocation;
   String? time;
@@ -2024,7 +2026,7 @@ enum EventCategory2 { Salsa, Zumba, HIIT, Ecstatic, Spin, Jiujitsu, Karate }
 
 extension ParseEventCategory2ToString on EventCategory2 {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3147,7 +3149,7 @@ enum ServiceProviderChatError {
 
 extension ParseServiceProviderChatErrorToString on ServiceProviderChatError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }

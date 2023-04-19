@@ -34,8 +34,10 @@ Future<List<EventCard>> get_event_by_category(
               // distance: distance,
               // from: Geography(
               //     fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              // categories2:
-              //     categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+              categories2: categories2
+                      ?.map((EventCategory2 e) => e.toFirebaseFormatString())
+                      .toList() ??
+                  ["uncategorized"],
               schedule_type: scheduleType
                   .map((ScheduleType e) => e.toFirebaseFormatString())
                   .toList(),
@@ -62,11 +64,16 @@ Future<List<EventCard>> get_event_by_category(
               position: data.details.position,
               businessId: data.business.id,
               available: data.details.available,
-              image: data.details.image?.map((e) => e.value).toList() ?? [],
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
-              tags:
-                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
+              tags: data.details.tags
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: data.schedule,

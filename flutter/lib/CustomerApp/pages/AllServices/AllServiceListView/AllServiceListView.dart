@@ -7,8 +7,6 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalVi
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -96,7 +94,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
               onClick: () {
-                CustServicesListView.navigate();
+                CustEventsListView.navigate();
               },
               content: Column(
                 children: [

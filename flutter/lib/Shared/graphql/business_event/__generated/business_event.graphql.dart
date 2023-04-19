@@ -2942,6 +2942,7 @@ class Variables$Query$get_event_by_category {
     List<String>? categories1,
     int? limit,
     int? offset,
+    List<String>? categories2,
     List<String>? schedule_type,
     List<String>? tags,
   }) =>
@@ -2949,6 +2950,7 @@ class Variables$Query$get_event_by_category {
         if (categories1 != null) r'categories1': categories1,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
+        if (categories2 != null) r'categories2': categories2,
         if (schedule_type != null) r'schedule_type': schedule_type,
         if (tags != null) r'tags': tags,
       });
@@ -2971,6 +2973,11 @@ class Variables$Query$get_event_by_category {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
+    if (data.containsKey('categories2')) {
+      final l$categories2 = data['categories2'];
+      result$data['categories2'] =
+          (l$categories2 as List<dynamic>?)?.map((e) => (e as String)).toList();
+    }
     if (data.containsKey('schedule_type')) {
       final l$schedule_type = data['schedule_type'];
       result$data['schedule_type'] = (l$schedule_type as List<dynamic>?)
@@ -2990,6 +2997,7 @@ class Variables$Query$get_event_by_category {
   List<String>? get categories1 => (_$data['categories1'] as List<String>?);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
+  List<String>? get categories2 => (_$data['categories2'] as List<String>?);
   List<String>? get schedule_type => (_$data['schedule_type'] as List<String>?);
   List<String>? get tags => (_$data['tags'] as List<String>?);
   Map<String, dynamic> toJson() {
@@ -3005,6 +3013,10 @@ class Variables$Query$get_event_by_category {
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('categories2')) {
+      final l$categories2 = categories2;
+      result$data['categories2'] = l$categories2?.map((e) => e).toList();
     }
     if (_$data.containsKey('schedule_type')) {
       final l$schedule_type = schedule_type;
@@ -3068,6 +3080,26 @@ class Variables$Query$get_event_by_category {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$categories2 = categories2;
+    final lOther$categories2 = other.categories2;
+    if (_$data.containsKey('categories2') !=
+        other._$data.containsKey('categories2')) {
+      return false;
+    }
+    if (l$categories2 != null && lOther$categories2 != null) {
+      if (l$categories2.length != lOther$categories2.length) {
+        return false;
+      }
+      for (int i = 0; i < l$categories2.length; i++) {
+        final l$categories2$entry = l$categories2[i];
+        final lOther$categories2$entry = lOther$categories2[i];
+        if (l$categories2$entry != lOther$categories2$entry) {
+          return false;
+        }
+      }
+    } else if (l$categories2 != lOther$categories2) {
+      return false;
+    }
     final l$schedule_type = schedule_type;
     final lOther$schedule_type = other.schedule_type;
     if (_$data.containsKey('schedule_type') !=
@@ -3115,6 +3147,7 @@ class Variables$Query$get_event_by_category {
     final l$categories1 = categories1;
     final l$limit = limit;
     final l$offset = offset;
+    final l$categories2 = categories2;
     final l$schedule_type = schedule_type;
     final l$tags = tags;
     return Object.hashAll([
@@ -3125,6 +3158,11 @@ class Variables$Query$get_event_by_category {
           : const {},
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('categories2')
+          ? l$categories2 == null
+              ? null
+              : Object.hashAll(l$categories2.map((v) => v))
+          : const {},
       _$data.containsKey('schedule_type')
           ? l$schedule_type == null
               ? null
@@ -3152,6 +3190,7 @@ abstract class CopyWith$Variables$Query$get_event_by_category<TRes> {
     List<String>? categories1,
     int? limit,
     int? offset,
+    List<String>? categories2,
     List<String>? schedule_type,
     List<String>? tags,
   });
@@ -3174,6 +3213,7 @@ class _CopyWithImpl$Variables$Query$get_event_by_category<TRes>
     Object? categories1 = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? categories2 = _undefined,
     Object? schedule_type = _undefined,
     Object? tags = _undefined,
   }) =>
@@ -3183,6 +3223,8 @@ class _CopyWithImpl$Variables$Query$get_event_by_category<TRes>
           'categories1': (categories1 as List<String>?),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
+        if (categories2 != _undefined)
+          'categories2': (categories2 as List<String>?),
         if (schedule_type != _undefined)
           'schedule_type': (schedule_type as List<String>?),
         if (tags != _undefined) 'tags': (tags as List<String>?),
@@ -3199,6 +3241,7 @@ class _CopyWithStubImpl$Variables$Query$get_event_by_category<TRes>
     List<String>? categories1,
     int? limit,
     int? offset,
+    List<String>? categories2,
     List<String>? schedule_type,
     List<String>? tags,
   }) =>
@@ -3397,6 +3440,18 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         directives: [],
       ),
       VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'categories2')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'schedule_type')),
         type: ListTypeNode(
           type: NamedTypeNode(
@@ -3446,6 +3501,16 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                                 name: NameNode(value: '_in'),
                                 value: VariableNode(
                                     name: NameNode(value: 'categories1')),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'category2'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_in'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'categories2')),
                               )
                             ]),
                           ),
