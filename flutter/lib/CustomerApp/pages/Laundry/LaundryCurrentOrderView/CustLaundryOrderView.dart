@@ -166,7 +166,17 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             OrderSummaryCard(
                               margin: const EdgeInsets.only(top: 15),
                               divideDeliveryCost: true,
-                              costs: viewController.order.value!.costs,
+                              costs: viewController.order.value!.isItemsPriceSet
+                                  ? viewController.order.value!.costs
+                                  : OrderCosts(
+                                      deliveryCost: viewController
+                                          .order.value!.costs.deliveryCost,
+                                      refundAmmount: viewController
+                                          .order.value!.costs.refundAmmount,
+                                      tax:
+                                          viewController.order.value!.costs.tax,
+                                      orderItemsCost: null,
+                                      totalCost: null),
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
                             ),
