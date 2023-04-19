@@ -21,7 +21,6 @@ export interface BusinessItemDetails {
     image?: Array<string>;
     cost: Record<TimeUnit, number>;
     additionalParameters?: Record<string, any>;
-    tags?: Array<string>;
 }
 
 export enum TimeUnit {
@@ -50,6 +49,7 @@ export interface Event {
     details: BusinessItemDetails;
     gpsLocation?: Location;
     time?: string;
+    tags?: Array<EventTag>;
 }
 export interface Service {
     category1: string;
@@ -114,6 +114,9 @@ export enum RentalCategory2 {
     ATB = "aTB",
     Bicycle = "bicycle",
     Uncategorized = "uncategorized"
+}
+export enum EventTag {
+    Class = "class",
 }
 export interface NewBusinessNotification extends ForegroundNotification {
     name: string,
