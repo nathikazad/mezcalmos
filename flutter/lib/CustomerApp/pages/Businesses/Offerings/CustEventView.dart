@@ -15,6 +15,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessHeading.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 class CustEventView extends StatefulWidget {
@@ -131,6 +132,8 @@ class _CustEventViewState extends State<CustEventView> {
                       CustBusinessMessageCard(
                         business: viewController.event!.business,
                       ),
+
+                      CustBusinessNoOrderBanner(),
                     ],
                   ),
                 ),
