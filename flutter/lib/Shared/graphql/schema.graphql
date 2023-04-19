@@ -5245,6 +5245,7 @@ type chat {
   chat_type: String!
   creation_time: timestamptz!
   id: Int!
+  last_message_sent: timestamptz
   messages(
     """JSON select path"""
     path: String
@@ -5300,6 +5301,7 @@ input chat_bool_exp {
   chat_type: String_comparison_exp
   creation_time: timestamptz_comparison_exp
   id: Int_comparison_exp
+  last_message_sent: timestamptz_comparison_exp
   messages: jsonb_comparison_exp
 }
 
@@ -5356,6 +5358,7 @@ input chat_insert_input {
   chat_type: String
   creation_time: timestamptz
   id: Int
+  last_message_sent: timestamptz
   messages: jsonb
 }
 
@@ -5365,6 +5368,7 @@ type chat_max_fields {
   chat_type: String
   creation_time: timestamptz
   id: Int
+  last_message_sent: timestamptz
 }
 
 """aggregate min on columns"""
@@ -5373,6 +5377,7 @@ type chat_min_fields {
   chat_type: String
   creation_time: timestamptz
   id: Int
+  last_message_sent: timestamptz
 }
 
 """
@@ -5412,6 +5417,7 @@ input chat_order_by {
   chat_type: order_by
   creation_time: order_by
   id: order_by
+  last_message_sent: order_by
   messages: order_by
 }
 
@@ -5845,6 +5851,9 @@ enum chat_select_column {
   id
 
   """column name"""
+  last_message_sent
+
+  """column name"""
   messages
 }
 
@@ -5858,6 +5867,7 @@ input chat_set_input {
   chat_type: String
   creation_time: timestamptz
   id: Int
+  last_message_sent: timestamptz
   messages: jsonb
 }
 
@@ -5895,6 +5905,7 @@ input chat_stream_cursor_value_input {
   chat_type: String
   creation_time: timestamptz
   id: Int
+  last_message_sent: timestamptz
   messages: jsonb
 }
 
@@ -5918,6 +5929,9 @@ enum chat_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  last_message_sent
 
   """column name"""
   messages

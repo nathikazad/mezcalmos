@@ -213,7 +213,9 @@ Future<int?> add_one_rental({required Rental rental}) async {
                       data: Input$business_item_details_insert_input(
                           available: rental.details.available,
                           category1: rental.category1.toFirebaseFormatString(),
-                          category2: rental.category2?.toFirebaseFormatString(),
+                          category2: rental.category2?.toFirebaseFormatString() ??
+                              RentalCategory2.Uncategorized
+                                  .toFirebaseFormatString(),
                           cost: rental.details.cost,
                           image: rental.details.image,
                           name: Input$translation_obj_rel_insert_input(
@@ -223,20 +225,18 @@ Future<int?> add_one_rental({required Rental rental}) async {
                                   service_provider_type: ServiceProviderType
                                       .Business.toFirebaseFormatString(),
                                   translations:
-                                      Input$translation_value_arr_rel_insert_input(
-                                          data: <
-                                              Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: rental
-                                                .details.name[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: rental
-                                                .details.name[Language.ES])
-                                      ]))),
+                                      Input$translation_value_arr_rel_insert_input(data: <
+                                          Input$translation_value_insert_input>[
+                                    Input$translation_value_insert_input(
+                                        language_id: Language.EN
+                                            .toFirebaseFormatString(),
+                                        value:
+                                            rental.details.name[Language.EN]),
+                                    Input$translation_value_insert_input(
+                                        language_id: Language.ES
+                                            .toFirebaseFormatString(),
+                                        value: rental.details.name[Language.ES])
+                                  ]))),
                           position: rental.details.position?.toInt(),
                           additional_parameters:
                               rental.details.additionalParameters,
@@ -294,7 +294,8 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
                 data: Input$business_item_details_insert_input(
                     available: rental.details.available,
                     category1: rental.category1.toFirebaseFormatString(),
-                    category2: rental.category2?.toFirebaseFormatString(),
+                    category2: rental.category2?.toFirebaseFormatString() ??
+                        RentalCategory2.Uncategorized.toFirebaseFormatString(),
                     cost: rental.details.cost,
                     image: rental.details.image,
                     name: Input$translation_obj_rel_insert_input(

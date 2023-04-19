@@ -645,7 +645,8 @@ enum BusinessProfile {
   Volunteer,
   TourAgency,
   DanceClass,
-  Therapy
+  Therapy,
+  Cleaning
 }
 
 extension ParseBusinessProfileToString on BusinessProfile {
@@ -2004,7 +2005,8 @@ enum EventCategory1 {
   Therapy,
   Fitness,
   Adventure,
-  Volunteer
+  Volunteer,
+  Uncategorized
 }
 
 extension ParseEventCategory1ToString on EventCategory1 {
@@ -2021,7 +2023,16 @@ extension ParseStringToEventCategory1 on String {
   }
 }
 
-enum EventCategory2 { Salsa, Zumba, HIIT, Ecstatic, Spin, Jiujitsu, Karate }
+enum EventCategory2 {
+  Salsa,
+  Zumba,
+  HIIT,
+  Ecstatic,
+  Spin,
+  Jiujitsu,
+  Karate,
+  Uncategorized
+}
 
 extension ParseEventCategory2ToString on EventCategory2 {
   String toFirebaseFormatString() {
