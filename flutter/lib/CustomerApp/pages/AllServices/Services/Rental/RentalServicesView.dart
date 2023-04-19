@@ -49,7 +49,7 @@ class _RentalViewState extends State<RentalView> {
             label: "Go to service",
             onClick: () async {
               await CustBusinessView.navigate(
-                businessId: 3,
+                businessId: 2,
               );
             },
           ),

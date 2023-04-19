@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class CustEventsListView extends StatefulWidget {
@@ -45,7 +47,19 @@ class _CustEventsListViewState extends State<CustEventsListView> {
             return Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(15),
-              child: const Text("No events found"),
+              child: Column(
+                children: [
+                  const Text("No events found"),
+                  MezButton(
+                    label: "Go to service",
+                    onClick: () async {
+                      await CustBusinessView.navigate(
+                        businessId: 8, //5678
+                      );
+                    },
+                  ),
+                ],
+              ),
             );
           } else {
             return SingleChildScrollView(

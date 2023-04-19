@@ -56,8 +56,12 @@ class CustBusinessEventCard extends StatelessWidget {
                 style: context.textTheme.bodyLarge,
               )
             ]),
-            Divider(),
-            MezServiceOpenHours(schedule: event.schedule),
+            // if (event.scheduleType == ScheduleType.OnDemand)
+            // if (event.scheduleType == ScheduleType.OneTime)
+            // if (event.scheduleType == ScheduleType.Scheduled)
+            if (event.schedule != null) Divider(),
+            if (event.schedule != null)
+              MezServiceOpenHours(schedule: event.schedule!),
           ],
         ),
       ),

@@ -452,6 +452,13 @@ const documentNodeQueryget_business_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'details'),
                 alias: null,
                 arguments: [],
@@ -2088,6 +2095,7 @@ class Query$get_business_by_id$business_business_by_pk$events {
   Query$get_business_by_id$business_business_by_pk$events({
     required this.id,
     required this.schedule_type,
+    this.schedule,
     required this.details,
     required this.$__typename,
   });
@@ -2096,11 +2104,13 @@ class Query$get_business_by_id$business_business_by_pk$events {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$schedule_type = json['schedule_type'];
+    final l$schedule = json['schedule'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$get_business_by_id$business_business_by_pk$events(
       id: (l$id as int),
       schedule_type: (l$schedule_type as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       details: Query$get_business_by_id$business_business_by_pk$events$details
           .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2110,6 +2120,8 @@ class Query$get_business_by_id$business_business_by_pk$events {
   final int id;
 
   final String schedule_type;
+
+  final dynamic? schedule;
 
   final Query$get_business_by_id$business_business_by_pk$events$details details;
 
@@ -2121,6 +2133,8 @@ class Query$get_business_by_id$business_business_by_pk$events {
     _resultData['id'] = l$id;
     final l$schedule_type = schedule_type;
     _resultData['schedule_type'] = l$schedule_type;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -2132,11 +2146,13 @@ class Query$get_business_by_id$business_business_by_pk$events {
   int get hashCode {
     final l$id = id;
     final l$schedule_type = schedule_type;
+    final l$schedule = schedule;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$schedule_type,
+      l$schedule,
       l$details,
       l$$__typename,
     ]);
@@ -2159,6 +2175,11 @@ class Query$get_business_by_id$business_business_by_pk$events {
     final l$schedule_type = schedule_type;
     final lOther$schedule_type = other.schedule_type;
     if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$details = details;
@@ -2200,6 +2221,7 @@ abstract class CopyWith$Query$get_business_by_id$business_business_by_pk$events<
   TRes call({
     int? id,
     String? schedule_type,
+    dynamic? schedule,
     Query$get_business_by_id$business_business_by_pk$events$details? details,
     String? $__typename,
   });
@@ -2226,6 +2248,7 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$events<
   TRes call({
     Object? id = _undefined,
     Object? schedule_type = _undefined,
+    Object? schedule = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -2234,6 +2257,9 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$events<
         schedule_type: schedule_type == _undefined || schedule_type == null
             ? _instance.schedule_type
             : (schedule_type as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -2262,6 +2288,7 @@ class _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$events<
   call({
     int? id,
     String? schedule_type,
+    dynamic? schedule,
     Query$get_business_by_id$business_business_by_pk$events$details? details,
     String? $__typename,
   }) =>

@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+
 class SendOtpResponse {
   bool success;
   SendOtpError? error;
@@ -1932,7 +1934,7 @@ class Event {
   EventCategory1 category1;
   EventCategory2? category2;
   ScheduleType scheduleType;
-  dynamic? schedule;
+  Schedule? schedule;
   BusinessItemDetails details;
   Location? gpsLocation;
   String? time;
