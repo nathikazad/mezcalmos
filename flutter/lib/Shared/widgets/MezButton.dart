@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:sizer/sizer.dart';
 
 class MezButton extends StatefulWidget {
   final double? width;
@@ -101,7 +100,7 @@ class _MezButtonState extends State<MezButton> {
                         children: [
                           if (widget.icon != null)
                             Padding(
-                              padding: const EdgeInsets.only(right: 5),
+                              padding: const EdgeInsets.only(right: 12),
                               child: Icon(
                                 widget.icon,
                                 color: widget.textColor ?? Colors.white,

@@ -32,7 +32,7 @@ Future<List<RentalCard>> get_rental_by_category(
               categories2: categories2
                       ?.map((e) => e.toFirebaseFormatString())
                       .toList() ??
-                  [],
+                  ["uncategorized"],
               tags: tags ?? [],
               distance: distance,
               from: Geography(

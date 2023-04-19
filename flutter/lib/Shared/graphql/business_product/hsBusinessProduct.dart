@@ -31,7 +31,7 @@ Future<List<ProductCard>> get_product_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2: categories2 ?? [],
+              categories2: categories2 ?? ["uncategorized"],
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
