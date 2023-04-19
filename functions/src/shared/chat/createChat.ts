@@ -6,7 +6,6 @@ import { getRestaurant } from "../graphql/restaurant/getRestaurant";
 import { getCustomer } from "../graphql/user/customer/getCustomer";
 import { getUser } from "../graphql/user/getUser";
 import { getMezAdmins } from "../graphql/user/mezAdmin/getMezAdmin";
-import { Chat } from "../models/Generic/Chat";
 import { AppType, MezError } from "../models/Generic/Generic";
 import { CustomerInfo } from "../models/Generic/User";
 import { ServiceProvider, ServiceProviderType } from "../models/Services/Service";
@@ -19,7 +18,7 @@ export interface ServiceProviderChatResponse {
     success: boolean,
     error?: ServiceProviderChatError
     unhandledError?: string,
-    chat?: any
+    chatId?: number
 }
 export enum ServiceProviderChatError {
     UnhandledError = "unhandledError",
@@ -49,10 +48,10 @@ export async function createServiceProviderChat(customerId: number, serviceProvi
             default:
                 throw new MezError(ServiceProviderChatError.InvalidServiceProviderType);
         }
-        let chat: Chat = await createServiceProviderCustomerChat(serviceProvider, customer);
+        let chatId: number = await createServiceProviderCustomerChat(serviceProvider, customer);
         return {
             success: true,
-            chat: chat
+            chatId
         }
     } catch(e: any) {
         if (e instanceof MezError) {

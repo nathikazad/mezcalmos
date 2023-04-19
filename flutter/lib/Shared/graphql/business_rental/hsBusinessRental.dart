@@ -59,8 +59,6 @@ Future<List<RentalCard>> get_rental_by_category(
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
-              tags:
-                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
             ),
             bathrooms: data.home_rental?.bathrooms,
             bedrooms: data.home_rental?.bedrooms,
@@ -116,11 +114,6 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
                 additionalParameters: data.details.additional_parameters,
                 description: toLanguageMap(
                     translations: data.details.description?.translations ?? []),
-                tags: data.details.tags
-                        ?.map((e) => e.toString())
-                        .toList()
-                        .cast<String>() ??
-                    [],
               ),
               bathrooms: data.home_rental?.bathrooms,
               bedrooms: data.home_rental?.bedrooms,
@@ -192,11 +185,6 @@ Future<List<RentalCard>> get_home_rentals(
                   [],
               cost: constructBusinessServiceCost(data.rental.details.cost),
               additionalParameters: data.rental.details.additional_parameters,
-              tags: data.rental.details.tags
-                      ?.map((e) => e.toString())
-                      .toList()
-                      .cast<String>() ??
-                  [],
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
@@ -273,8 +261,7 @@ Future<int?> add_one_rental({required Rental rental}) async {
                                                 value: rental.details
                                                     .description?[Language.ES])
                                           ])))
-                              : null,
-                          tags: rental.details.tags))))));
+                              : null))))));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura add rental mutation exception =>${response.exception}");
@@ -353,8 +340,7 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
                                           value: rental.details
                                               .description?[Language.ES])
                                     ])))
-                        : null,
-                    tags: rental.details.tags)))),
+                        : null)))),
   ))));
   if (response.hasException) {
     mezDbgPrint(
