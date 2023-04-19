@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/HomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/HomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -93,7 +94,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
               onClick: () {
-                navigateToServices(AllServiceViewEnum.values[index]);
+                CustEventsListView.navigate();
               },
               content: Column(
                 children: [

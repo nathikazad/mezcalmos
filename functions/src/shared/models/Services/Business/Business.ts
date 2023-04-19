@@ -44,6 +44,7 @@ export interface Rental {
 }
 export interface Event {
     category1: EventCategory1;
+    category2?: EventCategory2;
     scheduleType: ScheduleType;
     schedule?: any;
     details: BusinessItemDetails;
@@ -71,9 +72,20 @@ export enum EventCategory1 {
     MartialArt = "martialArt",
     Party = "party",
     Dance = "dance",
-    GetTogether = "getTogether",
+    Social = "social",
     Therapy = "therapy",
     Fitness = "fitness",
+    Adventure = "adventure",
+    Volunteer = "volunteer"
+}
+export enum EventCategory2 {
+    Salsa = "salsa",
+    Zumba = "zumba",
+    HIIT = "hIIT",
+    Ecstatic = "ecstatic",
+    Spin = "spin",
+    Jiujitsu = "jiujitsu",
+    Karate = "karate",
 }
 export enum ServiceType {
     Rental = "rental",
@@ -99,6 +111,8 @@ export enum BusinessProfile {
 export enum RentalCategory2 {
     Motorcycle = "motorcycle",
     Car = "car",
+    ATB = "aTB",
+    Bicycle = "bicycle",
     Uncategorized = "uncategorized"
 }
 export interface NewBusinessNotification extends ForegroundNotification {

@@ -101,3 +101,10 @@ query get_service_by_category($categories1: [String!], $distance: Float!, $from:
     }
   }
 }
+
+mutation add_service($object: business_service_insert_input!) {
+  insert_business_service_one(object: $object) {
+    details_id
+    id
+  }
+}

@@ -1,3 +1,5 @@
+import '../../__generated/schema.graphql.dart';
+import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -447,6 +449,13 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1888,6 +1897,7 @@ class Query$get_event_by_id$business_event_by_pk$details {
     this.additional_parameters,
     required this.available,
     required this.category1,
+    required this.category2,
     required this.cost,
     this.tags,
     this.description,
@@ -1903,6 +1913,7 @@ class Query$get_event_by_id$business_event_by_pk$details {
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
     final l$cost = json['cost'];
     final l$tags = json['tags'];
     final l$description = json['description'];
@@ -1917,6 +1928,7 @@ class Query$get_event_by_id$business_event_by_pk$details {
           : mapFromJson(l$additional_parameters),
       available: (l$available as bool),
       category1: (l$category1 as String),
+      category2: (l$category2 as String),
       cost: mapFromJson(l$cost),
       tags: l$tags == null ? null : mapFromJson(l$tags),
       description: l$description == null
@@ -1937,6 +1949,8 @@ class Query$get_event_by_id$business_event_by_pk$details {
   final bool available;
 
   final String category1;
+
+  final String category2;
 
   final dynamic cost;
 
@@ -1965,6 +1979,8 @@ class Query$get_event_by_id$business_event_by_pk$details {
     _resultData['available'] = l$available;
     final l$category1 = category1;
     _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
     final l$cost = cost;
     _resultData['cost'] = mapToJson(l$cost);
     final l$tags = tags;
@@ -1989,6 +2005,7 @@ class Query$get_event_by_id$business_event_by_pk$details {
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
+    final l$category2 = category2;
     final l$cost = cost;
     final l$tags = tags;
     final l$description = description;
@@ -2001,6 +2018,7 @@ class Query$get_event_by_id$business_event_by_pk$details {
       l$additional_parameters,
       l$available,
       l$category1,
+      l$category2,
       l$cost,
       l$tags,
       l$description,
@@ -2034,6 +2052,11 @@ class Query$get_event_by_id$business_event_by_pk$details {
     final l$category1 = category1;
     final lOther$category1 = other.category1;
     if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
       return false;
     }
     final l$cost = cost;
@@ -2106,6 +2129,7 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$details<
     dynamic? additional_parameters,
     bool? available,
     String? category1,
+    String? category2,
     dynamic? cost,
     dynamic? tags,
     Query$get_event_by_id$business_event_by_pk$details$description? description,
@@ -2139,6 +2163,7 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
+    Object? category2 = _undefined,
     Object? cost = _undefined,
     Object? tags = _undefined,
     Object? description = _undefined,
@@ -2158,6 +2183,9 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
         category1: category1 == _undefined || category1 == null
             ? _instance.category1
             : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as dynamic),
@@ -2208,6 +2236,7 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
     dynamic? additional_parameters,
     bool? available,
     String? category1,
+    String? category2,
     dynamic? cost,
     dynamic? tags,
     Query$get_event_by_id$business_event_by_pk$details$description? description,
@@ -2911,21 +2940,15 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name$
 class Variables$Query$get_event_by_category {
   factory Variables$Query$get_event_by_category({
     List<String>? categories1,
-    required double distance,
-    required Geography from,
     int? limit,
     int? offset,
-    List<String>? categories2,
     List<String>? schedule_type,
     List<String>? tags,
   }) =>
       Variables$Query$get_event_by_category._({
         if (categories1 != null) r'categories1': categories1,
-        r'distance': distance,
-        r'from': from,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
-        if (categories2 != null) r'categories2': categories2,
         if (schedule_type != null) r'schedule_type': schedule_type,
         if (tags != null) r'tags': tags,
       });
@@ -2940,10 +2963,6 @@ class Variables$Query$get_event_by_category {
       result$data['categories1'] =
           (l$categories1 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
-    final l$distance = data['distance'];
-    result$data['distance'] = (l$distance as num).toDouble();
-    final l$from = data['from'];
-    result$data['from'] = geographyFromJson(l$from);
     if (data.containsKey('limit')) {
       final l$limit = data['limit'];
       result$data['limit'] = (l$limit as int?);
@@ -2951,11 +2970,6 @@ class Variables$Query$get_event_by_category {
     if (data.containsKey('offset')) {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
-    }
-    if (data.containsKey('categories2')) {
-      final l$categories2 = data['categories2'];
-      result$data['categories2'] =
-          (l$categories2 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
     if (data.containsKey('schedule_type')) {
       final l$schedule_type = data['schedule_type'];
@@ -2974,11 +2988,8 @@ class Variables$Query$get_event_by_category {
   Map<String, dynamic> _$data;
 
   List<String>? get categories1 => (_$data['categories1'] as List<String>?);
-  double get distance => (_$data['distance'] as double);
-  Geography get from => (_$data['from'] as Geography);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
-  List<String>? get categories2 => (_$data['categories2'] as List<String>?);
   List<String>? get schedule_type => (_$data['schedule_type'] as List<String>?);
   List<String>? get tags => (_$data['tags'] as List<String>?);
   Map<String, dynamic> toJson() {
@@ -2987,10 +2998,6 @@ class Variables$Query$get_event_by_category {
       final l$categories1 = categories1;
       result$data['categories1'] = l$categories1?.map((e) => e).toList();
     }
-    final l$distance = distance;
-    result$data['distance'] = l$distance;
-    final l$from = from;
-    result$data['from'] = geographyToJson(l$from);
     if (_$data.containsKey('limit')) {
       final l$limit = limit;
       result$data['limit'] = l$limit;
@@ -2998,10 +3005,6 @@ class Variables$Query$get_event_by_category {
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
-    }
-    if (_$data.containsKey('categories2')) {
-      final l$categories2 = categories2;
-      result$data['categories2'] = l$categories2?.map((e) => e).toList();
     }
     if (_$data.containsKey('schedule_type')) {
       final l$schedule_type = schedule_type;
@@ -3049,16 +3052,6 @@ class Variables$Query$get_event_by_category {
     } else if (l$categories1 != lOther$categories1) {
       return false;
     }
-    final l$distance = distance;
-    final lOther$distance = other.distance;
-    if (l$distance != lOther$distance) {
-      return false;
-    }
-    final l$from = from;
-    final lOther$from = other.from;
-    if (l$from != lOther$from) {
-      return false;
-    }
     final l$limit = limit;
     final lOther$limit = other.limit;
     if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
@@ -3073,26 +3066,6 @@ class Variables$Query$get_event_by_category {
       return false;
     }
     if (l$offset != lOther$offset) {
-      return false;
-    }
-    final l$categories2 = categories2;
-    final lOther$categories2 = other.categories2;
-    if (_$data.containsKey('categories2') !=
-        other._$data.containsKey('categories2')) {
-      return false;
-    }
-    if (l$categories2 != null && lOther$categories2 != null) {
-      if (l$categories2.length != lOther$categories2.length) {
-        return false;
-      }
-      for (int i = 0; i < l$categories2.length; i++) {
-        final l$categories2$entry = l$categories2[i];
-        final lOther$categories2$entry = lOther$categories2[i];
-        if (l$categories2$entry != lOther$categories2$entry) {
-          return false;
-        }
-      }
-    } else if (l$categories2 != lOther$categories2) {
       return false;
     }
     final l$schedule_type = schedule_type;
@@ -3140,11 +3113,8 @@ class Variables$Query$get_event_by_category {
   @override
   int get hashCode {
     final l$categories1 = categories1;
-    final l$distance = distance;
-    final l$from = from;
     final l$limit = limit;
     final l$offset = offset;
-    final l$categories2 = categories2;
     final l$schedule_type = schedule_type;
     final l$tags = tags;
     return Object.hashAll([
@@ -3153,15 +3123,8 @@ class Variables$Query$get_event_by_category {
               ? null
               : Object.hashAll(l$categories1.map((v) => v))
           : const {},
-      l$distance,
-      l$from,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
-      _$data.containsKey('categories2')
-          ? l$categories2 == null
-              ? null
-              : Object.hashAll(l$categories2.map((v) => v))
-          : const {},
       _$data.containsKey('schedule_type')
           ? l$schedule_type == null
               ? null
@@ -3187,11 +3150,8 @@ abstract class CopyWith$Variables$Query$get_event_by_category<TRes> {
 
   TRes call({
     List<String>? categories1,
-    double? distance,
-    Geography? from,
     int? limit,
     int? offset,
-    List<String>? categories2,
     List<String>? schedule_type,
     List<String>? tags,
   });
@@ -3212,11 +3172,8 @@ class _CopyWithImpl$Variables$Query$get_event_by_category<TRes>
 
   TRes call({
     Object? categories1 = _undefined,
-    Object? distance = _undefined,
-    Object? from = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
-    Object? categories2 = _undefined,
     Object? schedule_type = _undefined,
     Object? tags = _undefined,
   }) =>
@@ -3224,13 +3181,8 @@ class _CopyWithImpl$Variables$Query$get_event_by_category<TRes>
         ..._instance._$data,
         if (categories1 != _undefined)
           'categories1': (categories1 as List<String>?),
-        if (distance != _undefined && distance != null)
-          'distance': (distance as double),
-        if (from != _undefined && from != null) 'from': (from as Geography),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
-        if (categories2 != _undefined)
-          'categories2': (categories2 as List<String>?),
         if (schedule_type != _undefined)
           'schedule_type': (schedule_type as List<String>?),
         if (tags != _undefined) 'tags': (tags as List<String>?),
@@ -3245,11 +3197,8 @@ class _CopyWithStubImpl$Variables$Query$get_event_by_category<TRes>
 
   call({
     List<String>? categories1,
-    double? distance,
-    Geography? from,
     int? limit,
     int? offset,
-    List<String>? categories2,
     List<String>? schedule_type,
     List<String>? tags,
   }) =>
@@ -3430,24 +3379,6 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'distance')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Float'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'from')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'geography'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'limit')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
@@ -3460,18 +3391,6 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'offset')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'categories2')),
-        type: ListTypeNode(
-          type: NamedTypeNode(
-            name: NameNode(value: 'String'),
-            isNonNull: true,
-          ),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -3531,16 +3450,6 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                             ]),
                           ),
                           ObjectFieldNode(
-                            name: NameNode(value: 'category2'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_in'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'categories2')),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
                             name: NameNode(value: 'tags'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
@@ -3562,84 +3471,6 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                         value: VariableNode(
                             name: NameNode(value: 'schedule_type')),
                       )
-                    ]),
-                  ),
-                  ObjectFieldNode(
-                    name: NameNode(value: '_or'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: 'gps_location'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: '_st_d_within'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'distance'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'distance')),
-                              ),
-                              ObjectFieldNode(
-                                name: NameNode(value: 'from'),
-                                value:
-                                    VariableNode(name: NameNode(value: 'from')),
-                              ),
-                            ]),
-                          )
-                        ]),
-                      ),
-                      ObjectFieldNode(
-                        name: NameNode(value: '_and'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: 'business'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'details'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: 'location'),
-                                    value: ObjectValueNode(fields: [
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'gps'),
-                                        value: ObjectValueNode(fields: [
-                                          ObjectFieldNode(
-                                            name:
-                                                NameNode(value: '_st_d_within'),
-                                            value: ObjectValueNode(fields: [
-                                              ObjectFieldNode(
-                                                name:
-                                                    NameNode(value: 'distance'),
-                                                value: VariableNode(
-                                                    name: NameNode(
-                                                        value: 'distance')),
-                                              ),
-                                              ObjectFieldNode(
-                                                name: NameNode(value: 'from'),
-                                                value: VariableNode(
-                                                    name: NameNode(
-                                                        value: 'from')),
-                                              ),
-                                            ]),
-                                          )
-                                        ]),
-                                      )
-                                    ]),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: 'gps_location'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_is_null'),
-                                value: BooleanValueNode(value: true),
-                              )
-                            ]),
-                          ),
-                        ]),
-                      ),
                     ]),
                   ),
                 ]),
@@ -3908,7 +3739,7 @@ class Options$Query$get_event_by_category
     extends graphql.QueryOptions<Query$get_event_by_category> {
   Options$Query$get_event_by_category({
     String? operationName,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -3916,7 +3747,7 @@ class Options$Query$get_event_by_category
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -3933,7 +3764,7 @@ class WatchOptions$Query$get_event_by_category
     extends graphql.WatchQueryOptions<Query$get_event_by_category> {
   WatchOptions$Query$get_event_by_category({
     String? operationName,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -3944,7 +3775,7 @@ class WatchOptions$Query$get_event_by_category
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -3964,10 +3795,10 @@ class FetchMoreOptions$Query$get_event_by_category
     extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$get_event_by_category({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           document: documentNodeQueryget_event_by_category,
         );
 }
@@ -3975,35 +3806,35 @@ class FetchMoreOptions$Query$get_event_by_category
 extension ClientExtension$Query$get_event_by_category on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$get_event_by_category>>
       query$get_event_by_category(
-              Options$Query$get_event_by_category options) async =>
-          await this.query(options);
-  graphql.ObservableQuery<Query$get_event_by_category>
-      watchQuery$get_event_by_category(
-              WatchOptions$Query$get_event_by_category options) =>
-          this.watchQuery(options);
+              [Options$Query$get_event_by_category? options]) async =>
+          await this.query(options ?? Options$Query$get_event_by_category());
+  graphql.ObservableQuery<
+      Query$get_event_by_category> watchQuery$get_event_by_category(
+          [WatchOptions$Query$get_event_by_category? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$get_event_by_category());
   void writeQuery$get_event_by_category({
     required Query$get_event_by_category data,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(
               document: documentNodeQueryget_event_by_category),
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? const {},
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$get_event_by_category? readQuery$get_event_by_category({
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation:
             graphql.Operation(document: documentNodeQueryget_event_by_category),
-        variables: variables.toJson(),
+        variables: variables?.toJson() ?? const {},
       ),
       optimistic: optimistic,
     );
@@ -5448,6 +5279,540 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event$business$deta
   call({
     Geography? gps,
     String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$add_event {
+  factory Variables$Mutation$add_event(
+          {required Input$business_event_insert_input object}) =>
+      Variables$Mutation$add_event._({
+        r'object': object,
+      });
+
+  Variables$Mutation$add_event._(this._$data);
+
+  factory Variables$Mutation$add_event.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$object = data['object'];
+    result$data['object'] = Input$business_event_insert_input.fromJson(
+        (l$object as Map<String, dynamic>));
+    return Variables$Mutation$add_event._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$business_event_insert_input get object =>
+      (_$data['object'] as Input$business_event_insert_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$object = object;
+    result$data['object'] = l$object.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$add_event<Variables$Mutation$add_event>
+      get copyWith => CopyWith$Variables$Mutation$add_event(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$add_event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$object = object;
+    return Object.hashAll([l$object]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$add_event<TRes> {
+  factory CopyWith$Variables$Mutation$add_event(
+    Variables$Mutation$add_event instance,
+    TRes Function(Variables$Mutation$add_event) then,
+  ) = _CopyWithImpl$Variables$Mutation$add_event;
+
+  factory CopyWith$Variables$Mutation$add_event.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$add_event;
+
+  TRes call({Input$business_event_insert_input? object});
+}
+
+class _CopyWithImpl$Variables$Mutation$add_event<TRes>
+    implements CopyWith$Variables$Mutation$add_event<TRes> {
+  _CopyWithImpl$Variables$Mutation$add_event(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$add_event _instance;
+
+  final TRes Function(Variables$Mutation$add_event) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? object = _undefined}) =>
+      _then(Variables$Mutation$add_event._({
+        ..._instance._$data,
+        if (object != _undefined && object != null)
+          'object': (object as Input$business_event_insert_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$add_event<TRes>
+    implements CopyWith$Variables$Mutation$add_event<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$add_event(this._res);
+
+  TRes _res;
+
+  call({Input$business_event_insert_input? object}) => _res;
+}
+
+class Mutation$add_event {
+  Mutation$add_event({
+    this.insert_business_event_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_event.fromJson(Map<String, dynamic> json) {
+    final l$insert_business_event_one = json['insert_business_event_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_event(
+      insert_business_event_one: l$insert_business_event_one == null
+          ? null
+          : Mutation$add_event$insert_business_event_one.fromJson(
+              (l$insert_business_event_one as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$add_event$insert_business_event_one? insert_business_event_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_business_event_one = insert_business_event_one;
+    _resultData['insert_business_event_one'] =
+        l$insert_business_event_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_business_event_one = insert_business_event_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_business_event_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_event) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_business_event_one = insert_business_event_one;
+    final lOther$insert_business_event_one = other.insert_business_event_one;
+    if (l$insert_business_event_one != lOther$insert_business_event_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_event on Mutation$add_event {
+  CopyWith$Mutation$add_event<Mutation$add_event> get copyWith =>
+      CopyWith$Mutation$add_event(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$add_event<TRes> {
+  factory CopyWith$Mutation$add_event(
+    Mutation$add_event instance,
+    TRes Function(Mutation$add_event) then,
+  ) = _CopyWithImpl$Mutation$add_event;
+
+  factory CopyWith$Mutation$add_event.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_event;
+
+  TRes call({
+    Mutation$add_event$insert_business_event_one? insert_business_event_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$add_event$insert_business_event_one<TRes>
+      get insert_business_event_one;
+}
+
+class _CopyWithImpl$Mutation$add_event<TRes>
+    implements CopyWith$Mutation$add_event<TRes> {
+  _CopyWithImpl$Mutation$add_event(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_event _instance;
+
+  final TRes Function(Mutation$add_event) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_business_event_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_event(
+        insert_business_event_one: insert_business_event_one == _undefined
+            ? _instance.insert_business_event_one
+            : (insert_business_event_one
+                as Mutation$add_event$insert_business_event_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$add_event$insert_business_event_one<TRes>
+      get insert_business_event_one {
+    final local$insert_business_event_one = _instance.insert_business_event_one;
+    return local$insert_business_event_one == null
+        ? CopyWith$Mutation$add_event$insert_business_event_one.stub(
+            _then(_instance))
+        : CopyWith$Mutation$add_event$insert_business_event_one(
+            local$insert_business_event_one,
+            (e) => call(insert_business_event_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$add_event<TRes>
+    implements CopyWith$Mutation$add_event<TRes> {
+  _CopyWithStubImpl$Mutation$add_event(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$add_event$insert_business_event_one? insert_business_event_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$add_event$insert_business_event_one<TRes>
+      get insert_business_event_one =>
+          CopyWith$Mutation$add_event$insert_business_event_one.stub(_res);
+}
+
+const documentNodeMutationadd_event = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'add_event'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'business_event_insert_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_business_event_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$add_event _parserFn$Mutation$add_event(Map<String, dynamic> data) =>
+    Mutation$add_event.fromJson(data);
+typedef OnMutationCompleted$Mutation$add_event = FutureOr<void> Function(
+  dynamic,
+  Mutation$add_event?,
+);
+
+class Options$Mutation$add_event
+    extends graphql.MutationOptions<Mutation$add_event> {
+  Options$Mutation$add_event({
+    String? operationName,
+    required Variables$Mutation$add_event variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$add_event? onCompleted,
+    graphql.OnMutationUpdate<Mutation$add_event>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null ? null : _parserFn$Mutation$add_event(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationadd_event,
+          parserFn: _parserFn$Mutation$add_event,
+        );
+
+  final OnMutationCompleted$Mutation$add_event? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$add_event
+    extends graphql.WatchQueryOptions<Mutation$add_event> {
+  WatchOptions$Mutation$add_event({
+    String? operationName,
+    required Variables$Mutation$add_event variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationadd_event,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$add_event,
+        );
+}
+
+extension ClientExtension$Mutation$add_event on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$add_event>> mutate$add_event(
+          Options$Mutation$add_event options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$add_event> watchMutation$add_event(
+          WatchOptions$Mutation$add_event options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$add_event$insert_business_event_one {
+  Mutation$add_event$insert_business_event_one({
+    required this.details_id,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_event$insert_business_event_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$details_id = json['details_id'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_event$insert_business_event_one(
+      details_id: (l$details_id as int),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int details_id;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details_id = details_id;
+    _resultData['details_id'] = l$details_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details_id = details_id;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details_id,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_event$insert_business_event_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details_id = details_id;
+    final lOther$details_id = other.details_id;
+    if (l$details_id != lOther$details_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_event$insert_business_event_one
+    on Mutation$add_event$insert_business_event_one {
+  CopyWith$Mutation$add_event$insert_business_event_one<
+          Mutation$add_event$insert_business_event_one>
+      get copyWith => CopyWith$Mutation$add_event$insert_business_event_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$add_event$insert_business_event_one<TRes> {
+  factory CopyWith$Mutation$add_event$insert_business_event_one(
+    Mutation$add_event$insert_business_event_one instance,
+    TRes Function(Mutation$add_event$insert_business_event_one) then,
+  ) = _CopyWithImpl$Mutation$add_event$insert_business_event_one;
+
+  factory CopyWith$Mutation$add_event$insert_business_event_one.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_event$insert_business_event_one;
+
+  TRes call({
+    int? details_id,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$add_event$insert_business_event_one<TRes>
+    implements CopyWith$Mutation$add_event$insert_business_event_one<TRes> {
+  _CopyWithImpl$Mutation$add_event$insert_business_event_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_event$insert_business_event_one _instance;
+
+  final TRes Function(Mutation$add_event$insert_business_event_one) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details_id = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_event$insert_business_event_one(
+        details_id: details_id == _undefined || details_id == null
+            ? _instance.details_id
+            : (details_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$add_event$insert_business_event_one<TRes>
+    implements CopyWith$Mutation$add_event$insert_business_event_one<TRes> {
+  _CopyWithStubImpl$Mutation$add_event$insert_business_event_one(this._res);
+
+  TRes _res;
+
+  call({
+    int? details_id,
+    int? id,
     String? $__typename,
   }) =>
       _res;

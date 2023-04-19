@@ -137,3 +137,20 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
     }
   }
 }
+
+mutation create_rental($object: business_rental_insert_input!) {
+  insert_business_rental_one(object: $object) {
+    id
+    details_id
+    business_id
+  }
+}
+
+mutation add_home_rental($object: business_home_rental_insert_input!) {
+  insert_business_home_rental_one(object: $object) {
+    rental_id
+    rental {
+      details_id
+    }
+  }
+}

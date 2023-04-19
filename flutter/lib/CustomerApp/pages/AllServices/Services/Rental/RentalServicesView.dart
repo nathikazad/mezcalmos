@@ -4,8 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/contr
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/HomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -49,8 +48,8 @@ class _RentalViewState extends State<RentalView> {
           MezButton(
             label: "Go to service",
             onClick: () async {
-              await CustEventView.navigate(
-                eventId: 8,
+              await CustBusinessView.navigate(
+                businessId: 3,
               );
             },
           ),

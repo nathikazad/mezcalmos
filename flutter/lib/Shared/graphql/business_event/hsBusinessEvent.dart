@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/graphql/business_event/__generated/business_event.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/__generated/business_event.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,7 +16,7 @@ Future<List<EventCard>> get_event_by_category(
     required double distance,
     required Location fromLocation,
     required List<ScheduleType> scheduleType,
-    List<String>? categories2,
+    List<EventCategory2>? categories2,
     List<String>? tags,
     int? offset,
     int? limit,
@@ -29,18 +29,21 @@ Future<List<EventCard>> get_event_by_category(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_event_by_category(
-              categories1:
-                  categories1.map((e) => e.toFirebaseFormatString()).toList(),
-              distance: distance,
-              from: Geography(
-                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2: categories2,
-              schedule_type:
-                  scheduleType.map((e) => e.toFirebaseFormatString()).toList(),
+              categories1: categories1
+                  .map((EventCategory1 e) => e.toFirebaseFormatString())
+                  .toList(),
+              // distance: distance,
+              // from: Geography(
+              //     fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              // categories2:
+              //     categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+              schedule_type: scheduleType
+                  .map((ScheduleType e) => e.toFirebaseFormatString())
+                  .toList(),
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
-
+  mezDbgPrint("Event response ======>${response.data}");
   if (response.parsedData?.business_event != null) {
     response.parsedData?.business_event
         .forEach((Query$get_event_by_category$business_event data) async {
@@ -79,7 +82,7 @@ Future<List<EventCard>> get_event_by_category(
     });
     return _events;
   } else {
-    return [];
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   }
 }
 
@@ -103,6 +106,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
       return EventWithBusinessCard(
           event: Event(
               category1: data.details.category1.toEventCategory1(),
+              category2: data.details.category2.toEventCategory2(),
               gpsLocation: data.gps_location != null
                   ? Location(
                       lat: data.gps_location!.latitude,
@@ -150,5 +154,81 @@ Future<EventWithBusinessCard?> get_event_by_id(
     }
   } else
     return null;
+  return null;
+}
+
+Future<int?> add_one_event({required Event event}) async {
+  // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
+
+  final QueryResult<Mutation$add_event> response = await _db.graphQLClient
+      .mutate$add_event(Options$Mutation$add_event(
+          variables: Variables$Mutation$add_event(
+              object: Input$business_event_insert_input(
+                  business_id: event.details.businessId.toInt(),
+                  gps_location: (event.gpsLocation != null)
+                      ? Geography(event.gpsLocation!.lat.toDouble(),
+                          event.gpsLocation!.lng.toDouble())
+                      : null,
+                  schedule_type: event.scheduleType.toFirebaseFormatString(),
+                  schedule: event.schedule,
+                  time: event.time,
+                  details: Input$business_item_details_obj_rel_insert_input(
+                      data: Input$business_item_details_insert_input(
+                          available: event.details.available,
+                          category1: event.category1.toFirebaseFormatString(),
+                          category2: event.category2?.toFirebaseFormatString(),
+                          cost: event.details.cost,
+                          image: event.details.image,
+                          name: Input$translation_obj_rel_insert_input(
+                              data: Input$translation_insert_input(
+                                  service_provider_id:
+                                      event.details.businessId.toInt(),
+                                  service_provider_type: ServiceProviderType
+                                      .Business.toFirebaseFormatString(),
+                                  translations:
+                                      Input$translation_value_arr_rel_insert_input(data: <
+                                          Input$translation_value_insert_input>[
+                                    Input$translation_value_insert_input(
+                                        language_id: Language.EN
+                                            .toFirebaseFormatString(),
+                                        value: event.details.name[Language.EN]),
+                                    Input$translation_value_insert_input(
+                                        language_id: Language.ES
+                                            .toFirebaseFormatString(),
+                                        value: event.details.name[Language.ES])
+                                  ]))),
+                          position: event.details.position?.toInt(),
+                          additional_parameters:
+                              event.details.additionalParameters,
+                          description: (event.details.description != null)
+                              ? Input$translation_obj_rel_insert_input(
+                                  data: Input$translation_insert_input(
+                                      service_provider_id:
+                                          event.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType
+                                          .Business.toFirebaseFormatString(),
+                                      translations:
+                                          Input$translation_value_arr_rel_insert_input(
+                                              data: <Input$translation_value_insert_input>[
+                                            Input$translation_value_insert_input(
+                                                language_id: Language.EN
+                                                    .toFirebaseFormatString(),
+                                                value: event.details
+                                                    .description?[Language.EN]),
+                                            Input$translation_value_insert_input(
+                                                language_id: Language.ES
+                                                    .toFirebaseFormatString(),
+                                                value: event.details
+                                                    .description?[Language.ES])
+                                          ])))
+                              : null,
+                          tags: event.details.tags))))));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura add event mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura add event mutation success => ${response.data}");
+    return response.parsedData?.insert_business_event_one?.id;
+  }
   return null;
 }
