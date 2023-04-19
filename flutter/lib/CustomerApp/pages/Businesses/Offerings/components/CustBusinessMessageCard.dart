@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/CustChatController.dart';
 
 class CustBusinessMessageCard extends StatelessWidget {
   const CustBusinessMessageCard({super.key, required this.business});
@@ -11,6 +12,7 @@ class CustBusinessMessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CustChatController custChatController = CustChatController();
     return MezCard(
       firstAvatarBgImage: CachedNetworkImageProvider(business.image),
       content: Text(
@@ -19,7 +21,11 @@ class CustBusinessMessageCard extends StatelessWidget {
       ),
       action: MessageButton(
         chatId: 0,
-        onTap: () {},
+        onTap: () {
+          custChatController.initiateChat(
+            serviceProviderId: business.id,
+          );
+        },
       ),
     );
   }

@@ -2307,7 +2307,7 @@ class Query$get_business_by_id$business_business_by_pk$events$details {
     required this.cost,
     this.image,
     required this.id,
-    this.tags,
+    required this.tags,
     required this.name,
     required this.position,
     required this.$__typename,
@@ -2334,7 +2334,7 @@ class Query$get_business_by_id$business_business_by_pk$events$details {
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       id: (l$id as int),
-      tags: l$tags == null ? null : mapFromJson(l$tags),
+      tags: mapFromJson(l$tags),
       name: Query$get_business_by_id$business_business_by_pk$events$details$name
           .fromJson((l$name as Map<String, dynamic>)),
       position: (l$position as int),
@@ -2354,7 +2354,7 @@ class Query$get_business_by_id$business_business_by_pk$events$details {
 
   final int id;
 
-  final dynamic? tags;
+  final dynamic tags;
 
   final Query$get_business_by_id$business_business_by_pk$events$details$name
       name;
@@ -2380,7 +2380,7 @@ class Query$get_business_by_id$business_business_by_pk$events$details {
     final l$id = id;
     _resultData['id'] = l$id;
     final l$tags = tags;
-    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    _resultData['tags'] = mapToJson(l$tags);
     final l$name = name;
     _resultData['name'] = l$name.toJson();
     final l$position = position;
@@ -2565,7 +2565,9 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$events$deta
             : (cost as dynamic),
         image: image == _undefined ? _instance.image : (image as dynamic?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         name: name == _undefined || name == null
             ? _instance.name
             : (name
@@ -3186,7 +3188,7 @@ class Query$get_business_by_id$business_business_by_pk$rentals$details {
     required this.cost,
     required this.id,
     this.image,
-    this.tags,
+    required this.tags,
     required this.name,
     required this.position,
     required this.$__typename,
@@ -3213,7 +3215,7 @@ class Query$get_business_by_id$business_business_by_pk$rentals$details {
       cost: mapFromJson(l$cost),
       id: (l$id as int),
       image: l$image == null ? null : mapFromJson(l$image),
-      tags: l$tags == null ? null : mapFromJson(l$tags),
+      tags: mapFromJson(l$tags),
       name:
           Query$get_business_by_id$business_business_by_pk$rentals$details$name
               .fromJson((l$name as Map<String, dynamic>)),
@@ -3234,7 +3236,7 @@ class Query$get_business_by_id$business_business_by_pk$rentals$details {
 
   final dynamic? image;
 
-  final dynamic? tags;
+  final dynamic tags;
 
   final Query$get_business_by_id$business_business_by_pk$rentals$details$name
       name;
@@ -3260,7 +3262,7 @@ class Query$get_business_by_id$business_business_by_pk$rentals$details {
     final l$image = image;
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$tags = tags;
-    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    _resultData['tags'] = mapToJson(l$tags);
     final l$name = name;
     _resultData['name'] = l$name.toJson();
     final l$position = position;
@@ -3445,7 +3447,9 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals$det
             : (cost as dynamic),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as dynamic?),
-        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         name: name == _undefined || name == null
             ? _instance.name
             : (name

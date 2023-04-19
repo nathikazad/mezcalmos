@@ -1275,7 +1275,7 @@ class Query$get_rental_by_category$business_rental$details {
     required this.cost,
     this.image,
     required this.position,
-    this.tags,
+    required this.tags,
     required this.$__typename,
   });
 
@@ -1305,7 +1305,7 @@ class Query$get_rental_by_category$business_rental$details {
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
-      tags: l$tags == null ? null : mapFromJson(l$tags),
+      tags: mapFromJson(l$tags),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1328,7 +1328,7 @@ class Query$get_rental_by_category$business_rental$details {
 
   final int position;
 
-  final dynamic? tags;
+  final dynamic tags;
 
   final String $__typename;
 
@@ -1355,7 +1355,7 @@ class Query$get_rental_by_category$business_rental$details {
     final l$position = position;
     _resultData['position'] = l$position;
     final l$tags = tags;
-    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    _resultData['tags'] = mapToJson(l$tags);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1549,7 +1549,9 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$details<TRes>
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
-        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -4763,7 +4765,7 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
   Query$get_rental_by_id$business_rental_by_pk$details({
     this.additional_parameters,
     required this.available,
-    this.tags,
+    required this.tags,
     required this.category1,
     required this.category2,
     required this.cost,
@@ -4794,7 +4796,7 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
           ? null
           : mapFromJson(l$additional_parameters),
       available: (l$available as bool),
-      tags: l$tags == null ? null : mapFromJson(l$tags),
+      tags: mapFromJson(l$tags),
       category1: (l$category1 as String),
       category2: (l$category2 as String),
       cost: mapFromJson(l$cost),
@@ -4815,7 +4817,7 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
 
   final bool available;
 
-  final dynamic? tags;
+  final dynamic tags;
 
   final String category1;
 
@@ -4845,7 +4847,7 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
     final l$available = available;
     _resultData['available'] = l$available;
     final l$tags = tags;
-    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    _resultData['tags'] = mapToJson(l$tags);
     final l$category1 = category1;
     _resultData['category1'] = l$category1;
     final l$category2 = category2;
@@ -5049,7 +5051,9 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$details<TRes>
         available: available == _undefined || available == null
             ? _instance.available
             : (available as bool),
-        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         category1: category1 == _undefined || category1 == null
             ? _instance.category1
             : (category1 as String),
@@ -7265,7 +7269,7 @@ class Query$get_home_rentals$business_home_rental$rental$details {
     required this.id,
     required this.name,
     this.description,
-    this.tags,
+    required this.tags,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -7298,7 +7302,7 @@ class Query$get_home_rentals$business_home_rental$rental$details {
           ? null
           : Query$get_home_rentals$business_home_rental$rental$details$description
               .fromJson((l$description as Map<String, dynamic>)),
-      tags: l$tags == null ? null : mapFromJson(l$tags),
+      tags: mapFromJson(l$tags),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -7319,7 +7323,7 @@ class Query$get_home_rentals$business_home_rental$rental$details {
   final Query$get_home_rentals$business_home_rental$rental$details$description?
       description;
 
-  final dynamic? tags;
+  final dynamic tags;
 
   final dynamic? additional_parameters;
 
@@ -7346,7 +7350,7 @@ class Query$get_home_rentals$business_home_rental$rental$details {
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$tags = tags;
-    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    _resultData['tags'] = mapToJson(l$tags);
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -7557,7 +7561,9 @@ class _CopyWithImpl$Query$get_home_rentals$business_home_rental$rental$details<
             ? _instance.description
             : (description
                 as Query$get_home_rentals$business_home_rental$rental$details$description?),
-        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),

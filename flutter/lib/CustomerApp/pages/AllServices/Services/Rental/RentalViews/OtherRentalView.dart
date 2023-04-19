@@ -42,6 +42,7 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
   AllServiceListViewController allServiceListViewController =
       Get.find<AllServiceListViewController>();
   AssetController assetController = Get.find<AssetController>();
+  LanguageController languageController = Get.find<LanguageController>();
   MGoogleMapController mGoogleMapController = MGoogleMapController();
   late OtherRentalController otherRentalController;
   late RentalViewEnum viewName;
@@ -228,41 +229,40 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                     () => assetController.currentSelectedView.value ==
                             assetController.currentSelectedViewList.first
                         ? Expanded(
-                            child: ListView(
-                              children: [
-                                CustClassCard(
-                                  cardType: ScheduleType.Scheduled,
-                                  title: "Scheduled Card",
-                                  imageUrl: customImageUrl,
-                                  price: 100,
-                                  priceUnit: null,
-                                  needAgencyName: true,
-                                  agencyName: "Puetro Class",
-                                  schedule: tempSchedule,
-                                ),
-                                CustClassCard(
-                                  cardType: ScheduleType.OnDemand,
-                                  title: "On Demand Card",
-                                  imageUrl: customImageUrl,
-                                  price: 100,
-                                  priceUnit: "hour",
-                                  agencyName: "Puetro Class",
-                                  needAgencyName: true,
-                                ),
-                                CustClassCard(
-                                  cardType: ScheduleType.OneTime,
-                                  title: "On Time Card",
-                                  imageUrl: customImageUrl,
-                                  price: 100,
-                                  priceUnit: null,
-                                  agencyName: "Puetro Class",
-                                  needAgencyName: true,
-                                  schedule: Map<String,
-                                          Map<String, String>>.fromEntries(
-                                      [tempSchedule.entries.first]),
-                                ),
-                              ],
-                            ),
+                            child: classesController.classesData.isEmpty
+                                ? const Center(
+                                    child: Text("Empty"),
+                                  )
+                                : ListView.builder(
+                                    itemCount:
+                                        classesController.classesData.length,
+                                    itemBuilder: (context, index) {
+                                      return CustClassCard(
+                                        cardType: classesController
+                                            .classesData[index].scheduleType,
+                                        title: classesController
+                                                    .classesData[index]
+                                                    .details
+                                                    .name[
+                                                languageController
+                                                    .userLanguageKey] ??
+                                            "",
+                                        imageUrl: classesController
+                                                .classesData[index]
+                                                .details
+                                                .image
+                                                ?.first ??
+                                            customImageUrl,
+                                        agencyName: classesController
+                                            .classesData[index].businessName,
+                                        price: classesController
+                                            .classesData[index].details.cost,
+                                        needAgencyName: true,
+                                        schedule: classesController
+                                            .classesData[index].schedule,
+                                      );
+                                    },
+                                  ),
                           )
                         : OtherAgencyList(
                             otherRentalController: otherRentalController,

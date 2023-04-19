@@ -53,8 +53,6 @@ Future<List<ServiceCard>> get_service_by_category(
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
-              tags:
-                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
             ),
           )));
     });
@@ -103,8 +101,6 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
 
               // data.details.image?.entries.map((e) => e.value).toList() ??
               //     [],
-              tags:
-                  data.details.tags?.map<String>((e) => e.toString()).toList(),
             )),
         business: BusinessCard(
           id: data.business.id,
@@ -185,8 +181,7 @@ Future<int?> add_one_service({required Service service}) async {
                                                 value: service.details
                                                     .description?[Language.ES])
                                           ])))
-                              : null,
-                          tags: service.details.tags))))));
+                              : null))))));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura add service mutation exception =>${response.exception}");
