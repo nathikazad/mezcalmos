@@ -13,8 +13,6 @@ class CustChatController {
   Future<void> initiateChat({
     required int serviceProviderId,
   }) async {
-    mezDbgPrint(
-        "initiateChat: $serviceProviderId ${_authController.user!.hasuraId}");
     final HasuraChat? chatData = await get_service_provider_customer_chat(
       customerId: _authController.user!.hasuraId,
       serviceProviderId: serviceProviderId,
@@ -28,8 +26,10 @@ class CustChatController {
         serviceProviderId: serviceProviderId,
         serviceProviderType: ServiceProviderType.Business,
       );
-      mezDbgPrint("initiateChat: HasuraChat is null $newChatData");
-      await BaseMessagingScreen.navigate(chatId: newChatData.chat.id);
+      mezDbgPrint(
+          "initiateChat: HasuraChat is null ${newChatData.toFirebaseFormattedJson()}");
+      await BaseMessagingScreen.navigate(
+          chatId: int.parse(newChatData.chatId.toString()));
       return;
     } else {
       // initiate previous chat

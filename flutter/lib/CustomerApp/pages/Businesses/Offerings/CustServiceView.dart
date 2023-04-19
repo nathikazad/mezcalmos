@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 
 class CustServiceView extends StatefulWidget {
   const CustServiceView({super.key});
@@ -62,6 +63,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                       CustBusinessMessageCard(
                         business: viewController.service!.business,
                       ),
+                      CustBusinessNoOrderBanner(),
                     ],
                   ),
                 ),
