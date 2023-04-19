@@ -49,11 +49,11 @@ query get_event_by_id($id: Int!) {
 }
 
 query get_event_by_category($categories1: [String!],
-#  $distance: Float!, $from: geography!,
+  $distance: Float!, $from: geography!,
   $limit: Int, $offset: Int, 
-  # $categories2: [String!],
+   $categories2: [String!],
    $schedule_type: [String!],
-   $tags: [String!]) {
+	$tags: [String!]) {
   business_event(
     where: {
       _and: {
@@ -62,40 +62,103 @@ query get_event_by_category($categories1: [String!],
             category1: {
               _in: $categories1
             }, 
-            # category2: {
-            #   _in: $categories2
-            # },
-             tags: {_has_keys_all: $tags}
+             category2: {
+               _in: $categories2
+             },
+            _not: {
+              tags: {_has_key: "class"}
+            },
+            tags: {_has_keys_all: $tags}
           }
         }, 
         schedule_type: {
           _in: $schedule_type
+        },
+         business: {
+           details: {
+             location: {
+               gps: {
+                 _st_d_within: {
+                   distance: $distance, 
+                   from: $from
+                 }
+               }
+             }
+           }
+         }
+      }
+    }, limit: $limit, offset: $offset) {
+    details {
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      cost
+      tags
+      image
+      position
+    }
+    id
+    gps_location
+    schedule_type
+    schedule
+    time
+    business {
+      id
+      details {
+        id
+        name
+        location {
+          gps
+          address
+        }
+      }
+    }
+  }
+}
+
+query get_class_by_category($categories1: [String!],
+  $distance: Float!, $from: geography!,
+  $limit: Int, $offset: Int, 
+   $categories2: [String!],
+   $schedule_type: [String!],
+	$tags: [String!]) {
+  business_event(
+    where: {
+      _and: {
+        details: {
+          _and: {
+            category1: {
+              _in: $categories1
+            }, 
+             category2: {
+               _in: $categories2
+             },
+            tags: {_has_keys_all: $tags}
+          },
+          tags: {_has_key: "class"}
         }, 
-        # _or: { 
-        #   gps_location: {
-        #     _st_d_within: {
-        #       distance: $distance, 
-        #       from: $from
-        #     }
-        #   }, 
-        #   _and: {
-        #     business: {
-        #       details: {
-        #         location: {
-        #           gps: {
-        #             _st_d_within: {
-        #               distance: $distance, 
-        #               from: $from
-        #             }
-        #           }
-        #         }
-        #       }
-        #     }, 
-        #     gps_location: {
-        #       _is_null: true
-        #     }
-        #   }
-        # }
+        schedule_type: {
+          _in: $schedule_type
+        },
+         business: {
+           details: {
+             location: {
+               gps: {
+                 _st_d_within: {
+                   distance: $distance, 
+                   from: $from
+                 }
+               }
+             }
+           }
+         }
       }
     }, limit: $limit, offset: $offset) {
     details {

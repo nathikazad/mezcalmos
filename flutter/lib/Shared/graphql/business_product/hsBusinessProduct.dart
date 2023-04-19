@@ -52,8 +52,6 @@ Future<List<ProductCard>> get_product_by_category(
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
-              tags:
-                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
             ),
           )));
     });
@@ -96,8 +94,6 @@ Future<ProductWithBusinessCard?> get_product_by_id(
                 image:
                     data.details.image?.entries.map((e) => e.value).toList() ??
                         [],
-                tags: data.details.tags?.entries.map((e) => e.value).toList() ??
-                    [],
               )),
           business: BusinessCard(
             id: data.business.id,
