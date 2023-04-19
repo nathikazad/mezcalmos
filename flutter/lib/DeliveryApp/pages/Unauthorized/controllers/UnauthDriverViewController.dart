@@ -17,16 +17,14 @@ class UnautthDriverViewController {
   AgentStatus? get status => _status.value;
 
   // stream sub
-  StreamSubscription<AgentStatus>? statusStream;
+  StreamSubscription<AgentStatus?>? statusStream;
   String? subscriptionId;
 
   Future<void> init() async {
     await dvAuthController.setupDeliveryDriver();
     _status.value = dvAuthController.driver?.deliveryDriverState.status;
-    if (_status.value != null &&
-        _status.value! == AgentStatus.AwaitingApproval) {
-      _startListeningOnSatus();
-    }
+
+    _startListeningOnSatus();
   }
 
   void _startListeningOnSatus() {
@@ -35,11 +33,13 @@ class UnautthDriverViewController {
     subscriptionId = hasuraDb.createSubscription(start: () {
       statusStream = listen_driver_status(
               driverId: dvAuthController.driver!.driverInfo.hasuraId)
-          .listen((AgentStatus event) {
+          .listen((AgentStatus? event) {
         mezDbgPrint(
             "Stream triggred from unauthorized view controller ✅✅=>$event");
-        _status.value = event;
-        _handleStatusChange();
+        if (event != null) {
+          _status.value = event;
+          _handleStatusChange();
+        }
       });
       statusStream?.onError((e, stk) {
         //  MezRouter.offAndToNamed(kHomeRoute);

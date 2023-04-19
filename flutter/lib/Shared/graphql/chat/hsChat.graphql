@@ -27,6 +27,18 @@ query get_service_provider_customer_chat($customer_id: Int, $service_provider_id
   }
 }
 
+query get_customer_chats_by_sp_type($customer_id: Int, $service_provider_type: String) {
+  service_provider_customer_chat(where: {customer_id: {_eq: $customer_id}, service_provider_type: {_eq: $service_provider_type}}, order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+    }
+  }
+}
+
 
 # Get chat infos
 subscription listen_on_chat_messages($chat_id :Int!) {
@@ -39,7 +51,7 @@ subscription listen_on_chat_messages($chat_id :Int!) {
 # Append messages
 mutation add_message($chat_id : Int! ,  $msg : jsonb!)
 {
-  update_chat( where: {id : {_eq :$chat_id}} , _append : {messages : $msg}){
+  update_chat( where: {id : {_eq :$chat_id}} , _append : {messages : $msg}, _set: {last_message_sent: "now()"}){
     affected_rows
   }
 }

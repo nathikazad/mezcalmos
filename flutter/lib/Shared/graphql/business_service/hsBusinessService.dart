@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/business_service/__generated/business_s
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -31,7 +32,7 @@ Future<List<ServiceCard>> get_service_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2: categories2,
+              categories2: categories2 ?? ["uncategorized"],
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
@@ -49,7 +50,9 @@ Future<List<ServiceCard>> get_service_by_category(
               position: data.details.position,
               businessId: data.business.id,
               available: data.details.available,
-              image: data.details.image?.entries.map((e) => e.value).toList() ??
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
@@ -58,7 +61,7 @@ Future<List<ServiceCard>> get_service_by_category(
     });
     return _services;
   } else {
-    return [];
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   }
 }
 
@@ -78,10 +81,10 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
 
     final Query$get_service_by_id$business_service_by_pk data =
         response.parsedData!.business_service_by_pk!;
-    Map<PaymentType, bool> _acceptedPayments = {};
-    data.business.details.accepted_payments.forEach((k, v) {
-      _acceptedPayments[k.toString().toPaymentType()] = v;
-    });
+    // Map<PaymentType, bool> _acceptedPayments = {};
+    // data.business.details.accepted_payments.forEach((k, v) {
+    //   _acceptedPayments[k.toString().toPaymentType()] = v;
+    // });
     List<String> images =
         data.details.image.map<String>((e) => e.toString()).toList();
     return ServiceWithBusinessCard(
@@ -107,10 +110,10 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
           detailsId: data.business.details.id,
           name: data.business.details.name,
           image: data.business.details.image,
-          acceptedPayments: _acceptedPayments,
-          // acceptedPayments: data.business.details.accepted_payments?.map(
-          //     (k, v) => MapEntry<PaymentType, bool>(
-          //         k.toString().toPaymentType(), v as bool)),
+          acceptedPayments: PaymentInfo.fromData(
+                  stripeInfo: {},
+                  acceptedPayments: data.business.details.accepted_payments)
+              .acceptedPayments,
           avgRating: double.tryParse(
               data.business.reviews_aggregate.aggregate?.avg.toString() ??
                   '0.0'),

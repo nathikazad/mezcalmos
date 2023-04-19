@@ -35,8 +35,10 @@ Future<List<EventCard>> get_event_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2:
-                  categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+              categories2: categories2
+                      ?.map((EventCategory2 e) => e.toFirebaseFormatString())
+                      .toList() ??
+                  ["uncategorized"],
               schedule_type: scheduleType
                   .map((ScheduleType e) => e.toFirebaseFormatString())
                   .toList(),
@@ -58,9 +60,8 @@ Future<List<EventCard>> get_event_by_category(
                 : null,
             time: data.time,
             tags: data.details.tags
-                    ?.map((e) => e.toString())
-                    .toList()
-                    .cast<String>() ??
+                    ?.map<EventTag>((e) => e.toString().toEventTag())
+                    .toList() ??
                 [],
             details: BusinessItemDetails(
               id: data.id,
@@ -69,9 +70,8 @@ Future<List<EventCard>> get_event_by_category(
               businessId: data.business.id,
               available: data.details.available,
               image: data.details.image
-                      ?.map((e) => e.toString())
-                      .toList()
-                      .cast<String>() ??
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
@@ -110,8 +110,10 @@ Future<List<EventCard>> get_class_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2:
-                  categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+              categories2: categories2
+                      ?.map((EventCategory2 e) => e.toFirebaseFormatString())
+                      .toList() ??
+                  ["uncategorized"],
               schedule_type: scheduleType
                   .map((ScheduleType e) => e.toFirebaseFormatString())
                   .toList(),
@@ -133,9 +135,8 @@ Future<List<EventCard>> get_class_by_category(
                 : null,
             time: data.time,
             tags: data.details.tags
-                    ?.map((e) => e.toString().toEventTag())
-                    .toList()
-                    .cast<String>() ??
+                    ?.map<EventTag>((e) => e.toString().toEventTag())
+                    .toList() ??
                 [],
             details: BusinessItemDetails(
               id: data.id,
@@ -251,15 +252,17 @@ Future<int?> add_one_event({required Event event}) async {
                       data: Input$business_item_details_insert_input(
                           available: event.details.available,
                           category1: event.category1.toFirebaseFormatString(),
-                          category2: event.category2?.toFirebaseFormatString(),
+                          category2: event.category2?.toFirebaseFormatString() ??
+                              EventCategory2.Uncategorized
+                                  .toFirebaseFormatString(),
                           cost: event.details.cost,
                           image: event.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
                                   service_provider_id:
                                       event.details.businessId.toInt(),
-                                  service_provider_type: ServiceProviderType
-                                      .Business.toFirebaseFormatString(),
+                                  service_provider_type: ServiceProviderType.Business
+                                      .toFirebaseFormatString(),
                                   translations:
                                       Input$translation_value_arr_rel_insert_input(data: <
                                           Input$translation_value_insert_input>[
@@ -280,11 +283,10 @@ Future<int?> add_one_event({required Event event}) async {
                                   data: Input$translation_insert_input(
                                       service_provider_id:
                                           event.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType
-                                          .Business.toFirebaseFormatString(),
-                                      translations:
-                                          Input$translation_value_arr_rel_insert_input(
-                                              data: <Input$translation_value_insert_input>[
+                                      service_provider_type: ServiceProviderType.Business
+                                          .toFirebaseFormatString(),
+                                      translations: Input$translation_value_arr_rel_insert_input(
+                                          data: <Input$translation_value_insert_input>[
                                             Input$translation_value_insert_input(
                                                 language_id: Language.EN
                                                     .toFirebaseFormatString(),

@@ -14,7 +14,6 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/Clas
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/components/VehicleFilterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -236,7 +235,8 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                                 : ListView.builder(
                                     itemCount:
                                         classesController.classesData.length,
-                                    itemBuilder: (context, index) {
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
                                       return CustClassCard(
                                         cardType: classesController
                                             .classesData[index].scheduleType,
@@ -258,8 +258,8 @@ class _OtherAssetListsViewState extends State<OtherAssetListsView> {
                                         price: classesController
                                             .classesData[index].details.cost,
                                         needAgencyName: true,
-                                        schedule: classesController
-                                            .classesData[index].schedule,
+                                        // schedule: classesController
+                                        //     .classesData[index].schedule,
                                       );
                                     },
                                   ),

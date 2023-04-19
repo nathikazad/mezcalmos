@@ -133,6 +133,51 @@ Future<HasuraChat?> get_service_provider_customer_chat(
   }
 }
 
+Future<List<HasuraChat>> get_customer_chat_by_sp_type(
+    {required int customerId,
+    required ServiceProviderType serviceProviderType}) async {
+  final List<HasuraChat> _chats = <HasuraChat>[];
+
+  final QueryResult<Query$get_customer_chats_by_sp_type> response =
+      await _hasuraDb.graphQLClient.query$get_customer_chats_by_sp_type(
+    Options$Query$get_customer_chats_by_sp_type(
+      variables: Variables$Query$get_customer_chats_by_sp_type(
+        customer_id: customerId,
+        service_provider_type: serviceProviderType.toFirebaseFormatString(),
+      ),
+    ),
+  );
+
+  if (response.parsedData?.service_provider_customer_chat != null) {
+    response.parsedData?.service_provider_customer_chat.forEach(
+        (Query$get_customer_chats_by_sp_type$service_provider_customer_chat
+            data) async {
+      _chats.add(HasuraChat(
+          chatInfo: HasuraChatInfo(
+            chatTite:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatTitle'],
+            phoneNumber:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['phoneNumber'],
+            chatImg:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatImage'],
+            parentlink:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['parentLink'],
+          ),
+          creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
+          id: data.chat.id,
+          messages: _get_messages(data.chat.messages),
+          participants: []));
+    });
+    return _chats;
+  } else {
+    return [];
+  }
+}
+
 Future<void> send_message(
     {required int chat_id, required Map<String, dynamic> msg}) async {
   final QueryResult<Mutation$add_message> _resp =

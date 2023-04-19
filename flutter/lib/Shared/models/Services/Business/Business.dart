@@ -55,6 +55,13 @@ class EventCard extends Event {
           category1: event.category1,
           details: event.details,
         );
+
+  bool isClass() {
+    if (tags != null) {
+      return tags!.contains(EventTag.Class);
+    }
+    return false;
+  }
 }
 
 class ProductCard extends Product {
@@ -116,6 +123,7 @@ class ProductWithBusinessCard extends Product {
           details: product.details,
         );
 }
+
 class ServiceWithBusinessCard extends Service {
   final BusinessCard business;
   ServiceWithBusinessCard({
