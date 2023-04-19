@@ -103,9 +103,6 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(10),
                       onTap: () {
-                        viewController.selectedCategories.value.clear();
-                        viewController.selectedCategories
-                            .addAll(viewController.baseCategories);
                         showModalBottomSheet(
                             isDismissible: false,
                             shape: RoundedRectangleBorder(

@@ -18,11 +18,6 @@ class CustEventsListViewController {
   RxBool showBusiness = false.obs;
   Location? _fromLocation;
 
-  List<EventCategory1> baseCategories = <EventCategory1>[
-    EventCategory1.Dance,
-    EventCategory1.Party,
-    EventCategory1.Social,
-  ];
   List<EventCategory1> filterCategories = <EventCategory1>[
     EventCategory1.Dance,
     EventCategory1.Party,
@@ -39,15 +34,16 @@ class CustEventsListViewController {
   Future<void> init() async {
     try {
       _isLoading.value = true;
+      selectedCategories.value = List.from(filterCategories);
       locPkg.LocationData location = await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation =
             Location(lat: location.latitude!, lng: location.longitude!);
+        await _fetchEvents();
+        await _fetchBusinesses();
+        _filtredBusiness.value.addAll(_businesses.value);
+        _filtredEvents.value.addAll(_events.value);
       }
-      await _fetchEvents();
-      await _fetchBusinesses();
-      _filtredBusiness.value.addAll(_businesses.value);
-      _filtredEvents.value.addAll(_events.value);
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -61,22 +57,19 @@ class CustEventsListViewController {
     mezDbgPrint("Getting events  =====>${filterCategories.length}");
     _events.value.clear();
     _events.value = await get_event_by_category(
-        offset: 0,
-        limit: 15,
-        categories1: filterCategories,
+        categories1: selectedCategories,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         tags: [],
         scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false);
+    mezDbgPrint(_events.value.length);
   }
 
   Future<void> _fetchBusinesses() async {
     mezDbgPrint("Getting events businesses  =====>$_fromLocation");
     _businesses.clear();
     _businesses.value = await get_business_by_event_category1(
-        offset: 0,
-        limit: 15,
         category1: filterCategories.first,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
