@@ -31,7 +31,7 @@ Future<List<ServiceCard>> get_service_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2: categories2,
+              categories2: categories2 ?? ["uncategorized"],
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
@@ -49,7 +49,9 @@ Future<List<ServiceCard>> get_service_by_category(
               position: data.details.position,
               businessId: data.business.id,
               available: data.details.available,
-              image: data.details.image?.entries.map((e) => e.value).toList() ??
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
@@ -58,7 +60,7 @@ Future<List<ServiceCard>> get_service_by_category(
     });
     return _services;
   } else {
-    return [];
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   }
 }
 

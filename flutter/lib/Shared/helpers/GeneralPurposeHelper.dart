@@ -784,14 +784,11 @@ void showErrorSnackBar(
   return customSnackBar(
       title: errorTitle,
       subTitle: errorText,
-      duration: duration,
-      icon: CircleAvatar(
-        radius: 19,
-        backgroundColor: offRedColor,
-        child: Icon(
-          Icons.close,
-          color: redAccentColor,
-        ),
+      duration: duration ?? Duration(seconds: 2),
+      icon: Icon(
+        Icons.cancel,
+        size: 40,
+        color: Colors.redAccent,
       ));
 }
 

@@ -48,10 +48,14 @@ class DvOrderDetailsViewController {
 // getters //
 
   bool get showEditPrice {
-    return (order.value?.orderType == cModels.OrderType.Courier ||
-            order.value?.orderType == cModels.OrderType.Laundry) &&
+    return order.value?.orderType == cModels.OrderType.Courier &&
         order.value?.isDriverAssigned == true &&
         order.value?.status == cModels.DeliveryOrderStatus.OrderReceived;
+  }
+
+  bool get showBillAndTax {
+    return order.value?.orderType == cModels.OrderType.Courier &&
+        order.value?.isDriverAssigned == true;
   }
 
   bool get isCourier => order.value?.orderType == cModels.OrderType.Courier;

@@ -35,8 +35,10 @@ Future<List<EventCard>> get_event_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2:
-                  categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+              categories2: categories2
+                      ?.map((EventCategory2 e) => e.toFirebaseFormatString())
+                      .toList() ??
+                  ["uncategorized"],
               schedule_type: scheduleType
                   .map((ScheduleType e) => e.toFirebaseFormatString())
                   .toList(),
@@ -58,9 +60,8 @@ Future<List<EventCard>> get_event_by_category(
                 : null,
             time: data.time,
             tags: data.details.tags
-                    ?.map((e) => e.toString())
-                    .toList()
-                    .cast<String>() ??
+                    ?.map<EventTag>((e) => e.toString().toEventTag())
+                    .toList() ??
                 [],
             details: BusinessItemDetails(
               id: data.id,
@@ -69,9 +70,8 @@ Future<List<EventCard>> get_event_by_category(
               businessId: data.business.id,
               available: data.details.available,
               image: data.details.image
-                      ?.map((e) => e.toString())
-                      .toList()
-                      .cast<String>() ??
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
@@ -110,8 +110,9 @@ Future<List<EventCard>> get_class_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2:
-                  categories2?.map((e) => e.toFirebaseFormatString()).toList(),
+              categories2: categories2
+                  ?.map((EventCategory2 e) => e.toFirebaseFormatString())
+                  .toList(),
               schedule_type: scheduleType
                   .map((ScheduleType e) => e.toFirebaseFormatString())
                   .toList(),
@@ -133,9 +134,8 @@ Future<List<EventCard>> get_class_by_category(
                 : null,
             time: data.time,
             tags: data.details.tags
-                    ?.map((e) => e.toString().toEventTag())
-                    .toList()
-                    .cast<String>() ??
+                    ?.map<EventTag>((e) => e.toString().toEventTag())
+                    .toList() ??
                 [],
             details: BusinessItemDetails(
               id: data.id,
