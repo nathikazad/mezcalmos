@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessAdditionalData.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessTitle.dart';
@@ -63,10 +64,8 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                                 .homeRental!.details.name[userLanguage] ??
                             "No Title",
                       ),
-                      CustBusinessAdditionalData(
-                        additionalValues: viewController
-                                .homeRental!.details.additionalParameters ??
-                            {},
+                      _CustBusinessAdditionalData(
+                        homeRental: viewController.homeRental!,
                       ),
                       _BuildRentalCost(
                         cost: viewController.homeRental!.details.cost,
@@ -180,6 +179,46 @@ class _BuildRentalCost extends StatelessWidget {
             )
         ],
       ),
+    );
+  }
+}
+
+class _CustBusinessAdditionalData extends StatelessWidget {
+  const _CustBusinessAdditionalData({
+    required this.homeRental,
+  });
+
+  final RentalWithBusinessCard? homeRental;
+
+  @override
+  Widget build(BuildContext context) {
+    String wholeAdditionalParamString() {
+      final String circle = "•";
+      final Map<String, String> additionalValues = {
+        "bedRooms": "Bedrooms ${homeRental?.bedrooms ?? 0}",
+        "bathRooms": "Bathrooms ${homeRental?.bathrooms ?? 0}",
+        "houseType": "${homeRental?.homeType ?? ""}",
+      };
+      final Map<String, String> moreAdditionalValues = homeRental
+              ?.details.additionalParameters
+              ?.map((key, value) => MapEntry(key, value.toString())) ??
+          {};
+
+      additionalValues.addAll(
+        moreAdditionalValues,
+      );
+      final StringBuffer wholeString = StringBuffer();
+      additionalValues.map(
+        (key, value) {
+          wholeString.write("$circle $value ");
+          return MapEntry(key, value);
+        },
+      );
+      return wholeString.toString();
+    }
+
+    return CustBusinessBlueText(
+      text: wholeAdditionalParamString(),
     );
   }
 }
