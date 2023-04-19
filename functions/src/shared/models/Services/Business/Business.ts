@@ -1,4 +1,5 @@
 import { Language, Location } from "../../Generic/Generic";
+import { Schedule } from "../../Generic/Schedule";
 import { ForegroundNotification } from "../../Notification";
 import { ServiceProvider } from "../Service";
 
@@ -45,7 +46,7 @@ export interface Event {
     category1: EventCategory1;
     category2?: EventCategory2;
     scheduleType: ScheduleType;
-    schedule?: any;
+    schedule?: Schedule;
     details: BusinessItemDetails;
     gpsLocation?: Location;
     time?: string;

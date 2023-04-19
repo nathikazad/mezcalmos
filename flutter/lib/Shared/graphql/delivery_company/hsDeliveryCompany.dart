@@ -38,7 +38,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
         freeDeliveryKmRange: data.delivery_details.free_delivery_km_range,
       ),
       creationTime: DateTime.parse(data.details!.creation_time),
-      schedule: Schedule.fromData(data.details!.schedule),
+      schedule: scheduleFromData(data.details!.schedule),
       deliveryDetailsId: data.delivery_details.id,
       info: ServiceInfo(
         hasuraId: data.id,
@@ -131,7 +131,7 @@ Future<List<DeliveryCompany>> get_nearby_companies(
         minimumCost: data.delivery_details.minimum_cost,
         freeDeliveryKmRange: data.delivery_details.free_delivery_km_range,
       ),
-      schedule: Schedule.fromData(data.details!.schedule),
+      schedule: scheduleFromData(data.details!.schedule),
       creationTime: DateTime.parse(data.details!.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
@@ -173,7 +173,7 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
   returnedList =
       dataList.map((Query$getDeliveryCompanies$delivery_company data) {
     return DeliveryCompany(
-      schedule: Schedule.fromData(data.details!.schedule),
+      schedule: scheduleFromData(data.details!.schedule),
       rate: data.reviews_aggregate.aggregate?.avg?.rating,
       numberOfReviews: data.reviews_aggregate.aggregate?.count,
       deliveryCost: DeliveryCost(

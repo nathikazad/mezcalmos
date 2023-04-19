@@ -10,12 +10,13 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { laundryUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
+import { Schedule } from "../shared/models/Generic/Schedule";
 
 export interface LaundryDetails {
   name: string,
   image: string,
   location: Location,
-  schedule:JSON,
+  schedule: Schedule,
   laundryOperatorNotificationToken?: string,
   firebaseId?: string,
   deliveryPartnerId?: number,

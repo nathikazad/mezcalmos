@@ -35,8 +35,8 @@ class ServiceScheduleViewController {
       oldSchedule.value = await get_service_schedule(
           serviceDetailsId: _detailsId, withCache: false);
 
-      newSchedule.value = Schedule.clone(oldSchedule.value!);
-      schedulePreview.value = Schedule.clone(oldSchedule.value!);
+      newSchedule.value = oldSchedule.value!.clone();
+      schedulePreview.value = oldSchedule.value!.clone();
     }
   }
 

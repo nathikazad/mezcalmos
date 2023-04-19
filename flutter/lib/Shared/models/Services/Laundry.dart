@@ -16,7 +16,7 @@ class Laundry extends Service {
 
   Laundry({
     required ServiceInfo userInfo,
-    required Schedule? schedule,
+    required cModels.Schedule? schedule,
     required PaymentInfo paymentInfo,
     required ServiceState laundryState,
     super.rate,
