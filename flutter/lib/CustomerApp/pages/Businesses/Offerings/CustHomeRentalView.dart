@@ -13,9 +13,9 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessTitle.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
 
 class CustHomeRentalView extends StatefulWidget {
   const CustHomeRentalView({super.key});
@@ -35,11 +35,11 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   @override
   void initState() {
     rentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
-    mezDbgPrint("✅ init rental view with id => $rentalId");
+    mezDbgPrint("✅ init home rental view with id => $rentalId");
     if (rentalId != null) {
       viewController.fetchData(rentalId: rentalId!);
     } else {
-      showErrorSnackBar(errorText: "Error: Rental ID $rentalId not found");
+      showErrorSnackBar(errorText: "Error: Home Rental ID $rentalId not found");
     }
     super.initState();
   }
@@ -67,7 +67,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       _CustBusinessAdditionalData(
                         homeRental: viewController.homeRental!,
                       ),
-                      _BuildRentalCost(
+                      CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
                       CustBusinessDescription(
@@ -95,93 +95,6 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   }
 }
 
-class _BuildRentalCost extends StatelessWidget {
-  const _BuildRentalCost({required this.cost});
-
-  final Map<TimeUnit, num>? cost;
-
-  @override
-  Widget build(BuildContext context) {
-    List<Map<String, dynamic>> generateCosetData() {
-      String removePerFromUnit(TimeUnit unit) {
-        return unit.name.toLowerCase().replaceAll("per", "");
-      }
-
-      final List<Map<String, dynamic>> data = [];
-      var allCost = cost ?? {};
-      allCost.map((key, value) {
-        switch (key) {
-          case TimeUnit.PerHour:
-            data.add({
-              "cost": double.parse("$value"),
-              "unit": removePerFromUnit(key),
-              "icon": Icons.hourglass_top,
-            });
-            break;
-          case TimeUnit.PerDay:
-            data.add({
-              "cost": double.parse("$value"),
-              "unit": removePerFromUnit(key),
-              "icon": Icons.event,
-            });
-            break;
-          case TimeUnit.PerWeek:
-            data.add({
-              "cost": double.parse("$value"),
-              "unit": removePerFromUnit(key),
-              "icon": Icons.date_range,
-            });
-            break;
-          case TimeUnit.PerMonth:
-            data.add({
-              "cost": double.parse("$value"),
-              "unit": removePerFromUnit(key),
-              "icon": Icons.calendar_month,
-            });
-            break;
-          case TimeUnit.Total:
-            data.add({
-              "cost": double.parse("$value"),
-              "unit": removePerFromUnit(key),
-              "icon": Icons.equalizer,
-            });
-            break;
-          case TimeUnit.PerPerson:
-            data.add({
-              "cost": double.parse("$value"),
-              "unit": removePerFromUnit(key),
-              "icon": Icons.person,
-            });
-            break;
-        }
-        return MapEntry(key, value);
-      });
-      return data;
-    }
-
-    final List<Map<String, dynamic>> costData = generateCosetData();
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          for (int index = 0; index < costData.length; index++)
-            Column(
-              children: [
-                Icon(
-                  costData[index]["icon"],
-                ),
-                Text(
-                  "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-                ),
-              ],
-            )
-        ],
-      ),
-    );
-  }
-}
 
 class _CustBusinessAdditionalData extends StatelessWidget {
   const _CustBusinessAdditionalData({
