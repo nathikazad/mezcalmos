@@ -2020,7 +2020,7 @@ extension ParseStringToEventCategory1 on String {
   }
 }
 
-enum EventCategory2 { Salsa, Zumba, HIIT, Ecstatic, Spin, Jiujitsu, Karate }
+enum EventCategory2 { Salsa, Zumba, HIIT, Ecstatic, Spin, Jiujitsu, Karate, Uncategorized }
 
 extension ParseEventCategory2ToString on EventCategory2 {
   String toFirebaseFormatString() {

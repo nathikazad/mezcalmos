@@ -24,7 +24,8 @@ class ClassesController {
     EventCategory1.Dance: true,
     EventCategory1.Yoga: true,
   }.obs;
-  RxList<String> category2 = <String>["uncategorized"].obs;
+  RxList<EventCategory2> category2 =
+      <EventCategory2>[EventCategory2.Uncategorized].obs;
 
   RxString filterString = "All".obs;
   RxList<EventCard> classesData = <EventCard>[].obs;

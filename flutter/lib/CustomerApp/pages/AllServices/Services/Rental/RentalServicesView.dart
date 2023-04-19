@@ -1,16 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/HomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -47,6 +54,38 @@ class _RentalViewState extends State<RentalView> {
         children: [
           MezButton(
             label: "Go to service",
+            onClick: () async {
+              await CustServiceView.navigate(
+                serviceId: 1,
+              );
+            },
+          ),
+          MezButton(
+            label: "Go to Home Rental",
+            onClick: () async {
+              await CustHomeRentalView.navigate(
+                rentalId: 14,
+              );
+            },
+          ),
+          MezButton(
+            label: "Go to Event",
+            onClick: () async {
+              await CustEventView.navigate(
+                eventId: 8,
+              );
+            },
+          ),
+          MezButton(
+            label: "Go to Product",
+            onClick: () async {
+              await CustProductView.navigate(
+                productId: 14,
+              );
+            },
+          ),
+          MezButton(
+            label: "Go to Cust Business",
             onClick: () async {
               await CustBusinessView.navigate(
                 businessId: 3,
