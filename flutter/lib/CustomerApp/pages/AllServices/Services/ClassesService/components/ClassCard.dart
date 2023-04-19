@@ -10,7 +10,6 @@ class CustClassCard extends StatelessWidget {
     required this.imageUrl,
     required this.agencyName,
     required this.price,
-    required this.priceUnit,
     required this.needAgencyName,
     this.schedule = null,
   });
@@ -19,8 +18,7 @@ class CustClassCard extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String agencyName;
-  final double price;
-  final String? priceUnit;
+  final Map<TimeUnit, num> price;
   final bool needAgencyName;
   final Map<String, Map<String, String>>? schedule;
 
@@ -32,7 +30,6 @@ class CustClassCard extends StatelessWidget {
       needAgencyName: true,
       agencyName: agencyName,
       price: price,
-      priceUnit: priceUnit,
       schedule: _getSchedule(),
     );
   }
@@ -50,7 +47,6 @@ class _DefaultClassCard extends StatelessWidget {
     required this.imageUrl,
     required this.title,
     required this.price,
-    required this.priceUnit,
     required this.needAgencyName,
     this.schedule = null,
     this.agencyName = "",
@@ -58,8 +54,7 @@ class _DefaultClassCard extends StatelessWidget {
 
   final String imageUrl;
   final String title;
-  final double price;
-  final String? priceUnit;
+  final Map<TimeUnit, num> price;
   final bool needAgencyName;
   final String agencyName;
   final Map<String, Map<String, String>>? schedule;
@@ -99,7 +94,7 @@ class _DefaultClassCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "\$$price${priceUnit != null ? "/" : ""}${priceUnit ?? ""}",
+                  "\$$price ",
                 ),
               ],
             ),

@@ -55,7 +55,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
         return;
       case AllServiceViewEnum.Event:
-        RentalView.navigate();
+        CustEventsListView.navigate();
         return;
       case AllServiceViewEnum.Volunteer:
         HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Volunteer);
@@ -94,7 +94,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
               onClick: () {
-                CustEventsListView.navigate();
+                navigateToServices(AllServiceViewEnum.values[index]);
               },
               content: Column(
                 children: [

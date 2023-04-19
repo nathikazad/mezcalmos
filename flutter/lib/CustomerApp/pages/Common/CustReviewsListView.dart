@@ -60,10 +60,9 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
 
   Future<void> fetchReviews() async {
     reviews.value = await get_service_reviews(
-            serviceId: serviceId!,
-            serviceProviderType: serviceProviderType!,
-            withCache: false) ??
-        [];
+        serviceId: serviceId!,
+        serviceProviderType: serviceProviderType!,
+        withCache: false);
     rating.value = await get_service_review_average(
             serviceId: serviceId!,
             serviceProviderType: serviceProviderType!,

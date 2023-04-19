@@ -152,6 +152,12 @@ class _AgencyStoreTabState extends State<AgencyStoreTab> {
                           case BusinessProfile.Volunteer:
                             // Tour screen not going to navigate here thats why no UI needed
                             return Offstage();
+                          case BusinessProfile.DanceClass:
+                            // Tour screen not going to navigate here thats why no UI needed
+                            return Offstage();
+                          case BusinessProfile.Therapy:
+                            // Tour screen not going to navigate here thats why no UI needed
+                            return Offstage();
                           case null:
                             // Activities screen not going to navigate here thats why no UI needed
                             return Offstage();

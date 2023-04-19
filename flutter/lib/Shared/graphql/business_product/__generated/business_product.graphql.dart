@@ -1770,7 +1770,7 @@ class Query$get_product_by_id$business_product_by_pk$details {
     required this.category1,
     required this.category2,
     required this.cost,
-    this.tags,
+    required this.tags,
     this.description,
     required this.id,
     this.image,
@@ -1799,7 +1799,7 @@ class Query$get_product_by_id$business_product_by_pk$details {
       category1: (l$category1 as String),
       category2: (l$category2 as String),
       cost: mapFromJson(l$cost),
-      tags: l$tags == null ? null : mapFromJson(l$tags),
+      tags: mapFromJson(l$tags),
       description: l$description == null
           ? null
           : Query$get_product_by_id$business_product_by_pk$details$description
@@ -1823,7 +1823,7 @@ class Query$get_product_by_id$business_product_by_pk$details {
 
   final dynamic cost;
 
-  final dynamic? tags;
+  final dynamic tags;
 
   final Query$get_product_by_id$business_product_by_pk$details$description?
       description;
@@ -1851,7 +1851,7 @@ class Query$get_product_by_id$business_product_by_pk$details {
     final l$cost = cost;
     _resultData['cost'] = mapToJson(l$cost);
     final l$tags = tags;
-    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    _resultData['tags'] = mapToJson(l$tags);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$id = id;
@@ -2047,7 +2047,9 @@ class _CopyWithImpl$Query$get_product_by_id$business_product_by_pk$details<TRes>
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as dynamic),
-        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         description: description == _undefined
             ? _instance.description
             : (description
@@ -3973,7 +3975,7 @@ class Query$get_product_by_category$business_product$details {
     required this.available,
     required this.category1,
     required this.cost,
-    this.tags,
+    required this.tags,
     this.image,
     required this.position,
     required this.$__typename,
@@ -4002,7 +4004,7 @@ class Query$get_product_by_category$business_product$details {
       available: (l$available as bool),
       category1: (l$category1 as String),
       cost: mapFromJson(l$cost),
-      tags: l$tags == null ? null : mapFromJson(l$tags),
+      tags: mapFromJson(l$tags),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4021,7 +4023,7 @@ class Query$get_product_by_category$business_product$details {
 
   final dynamic cost;
 
-  final dynamic? tags;
+  final dynamic tags;
 
   final dynamic? image;
 
@@ -4046,7 +4048,7 @@ class Query$get_product_by_category$business_product$details {
     final l$cost = cost;
     _resultData['cost'] = mapToJson(l$cost);
     final l$tags = tags;
-    _resultData['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    _resultData['tags'] = mapToJson(l$tags);
     final l$image = image;
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
@@ -4228,7 +4230,9 @@ class _CopyWithImpl$Query$get_product_by_category$business_product$details<TRes>
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as dynamic),
-        tags: tags == _undefined ? _instance.tags : (tags as dynamic?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         image: image == _undefined ? _instance.image : (image as dynamic?),
         position: position == _undefined || position == null
             ? _instance.position

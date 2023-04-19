@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/graphql/business_rental/__generated/business_re
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -59,8 +59,6 @@ Future<List<RentalCard>> get_rental_by_category(
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
-              tags:
-                  data.details.tags?.entries.map((e) => e.value).toList() ?? [],
             ),
             bathrooms: data.home_rental?.bathrooms,
             bedrooms: data.home_rental?.bedrooms,
@@ -101,24 +99,22 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
               category2: data.details.category2.toRentalCategory2(),
               category3: data.category3,
               details: BusinessItemDetails(
-                  id: id,
-                  name: toLanguageMap(
-                      translations: data.details.name.translations),
-                  position: data.details.position,
-                  businessId: data.business.id,
-                  available: data.details.available,
-                  cost: constructBusinessServiceCost(data.details.cost),
-                  image: data.details.image?.entries
-                          .map((e) => e.value)
-                          .toList() ??
-                      [],
-                  additionalParameters: data.details.additional_parameters,
-                  description: toLanguageMap(
-                      translations:
-                          data.details.description?.translations ?? []),
-                  tags:
-                      data.details.tags?.entries.map((e) => e.value).toList() ??
-                          []),
+                id: id,
+                name:
+                    toLanguageMap(translations: data.details.name.translations),
+                position: data.details.position,
+                businessId: data.business.id,
+                available: data.details.available,
+                cost: constructBusinessServiceCost(data.details.cost),
+                image: data.details.image
+                        ?.map((e) => e.toString())
+                        .toList()
+                        .cast<String>() ??
+                    [],
+                additionalParameters: data.details.additional_parameters,
+                description: toLanguageMap(
+                    translations: data.details.description?.translations ?? []),
+              ),
               bathrooms: data.home_rental?.bathrooms,
               bedrooms: data.home_rental?.bedrooms,
               homeType: data.home_rental?.home_type,
@@ -132,7 +128,10 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,
-            acceptedPayments: data.business.details.accepted_payments,
+            acceptedPayments: PaymentInfo.fromData(
+                    stripeInfo: {},
+                    acceptedPayments: data.business.details.accepted_payments)
+                .acceptedPayments,
             avgRating: double.tryParse(
                 data.business.reviews_aggregate.aggregate?.avg.toString() ??
                     '0.0'),
@@ -163,6 +162,8 @@ Future<List<RentalCard>> get_home_rentals(
               offset: offset,
               limit: limit)));
 
+  mezDbgPrint("get_home_rentals ${response}");
+
   if (response.parsedData?.business_home_rental != null) {
     response.parsedData?.business_home_rental
         .forEach((Query$get_home_rentals$business_home_rental data) async {
@@ -177,16 +178,13 @@ Future<List<RentalCard>> get_home_rentals(
               position: data.rental.details.position,
               businessId: data.rental.business.id,
               available: data.rental.details.available,
-              image: data.rental.details.image?.entries
-                      .map((e) => e.value)
-                      .toList() ??
+              image: data.rental.details.image
+                      ?.map((e) => e.toString())
+                      .toList()
+                      .cast<String>() ??
                   [],
               cost: constructBusinessServiceCost(data.rental.details.cost),
               additionalParameters: data.rental.details.additional_parameters,
-              tags: data.rental.details.tags?.entries
-                      .map((e) => e.value)
-                      .toList() ??
-                  [],
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
@@ -263,8 +261,7 @@ Future<int?> add_one_rental({required Rental rental}) async {
                                                 value: rental.details
                                                     .description?[Language.ES])
                                           ])))
-                              : null,
-                          tags: rental.details.tags))))));
+                              : null))))));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura add rental mutation exception =>${response.exception}");
@@ -343,8 +340,7 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
                                           value: rental.details
                                               .description?[Language.ES])
                                     ])))
-                        : null,
-                    tags: rental.details.tags)))),
+                        : null)))),
   ))));
   if (response.hasException) {
     mezDbgPrint(

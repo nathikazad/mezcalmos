@@ -1,12 +1,12 @@
 import { service_provider_customer_chat_constraint } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../utilities/hasura";
 import { DirectChatDetails } from "../../chat/createChat";
-import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, Chat, ChatInfo } from "../../models/Generic/Chat";
+import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, ChatInfo } from "../../models/Generic/Chat";
 import { AppType, MezError } from "../../models/Generic/Generic";
 import { CustomerInfo, MezAdmin, UserInfo } from "../../models/Generic/User";
 import { ServiceProvider, ServiceProviderToAppType } from "../../models/Services/Service";
 
-export async function createServiceProviderCustomerChat(serviceProvider: ServiceProvider, customer: CustomerInfo): Promise<Chat> {
+export async function createServiceProviderCustomerChat(serviceProvider: ServiceProvider, customer: CustomerInfo): Promise<number> {
     let chain = getHasura();
     let operatorsDetails = serviceProvider.operators!.map((r) => {
         return {
@@ -55,11 +55,7 @@ export async function createServiceProviderCustomerChat(serviceProvider: Service
     if(response.insert_service_provider_customer_chat_one == null) {
         throw new MezError("chatCreationError");
     }
-    return {
-        chatId: response.insert_service_provider_customer_chat_one.chat_id,
-        chatInfo,
-        chatType: ChatType.Group
-    }
+    return response.insert_service_provider_customer_chat_one.chat_id
 }
 
 export async function createDirectChat(user1: UserInfo, user2: UserInfo, directChatDetails: DirectChatDetails) {

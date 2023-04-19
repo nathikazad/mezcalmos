@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 
 class CustServiceView extends StatefulWidget {
   const CustServiceView({super.key});
@@ -59,7 +60,8 @@ class _CustServiceViewState extends State<CustServiceView> {
                       ),
                       // todo @ChiragKr04 complete the view with the needed data
                       CustBusinessMessageCard(
-                          business: viewController.service!.business),
+                        business: viewController.service!.business,
+                      ),
                     ],
                   ),
                 ),
@@ -67,33 +69,7 @@ class _CustServiceViewState extends State<CustServiceView> {
             ],
           );
         } else {
-          return Container(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "Loading...",
-                  style: context.textTheme.bodyMedium
-                      ?.copyWith(color: primaryBlueColor),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                // InkWell(
-                //   onTap: () {
-                //     MezRouter.back();
-                //   },
-                //   child: Ink(
-                //       padding: const EdgeInsets.all(8), child: Text("Back")),
-                // )
-              ],
-            ),
-          );
+          return CustCircularLoader();
         }
       }),
     );
