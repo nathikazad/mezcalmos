@@ -21,7 +21,7 @@ class CustChatController {
 
     if (chatData == null) {
       // initiate new chat
-      var newChatData =
+      final ServiceProviderChatResponse  newChatData =
           await CloudFunctions.serviceProvider_createServiceProviderChat(
         serviceProviderId: serviceProviderId,
         serviceProviderType: ServiceProviderType.Business,
