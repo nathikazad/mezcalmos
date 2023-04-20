@@ -35,7 +35,7 @@ class CustChatController {
       // initiate previous chat
       mezDbgPrint("initiateChat: HasuraChat is not null $chatData");
       await get_chat_info(chat_id: chatData.id);
-      //  await BaseMessagingScreen.navigate(chatId: chatData.id);
+       await BaseMessagingScreen.navigate(chatId: chatData.id);
       return;
     }
   }

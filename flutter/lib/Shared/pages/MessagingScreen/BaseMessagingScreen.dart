@@ -203,8 +203,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                         mezDbgPrint("Linkkkkkkkk ⏰");
                         mezDbgPrint(
                             "${controller.chat.value?.chatInfo.parentlink}");
-                        if (MezRouter.isRouteInStack(
-                            controller.chat.value?.chatInfo.parentlink)) {
+                        mezDbgPrint(
+                            "${controller.chat.value?.chatInfo.parentlink}");
+                        if (controller.chat.value?.chatInfo.parentlink ==
+                                null ||
+                            (MezRouter.isRouteInStack(
+                                controller.chat.value?.chatInfo.parentlink))) {
                           return SizedBox();
                         } else {
                           return Center(
@@ -212,7 +216,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                               borderRadius: BorderRadius.circular(10),
                               onTap: () {
                                 MezRouter.toPath(
-                                  controller.chat.value!.chatInfo.parentlink,
+                                  controller.chat.value!.chatInfo.parentlink!,
                                 );
                               },
                               child: Ink(

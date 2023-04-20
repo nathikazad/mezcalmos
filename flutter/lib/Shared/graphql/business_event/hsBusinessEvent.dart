@@ -190,9 +190,8 @@ Future<EventWithBusinessCard?> get_event_by_id(
                   : null,
               time: data.time,
               tags: data.details.tags
-                      ?.map((e) => e.toString())
-                      .toList()
-                      .cast<String>() ??
+                      ?.map<EventTag>((e) => e.toString().toEventTag())
+                      .toList() ??
                   [],
               details: BusinessItemDetails(
                 id: id,
