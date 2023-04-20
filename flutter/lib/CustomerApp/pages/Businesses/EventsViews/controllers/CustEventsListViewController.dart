@@ -41,9 +41,11 @@ class CustEventsListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+  RxList<EventCategory1> previewCategories = <EventCategory1>[].obs;
 
   // getters //
   bool get isLoading => _isLoading.value;
+  bool get isFiltering => selectedCategories.length != filterCategories.length;
   List<EventCard> get events => _events.value;
   List<BusinessCard> get businesses => _businesses.value;
 
@@ -51,6 +53,7 @@ class CustEventsListViewController {
     try {
       _isLoading.value = true;
       selectedCategories.value = List.from(filterCategories);
+      previewCategories.value = List.from(filterCategories);
       locPkg.LocationData location = await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation =
@@ -58,9 +61,9 @@ class CustEventsListViewController {
         await _fetchEvents();
         await _fetchBusinesses();
 
-        _eventScrollController.onBottomReach(_fetchEvents, sensitivity: 200);
+        _eventScrollController.onBottomReach(_fetchEvents, sensitivity: 500);
         _businessScrollController.onBottomReach(_fetchBusinesses,
-            sensitivity: 200);
+            sensitivity: 500);
       }
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -77,7 +80,7 @@ class CustEventsListViewController {
     try {
       _eventFetchingData = true;
       mezDbgPrint(
-          "👋 _fetchEvents called with ferchSize : $eventFetchSize offset: $_eventCurrentOffset");
+          "👋 _fetchEvents called selected categories : $selectedCategories \n ferchSize : $eventFetchSize \n offset: $_eventCurrentOffset");
       List<EventCard> newList = await get_event_by_category(
         categories1: selectedCategories,
         distance: 1000000000000,
@@ -121,6 +124,7 @@ class CustEventsListViewController {
       if (newList.length == 0) {
         _businessReachedEndOfData = true;
       }
+
       _businessCurrentOffset += businessFetchSize;
     } catch (e) {
       mezDbgPrint(e);
@@ -129,17 +133,36 @@ class CustEventsListViewController {
     }
   }
 
-  void filter() {}
+  void filter() {
+    selectedCategories.value = List.from(previewCategories);
+
+    _resetEvents();
+    _fetchEvents();
+  }
+
+  void _resetEvents() {
+    _events.clear();
+
+    _eventCurrentOffset = 0;
+    _eventReachedEndOfData = false;
+  }
+
+  void resetFilter() {
+    previewCategories.value = List.from(filterCategories);
+    selectedCategories.value = List.from(filterCategories);
+    _fetchEvents();
+  }
 
   void switchFilterCategory(bool? value, int index) {
     if (value == true) {
-      selectedCategories.add(filterCategories[index]);
+      previewCategories.add(filterCategories[index]);
     } else {
-      selectedCategories.remove(filterCategories[index]);
+      previewCategories.remove(filterCategories[index]);
     }
   }
 
   void dispose() {
     _eventScrollController.dispose();
+    _businessScrollController.dispose();
   }
 }
