@@ -209,16 +209,17 @@ Future<bool?> delete_delivery_driver_by_id(
   }
 }
 
-Stream<AgentStatus> listen_driver_status({required int driverId}) {
+Stream<AgentStatus?> listen_driver_status({required int driverId}) {
   return _db.graphQLClient
       .subscribe$driverStatusStream(Options$Subscription$driverStatusStream(
           variables:
               Variables$Subscription$driverStatusStream(userId: driverId)))
       .map((QueryResult<Subscription$driverStatusStream> event) {
-    if (event.parsedData?.delivery_driver == null ||
+    if (event.hasException) {
+      throw Exception(event.exception);
+    } else if (event.parsedData?.delivery_driver == null ||
         event.parsedData!.delivery_driver.isEmpty) {
-      throw Exception(
-          "🚨🚨 Stream on operator status exceptions =>${event.exception}");
+      return null;
     } else {
       return event.parsedData!.delivery_driver.first.status.toAgentStatus();
     }

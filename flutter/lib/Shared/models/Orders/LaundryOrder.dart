@@ -280,6 +280,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         return LaundryOrderPhase.Neither;
     }
   }
+
+  bool get isItemsPriceSet {
+    return costsByType != null && costsByType!.lineItems.isNotEmpty;
+  }
 }
 
 class LaundryOrderCostLineItem extends LaundryCostLineItem {

@@ -380,6 +380,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
     if(response.service_provider_details.length == 0) {
         throw new MezError("serviceProviderDetailsNotFound");
     }
+    console.log(response.service_provider_details[0].service_provider_type)
     switch (response.service_provider_details[0].service_provider_type) {
         case ServiceProviderType.Restaurant:
             let operators: Operator[] = response.service_provider_details[0].restaurant!.restaurant_operators.map((r): Operator => {
@@ -518,7 +519,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 //     ? response.laundry_store_by_pk.delivery_partners[0].delivery_company_id
                 //     : undefined,
             }
-        case ServiceProviderType.Delivery:
+        case ServiceProviderType.DeliveryCompany:
             let deliveryOperators: Operator[] = response.service_provider_details[0].delivery_company!.delivery_operators.map((o) => {
                 return {
                     id: o.id,

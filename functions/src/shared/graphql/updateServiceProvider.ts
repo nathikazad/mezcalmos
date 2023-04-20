@@ -114,7 +114,7 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
         case ServiceProviderType.Restaurant:
             appType = AppType.Restaurant
             break;
-        case ServiceProviderType.Delivery:
+        case ServiceProviderType.DeliveryCompany:
             appType = AppType.DeliveryAdmin
             break;
         case ServiceProviderType.Laundry:
