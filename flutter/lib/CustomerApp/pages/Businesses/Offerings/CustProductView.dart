@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -62,9 +59,28 @@ class _CustProductViewState extends State<CustProductView> {
                             "Error",
                         style: context.textTheme.displayMedium,
                       ),
-                      CustBusinessBlueText(text: "\$${viewController.product!.details.cost.entries.first.value}"),
-                      CustBusinessDescription(
-                        description: viewController.product!.details.name,
+                      Text(
+                        "\$${viewController.product!.details.cost.entries.first.value}",
+                        style: context.textTheme.bodyLarge!.copyWith(
+                          color: primaryBlueColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        "Description",
+                        style: context.textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        viewController
+                                .product!.details.description?[userLanguage] ??
+                            "No Desription",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
                       ),
                       CustBusinessMessageCard(
                           business: viewController.product!.business),

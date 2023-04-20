@@ -83,7 +83,7 @@ class CustRentalsListViewController {
     mezDbgPrint("Getting rentals businesses  =====>$_fromLocation");
     _businesses.clear();
     _businesses.value = await get_business_by_rental_category1(
-        category1: rentalCategory,
+        categories1: [rentalCategory],
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         withCache: false);

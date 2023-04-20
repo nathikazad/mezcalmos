@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessHeading.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessSubHeading.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';

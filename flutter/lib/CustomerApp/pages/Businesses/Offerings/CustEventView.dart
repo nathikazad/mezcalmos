@@ -5,15 +5,12 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessTitle.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessHeading.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -84,10 +81,10 @@ class _CustEventViewState extends State<CustEventView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustBusinessTitle(
-                        title:
-                            viewController.event!.details.name[userLanguage] ??
-                                "No Title",
+                      Text(
+                        viewController.event!.details.name[userLanguage] ??
+                            "No Title",
+                        style: context.textTheme.displayMedium,
                       ),
                       CustBusinessAdditionalData(
                         additionalValues: viewController
@@ -97,13 +94,32 @@ class _CustEventViewState extends State<CustEventView> {
                       // Price
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: CustBusinessBlueText(
-                          text: generateCost(),
+                        child: Text(
+                          generateCost(),
+                          style: context.textTheme.bodyLarge!.copyWith(
+                            color: primaryBlueColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                      CustBusinessDescription(
-                        description: viewController.event!.details.description,
+
+                      Text(
+                        "Description",
+                        style: context.textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
+                      Text(
+                        viewController
+                                .event!.details.description?[userLanguage] ??
+                            "No Desription",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+
                       // todo @ChiragKr04 complete the view with the needed data
 
                       CustBusinessScheduleBuilder(

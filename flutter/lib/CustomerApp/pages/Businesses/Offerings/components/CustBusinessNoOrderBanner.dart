@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 class CustBusinessNoOrderBanner extends StatelessWidget {

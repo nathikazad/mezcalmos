@@ -69,7 +69,7 @@ class HomeRentalController {
     try {
       _fetchingAgencyData = true;
       final List<BusinessCard> newData = await get_business_by_rental_category1(
-        category1: RentalCategory1.Home,
+        categories1: [RentalCategory1.Home],
         distance: 100000,
         withCache: true,
         fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),

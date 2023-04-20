@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessTitle.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
@@ -59,10 +57,10 @@ class _CustRentalViewState extends State<CustRentalView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustBusinessTitle(
-                        title:
-                            viewController.rental!.details.name[userLanguage] ??
-                                "No Title",
+                      Text(
+                        viewController.rental!.details.name[userLanguage] ??
+                            "No Title",
+                        style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
                         rental: viewController.rental!,
@@ -70,8 +68,21 @@ class _CustRentalViewState extends State<CustRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.rental!.details.cost,
                       ),
-                      CustBusinessDescription(
-                        description: viewController.rental!.details.description,
+                      Text(
+                        "Description",
+                        style: context.textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        viewController
+                                .rental!.details.description?[userLanguage] ??
+                            "No Desription",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
                       ),
                       CustBusinessLocation(
                         location: viewController.rental!.gpsLocation,
@@ -124,8 +135,12 @@ class _CustBusinessAdditionalData extends StatelessWidget {
     final String addtionalData = wholeAdditionalParamString();
     return addtionalData.isEmpty
         ? const SizedBox.shrink()
-        : CustBusinessBlueText(
-            text: addtionalData,
+        : Text(
+            addtionalData,
+            style: context.textTheme.bodyLarge!.copyWith(
+              color: primaryBlueColor,
+              fontWeight: FontWeight.w600,
+            ),
           );
   }
 }

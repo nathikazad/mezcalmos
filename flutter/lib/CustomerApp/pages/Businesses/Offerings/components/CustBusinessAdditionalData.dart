@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 class CustBusinessAdditionalData extends StatelessWidget {
@@ -43,8 +43,12 @@ class CustBusinessAdditionalData extends StatelessWidget {
       return wholeString.toString();
     }
 
-    return CustBusinessBlueText(
-      text: wholeAdditionalParamString(),
+    return Text(
+      wholeAdditionalParamString(),
+      style: context.textTheme.bodyLarge!.copyWith(
+        color: primaryBlueColor,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

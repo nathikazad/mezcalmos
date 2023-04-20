@@ -110,6 +110,10 @@ class EventWithBusinessCard extends Event {
           scheduleType: event.scheduleType,
           category1: event.category1,
           details: event.details,
+          schedule: event.schedule,
+          tags: event.tags,
+          gpsLocation: event.gpsLocation,
+          category2: event.category2,
         );
 }
 
