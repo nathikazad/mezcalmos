@@ -33,10 +33,10 @@ class CustBusinessAdditionalData extends StatelessWidget {
         "Space3": "Very Spacious",
         "For party3": true,
       };
-      final StringBuffer wholeString = StringBuffer();
+      String wholeString = "";
       additionalValues2.map(
         (key, value) {
-          wholeString.write("$circle $key $value ");
+          wholeString += "$circle $key $value ";
           return MapEntry(key, value);
         },
       );

@@ -72,6 +72,8 @@ class _CustEventViewState extends State<CustEventView> {
     return Scaffold(
       body: Obx(() {
         if (viewController.event != null) {
+          mezDbgPrint(
+              "EVENT ${viewController.event?.toFirebaseFormattedJson()}");
           return CustomScrollView(
             slivers: [
               CustBusinessItemAppbar(

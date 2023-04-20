@@ -67,7 +67,7 @@ class CustBusinessMessageCard extends StatelessWidget {
         chatId: 0,
         onTap: () {
           custChatController.initiateChat(
-            serviceProviderId: business.id,
+            business: business,
           );
         },
       ),
