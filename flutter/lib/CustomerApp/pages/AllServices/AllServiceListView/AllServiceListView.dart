@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsLi
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -88,36 +89,32 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         padding: const EdgeInsets.only(top: 8.0),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 14.0,
-            crossAxisSpacing: 14.0,
-            childAspectRatio: 1.2,
-          ),
+              crossAxisCount: 2, mainAxisSpacing: 14.0, crossAxisSpacing: 14.0),
           itemCount: serviceListData.length,
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
+              radius: 10,
+              borderRadius: 15,
+              contentPadding: EdgeInsets.zero,
               onClick: () {
                 navigateToServices(AllServiceViewEnum.values[index]);
               },
               content: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Image.asset(
                     serviceListData[index]["icon"].toString(),
-                    height: 96,
-                    width: 96,
+                    height: 85.mezSp,
+                    width: 85.mezSp,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Obx(
-                      () => Text(
-                        noTabsONNextScreen(index)
-                            ? _i18n()[AllServiceViewEnum.values[index].name
-                                    .toLowerCase()]["title"]
-                                .toString()
-                            : _i18n()[serviceListData[index]["title"]]
-                                .toString(),
-                        style: txt.headlineSmall,
-                      ),
+                  Obx(
+                    () => Text(
+                      noTabsONNextScreen(index)
+                          ? _i18n()[AllServiceViewEnum.values[index].name
+                                  .toLowerCase()]["title"]
+                              .toString()
+                          : _i18n()[serviceListData[index]["title"]].toString(),
+                      style: txt.headlineSmall,
                     ),
                   ),
                 ],

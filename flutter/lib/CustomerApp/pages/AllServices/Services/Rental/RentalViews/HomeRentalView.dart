@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
@@ -83,11 +84,18 @@ class _HomeAssetListsViewState extends State<HomeAssetListsView> {
                     child: MezCard(
                       contentPadding: EdgeInsets.zero,
                       radius: 5,
+                      borderRadius: 5,
                       content: TextField(
                         decoration: InputDecoration(
                             fillColor: Colors.transparent,
-                            prefixIcon: Icon(Icons.search),
-                            hintText: _i18n()["search"].toString()),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: offShadeGreyColor,
+                            ),
+                            hintText: _i18n()["search"].toString(),
+                            hintStyle: context.textTheme.bodyLarge?.copyWith(
+                                color: Colors.grey.shade400,
+                                fontSize: 10.mezSp)),
                       ),
                     ),
                   ),

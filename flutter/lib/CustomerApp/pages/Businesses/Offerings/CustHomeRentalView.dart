@@ -70,10 +70,11 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
-                      CustBusinessDescription(
-                        description:
-                            viewController.homeRental!.details.description,
-                      ),
+                      // CustBusinessDescription(
+                      //   description:
+                      //       viewController.homeRental!.details.description,
+                      // ),
+                      _description(context),
                       CustBusinessLocation(
                         location: viewController.homeRental!.gpsLocation,
                       ),
@@ -91,6 +92,20 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Padding _description(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('Description', style: context.textTheme.bodyLarge),
+          Text(viewController.homeRental!.details.description?[userLanguage] ??
+              "No Desription")
+        ],
+      ),
     );
   }
 }

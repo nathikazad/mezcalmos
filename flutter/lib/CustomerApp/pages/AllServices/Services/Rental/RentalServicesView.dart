@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/HomeRentalView.dart';
@@ -51,127 +52,103 @@ class _RentalViewState extends State<RentalView> {
                 .toLowerCase()]["title"]
             .toString()),
       ),
-      body: Column(
-        children: [
-          MezButton(
-            label: "Go to service",
-            onClick: () async {
-              await CustServiceView.navigate(
-                serviceId: 1,
-              );
-            },
-          ),
-          MezButton(
-            label: "Go to Home Rental",
-            onClick: () async {
-              await CustHomeRentalView.navigate(
-                rentalId: 14,
-              );
-            },
-          ),
-          MezButton(
-            label: "Go to Rental",
-            onClick: () async {
-              await CustRentalView.navigate(
-                rentalId: 18,
-              );
-            },
-          ),
-          MezButton(
-            label: "Go to Event",
-            onClick: () async {
-              await CustEventView.navigate(
-                eventId: 8,
-              );
-            },
-          ),
-          MezButton(
-            label: "Go to Product",
-            onClick: () async {
-              await CustProductView.navigate(
-                productId: 2,
-              );
-            },
-          ),
-          MezButton(
-            label: "Go to Cust Business",
-            onClick: () async {
-              await CustBusinessView.navigate(
-                businessId: 2,
-              );
-            },
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: rentalController
-                  .allRentalValues[
-                      allServiceListViewController.currentSelectedService]!
-                  .length,
-              itemBuilder: (BuildContext context, int index) {
-                return MezCard(
-                  onClick: () {
-                    final RentalViewEnum goToView =
-                        rentalController.allRentalValues[
-                            allServiceListViewController
-                                .currentSelectedService]![index]["value"];
-                    if (goToView == RentalViewEnum.Homes) {
-                      HomeAssetListsView.navigate(
-                        viewEnum: goToView,
-                      );
-                    } else {
-                      OtherAssetListsView.navigate(
-                        viewEnum: goToView,
-                      );
-                    }
-                  },
-                  content: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _i18n()[allServiceListViewController
-                                      .currentSelectedService.value.name
-                                      .toLowerCase()][
-                                  rentalController.allRentalValues[
-                                          allServiceListViewController
-                                              .currentSelectedService]![index]
-                                      ["key"]]['title'],
-                              style: txt.displayMedium,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: Text(
-                                _i18n()[allServiceListViewController
-                                        .currentSelectedService.value.name
-                                        .toLowerCase()][
-                                    rentalController.allRentalValues[
-                                            allServiceListViewController
-                                                .currentSelectedService]![index]
-                                        ["key"]]['description'],
-                                style: txt.labelLarge,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Image.asset(
-                        rentalController.allRentalValues[
-                                allServiceListViewController
-                                    .currentSelectedService]![index]["icon"]
-                            .toString(),
-                        height: 110,
-                        width: 110,
-                      ),
-                    ],
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            MezButton(
+              label: "Go to service",
+              onClick: () async {
+                await CustServiceView.navigate(
+                  serviceId: 1,
                 );
               },
             ),
-          ),
-        ],
+            MezButton(
+              label: "Go to Home Rental",
+              onClick: () async {
+                await CustHomeRentalView.navigate(
+                  rentalId: 14,
+                );
+              },
+            ),
+            MezButton(
+              label: "Go to Rental",
+              onClick: () async {
+                await CustRentalView.navigate(
+                  rentalId: 18,
+                );
+              },
+            ),
+            MezButton(
+              label: "Go to Event",
+              onClick: () async {
+                await CustEventView.navigate(
+                  eventId: 8,
+                );
+              },
+            ),
+            MezButton(
+              label: "Go to Product",
+              onClick: () async {
+                await CustProductView.navigate(
+                  productId: 2,
+                );
+              },
+            ),
+            MezButton(
+              label: "Go to Cust Business",
+              onClick: () async {
+                await CustBusinessView.navigate(
+                  businessId: 2,
+                );
+              },
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: rentalController
+                    .allRentalValues[
+                        allServiceListViewController.currentSelectedService]!
+                    .length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ServicesCard(
+                    title: _i18n()[
+                        allServiceListViewController
+                            .currentSelectedService.value.name
+                            .toLowerCase()][rentalController.allRentalValues[
+                        allServiceListViewController
+                            .currentSelectedService]![index]["key"]]['title'],
+                    subtitle: _i18n()[allServiceListViewController
+                        .currentSelectedService.value.name
+                        .toLowerCase()][rentalController.allRentalValues[
+                            allServiceListViewController
+                                .currentSelectedService]![index]
+                        ["key"]]['description'],
+                    url: rentalController.allRentalValues[
+                            allServiceListViewController
+                                .currentSelectedService]![index]["icon"]
+                        .toString(),
+                    onTap: () {
+                      final RentalViewEnum goToView =
+                          rentalController.allRentalValues[
+                              allServiceListViewController
+                                  .currentSelectedService]![index]["value"];
+                      if (goToView == RentalViewEnum.Homes) {
+                        HomeAssetListsView.navigate(
+                          viewEnum: goToView,
+                        );
+                      } else {
+                        OtherAssetListsView.navigate(
+                          viewEnum: goToView,
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

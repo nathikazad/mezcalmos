@@ -7,9 +7,6 @@ class CustBusinessRentalCost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-    
     List<Map<String, dynamic>> generateCosetData() {
       String removePerFromUnit(TimeUnit unit) {
         return unit.name.toLowerCase().replaceAll("per", "");
@@ -69,24 +66,40 @@ class CustBusinessRentalCost extends StatelessWidget {
 
     final List<Map<String, dynamic>> costData = generateCosetData();
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          for (int index = 0; index < costData.length; index++)
-            Column(
-              children: [
-                Icon(
-                  costData[index]["icon"],
-                ),
-                Text(
-                  "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-                ),
-              ],
-            )
-        ],
-      ),
+    return Center(
+      child: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Wrap(
+            spacing: 20,
+            runSpacing: 20,
+            direction: costData.length > 2 ? Axis.horizontal : Axis.vertical,
+            children: [
+              for (int index = 0; index < costData.length; index++)
+                costData.length <= 2
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            costData[index]["icon"],
+                          ),
+                          Text(
+                            "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
+                          )
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            costData[index]["icon"],
+                          ),
+                          Text(
+                            "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
+                          )
+                        ],
+                      ),
+            ],
+          )),
     );
   }
 }
