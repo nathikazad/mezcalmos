@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
 
 class CustServiceView extends StatefulWidget {
@@ -67,20 +65,32 @@ class _CustServiceViewState extends State<CustServiceView> {
                         style: context.textTheme.displayMedium,
                       ),
                       viewController.service!.details.cost.length == 1
-                          ? CustBusinessBlueText(
-                              text:
-                                  "\$${costData.entries.first.value}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
+                          ? Text(
+                              "\$${costData.entries.first.value}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
+                              style: context.textTheme.bodyLarge!.copyWith(
+                                color: primaryBlueColor,
+                                fontWeight: FontWeight.w600,
+                              ),
                             )
                           : CustBusinessRentalCost(
                               cost: viewController.service!.details.cost,
                             ),
-                      CustBusinessDescription(
-                        description: viewController.service!.details.name,
+                      Text(
+                        "Description",
+                        style: context.textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
-                      // CustBusinessScheduleBuilder(
-                      //   schedule: viewController.service!.details.schedule,
-                      //   scheduleType: ScheduleType.Scheduled,
-                      // ),
+                      Text(
+                        viewController
+                                .service!.details.description?[userLanguage] ??
+                            "No Desription",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
                       CustBusinessMessageCard(
                         business: viewController.service!.business,
                       ),

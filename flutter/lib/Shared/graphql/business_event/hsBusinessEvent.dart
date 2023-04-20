@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -77,7 +78,7 @@ Future<List<EventCard>> get_event_by_category(
               additionalParameters: data.details.additional_parameters,
             ),
             scheduleType: data.schedule_type.toScheduleType(),
-            schedule: data.schedule,
+            schedule: scheduleFromData(data.schedule),
           )));
     });
     return _events;
@@ -153,7 +154,7 @@ Future<List<EventCard>> get_class_by_category(
               additionalParameters: data.details.additional_parameters,
             ),
             scheduleType: data.schedule_type.toScheduleType(),
-            schedule: data.schedule,
+            schedule: scheduleFromData(data.schedule),
           )));
     });
     return _classes;
@@ -211,7 +212,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
                     [],
               ),
               scheduleType: data.schedule_type.toScheduleType(),
-              schedule: data.schedule),
+              schedule: scheduleFromData(data.schedule)),
           business: BusinessCard(
             id: data.business.id,
             detailsId: data.business.details.id,

@@ -76,7 +76,7 @@ query get_business_by_id($id: Int!) {
 query get_business_by_rental_category1(
   $distance: Float!
   $from: geography!
-  $category1: String
+  $categories1: [String!]
   $offset: Int
   $limit: Int
 ) {
@@ -88,7 +88,7 @@ query get_business_by_rental_category1(
             gps: { _st_d_within: { distance: $distance, from: $from } }
           }
         }
-        rentals: { details: { category1: { _eq: $category1 } } }
+        rentals: { details: { category1: { _in: $categories1 } } }
       }
     }
     offset: $offset
@@ -115,9 +115,10 @@ query get_business_by_rental_category1(
 query get_business_by_event_category1(
   $distance: Float!
   $from: geography!
-  $category1: String
   $offset: Int
   $limit: Int
+  $categories1: [String!]
+  $schedule_type: [String!]
 ) {
   business_business(
     where: {
@@ -127,7 +128,10 @@ query get_business_by_event_category1(
             gps: { _st_d_within: { distance: $distance, from: $from } }
           }
         }
-        events: { details: { category1: { _eq: $category1 } } }
+        events: {
+          details: { category1: { _in: $categories1 } }
+          schedule_type: { _in: $schedule_type }
+        }
       }
     }
     offset: $offset

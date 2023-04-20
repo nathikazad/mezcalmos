@@ -1,53 +1,75 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
-import 'package:mezcalmos/CustomerApp/helpers/BusinessListHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class CustRentalsListViewController {
   // variables //
   RxList<RentalCard> _rentals = <RentalCard>[].obs;
-  RxList<RentalCard> _filtredRentals = <RentalCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
-  RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
+  // RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
 
   RxBool _isLoading = false.obs;
   RxBool showBusiness = false.obs;
   Location? _fromLocation;
   String searchQuery = "";
 
-  List<RentalCategory2> filterCategories = <RentalCategory2>[];
+  List<RentalCategory2> _filterCategories = <RentalCategory2>[];
 
   RxList<RentalCategory2> selectedCategories = <RentalCategory2>[].obs;
+  RxList<RentalCategory2> previewCategories = <RentalCategory2>[].obs;
+  // scroll logic //
+  /* SCROLL CONTROLLER */
+  ScrollController get scrollController =>
+      showBusiness.isTrue ? _businessScrollController : _rentalScrollController;
+  ScrollController _rentalScrollController = ScrollController();
+  ScrollController _businessScrollController = ScrollController();
+  int rentalFetchSize = 3;
+  int _rentalCurrentOffset = 0;
+  bool _rentalFetchingData = false;
+  bool _rentalReachedEndOfData = false;
+  final int businessFetchSize = 3;
+  int _businessCurrentOffset = 0;
+  bool _businessFetchingData = false;
+  bool _businessReachedEndOfData = false;
+  /* SCROLL CONTROLLER */
+  // scroll logic //
 
   // getters //
   bool get isLoading => _isLoading.value;
+  bool get isFiltering => selectedCategories.length != _filterCategories.length;
+  List<RentalCategory2> get filterCategories => _filterCategories;
+
   bool get isVehicle => rentalCategory == RentalCategory1.Vehicle;
   bool get showFilter =>
       rentalCategory == RentalCategory1.Vehicle && showBusiness.isFalse;
-  List<RentalCard> get rentals => _filtredRentals.value;
-  List<BusinessCard> get businesses => _filtredBusiness.value;
+  List<RentalCard> get rentals => _rentals.value;
+  List<BusinessCard> get businesses => _businesses.value;
 
   /// return current view rental category (Home, Surf, etc)
   RentalCategory1 get rentalCategory => _currentRentalCategory;
-  //
+
   late RentalCategory1 _currentRentalCategory;
 
+// methods //
   Future<void> init({required RentalCategory1 rentalCategory}) async {
     _currentRentalCategory = rentalCategory;
+    if (isVehicle) {
+      filterCategories.addAll([
+        RentalCategory2.Motorcycle,
+        RentalCategory2.Car,
+        RentalCategory2.Bicycle,
+      ]);
+      selectedCategories.value = List.from(filterCategories);
+      previewCategories.value = List.from(filterCategories);
+    }
     try {
       _isLoading.value = true;
-      if (isVehicle) {
-        filterCategories.addAll([
-          RentalCategory2.Motorcycle,
-          RentalCategory2.Car,
-          RentalCategory2.Bicycle,
-        ]);
-        selectedCategories.value = List.from(filterCategories);
-      }
 
       locPkg.LocationData location = await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
@@ -55,8 +77,9 @@ class CustRentalsListViewController {
             Location(lat: location.latitude!, lng: location.longitude!);
         await _fetchRentals();
         await _fetchBusinesses();
-        _filtredBusiness.value.addAll(_businesses.value);
-        _filtredRentals.value.addAll(_rentals.value);
+        _rentalScrollController.onBottomReach(_fetchRentals, sensitivity: 500);
+        _businessScrollController.onBottomReach(_fetchBusinesses,
+            sensitivity: 500);
       }
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -67,48 +90,90 @@ class CustRentalsListViewController {
   }
 
   Future<void> _fetchRentals() async {
-    mezDbgPrint("Getting rentals  =====>${filterCategories.length}");
-    _rentals.value.clear();
-    _rentals.value = await get_rental_by_category(
+    if (_rentalFetchingData || _rentalReachedEndOfData) {
+      return;
+    }
+    try {
+      _rentalFetchingData = true;
+      mezDbgPrint(
+          "👋 _fetchRentals called selected categories : $selectedCategories \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
+      List<RentalCard> newList = await get_rental_by_category(
         category1: rentalCategory,
-        // categories2: isVehicle ? selectedCategories : null,
+        categories2: (isVehicle) ? selectedCategories : null,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         tags: [],
-        withCache: false);
-    mezDbgPrint(_rentals.value.length);
+        // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
+        withCache: false,
+        offset: _rentalCurrentOffset,
+        limit: rentalFetchSize,
+      );
+      _rentals.value += newList;
+      if (newList.length == 0) {
+        _rentalReachedEndOfData = true;
+      }
+      _rentalCurrentOffset += rentalFetchSize;
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      _rentalFetchingData = false;
+    }
   }
 
   Future<void> _fetchBusinesses() async {
-    mezDbgPrint("Getting rentals businesses  =====>$_fromLocation");
-    _businesses.clear();
-    _businesses.value = await get_business_by_rental_category1(
-        category1: rentalCategory,
-        distance: 1000000000000,
-        fromLocation: _fromLocation!,
-        withCache: false);
+    if (_businessFetchingData || _businessReachedEndOfData) {
+      return;
+    }
+    try {
+      mezDbgPrint(
+          "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
+      _businessFetchingData = true;
+      List<BusinessCard> newList = await get_business_by_rental_category1(
+          categories1: [_currentRentalCategory],
+          distance: 1000000000000,
+          fromLocation: _fromLocation!,
+          offset: _businessCurrentOffset,
+          limit: businessFetchSize,
+
+          // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
+          withCache: false);
+      _businesses.value += newList;
+      if (newList.length == 0) {
+        _businessReachedEndOfData = true;
+      }
+
+      _businessCurrentOffset += businessFetchSize;
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      _businessFetchingData = false;
+    }
   }
 
   void filter() {
-    // if (showBusiness.isFalse) {
-    //   List<RentalCard> newList = new List<RentalCard>.from(_rentals);
-    //   newList = newList
-    //    //   .searchByName(searchQuery)
-    //       .filterByCategory2(selectedCategories);
-    //   _filtredRentals.value = newList;
-    // } else {
-    //   List<BusinessCard> newList = new List<BusinessCard>.from(_businesses);
-    //   newList = newList.searchByName(searchQuery);
+    selectedCategories.value = List.from(previewCategories);
 
-    //   _filtredBusiness.value = newList;
-    // }
+    _resetRentals();
+    _fetchRentals();
+  }
+
+  void resetFilter() {
+    previewCategories.value = List.from(filterCategories);
+    selectedCategories.value = List.from(filterCategories);
+    _fetchRentals();
   }
 
   void switchFilterCategory(bool? value, int index) {
     if (value == true) {
-      selectedCategories.add(filterCategories[index]);
+      previewCategories.add(filterCategories[index]);
     } else {
-      selectedCategories.remove(filterCategories[index]);
+      previewCategories.remove(filterCategories[index]);
     }
+  }
+
+  void _resetRentals() {
+    _rentals.clear();
+    _rentalCurrentOffset = 0;
+    _rentalReachedEndOfData = false;
   }
 }

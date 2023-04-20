@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-// todo @ChiragKr04 fix the cards and ui  of this page
 class CustEventsListView extends StatefulWidget {
   const CustEventsListView({super.key});
   static Future<void> navigate() {
@@ -184,7 +183,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                         activeColor: primaryBlueColor,
                         title:
                             Text(viewController.filterCategories[index].name),
-                        value: viewController.selectedCategories
+                        value: viewController.previewCategories
                             .contains(viewController.filterCategories[index]),
                         onChanged: (bool? v) {
                           viewController.switchFilterCategory(v, index);
@@ -204,7 +203,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                             backgroundColor: offRedColor,
                             textColor: redAccentColor,
                             onClick: () async {
-                              // todo cancel filter
+                             viewController.resetFilter();
                               Navigator.pop(context);
                             })),
                     SizedBox(

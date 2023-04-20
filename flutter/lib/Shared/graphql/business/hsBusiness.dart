@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 HasuraDb _db = Get.find<HasuraDb>();
 
 Future<List<BusinessCard>> get_business_by_rental_category1(
-    {required RentalCategory1 category1,
+    {required List<RentalCategory1> categories1,
     required double distance,
     required Location fromLocation,
     int? offset,
@@ -28,7 +28,9 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
                   ? FetchPolicy.cacheAndNetwork
                   : FetchPolicy.networkOnly,
               variables: Variables$Query$get_business_by_rental_category1(
-                  category1: category1.toFirebaseFormatString(),
+                  categories1: categories1
+                      .map((RentalCategory1 e) => e.toFirebaseFormatString())
+                      .toList(),
                   distance: distance,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
@@ -142,9 +144,10 @@ Future<Business?> get_business_by_id(
 }
 
 Future<List<BusinessCard>> get_business_by_event_category1(
-    {required EventCategory1 category1,
+    {required List<EventCategory1> categories1,
     required double distance,
     required Location fromLocation,
+    required List<ScheduleType> scheduleType,
     int? offset,
     int? limit,
     required bool withCache}) async {
@@ -157,7 +160,12 @@ Future<List<BusinessCard>> get_business_by_event_category1(
                   ? FetchPolicy.cacheAndNetwork
                   : FetchPolicy.networkOnly,
               variables: Variables$Query$get_business_by_event_category1(
-                  category1: category1.toFirebaseFormatString(),
+                  categories1: categories1
+                      .map((EventCategory1 e) => e.toFirebaseFormatString())
+                      .toList(),
+                  schedule_type: scheduleType
+                      .map((ScheduleType e) => e.toFirebaseFormatString())
+                      .toList(),
                   distance: distance,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),

@@ -4054,14 +4054,14 @@ class Variables$Query$get_business_by_rental_category1 {
   factory Variables$Query$get_business_by_rental_category1({
     required double distance,
     required Geography from,
-    String? category1,
+    List<String>? categories1,
     int? offset,
     int? limit,
   }) =>
       Variables$Query$get_business_by_rental_category1._({
         r'distance': distance,
         r'from': from,
-        if (category1 != null) r'category1': category1,
+        if (categories1 != null) r'categories1': categories1,
         if (offset != null) r'offset': offset,
         if (limit != null) r'limit': limit,
       });
@@ -4075,9 +4075,10 @@ class Variables$Query$get_business_by_rental_category1 {
     result$data['distance'] = (l$distance as num).toDouble();
     final l$from = data['from'];
     result$data['from'] = geographyFromJson(l$from);
-    if (data.containsKey('category1')) {
-      final l$category1 = data['category1'];
-      result$data['category1'] = (l$category1 as String?);
+    if (data.containsKey('categories1')) {
+      final l$categories1 = data['categories1'];
+      result$data['categories1'] =
+          (l$categories1 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
     if (data.containsKey('offset')) {
       final l$offset = data['offset'];
@@ -4094,7 +4095,7 @@ class Variables$Query$get_business_by_rental_category1 {
 
   double get distance => (_$data['distance'] as double);
   Geography get from => (_$data['from'] as Geography);
-  String? get category1 => (_$data['category1'] as String?);
+  List<String>? get categories1 => (_$data['categories1'] as List<String>?);
   int? get offset => (_$data['offset'] as int?);
   int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
@@ -4103,9 +4104,9 @@ class Variables$Query$get_business_by_rental_category1 {
     result$data['distance'] = l$distance;
     final l$from = from;
     result$data['from'] = geographyToJson(l$from);
-    if (_$data.containsKey('category1')) {
-      final l$category1 = category1;
-      result$data['category1'] = l$category1;
+    if (_$data.containsKey('categories1')) {
+      final l$categories1 = categories1;
+      result$data['categories1'] = l$categories1?.map((e) => e).toList();
     }
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
@@ -4143,13 +4144,24 @@ class Variables$Query$get_business_by_rental_category1 {
     if (l$from != lOther$from) {
       return false;
     }
-    final l$category1 = category1;
-    final lOther$category1 = other.category1;
-    if (_$data.containsKey('category1') !=
-        other._$data.containsKey('category1')) {
+    final l$categories1 = categories1;
+    final lOther$categories1 = other.categories1;
+    if (_$data.containsKey('categories1') !=
+        other._$data.containsKey('categories1')) {
       return false;
     }
-    if (l$category1 != lOther$category1) {
+    if (l$categories1 != null && lOther$categories1 != null) {
+      if (l$categories1.length != lOther$categories1.length) {
+        return false;
+      }
+      for (int i = 0; i < l$categories1.length; i++) {
+        final l$categories1$entry = l$categories1[i];
+        final lOther$categories1$entry = lOther$categories1[i];
+        if (l$categories1$entry != lOther$categories1$entry) {
+          return false;
+        }
+      }
+    } else if (l$categories1 != lOther$categories1) {
       return false;
     }
     final l$offset = offset;
@@ -4175,13 +4187,17 @@ class Variables$Query$get_business_by_rental_category1 {
   int get hashCode {
     final l$distance = distance;
     final l$from = from;
-    final l$category1 = category1;
+    final l$categories1 = categories1;
     final l$offset = offset;
     final l$limit = limit;
     return Object.hashAll([
       l$distance,
       l$from,
-      _$data.containsKey('category1') ? l$category1 : const {},
+      _$data.containsKey('categories1')
+          ? l$categories1 == null
+              ? null
+              : Object.hashAll(l$categories1.map((v) => v))
+          : const {},
       _$data.containsKey('offset') ? l$offset : const {},
       _$data.containsKey('limit') ? l$limit : const {},
     ]);
@@ -4201,7 +4217,7 @@ abstract class CopyWith$Variables$Query$get_business_by_rental_category1<TRes> {
   TRes call({
     double? distance,
     Geography? from,
-    String? category1,
+    List<String>? categories1,
     int? offset,
     int? limit,
   });
@@ -4223,7 +4239,7 @@ class _CopyWithImpl$Variables$Query$get_business_by_rental_category1<TRes>
   TRes call({
     Object? distance = _undefined,
     Object? from = _undefined,
-    Object? category1 = _undefined,
+    Object? categories1 = _undefined,
     Object? offset = _undefined,
     Object? limit = _undefined,
   }) =>
@@ -4232,7 +4248,8 @@ class _CopyWithImpl$Variables$Query$get_business_by_rental_category1<TRes>
         if (distance != _undefined && distance != null)
           'distance': (distance as double),
         if (from != _undefined && from != null) 'from': (from as Geography),
-        if (category1 != _undefined) 'category1': (category1 as String?),
+        if (categories1 != _undefined)
+          'categories1': (categories1 as List<String>?),
         if (offset != _undefined) 'offset': (offset as int?),
         if (limit != _undefined) 'limit': (limit as int?),
       }));
@@ -4247,7 +4264,7 @@ class _CopyWithStubImpl$Variables$Query$get_business_by_rental_category1<TRes>
   call({
     double? distance,
     Geography? from,
-    String? category1,
+    List<String>? categories1,
     int? offset,
     int? limit,
   }) =>
@@ -4442,9 +4459,12 @@ const documentNodeQueryget_business_by_rental_category1 =
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'category1')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
+        variable: VariableNode(name: NameNode(value: 'categories1')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -4521,9 +4541,9 @@ const documentNodeQueryget_business_by_rental_category1 =
                             name: NameNode(value: 'category1'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
+                                name: NameNode(value: '_in'),
                                 value: VariableNode(
-                                    name: NameNode(value: 'category1')),
+                                    name: NameNode(value: 'categories1')),
                               )
                             ]),
                           )
@@ -5702,16 +5722,18 @@ class Variables$Query$get_business_by_event_category1 {
   factory Variables$Query$get_business_by_event_category1({
     required double distance,
     required Geography from,
-    String? category1,
     int? offset,
     int? limit,
+    List<String>? categories1,
+    List<String>? schedule_type,
   }) =>
       Variables$Query$get_business_by_event_category1._({
         r'distance': distance,
         r'from': from,
-        if (category1 != null) r'category1': category1,
         if (offset != null) r'offset': offset,
         if (limit != null) r'limit': limit,
+        if (categories1 != null) r'categories1': categories1,
+        if (schedule_type != null) r'schedule_type': schedule_type,
       });
 
   Variables$Query$get_business_by_event_category1._(this._$data);
@@ -5723,10 +5745,6 @@ class Variables$Query$get_business_by_event_category1 {
     result$data['distance'] = (l$distance as num).toDouble();
     final l$from = data['from'];
     result$data['from'] = geographyFromJson(l$from);
-    if (data.containsKey('category1')) {
-      final l$category1 = data['category1'];
-      result$data['category1'] = (l$category1 as String?);
-    }
     if (data.containsKey('offset')) {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
@@ -5735,6 +5753,17 @@ class Variables$Query$get_business_by_event_category1 {
       final l$limit = data['limit'];
       result$data['limit'] = (l$limit as int?);
     }
+    if (data.containsKey('categories1')) {
+      final l$categories1 = data['categories1'];
+      result$data['categories1'] =
+          (l$categories1 as List<dynamic>?)?.map((e) => (e as String)).toList();
+    }
+    if (data.containsKey('schedule_type')) {
+      final l$schedule_type = data['schedule_type'];
+      result$data['schedule_type'] = (l$schedule_type as List<dynamic>?)
+          ?.map((e) => (e as String))
+          .toList();
+    }
     return Variables$Query$get_business_by_event_category1._(result$data);
   }
 
@@ -5742,19 +5771,16 @@ class Variables$Query$get_business_by_event_category1 {
 
   double get distance => (_$data['distance'] as double);
   Geography get from => (_$data['from'] as Geography);
-  String? get category1 => (_$data['category1'] as String?);
   int? get offset => (_$data['offset'] as int?);
   int? get limit => (_$data['limit'] as int?);
+  List<String>? get categories1 => (_$data['categories1'] as List<String>?);
+  List<String>? get schedule_type => (_$data['schedule_type'] as List<String>?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$distance = distance;
     result$data['distance'] = l$distance;
     final l$from = from;
     result$data['from'] = geographyToJson(l$from);
-    if (_$data.containsKey('category1')) {
-      final l$category1 = category1;
-      result$data['category1'] = l$category1;
-    }
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
@@ -5762,6 +5788,14 @@ class Variables$Query$get_business_by_event_category1 {
     if (_$data.containsKey('limit')) {
       final l$limit = limit;
       result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('categories1')) {
+      final l$categories1 = categories1;
+      result$data['categories1'] = l$categories1?.map((e) => e).toList();
+    }
+    if (_$data.containsKey('schedule_type')) {
+      final l$schedule_type = schedule_type;
+      result$data['schedule_type'] = l$schedule_type?.map((e) => e).toList();
     }
     return result$data;
   }
@@ -5791,15 +5825,6 @@ class Variables$Query$get_business_by_event_category1 {
     if (l$from != lOther$from) {
       return false;
     }
-    final l$category1 = category1;
-    final lOther$category1 = other.category1;
-    if (_$data.containsKey('category1') !=
-        other._$data.containsKey('category1')) {
-      return false;
-    }
-    if (l$category1 != lOther$category1) {
-      return false;
-    }
     final l$offset = offset;
     final lOther$offset = other.offset;
     if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
@@ -5816,6 +5841,46 @@ class Variables$Query$get_business_by_event_category1 {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$categories1 = categories1;
+    final lOther$categories1 = other.categories1;
+    if (_$data.containsKey('categories1') !=
+        other._$data.containsKey('categories1')) {
+      return false;
+    }
+    if (l$categories1 != null && lOther$categories1 != null) {
+      if (l$categories1.length != lOther$categories1.length) {
+        return false;
+      }
+      for (int i = 0; i < l$categories1.length; i++) {
+        final l$categories1$entry = l$categories1[i];
+        final lOther$categories1$entry = lOther$categories1[i];
+        if (l$categories1$entry != lOther$categories1$entry) {
+          return false;
+        }
+      }
+    } else if (l$categories1 != lOther$categories1) {
+      return false;
+    }
+    final l$schedule_type = schedule_type;
+    final lOther$schedule_type = other.schedule_type;
+    if (_$data.containsKey('schedule_type') !=
+        other._$data.containsKey('schedule_type')) {
+      return false;
+    }
+    if (l$schedule_type != null && lOther$schedule_type != null) {
+      if (l$schedule_type.length != lOther$schedule_type.length) {
+        return false;
+      }
+      for (int i = 0; i < l$schedule_type.length; i++) {
+        final l$schedule_type$entry = l$schedule_type[i];
+        final lOther$schedule_type$entry = lOther$schedule_type[i];
+        if (l$schedule_type$entry != lOther$schedule_type$entry) {
+          return false;
+        }
+      }
+    } else if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
     return true;
   }
 
@@ -5823,15 +5888,25 @@ class Variables$Query$get_business_by_event_category1 {
   int get hashCode {
     final l$distance = distance;
     final l$from = from;
-    final l$category1 = category1;
     final l$offset = offset;
     final l$limit = limit;
+    final l$categories1 = categories1;
+    final l$schedule_type = schedule_type;
     return Object.hashAll([
       l$distance,
       l$from,
-      _$data.containsKey('category1') ? l$category1 : const {},
       _$data.containsKey('offset') ? l$offset : const {},
       _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('categories1')
+          ? l$categories1 == null
+              ? null
+              : Object.hashAll(l$categories1.map((v) => v))
+          : const {},
+      _$data.containsKey('schedule_type')
+          ? l$schedule_type == null
+              ? null
+              : Object.hashAll(l$schedule_type.map((v) => v))
+          : const {},
     ]);
   }
 }
@@ -5849,9 +5924,10 @@ abstract class CopyWith$Variables$Query$get_business_by_event_category1<TRes> {
   TRes call({
     double? distance,
     Geography? from,
-    String? category1,
     int? offset,
     int? limit,
+    List<String>? categories1,
+    List<String>? schedule_type,
   });
 }
 
@@ -5871,18 +5947,22 @@ class _CopyWithImpl$Variables$Query$get_business_by_event_category1<TRes>
   TRes call({
     Object? distance = _undefined,
     Object? from = _undefined,
-    Object? category1 = _undefined,
     Object? offset = _undefined,
     Object? limit = _undefined,
+    Object? categories1 = _undefined,
+    Object? schedule_type = _undefined,
   }) =>
       _then(Variables$Query$get_business_by_event_category1._({
         ..._instance._$data,
         if (distance != _undefined && distance != null)
           'distance': (distance as double),
         if (from != _undefined && from != null) 'from': (from as Geography),
-        if (category1 != _undefined) 'category1': (category1 as String?),
         if (offset != _undefined) 'offset': (offset as int?),
         if (limit != _undefined) 'limit': (limit as int?),
+        if (categories1 != _undefined)
+          'categories1': (categories1 as List<String>?),
+        if (schedule_type != _undefined)
+          'schedule_type': (schedule_type as List<String>?),
       }));
 }
 
@@ -5895,9 +5975,10 @@ class _CopyWithStubImpl$Variables$Query$get_business_by_event_category1<TRes>
   call({
     double? distance,
     Geography? from,
-    String? category1,
     int? offset,
     int? limit,
+    List<String>? categories1,
+    List<String>? schedule_type,
   }) =>
       _res;
 }
@@ -6090,15 +6171,6 @@ const documentNodeQueryget_business_by_event_category1 =
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'category1')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'offset')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
@@ -6111,6 +6183,30 @@ const documentNodeQueryget_business_by_event_category1 =
         variable: VariableNode(name: NameNode(value: 'limit')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'categories1')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'schedule_type')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'String'),
+            isNonNull: true,
+          ),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -6169,14 +6265,24 @@ const documentNodeQueryget_business_by_event_category1 =
                             name: NameNode(value: 'category1'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
+                                name: NameNode(value: '_in'),
                                 value: VariableNode(
-                                    name: NameNode(value: 'category1')),
+                                    name: NameNode(value: 'categories1')),
                               )
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'schedule_type'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_in'),
+                            value: VariableNode(
+                                name: NameNode(value: 'schedule_type')),
+                          )
+                        ]),
+                      ),
                     ]),
                   ),
                 ]),
