@@ -76,44 +76,44 @@ Future<Business?> get_business_by_id(
 
     if (data != null) {
       final List<Rental> _rentals = <Rental>[];
-      // data.rentals.forEach(
-      //     (Query$get_business_by_id$business_business_by_pk$rentals
-      //         rental) async {
-      //   _rentals.add(Rental(
-      //     category1: rental.details.category1.toRentalCategory1(),
-      //     details: BusinessItemDetails(
-      //       id: rental.id,
-      //       name: toLanguageMap(translations: rental.details.name.translations),
-      //       position: rental.details.position,
-      //       businessId: data.id,
-      //       available: rental.details.available,
-      //       cost: constructBusinessServiceCost(rental.details.cost),
-      //       image: rental.details.image?.entries.map((e) => e.value).toList() ??
-      //           [],
-      //     ),
-      //     // bathrooms: rental.
-      //   ));
-      // });
+      data.rentals.forEach(
+          (Query$get_business_by_id$business_business_by_pk$rentals
+              rental) async {
+        _rentals.add(Rental(
+          category1: rental.details.category1.toRentalCategory1(),
+          details: BusinessItemDetails(
+            id: rental.id,
+            name: toLanguageMap(translations: rental.details.name.translations),
+            position: rental.details.position,
+            businessId: data.id,
+            available: rental.details.available,
+            cost: constructBusinessServiceCost(rental.details.cost),
+            image: rental.details.image?.entries.map((e) => e.value).toList() ??
+                [],
+          ),
+          // bathrooms: rental.
+        ));
+      });
       final List<Event> _events = <Event>[];
-      // data.events.forEach(
-      //     (Query$get_business_by_id$business_business_by_pk$events
-      //         event) async {
-      //   _events.add(Event(
-      //       category1: event.details.category1.toEventCategory1(),
-      //       scheduleType: event.schedule_type.toScheduleType(),
-      //       details: BusinessItemDetails(
-      //         id: event.id,
-      //         name:
-      //             toLanguageMap(translations: event.details.name.translations),
-      //         position: event.details.position,
-      //         businessId: data.id,
-      //         available: event.details.available,
-      //         cost: constructBusinessServiceCost(event.details.cost),
-      //         image:
-      //             event.details.image?.entries.map((e) => e.value).toList() ??
-      //                 [],
-      //       )));
-      // });
+      data.events.forEach(
+          (Query$get_business_by_id$business_business_by_pk$events
+              event) async {
+        _events.add(Event(
+            category1: event.details.category1.toEventCategory1(),
+            scheduleType: event.schedule_type.toScheduleType(),
+            details: BusinessItemDetails(
+              id: event.id,
+              name:
+                  toLanguageMap(translations: event.details.name.translations),
+              position: event.details.position,
+              businessId: data.id,
+              available: event.details.available,
+              cost: constructBusinessServiceCost(event.details.cost),
+              image:
+                  event.details.image?.entries.map((e) => e.value).toList() ??
+                      [],
+            )));
+      });
       return Business(
           profile: data.profile.toBusinessProfile(),
           details: ServiceProvider(
