@@ -101,11 +101,7 @@ Future<Business?> get_business_by_id(
       data.events.forEach(
           (Query$get_business_by_id$business_business_by_pk$events
               event) async {
-        print(event.schedule_type.toScheduleType());
         _events.add(Event(
-            schedule: event.schedule != null
-                ? scheduleFromData(event.schedule)
-                : null,
             category1: event.details.category1.toEventCategory1(),
             scheduleType: event.schedule_type.toScheduleType(),
             details: BusinessItemDetails(

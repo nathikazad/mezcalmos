@@ -52,19 +52,13 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
         chatTite: _chat.parsedData!.chat_by_pk!
-                    .chat_info?['${MezEnv.appType.toChatInfoString()}']
-                ['chatTitle'] ??
-            "",
+            .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatTitle'],
         phoneNumber: _chat.parsedData!.chat_by_pk!
             .chat_info!['${MezEnv.appType.toChatInfoString()}']['phoneNumber'],
         chatImg: _chat.parsedData!.chat_by_pk!
-                    .chat_info?['${MezEnv.appType.toChatInfoString()}']
-                ['chatImage'] ??
-            "",
+            .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatImage'],
         parentlink: _chat.parsedData!.chat_by_pk!
-                    .chat_info?['${MezEnv.appType.toChatInfoString()}']
-                ['parentLink'] ??
-            "",
+            .chat_info!['${MezEnv.appType.toChatInfoString()}']['parentLink'],
       ),
       creationTime:
           DateTime.parse(_chat.parsedData!.chat_by_pk!.creation_time).toLocal(),

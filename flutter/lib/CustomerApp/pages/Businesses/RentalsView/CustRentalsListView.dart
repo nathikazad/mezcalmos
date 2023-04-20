@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Common/MezSearch.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -11,23 +14,30 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 // todo @ChiragKr04 fix the cards and ui  of this page
-class CustEventsListView extends StatefulWidget {
-  const CustEventsListView({super.key});
-  static Future<void> navigate() {
-    final String route = CustBusinessRoutes.custEventsListRoute;
-    return MezRouter.toPath(route);
+class CustRentalsListView extends StatefulWidget {
+  const CustRentalsListView({super.key});
+  static Future<void> navigate({required RentalCategory1 category}) {
+    final String route = CustBusinessRoutes.custRentalsListRoute;
+    return MezRouter.toPath(route, arguments: {"category": category});
   }
 
   @override
-  State<CustEventsListView> createState() => _CustEventsListViewState();
+  State<CustRentalsListView> createState() => _CustRentalsListViewState();
 }
 
-class _CustEventsListViewState extends State<CustEventsListView> {
-  CustEventsListViewController viewController = CustEventsListViewController();
+class _CustRentalsListViewState extends State<CustRentalsListView> {
+  CustRentalsListViewController viewController =
+      CustRentalsListViewController();
 
   @override
   void initState() {
-    viewController.init();
+    RentalCategory1? category =
+        MezRouter.bodyArguments?["category"] as RentalCategory1?;
+    if (category != null) {
+      viewController.init(rentalCategory: category);
+    } else {
+      showErrorSnackBar(errorText: "Category not found : $category");
+    }
     super.initState();
   }
 
@@ -37,40 +47,44 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Events",
+        title: "Rentals",
       ),
-      body: Obx(() {
-        if (viewController.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return CustomScrollView(
-            controller: viewController.scrollController,
-            physics: AlwaysScrollableScrollPhysics(),
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Container(
-                  margin: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _viewBusinessesSwitcher(),
-                      if (viewController.showBusiness.isFalse)
-                        _filterButton(context),
-                      Container(
-                        margin: const EdgeInsets.only(top: 15),
-                        child: (viewController.showBusiness.isTrue)
-                            ? _buildBusinesses()
-                            : _buildEvents(),
-                      ),
-                    ],
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: Obx(() {
+          if (viewController.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // search bar
+                  MezSearch(
+                    margin: const EdgeInsets.only(bottom: 15),
+                    onChanged: (String value) {
+                      viewController.searchQuery = value;
+                      viewController.filter();
+                      // viewController.searchEvents(value);
+                    },
                   ),
-                ),
+                  _viewBusinessesSwitcher(),
+
+                  // filter bar
+                  if (viewController.showBusiness.isFalse)
+                    _filterButton(context),
+                  Container(
+                    margin: const EdgeInsets.only(top: 15),
+                    child: (viewController.showBusiness.isTrue)
+                        ? _buildBusinesses()
+                        : _buildRentals(),
+                  ),
+                ],
               ),
-            ],
-          );
-        }
-      }),
+            );
+          }
+        }),
+      ),
     );
   }
 
@@ -79,7 +93,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Events",
+            label: "Rentals",
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -242,21 +256,25 @@ class _CustEventsListViewState extends State<CustEventsListView> {
           child: Text("No businesses found"));
   }
 
-  Widget _buildEvents() {
-    if (viewController.events.isNotEmpty) {
+  Widget _buildRentals() {
+    if (viewController.rentals.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.events.length,
+        viewController.rentals.length,
         (int index) => MezCard(
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.events[index].details.image?.first ?? ""),
+            firstAvatarBgImage:
+                (viewController.rentals[index].details.firstImage != null)
+                    ? CachedNetworkImageProvider(
+                        viewController.rentals[index].details.firstImage!)
+                    : null,
             content: Text(
-                viewController.events[index].details.name[userLanguage] ?? "")),
+                viewController.rentals[index].details.name[userLanguage] ??
+                    "")),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No events found"));
+          child: Text("No rentals found"));
   }
 }

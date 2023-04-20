@@ -89,7 +89,7 @@ class _RentalViewState extends State<RentalView> {
             label: "Go to Product",
             onClick: () async {
               await CustProductView.navigate(
-                productId: 14,
+                productId: 2,
               );
             },
           ),

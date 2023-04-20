@@ -30,7 +30,7 @@ Future<List<RentalCard>> get_rental_by_category(
           variables: Variables$Query$get_rental_by_category(
               category1: category1.toFirebaseFormatString(),
               categories2: categories2
-                      ?.map((e) => e.toFirebaseFormatString())
+                      ?.map((RentalCategory2 e) => e.toFirebaseFormatString())
                       .toList() ??
                   ["uncategorized"],
               tags: tags ?? [],
@@ -55,7 +55,9 @@ Future<List<RentalCard>> get_rental_by_category(
               position: data.details.position,
               businessId: data.business.id,
               available: data.details.available,
-              image: data.details.image?.entries.map((e) => e.value).toList() ??
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
@@ -71,6 +73,8 @@ Future<List<RentalCard>> get_rental_by_category(
       ));
     });
     return _rentals;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else {
     return [];
   }
@@ -107,9 +111,8 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
                 available: data.details.available,
                 cost: constructBusinessServiceCost(data.details.cost),
                 image: data.details.image
-                        ?.map((e) => e.toString())
-                        .toList()
-                        .cast<String>() ??
+                        ?.map<String>((e) => e.toString())
+                        .toList() ??
                     [],
                 additionalParameters: data.details.additional_parameters,
                 description: toLanguageMap(
@@ -162,7 +165,7 @@ Future<List<RentalCard>> get_home_rentals(
               offset: offset,
               limit: limit)));
 
-  mezDbgPrint("get_home_rentals ${response}");
+  mezDbgPrint("get_home_rentals $response");
 
   if (response.parsedData?.business_home_rental != null) {
     response.parsedData?.business_home_rental
@@ -179,9 +182,8 @@ Future<List<RentalCard>> get_home_rentals(
               businessId: data.rental.business.id,
               available: data.rental.details.available,
               image: data.rental.details.image
-                      ?.map((e) => e.toString())
-                      .toList()
-                      .cast<String>() ??
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.rental.details.cost),
               additionalParameters: data.rental.details.additional_parameters,

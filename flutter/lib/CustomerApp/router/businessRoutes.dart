@@ -10,6 +10,8 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView
     deferred as custProducView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart'
     deferred as custServiceView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart'
+    deferred as custRentalsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart'
     deferred as custServicesListView;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
@@ -23,6 +25,9 @@ class CustBusinessRoutes {
   static String custRentalRoute = "/otherRental/:id";
   static String custEventsListRoute = "/customer/events";
   static String custServicesListRoute = "/customer/services";
+  static String custRentalsListRoute = "/customer/rentals";
+  // wrappers //
+  static String custRentalsWrapperRoute = "/rentalsWrapper";
 
   final List<QRoute> routes = [
     QRoute(
@@ -59,6 +64,14 @@ class CustBusinessRoutes {
       builder: () => custEventsListView.CustEventsListView(),
       middleware: <QMiddleware>[
         DefferedLoader(custEventsListView.loadLibrary),
+      ],
+    ),
+    QRoute(
+      name: custRentalsListRoute,
+      path: custRentalsListRoute,
+      builder: () => custRentalsListView.CustRentalsListView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(custRentalsListView.loadLibrary),
       ],
     ),
     QRoute(

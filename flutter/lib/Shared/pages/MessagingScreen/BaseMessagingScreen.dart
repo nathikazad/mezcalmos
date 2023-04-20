@@ -32,14 +32,17 @@ class BaseMessagingScreen extends StatefulWidget {
   @override
   BaseMessagingScreenState createState() => BaseMessagingScreenState();
 
-  static Future<void> navigate({required int chatId}) {
+  static Future<void> navigate(
+      {required int chatId, IncomingViewLink? incomingViewLink}) {
     return MezRouter.toPath(
-        SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()));
+        SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()),
+        arguments: {"incomingViewLink": incomingViewLink});
   }
 }
 
 class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   late final int chatId;
+
   ParticipantType recipientType = ParticipantType.Customer;
   String? recipientId;
   MessageController controller =
@@ -63,6 +66,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
     chatId = int.parse(MezRouter.urlArguments['chatId'].toString());
 
+    controller
+        .setIncomingViewLink(MezRouter.bodyArguments?['incomingViewLink']);
     if (MezRouter.urlArguments['recipientType'] != null) {
       recipientType = MezRouter.urlArguments['recipientType']!
           .toString()
@@ -198,8 +203,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                         mezDbgPrint("Linkkkkkkkk ⏰");
                         mezDbgPrint(
                             "${controller.chat.value?.chatInfo.parentlink}");
-                        if (MezRouter.isRouteInStack(
-                            controller.chat.value?.chatInfo.parentlink)) {
+                        mezDbgPrint(
+                            "${controller.chat.value?.chatInfo.parentlink}");
+                        if (controller.chat.value?.chatInfo.parentlink ==
+                                null ||
+                            (MezRouter.isRouteInStack(
+                                controller.chat.value?.chatInfo.parentlink))) {
                           return SizedBox();
                         } else {
                           return Center(
@@ -207,7 +216,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                               borderRadius: BorderRadius.circular(10),
                               onTap: () {
                                 MezRouter.toPath(
-                                  controller.chat.value!.chatInfo.parentlink,
+                                  controller.chat.value!.chatInfo.parentlink!,
                                 );
                               },
                               child: Ink(
