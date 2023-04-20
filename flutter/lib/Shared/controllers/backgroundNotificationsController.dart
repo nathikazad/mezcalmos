@@ -95,28 +95,28 @@ class BackgroundNotificationsController extends GetxController {
     mezDbgPrint("notificationClickHandler");
     mezDbgPrint("CurrentRoute : ${MezRouter.currentRoute}");
     mezDbgPrint(message.data);
-    if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
-    if (message.data['linkUrl'].toString().contains('/messages/')) {
-      if (MezRouter.isCurrentRoute(SharedRoutes.kWrapperRoute)) {
-        Future<void>.delayed(Duration(milliseconds: 100), () {
-          MezRouter.toNamed(SharedRoutes.kHomeRoute);
-          MezRouter.toNamed(
-            message.data["linkUrl"],
-          );
-        });
-      } else {
-        Future<void>.delayed(
-          Duration(milliseconds: 100),
-          () => MezRouter.toNamed(
-            message.data["linkUrl"],
-          ),
-        );
-      }
-    } else
-      Future<void>.delayed(
-        Duration(milliseconds: 100),
-        () => MezRouter.toPath(message.data["linkUrl"]),
-      );
+    // if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
+    // if (message.data['linkUrl'].toString().contains('/messages/')) {
+    //   if (MezRouter.isCurrentRoute(SharedRoutes.kWrapperRoute)) {
+    //     Future<void>.delayed(Duration(milliseconds: 100), () {
+    //       MezRouter.toNamed(SharedRoutes.kHomeRoute);
+    //       MezRouter.toNamed(
+    //         message.data["linkUrl"],
+    //       );
+    //     });
+    //   } else {
+    //     Future<void>.delayed(
+    //       Duration(milliseconds: 100),
+    //       () => MezRouter.toNamed(
+    //         message.data["linkUrl"],
+    //       ),
+    //     );
+    //   }
+    // } else
+    Future<void>.delayed(
+      Duration(milliseconds: 100),
+      () => MezRouter.toPath(message.data["linkUrl"]),
+    );
   }
 
   Future<NotificationSettings> requestPermission() async {
