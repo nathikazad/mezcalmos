@@ -84,7 +84,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
   let notification: Notification = {
     foreground: <NewLaundryNotification>{
       time: (new Date()).toISOString(),
-      notificationType: NotificationType.NewOrder,
+      notificationType: NotificationType.NewLaundry,
       notificationAction: NotificationAction.ShowSnackBarAlways,
       name: laundryStore.name,
       image: laundryStore.image,

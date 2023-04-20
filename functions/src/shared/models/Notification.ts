@@ -13,6 +13,7 @@ export enum NotificationType {
   OperatorApproved = "operatorApproved",
   AuthorizeOperator = "authorizeOperator",
   NewRestaurant = "newRestaurant",
+  NewLaundry = "newLaundry",
   NewDriver = "newDriver",
   DriverApproved = "driverApproved",
   PriceChange = "priceChange",
