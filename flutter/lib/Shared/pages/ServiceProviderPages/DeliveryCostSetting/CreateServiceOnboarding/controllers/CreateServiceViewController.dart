@@ -21,7 +21,6 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -289,7 +288,7 @@ class CreateServiceViewController {
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
             address: serviceInput.value.serviceInfo!.location.address),
-        schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
+        schedule: serviceInput.value.schedule!,
         deliveryPartnerId: serviceInput.value.deliveryPartnerId,
         deliveryDetails: cModels.DeliveryDetails(
           minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,

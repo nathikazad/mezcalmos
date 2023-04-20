@@ -93,7 +93,7 @@ Future<ProductWithBusinessCard?> get_product_by_id(
                     translations: data.details.description?.translations ?? []),
                 additionalParameters: data.details.additional_parameters,
                 image:
-                    data.details.image?.entries.map((e) => e.value).toList() ??
+                    data.details.image?.map<String>((e) => e.toString()).toList() ??
                         [],
               )),
           business: BusinessCard(

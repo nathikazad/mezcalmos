@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalVi
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
@@ -69,6 +70,14 @@ class _RentalViewState extends State<RentalView> {
             },
           ),
           MezButton(
+            label: "Go to Rental",
+            onClick: () async {
+              await CustRentalView.navigate(
+                rentalId: 18,
+              );
+            },
+          ),
+          MezButton(
             label: "Go to Event",
             onClick: () async {
               await CustEventView.navigate(
@@ -80,7 +89,7 @@ class _RentalViewState extends State<RentalView> {
             label: "Go to Product",
             onClick: () async {
               await CustProductView.navigate(
-                productId: 14,
+                productId: 2,
               );
             },
           ),

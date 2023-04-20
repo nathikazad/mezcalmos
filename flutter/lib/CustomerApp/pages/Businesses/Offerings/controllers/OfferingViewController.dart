@@ -6,6 +6,9 @@ import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
+
+
+
 class CustServiceViewController {
   // state vars //
   Rxn<ServiceWithBusinessCard> _service = Rxn<ServiceWithBusinessCard>();
@@ -52,6 +55,21 @@ class CustHomeRentalViewController {
   // methods //
   Future<void> fetchData({required int rentalId}) async {
     _homeRental.value = await get_rental_by_id(
+      id: rentalId,
+      withCache: true,
+    );
+  }
+}
+
+class CustRentalViewController {
+  // state vars //
+  Rxn<RentalWithBusinessCard> _rental = Rxn<RentalWithBusinessCard>();
+
+  // getters //
+  RentalWithBusinessCard? get rental => _rental.value;
+  // methods //
+  Future<void> fetchData({required int rentalId}) async {
+    _rental.value = await get_rental_by_id(
       id: rentalId,
       withCache: true,
     );
