@@ -57,3 +57,18 @@ class CustHomeRentalViewController {
     );
   }
 }
+
+class CustRentalViewController {
+  // state vars //
+  Rxn<RentalWithBusinessCard> _rental = Rxn<RentalWithBusinessCard>();
+
+  // getters //
+  RentalWithBusinessCard? get rental => _rental.value;
+  // methods //
+  Future<void> fetchData({required int rentalId}) async {
+    _rental.value = await get_rental_by_id(
+      id: rentalId,
+      withCache: true,
+    );
+  }
+}

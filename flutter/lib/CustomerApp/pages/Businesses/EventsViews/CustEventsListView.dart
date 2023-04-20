@@ -254,7 +254,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         viewController.events.length,
         (int index) => MezCard(
             firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.events[index].details.firstImage ?? ""),
+                viewController.events[index].details.image?.first ?? ""),
             content: Text(
                 viewController.events[index].details.name[userLanguage] ?? "")),
       ));

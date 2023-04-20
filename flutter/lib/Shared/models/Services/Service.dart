@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 abstract class Service {
   ServiceInfo info;
   int serviceDetailsId;
-  Schedule? schedule;
+  cModels.Schedule? schedule;
   String? phoneNumber;
   int? serviceLinkId;
   cModels.ServiceProviderType? serviceProviderType;

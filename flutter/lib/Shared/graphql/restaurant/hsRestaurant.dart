@@ -61,7 +61,7 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
                     .free_delivery_km_range,
               ),
         schedule: data.details!.schedule != null
-            ? Schedule.fromData(data.details!.schedule)
+            ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: PaymentInfo(),
         rate: data.reviews_aggregate.aggregate?.avg?.rating,
@@ -171,7 +171,7 @@ Future<Restaurant?> get_restaurant_by_id(
             location: MezLocation.fromHasura(
                 data.details!.location.gps, data.details!.location.address)),
         schedule: data.details!.schedule != null
-            ? Schedule.fromData(data.details!.schedule)
+            ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: null,
         selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
@@ -199,7 +199,7 @@ Future<cModels.Language?> get_restaurant_priamry_lang(int restaurantId) async {
   return null;
 }
 
-Future<Schedule?> get_restaurant_schedule(
+Future<cModels.Schedule?> get_restaurant_schedule(
     {required int restaurantId, bool withCache = true}) async {
   final QueryResult<Query$getRestaurantSchedule> response = await _db
       .graphQLClient
@@ -214,7 +214,7 @@ Future<Schedule?> get_restaurant_schedule(
           .parsedData?.restaurant_restaurant_by_pk?.details?.schedule !=
       null) {
     mezDbgPrint("✅✅✅ restuarnt schedule lang query success");
-    return Schedule.fromData(
+    return scheduleFromData(
         response.parsedData!.restaurant_restaurant_by_pk!.details?.schedule);
   }
   return null;

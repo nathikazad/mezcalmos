@@ -1,4 +1,5 @@
 import { Language, Location } from "../../Generic/Generic";
+import { Schedule } from "../../Generic/Schedule";
 import { ForegroundNotification } from "../../Notification";
 import { ServiceProvider } from "../Service";
 
@@ -45,7 +46,7 @@ export interface Event {
     category1: EventCategory1;
     category2?: EventCategory2;
     scheduleType: ScheduleType;
-    schedule?: any;
+    schedule?: Schedule;
     details: BusinessItemDetails;
     gpsLocation?: Location;
     time?: string;
@@ -76,7 +77,8 @@ export enum EventCategory1 {
     Therapy = "therapy",
     Fitness = "fitness",
     Adventure = "adventure",
-    Volunteer = "volunteer"
+    Volunteer = "volunteer",
+    Uncategorized = "uncategorized",
 }
 export enum EventCategory2 {
     Salsa = "salsa",
@@ -86,6 +88,7 @@ export enum EventCategory2 {
     Spin = "spin",
     Jiujitsu = "jiujitsu",
     Karate = "karate",
+    Uncategorized = "uncategorized",
 }
 export enum ServiceType {
     Rental = "rental",
@@ -107,6 +110,7 @@ export enum BusinessProfile {
     TourAgency = "tourAgency",
     DanceClass = "danceClass",
     Therapy = "therapy",
+    Cleaning = "cleaning",
 }
 export enum RentalCategory2 {
     Motorcycle = "motorcycle",

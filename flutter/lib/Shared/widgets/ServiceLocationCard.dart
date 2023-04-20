@@ -12,10 +12,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["restaurantInfoTab"];
 
 class ServiceLocationCard extends StatefulWidget {
-  const ServiceLocationCard({Key? key, required this.location})
-      : super(key: key);
+  const ServiceLocationCard({
+    Key? key,
+    required this.location,
+    this.height = null,
+  }) : super(key: key);
 
   final MezLocation location;
+  final double? height;
 
   @override
   State<ServiceLocationCard> createState() => _ServiceLocationCardState();
@@ -64,7 +68,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
               child: Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                height: 35.h,
+                height: widget.height ?? 35.h,
                 width: double.infinity,
                 child: MGoogleMap(mGoogleMapController: mapController),
               ),

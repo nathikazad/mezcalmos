@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/graphql/business_product/__generated/business_p
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -30,7 +31,7 @@ Future<List<ProductCard>> get_product_by_category(
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              categories2: categories2,
+              categories2: categories2 ?? ["uncategorized"],
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
@@ -100,7 +101,10 @@ Future<ProductWithBusinessCard?> get_product_by_id(
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,
-            acceptedPayments: data.business.details.accepted_payments,
+            acceptedPayments: PaymentInfo.fromData(
+                    stripeInfo: {},
+                    acceptedPayments: data.business.details.accepted_payments)
+                .acceptedPayments,
             avgRating: double.tryParse(
                 data.business.reviews_aggregate.aggregate?.avg.toString() ??
                     '0.0'),

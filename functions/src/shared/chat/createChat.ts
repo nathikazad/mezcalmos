@@ -43,8 +43,10 @@ export async function createServiceProviderChat(customerId: number, serviceProvi
                 break;
             case ServiceProviderType.Business:
                 serviceProvider = (await getBusiness(serviceProviderDetails.serviceProviderId)).details;
+                break;
             case ServiceProviderType.DeliveryCompany:
                 serviceProvider = await getDeliveryCompany(serviceProviderDetails.serviceProviderId);
+                break;
             default:
                 throw new MezError(ServiceProviderChatError.InvalidServiceProviderType);
         }
