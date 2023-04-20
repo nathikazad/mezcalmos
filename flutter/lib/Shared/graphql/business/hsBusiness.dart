@@ -104,7 +104,7 @@ Future<Business?> get_business_by_id(
         print(event.schedule_type.toScheduleType());
         _events.add(Event(
             schedule: event.schedule != null
-                ? Schedule.fromData(event.schedule)
+                ? scheduleFromData(event.schedule)
                 : null,
             category1: event.details.category1.toEventCategory1(),
             scheduleType: event.schedule_type.toScheduleType(),

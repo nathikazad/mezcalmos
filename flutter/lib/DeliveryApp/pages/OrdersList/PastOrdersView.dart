@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/CustomerPastOrdersList.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/CustomerPastOrdersList.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/PastOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';

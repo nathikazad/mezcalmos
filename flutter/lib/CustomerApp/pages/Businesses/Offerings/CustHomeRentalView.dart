@@ -95,7 +95,6 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   }
 }
 
-
 class _CustBusinessAdditionalData extends StatelessWidget {
   const _CustBusinessAdditionalData({
     required this.homeRental,

@@ -289,7 +289,7 @@ class CreateServiceViewController {
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
             address: serviceInput.value.serviceInfo!.location.address),
-        schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
+        schedule: serviceInput.value.schedule!,
         deliveryPartnerId: serviceInput.value.deliveryPartnerId,
         deliveryDetails: cModels.DeliveryDetails(
           minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,

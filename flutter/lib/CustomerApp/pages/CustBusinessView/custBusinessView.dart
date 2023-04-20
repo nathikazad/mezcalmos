@@ -105,7 +105,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   __headerButtons(),
                   if (_viewController.business!.details.schedule != null)
                     MezServiceOpenHours(
-                        schedule: _viewController.business!.details.schedule),
+                        schedule: _viewController.business!.details.schedule!),
                   ServiceLocationCard(
                       location: MezLocation(
                           _viewController.business!.details.location.address!,
