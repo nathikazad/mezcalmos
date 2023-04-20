@@ -88,7 +88,9 @@ Future<Business?> get_business_by_id(
             businessId: data.id,
             available: rental.details.available,
             cost: constructBusinessServiceCost(rental.details.cost),
-            image: rental.details.image?.entries.map((e) => e.value).toList() ??
+            image: rental.details.image
+                    ?.map<String>((e) => e.toString())
+                    .toList() ??
                 [],
           ),
           // bathrooms: rental.
@@ -109,9 +111,10 @@ Future<Business?> get_business_by_id(
               businessId: data.id,
               available: event.details.available,
               cost: constructBusinessServiceCost(event.details.cost),
-              image:
-                  event.details.image?.entries.map((e) => e.value).toList() ??
-                      [],
+              image: event.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
             )));
       });
       return Business(
