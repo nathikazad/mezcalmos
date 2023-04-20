@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 class CustBusinessAdditionalData extends StatelessWidget {
@@ -33,18 +33,22 @@ class CustBusinessAdditionalData extends StatelessWidget {
         "Space3": "Very Spacious",
         "For party3": true,
       };
-      final StringBuffer wholeString = StringBuffer();
+      String wholeString = "";
       additionalValues2.map(
         (key, value) {
-          wholeString.write("$circle $key $value ");
+          wholeString += "$circle $key $value ";
           return MapEntry(key, value);
         },
       );
       return wholeString.toString();
     }
 
-    return CustBusinessBlueText(
-      text: wholeAdditionalParamString(),
+    return Text(
+      wholeAdditionalParamString(),
+      style: context.textTheme.bodyLarge!.copyWith(
+        color: primaryBlueColor,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

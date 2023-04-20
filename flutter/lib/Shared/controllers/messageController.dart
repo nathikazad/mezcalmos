@@ -93,6 +93,7 @@ class MessageController extends GetxController {
       "timestamp": DateTime.now().toUtc().toString(),
       "message": message,
       "userId": _authController.user!.hasuraId,
+      "link": incomingViewLink,
     };
     if (firstMessageSent != true && incomingViewLink != null) {
       // make sure that the last message with the link does not have the same url

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessTitle.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
@@ -59,10 +57,10 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustBusinessTitle(
-                        title: viewController
-                                .homeRental!.details.name[userLanguage] ??
+                      Text(
+                        viewController.homeRental!.details.name[userLanguage] ??
                             "No Title",
+                        style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
                         homeRental: viewController.homeRental!,
@@ -70,9 +68,21 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
-                      CustBusinessDescription(
-                        description:
-                            viewController.homeRental!.details.description,
+                      Text(
+                        "Description",
+                        style: context.textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        viewController.homeRental!.details
+                                .description?[userLanguage] ??
+                            "No Desription",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
                       ),
                       CustBusinessLocation(
                         location: viewController.homeRental!.gpsLocation,
@@ -94,7 +104,6 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
     );
   }
 }
-
 
 class _CustBusinessAdditionalData extends StatelessWidget {
   const _CustBusinessAdditionalData({
@@ -130,8 +139,12 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       return wholeString.toString();
     }
 
-    return CustBusinessBlueText(
-      text: wholeAdditionalParamString(),
+    return Text(
+      wholeAdditionalParamString(),
+      style: context.textTheme.bodyLarge!.copyWith(
+        color: primaryBlueColor,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

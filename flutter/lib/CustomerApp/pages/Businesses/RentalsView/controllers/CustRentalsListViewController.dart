@@ -129,7 +129,7 @@ class CustRentalsListViewController {
           "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_rental_category1(
-          category1: _currentRentalCategory,
+          categories1: [_currentRentalCategory],
           distance: 1000000000000,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,

@@ -112,13 +112,12 @@ class CustEventsListViewController {
           "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_event_category1(
-          category1: filterCategories.first,
+          categories1: filterCategories,
           distance: 1000000000000,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,
-
-          // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
+          scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
           withCache: false);
       _businesses.value += newList;
       if (newList.length == 0) {
