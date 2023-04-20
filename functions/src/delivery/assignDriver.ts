@@ -43,8 +43,9 @@ export enum AssignDriverError {
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails): Promise<AssignDriverResponse> {
   // assignDriverDetails.deliveryDriverType = 'delivery_driver';
   try {
-    await setLockTime(assignDriverDetails.deliveryOrderId)
-
+    if(assignDriverDetails.changeDriver == null) {
+      await setLockTime(assignDriverDetails.deliveryOrderId)
+    }
     let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryOrderId);
     let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId)//, assignDriverDetails.deliveryDriverType);
     let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
