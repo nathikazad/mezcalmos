@@ -48,7 +48,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         DeliveryServiceView.navigate();
         return;
       case AllServiceViewEnum.Rental:
-        CustRentalsListView.navigate(category: RentalCategory1.Home);
+        CustRentalsListView.navigate(category: RentalCategory1.Vehicle);
         return;
       case AllServiceViewEnum.Class:
         OtherAssetListsView.navigate(viewEnum: RentalViewEnum.Classes);

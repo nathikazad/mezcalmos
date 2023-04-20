@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/MezSearch.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -40,42 +39,38 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         onClick: MezRouter.back,
         title: "Events",
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Obx(() {
-          if (viewController.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // search bar
-                  MezSearch(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    onChanged: (String value) {
-                      viewController.searchQuery = value;
-                      viewController.filter();
-                      // viewController.searchEvents(value);
-                    },
+      body: Obx(() {
+        if (viewController.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return CustomScrollView(
+            controller: viewController.scrollController,
+            physics: AlwaysScrollableScrollPhysics(),
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Container(
+                  margin: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _viewBusinessesSwitcher(),
+                      if (viewController.showBusiness.isFalse)
+                        _filterButton(context),
+                      Container(
+                        margin: const EdgeInsets.only(top: 15),
+                        child: (viewController.showBusiness.isTrue)
+                            ? _buildBusinesses()
+                            : _buildEvents(),
+                      ),
+                    ],
                   ),
-                  _viewBusinessesSwitcher(),
-
-                  // filter bar
-                  if (viewController.showBusiness.isFalse)
-                    _filterButton(context),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    child: (viewController.showBusiness.isTrue)
-                        ? _buildBusinesses()
-                        : _buildEvents(),
-                  ),
-                ],
+                ),
               ),
-            );
-          }
-        }),
-      ),
+            ],
+          );
+        }
+      }),
     );
   }
 

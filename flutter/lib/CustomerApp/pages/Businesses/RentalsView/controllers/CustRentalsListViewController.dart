@@ -25,6 +25,9 @@ class CustRentalsListViewController {
 
   // getters //
   bool get isLoading => _isLoading.value;
+  bool get isVehicle => rentalCategory == RentalCategory1.Vehicle;
+  bool get showFilter =>
+      rentalCategory == RentalCategory1.Vehicle && showBusiness.isFalse;
   List<RentalCard> get rentals => _filtredRentals.value;
   List<BusinessCard> get businesses => _filtredBusiness.value;
 
@@ -37,12 +40,20 @@ class CustRentalsListViewController {
     _currentRentalCategory = rentalCategory;
     try {
       _isLoading.value = true;
-      selectedCategories.value = List.from(filterCategories);
+      if (isVehicle) {
+        filterCategories.addAll([
+          RentalCategory2.Motorcycle,
+          RentalCategory2.Car,
+          RentalCategory2.Bicycle,
+        ]);
+        selectedCategories.value = List.from(filterCategories);
+      }
+
       locPkg.LocationData location = await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation =
             Location(lat: location.latitude!, lng: location.longitude!);
-        await _fetchEvents();
+        await _fetchRentals();
         await _fetchBusinesses();
         _filtredBusiness.value.addAll(_businesses.value);
         _filtredRentals.value.addAll(_rentals.value);
@@ -55,11 +66,12 @@ class CustRentalsListViewController {
     }
   }
 
-  Future<void> _fetchEvents() async {
+  Future<void> _fetchRentals() async {
     mezDbgPrint("Getting rentals  =====>${filterCategories.length}");
     _rentals.value.clear();
     _rentals.value = await get_rental_by_category(
         category1: rentalCategory,
+        // categories2: isVehicle ? selectedCategories : null,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         tags: [],
@@ -78,17 +90,18 @@ class CustRentalsListViewController {
   }
 
   void filter() {
-    if (showBusiness.isFalse) {
-      List<RentalCard> newList = new List<RentalCard>.from(_rentals);
-      newList = newList.searchByName(searchQuery);
-      //  .filterByCategory(selectedCategories);
-      _filtredRentals.value = newList;
-    } else {
-      List<BusinessCard> newList = new List<BusinessCard>.from(_businesses);
-      newList = newList.searchByName(searchQuery);
+    // if (showBusiness.isFalse) {
+    //   List<RentalCard> newList = new List<RentalCard>.from(_rentals);
+    //   newList = newList
+    //    //   .searchByName(searchQuery)
+    //       .filterByCategory2(selectedCategories);
+    //   _filtredRentals.value = newList;
+    // } else {
+    //   List<BusinessCard> newList = new List<BusinessCard>.from(_businesses);
+    //   newList = newList.searchByName(searchQuery);
 
-      _filtredBusiness.value = newList;
-    }
+    //   _filtredBusiness.value = newList;
+    // }
   }
 
   void switchFilterCategory(bool? value, int index) {

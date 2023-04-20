@@ -262,8 +262,11 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
           children: List.generate(
         viewController.rentals.length,
         (int index) => MezCard(
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.rentals[index].details.firstImage ?? ""),
+            firstAvatarBgImage:
+                (viewController.rentals[index].details.firstImage != null)
+                    ? CachedNetworkImageProvider(
+                        viewController.rentals[index].details.firstImage!)
+                    : null,
             content: Text(
                 viewController.rentals[index].details.name[userLanguage] ??
                     "")),

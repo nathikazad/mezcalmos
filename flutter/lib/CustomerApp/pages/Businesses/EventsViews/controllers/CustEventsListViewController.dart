@@ -1,23 +1,38 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
-import 'package:mezcalmos/CustomerApp/helpers/BusinessListHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class CustEventsListViewController {
   // variables //
   RxList<EventCard> _events = <EventCard>[].obs;
-  RxList<EventCard> _filtredEvents = <EventCard>[].obs;
+
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
-  RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
 
   RxBool _isLoading = false.obs;
   RxBool showBusiness = false.obs;
   Location? _fromLocation;
   String searchQuery = "";
+
+  /* SCROLL CONTROLLER */
+  ScrollController get scrollController =>
+      showBusiness.isTrue ? _businessScrollController : _eventScrollController;
+  ScrollController _eventScrollController = ScrollController();
+  ScrollController _businessScrollController = ScrollController();
+  final int eventFetchSize = 3;
+  int _eventCurrentOffset = 0;
+  bool _eventFetchingData = false;
+  bool _eventReachedEndOfData = false;
+  final int businessFetchSize = 3;
+  int _businessCurrentOffset = 0;
+  bool _businessFetchingData = false;
+  bool _businessReachedEndOfData = false;
+  /* SCROLL CONTROLLER */
 
   List<EventCategory1> filterCategories = <EventCategory1>[
     EventCategory1.Dance,
@@ -29,8 +44,8 @@ class CustEventsListViewController {
 
   // getters //
   bool get isLoading => _isLoading.value;
-  List<EventCard> get events => _filtredEvents.value;
-  List<BusinessCard> get businesses => _filtredBusiness.value;
+  List<EventCard> get events => _events.value;
+  List<BusinessCard> get businesses => _businesses.value;
 
   Future<void> init() async {
     try {
@@ -42,8 +57,10 @@ class CustEventsListViewController {
             Location(lat: location.latitude!, lng: location.longitude!);
         await _fetchEvents();
         await _fetchBusinesses();
-        _filtredBusiness.value.addAll(_businesses.value);
-        _filtredEvents.value.addAll(_events.value);
+
+        _eventScrollController.onBottomReach(_fetchEvents, sensitivity: 200);
+        _businessScrollController.onBottomReach(_fetchBusinesses,
+            sensitivity: 200);
       }
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -54,44 +71,65 @@ class CustEventsListViewController {
   }
 
   Future<void> _fetchEvents() async {
-    mezDbgPrint("Getting events  =====>${filterCategories.length}");
-    _events.value.clear();
-    _events.value = await get_event_by_category(
+    if (_eventFetchingData || _eventReachedEndOfData) {
+      return;
+    }
+    try {
+      _eventFetchingData = true;
+      mezDbgPrint(
+          "👋 _fetchEvents called with ferchSize : $eventFetchSize offset: $_eventCurrentOffset");
+      List<EventCard> newList = await get_event_by_category(
         categories1: selectedCategories,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         tags: [],
         scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
-        withCache: false);
-    mezDbgPrint(_events.value.length);
+        withCache: false,
+        offset: _eventCurrentOffset,
+        limit: eventFetchSize,
+      );
+      _events.value += newList;
+      if (newList.length == 0) {
+        _eventReachedEndOfData = true;
+      }
+      _eventCurrentOffset += eventFetchSize;
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      _eventFetchingData = false;
+    }
   }
 
   Future<void> _fetchBusinesses() async {
-    mezDbgPrint("Getting events businesses  =====>$_fromLocation");
-    _businesses.clear();
-    _businesses.value = await get_business_by_event_category1(
-        category1: filterCategories.first,
-        distance: 1000000000000,
-        fromLocation: _fromLocation!,
+    if (_businessFetchingData || _businessReachedEndOfData) {
+      return;
+    }
+    try {
+      mezDbgPrint(
+          "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
+      _businessFetchingData = true;
+      List<BusinessCard> newList = await get_business_by_event_category1(
+          category1: filterCategories.first,
+          distance: 1000000000000,
+          fromLocation: _fromLocation!,
+          offset: _businessCurrentOffset,
+          limit: businessFetchSize,
 
-        // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
-        withCache: false);
-  }
-
-  void filter() {
-    if (showBusiness.isFalse) {
-      List<EventCard> newList = new List<EventCard>.from(_events);
-      newList = newList
-          .searchByName(searchQuery)
-          .filterByCategory(selectedCategories);
-      _filtredEvents.value = newList;
-    } else {
-      List<BusinessCard> newList = new List<BusinessCard>.from(_businesses);
-      newList = newList.searchByName(searchQuery);
-
-      _filtredBusiness.value = newList;
+          // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
+          withCache: false);
+      _businesses.value += newList;
+      if (newList.length == 0) {
+        _businessReachedEndOfData = true;
+      }
+      _businessCurrentOffset += businessFetchSize;
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      _businessFetchingData = false;
     }
   }
+
+  void filter() {}
 
   void switchFilterCategory(bool? value, int index) {
     if (value == true) {
@@ -99,5 +137,9 @@ class CustEventsListViewController {
     } else {
       selectedCategories.remove(filterCategories[index]);
     }
+  }
+
+  void dispose() {
+    _eventScrollController.dispose();
   }
 }

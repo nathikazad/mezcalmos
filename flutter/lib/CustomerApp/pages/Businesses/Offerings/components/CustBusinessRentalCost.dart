@@ -7,6 +7,9 @@ class CustBusinessRentalCost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+    
     List<Map<String, dynamic>> generateCosetData() {
       String removePerFromUnit(TimeUnit unit) {
         return unit.name.toLowerCase().replaceAll("per", "");
