@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -87,13 +88,15 @@ class ServiceScheduleWidgets {
                                 Text(
                                   convertToAmPm(
                                       viewController.newSchedule.value!
-                                          .openHours[weekday]!.from[0],
+                                          .openHours[weekday]!.from[0]
+                                          .toInt(),
                                       viewController.newSchedule.value!
-                                          .openHours[weekday]!.from[1]),
+                                          .openHours[weekday]!.from[1]
+                                          .toInt()),
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  " - ${convertToAmPm(viewController.newSchedule.value!.openHours[weekday]!.to[0], viewController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                  " - ${convertToAmPm(viewController.newSchedule.value!.openHours[weekday]!.to[0].toInt(), viewController.newSchedule.value!.openHours[weekday]!.to[1].toInt())}",
                                   textAlign: TextAlign.center,
                                 ),
                               ])
@@ -291,7 +294,7 @@ class ServiceScheduleWidgets {
         onPressed: () {
           Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.schedulePreview.value =
-                Schedule.clone(viewController.newSchedule.value!);
+                viewController.newSchedule.value!.clone();
             viewController.schedulePreview.refresh();
             //   viewController.theNewSchedule.refresh();
           });
@@ -308,7 +311,7 @@ class ServiceScheduleWidgets {
         onTap: () {
           Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.newSchedule.value =
-                Schedule.clone(viewController.schedulePreview.value!);
+                viewController.schedulePreview.value!.clone();
             viewController.newSchedule.refresh();
           });
         },
@@ -335,9 +338,11 @@ class ServiceScheduleWidgets {
             context: context,
             initialTime: TimeOfDay(
                 hour: viewController
-                    .schedulePreview.value!.openHours[weekday]!.to[0],
+                    .schedulePreview.value!.openHours[weekday]!.to[0]
+                    .toInt(),
                 minute: viewController
-                    .schedulePreview.value!.openHours[weekday]!.to[1]),
+                    .schedulePreview.value!.openHours[weekday]!.to[1]
+                    .toInt()),
             builder: (BuildContext context, Widget? child) {
               return Theme(
                   data: Theme.of(context).copyWith(
@@ -368,7 +373,7 @@ class ServiceScheduleWidgets {
             width: double.infinity,
             alignment: Alignment.centerLeft,
             child: Text(
-              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.to[0], viewController.schedulePreview.value!.openHours[weekday]!.to[1])}",
+              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.to[0].toInt(), viewController.schedulePreview.value!.openHours[weekday]!.to[1].toInt())}",
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge
@@ -389,9 +394,11 @@ class ServiceScheduleWidgets {
               context: context,
               initialTime: TimeOfDay(
                   hour: viewController
-                      .schedulePreview.value!.openHours[weekday]!.from[0],
+                      .schedulePreview.value!.openHours[weekday]!.from[0]
+                      .toInt(),
                   minute: viewController
-                      .schedulePreview.value!.openHours[weekday]!.from[1]),
+                      .schedulePreview.value!.openHours[weekday]!.from[1]
+                      .toInt()),
               builder: (BuildContext context, Widget? child) {
                 return Theme(
                     data: Theme.of(context).copyWith(
@@ -422,7 +429,7 @@ class ServiceScheduleWidgets {
             alignment: Alignment.centerLeft,
             height: 50,
             child: Text(
-              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.from[0], viewController.schedulePreview.value!.openHours[weekday]!.from[1])}",
+              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.from[0].toInt(), viewController.schedulePreview.value!.openHours[weekday]!.from[1].toInt())}",
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge

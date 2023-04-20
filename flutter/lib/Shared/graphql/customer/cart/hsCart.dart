@@ -107,7 +107,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                   ),
                 ),
                 schedule: cartData.restaurant?.details?.schedule != null
-                    ? Schedule.fromData(cartData.restaurant!.details!.schedule)
+                    ? scheduleFromData(cartData.restaurant!.details!.schedule)
                     : null,
                 paymentInfo: paymentInfo,
                 restaurantState: ServiceState(
@@ -316,7 +316,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             ),
           ),
           schedule: _res.details!.schedule != null
-              ? Schedule.fromData(_res.details!.schedule)
+              ? scheduleFromData(_res.details!.schedule)
               : null,
           paymentInfo: paymentInfo,
           restaurantState: ServiceState(

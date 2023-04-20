@@ -110,7 +110,7 @@ Future<Service?> get_service_details_by_id(
       state: ServiceState(data.open_status.toServiceStatus(), data.approved),
       languages: convertToLanguages(data.language),
       paymentInfo: paymentInfo,
-      schedule: Schedule.fromData(data.schedule),
+      schedule: scheduleFromData(data.schedule),
       phoneNumber: data.phone_number,
       serviceLinkId: data.service_link_id,
       serviceProviderType: data.service_provider_type.toServiceProviderType());
@@ -195,7 +195,7 @@ Future<MezLocation?> get_service_location(
   return mezLocation;
 }
 
-Future<Schedule?> get_service_schedule(
+Future<cModels.Schedule?> get_service_schedule(
     {required int serviceDetailsId, bool withCache = true}) async {
   QueryResult<Query$getServiceSchedule> res =
       await _db.graphQLClient.query$getServiceSchedule(
@@ -213,7 +213,7 @@ Future<Schedule?> get_service_schedule(
       res.parsedData!.service_provider_details_by_pk!;
 
   if (data.schedule != null) {
-    return Schedule.fromData(data.schedule!);
+    return scheduleFromData(data.schedule!);
   }
   return null;
 }
@@ -251,8 +251,8 @@ Future<ServiceInfo> update_service_info(
       name: data.name);
 }
 
-Future<Schedule?> update_service_schedule(
-    {required Schedule schedule, required int detailsId}) async {
+Future<cModels.Schedule?> update_service_schedule(
+    {required cModels.Schedule schedule, required int detailsId}) async {
   QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
@@ -268,7 +268,7 @@ Future<Schedule?> update_service_schedule(
   }
   Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
       res.parsedData!.update_service_provider_details_by_pk;
-  return Schedule.fromData(data!.schedule);
+  return scheduleFromData(data!.schedule);
 }
 
 Future<bool> update_service_state({

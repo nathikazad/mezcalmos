@@ -91,7 +91,7 @@ Future<Laundry?> get_laundry_store_by_id(
             location: MezLocation.fromHasura(
                 data.details!.location.gps, data.details!.location.address)),
         schedule: data.details?.schedule != null
-            ? Schedule.fromData(data.details!.schedule)
+            ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: paymentInfo,
         selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
@@ -385,7 +385,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
             location: MezLocation.fromHasura(
                 data.details!.location.gps, data.details!.location.address)),
         schedule: data.details?.schedule != null
-            ? Schedule.fromData(data.details!.schedule)
+            ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: paymentInfo,
         selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,

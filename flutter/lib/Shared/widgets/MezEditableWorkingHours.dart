@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -209,8 +210,10 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                   showTimePicker(
                     context: context,
                     initialTime: TimeOfDay(
-                        hour: schedule.value!.openHours[weekday]!.from[0],
-                        minute: schedule.value!.openHours[weekday]!.from[1]),
+                        hour:
+                            schedule.value!.openHours[weekday]!.from[0].toInt(),
+                        minute: schedule.value!.openHours[weekday]!.from[1]
+                            .toInt()),
                     builder: (BuildContext context, Widget? child) {
                       return child ?? Container();
                     },
@@ -251,8 +254,9 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                   showTimePicker(
                     context: context,
                     initialTime: TimeOfDay(
-                        hour: schedule.value!.openHours[weekday]!.to[0],
-                        minute: schedule.value!.openHours[weekday]!.to[1]),
+                        hour: schedule.value!.openHours[weekday]!.to[0].toInt(),
+                        minute:
+                            schedule.value!.openHours[weekday]!.to[1].toInt()),
                     builder: (BuildContext context, Widget? child) {
                       return child ?? Container();
                     },

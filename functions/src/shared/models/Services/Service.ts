@@ -5,6 +5,7 @@ import { AppType, AuthorizationStatus, Language, Location, NotificationInfo } fr
 import {  PaymentType } from "../Generic/Order";
 import { UserInfo } from "../Generic/User";
 import { ForegroundNotification } from "../Notification";
+import { Schedule } from "../Generic/Schedule";
 
 export interface ServiceProvider {
   id: number;
@@ -22,7 +23,7 @@ export interface ServiceProvider {
   links?: ServiceLink;
   creationTime?: string;
   language: Record<Language, boolean>;
-  schedule?: any;
+  schedule?: Schedule;
   deliveryPartnerId?: number;
   deliveryDetails: DeliveryDetails;
   operators?: Array<Operator>;

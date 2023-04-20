@@ -74,7 +74,7 @@ class ROpItemViewController {
 
   RxBool needToRefetch = RxBool(false);
   RxBool isInitalized = RxBool(false);
-  Rxn<Schedule> schedule = Rxn();
+  Rxn<cModels.Schedule> schedule = Rxn();
 
   bool get isEditing => editMode.value && editableItem.value != null;
   late int restaurantId;

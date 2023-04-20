@@ -45,7 +45,7 @@ class Restaurant extends Service {
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
   PaymentInfo? paymentInfo;
-  Schedule? schedule;
+  cModels.Schedule? schedule;
   Restaurant({
     required ServiceInfo userInfo,
     this.restaurantsView = RestaurantsView.Rows,
@@ -87,8 +87,8 @@ class Restaurant extends Service {
           .toRestaurantsView();
     }
 
-    final Schedule schedule =
-        Schedule.fromData(restaurantData["details"]["schedule"]);
+    final cModels.Schedule schedule =
+        scheduleFromData(restaurantData["details"]["schedule"]);
 
     final PaymentInfo paymentInfo =
         // restaurantData["details"]["paymentInfo"] != null
@@ -323,14 +323,13 @@ class Restaurant extends Service {
     return data;
   }
 
-
   Restaurant copyWith({
     ServiceInfo? userInfo,
     ServiceState? state,
     bool? selfDelivery,
     PaymentInfo? paymentInfo,
     cModels.Language? primaryLanguage,
-    Schedule? schedule,
+    cModels.Schedule? schedule,
     int? deliveryDetailsId,
     Map<cModels.Language, bool>? languages,
   }) {

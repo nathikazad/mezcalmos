@@ -52,13 +52,19 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
         chatTite: _chat.parsedData!.chat_by_pk!
-            .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatTitle'],
+                    .chat_info?['${MezEnv.appType.toChatInfoString()}']
+                ['chatTitle'] ??
+            "",
         phoneNumber: _chat.parsedData!.chat_by_pk!
             .chat_info!['${MezEnv.appType.toChatInfoString()}']['phoneNumber'],
         chatImg: _chat.parsedData!.chat_by_pk!
-            .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatImage'],
+                    .chat_info?['${MezEnv.appType.toChatInfoString()}']
+                ['chatImage'] ??
+            "",
         parentlink: _chat.parsedData!.chat_by_pk!
-            .chat_info!['${MezEnv.appType.toChatInfoString()}']['parentLink'],
+                    .chat_info?['${MezEnv.appType.toChatInfoString()}']
+                ['parentLink'] ??
+            "",
       ),
       creationTime:
           DateTime.parse(_chat.parsedData!.chat_by_pk!.creation_time).toLocal(),
@@ -101,14 +107,20 @@ Future<HasuraChat?> get_service_provider_customer_chat(
     final HasuraChat RetChat = HasuraChat(
         chatInfo: HasuraChatInfo(
           chatTite: _chat.parsedData!.service_provider_customer_chat[0].chat
-              .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatTitle'],
+                      .chat_info?['${MezEnv.appType.toChatInfoString()}']
+                  ['chatTitle'] ??
+              "",
           phoneNumber: _chat.parsedData!.service_provider_customer_chat[0].chat
                   .chat_info!['${MezEnv.appType.toChatInfoString()}']
               ['phoneNumber'],
           chatImg: _chat.parsedData!.service_provider_customer_chat[0].chat
-              .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatImage'],
+                      .chat_info?['${MezEnv.appType.toChatInfoString()}']
+                  ['chatImage'] ??
+              "",
           parentlink: _chat.parsedData!.service_provider_customer_chat[0].chat
-              .chat_info!['${MezEnv.appType.toChatInfoString()}']['parentLink'],
+                      .chat_info?['${MezEnv.appType.toChatInfoString()}']
+                  ['parentLink'] ??
+              "",
         ),
         creationTime: DateTime.parse(_chat.parsedData!
                 .service_provider_customer_chat[0].chat.creation_time)
@@ -118,6 +130,51 @@ Future<HasuraChat?> get_service_provider_customer_chat(
             _chat.parsedData!.service_provider_customer_chat[0].chat.messages),
         participants: []);
     return RetChat;
+  }
+}
+
+Future<List<HasuraChat>> get_customer_chat_by_sp_type(
+    {required int customerId,
+    required ServiceProviderType serviceProviderType}) async {
+  final List<HasuraChat> _chats = <HasuraChat>[];
+
+  final QueryResult<Query$get_customer_chats_by_sp_type> response =
+      await _hasuraDb.graphQLClient.query$get_customer_chats_by_sp_type(
+    Options$Query$get_customer_chats_by_sp_type(
+      variables: Variables$Query$get_customer_chats_by_sp_type(
+        customer_id: customerId,
+        service_provider_type: serviceProviderType.toFirebaseFormatString(),
+      ),
+    ),
+  );
+
+  if (response.parsedData?.service_provider_customer_chat != null) {
+    response.parsedData?.service_provider_customer_chat.forEach(
+        (Query$get_customer_chats_by_sp_type$service_provider_customer_chat
+            data) async {
+      _chats.add(HasuraChat(
+          chatInfo: HasuraChatInfo(
+            chatTite:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatTitle'],
+            phoneNumber:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['phoneNumber'],
+            chatImg:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatImage'],
+            parentlink:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['parentLink'],
+          ),
+          creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
+          id: data.chat.id,
+          messages: _get_messages(data.chat.messages),
+          participants: []));
+    });
+    return _chats;
+  } else {
+    return [];
   }
 }
 
