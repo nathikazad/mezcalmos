@@ -57,7 +57,11 @@ Map<Language, bool> convertToLanguages(languages) {
 /// Decode a jsonString into a Map<String, dynamic>
 T mapFromJson<T>(jsonString) {
   mezDbgPrint("mapFromJson: $jsonString");
-  return jsonDecode(jsonString.toString()) as T;
+  try {
+    return jsonDecode(jsonString.toString()) as T;
+  } on FormatException catch (e) {
+    return jsonString;
+  }
 }
 
 /// Stringify a Map object

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -59,7 +62,10 @@ class _CustProductViewState extends State<CustProductView> {
                             "Error",
                         style: context.textTheme.displayMedium,
                       ),
-                      // todo @ChiragKr04 complete the view with the needed data
+                      CustBusinessBlueText(text: "\$${viewController.product!.details.cost.entries.first.value}"),
+                      CustBusinessDescription(
+                        description: viewController.product!.details.name,
+                      ),
                       CustBusinessMessageCard(
                           business: viewController.product!.business),
                       CustBusinessNoOrderBanner(),

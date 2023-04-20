@@ -23,15 +23,20 @@ class MessageController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   String? subscriptionId;
-
+  IncomingViewLink? incomingViewLink;
   AuthController _authController = Get.find<AuthController>();
   StreamSubscription? chatListener;
+  bool firstMessageSent = false;
   late AppType appType;
 
   @override
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
+  }
+
+  void setIncomingViewLink(IncomingViewLink? incomingViewLink) {
+    this.incomingViewLink = incomingViewLink;
   }
 
   void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {
@@ -84,13 +89,16 @@ class MessageController extends GetxController {
         .child(messagesNode(chatId.toString()))
         .push();
 
-    await send_message(chat_id: chatId, msg:
-        // timestamp as key
-        <String, dynamic>{
+    Map<String, dynamic> messageMap = <String, dynamic>{
       "timestamp": DateTime.now().toUtc().toString(),
       "message": message,
       "userId": _authController.user!.hasuraId,
-    });
+    };
+    if (firstMessageSent != true && incomingViewLink != null) {
+      // make sure that the last message with the link does not have the same url
+      messageMap["link"] = incomingViewLink!.toJson();
+    }
+    await send_message(chat_id: chatId, msg: messageMap);
 
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
@@ -103,6 +111,8 @@ class MessageController extends GetxController {
           messageId: messageNode.key!,
           participantType: MezEnv.appType.convertParticipantTypefromAppType(),
         ).toFirebaseFormatJson());
+
+    firstMessageSent = true;
   }
 
   void clearMessageNotifications({required int chatId}) {
