@@ -5,15 +5,21 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:sizer/sizer.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustHomeRentalView extends StatefulWidget {
   const CustHomeRentalView({super.key});
@@ -59,7 +65,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     children: [
                       Text(
                         viewController.homeRental!.details.name[userLanguage] ??
-                            "No Title",
+                            _i18n()['noTitle'],
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
@@ -69,26 +75,33 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         cost: viewController.homeRental!.details.cost,
                       ),
                       Text(
-                        "Description",
-                        style: context.textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
+                        _i18n()['description'],
+                        style: context.textTheme.bodyLarge,
                       ),
                       Text(
                         viewController.homeRental!.details
                                 .description?[userLanguage] ??
-                            "No Desription",
-                        style: context.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
+                            _i18n()['noDescription'],
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      CustBusinessLocation(
-                        location: viewController.homeRental!.gpsLocation,
-                      ),
+                      viewController.homeRental!.gpsLocation == null
+                          ? const SizedBox.shrink()
+                          : ServiceLocationCard(
+                              height: 20.h,
+                              location: MezLocation(
+                                viewController.homeRental!.gpsLocation?.address ??
+                                    "",
+                                MezLocation.buildLocationData(
+                                  viewController.homeRental!.gpsLocation!.lat
+                                      .toDouble(),
+                                  viewController.homeRental!.gpsLocation!.lng
+                                      .toDouble(),
+                                ),
+                              ),
+                            ),
                       CustBusinessMessageCard(
                         business: viewController.homeRental!.business,
+                        offeringName: viewController.homeRental!.details.name,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

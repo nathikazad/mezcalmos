@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/Off
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -13,6 +14,9 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustServiceView extends StatefulWidget {
   const CustServiceView({super.key});
@@ -61,7 +65,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                     children: [
                       Text(
                         viewController.service!.details.name[userLanguage] ??
-                            "Error",
+                            _i18n()['noTitle'],
                         style: context.textTheme.displayMedium,
                       ),
                       viewController.service!.details.cost.length == 1
@@ -76,23 +80,18 @@ class _CustServiceViewState extends State<CustServiceView> {
                               cost: viewController.service!.details.cost,
                             ),
                       Text(
-                        "Description",
-                        style: context.textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
+                        _i18n()['description'],
+                        style: context.textTheme.bodyLarge,
                       ),
                       Text(
                         viewController
                                 .service!.details.description?[userLanguage] ??
-                            "No Desription",
-                        style: context.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
+                            _i18n()['noDescription'],
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       CustBusinessMessageCard(
                         business: viewController.service!.business,
+                        offeringName: viewController.service!.details.name,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

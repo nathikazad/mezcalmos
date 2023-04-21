@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -190,6 +191,11 @@ class _CustEventsListViewState extends State<CustEventsListView> {
           children: List.generate(
         viewController.events.length,
         (int index) => MezCard(
+            onClick: () {
+              CustEventView.navigate(
+                eventId: viewController.events[index].details.id.toInt(),
+              );
+            },
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.events[index].details.image?.first ?? ""),
             content: Text(

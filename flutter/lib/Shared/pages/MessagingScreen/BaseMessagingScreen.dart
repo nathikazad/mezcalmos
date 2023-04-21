@@ -105,8 +105,48 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void _fillCallBack() {
+    bool showOnce = true;
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
+        final Widget offeringCard = message.link != null
+            ? MezCard(
+                firstAvatarBgImage:
+                    NetworkImage(controller.incomingViewLink!.image),
+                action: InkWell(
+                  onTap: () {
+                    if (MezRouter.isRouteInStack(
+                      controller.incomingViewLink!.url,
+                    )) {
+                      MezRouter.toPath(controller.incomingViewLink!.url);
+                    }
+                  },
+                  child: Text(
+                    "View",
+                    style: context.textTheme.titleLarge!.copyWith(
+                      color: primaryBlueColor,
+                    ),
+                  ),
+                ),
+                content: Text(
+                  controller.incomingViewLink!.name.toString(),
+                ),
+              )
+            : SizedBox.shrink();
+        if (showOnce) {
+          showOnce = false;
+          return Column(
+            children: [
+              offeringCard,
+              singleChatComponent(
+                message: message.message,
+                time: intl.DateFormat('hh:mm a')
+                    .format(message.timestamp.toLocal()),
+                isMe: message.userId == _authController.user!.hasuraId,
+                userImage: getchatImg(message),
+              )
+            ],
+          );
+        }
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
@@ -241,36 +281,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                           () => ListView(
                             shrinkWrap: true,
                             controller: _listViewScrollController,
-                            children: [
-                              !controller.firstMessageSent
-                                  ? MezCard(
-                                      firstAvatarBgImage: NetworkImage(
-                                          controller.incomingViewLink!.image),
-                                      action: InkWell(
-                                        onTap: () {
-                                          if (MezRouter.isRouteInStack(
-                                            controller.incomingViewLink!.url,
-                                          )) {
-                                            MezRouter.toPath(controller
-                                                .incomingViewLink!.url);
-                                          }
-                                        },
-                                        child: Text(
-                                          "View",
-                                          style: context.textTheme.titleLarge!
-                                              .copyWith(
-                                            color: primaryBlueColor,
-                                          ),
-                                        ),
-                                      ),
-                                      content: Text(
-                                        controller.incomingViewLink!.name
-                                            .toString(),
-                                      ),
-                                    )
-                                  : SizedBox.shrink(),
-                              ...List.from(chatLines),
-                            ],
+                            children: List.from(chatLines),
                           ),
                         ),
                       ),

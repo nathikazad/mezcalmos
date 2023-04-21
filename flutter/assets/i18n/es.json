@@ -45,6 +45,18 @@
       }
     },
     "pages": {
+      "Offerings": {
+        "components": {
+          "loading": "Cargando",
+          "schedule": "Horario",
+          "availability": "Disponibilidad",
+          "time": "Tiempo",
+          "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta."
+        },
+        "description": "Descripción",
+        "noDescription": "Sin descripción",
+        "noTitle": "Sin Título"
+      },
       "cards": {
         "SavedCardsListView": {
           "cards": "Mis cartas",
@@ -408,7 +420,7 @@
             "restaurantInfoTab": {
               "description": "Descripción",
               "location": "Dirección",
-              "viewAll" : "Ver Todo",
+              "viewAll": "Ver Todo",
               "codText": "Efectivo en la entrega",
               "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",

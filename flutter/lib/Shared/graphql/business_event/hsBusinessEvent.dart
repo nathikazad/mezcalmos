@@ -156,7 +156,9 @@ Future<List<EventCard>> get_class_by_category(
               additionalParameters: data.details.additional_parameters,
             ),
             scheduleType: data.schedule_type.toScheduleType(),
-            schedule: scheduleFromData(data.schedule),
+            schedule: (data.schedule != null)
+                ? scheduleFromData(data.schedule)
+                : null,
           )));
     });
     return _classes;
@@ -214,7 +216,9 @@ Future<EventWithBusinessCard?> get_event_by_id(
                     [],
               ),
               scheduleType: data.schedule_type.toScheduleType(),
-              schedule: scheduleFromData(data.schedule)),
+              schedule: (data.schedule != null)
+                  ? scheduleFromData(data.schedule)
+                  : null),
           business: BusinessCard(
             id: data.business.id,
             detailsId: data.business.details.id,
