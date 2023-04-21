@@ -3,6 +3,7 @@
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 
 // enum ParticipantType {
@@ -120,8 +121,8 @@ class IncomingViewLink {
   String url;
   IncomingViewLink(
       {required this.name, required this.image, required this.url});
-  Map<String, String> toJson() {
-    return {"name": name.toString(), "image": image, "url": url};
+  Map<String, dynamic> toJson() {
+    return {"name": name.toFirebaseFormat(), "image": image, "url": url};
   }
 }
 

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/env.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -214,6 +215,13 @@ Stream<List<Message>> listen_on_chat_messages({required int chatId}) {
           message: msg['message'],
           timestamp: DateTime.parse(msg['timestamp']).toLocal(),
           userId: msg['userId'],
+          link: msg['link'] != null
+              ? ChatLink(
+                  image: msg['link']['image'],
+                  name: convertToLanguageMap(msg['link']['name']),
+                  url: msg['link']['url'],
+                )
+              : null,
         ),
       );
     });

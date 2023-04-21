@@ -18,11 +18,11 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -105,11 +105,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void _fillCallBack() {
-    bool showOnce = true;
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
-        final Widget offeringCard = message.link != null
-            ? MezCard(
+        if (message.link != null) {
+          return Column(
+            children: [
+              MezCard(
                 firstAvatarBgImage:
                     NetworkImage(controller.incomingViewLink!.image),
                 action: InkWell(
@@ -128,15 +129,10 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                   ),
                 ),
                 content: Text(
-                  controller.incomingViewLink!.name.toString(),
+                  controller.incomingViewLink!.name[userLanguage] ??
+                      controller.incomingViewLink!.name.entries.first.value,
                 ),
-              )
-            : SizedBox.shrink();
-        if (showOnce) {
-          showOnce = false;
-          return Column(
-            children: [
-              offeringCard,
+              ),
               singleChatComponent(
                 message: message.message,
                 time: intl.DateFormat('hh:mm a')
