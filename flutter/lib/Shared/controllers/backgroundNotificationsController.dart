@@ -24,7 +24,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
     // await markInDb(event.data["markReceivedUrl"]);
   } else if (event.data["notificationType"] ==
       NotificationType.Call.toFirebaseFormatString()) {
-    // unawaited(Sagora.handleCallNotificationEvent(event));
+    unawaited(Sagora.handleCallNotificationEvent(event));
   }
 }
 
