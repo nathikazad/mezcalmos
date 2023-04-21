@@ -528,29 +528,42 @@
         "deliveries": "Entregas",
         "rentals": "Alquileres",
         "rental": {
-          "title": "Alquilere",
+          "title": "Alquileres",
+          "shared": {
+            "store": "Almacenar",
+            "filter": "Filtrar",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Persona",
+            "total": "Total",
+            "none": "Ninguna"
+          },
           "surf": {
-            "title": "Surf",
-            "description": "Discover most delicious dishes from the nearest restaurants.",
-            "board": "Tablero",
-            "store": "Tienda"
+            "title": "Navegar",
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos.",
+            "board": "Junta",
+            "store": "Almacenar"
           },
           "vehicle": {
             "title": "Vehículo",
-            "description": "Get your clothes cleaned by your nearest laundry service.",
+            "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
             "vehicle": "Vehículo",
-            "store": "Tienda"
+            "store": "Almacenar"
           },
           "car": {
-            "title": "Coche",
-            "description": "Book and rent your car from local suppliers with affordable prices.",
-            "car": "Coche",
-            "store": "Tienda"
+            "title": "Auto",
+            "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
+            "car": "Auto",
+            "store": "Almacenar"
           },
           "homes": {
-            "title": "Viviendas",
-            "description": "Obtain delivery of anything you desire to your location.",
-            "home": "Vivienda",
+            "title": "Casas",
+            "description": "Obtenga la entrega de todo lo que desee a su ubicación.",
+            "home": "Hogar",
             "agency": "Agencia"
           }
         },

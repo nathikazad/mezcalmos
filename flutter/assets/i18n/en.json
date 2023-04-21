@@ -530,7 +530,20 @@
         "deliveries": "Deliveries",
         "rentals": "Rentals",
         "rental": {
-          "title": "Rental",
+          "title": "Rentals",
+          "shared": {
+            "store": "Store",
+            "filter": "Filter",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "Hour",
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "person": "Person",
+            "total": "Total",
+            "none": "None"
+          },
           "surf": {
             "title": "Surf",
             "description": "Discover most delicious dishes from the nearest restaurants.",
@@ -539,7 +552,7 @@
           },
           "vehicle": {
             "title": "Vehicle",
-            "description": "Get your clothes cleaned by your nearest laundry service.",
+            "description": "Book and rent your car from local suppliers with affordable prices.",
             "vehicle": "Vehicle",
             "store": "Store"
           },
