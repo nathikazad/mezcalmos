@@ -165,6 +165,17 @@ class CloudFunctions {
       }));
   }
 
+  static Future<RemoveDriverResponse> serviceProvider_removeDriver(
+      {required num deliveryDriverId,
+      required DeliveryServiceProviderType deliveryServiceProviderType}  ) async {
+    return RemoveDriverResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-removeDriver",
+      parameters: <String, dynamic>{
+        "deliveryDriverId": deliveryDriverId,
+        "deliveryServiceProviderType":deliveryServiceProviderType.toFirebaseFormatString(),
+      }));
+  }
+
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,
