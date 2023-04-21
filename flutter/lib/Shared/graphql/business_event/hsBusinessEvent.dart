@@ -78,7 +78,9 @@ Future<List<EventCard>> get_event_by_category(
               additionalParameters: data.details.additional_parameters,
             ),
             scheduleType: data.schedule_type.toScheduleType(),
-            schedule: scheduleFromData(data.schedule),
+            schedule: (data.schedule != null)
+                ? scheduleFromData(data.schedule)
+                : null,
           )));
     });
     return _events;
