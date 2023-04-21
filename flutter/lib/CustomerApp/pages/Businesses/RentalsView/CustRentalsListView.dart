@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/MezSearch.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -47,44 +48,43 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Rentals",
+        titleWidget: Text(viewController.rentalCategory.name),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Obx(() {
-          if (viewController.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // search bar
-                  MezSearch(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    onChanged: (String value) {
-                      viewController.searchQuery = value;
-                      viewController.filter();
-                      // viewController.searchEvents(value);
-                    },
-                  ),
-                  _viewBusinessesSwitcher(),
+      body: Obx(() {
+        if (viewController.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return Container(
+            margin: const EdgeInsets.all(16),
+            child: CustomScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              controller: viewController.scrollController,
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // search bar
 
-                  // filter bar
-                  if (viewController.showBusiness.isFalse)
-                    _filterButton(context),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    child: (viewController.showBusiness.isTrue)
-                        ? _buildBusinesses()
-                        : _buildRentals(),
+                      _viewBusinessesSwitcher(),
+
+                      // filter bar
+                      if (viewController.showFilter) _filterButton(context),
+                      Container(
+                        margin: const EdgeInsets.only(top: 15),
+                        child: (viewController.showBusiness.isTrue)
+                            ? _buildBusinesses()
+                            : _buildRentals(),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }
-        }),
-      ),
+                ),
+              ],
+            ),
+          );
+        }
+      }),
     );
   }
 
@@ -175,8 +175,10 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     );
   }
 
-  Future<dynamic> _showFilterSheet(BuildContext context) {
-    return showModalBottomSheet(
+  Future<List<String>?> _showFilterSheet<String>(
+    BuildContext context,
+  ) {
+    return showModalBottomSheet<List<String>?>(
         isDismissible: false,
         context: context,
         builder: (BuildContext context) {
@@ -218,8 +220,9 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                             backgroundColor: offRedColor,
                             textColor: redAccentColor,
                             onClick: () async {
-                              // todo cancel filter
-                              Navigator.pop(context);
+                              //   viewController.resetFilter();
+
+                              Navigator.pop(context, null);
                             })),
                     SizedBox(
                       width: 10,
@@ -229,7 +232,9 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                             label: "Confirm",
                             onClick: () async {
                               viewController.filter();
-                              Navigator.pop(context);
+                              Navigator.pop(
+                                context,
+                              );
                             })),
                   ],
                 ),
@@ -262,6 +267,17 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
           children: List.generate(
         viewController.rentals.length,
         (int index) => MezCard(
+            onClick: () {
+              if (viewController.rentalCategory == RentalCategory1.Home) {
+                CustHomeRentalView.navigate(
+                  rentalId: viewController.rentals[index].details.id.toInt(),
+                );
+              } else {
+                CustRentalView.navigate(
+                  rentalId: viewController.rentals[index].details.id.toInt(),
+                );
+              }
+            },
             firstAvatarBgImage:
                 (viewController.rentals[index].details.firstImage != null)
                     ? CachedNetworkImageProvider(
@@ -269,7 +285,8 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                     : null,
             content: Text(
                 viewController.rentals[index].details.name[userLanguage] ??
-                    "")),
+                    viewController
+                        .rentals[index].details.name.entries.first.value)),
       ));
     } else
       return Container(

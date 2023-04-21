@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustServiceView extends StatefulWidget {
   const CustServiceView({super.key});
@@ -63,26 +65,33 @@ class _CustServiceViewState extends State<CustServiceView> {
                     children: [
                       Text(
                         viewController.service!.details.name[userLanguage] ??
-                            "Error",
+                            _i18n()['noTitle'],
                         style: context.textTheme.displayMedium,
                       ),
                       viewController.service!.details.cost.length == 1
-                          ? CustBusinessBlueText(
-                              text:
-                                  "\$${costData.entries.first.value}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
+                          ? Text(
+                              "\$${costData.entries.first.value}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
+                              style: context.textTheme.bodyLarge!.copyWith(
+                                color: primaryBlueColor,
+                                fontWeight: FontWeight.w600,
+                              ),
                             )
                           : CustBusinessRentalCost(
                               cost: viewController.service!.details.cost,
                             ),
-                      CustBusinessDescription(
-                        description: viewController.service!.details.name,
+                      Text(
+                        _i18n()['description'],
+                        style: context.textTheme.bodyLarge,
                       ),
-                      // CustBusinessScheduleBuilder(
-                      //   schedule: viewController.service!.details.schedule,
-                      //   scheduleType: ScheduleType.Scheduled,
-                      // ),
+                      Text(
+                        viewController
+                                .service!.details.description?[userLanguage] ??
+                            _i18n()['noDescription'],
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                       CustBusinessMessageCard(
                         business: viewController.service!.business,
+                        offeringName: viewController.service!.details.name,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

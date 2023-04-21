@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustProductView extends StatefulWidget {
   const CustProductView({super.key});
@@ -59,15 +60,30 @@ class _CustProductViewState extends State<CustProductView> {
                     children: [
                       Text(
                         viewController.product!.details.name[userLanguage] ??
-                            "Error",
+                            _i18n()['noTitle'],
                         style: context.textTheme.displayMedium,
                       ),
-                      CustBusinessBlueText(text: "\$${viewController.product!.details.cost.entries.first.value}"),
-                      CustBusinessDescription(
-                        description: viewController.product!.details.name,
+                      Text(
+                        "\$${viewController.product!.details.cost.entries.first.value}",
+                        style: context.textTheme.bodyLarge!.copyWith(
+                          color: primaryBlueColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        _i18n()['description'],
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      Text(
+                        viewController
+                                .product!.details.description?[userLanguage] ??
+                            _i18n()['noDescription'],
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       CustBusinessMessageCard(
-                          business: viewController.product!.business),
+                        business: viewController.product!.business,
+                        offeringName: viewController.product!.details.name,
+                      ),
                       CustBusinessNoOrderBanner(),
                     ],
                   ),

@@ -1,17 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/CustChatController.dart';
 
 class CustBusinessMessageCard extends StatelessWidget {
-  const CustBusinessMessageCard({super.key, required this.business});
+  const CustBusinessMessageCard({
+    super.key,
+    required this.business,
+    required this.offeringName,
+  });
   final BusinessCard business;
+  final Map<Language, String> offeringName;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,8 @@ class CustBusinessMessageCard extends StatelessWidget {
         chatId: 0,
         onTap: () {
           custChatController.initiateChat(
-            serviceProviderId: business.id,
+            business: business,
+            offeringName: offeringName,
           );
         },
       ),

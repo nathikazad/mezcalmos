@@ -115,13 +115,13 @@ class Participant {
 }
 
 class IncomingViewLink {
-  String name;
+  Map<Language, String> name;
   String image;
   String url;
   IncomingViewLink(
       {required this.name, required this.image, required this.url});
   Map<String, String> toJson() {
-    return {"name": name, "image": image, "url": url};
+    return {"name": name.toString(), "image": image, "url": url};
   }
 }
 
@@ -153,12 +153,25 @@ class Message {
   DateTime timestamp;
   String get formatedTime => DateFormat('HH:mm').format(timestamp).toString();
   int userId;
+  ChatLink? link;
   // ParticipantType participantType;
   Message({
     required this.message,
     required this.timestamp,
     required this.userId,
+    this.link,
     // required this.participantType,
+  });
+}
+
+class ChatLink {
+  String url;
+  String image;
+  Map<Language, String> name;
+  ChatLink({
+    required this.url,
+    required this.name,
+    required this.image,
   });
 }
 

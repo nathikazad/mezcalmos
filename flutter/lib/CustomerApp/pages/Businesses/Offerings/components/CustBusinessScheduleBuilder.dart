@@ -1,112 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessHeading.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class CustBusinessScheduleBuilder extends StatelessWidget {
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Offerings']['components'];
+
+class CustBusinessScheduleBuilder extends StatefulWidget {
   const CustBusinessScheduleBuilder({
     super.key,
     required this.schedule,
     required this.scheduleType,
   });
 
-  /// Schedule will look like this
-  ///
-  /// (showing this for reference coz schedule is dynamic)
-  ///
-  /// ```
-  /// {
-  ///   "monday": {
-  ///     // in 24hr format
-  ///     "from": "10:0",
-  ///     "to": "21:0",
-  ///     "isOpen": true
-  ///   },
-  ///   "tuesday": {
-  ///     // in 24hr format
-  ///     "from": "12:0",
-  ///     "to": "20:0",
-  ///     "isOpen": true
-  ///   },
-  /// }
-  /// ```
   final Schedule? schedule;
   final ScheduleType scheduleType;
 
   @override
+  State<CustBusinessScheduleBuilder> createState() =>
+      _CustBusinessScheduleBuilderState();
+}
+
+class _CustBusinessScheduleBuilderState
+    extends State<CustBusinessScheduleBuilder> {
+  String scheduleTypeHeading() {
+    switch (widget.scheduleType) {
+      case ScheduleType.Scheduled:
+        return "schedule";
+
+      case ScheduleType.OnDemand:
+        return "availability";
+
+      case ScheduleType.OneTime:
+        return "time";
+    }
+  }
+
+  String formatTime(String hour, String minute) {
+    final int h = int.parse(hour);
+    final int m = int.parse(minute);
+    if (h < 0 || h > 23 || m < 0 || m > 59) {
+      throw ArgumentError('Invalid time value');
+    }
+    if (h == 0) {
+      return '12:${m.toString().padLeft(2, '0')} AM';
+    } else if (h < 12) {
+      return '${h.toString()}:${m.toString().padLeft(2, '0')} AM';
+    } else if (h == 12) {
+      return '12:${m.toString().padLeft(2, '0')} PM';
+    } else if (h > 12 && h <= 23) {
+      return '${(h - 12).toString()}:${m.toString().padLeft(2, '0')} PM';
+    }
+    throw ArgumentError('Invalid time value');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    mezDbgPrint("_BuildSchedule: $schedule $scheduleType");
-
-    String scheduleTypeHeading() {
-      switch (scheduleType) {
-        case ScheduleType.Scheduled:
-          return "Schedule";
-
-        case ScheduleType.OnDemand:
-          return "Availability";
-
-        case ScheduleType.OneTime:
-          return "Time";
-      }
+    if (widget.schedule == null) {
+      return SizedBox.shrink();
     }
-
-    String formatTime(String timeString) {
-      final List<String> parts = timeString.split(':');
-      final int hour = int.parse(parts[0]);
-      final int minute = int.parse(parts[1]);
-      if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
-        throw ArgumentError('Invalid time value: $timeString');
-      }
-      if (hour == 0) {
-        return '12:${minute.toString().padLeft(2, '0')} AM';
-      } else if (hour < 12) {
-        return '${hour.toString()}:${minute.toString().padLeft(2, '0')} AM';
-      } else if (hour == 12) {
-        return '12:${minute.toString().padLeft(2, '0')} PM';
-      } else if (hour > 12 && hour <= 23) {
-        return '${(hour - 12).toString()}:${minute.toString().padLeft(2, '0')} PM';
-      }
-      throw ArgumentError('Invalid time value: $timeString');
-    }
-
-    Map<String, Map<String, dynamic>> changeScheduleOnTime() {
-      var fakeSchedule = {
-        "monday": {"from": "10:0", "to": "21:0", "isOpen": true},
-        "tuesday": {"from": "12:0", "to": "20:0", "isOpen": true},
-        "wednesday": {"from": "15:0", "to": "17:0", "isOpen": true},
-      };
-      final String firstKey = fakeSchedule.keys.first;
-      final Map<String, dynamic> firstValue =
-          fakeSchedule.values.first.cast<String, dynamic>();
-      switch (scheduleType) {
-        case ScheduleType.Scheduled:
-          return fakeSchedule;
-        case ScheduleType.OnDemand:
-          return {"$firstKey": firstValue};
-        case ScheduleType.OneTime:
-          return {"$firstKey": firstValue};
-      }
-    }
-
-    final Map<String, Map<String, dynamic>> tempSchedule =
-        changeScheduleOnTime();
-
-    // if (schedule == null || schedule.isEmpty()) {
-    //   return Text("No Schedule Available");
-    // }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustBusinessHeading(
-          text: scheduleTypeHeading(),
+        Text(
+          _i18n()[scheduleTypeHeading()],
+          style: context.textTheme.titleLarge!.copyWith(
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
         ),
-        for (int index = 0; index < tempSchedule.length; index++)
+        for (int index = 0; index < widget.schedule!.openHours.length; index++)
           Builder(
             builder: (context) {
-              final String day = tempSchedule.keys.elementAt(index);
-              final Map<String, dynamic> data = tempSchedule[day] ?? {};
-              final String from = data['from'];
-              final String to = data['to'];
+              final String day =
+                  widget.schedule!.openHours.keys.elementAt(index).name;
+              final OpenHours data =
+                  widget.schedule!.openHours.values.elementAt(index);
+              final String fromHour = data.from[0].toString();
+              final String fromMinute = data.from[1].toString();
+
+              final String toHour = data.to[0].toString();
+              final String toMinute = data.to[1].toString();
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -116,12 +91,14 @@ class CustBusinessScheduleBuilder extends StatelessWidget {
                         Icon(Icons.access_time_outlined),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(tempSchedule.keys.elementAt(index)),
+                          child: Text(day),
                         ),
                       ],
                     ),
                   ),
-                  Text("${formatTime(from)}-${formatTime(to)}"),
+                  Text(
+                    "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+                  ),
                 ],
               );
             },

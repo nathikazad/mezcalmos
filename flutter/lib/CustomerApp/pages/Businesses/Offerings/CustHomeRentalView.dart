@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessTitle.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:sizer/sizer.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustHomeRentalView extends StatefulWidget {
   const CustHomeRentalView({super.key});
@@ -59,10 +63,10 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustBusinessTitle(
-                        title: viewController
-                                .homeRental!.details.name[userLanguage] ??
-                            "No Title",
+                      Text(
+                        viewController.homeRental!.details.name[userLanguage] ??
+                            _i18n()['noTitle'],
+                        style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
                         homeRental: viewController.homeRental!,
@@ -70,15 +74,34 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
-                      CustBusinessDescription(
-                        description:
-                            viewController.homeRental!.details.description,
+                      Text(
+                        _i18n()['description'],
+                        style: context.textTheme.bodyLarge,
                       ),
-                      CustBusinessLocation(
-                        location: viewController.homeRental!.gpsLocation,
+                      Text(
+                        viewController.homeRental!.details
+                                .description?[userLanguage] ??
+                            _i18n()['noDescription'],
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      viewController.homeRental!.gpsLocation == null
+                          ? const SizedBox.shrink()
+                          : ServiceLocationCard(
+                              height: 20.h,
+                              location: MezLocation(
+                                viewController.homeRental!.gpsLocation?.address ??
+                                    "",
+                                MezLocation.buildLocationData(
+                                  viewController.homeRental!.gpsLocation!.lat
+                                      .toDouble(),
+                                  viewController.homeRental!.gpsLocation!.lng
+                                      .toDouble(),
+                                ),
+                              ),
+                            ),
                       CustBusinessMessageCard(
                         business: viewController.homeRental!.business,
+                        offeringName: viewController.homeRental!.details.name,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
@@ -94,7 +117,6 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
     );
   }
 }
-
 
 class _CustBusinessAdditionalData extends StatelessWidget {
   const _CustBusinessAdditionalData({
@@ -130,8 +152,12 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       return wholeString.toString();
     }
 
-    return CustBusinessBlueText(
-      text: wholeAdditionalParamString(),
+    return Text(
+      wholeAdditionalParamString(),
+      style: context.textTheme.bodyLarge!.copyWith(
+        color: primaryBlueColor,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

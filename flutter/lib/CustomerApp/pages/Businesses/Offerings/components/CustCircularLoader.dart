@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Offerings']['components'];
 
 class CustCircularLoader extends StatelessWidget {
   const CustCircularLoader({super.key});
@@ -16,10 +20,12 @@ class CustCircularLoader extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text(
-            "Loading...",
-            style: context.theme.textTheme.bodyMedium
-                ?.copyWith(color: primaryBlueColor),
+          Obx(
+            () => Text(
+              "${_i18n()['loading']}...",
+              style: context.theme.textTheme.bodyMedium
+                  ?.copyWith(color: primaryBlueColor),
+            ),
           ),
           SizedBox(
             height: 5,

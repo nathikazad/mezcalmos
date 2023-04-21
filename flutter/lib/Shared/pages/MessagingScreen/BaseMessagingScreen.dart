@@ -17,6 +17,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -103,8 +105,48 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void _fillCallBack() {
+    bool showOnce = true;
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
+        final Widget offeringCard = message.link != null
+            ? MezCard(
+                firstAvatarBgImage:
+                    NetworkImage(controller.incomingViewLink!.image),
+                action: InkWell(
+                  onTap: () {
+                    if (MezRouter.isRouteInStack(
+                      controller.incomingViewLink!.url,
+                    )) {
+                      MezRouter.toPath(controller.incomingViewLink!.url);
+                    }
+                  },
+                  child: Text(
+                    "View",
+                    style: context.textTheme.titleLarge!.copyWith(
+                      color: primaryBlueColor,
+                    ),
+                  ),
+                ),
+                content: Text(
+                  controller.incomingViewLink!.name.toString(),
+                ),
+              )
+            : SizedBox.shrink();
+        if (showOnce) {
+          showOnce = false;
+          return Column(
+            children: [
+              offeringCard,
+              singleChatComponent(
+                message: message.message,
+                time: intl.DateFormat('hh:mm a')
+                    .format(message.timestamp.toLocal()),
+                isMe: message.userId == _authController.user!.hasuraId,
+                userImage: getchatImg(message),
+              )
+            ],
+          );
+        }
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),

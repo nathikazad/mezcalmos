@@ -5,19 +5,22 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessTitle.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDescription.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessHeading.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessBlueText.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessLocation.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:sizer/sizer.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustEventView extends StatefulWidget {
   const CustEventView({super.key});
@@ -72,6 +75,8 @@ class _CustEventViewState extends State<CustEventView> {
     return Scaffold(
       body: Obx(() {
         if (viewController.event != null) {
+          mezDbgPrint(
+              "EVENT ${viewController.event?.toFirebaseFormattedJson()}");
           return CustomScrollView(
             slivers: [
               CustBusinessItemAppbar(
@@ -82,10 +87,10 @@ class _CustEventViewState extends State<CustEventView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustBusinessTitle(
-                        title:
-                            viewController.event!.details.name[userLanguage] ??
-                                "No Title",
+                      Text(
+                        viewController.event!.details.name[userLanguage] ??
+                            _i18n()['noTitle'],
+                        style: context.textTheme.displayMedium,
                       ),
                       CustBusinessAdditionalData(
                         additionalValues: viewController
@@ -95,13 +100,26 @@ class _CustEventViewState extends State<CustEventView> {
                       // Price
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: CustBusinessBlueText(
-                          text: generateCost(),
+                        child: Text(
+                          generateCost(),
+                          style: context.textTheme.bodyLarge!.copyWith(
+                            color: primaryBlueColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                      CustBusinessDescription(
-                        description: viewController.event!.details.description,
+
+                      Text(
+                        _i18n()['description'],
+                        style: context.textTheme.bodyLarge,
                       ),
+                      Text(
+                        viewController
+                                .event!.details.description?[userLanguage] ??
+                            _i18n()['noDescription'],
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+
                       // todo @ChiragKr04 complete the view with the needed data
 
                       CustBusinessScheduleBuilder(
@@ -109,12 +127,25 @@ class _CustEventViewState extends State<CustEventView> {
                         scheduleType: viewController.event!.scheduleType,
                       ),
 
-                      CustBusinessLocation(
-                        location: viewController.event!.gpsLocation,
-                      ),
+                      viewController.event!.gpsLocation == null
+                          ? const SizedBox.shrink()
+                          : ServiceLocationCard(
+                              height: 20.h,
+                              location: MezLocation(
+                                viewController.event!.gpsLocation?.address ??
+                                    "",
+                                MezLocation.buildLocationData(
+                                  viewController.event!.gpsLocation!.lat
+                                      .toDouble(),
+                                  viewController.event!.gpsLocation!.lng
+                                      .toDouble(),
+                                ),
+                              ),
+                            ),
 
                       CustBusinessMessageCard(
                         business: viewController.event!.business,
+                        offeringName: viewController.event!.details.name,
                       ),
 
                       CustBusinessNoOrderBanner(),
