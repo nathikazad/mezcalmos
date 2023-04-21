@@ -21,6 +21,7 @@ query get_event_by_id($id: Int!) {
     schedule
     schedule_type
     gps_location
+    address
     time
     details {
       additional_parameters
@@ -106,6 +107,7 @@ query get_event_by_category($categories1: [String!],
     }
     id
     gps_location
+    address
     schedule_type
     schedule
     time
@@ -179,6 +181,7 @@ query get_class_by_category($categories1: [String!],
     }
     id
     gps_location
+    address
     schedule_type
     schedule
     time
@@ -192,6 +195,45 @@ query get_class_by_category($categories1: [String!],
           address
         }
       }
+    }
+  }
+}
+
+query number_of_classes($distance: Float!, $from: geography!) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {tags: {_has_key: "class"}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_therapy($distance: Float!, $from: geography!) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "therapy"}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_events($distance: Float!, $from: geography!) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_in: ["party", "dance", "social"]}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_volunteer($distance: Float!, $from: geography!) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "volunteer"}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+query number_of_adventure($distance: Float!, $from: geography!) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "adventure"}}}) {
+    aggregate {
+      count
     }
   }
 }

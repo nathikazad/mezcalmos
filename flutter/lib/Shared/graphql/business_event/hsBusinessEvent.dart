@@ -54,10 +54,11 @@ Future<List<EventCard>> get_event_by_category(
           businessName: data.business.details.name,
           event: Event(
             category1: data.details.category1.toEventCategory1(),
-            gpsLocation: data.gps_location != null
+            gpsLocation: data.gps_location != null && data.address != null
                 ? Location(
                     lat: data.gps_location!.latitude,
-                    lng: data.gps_location!.longitude)
+                    lng: data.gps_location!.longitude,
+                    address: data.address!)
                 : null,
             time: data.time,
             tags: data.details.tags
@@ -131,10 +132,11 @@ Future<List<EventCard>> get_class_by_category(
           businessName: data.business.details.name,
           event: Event(
             category1: data.details.category1.toEventCategory1(),
-            gpsLocation: data.gps_location != null
+            gpsLocation: data.gps_location != null && data.address != null
                 ? Location(
                     lat: data.gps_location!.latitude,
-                    lng: data.gps_location!.longitude)
+                    lng: data.gps_location!.longitude,
+                    address: data.address!)
                 : null,
             time: data.time,
             tags: data.details.tags
@@ -188,10 +190,11 @@ Future<EventWithBusinessCard?> get_event_by_id(
           event: Event(
               category1: data.details.category1.toEventCategory1(),
               category2: data.details.category2.toEventCategory2(),
-              gpsLocation: data.gps_location != null
+              gpsLocation: data.gps_location != null && data.address != null
                   ? Location(
                       lat: data.gps_location!.latitude,
-                      lng: data.gps_location!.longitude)
+                      lng: data.gps_location!.longitude,
+                      address: data.address!)
                   : null,
               time: data.time,
               tags: data.details.tags
@@ -239,6 +242,118 @@ Future<EventWithBusinessCard?> get_event_by_id(
   return null;
 }
 
+Future<int?> get_number_of_classes(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_classes> response = await _db.graphQLClient
+      .query$number_of_classes(Options$Query$number_of_classes(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_classes(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_event_aggregate.aggregate != null) {
+    return response.parsedData!.business_event_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
+Future<int?> get_number_of_therapy(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_therapy> response = await _db.graphQLClient
+      .query$number_of_therapy(Options$Query$number_of_therapy(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_therapy(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_event_aggregate.aggregate != null) {
+    return response.parsedData!.business_event_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
+Future<int?> get_number_of_events(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_events> response = await _db.graphQLClient
+      .query$number_of_events(Options$Query$number_of_events(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_events(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_event_aggregate.aggregate != null) {
+    return response.parsedData!.business_event_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
+Future<int?> get_number_of_volunteer(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_volunteer> response = await _db
+      .graphQLClient
+      .query$number_of_volunteer(Options$Query$number_of_volunteer(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_volunteer(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_event_aggregate.aggregate != null) {
+    return response.parsedData!.business_event_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
+Future<int?> get_number_of_adventure(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_adventure> response = await _db
+      .graphQLClient
+      .query$number_of_adventure(Options$Query$number_of_adventure(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_adventure(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_event_aggregate.aggregate != null) {
+    return response.parsedData!.business_event_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
 Future<int?> add_one_event({required Event event}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
 
@@ -251,6 +366,7 @@ Future<int?> add_one_event({required Event event}) async {
                       ? Geography(event.gpsLocation!.lat.toDouble(),
                           event.gpsLocation!.lng.toDouble())
                       : null,
+                  address: event.gpsLocation?.address,
                   schedule_type: event.scheduleType.toFirebaseFormatString(),
                   schedule: event.schedule,
                   time: event.time,

@@ -124,6 +124,28 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
   return null;
 }
 
+Future<int?> get_number_of_services(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_services> response = await _db.graphQLClient
+      .query$number_of_services(Options$Query$number_of_services(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_services(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_service_aggregate.aggregate != null) {
+    return response.parsedData!.business_service_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
 Future<int?> add_one_service({required Service service}) async {
   // mezDbgPrint("Adding this service 🇹🇳 ${service.toJson()}");
 

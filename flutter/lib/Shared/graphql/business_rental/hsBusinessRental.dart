@@ -68,7 +68,8 @@ Future<List<RentalCard>> get_rental_by_category(
             gpsLocation: (data.home_rental != null)
                 ? Location(
                     lat: data.home_rental!.gps_location.latitude,
-                    lng: data.home_rental!.gps_location.longitude)
+                    lng: data.home_rental!.gps_location.longitude,
+                    address: data.home_rental!.address)
                 : null),
       ));
     });
@@ -124,7 +125,8 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
               gpsLocation: (data.home_rental != null)
                   ? Location(
                       lat: data.home_rental!.gps_location.latitude,
-                      lng: data.home_rental!.gps_location.longitude)
+                      lng: data.home_rental!.gps_location.longitude,
+                      address: data.home_rental!.address)
                   : null),
           business: BusinessCard(
             id: data.business.id,
@@ -144,6 +146,28 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
   } else
     return null;
   return null;
+}
+
+Future<int?> get_number_of_rental(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_rentals> response = await _db.graphQLClient
+      .query$number_of_rentals(Options$Query$number_of_rentals(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_rentals(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_rental_aggregate.aggregate != null) {
+    return response.parsedData!.business_rental_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
 }
 
 Future<List<RentalCard>> get_home_rentals(
@@ -192,7 +216,8 @@ Future<List<RentalCard>> get_home_rentals(
             bedrooms: data.bedrooms,
             gpsLocation: Location(
                 lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude),
+                lng: data.gps_location.longitude,
+                address: data.address),
             homeType: data.home_type,
           )));
     });

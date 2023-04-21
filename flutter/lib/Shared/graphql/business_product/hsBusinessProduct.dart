@@ -118,6 +118,28 @@ Future<ProductWithBusinessCard?> get_product_by_id(
   return null;
 }
 
+Future<int?> get_number_of_products(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_products> response = await _db.graphQLClient
+      .query$number_of_products(Options$Query$number_of_products(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_products(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_product_aggregate.aggregate != null) {
+    return response.parsedData!.business_product_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
 Future<int?> add_one_product({required Product product}) async {
   // mezDbgPrint("Adding this product 🇹🇳 ${product.toJson()}");
 
