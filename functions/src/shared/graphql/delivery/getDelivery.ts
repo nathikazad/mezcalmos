@@ -132,6 +132,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       id: true,
       pickup_gps: true,
       dropoff_gps: true,
+      dropoff_address: true,
       chat_with_customer_id: true,
       payment_type: true,
       status: true,
@@ -169,6 +170,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       dropoffLocation: {
         lat: d.dropoff_gps.coordinates[1],
         lng: d.dropoff_gps.coordinates[0],
+        address: d.dropoff_address,
       },
       chatWithCustomerId: d.chat_with_customer_id,
       paymentType: d.payment_type as PaymentType,
@@ -212,6 +214,7 @@ export async function getDeliveryCompany(deliveryCompanyId: number): Promise<Ser
         image: true,
         location: {
           gps: true,
+          address: true,
         },
         language: [{}, true],
       },
@@ -254,6 +257,7 @@ export async function getDeliveryCompany(deliveryCompanyId: number): Promise<Ser
     location: {
       lat: response.delivery_company_by_pk?.details?.location.gps.coordinates[1],
       lng: response.delivery_company_by_pk?.details?.location.gps.coordinates[0],
+      address: response.delivery_company_by_pk?.details?.location.address
     },
     language: response.delivery_company_by_pk?.details?.language,
     deliveryDetails: {

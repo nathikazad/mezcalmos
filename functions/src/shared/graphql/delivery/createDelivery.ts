@@ -38,9 +38,9 @@ export async function createLaundryToCustomerDeliveryOrder(
                 order_type: OrderType.Laundry,
                 dropoff_gps: JSON.stringify({
                 "type": "Point",
-                "coordinates": [laundryOrder.customerLocation.lng, laundryOrder.customerLocation.lat ],
+                "coordinates": [laundryOrder.customerLocation!.lng, laundryOrder.customerLocation!.lat ],
                 }),
-                dropoff_address: laundryOrder.customerLocation.address,
+                dropoff_address: laundryOrder.customerLocation!.address,
                 pickup_gps: JSON.stringify({
                     "type": "Point",
                     "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],

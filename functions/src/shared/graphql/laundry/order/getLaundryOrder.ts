@@ -69,12 +69,6 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
     if(response.laundry_order_by_pk == null) {
       throw new MezError("orderNotFound");
     }
-    
-    let customerLocation: Location = {
-      lat: response.laundry_order_by_pk.customer_location_gps.coordinates[1],
-      lng: response.laundry_order_by_pk.customer_location_gps.coordinates[0],
-      address: response.laundry_order_by_pk.customer_address
-    }
   
     let categories: OrderCategory[] = response.laundry_order_by_pk.categories.map((c) => {
       return {
@@ -91,7 +85,11 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
       customerId: response.laundry_order_by_pk.customer_id,
       storeId: response.laundry_order_by_pk.store_id,
       paymentType: response.laundry_order_by_pk.payment_type as PaymentType,
-      customerLocation,
+      customerLocation: (response.laundry_order_by_pk.customer_address) ? {
+        lat: response.laundry_order_by_pk.customer_location_gps.coordinates[1],
+        lng: response.laundry_order_by_pk.customer_location_gps.coordinates[0],
+        address: response.laundry_order_by_pk.customer_address
+      }: undefined,
       refundAmount: parseFloat(response.laundry_order_by_pk.refund_amount.replace("$","")),
       status: response.laundry_order_by_pk.status as LaundryOrderStatus,
       deliveryType: response.laundry_order_by_pk.delivery_type as DeliveryType,
@@ -191,12 +189,6 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
   if(response.laundry_order.length == 0) {
     throw new MezError("orderNotFound");
   }
-  
-  let customerLocation: Location = {
-    lat: response.laundry_order[0].customer_location_gps.coordinates[1],
-    lng: response.laundry_order[0].customer_location_gps.coordinates[0],
-    address: response.laundry_order[0].customer_address
-  }
 
   let categories: OrderCategory[] = response.laundry_order[0].categories.map((c) => {
     return {
@@ -213,7 +205,11 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
     storeId: response.laundry_order[0].store_id,
     spDetailsId: response.laundry_order[0].store.details_id,
     paymentType: response.laundry_order[0].payment_type as PaymentType,
-    customerLocation,
+    customerLocation: (response.laundry_order[0].customer_address) ? {
+      lat: response.laundry_order[0].customer_location_gps.coordinates[1],
+      lng: response.laundry_order[0].customer_location_gps.coordinates[0],
+      address: response.laundry_order[0].customer_address
+    }: undefined,
     refundAmount: parseFloat(response.laundry_order[0].refund_amount.replace("$","")),
     status: response.laundry_order[0].status as LaundryOrderStatus,
     deliveryType: response.laundry_order[0].delivery_type as DeliveryType,
@@ -293,11 +289,11 @@ export async function getCustomerLaundryOrders(customerId: number): Promise<Laun
       customerId: o.customer_id,
       storeId: o.store_id,
       paymentType: o.payment_type as PaymentType,
-      customerLocation: {
+      customerLocation: (o.customer_address) ? {
         lat: o.customer_location_gps.coordinates[1],
         lng: o.customer_location_gps.coordinates[0],
         address: o.customer_address
-      },
+      }: undefined,
       orderTime: o.order_time,
       status: o.status as LaundryOrderStatus,
       deliveryType: o.delivery_type as DeliveryType,
@@ -419,11 +415,11 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
       customerId: o.customer_id,
       storeId: o.store_id,
       paymentType: o.payment_type as PaymentType,
-      customerLocation: {
+      customerLocation:  (o.customer_address) ? {
         lat: o.customer_location_gps.coordinates[1],
         lng: o.customer_location_gps.coordinates[0],
         address: o.customer_address
-      },
+      } : undefined,
       orderTime: o.order_time,
       status: o.status as LaundryOrderStatus,
       deliveryType: o.delivery_type as DeliveryType,

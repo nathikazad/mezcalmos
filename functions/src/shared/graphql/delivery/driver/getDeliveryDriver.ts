@@ -157,10 +157,6 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
         deliveryCompanyId: d.delivery_company_id,
         status: d.status as AuthorizationStatus,
         online: d.online,
-        currentLocation: (d.current_location) ? {
-          lat: d.current_location.coordinates[1],
-          lng: d.current_location.coordinates[0]
-        }: undefined,
         user: {
           id: d.user_id,
           firebaseId: d.user.firebase_id,

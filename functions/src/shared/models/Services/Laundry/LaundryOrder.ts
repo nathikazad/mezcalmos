@@ -8,7 +8,7 @@ import { OrderStripeInfo } from '../../stripe';
 
 export interface LaundryOrder {
   storeId: number;
-  customerLocation: Location;
+  customerLocation?: Location;
   estimatedReadyTime?: string;
   actualReadyTime?: string;
   fromCustomerDeliveryId?: number;
