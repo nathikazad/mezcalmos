@@ -193,8 +193,8 @@ class CustRequestCourierViewController {
     await Future.forEach(newImages.keys, (int key) async {
       await uploadImgToFbStorage(
               imageFile: newImages[key]!,
-              pathPrefix:
-                  "${Get.find<AuthController>().hasuraUserId!}/Courier/items/${DateTime.now().toIso8601String()}")
+              storageFolder:
+                  "CourierOrders/${Get.find<AuthController>().hasuraUserId!}/items")
           .then((String url) => items[key].image = url);
     });
   }

@@ -85,7 +85,7 @@ class UserProfileViewController {
     if (newImageFile.value != null) {
       newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          pathPrefix: "users/${_authController.hasuraUserId!}/avatar/");
+          storageFolder: "users/${_authController.hasuraUserId!}/avatar");
     }
   }
 

@@ -414,7 +414,6 @@
               "codText": "Efectivo en la entrega",
               "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",
-              "viewAll": "Ver Todo",
               "paymentMethod": "Método de pago",
               "workingHours": "Horas laborales",
               "weekDays": {
@@ -2596,6 +2595,7 @@
     "noRoute": "No se encontró ruta.Ingrese un destino válido",
     "minutes": "minutos",
     "slowInternet": "Internet lento",
+    "noInternet": "Sin conexión a Internet",
     "min": "min"
   }
 }

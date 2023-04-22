@@ -178,7 +178,8 @@ class ROpItemViewController {
     if (newImageFile.value != null) {
       newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          pathPrefix: "/restaurants/$restaurantId/items/images");
+          storageFolder: "/restaurants/$restaurantId/itemImages",
+          fileName: prItemNameController.text);
     }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(

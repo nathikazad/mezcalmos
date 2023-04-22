@@ -86,8 +86,7 @@ class CreateServiceViewController {
     if (newImageFile.value != null) {
       newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          pathPrefix:
-              "restaurants/$serviceName/avatar/${newImageFile.value!.path}");
+          storageFolder: "/services/${serviceType.name}/$serviceName/images");
     }
   }
 
