@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWr
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -52,7 +53,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         //  RentalView.navigate();
         return;
       case AllServiceViewEnum.Class:
-        OtherAssetListsView.navigate(viewEnum: RentalViewEnum.Classes);
+        CustClassesListView.navigate();
         return;
       case AllServiceViewEnum.Wellness:
         HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
