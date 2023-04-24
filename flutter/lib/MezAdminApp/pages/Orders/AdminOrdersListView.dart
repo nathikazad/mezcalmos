@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -92,21 +93,21 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   order: viewController.pastOrders[index],
                   onTap: () {
                     // todo @m66are add routing
-                    // switch (viewController.currentService) {
-                    //   case ServiceProviderType.Restaurant:
-                    //     MezRouter.toNamed(getRestaurantOrderRoute(
-                    //         viewController.pastOrders[index].id));
-                    //     break;
-                    //   case ServiceProviderType.Laundry:
-                    //     MezRouter.toNamed(getLaundryOrderRoute(
-                    //         viewController.pastOrders[index].id));
-                    //     break;
-                    //   case ServiceProviderType.DeliveryCompany:
-                    //     MezRouter.toNamed(getDvCompanyOrderRoute(
-                    //         viewController.pastOrders[index].id));
-                    //     break;
-                    //   default:
-                    // }
+                    switch (viewController.currentService) {
+                      case ServiceProviderType.Restaurant:
+                        RestaurantOrderView.navigate(
+                            orderId: viewController.pastOrders[index].id);
+                        break;
+                      case ServiceProviderType.Laundry:
+                        LaundryOrderView.navigate(
+                            orderId: viewController.pastOrders[index].id);
+                        break;
+                      case ServiceProviderType.DeliveryCompany:
+                        DvCompanyOrderView.navigate(
+                            orderId: viewController.pastOrders[index].id);
+                        break;
+                      default:
+                    }
                   }),
             ));
   }
@@ -124,12 +125,11 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                             "ID ====>${viewController.restaurantOrders.value![index].id}");
                         RestaurantOrderView.navigate(
                             orderId: viewController
-                                .restaurantOrders.value![index].id
-                                .toString());
+                                .restaurantOrders.value![index].id);
                       })),
             )
           : (viewController.restaurantPastOrders.value == null ||
-                  viewController.restaurantPastOrders.value?.isEmpty == true)
+                  viewController.restaurantPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
@@ -153,7 +153,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                       })),
             )
           : (viewController.dvPastOrders.value == null ||
-                  viewController.dvPastOrders.value?.isEmpty == true)
+                  viewController.dvPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
@@ -177,7 +177,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                       })),
             )
           : (viewController.laundryPastOrders.value == null ||
-                  viewController.laundryPastOrders.value?.isEmpty == true)
+                  viewController.laundryPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
