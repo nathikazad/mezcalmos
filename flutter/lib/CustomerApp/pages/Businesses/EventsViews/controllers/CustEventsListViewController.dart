@@ -66,8 +66,11 @@ class CustEventsListViewController {
 
       locPkg.LocationData location = await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
-        _fromLocation =
-            Location(lat: location.latitude!, lng: location.longitude!);
+        _fromLocation = Location(
+          lat: location.latitude!,
+          lng: location.longitude!,
+          address: "",
+        );
         await _fetchEvents();
         await _fetchBusinesses();
 

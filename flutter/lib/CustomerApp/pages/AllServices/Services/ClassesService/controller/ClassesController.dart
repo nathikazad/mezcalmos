@@ -64,7 +64,11 @@ class ClassesController {
       categories2: category2,
       tags: ["class"],
       distance: 100000000,
-      fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
+      fromLocation: Location(
+        lat: 15.8.toDouble(),
+        lng: -97.toDouble(),
+        address: "",
+      ),
       scheduleType: scheduleType.entries
           .where((entry) => entry.value)
           .map((entry) => entry.key)

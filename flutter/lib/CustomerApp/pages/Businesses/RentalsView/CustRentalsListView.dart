@@ -282,7 +282,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                 (viewController.rentals[index].details.firstImage != null)
                     ? CachedNetworkImageProvider(
                         viewController.rentals[index].details.firstImage!)
-                    : null,
+                    : CachedNetworkImageProvider(customImageUrl),
             content: Text(
                 viewController.rentals[index].details.name[userLanguage] ??
                     viewController
