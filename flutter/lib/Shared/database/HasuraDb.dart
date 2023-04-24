@@ -241,6 +241,8 @@ class HasuraDb {
         return "restaurant_operator";
       case AppType.DeliveryAdmin:
         return "delivery_operator";
+      case AppType.Business:
+        return "business_operator";
       case AppType.MezAdmin:
         return "mez_admin";
       case AppType.Laundry:

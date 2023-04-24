@@ -1,0 +1,299 @@
+{
+  "project_info": {
+    "project_number": "804036698204",
+    "firebase_url": "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+    "project_id": "mezcalmos-31f1c",
+    "storage_bucket": "mezcalmos-31f1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:b73b51890814a2fd3f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:ec66c1f91764c6033f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:665f9f587f40061c3f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:d6fe4158c6789e473f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:1a4343fc47017ef73f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.deliveryadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:78efb6c6983b34cd3f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.laundry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:512d503dd4d2619a3f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804036698204:android:4a83981d108e68663f8699",
+        "android_client_info": {
+          "package_name": "com.mezcalmos.taxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804036698204-0u21r6uco7o5udcveioro4rpjlkeh7uh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804036698204-12shm9bvvc38bmu49uisknugdr3ri7cc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.restaurant"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
