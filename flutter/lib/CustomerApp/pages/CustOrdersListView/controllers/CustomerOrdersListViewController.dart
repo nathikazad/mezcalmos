@@ -100,5 +100,6 @@ class CustomerOrdersListViewController {
   void dispose() {
     if (subscriptionId != null) _hasuraDb.cancelSubscription(subscriptionId!);
     _scrollController.dispose();
+    mezDbgPrint("Called dispose");
   }
 }

@@ -612,9 +612,10 @@
         "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad."
       },
       "CustomerWrapper": {
-        "orders": {
-          "myCart": "My cart"
-        },
+        "orders" : "Pedidos",
+        "profile" :"Perfil",
+        "feed" : "Alimentar",
+        "home" :"Hogar",
         "savedLocations": "Ubicaciones guardadas",
         "welcomeText": "Bienvenido a MEZCALMOS 👋",
         "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad.",
