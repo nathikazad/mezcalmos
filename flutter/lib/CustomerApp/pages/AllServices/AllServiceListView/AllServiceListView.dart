@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -55,7 +56,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
       case AllServiceViewEnum.Class:
         CustClassesListView.navigate();
         return;
-      case AllServiceViewEnum.Wellness:
+      case AllServiceViewEnum.Therapy:
         HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
         return;
       case AllServiceViewEnum.Event:
@@ -67,16 +68,15 @@ class _AllServiceListViewState extends State<AllServiceListView> {
       case AllServiceViewEnum.Adventure:
         RentalView.navigate();
         return;
+      case AllServiceViewEnum.Service:
+        CustServicesListView.navigate();
+        return;
+      case AllServiceViewEnum.LocallyMade:
+        RentalView.navigate();
+        return;
     }
   }
 
-  bool noTabsONNextScreen(int index) {
-    if (AllServiceViewEnum.values[index] == AllServiceViewEnum.Wellness ||
-        AllServiceViewEnum.values[index] == AllServiceViewEnum.Volunteer) {
-      return true;
-    }
-    return false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,14 +110,11 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Obx(
-                      () => Text(
-                        noTabsONNextScreen(index)
-                            ? _i18n()[AllServiceViewEnum.values[index].name
-                                    .toLowerCase()]["title"]
-                                .toString()
-                            : _i18n()[serviceListData[index]["title"]]
-                                .toString(),
-                        style: txt.headlineSmall,
+                      () => FittedBox(
+                        child: Text(
+                          _i18n()[serviceListData[index]["title"]].toString(),
+                          style: txt.headlineSmall,
+                        ),
                       ),
                     ),
                   ),

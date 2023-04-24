@@ -5,7 +5,7 @@ enum AllServiceViewEnum {
   Delivery,
   Rental,
   Class,
-  Wellness,
+  Therapy,
   Event,
   Volunteer,
   Adventure,
@@ -31,12 +31,12 @@ class AllServiceListViewController {
         "title": "rentals",
       },
       {
-        "icon": aChakras,
+        "icon": aYoga,
         "title": "classes",
       },
       {
-        "icon": aYoga,
-        "title": "wellness",
+        "icon": aChakras,
+        "title": "therapy",
       },
       {
         "icon": aDiscoBall,
@@ -49,6 +49,14 @@ class AllServiceListViewController {
       {
         "icon": aAdventure,
         "title": "adventures",
+      },
+      {
+        "icon": aServices,
+        "title": "services",
+      },
+      {
+        "icon": aLocallyMade,
+        "title": "locallyMade",
       },
     ]);
   }

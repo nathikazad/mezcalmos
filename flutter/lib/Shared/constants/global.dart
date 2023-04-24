@@ -140,6 +140,8 @@ const String aDelivery = "assets/images/customer/delivery.png";
 const String aDiscoBall = "assets/images/customer/discoBall.png";
 const String aVolunteering = "assets/images/customer/volunteering.png";
 const String aYoga = "assets/images/customer/yoga.png";
+const String aServices = "assets/images/customer/services.png";
+const String aLocallyMade = "assets/images/customer/locallyMade.png";
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";
 const String aHomes = "assets/images/customer/rental/homes.png";

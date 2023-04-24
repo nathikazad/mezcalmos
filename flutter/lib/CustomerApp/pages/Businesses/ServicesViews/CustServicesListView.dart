@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 
 class CustServicesListView extends StatefulWidget {
   const CustServicesListView({super.key});
@@ -90,8 +91,15 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                       children: List.generate(
                     viewController.services.length,
                     (int index) => MezCard(
+                        onClick: () {
+                          CustServiceView.navigate(
+                              serviceId: viewController
+                                  .services[index].details.id
+                                  .toInt());
+                        },
                         firstAvatarBgImage: CachedNetworkImageProvider(
-                            viewController.services[index].details.image?.first ??
+                            viewController
+                                    .services[index].details.image?.first ??
                                 ""),
                         content: Text(viewController
                                 .services[index].details.name[userLanguage] ??

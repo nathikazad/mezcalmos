@@ -24,7 +24,7 @@ class CustHomeRentalsListViewController {
       showBusiness.isTrue ? _businessScrollController : _rentalScrollController;
   ScrollController _rentalScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int rentalFetchSize = 3;
+  int rentalFetchSize = 10;
   int _rentalCurrentOffset = 0;
   bool _rentalFetchingData = false;
   bool _rentalReachedEndOfData = false;
