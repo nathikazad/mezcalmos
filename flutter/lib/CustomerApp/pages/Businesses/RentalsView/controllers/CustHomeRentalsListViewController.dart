@@ -45,11 +45,12 @@ class CustHomeRentalsListViewController {
   Future<void> init() async {
     try {
       _isLoading.value = true;
+      // todo @ChiragKr04 fix the location thing
 
       locPkg.LocationData location = await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
-        _fromLocation =
-            Location(lat: location.latitude!, lng: location.longitude!);
+        _fromLocation = Location(
+            lat: location.latitude!, lng: location.longitude!, address: "");
         await _fetchRentals();
         await _fetchBusinesses();
         _rentalScrollController.onBottomReach(_fetchRentals, sensitivity: 500);

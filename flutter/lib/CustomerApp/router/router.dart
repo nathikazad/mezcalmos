@@ -1,3 +1,4 @@
+
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart'
     deferred as customerWrapper;
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart'
@@ -15,6 +16,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class XRouter {
   static String deliveryServicesRoute = "/deliveryServices";
+  static String tabsViewRoute = "/home";
 
   static List<QRoute> mainRoutes = [
         QRoute(
@@ -24,6 +26,7 @@ class XRouter {
             middleware: <QMiddleware>[
               DefferedLoader(customerWrapper.loadLibrary)
             ]),
+       
         QRoute(
             name: deliveryServicesRoute,
             path: deliveryServicesRoute,

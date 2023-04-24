@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
@@ -11,13 +13,15 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileView"];
 
 class UserProfileView extends StatefulWidget {
-  const UserProfileView({super.key});
+  final bool asTab;
+  const UserProfileView({super.key, this.asTab = false});
   static Future<void> navigate({UserProfileViewMode? initalMode}) {
     return MezRouter.toPath(SharedRoutes.kUserNewProfile,
         arguments: {"mode": initalMode});
@@ -40,12 +44,26 @@ class _UserProfileViewState extends State<UserProfileView> {
   }
 
   @override
+  void dispose() {
+    viewController.dispose();
+    mezDbgPrint("Dispose Called");
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-        _handleBackClick();
-      }, title: "${_i18n()["profile"]}"),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
+      appBar: MezcalmosAppBar(
+          widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+          onClick: widget.asTab
+              ? null
+              : () {
+                  _handleBackClick();
+                },
+          title: "${_i18n()["profile"]}"),
       bottomSheet: Obx(
         () => (viewController.isEditingInfo)
             ? MezButton(

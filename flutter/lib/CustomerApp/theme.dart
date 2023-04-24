@@ -58,7 +58,8 @@ class CustomerAppTheme {
           border: InputBorder.none,
           floatingLabelBehavior: FloatingLabelBehavior.never),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: Color(0xFF6779FE),
+        backgroundColor: Colors.white,
+        selectedItemColor: primaryBlueColor,
         elevation: 1.0,
       ),
       bottomAppBarTheme:

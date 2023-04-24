@@ -115,4 +115,6 @@ class UserProfileViewController {
   Future<ServerResponse> deleteAccount() {
     return _authController.deleteAccount();
   }
+
+  void dispose() {}
 }
