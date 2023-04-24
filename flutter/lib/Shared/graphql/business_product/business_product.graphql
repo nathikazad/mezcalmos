@@ -110,6 +110,15 @@ query number_of_products($distance: Float!, $from: geography!) {
   }
 }
 
+query number_of_products_by_category($distance: Float!, $from: geography!, $category1: String) {
+  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: $category1}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+
+
 mutation add_product($object: business_product_insert_input!) {
   insert_business_product_one(object: $object) {
     details_id

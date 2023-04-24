@@ -107,15 +107,17 @@ class PickDriverViewController {
     mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
     mapController.animateMarkersPolyLinesBounds.value = true;
 
-    mapController.setLocation(
-      LocModel.MezLocation(
-        "",
-        LocModel.MezLocation.buildLocationData(
-          order.value?.dropOffLocation.latitude,
-          order.value?.dropOffLocation.longitude,
+    if (order.value?.dropOffLocation != null) {
+      mapController.setLocation(
+        LocModel.MezLocation(
+          "",
+          LocModel.MezLocation.buildLocationData(
+            order.value!.dropOffLocation.latitude,
+            order.value!.dropOffLocation.longitude,
+          ),
         ),
-      ),
-    );
+      );
+    }
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     await mapController.addOrUpdatePackageMarkerMarker(

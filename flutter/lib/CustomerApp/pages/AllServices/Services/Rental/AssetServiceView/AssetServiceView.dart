@@ -12,7 +12,6 @@ import 'package:mezcalmos/CustomerApp/router/rentalRoutes.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/CustomAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/OrderViewPage/order_view_page.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/controller/AssetDetailsController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';

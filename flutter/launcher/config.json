@@ -688,6 +688,44 @@
                     "assets/images/restaurantApp/createRestaurant.png"
                 ]
             }
+        },
+        "BusinessApp": {
+            "folderName": "BusinessApp",
+            "packages": {
+                "stage": {
+                    "appName": "MezBiz Stage",
+                    "packageName": "com.mezstaging.business",
+                    "googe-service-file": "services/stage/android/business.json",
+                    "apple-service-file": "services/stage/ios/business.plist"
+                },
+                "prod": {
+                    "appName": "MezBiz",
+                    "packageName": "com.mezcalmos.business",
+                    "googe-service-file": "services/prod/android/business.json",
+                    "apple-service-file": "services/prod/ios/business.plist"
+                },
+                "dev": {
+                    "appName": "MezChef Dev",
+                    "packageName": "com.mezcalmos.business",
+                    "googe-service-file": "services/prod/android/business.json",
+                    "apple-service-file": "services/prod/ios/business.plist"
+                }
+            },
+            "MainActivityKt": {
+                "imports": [
+                    "import io.flutter.embedding.android.FlutterFragmentActivity"
+                ],
+                "super": "FlutterFragmentActivity"
+            },
+            "pubspec": {
+                "dependencies": {
+                    "agora_rtc_engine": "6.1.0"
+                },
+                "assets": [
+                    "assets/images/",
+                    "assets/images/shared/"
+                ]
+            }
         }
     }
 }

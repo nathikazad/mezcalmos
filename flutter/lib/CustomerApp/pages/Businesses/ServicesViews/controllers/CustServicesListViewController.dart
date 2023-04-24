@@ -34,7 +34,7 @@ class CustServiceListViewController {
       _services.value = await get_service_by_category(
           offset: 0,
           limit: 15,
-          categories1: ["cleaning"],
+          categories1: [ServiceCategory1.Cleaning],
           distance: 1000000000000,
           fromLocation: _fromLocation!,
           tags: [],

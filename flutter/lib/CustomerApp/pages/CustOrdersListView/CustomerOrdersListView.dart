@@ -5,16 +5,20 @@ import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/Custom
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 
 class CustomerOrdersListView extends StatefulWidget {
-  const CustomerOrdersListView({Key? key}) : super(key: key);
+  final bool asTab;
+  const CustomerOrdersListView({Key? key, this.asTab = false})
+      : super(key: key);
   static Future<void> navigate() {
     return MezRouter.toPath(CustomerRoutes.customerOrdersRoute);
   }
@@ -42,8 +46,11 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back,
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
+      appBar: MezcalmosAppBar(
+          widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+          onClick: widget.asTab ? null : MezRouter.back,
           title: '${_i18n()["title"]}',
           ordersRoute: CustomerRoutes.customerOrdersRoute),
       body: Obx(

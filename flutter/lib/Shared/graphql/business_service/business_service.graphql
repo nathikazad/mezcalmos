@@ -110,6 +110,15 @@ query number_of_services($distance: Float!, $from: geography!) {
   }
 }
 
+query number_of_services_by_category($distance: Float!, $from: geography!, $category1: String) {
+  business_service_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: $category1}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+
+
 mutation add_service($object: business_service_insert_input!) {
   insert_business_service_one(object: $object) {
     details_id

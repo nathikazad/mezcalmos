@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/OrderViewPage/order_view_page.dart';
+import 'package:mezcalmos/CustomerApp/router/cartRoute.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/CustomerApp/router/cartRoute.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper']['orders'];
@@ -65,7 +62,7 @@ class _CartViewPageState extends State<CartViewPage> {
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) {
+                    (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -157,10 +154,7 @@ class _CartViewPageState extends State<CartViewPage> {
           MezButton(
             label: "Book Now",
             withGradient: true,
-            onClick: () async {
-              await OrderViewPage.navigate();
-              return;
-            },
+            onClick: () async {},
           ),
         ],
       ),

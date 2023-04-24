@@ -149,6 +149,14 @@ query number_of_rentals($distance: Float!, $from: geography!) {
   }
 }
 
+query number_of_rentals_by_category($distance: Float!, $from: geography!, $category1: String) {
+  business_rental_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: $category1}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+
 mutation create_rental($object: business_rental_insert_input!) {
   insert_business_rental_one(object: $object) {
     id

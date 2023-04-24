@@ -1,0 +1,30 @@
+query number_of_food_by_category($distance: Float!, $from: geography!) {
+  restaurant_restaurant_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}) {
+    aggregate {
+      count
+    }
+  }
+  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "consumable"}}}) {
+    aggregate {
+      count
+    }
+  }
+  business_service_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "mealPlanning"}}}) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_delivery($distance: Float!, $from: geography!) {
+  delivery_company_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}) {
+    aggregate {
+      count
+    }
+  }
+  laundry_store_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}) {
+    aggregate {
+      count
+    }
+  }
+}
