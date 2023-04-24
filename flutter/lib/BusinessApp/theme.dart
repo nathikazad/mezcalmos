@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:sizer/sizer.dart';
 
-class CustomerAppTheme {
+class DeliveryDAdminTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
@@ -27,7 +27,7 @@ class CustomerAppTheme {
         titleTextStyle: TextStyle(
           fontFamily: "Poppins",
           fontWeight: FontWeight.w600,
-          fontSize: 17.mezSp,
+          fontSize: 17.sp,
           color: Colors.black,
         ),
         elevation: 0.2,
@@ -43,7 +43,7 @@ class CustomerAppTheme {
           errorStyle: TextStyle(
             fontFamily: "Nunito",
             fontWeight: FontWeight.w400,
-            fontSize: 11.mezSp,
+            fontSize: 11.sp,
             color: Colors.red,
           ),
           focusColor: Color(0xFF6779FE),
@@ -52,14 +52,13 @@ class CustomerAppTheme {
           hintStyle: TextStyle(
             fontWeight: FontWeight.w400,
             fontFamily: "Nunito",
-            fontSize: 10.mezSp,
+            fontSize: 10.sp,
             color: Colors.black.withOpacity(0.8),
           ),
           border: InputBorder.none,
           floatingLabelBehavior: FloatingLabelBehavior.never),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
-        selectedItemColor: primaryBlueColor,
         elevation: 1.0,
       ),
       bottomAppBarTheme:
@@ -71,13 +70,13 @@ class CustomerAppTheme {
         titleTextStyle: TextStyle(
           fontFamily: "Poppins",
           fontWeight: FontWeight.w600,
-          fontSize: 18.mezSp,
+          fontSize: 18.sp,
           color: Colors.black,
         ),
         contentTextStyle: TextStyle(
           fontFamily: "Nunito",
           fontWeight: FontWeight.w600,
-          fontSize: 13.mezSp,
+          fontSize: 13.sp,
           color: Colors.black,
         ),
         backgroundColor: Colors.white,
@@ -94,7 +93,7 @@ class CustomerAppTheme {
         textStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 14.mezSp,
+          fontSize: 14.sp,
           color: Colors.white,
         ),
       )),
@@ -117,7 +116,7 @@ class CustomerAppTheme {
         labelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 12.mezSp,
+          fontSize: 12.sp,
           color: primaryBlueColor,
         ),
         brightness: Brightness.light,
@@ -125,71 +124,65 @@ class CustomerAppTheme {
         secondaryLabelStyle: TextStyle(
             fontFamily: "Montserrat",
             fontWeight: FontWeight.w600,
-            fontSize: 14.mezSp,
+            fontSize: 14.sp,
             color: Colors.white),
       ),
-      bottomSheetTheme: BottomSheetThemeData(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        )),
-      ),
+
       //---------------------------------------------------- TYPOGRAPHY ------------------------------------------------------------------------//
       //---------------------------------------------------- Typography ------------------------------------------------------------------------//
       textTheme: TextTheme(
         displayLarge: TextStyle(
             fontFamily: "Poppins",
             fontWeight: FontWeight.w700,
-            fontSize: 18.mezSp,
+            fontSize: 18.sp,
             color: Colors.black),
         displayMedium: TextStyle(
           fontFamily: "Poppins",
           fontWeight: FontWeight.w600,
-          fontSize: 17.mezSp,
+          fontSize: 17.sp,
           color: Colors.black,
         ),
         displaySmall: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 16.mezSp,
+          fontSize: 16.sp,
           color: Colors.black,
         ),
         bodyLarge: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 13.mezSp,
+          fontSize: 13.sp,
           color: Colors.black,
         ),
         bodyMedium: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w500,
           height: 1.5,
-          fontSize: 11.mezSp,
+          fontSize: 11.sp,
           color: Color(0xFF494949),
         ),
         titleSmall: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w500,
-          fontSize: 12.mezSp,
+          fontSize: 12.sp,
           color: Color(0xFF494949),
         ),
         titleMedium: TextStyle(
           fontFamily: "Nunito",
           fontWeight: FontWeight.w400,
-          fontSize: 11.mezSp,
+          fontSize: 11.sp,
           color: Colors.black,
         ),
         bodySmall: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w500,
-          fontSize: 13.mezSp,
+          fontSize: 13.sp,
           color: Colors.black,
         ),
         titleLarge: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 11.mezSp,
+          fontSize: 11.sp,
           color: Color(0xFF494949),
         ),
         headlineLarge: TextStyle(
@@ -200,13 +193,13 @@ class CustomerAppTheme {
         headlineMedium: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w700,
-          fontSize: 13.mezSp,
+          fontSize: 13.sp,
           color: Colors.black,
         ),
         headlineSmall: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w700,
-          fontSize: 14.mezSp,
+          fontSize: 14.sp,
           color: Colors.black,
         ),
       ),

@@ -1,3 +1,4 @@
+
 {
   "CustomerApp": {
     "main": {
@@ -614,9 +615,11 @@
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."
       },
       "CustomerWrapper": {
-        "orders": {
-          "myCart": "My cart"
-        },
+       
+        "orders" : "Orders",
+        "profile" :"Profile",
+        "feed" : "Feed",
+        "home" :"Home",
         "savedLocations": "Saved locations",
         "welcomeText": "Welcome to MEZCALMOS 👋",
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",

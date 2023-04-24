@@ -3,14 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/CustLaundriesListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -39,14 +34,9 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   AllServiceListViewController allServiceListViewController =
       Get.find<AllServiceListViewController>();
 
-  CustomerOrderController? _orderController;
-
   @override
   void initState() {
     super.initState();
-    if (authController.fireAuthUser != null) {
-      _orderController = Get.find<CustomerOrderController>();
-    }
   }
 
   @override
@@ -133,12 +123,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
             url: "assets/images/customer/foodService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
             onTap: () {
-              getServiceRoute(
-                  orderType: OrderType.Restaurant,
-                  serviceRoute: CustRestaurantListView.navigate,
-                  singleOrderRoute: (int orderId) {
-                    ViewRestaurantOrderScreen.navigate(orderId: orderId);
-                  });
+              CustRestaurantListView.navigate();
             },
           ),
         ),
@@ -148,12 +133,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
             subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
             onTap: () {
-              getServiceRoute(
-                  orderType: OrderType.Laundry,
-                  serviceRoute: CustLaundriesListView.navigate,
-                  singleOrderRoute: (int orderId) {
-                    CustLaundryOrderView.navigate(orderId: orderId);
-                  });
+              CustLaundriesListView.navigate();
             },
           ),
         ),
@@ -162,12 +142,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
           url: "assets/images/customer/courrierService.png",
           subtitle: "Obtain delivery of anything you desire to your location.",
           onTap: () {
-            getServiceRoute(
-                orderType: OrderType.Courier,
-                serviceRoute: CustCourierServicesListView.navigate,
-                singleOrderRoute: (int orderId) {
-                  CustCourierOrderView.navigate(orderId: orderId);
-                });
+            CustCourierServicesListView.navigate();
           },
         ),
       ],
@@ -178,61 +153,15 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
       {required OrderType orderType,
       required Future<void> Function() serviceRoute,
       required void Function(int) singleOrderRoute}) async {
-    if (Get.find<AuthController>().fireAuthUser != null &&
-        _orderController != null) {
-      if (_orderController!.firstOrderIdBasedOnType(orderType) != null) {
-        singleOrderRoute(_orderController!.firstOrderIdBasedOnType(orderType)!);
-      } else {
-        await serviceRoute();
-      }
-    } else {
-      await serviceRoute();
-    }
-  }
-
-  Future<void> _navigateToOrdersIfNecessary() async {
-    if (_orderController != null) {
-      await _orderController!.fetchCurrentOrders();
-      if (_orderController!.hasOneOrder) {
-        switch (_orderController!.hasOneOrderType) {
-          case OrderType.Restaurant:
-            unawaited(MezRouter.popEverythingTillBeforeHome().then((_) =>
-                ViewRestaurantOrderScreen.navigate(
-                    orderId: _orderController!.hasOneOrderId!)));
-            break;
-          case OrderType.Laundry:
-            unawaited(MezRouter.popEverythingTillBeforeHome().then((_) =>
-                CustLaundryOrderView.navigate(
-                    orderId: _orderController!.hasOneOrderId!)));
-            break;
-          case OrderType.Courier:
-            unawaited(MezRouter.popEverythingTillBeforeHome().then((_) =>
-                CustCourierOrderView.navigate(
-                    orderId: _orderController!.hasOneOrderId!)));
-            break;
-          default:
-        }
-        // if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
-        //   // MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
-        //   //     .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
-        //   // ignore: unawaited_futures
-        //   MezRouter.popEverythingTillBeforeHome().then((_) =>
-        //       ViewRestaurantOrderScreen.navigate(
-        //           orderId: _orderController!.hasOneOrderId!));
-        //   // } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
-        //   //   MezRouter.popEverythingAndNavigateTo(
-        //   //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));
-        // } else if (_orderController!.hasOneOrderType == OrderType.Laundry) {
-        //   // ignore: unawaited_futures
-        //   MezRouter.popEverythingTillBeforeHome().then((_) =>
-        //       CustLaundryOrderView.navigate(
-        //           orderId: _orderController!.hasOneOrderId!));
-        // }
-      } else if (_orderController!.hasManyOrders) {
-        // ignore: unawaited_futures
-        MezRouter.popEverythingTillBeforeHome()
-            .then((_) => CustomerOrdersListView.navigate());
-      }
-    }
+    // if (Get.find<AuthController>().fireAuthUser != null &&
+    //     _orderController != null) {
+    //   if (_orderController!.firstOrderIdBasedOnType(orderType) != null) {
+    //     singleOrderRoute(_orderController!.firstOrderIdBasedOnType(orderType)!);
+    //   } else {
+    //     await serviceRoute();
+    //   }
+    // } else {
+    //   await serviceRoute();
+    // }
   }
 }

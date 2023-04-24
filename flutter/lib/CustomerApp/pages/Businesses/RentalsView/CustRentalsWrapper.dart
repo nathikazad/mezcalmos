@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -50,7 +51,7 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
                 )),
             MezCard(
                 onClick: () {
-                  CustRentalsListView.navigate(category: RentalCategory1.Home);
+                  CustHomeRentalListView.navigate();
                 },
                 content: Text(
                   "Home",
