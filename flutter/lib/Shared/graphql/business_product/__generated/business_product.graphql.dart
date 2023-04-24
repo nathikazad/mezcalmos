@@ -5938,6 +5938,866 @@ class _CopyWithStubImpl$Query$number_of_products$business_product_aggregate$aggr
       _res;
 }
 
+class Variables$Query$number_of_products_by_category {
+  factory Variables$Query$number_of_products_by_category({
+    required double distance,
+    required Geography from,
+    String? category1,
+  }) =>
+      Variables$Query$number_of_products_by_category._({
+        r'distance': distance,
+        r'from': from,
+        if (category1 != null) r'category1': category1,
+      });
+
+  Variables$Query$number_of_products_by_category._(this._$data);
+
+  factory Variables$Query$number_of_products_by_category.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    if (data.containsKey('category1')) {
+      final l$category1 = data['category1'];
+      result$data['category1'] = (l$category1 as String?);
+    }
+    return Variables$Query$number_of_products_by_category._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  String? get category1 => (_$data['category1'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    if (_$data.containsKey('category1')) {
+      final l$category1 = category1;
+      result$data['category1'] = l$category1;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_products_by_category<
+          Variables$Query$number_of_products_by_category>
+      get copyWith => CopyWith$Variables$Query$number_of_products_by_category(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_products_by_category) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (_$data.containsKey('category1') !=
+        other._$data.containsKey('category1')) {
+      return false;
+    }
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    final l$category1 = category1;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+      _$data.containsKey('category1') ? l$category1 : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_products_by_category<TRes> {
+  factory CopyWith$Variables$Query$number_of_products_by_category(
+    Variables$Query$number_of_products_by_category instance,
+    TRes Function(Variables$Query$number_of_products_by_category) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_products_by_category;
+
+  factory CopyWith$Variables$Query$number_of_products_by_category.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_products_by_category;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+    String? category1,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_products_by_category<TRes>
+    implements CopyWith$Variables$Query$number_of_products_by_category<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_products_by_category(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_products_by_category _instance;
+
+  final TRes Function(Variables$Query$number_of_products_by_category) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+    Object? category1 = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_products_by_category._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+        if (category1 != _undefined) 'category1': (category1 as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_products_by_category<TRes>
+    implements CopyWith$Variables$Query$number_of_products_by_category<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_products_by_category(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+    String? category1,
+  }) =>
+      _res;
+}
+
+class Query$number_of_products_by_category {
+  Query$number_of_products_by_category({
+    required this.business_product_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_products_by_category.fromJson(
+      Map<String, dynamic> json) {
+    final l$business_product_aggregate = json['business_product_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_products_by_category(
+      business_product_aggregate:
+          Query$number_of_products_by_category$business_product_aggregate
+              .fromJson((l$business_product_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_products_by_category$business_product_aggregate
+      business_product_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_product_aggregate = business_product_aggregate;
+    _resultData['business_product_aggregate'] =
+        l$business_product_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_product_aggregate = business_product_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_product_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_products_by_category) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_product_aggregate = business_product_aggregate;
+    final lOther$business_product_aggregate = other.business_product_aggregate;
+    if (l$business_product_aggregate != lOther$business_product_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_products_by_category
+    on Query$number_of_products_by_category {
+  CopyWith$Query$number_of_products_by_category<
+          Query$number_of_products_by_category>
+      get copyWith => CopyWith$Query$number_of_products_by_category(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_products_by_category<TRes> {
+  factory CopyWith$Query$number_of_products_by_category(
+    Query$number_of_products_by_category instance,
+    TRes Function(Query$number_of_products_by_category) then,
+  ) = _CopyWithImpl$Query$number_of_products_by_category;
+
+  factory CopyWith$Query$number_of_products_by_category.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_products_by_category;
+
+  TRes call({
+    Query$number_of_products_by_category$business_product_aggregate?
+        business_product_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate<TRes>
+      get business_product_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_products_by_category<TRes>
+    implements CopyWith$Query$number_of_products_by_category<TRes> {
+  _CopyWithImpl$Query$number_of_products_by_category(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_products_by_category _instance;
+
+  final TRes Function(Query$number_of_products_by_category) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_product_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_products_by_category(
+        business_product_aggregate: business_product_aggregate == _undefined ||
+                business_product_aggregate == null
+            ? _instance.business_product_aggregate
+            : (business_product_aggregate
+                as Query$number_of_products_by_category$business_product_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate<TRes>
+      get business_product_aggregate {
+    final local$business_product_aggregate =
+        _instance.business_product_aggregate;
+    return CopyWith$Query$number_of_products_by_category$business_product_aggregate(
+        local$business_product_aggregate,
+        (e) => call(business_product_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_products_by_category<TRes>
+    implements CopyWith$Query$number_of_products_by_category<TRes> {
+  _CopyWithStubImpl$Query$number_of_products_by_category(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_products_by_category$business_product_aggregate?
+        business_product_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate<TRes>
+      get business_product_aggregate =>
+          CopyWith$Query$number_of_products_by_category$business_product_aggregate
+              .stub(_res);
+}
+
+const documentNodeQuerynumber_of_products_by_category =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_products_by_category'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'category1')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_product_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'category1'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: VariableNode(name: NameNode(value: 'category1')),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_products_by_category
+    _parserFn$Query$number_of_products_by_category(Map<String, dynamic> data) =>
+        Query$number_of_products_by_category.fromJson(data);
+
+class Options$Query$number_of_products_by_category
+    extends graphql.QueryOptions<Query$number_of_products_by_category> {
+  Options$Query$number_of_products_by_category({
+    String? operationName,
+    required Variables$Query$number_of_products_by_category variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_products_by_category,
+          parserFn: _parserFn$Query$number_of_products_by_category,
+        );
+}
+
+class WatchOptions$Query$number_of_products_by_category
+    extends graphql.WatchQueryOptions<Query$number_of_products_by_category> {
+  WatchOptions$Query$number_of_products_by_category({
+    String? operationName,
+    required Variables$Query$number_of_products_by_category variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_products_by_category,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_products_by_category,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_products_by_category
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_products_by_category({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_products_by_category variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_products_by_category,
+        );
+}
+
+extension ClientExtension$Query$number_of_products_by_category
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_products_by_category>>
+      query$number_of_products_by_category(
+              Options$Query$number_of_products_by_category options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$number_of_products_by_category>
+      watchQuery$number_of_products_by_category(
+              WatchOptions$Query$number_of_products_by_category options) =>
+          this.watchQuery(options);
+  void writeQuery$number_of_products_by_category({
+    required Query$number_of_products_by_category data,
+    required Variables$Query$number_of_products_by_category variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerynumber_of_products_by_category),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_products_by_category?
+      readQuery$number_of_products_by_category({
+    required Variables$Query$number_of_products_by_category variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerynumber_of_products_by_category),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$number_of_products_by_category.fromJson(result);
+  }
+}
+
+class Query$number_of_products_by_category$business_product_aggregate {
+  Query$number_of_products_by_category$business_product_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_products_by_category$business_product_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_products_by_category$business_product_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_products_by_category$business_product_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_products_by_category$business_product_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_products_by_category$business_product_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_products_by_category$business_product_aggregate
+    on Query$number_of_products_by_category$business_product_aggregate {
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate<
+          Query$number_of_products_by_category$business_product_aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_products_by_category$business_product_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_products_by_category$business_product_aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_products_by_category$business_product_aggregate(
+    Query$number_of_products_by_category$business_product_aggregate instance,
+    TRes Function(
+            Query$number_of_products_by_category$business_product_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_products_by_category$business_product_aggregate;
+
+  factory CopyWith$Query$number_of_products_by_category$business_product_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_products_by_category$business_product_aggregate;
+
+  TRes call({
+    Query$number_of_products_by_category$business_product_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_products_by_category$business_product_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_products_by_category$business_product_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_products_by_category$business_product_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_products_by_category$business_product_aggregate
+      _instance;
+
+  final TRes Function(
+      Query$number_of_products_by_category$business_product_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_products_by_category$business_product_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_products_by_category$business_product_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_products_by_category$business_product_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_products_by_category$business_product_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_products_by_category$business_product_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_products_by_category$business_product_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_products_by_category$business_product_aggregate$aggregate {
+  Query$number_of_products_by_category$business_product_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_products_by_category$business_product_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_products_by_category$business_product_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_products_by_category$business_product_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_products_by_category$business_product_aggregate$aggregate
+    on Query$number_of_products_by_category$business_product_aggregate$aggregate {
+  CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+          Query$number_of_products_by_category$business_product_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate(
+    Query$number_of_products_by_category$business_product_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$number_of_products_by_category$business_product_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_products_by_category$business_product_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_products_by_category$business_product_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_products_by_category$business_product_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_products_by_category$business_product_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$number_of_products_by_category$business_product_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$number_of_products_by_category$business_product_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_products_by_category$business_product_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_products_by_category$business_product_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$add_product {
   factory Variables$Mutation$add_product(
           {required Input$business_product_insert_input object}) =>
