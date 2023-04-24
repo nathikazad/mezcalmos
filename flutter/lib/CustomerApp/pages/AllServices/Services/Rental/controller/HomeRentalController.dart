@@ -49,7 +49,11 @@ class HomeRentalController {
       _fetchingHomeData = true;
       final List<RentalCard> newData = await get_home_rentals(
         distance: 100000,
-        fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
+        fromLocation: Location(
+          lat: 15.8.toDouble(),
+          lng: -97.toDouble(),
+          address: "",
+        ),
         withCache: true,
         limit: _fetchHomeSize,
         offset: _fetchHomeOffset,
@@ -72,7 +76,11 @@ class HomeRentalController {
         categories1: [RentalCategory1.Home],
         distance: 100000,
         withCache: true,
-        fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
+        fromLocation: Location(
+          lat: 15.8.toDouble(),
+          lng: -97.toDouble(),
+          address: "",
+        ),
         limit: _fetchAgencySize,
         offset: _fetchAgencyOffset,
       );

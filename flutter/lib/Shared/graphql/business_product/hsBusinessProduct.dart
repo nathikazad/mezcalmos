@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/__generated/business_product.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -92,9 +93,10 @@ Future<ProductWithBusinessCard?> get_product_by_id(
                 description: toLanguageMap(
                     translations: data.details.description?.translations ?? []),
                 additionalParameters: data.details.additional_parameters,
-                image:
-                    data.details.image?.map<String>((e) => e.toString()).toList() ??
-                        [],
+                image: data.details.image
+                        ?.map<String>((e) => e.toString())
+                        .toList() ??
+                    [],
               )),
           business: BusinessCard(
             id: data.business.id,
@@ -113,5 +115,98 @@ Future<ProductWithBusinessCard?> get_product_by_id(
     }
   } else
     return null;
+  return null;
+}
+
+Future<int?> get_number_of_products(
+    {required double distance,
+    required Location fromLocation,
+    required bool withCache}) async {
+  final QueryResult<Query$number_of_products> response = await _db.graphQLClient
+      .query$number_of_products(Options$Query$number_of_products(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_products(
+              distance: distance,
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()))));
+
+  if (response.parsedData?.business_product_aggregate.aggregate != null) {
+    return response.parsedData!.business_product_aggregate.aggregate!.count;
+  } else if (response.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else {
+    return null;
+  }
+}
+
+Future<int?> add_one_product({required Product product}) async {
+  // mezDbgPrint("Adding this product 🇹🇳 ${product.toJson()}");
+
+  final QueryResult<Mutation$add_product> response = await _db.graphQLClient
+      .mutate$add_product(Options$Mutation$add_product(
+          variables: Variables$Mutation$add_product(
+              object: Input$business_product_insert_input(
+                  business_id: product.details.businessId.toInt(),
+                  details: Input$business_item_details_obj_rel_insert_input(
+                      data: Input$business_item_details_insert_input(
+                          available: product.details.available,
+                          category1: product.category1,
+                          // category2: product.category2?.toFirebaseFormatString(),
+                          cost: product.details.cost,
+                          image: product.details.image,
+                          name: Input$translation_obj_rel_insert_input(
+                              data: Input$translation_insert_input(
+                                  service_provider_id:
+                                      product.details.businessId.toInt(),
+                                  service_provider_type: ServiceProviderType
+                                      .Business.toFirebaseFormatString(),
+                                  translations:
+                                      Input$translation_value_arr_rel_insert_input(
+                                          data: <
+                                              Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: product
+                                                .details.name[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: product
+                                                .details.name[Language.ES])
+                                      ]))),
+                          position: product.details.position?.toInt(),
+                          additional_parameters:
+                              product.details.additionalParameters,
+                          description: (product.details.description != null)
+                              ? Input$translation_obj_rel_insert_input(
+                                  data: Input$translation_insert_input(
+                                      service_provider_id:
+                                          product.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType
+                                          .Business.toFirebaseFormatString(),
+                                      translations:
+                                          Input$translation_value_arr_rel_insert_input(
+                                              data: <Input$translation_value_insert_input>[
+                                            Input$translation_value_insert_input(
+                                                language_id: Language.EN
+                                                    .toFirebaseFormatString(),
+                                                value: product.details
+                                                    .description?[Language.EN]),
+                                            Input$translation_value_insert_input(
+                                                language_id: Language.ES
+                                                    .toFirebaseFormatString(),
+                                                value: product.details
+                                                    .description?[Language.ES])
+                                          ])))
+                              : null))))));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura add product mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura add product mutation success => ${response.data}");
+    return response.parsedData?.insert_business_product_one?.id;
+  }
   return null;
 }

@@ -458,8 +458,8 @@ class ServiceProviderChatResponse {
 class Location {
   num lat;
   num lng;
-  String? address;
-  Location({required this.lat, required this.lng, this.address});
+  String address;
+  Location({required this.lat, required this.lng, required this.address});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "lat": lat,
@@ -2388,7 +2388,7 @@ class LaundryCategory {
 
 class LaundryOrder {
   num storeId;
-  Location customerLocation;
+  Location? customerLocation;
   String? estimatedReadyTime;
   String? actualReadyTime;
   num? fromCustomerDeliveryId;
@@ -2419,7 +2419,7 @@ class LaundryOrder {
   num? itemsCost;
   LaundryOrder(
       {required this.storeId,
-      required this.customerLocation,
+      this.customerLocation,
       this.estimatedReadyTime,
       this.actualReadyTime,
       this.fromCustomerDeliveryId,
@@ -2723,7 +2723,7 @@ class Choice {
 
 class RestaurantOrder {
   num restaurantId;
-  Location toLocation;
+  Location? toLocation;
   String? estimatedFoodReadyTime;
   String? actualFoodReadyTime;
   RestaurantOrderStatus status;
@@ -2753,7 +2753,7 @@ class RestaurantOrder {
   num? itemsCost;
   RestaurantOrder(
       {required this.restaurantId,
-      required this.toLocation,
+      this.toLocation,
       this.estimatedFoodReadyTime,
       this.actualFoodReadyTime,
       required this.status,

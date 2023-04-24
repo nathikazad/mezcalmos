@@ -45,8 +45,8 @@ class MezLocation {
   Map<String, String> toJson() =>
       {"address": address, "position": position.toString()};
 
-  dynamic get latitude => position.latitude;
-  dynamic get longitude => position.longitude;
+  double get latitude => position.latitude!;
+  double get longitude => position.longitude!;
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
@@ -85,7 +85,7 @@ class MezLocation {
   }
 }
 
-cModels.Location constructLocation(Geography locationData, String? address) {
+cModels.Location constructLocation(Geography locationData, String address) {
   return cModels.Location(
       lat: locationData.latitude,
       lng: locationData.longitude,

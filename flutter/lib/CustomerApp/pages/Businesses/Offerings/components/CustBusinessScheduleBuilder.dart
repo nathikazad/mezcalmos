@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Offerings']['components'];
 
 class CustBusinessScheduleBuilder extends StatefulWidget {
   const CustBusinessScheduleBuilder({
@@ -23,13 +27,13 @@ class _CustBusinessScheduleBuilderState
   String scheduleTypeHeading() {
     switch (widget.scheduleType) {
       case ScheduleType.Scheduled:
-        return "Schedule";
+        return "schedule";
 
       case ScheduleType.OnDemand:
-        return "Availability";
+        return "availability";
 
       case ScheduleType.OneTime:
-        return "Time";
+        return "time";
     }
   }
 
@@ -53,15 +57,14 @@ class _CustBusinessScheduleBuilderState
 
   @override
   Widget build(BuildContext context) {
-   
-   if (widget.schedule == null) {
+    if (widget.schedule == null) {
       return SizedBox.shrink();
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          scheduleTypeHeading(),
+          _i18n()[scheduleTypeHeading()],
           style: context.textTheme.titleLarge!.copyWith(
             fontWeight: FontWeight.w600,
             color: Colors.black,

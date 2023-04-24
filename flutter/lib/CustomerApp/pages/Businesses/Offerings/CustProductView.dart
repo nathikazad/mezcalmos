@@ -5,12 +5,16 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustProductView extends StatefulWidget {
   const CustProductView({super.key});
@@ -56,7 +60,7 @@ class _CustProductViewState extends State<CustProductView> {
                     children: [
                       Text(
                         viewController.product!.details.name[userLanguage] ??
-                            "Error",
+                            _i18n()['noTitle'],
                         style: context.textTheme.displayMedium,
                       ),
                       Text(
@@ -67,23 +71,19 @@ class _CustProductViewState extends State<CustProductView> {
                         ),
                       ),
                       Text(
-                        "Description",
-                        style: context.textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
+                        _i18n()['description'],
+                        style: context.textTheme.bodyLarge,
                       ),
                       Text(
                         viewController
                                 .product!.details.description?[userLanguage] ??
-                            "No Desription",
-                        style: context.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
+                            _i18n()['noDescription'],
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       CustBusinessMessageCard(
-                          business: viewController.product!.business),
+                        business: viewController.product!.business,
+                        offeringName: viewController.product!.details.name,
+                      ),
                       CustBusinessNoOrderBanner(),
                     ],
                   ),

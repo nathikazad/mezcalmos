@@ -162,15 +162,15 @@ class CustomerCartController extends GetxController {
     if (nameAndImageChecker == true) {
       try {
         final Map<String, dynamic> payload = _contructCart(stripePaymentId);
-
+        final String address = cart.value!.toLocation!.address;
         mezDbgPrint("[+] -> payload :: $payload");
         final cloudFunctionModels.CheckoutResponse res =
             await CloudFunctions.restaurant2_checkoutCart(
                 customerAppType: cloudFunctionModels.CustomerAppType.Native,
                 customerLocation: cloudFunctionModels.Location(
-                    lat: cart.value?.toLocation!.latitude,
-                    lng: cart.value?.toLocation!.longitude,
-                    address: cart.value?.toLocation!.address),
+                    lat: cart.value!.toLocation!.latitude,
+                    lng: cart.value!.toLocation!.longitude,
+                    address: cart.value!.toLocation!.address),
                 deliveryCost: cart.value!.shippingCost!,
                 paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
                 notes: cart.value?.notes,

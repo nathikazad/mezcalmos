@@ -45,7 +45,11 @@ class CustServiceListViewController {
   Future<void> _getFromLocation() async {
     await locPkg.Location().getLocation().then((locPkg.LocationData value) {
       if (value.latitude != null && value.longitude != null) {
-        _fromLocation = Location(lat: value.latitude!, lng: value.longitude!);
+        _fromLocation = Location(
+          lat: value.latitude!,
+          lng: value.longitude!,
+          address: "",
+        );
       }
     }).onError((Object? error, StackTrace stackTrace) {
       showErrorSnackBar(errorText: "Error getting your location");

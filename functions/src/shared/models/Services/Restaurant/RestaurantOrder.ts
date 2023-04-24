@@ -7,7 +7,7 @@ import { OrderStripeInfo } from '../../stripe';
 
 export interface RestaurantOrder {
   restaurantId: number;
-  toLocation: Location;
+  toLocation?: Location;
   estimatedFoodReadyTime?: string;
   actualFoodReadyTime?: string;
   status: RestaurantOrderStatus;

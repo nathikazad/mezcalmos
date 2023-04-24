@@ -5150,6 +5150,794 @@ class _CopyWithStubImpl$Query$get_service_by_category$business_service$business$
       _res;
 }
 
+class Variables$Query$number_of_services {
+  factory Variables$Query$number_of_services({
+    required double distance,
+    required Geography from,
+  }) =>
+      Variables$Query$number_of_services._({
+        r'distance': distance,
+        r'from': from,
+      });
+
+  Variables$Query$number_of_services._(this._$data);
+
+  factory Variables$Query$number_of_services.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    return Variables$Query$number_of_services._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_services<
+          Variables$Query$number_of_services>
+      get copyWith => CopyWith$Variables$Query$number_of_services(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_services) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_services<TRes> {
+  factory CopyWith$Variables$Query$number_of_services(
+    Variables$Query$number_of_services instance,
+    TRes Function(Variables$Query$number_of_services) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_services;
+
+  factory CopyWith$Variables$Query$number_of_services.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_services;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_services<TRes>
+    implements CopyWith$Variables$Query$number_of_services<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_services(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_services _instance;
+
+  final TRes Function(Variables$Query$number_of_services) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_services._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_services<TRes>
+    implements CopyWith$Variables$Query$number_of_services<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_services(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
+class Query$number_of_services {
+  Query$number_of_services({
+    required this.business_service_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_services.fromJson(Map<String, dynamic> json) {
+    final l$business_service_aggregate = json['business_service_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_services(
+      business_service_aggregate:
+          Query$number_of_services$business_service_aggregate.fromJson(
+              (l$business_service_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_services$business_service_aggregate
+      business_service_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_service_aggregate = business_service_aggregate;
+    _resultData['business_service_aggregate'] =
+        l$business_service_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_service_aggregate = business_service_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_service_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_services) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_service_aggregate = business_service_aggregate;
+    final lOther$business_service_aggregate = other.business_service_aggregate;
+    if (l$business_service_aggregate != lOther$business_service_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_services
+    on Query$number_of_services {
+  CopyWith$Query$number_of_services<Query$number_of_services> get copyWith =>
+      CopyWith$Query$number_of_services(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$number_of_services<TRes> {
+  factory CopyWith$Query$number_of_services(
+    Query$number_of_services instance,
+    TRes Function(Query$number_of_services) then,
+  ) = _CopyWithImpl$Query$number_of_services;
+
+  factory CopyWith$Query$number_of_services.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_services;
+
+  TRes call({
+    Query$number_of_services$business_service_aggregate?
+        business_service_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_services$business_service_aggregate<TRes>
+      get business_service_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_services<TRes>
+    implements CopyWith$Query$number_of_services<TRes> {
+  _CopyWithImpl$Query$number_of_services(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_services _instance;
+
+  final TRes Function(Query$number_of_services) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_service_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_services(
+        business_service_aggregate: business_service_aggregate == _undefined ||
+                business_service_aggregate == null
+            ? _instance.business_service_aggregate
+            : (business_service_aggregate
+                as Query$number_of_services$business_service_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_services$business_service_aggregate<TRes>
+      get business_service_aggregate {
+    final local$business_service_aggregate =
+        _instance.business_service_aggregate;
+    return CopyWith$Query$number_of_services$business_service_aggregate(
+        local$business_service_aggregate,
+        (e) => call(business_service_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_services<TRes>
+    implements CopyWith$Query$number_of_services<TRes> {
+  _CopyWithStubImpl$Query$number_of_services(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_services$business_service_aggregate?
+        business_service_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_services$business_service_aggregate<TRes>
+      get business_service_aggregate =>
+          CopyWith$Query$number_of_services$business_service_aggregate.stub(
+              _res);
+}
+
+const documentNodeQuerynumber_of_services = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_services'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_service_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_services _parserFn$Query$number_of_services(
+        Map<String, dynamic> data) =>
+    Query$number_of_services.fromJson(data);
+
+class Options$Query$number_of_services
+    extends graphql.QueryOptions<Query$number_of_services> {
+  Options$Query$number_of_services({
+    String? operationName,
+    required Variables$Query$number_of_services variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_services,
+          parserFn: _parserFn$Query$number_of_services,
+        );
+}
+
+class WatchOptions$Query$number_of_services
+    extends graphql.WatchQueryOptions<Query$number_of_services> {
+  WatchOptions$Query$number_of_services({
+    String? operationName,
+    required Variables$Query$number_of_services variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_services,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_services,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_services
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_services({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_services variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_services,
+        );
+}
+
+extension ClientExtension$Query$number_of_services on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_services>>
+      query$number_of_services(
+              Options$Query$number_of_services options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$number_of_services>
+      watchQuery$number_of_services(
+              WatchOptions$Query$number_of_services options) =>
+          this.watchQuery(options);
+  void writeQuery$number_of_services({
+    required Query$number_of_services data,
+    required Variables$Query$number_of_services variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerynumber_of_services),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_services? readQuery$number_of_services({
+    required Variables$Query$number_of_services variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerynumber_of_services),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$number_of_services.fromJson(result);
+  }
+}
+
+class Query$number_of_services$business_service_aggregate {
+  Query$number_of_services$business_service_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_services$business_service_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_services$business_service_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_services$business_service_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_services$business_service_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_services$business_service_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_services$business_service_aggregate
+    on Query$number_of_services$business_service_aggregate {
+  CopyWith$Query$number_of_services$business_service_aggregate<
+          Query$number_of_services$business_service_aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_services$business_service_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_services$business_service_aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_services$business_service_aggregate(
+    Query$number_of_services$business_service_aggregate instance,
+    TRes Function(Query$number_of_services$business_service_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_services$business_service_aggregate;
+
+  factory CopyWith$Query$number_of_services$business_service_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_services$business_service_aggregate;
+
+  TRes call({
+    Query$number_of_services$business_service_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_services$business_service_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_services$business_service_aggregate<TRes>
+    implements
+        CopyWith$Query$number_of_services$business_service_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_services$business_service_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_services$business_service_aggregate _instance;
+
+  final TRes Function(Query$number_of_services$business_service_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_services$business_service_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_services$business_service_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_services$business_service_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_services$business_service_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_services$business_service_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_services$business_service_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_services$business_service_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_services$business_service_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_services$business_service_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_services$business_service_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_services$business_service_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_services$business_service_aggregate$aggregate {
+  Query$number_of_services$business_service_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_services$business_service_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_services$business_service_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_services$business_service_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_services$business_service_aggregate$aggregate
+    on Query$number_of_services$business_service_aggregate$aggregate {
+  CopyWith$Query$number_of_services$business_service_aggregate$aggregate<
+          Query$number_of_services$business_service_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_services$business_service_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_services$business_service_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_services$business_service_aggregate$aggregate(
+    Query$number_of_services$business_service_aggregate$aggregate instance,
+    TRes Function(Query$number_of_services$business_service_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_services$business_service_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_services$business_service_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_services$business_service_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_services$business_service_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_services$business_service_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_services$business_service_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_services$business_service_aggregate$aggregate _instance;
+
+  final TRes Function(
+      Query$number_of_services$business_service_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_services$business_service_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_services$business_service_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_services$business_service_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_services$business_service_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$add_service {
   factory Variables$Mutation$add_service(
           {required Input$business_service_insert_input object}) =>

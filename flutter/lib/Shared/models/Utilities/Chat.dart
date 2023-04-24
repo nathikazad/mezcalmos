@@ -3,6 +3,7 @@
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 
 // enum ParticipantType {
@@ -115,13 +116,13 @@ class Participant {
 }
 
 class IncomingViewLink {
-  String name;
+  Map<Language, String> name;
   String image;
   String url;
   IncomingViewLink(
       {required this.name, required this.image, required this.url});
-  Map<String, String> toJson() {
-    return {"name": name, "image": image, "url": url};
+  Map<String, dynamic> toJson() {
+    return {"name": name.toFirebaseFormat(), "image": image, "url": url};
   }
 }
 
@@ -153,12 +154,25 @@ class Message {
   DateTime timestamp;
   String get formatedTime => DateFormat('HH:mm').format(timestamp).toString();
   int userId;
+  ChatLink? link;
   // ParticipantType participantType;
   Message({
     required this.message,
     required this.timestamp,
     required this.userId,
+    this.link,
     // required this.participantType,
+  });
+}
+
+class ChatLink {
+  String url;
+  String image;
+  Map<Language, String> name;
+  ChatLink({
+    required this.url,
+    required this.name,
+    required this.image,
   });
 }
 

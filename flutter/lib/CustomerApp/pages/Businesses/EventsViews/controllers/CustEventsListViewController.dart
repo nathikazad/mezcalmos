@@ -25,11 +25,11 @@ class CustEventsListViewController {
       showBusiness.isTrue ? _businessScrollController : _eventScrollController;
   ScrollController _eventScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int eventFetchSize = 3;
+  final int eventFetchSize = 10;
   int _eventCurrentOffset = 0;
   bool _eventFetchingData = false;
   bool _eventReachedEndOfData = false;
-  final int businessFetchSize = 3;
+  final int businessFetchSize = 10;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
@@ -39,6 +39,11 @@ class CustEventsListViewController {
     EventCategory1.Dance,
     EventCategory1.Party,
     EventCategory1.Social,
+    EventCategory1.Therapy,
+  ];
+
+  final List<EventCategory2> _categories2 = <EventCategory2>[
+    EventCategory2.Uncategorized,
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
@@ -61,8 +66,11 @@ class CustEventsListViewController {
 
       locPkg.LocationData location = await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
-        _fromLocation =
-            Location(lat: location.latitude!, lng: location.longitude!);
+        _fromLocation = Location(
+          lat: location.latitude!,
+          lng: location.longitude!,
+          address: "",
+        );
         await _fetchEvents();
         await _fetchBusinesses();
 
@@ -83,9 +91,11 @@ class CustEventsListViewController {
       "categories": _filterCategories
           .map((EventCategory1 e) => e.toFirebaseFormatString())
           .toList(),
-      "schedule": [ScheduleType.Scheduled, ScheduleType.OneTime]
-          .map((ScheduleType e) => e.toFirebaseFormatString())
-          .toList(),
+      "schedule": [
+        ScheduleType.Scheduled,
+        ScheduleType.OneTime,
+        ScheduleType.OnDemand
+      ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
     };
   }
 
@@ -101,7 +111,8 @@ class CustEventsListViewController {
         categories1: filterInput["categories"]!
             .map((String e) => e.toEventCategory1())
             .toList(),
-        distance: 1000000000000,
+        distance: 100000000000,
+        categories2: _categories2,
         fromLocation: _fromLocation!,
         tags: [],
         scheduleType: filterInput["schedule"]!

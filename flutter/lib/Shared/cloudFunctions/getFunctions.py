@@ -265,7 +265,7 @@ def printDartFormatEnum(key, values):
 
   converter = '''extension Parse####ToString on #### {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -422,7 +422,7 @@ def getModels():
       toWriteModel +=  "};\n  }\n"
       if "Response" in key:
         # print(key)
-        toWriteModel += "factory "+key+".fromFirebaseFormattedJson(dynamic json) { "
+        toWriteModel += "factory "+key+".fromFirebaseFormattedJson(json) { "
         toWriteModel += "\n   return "+key+"("
         for v in models[key]["values"]:
           toWriteModel += '''json["'''+v.replace("?","")+'''"], '''

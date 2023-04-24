@@ -9,8 +9,13 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class CustBusinessMessageCard extends StatelessWidget {
-  const CustBusinessMessageCard({super.key, required this.business});
+  const CustBusinessMessageCard({
+    super.key,
+    required this.business,
+    required this.offeringName,
+  });
   final BusinessCard business;
+  final Map<Language, String> offeringName;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +72,7 @@ class CustBusinessMessageCard extends StatelessWidget {
         onTap: () {
           custChatController.initiateChat(
             business: business,
+            offeringName: offeringName,
           );
         },
       ),

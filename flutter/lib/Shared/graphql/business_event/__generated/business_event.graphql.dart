@@ -421,6 +421,13 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'time'),
             alias: null,
             arguments: [],
@@ -721,6 +728,7 @@ class Query$get_event_by_id$business_event_by_pk {
     this.schedule,
     required this.schedule_type,
     this.gps_location,
+    this.address,
     this.time,
     required this.details,
     required this.$__typename,
@@ -733,6 +741,7 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule = json['schedule'];
     final l$schedule_type = json['schedule_type'];
     final l$gps_location = json['gps_location'];
+    final l$address = json['address'];
     final l$time = json['time'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
@@ -744,6 +753,7 @@ class Query$get_event_by_id$business_event_by_pk {
       schedule_type: (l$schedule_type as String),
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
+      address: (l$address as String?),
       time: (l$time as String?),
       details: Query$get_event_by_id$business_event_by_pk$details.fromJson(
           (l$details as Map<String, dynamic>)),
@@ -760,6 +770,8 @@ class Query$get_event_by_id$business_event_by_pk {
   final String schedule_type;
 
   final Geography? gps_location;
+
+  final String? address;
 
   final String? time;
 
@@ -780,6 +792,8 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$gps_location = gps_location;
     _resultData['gps_location'] =
         l$gps_location == null ? null : geographyToJson(l$gps_location);
+    final l$address = address;
+    _resultData['address'] = l$address;
     final l$time = time;
     _resultData['time'] = l$time;
     final l$details = details;
@@ -796,6 +810,7 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule = schedule;
     final l$schedule_type = schedule_type;
     final l$gps_location = gps_location;
+    final l$address = address;
     final l$time = time;
     final l$details = details;
     final l$$__typename = $__typename;
@@ -805,6 +820,7 @@ class Query$get_event_by_id$business_event_by_pk {
       l$schedule,
       l$schedule_type,
       l$gps_location,
+      l$address,
       l$time,
       l$details,
       l$$__typename,
@@ -843,6 +859,11 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$gps_location = gps_location;
     final lOther$gps_location = other.gps_location;
     if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
       return false;
     }
     final l$time = time;
@@ -889,6 +910,7 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk<TRes> {
     dynamic? schedule,
     String? schedule_type,
     Geography? gps_location,
+    String? address,
     String? time,
     Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
@@ -917,6 +939,7 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     Object? schedule = _undefined,
     Object? schedule_type = _undefined,
     Object? gps_location = _undefined,
+    Object? address = _undefined,
     Object? time = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
@@ -935,6 +958,8 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
         gps_location: gps_location == _undefined
             ? _instance.gps_location
             : (gps_location as Geography?),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
         time: time == _undefined ? _instance.time : (time as String?),
         details: details == _undefined || details == null
             ? _instance.details
@@ -970,6 +995,7 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     dynamic? schedule,
     String? schedule_type,
     Geography? gps_location,
+    String? address,
     String? time,
     Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
@@ -3792,6 +3818,13 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'schedule_type'),
             alias: null,
             arguments: [],
@@ -4021,6 +4054,7 @@ class Query$get_event_by_category$business_event {
     required this.details,
     required this.id,
     this.gps_location,
+    this.address,
     required this.schedule_type,
     this.schedule,
     this.time,
@@ -4033,6 +4067,7 @@ class Query$get_event_by_category$business_event {
     final l$details = json['details'];
     final l$id = json['id'];
     final l$gps_location = json['gps_location'];
+    final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
     final l$time = json['time'];
@@ -4044,6 +4079,7 @@ class Query$get_event_by_category$business_event {
       id: (l$id as int),
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
+      address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       time: (l$time as String?),
@@ -4058,6 +4094,8 @@ class Query$get_event_by_category$business_event {
   final int id;
 
   final Geography? gps_location;
+
+  final String? address;
 
   final String schedule_type;
 
@@ -4078,6 +4116,8 @@ class Query$get_event_by_category$business_event {
     final l$gps_location = gps_location;
     _resultData['gps_location'] =
         l$gps_location == null ? null : geographyToJson(l$gps_location);
+    final l$address = address;
+    _resultData['address'] = l$address;
     final l$schedule_type = schedule_type;
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
@@ -4096,6 +4136,7 @@ class Query$get_event_by_category$business_event {
     final l$details = details;
     final l$id = id;
     final l$gps_location = gps_location;
+    final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
     final l$time = time;
@@ -4105,6 +4146,7 @@ class Query$get_event_by_category$business_event {
       l$details,
       l$id,
       l$gps_location,
+      l$address,
       l$schedule_type,
       l$schedule,
       l$time,
@@ -4135,6 +4177,11 @@ class Query$get_event_by_category$business_event {
     final l$gps_location = gps_location;
     final lOther$gps_location = other.gps_location;
     if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
       return false;
     }
     final l$schedule_type = schedule_type;
@@ -4189,6 +4236,7 @@ abstract class CopyWith$Query$get_event_by_category$business_event<TRes> {
     Query$get_event_by_category$business_event$details? details,
     int? id,
     Geography? gps_location,
+    String? address,
     String? schedule_type,
     dynamic? schedule,
     String? time,
@@ -4217,6 +4265,7 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
     Object? details = _undefined,
     Object? id = _undefined,
     Object? gps_location = _undefined,
+    Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
     Object? time = _undefined,
@@ -4231,6 +4280,8 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
         gps_location: gps_location == _undefined
             ? _instance.gps_location
             : (gps_location as Geography?),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
         schedule_type: schedule_type == _undefined || schedule_type == null
             ? _instance.schedule_type
             : (schedule_type as String),
@@ -4270,6 +4321,7 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event<TRes>
     Query$get_event_by_category$business_event$details? details,
     int? id,
     Geography? gps_location,
+    String? address,
     String? schedule_type,
     dynamic? schedule,
     String? time,
@@ -6308,6 +6360,13 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'schedule_type'),
             alias: null,
             arguments: [],
@@ -6537,6 +6596,7 @@ class Query$get_class_by_category$business_event {
     required this.details,
     required this.id,
     this.gps_location,
+    this.address,
     required this.schedule_type,
     this.schedule,
     this.time,
@@ -6549,6 +6609,7 @@ class Query$get_class_by_category$business_event {
     final l$details = json['details'];
     final l$id = json['id'];
     final l$gps_location = json['gps_location'];
+    final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
     final l$time = json['time'];
@@ -6560,6 +6621,7 @@ class Query$get_class_by_category$business_event {
       id: (l$id as int),
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
+      address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       time: (l$time as String?),
@@ -6574,6 +6636,8 @@ class Query$get_class_by_category$business_event {
   final int id;
 
   final Geography? gps_location;
+
+  final String? address;
 
   final String schedule_type;
 
@@ -6594,6 +6658,8 @@ class Query$get_class_by_category$business_event {
     final l$gps_location = gps_location;
     _resultData['gps_location'] =
         l$gps_location == null ? null : geographyToJson(l$gps_location);
+    final l$address = address;
+    _resultData['address'] = l$address;
     final l$schedule_type = schedule_type;
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
@@ -6612,6 +6678,7 @@ class Query$get_class_by_category$business_event {
     final l$details = details;
     final l$id = id;
     final l$gps_location = gps_location;
+    final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
     final l$time = time;
@@ -6621,6 +6688,7 @@ class Query$get_class_by_category$business_event {
       l$details,
       l$id,
       l$gps_location,
+      l$address,
       l$schedule_type,
       l$schedule,
       l$time,
@@ -6651,6 +6719,11 @@ class Query$get_class_by_category$business_event {
     final l$gps_location = gps_location;
     final lOther$gps_location = other.gps_location;
     if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
       return false;
     }
     final l$schedule_type = schedule_type;
@@ -6705,6 +6778,7 @@ abstract class CopyWith$Query$get_class_by_category$business_event<TRes> {
     Query$get_class_by_category$business_event$details? details,
     int? id,
     Geography? gps_location,
+    String? address,
     String? schedule_type,
     dynamic? schedule,
     String? time,
@@ -6733,6 +6807,7 @@ class _CopyWithImpl$Query$get_class_by_category$business_event<TRes>
     Object? details = _undefined,
     Object? id = _undefined,
     Object? gps_location = _undefined,
+    Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
     Object? time = _undefined,
@@ -6747,6 +6822,8 @@ class _CopyWithImpl$Query$get_class_by_category$business_event<TRes>
         gps_location: gps_location == _undefined
             ? _instance.gps_location
             : (gps_location as Geography?),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
         schedule_type: schedule_type == _undefined || schedule_type == null
             ? _instance.schedule_type
             : (schedule_type as String),
@@ -6786,6 +6863,7 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_event<TRes>
     Query$get_class_by_category$business_event$details? details,
     int? id,
     Geography? gps_location,
+    String? address,
     String? schedule_type,
     dynamic? schedule,
     String? time,
@@ -7971,6 +8049,3982 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_event$business$deta
   call({
     Geography? gps,
     String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$number_of_classes {
+  factory Variables$Query$number_of_classes({
+    required double distance,
+    required Geography from,
+  }) =>
+      Variables$Query$number_of_classes._({
+        r'distance': distance,
+        r'from': from,
+      });
+
+  Variables$Query$number_of_classes._(this._$data);
+
+  factory Variables$Query$number_of_classes.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    return Variables$Query$number_of_classes._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_classes<Variables$Query$number_of_classes>
+      get copyWith => CopyWith$Variables$Query$number_of_classes(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_classes) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_classes<TRes> {
+  factory CopyWith$Variables$Query$number_of_classes(
+    Variables$Query$number_of_classes instance,
+    TRes Function(Variables$Query$number_of_classes) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_classes;
+
+  factory CopyWith$Variables$Query$number_of_classes.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_classes;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_classes<TRes>
+    implements CopyWith$Variables$Query$number_of_classes<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_classes(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_classes _instance;
+
+  final TRes Function(Variables$Query$number_of_classes) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_classes._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_classes<TRes>
+    implements CopyWith$Variables$Query$number_of_classes<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_classes(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
+class Query$number_of_classes {
+  Query$number_of_classes({
+    required this.business_event_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_classes.fromJson(Map<String, dynamic> json) {
+    final l$business_event_aggregate = json['business_event_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_classes(
+      business_event_aggregate:
+          Query$number_of_classes$business_event_aggregate.fromJson(
+              (l$business_event_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_classes$business_event_aggregate
+      business_event_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_event_aggregate = business_event_aggregate;
+    _resultData['business_event_aggregate'] =
+        l$business_event_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_event_aggregate = business_event_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_event_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_classes) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_event_aggregate = business_event_aggregate;
+    final lOther$business_event_aggregate = other.business_event_aggregate;
+    if (l$business_event_aggregate != lOther$business_event_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_classes on Query$number_of_classes {
+  CopyWith$Query$number_of_classes<Query$number_of_classes> get copyWith =>
+      CopyWith$Query$number_of_classes(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$number_of_classes<TRes> {
+  factory CopyWith$Query$number_of_classes(
+    Query$number_of_classes instance,
+    TRes Function(Query$number_of_classes) then,
+  ) = _CopyWithImpl$Query$number_of_classes;
+
+  factory CopyWith$Query$number_of_classes.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_classes;
+
+  TRes call({
+    Query$number_of_classes$business_event_aggregate? business_event_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_classes$business_event_aggregate<TRes>
+      get business_event_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_classes<TRes>
+    implements CopyWith$Query$number_of_classes<TRes> {
+  _CopyWithImpl$Query$number_of_classes(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_classes _instance;
+
+  final TRes Function(Query$number_of_classes) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_event_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_classes(
+        business_event_aggregate: business_event_aggregate == _undefined ||
+                business_event_aggregate == null
+            ? _instance.business_event_aggregate
+            : (business_event_aggregate
+                as Query$number_of_classes$business_event_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_classes$business_event_aggregate<TRes>
+      get business_event_aggregate {
+    final local$business_event_aggregate = _instance.business_event_aggregate;
+    return CopyWith$Query$number_of_classes$business_event_aggregate(
+        local$business_event_aggregate,
+        (e) => call(business_event_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_classes<TRes>
+    implements CopyWith$Query$number_of_classes<TRes> {
+  _CopyWithStubImpl$Query$number_of_classes(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_classes$business_event_aggregate? business_event_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_classes$business_event_aggregate<TRes>
+      get business_event_aggregate =>
+          CopyWith$Query$number_of_classes$business_event_aggregate.stub(_res);
+}
+
+const documentNodeQuerynumber_of_classes = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_classes'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_event_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'tags'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_has_key'),
+                        value: StringValueNode(
+                          value: 'class',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_classes _parserFn$Query$number_of_classes(
+        Map<String, dynamic> data) =>
+    Query$number_of_classes.fromJson(data);
+
+class Options$Query$number_of_classes
+    extends graphql.QueryOptions<Query$number_of_classes> {
+  Options$Query$number_of_classes({
+    String? operationName,
+    required Variables$Query$number_of_classes variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_classes,
+          parserFn: _parserFn$Query$number_of_classes,
+        );
+}
+
+class WatchOptions$Query$number_of_classes
+    extends graphql.WatchQueryOptions<Query$number_of_classes> {
+  WatchOptions$Query$number_of_classes({
+    String? operationName,
+    required Variables$Query$number_of_classes variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_classes,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_classes,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_classes
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_classes({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_classes variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_classes,
+        );
+}
+
+extension ClientExtension$Query$number_of_classes on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_classes>> query$number_of_classes(
+          Options$Query$number_of_classes options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$number_of_classes> watchQuery$number_of_classes(
+          WatchOptions$Query$number_of_classes options) =>
+      this.watchQuery(options);
+  void writeQuery$number_of_classes({
+    required Query$number_of_classes data,
+    required Variables$Query$number_of_classes variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerynumber_of_classes),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_classes? readQuery$number_of_classes({
+    required Variables$Query$number_of_classes variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerynumber_of_classes),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$number_of_classes.fromJson(result);
+  }
+}
+
+class Query$number_of_classes$business_event_aggregate {
+  Query$number_of_classes$business_event_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_classes$business_event_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_classes$business_event_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_classes$business_event_aggregate$aggregate.fromJson(
+              (l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_classes$business_event_aggregate$aggregate? aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_classes$business_event_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_classes$business_event_aggregate
+    on Query$number_of_classes$business_event_aggregate {
+  CopyWith$Query$number_of_classes$business_event_aggregate<
+          Query$number_of_classes$business_event_aggregate>
+      get copyWith => CopyWith$Query$number_of_classes$business_event_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_classes$business_event_aggregate<TRes> {
+  factory CopyWith$Query$number_of_classes$business_event_aggregate(
+    Query$number_of_classes$business_event_aggregate instance,
+    TRes Function(Query$number_of_classes$business_event_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_classes$business_event_aggregate;
+
+  factory CopyWith$Query$number_of_classes$business_event_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_classes$business_event_aggregate;
+
+  TRes call({
+    Query$number_of_classes$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_classes$business_event_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_classes$business_event_aggregate<TRes>
+    implements CopyWith$Query$number_of_classes$business_event_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_classes$business_event_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_classes$business_event_aggregate _instance;
+
+  final TRes Function(Query$number_of_classes$business_event_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_classes$business_event_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_classes$business_event_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_classes$business_event_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_classes$business_event_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_classes$business_event_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_classes$business_event_aggregate<TRes>
+    implements CopyWith$Query$number_of_classes$business_event_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_classes$business_event_aggregate(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_classes$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_classes$business_event_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_classes$business_event_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_classes$business_event_aggregate$aggregate {
+  Query$number_of_classes$business_event_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_classes$business_event_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_classes$business_event_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_classes$business_event_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_classes$business_event_aggregate$aggregate
+    on Query$number_of_classes$business_event_aggregate$aggregate {
+  CopyWith$Query$number_of_classes$business_event_aggregate$aggregate<
+          Query$number_of_classes$business_event_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_classes$business_event_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_classes$business_event_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_classes$business_event_aggregate$aggregate(
+    Query$number_of_classes$business_event_aggregate$aggregate instance,
+    TRes Function(Query$number_of_classes$business_event_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_classes$business_event_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_classes$business_event_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_classes$business_event_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_classes$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_classes$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_classes$business_event_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_classes$business_event_aggregate$aggregate _instance;
+
+  final TRes Function(
+      Query$number_of_classes$business_event_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_classes$business_event_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_classes$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_classes$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_classes$business_event_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$number_of_therapy {
+  factory Variables$Query$number_of_therapy({
+    required double distance,
+    required Geography from,
+  }) =>
+      Variables$Query$number_of_therapy._({
+        r'distance': distance,
+        r'from': from,
+      });
+
+  Variables$Query$number_of_therapy._(this._$data);
+
+  factory Variables$Query$number_of_therapy.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    return Variables$Query$number_of_therapy._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_therapy<Variables$Query$number_of_therapy>
+      get copyWith => CopyWith$Variables$Query$number_of_therapy(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_therapy) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_therapy<TRes> {
+  factory CopyWith$Variables$Query$number_of_therapy(
+    Variables$Query$number_of_therapy instance,
+    TRes Function(Variables$Query$number_of_therapy) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_therapy;
+
+  factory CopyWith$Variables$Query$number_of_therapy.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_therapy;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_therapy<TRes>
+    implements CopyWith$Variables$Query$number_of_therapy<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_therapy(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_therapy _instance;
+
+  final TRes Function(Variables$Query$number_of_therapy) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_therapy._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_therapy<TRes>
+    implements CopyWith$Variables$Query$number_of_therapy<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_therapy(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
+class Query$number_of_therapy {
+  Query$number_of_therapy({
+    required this.business_event_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_therapy.fromJson(Map<String, dynamic> json) {
+    final l$business_event_aggregate = json['business_event_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_therapy(
+      business_event_aggregate:
+          Query$number_of_therapy$business_event_aggregate.fromJson(
+              (l$business_event_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_therapy$business_event_aggregate
+      business_event_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_event_aggregate = business_event_aggregate;
+    _resultData['business_event_aggregate'] =
+        l$business_event_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_event_aggregate = business_event_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_event_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_therapy) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_event_aggregate = business_event_aggregate;
+    final lOther$business_event_aggregate = other.business_event_aggregate;
+    if (l$business_event_aggregate != lOther$business_event_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_therapy on Query$number_of_therapy {
+  CopyWith$Query$number_of_therapy<Query$number_of_therapy> get copyWith =>
+      CopyWith$Query$number_of_therapy(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$number_of_therapy<TRes> {
+  factory CopyWith$Query$number_of_therapy(
+    Query$number_of_therapy instance,
+    TRes Function(Query$number_of_therapy) then,
+  ) = _CopyWithImpl$Query$number_of_therapy;
+
+  factory CopyWith$Query$number_of_therapy.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_therapy;
+
+  TRes call({
+    Query$number_of_therapy$business_event_aggregate? business_event_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_therapy$business_event_aggregate<TRes>
+      get business_event_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_therapy<TRes>
+    implements CopyWith$Query$number_of_therapy<TRes> {
+  _CopyWithImpl$Query$number_of_therapy(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_therapy _instance;
+
+  final TRes Function(Query$number_of_therapy) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_event_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_therapy(
+        business_event_aggregate: business_event_aggregate == _undefined ||
+                business_event_aggregate == null
+            ? _instance.business_event_aggregate
+            : (business_event_aggregate
+                as Query$number_of_therapy$business_event_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_therapy$business_event_aggregate<TRes>
+      get business_event_aggregate {
+    final local$business_event_aggregate = _instance.business_event_aggregate;
+    return CopyWith$Query$number_of_therapy$business_event_aggregate(
+        local$business_event_aggregate,
+        (e) => call(business_event_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_therapy<TRes>
+    implements CopyWith$Query$number_of_therapy<TRes> {
+  _CopyWithStubImpl$Query$number_of_therapy(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_therapy$business_event_aggregate? business_event_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_therapy$business_event_aggregate<TRes>
+      get business_event_aggregate =>
+          CopyWith$Query$number_of_therapy$business_event_aggregate.stub(_res);
+}
+
+const documentNodeQuerynumber_of_therapy = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_therapy'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_event_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'category1'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: StringValueNode(
+                          value: 'therapy',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_therapy _parserFn$Query$number_of_therapy(
+        Map<String, dynamic> data) =>
+    Query$number_of_therapy.fromJson(data);
+
+class Options$Query$number_of_therapy
+    extends graphql.QueryOptions<Query$number_of_therapy> {
+  Options$Query$number_of_therapy({
+    String? operationName,
+    required Variables$Query$number_of_therapy variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_therapy,
+          parserFn: _parserFn$Query$number_of_therapy,
+        );
+}
+
+class WatchOptions$Query$number_of_therapy
+    extends graphql.WatchQueryOptions<Query$number_of_therapy> {
+  WatchOptions$Query$number_of_therapy({
+    String? operationName,
+    required Variables$Query$number_of_therapy variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_therapy,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_therapy,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_therapy
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_therapy({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_therapy variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_therapy,
+        );
+}
+
+extension ClientExtension$Query$number_of_therapy on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_therapy>> query$number_of_therapy(
+          Options$Query$number_of_therapy options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$number_of_therapy> watchQuery$number_of_therapy(
+          WatchOptions$Query$number_of_therapy options) =>
+      this.watchQuery(options);
+  void writeQuery$number_of_therapy({
+    required Query$number_of_therapy data,
+    required Variables$Query$number_of_therapy variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerynumber_of_therapy),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_therapy? readQuery$number_of_therapy({
+    required Variables$Query$number_of_therapy variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerynumber_of_therapy),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$number_of_therapy.fromJson(result);
+  }
+}
+
+class Query$number_of_therapy$business_event_aggregate {
+  Query$number_of_therapy$business_event_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_therapy$business_event_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_therapy$business_event_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_therapy$business_event_aggregate$aggregate.fromJson(
+              (l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_therapy$business_event_aggregate$aggregate? aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_therapy$business_event_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_therapy$business_event_aggregate
+    on Query$number_of_therapy$business_event_aggregate {
+  CopyWith$Query$number_of_therapy$business_event_aggregate<
+          Query$number_of_therapy$business_event_aggregate>
+      get copyWith => CopyWith$Query$number_of_therapy$business_event_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_therapy$business_event_aggregate<TRes> {
+  factory CopyWith$Query$number_of_therapy$business_event_aggregate(
+    Query$number_of_therapy$business_event_aggregate instance,
+    TRes Function(Query$number_of_therapy$business_event_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_therapy$business_event_aggregate;
+
+  factory CopyWith$Query$number_of_therapy$business_event_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_therapy$business_event_aggregate;
+
+  TRes call({
+    Query$number_of_therapy$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_therapy$business_event_aggregate<TRes>
+    implements CopyWith$Query$number_of_therapy$business_event_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_therapy$business_event_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_therapy$business_event_aggregate _instance;
+
+  final TRes Function(Query$number_of_therapy$business_event_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_therapy$business_event_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_therapy$business_event_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_therapy$business_event_aggregate<TRes>
+    implements CopyWith$Query$number_of_therapy$business_event_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_therapy$business_event_aggregate(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_therapy$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_therapy$business_event_aggregate$aggregate {
+  Query$number_of_therapy$business_event_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_therapy$business_event_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_therapy$business_event_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_therapy$business_event_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_therapy$business_event_aggregate$aggregate
+    on Query$number_of_therapy$business_event_aggregate$aggregate {
+  CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate<
+          Query$number_of_therapy$business_event_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate(
+    Query$number_of_therapy$business_event_aggregate$aggregate instance,
+    TRes Function(Query$number_of_therapy$business_event_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_therapy$business_event_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_therapy$business_event_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_therapy$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_therapy$business_event_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_therapy$business_event_aggregate$aggregate _instance;
+
+  final TRes Function(
+      Query$number_of_therapy$business_event_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_therapy$business_event_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_therapy$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_therapy$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_therapy$business_event_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$number_of_events {
+  factory Variables$Query$number_of_events({
+    required double distance,
+    required Geography from,
+  }) =>
+      Variables$Query$number_of_events._({
+        r'distance': distance,
+        r'from': from,
+      });
+
+  Variables$Query$number_of_events._(this._$data);
+
+  factory Variables$Query$number_of_events.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    return Variables$Query$number_of_events._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_events<Variables$Query$number_of_events>
+      get copyWith => CopyWith$Variables$Query$number_of_events(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_events) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_events<TRes> {
+  factory CopyWith$Variables$Query$number_of_events(
+    Variables$Query$number_of_events instance,
+    TRes Function(Variables$Query$number_of_events) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_events;
+
+  factory CopyWith$Variables$Query$number_of_events.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_events;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_events<TRes>
+    implements CopyWith$Variables$Query$number_of_events<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_events(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_events _instance;
+
+  final TRes Function(Variables$Query$number_of_events) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_events._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_events<TRes>
+    implements CopyWith$Variables$Query$number_of_events<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_events(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
+class Query$number_of_events {
+  Query$number_of_events({
+    required this.business_event_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_events.fromJson(Map<String, dynamic> json) {
+    final l$business_event_aggregate = json['business_event_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_events(
+      business_event_aggregate:
+          Query$number_of_events$business_event_aggregate.fromJson(
+              (l$business_event_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_events$business_event_aggregate
+      business_event_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_event_aggregate = business_event_aggregate;
+    _resultData['business_event_aggregate'] =
+        l$business_event_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_event_aggregate = business_event_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_event_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_events) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_event_aggregate = business_event_aggregate;
+    final lOther$business_event_aggregate = other.business_event_aggregate;
+    if (l$business_event_aggregate != lOther$business_event_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_events on Query$number_of_events {
+  CopyWith$Query$number_of_events<Query$number_of_events> get copyWith =>
+      CopyWith$Query$number_of_events(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$number_of_events<TRes> {
+  factory CopyWith$Query$number_of_events(
+    Query$number_of_events instance,
+    TRes Function(Query$number_of_events) then,
+  ) = _CopyWithImpl$Query$number_of_events;
+
+  factory CopyWith$Query$number_of_events.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_events;
+
+  TRes call({
+    Query$number_of_events$business_event_aggregate? business_event_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_events$business_event_aggregate<TRes>
+      get business_event_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_events<TRes>
+    implements CopyWith$Query$number_of_events<TRes> {
+  _CopyWithImpl$Query$number_of_events(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_events _instance;
+
+  final TRes Function(Query$number_of_events) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_event_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_events(
+        business_event_aggregate: business_event_aggregate == _undefined ||
+                business_event_aggregate == null
+            ? _instance.business_event_aggregate
+            : (business_event_aggregate
+                as Query$number_of_events$business_event_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_events$business_event_aggregate<TRes>
+      get business_event_aggregate {
+    final local$business_event_aggregate = _instance.business_event_aggregate;
+    return CopyWith$Query$number_of_events$business_event_aggregate(
+        local$business_event_aggregate,
+        (e) => call(business_event_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_events<TRes>
+    implements CopyWith$Query$number_of_events<TRes> {
+  _CopyWithStubImpl$Query$number_of_events(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_events$business_event_aggregate? business_event_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_events$business_event_aggregate<TRes>
+      get business_event_aggregate =>
+          CopyWith$Query$number_of_events$business_event_aggregate.stub(_res);
+}
+
+const documentNodeQuerynumber_of_events = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_events'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_event_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'category1'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_in'),
+                        value: ListValueNode(values: [
+                          StringValueNode(
+                            value: 'party',
+                            isBlock: false,
+                          ),
+                          StringValueNode(
+                            value: 'dance',
+                            isBlock: false,
+                          ),
+                          StringValueNode(
+                            value: 'social',
+                            isBlock: false,
+                          ),
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_events _parserFn$Query$number_of_events(
+        Map<String, dynamic> data) =>
+    Query$number_of_events.fromJson(data);
+
+class Options$Query$number_of_events
+    extends graphql.QueryOptions<Query$number_of_events> {
+  Options$Query$number_of_events({
+    String? operationName,
+    required Variables$Query$number_of_events variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_events,
+          parserFn: _parserFn$Query$number_of_events,
+        );
+}
+
+class WatchOptions$Query$number_of_events
+    extends graphql.WatchQueryOptions<Query$number_of_events> {
+  WatchOptions$Query$number_of_events({
+    String? operationName,
+    required Variables$Query$number_of_events variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_events,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_events,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_events extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_events({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_events variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_events,
+        );
+}
+
+extension ClientExtension$Query$number_of_events on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_events>> query$number_of_events(
+          Options$Query$number_of_events options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$number_of_events> watchQuery$number_of_events(
+          WatchOptions$Query$number_of_events options) =>
+      this.watchQuery(options);
+  void writeQuery$number_of_events({
+    required Query$number_of_events data,
+    required Variables$Query$number_of_events variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerynumber_of_events),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_events? readQuery$number_of_events({
+    required Variables$Query$number_of_events variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerynumber_of_events),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$number_of_events.fromJson(result);
+  }
+}
+
+class Query$number_of_events$business_event_aggregate {
+  Query$number_of_events$business_event_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_events$business_event_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_events$business_event_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_events$business_event_aggregate$aggregate.fromJson(
+              (l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_events$business_event_aggregate$aggregate? aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_events$business_event_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_events$business_event_aggregate
+    on Query$number_of_events$business_event_aggregate {
+  CopyWith$Query$number_of_events$business_event_aggregate<
+          Query$number_of_events$business_event_aggregate>
+      get copyWith => CopyWith$Query$number_of_events$business_event_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_events$business_event_aggregate<TRes> {
+  factory CopyWith$Query$number_of_events$business_event_aggregate(
+    Query$number_of_events$business_event_aggregate instance,
+    TRes Function(Query$number_of_events$business_event_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_events$business_event_aggregate;
+
+  factory CopyWith$Query$number_of_events$business_event_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_events$business_event_aggregate;
+
+  TRes call({
+    Query$number_of_events$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_events$business_event_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_events$business_event_aggregate<TRes>
+    implements CopyWith$Query$number_of_events$business_event_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_events$business_event_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_events$business_event_aggregate _instance;
+
+  final TRes Function(Query$number_of_events$business_event_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_events$business_event_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_events$business_event_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_events$business_event_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_events$business_event_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_events$business_event_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_events$business_event_aggregate<TRes>
+    implements CopyWith$Query$number_of_events$business_event_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_events$business_event_aggregate(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_events$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_events$business_event_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_events$business_event_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_events$business_event_aggregate$aggregate {
+  Query$number_of_events$business_event_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_events$business_event_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_events$business_event_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_events$business_event_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_events$business_event_aggregate$aggregate
+    on Query$number_of_events$business_event_aggregate$aggregate {
+  CopyWith$Query$number_of_events$business_event_aggregate$aggregate<
+          Query$number_of_events$business_event_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_events$business_event_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_events$business_event_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_events$business_event_aggregate$aggregate(
+    Query$number_of_events$business_event_aggregate$aggregate instance,
+    TRes Function(Query$number_of_events$business_event_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_events$business_event_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_events$business_event_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_events$business_event_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_events$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_events$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_events$business_event_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_events$business_event_aggregate$aggregate _instance;
+
+  final TRes Function(Query$number_of_events$business_event_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_events$business_event_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_events$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_events$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_events$business_event_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$number_of_volunteer {
+  factory Variables$Query$number_of_volunteer({
+    required double distance,
+    required Geography from,
+  }) =>
+      Variables$Query$number_of_volunteer._({
+        r'distance': distance,
+        r'from': from,
+      });
+
+  Variables$Query$number_of_volunteer._(this._$data);
+
+  factory Variables$Query$number_of_volunteer.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    return Variables$Query$number_of_volunteer._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_volunteer<
+          Variables$Query$number_of_volunteer>
+      get copyWith => CopyWith$Variables$Query$number_of_volunteer(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_volunteer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_volunteer<TRes> {
+  factory CopyWith$Variables$Query$number_of_volunteer(
+    Variables$Query$number_of_volunteer instance,
+    TRes Function(Variables$Query$number_of_volunteer) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_volunteer;
+
+  factory CopyWith$Variables$Query$number_of_volunteer.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_volunteer;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_volunteer<TRes>
+    implements CopyWith$Variables$Query$number_of_volunteer<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_volunteer(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_volunteer _instance;
+
+  final TRes Function(Variables$Query$number_of_volunteer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_volunteer._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_volunteer<TRes>
+    implements CopyWith$Variables$Query$number_of_volunteer<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_volunteer(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
+class Query$number_of_volunteer {
+  Query$number_of_volunteer({
+    required this.business_event_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_volunteer.fromJson(Map<String, dynamic> json) {
+    final l$business_event_aggregate = json['business_event_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_volunteer(
+      business_event_aggregate:
+          Query$number_of_volunteer$business_event_aggregate.fromJson(
+              (l$business_event_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_volunteer$business_event_aggregate
+      business_event_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_event_aggregate = business_event_aggregate;
+    _resultData['business_event_aggregate'] =
+        l$business_event_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_event_aggregate = business_event_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_event_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_volunteer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_event_aggregate = business_event_aggregate;
+    final lOther$business_event_aggregate = other.business_event_aggregate;
+    if (l$business_event_aggregate != lOther$business_event_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_volunteer
+    on Query$number_of_volunteer {
+  CopyWith$Query$number_of_volunteer<Query$number_of_volunteer> get copyWith =>
+      CopyWith$Query$number_of_volunteer(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$number_of_volunteer<TRes> {
+  factory CopyWith$Query$number_of_volunteer(
+    Query$number_of_volunteer instance,
+    TRes Function(Query$number_of_volunteer) then,
+  ) = _CopyWithImpl$Query$number_of_volunteer;
+
+  factory CopyWith$Query$number_of_volunteer.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_volunteer;
+
+  TRes call({
+    Query$number_of_volunteer$business_event_aggregate?
+        business_event_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_volunteer$business_event_aggregate<TRes>
+      get business_event_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_volunteer<TRes>
+    implements CopyWith$Query$number_of_volunteer<TRes> {
+  _CopyWithImpl$Query$number_of_volunteer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_volunteer _instance;
+
+  final TRes Function(Query$number_of_volunteer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_event_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_volunteer(
+        business_event_aggregate: business_event_aggregate == _undefined ||
+                business_event_aggregate == null
+            ? _instance.business_event_aggregate
+            : (business_event_aggregate
+                as Query$number_of_volunteer$business_event_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_volunteer$business_event_aggregate<TRes>
+      get business_event_aggregate {
+    final local$business_event_aggregate = _instance.business_event_aggregate;
+    return CopyWith$Query$number_of_volunteer$business_event_aggregate(
+        local$business_event_aggregate,
+        (e) => call(business_event_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_volunteer<TRes>
+    implements CopyWith$Query$number_of_volunteer<TRes> {
+  _CopyWithStubImpl$Query$number_of_volunteer(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_volunteer$business_event_aggregate?
+        business_event_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_volunteer$business_event_aggregate<TRes>
+      get business_event_aggregate =>
+          CopyWith$Query$number_of_volunteer$business_event_aggregate.stub(
+              _res);
+}
+
+const documentNodeQuerynumber_of_volunteer = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_volunteer'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_event_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'category1'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: StringValueNode(
+                          value: 'volunteer',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_volunteer _parserFn$Query$number_of_volunteer(
+        Map<String, dynamic> data) =>
+    Query$number_of_volunteer.fromJson(data);
+
+class Options$Query$number_of_volunteer
+    extends graphql.QueryOptions<Query$number_of_volunteer> {
+  Options$Query$number_of_volunteer({
+    String? operationName,
+    required Variables$Query$number_of_volunteer variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_volunteer,
+          parserFn: _parserFn$Query$number_of_volunteer,
+        );
+}
+
+class WatchOptions$Query$number_of_volunteer
+    extends graphql.WatchQueryOptions<Query$number_of_volunteer> {
+  WatchOptions$Query$number_of_volunteer({
+    String? operationName,
+    required Variables$Query$number_of_volunteer variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_volunteer,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_volunteer,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_volunteer
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_volunteer({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_volunteer variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_volunteer,
+        );
+}
+
+extension ClientExtension$Query$number_of_volunteer on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_volunteer>>
+      query$number_of_volunteer(
+              Options$Query$number_of_volunteer options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$number_of_volunteer>
+      watchQuery$number_of_volunteer(
+              WatchOptions$Query$number_of_volunteer options) =>
+          this.watchQuery(options);
+  void writeQuery$number_of_volunteer({
+    required Query$number_of_volunteer data,
+    required Variables$Query$number_of_volunteer variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerynumber_of_volunteer),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_volunteer? readQuery$number_of_volunteer({
+    required Variables$Query$number_of_volunteer variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerynumber_of_volunteer),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$number_of_volunteer.fromJson(result);
+  }
+}
+
+class Query$number_of_volunteer$business_event_aggregate {
+  Query$number_of_volunteer$business_event_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_volunteer$business_event_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_volunteer$business_event_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_volunteer$business_event_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_volunteer$business_event_aggregate$aggregate? aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_volunteer$business_event_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_volunteer$business_event_aggregate
+    on Query$number_of_volunteer$business_event_aggregate {
+  CopyWith$Query$number_of_volunteer$business_event_aggregate<
+          Query$number_of_volunteer$business_event_aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_volunteer$business_event_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_volunteer$business_event_aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_volunteer$business_event_aggregate(
+    Query$number_of_volunteer$business_event_aggregate instance,
+    TRes Function(Query$number_of_volunteer$business_event_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_volunteer$business_event_aggregate;
+
+  factory CopyWith$Query$number_of_volunteer$business_event_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_volunteer$business_event_aggregate;
+
+  TRes call({
+    Query$number_of_volunteer$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_volunteer$business_event_aggregate<TRes>
+    implements
+        CopyWith$Query$number_of_volunteer$business_event_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_volunteer$business_event_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_volunteer$business_event_aggregate _instance;
+
+  final TRes Function(Query$number_of_volunteer$business_event_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_volunteer$business_event_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_volunteer$business_event_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_volunteer$business_event_aggregate<TRes>
+    implements
+        CopyWith$Query$number_of_volunteer$business_event_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_volunteer$business_event_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_volunteer$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_volunteer$business_event_aggregate$aggregate {
+  Query$number_of_volunteer$business_event_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_volunteer$business_event_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_volunteer$business_event_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_volunteer$business_event_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_volunteer$business_event_aggregate$aggregate
+    on Query$number_of_volunteer$business_event_aggregate$aggregate {
+  CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate<
+          Query$number_of_volunteer$business_event_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate(
+    Query$number_of_volunteer$business_event_aggregate$aggregate instance,
+    TRes Function(Query$number_of_volunteer$business_event_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_volunteer$business_event_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_volunteer$business_event_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_volunteer$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_volunteer$business_event_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_volunteer$business_event_aggregate$aggregate _instance;
+
+  final TRes Function(
+      Query$number_of_volunteer$business_event_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_volunteer$business_event_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_volunteer$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_volunteer$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_volunteer$business_event_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$number_of_adventure {
+  factory Variables$Query$number_of_adventure({
+    required double distance,
+    required Geography from,
+  }) =>
+      Variables$Query$number_of_adventure._({
+        r'distance': distance,
+        r'from': from,
+      });
+
+  Variables$Query$number_of_adventure._(this._$data);
+
+  factory Variables$Query$number_of_adventure.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    return Variables$Query$number_of_adventure._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_adventure<
+          Variables$Query$number_of_adventure>
+      get copyWith => CopyWith$Variables$Query$number_of_adventure(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_adventure) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_adventure<TRes> {
+  factory CopyWith$Variables$Query$number_of_adventure(
+    Variables$Query$number_of_adventure instance,
+    TRes Function(Variables$Query$number_of_adventure) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_adventure;
+
+  factory CopyWith$Variables$Query$number_of_adventure.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_adventure;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_adventure<TRes>
+    implements CopyWith$Variables$Query$number_of_adventure<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_adventure(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_adventure _instance;
+
+  final TRes Function(Variables$Query$number_of_adventure) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_adventure._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_adventure<TRes>
+    implements CopyWith$Variables$Query$number_of_adventure<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_adventure(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
+class Query$number_of_adventure {
+  Query$number_of_adventure({
+    required this.business_event_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_adventure.fromJson(Map<String, dynamic> json) {
+    final l$business_event_aggregate = json['business_event_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_adventure(
+      business_event_aggregate:
+          Query$number_of_adventure$business_event_aggregate.fromJson(
+              (l$business_event_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_adventure$business_event_aggregate
+      business_event_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_event_aggregate = business_event_aggregate;
+    _resultData['business_event_aggregate'] =
+        l$business_event_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_event_aggregate = business_event_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_event_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_adventure) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_event_aggregate = business_event_aggregate;
+    final lOther$business_event_aggregate = other.business_event_aggregate;
+    if (l$business_event_aggregate != lOther$business_event_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_adventure
+    on Query$number_of_adventure {
+  CopyWith$Query$number_of_adventure<Query$number_of_adventure> get copyWith =>
+      CopyWith$Query$number_of_adventure(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$number_of_adventure<TRes> {
+  factory CopyWith$Query$number_of_adventure(
+    Query$number_of_adventure instance,
+    TRes Function(Query$number_of_adventure) then,
+  ) = _CopyWithImpl$Query$number_of_adventure;
+
+  factory CopyWith$Query$number_of_adventure.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_adventure;
+
+  TRes call({
+    Query$number_of_adventure$business_event_aggregate?
+        business_event_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_adventure$business_event_aggregate<TRes>
+      get business_event_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_adventure<TRes>
+    implements CopyWith$Query$number_of_adventure<TRes> {
+  _CopyWithImpl$Query$number_of_adventure(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_adventure _instance;
+
+  final TRes Function(Query$number_of_adventure) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_event_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_adventure(
+        business_event_aggregate: business_event_aggregate == _undefined ||
+                business_event_aggregate == null
+            ? _instance.business_event_aggregate
+            : (business_event_aggregate
+                as Query$number_of_adventure$business_event_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_adventure$business_event_aggregate<TRes>
+      get business_event_aggregate {
+    final local$business_event_aggregate = _instance.business_event_aggregate;
+    return CopyWith$Query$number_of_adventure$business_event_aggregate(
+        local$business_event_aggregate,
+        (e) => call(business_event_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_adventure<TRes>
+    implements CopyWith$Query$number_of_adventure<TRes> {
+  _CopyWithStubImpl$Query$number_of_adventure(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_adventure$business_event_aggregate?
+        business_event_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_adventure$business_event_aggregate<TRes>
+      get business_event_aggregate =>
+          CopyWith$Query$number_of_adventure$business_event_aggregate.stub(
+              _res);
+}
+
+const documentNodeQuerynumber_of_adventure = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_adventure'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_event_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'category1'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: StringValueNode(
+                          value: 'adventure',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_adventure _parserFn$Query$number_of_adventure(
+        Map<String, dynamic> data) =>
+    Query$number_of_adventure.fromJson(data);
+
+class Options$Query$number_of_adventure
+    extends graphql.QueryOptions<Query$number_of_adventure> {
+  Options$Query$number_of_adventure({
+    String? operationName,
+    required Variables$Query$number_of_adventure variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_adventure,
+          parserFn: _parserFn$Query$number_of_adventure,
+        );
+}
+
+class WatchOptions$Query$number_of_adventure
+    extends graphql.WatchQueryOptions<Query$number_of_adventure> {
+  WatchOptions$Query$number_of_adventure({
+    String? operationName,
+    required Variables$Query$number_of_adventure variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_adventure,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_adventure,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_adventure
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_adventure({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_adventure variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_adventure,
+        );
+}
+
+extension ClientExtension$Query$number_of_adventure on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_adventure>>
+      query$number_of_adventure(
+              Options$Query$number_of_adventure options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$number_of_adventure>
+      watchQuery$number_of_adventure(
+              WatchOptions$Query$number_of_adventure options) =>
+          this.watchQuery(options);
+  void writeQuery$number_of_adventure({
+    required Query$number_of_adventure data,
+    required Variables$Query$number_of_adventure variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerynumber_of_adventure),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_adventure? readQuery$number_of_adventure({
+    required Variables$Query$number_of_adventure variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerynumber_of_adventure),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$number_of_adventure.fromJson(result);
+  }
+}
+
+class Query$number_of_adventure$business_event_aggregate {
+  Query$number_of_adventure$business_event_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_adventure$business_event_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_adventure$business_event_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_adventure$business_event_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_adventure$business_event_aggregate$aggregate? aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_adventure$business_event_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_adventure$business_event_aggregate
+    on Query$number_of_adventure$business_event_aggregate {
+  CopyWith$Query$number_of_adventure$business_event_aggregate<
+          Query$number_of_adventure$business_event_aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_adventure$business_event_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_adventure$business_event_aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_adventure$business_event_aggregate(
+    Query$number_of_adventure$business_event_aggregate instance,
+    TRes Function(Query$number_of_adventure$business_event_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_adventure$business_event_aggregate;
+
+  factory CopyWith$Query$number_of_adventure$business_event_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_adventure$business_event_aggregate;
+
+  TRes call({
+    Query$number_of_adventure$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_adventure$business_event_aggregate<TRes>
+    implements
+        CopyWith$Query$number_of_adventure$business_event_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_adventure$business_event_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_adventure$business_event_aggregate _instance;
+
+  final TRes Function(Query$number_of_adventure$business_event_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_adventure$business_event_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_adventure$business_event_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_adventure$business_event_aggregate<TRes>
+    implements
+        CopyWith$Query$number_of_adventure$business_event_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_adventure$business_event_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_adventure$business_event_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_adventure$business_event_aggregate$aggregate {
+  Query$number_of_adventure$business_event_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_adventure$business_event_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_adventure$business_event_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_adventure$business_event_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_adventure$business_event_aggregate$aggregate
+    on Query$number_of_adventure$business_event_aggregate$aggregate {
+  CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate<
+          Query$number_of_adventure$business_event_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate(
+    Query$number_of_adventure$business_event_aggregate$aggregate instance,
+    TRes Function(Query$number_of_adventure$business_event_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_adventure$business_event_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_adventure$business_event_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_adventure$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_adventure$business_event_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_adventure$business_event_aggregate$aggregate _instance;
+
+  final TRes Function(
+      Query$number_of_adventure$business_event_aggregate$aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_adventure$business_event_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_adventure$business_event_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_adventure$business_event_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_adventure$business_event_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
     String? $__typename,
   }) =>
       _res;

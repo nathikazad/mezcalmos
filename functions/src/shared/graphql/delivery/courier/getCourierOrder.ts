@@ -81,6 +81,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
     let toLocation: Location = {
       lat: response.delivery_courier_order_by_pk.to_location_gps.coordinates[1],
       lng: response.delivery_courier_order_by_pk.to_location_gps.coordinates[0],
+      address: response.delivery_courier_order_by_pk.to_location_address
     }
   
     let items: CourierItem[] = response.delivery_courier_order_by_pk.items.map((i) => {
@@ -95,9 +96,10 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
         orderTime: response.delivery_courier_order_by_pk.order_time,
         paymentType: response.delivery_courier_order_by_pk.payment_type as PaymentType,
         discountValue: response.delivery_courier_order_by_pk.discount_value,
-        fromLocationGps: (response.delivery_courier_order_by_pk.from_location_gps) ? {
+        fromLocationGps: (response.delivery_courier_order_by_pk.from_location_gps && response.delivery_courier_order_by_pk.from_location_text) ? {
             lat: response.delivery_courier_order_by_pk.from_location_gps.coordinates[1],
             lng: response.delivery_courier_order_by_pk.from_location_gps.coordinates[0],
+            address: response.delivery_courier_order_by_pk.from_location_text,
         }: undefined,
         fromLocationText: response.delivery_courier_order_by_pk.from_location_text,
         toLocation,
@@ -111,7 +113,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             deliveryId: response.delivery_courier_order_by_pk.delivery_order_id,
             serviceProviderId: response.delivery_courier_order_by_pk.delivery_order.service_provider_id,
             orderType: response.delivery_courier_order_by_pk.delivery_order.order_type as OrderType,
-            pickupLocation: (response.delivery_courier_order_by_pk.delivery_order.pickup_gps) ? {
+            pickupLocation: (response.delivery_courier_order_by_pk.delivery_order.pickup_gps && response.delivery_courier_order_by_pk.delivery_order.pickup_address) ? {
                 lat: response.delivery_courier_order_by_pk.delivery_order.pickup_gps.coordinates[1],
                 lng: response.delivery_courier_order_by_pk.delivery_order.pickup_gps.coordinates[0],
                 address: response.delivery_courier_order_by_pk.delivery_order.pickup_address,
@@ -202,6 +204,7 @@ export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder):
     let toLocation: Location = {
       lat: response.delivery_courier_order[0].to_location_gps.coordinates[1],
       lng: response.delivery_courier_order[0].to_location_gps.coordinates[0],
+      address: response.delivery_courier_order[0].to_location_address,
     }
   
     let items: CourierItem[] = response.delivery_courier_order[0].items.map((i) => {
@@ -216,9 +219,10 @@ export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder):
         orderTime: response.delivery_courier_order[0].order_time,
         paymentType: response.delivery_courier_order[0].payment_type as PaymentType,
         discountValue: response.delivery_courier_order[0].discount_value,
-        fromLocationGps: (response.delivery_courier_order[0].from_location_gps) ? {
+        fromLocationGps: (response.delivery_courier_order[0].from_location_gps && response.delivery_courier_order[0].from_location_text) ? {
             lat: response.delivery_courier_order[0].from_location_gps.coordinates[1],
             lng: response.delivery_courier_order[0].from_location_gps.coordinates[0],
+            address: response.delivery_courier_order[0].from_location_text
         }: undefined,
         fromLocationText: response.delivery_courier_order[0].from_location_text,
         toLocation,

@@ -64,11 +64,6 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
   if(response.restaurant_order_by_pk == null) {
     throw new MezError("orderNotFound");
   }
-  
-  let toLocation: Location = {
-    lat: response.restaurant_order_by_pk.to_location_gps.coordinates[1],
-    lng: response.restaurant_order_by_pk.to_location_gps.coordinates[0],
-  }
 
   let items: OrderItem[] = response.restaurant_order_by_pk.items.map((i) => {
     return {
@@ -86,7 +81,11 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     restaurantId: response.restaurant_order_by_pk.restaurant_id,
     spDetailsId: response.restaurant_order_by_pk.restaurant.details_id,
     paymentType: response.restaurant_order_by_pk.payment_type as PaymentType,
-    toLocation,
+    toLocation: (response.restaurant_order_by_pk.to_location_address) ? {
+      lat: response.restaurant_order_by_pk.to_location_gps.coordinates[1],
+      lng: response.restaurant_order_by_pk.to_location_gps.coordinates[0],
+      address: response.restaurant_order_by_pk.to_location_address
+    }: undefined,
     refundAmount: parseFloat(response.restaurant_order_by_pk.refund_amount.replace("$","")),
     estimatedFoodReadyTime: response.restaurant_order_by_pk.estimated_food_ready_time,
     status: response.restaurant_order_by_pk.status as RestaurantOrderStatus,
@@ -169,11 +168,6 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
     throw new MezError("orderNotFound");
   }
   
-  let toLocation: Location = {
-    lat: response.restaurant_order[0].to_location_gps.coordinates[1],
-    lng: response.restaurant_order[0].to_location_gps.coordinates[0],
-  }
-
   let items: OrderItem[] = response.restaurant_order[0].items.map((i) => {
     return {
       orderItemId: i.id,
@@ -190,7 +184,11 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
     restaurantId: response.restaurant_order[0].restaurant_id,
     spDetailsId: response.restaurant_order[0].restaurant.details_id,
     paymentType: response.restaurant_order[0].payment_type as PaymentType,
-    toLocation,
+    toLocation: (response.restaurant_order[0].to_location_address) ? {
+      lat: response.restaurant_order[0].to_location_gps.coordinates[1],
+      lng: response.restaurant_order[0].to_location_gps.coordinates[0],
+      address: response.restaurant_order[0].to_location_address
+    }: undefined,
     refundAmount: parseFloat(response.restaurant_order[0].refund_amount.replace("$","")),
     estimatedFoodReadyTime: response.restaurant_order[0].estimated_food_ready_time,
     status: response.restaurant_order[0].status as RestaurantOrderStatus,
@@ -223,6 +221,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       payment_type: true,
       customer_id: true,
       to_location_gps: true,
+      to_location_address: true,
       order_time: true,
       restaurant: {
         id: true,
@@ -322,10 +321,11 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       customerId: o.customer_id,
       restaurantId: o.restaurant_id,
       paymentType: o.payment_type as PaymentType,
-      toLocation: {
+      toLocation: (o.to_location_address) ? {
         lat: o.to_location_gps.coordinates[1],
         lng: o.to_location_gps.coordinates[0],
-      },
+        address: o.to_location_address
+      }: undefined,
       orderTime: o.order_time,
       status: o.status as RestaurantOrderStatus,
       deliveryType: o.delivery_type as DeliveryType,
@@ -372,6 +372,7 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       payment_type: true,
       customer_id: true,
       to_location_gps: true,
+      to_location_address: true,
       order_time: true,
       customer_app_type: true,
       delivery_cost: true,
@@ -411,10 +412,11 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       restaurantId: o.restaurant_id,
       spDetailsId: o.restaurant.details_id,
       paymentType: o.payment_type as PaymentType,
-      toLocation: {
+      toLocation: (o.to_location_address) ? {
         lat: o.to_location_gps.coordinates[1],
         lng: o.to_location_gps.coordinates[0],
-      },
+        address: o.to_location_address
+      }: undefined,
       orderTime: o.order_time,
       status: o.status as RestaurantOrderStatus,
       deliveryType: o.delivery_type as DeliveryType,

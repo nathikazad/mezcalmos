@@ -18,11 +18,11 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -107,6 +107,42 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   void _fillCallBack() {
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
+        if (message.link != null) {
+          return Column(
+            children: [
+              MezCard(
+                firstAvatarBgImage:
+                    NetworkImage(controller.incomingViewLink!.image),
+                action: InkWell(
+                  onTap: () {
+                    if (MezRouter.isRouteInStack(
+                      controller.incomingViewLink!.url,
+                    )) {
+                      MezRouter.toPath(controller.incomingViewLink!.url);
+                    }
+                  },
+                  child: Text(
+                    "View",
+                    style: context.textTheme.titleLarge!.copyWith(
+                      color: primaryBlueColor,
+                    ),
+                  ),
+                ),
+                content: Text(
+                  controller.incomingViewLink!.name[userLanguage] ??
+                      controller.incomingViewLink!.name.entries.first.value,
+                ),
+              ),
+              singleChatComponent(
+                message: message.message,
+                time: intl.DateFormat('hh:mm a')
+                    .format(message.timestamp.toLocal()),
+                isMe: message.userId == _authController.user!.hasuraId,
+                userImage: getchatImg(message),
+              )
+            ],
+          );
+        }
         return singleChatComponent(
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
@@ -241,36 +277,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                           () => ListView(
                             shrinkWrap: true,
                             controller: _listViewScrollController,
-                            children: [
-                              !controller.firstMessageSent
-                                  ? MezCard(
-                                      firstAvatarBgImage: NetworkImage(
-                                          controller.incomingViewLink!.image),
-                                      action: InkWell(
-                                        onTap: () {
-                                          if (MezRouter.isRouteInStack(
-                                            controller.incomingViewLink!.url,
-                                          )) {
-                                            MezRouter.toPath(controller
-                                                .incomingViewLink!.url);
-                                          }
-                                        },
-                                        child: Text(
-                                          "View",
-                                          style: context.textTheme.titleLarge!
-                                              .copyWith(
-                                            color: primaryBlueColor,
-                                          ),
-                                        ),
-                                      ),
-                                      content: Text(
-                                        controller.incomingViewLink!.name
-                                            .toString(),
-                                      ),
-                                    )
-                                  : SizedBox.shrink(),
-                              ...List.from(chatLines),
-                            ],
+                            children: List.from(chatLines),
                           ),
                         ),
                       ),

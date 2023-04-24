@@ -101,7 +101,11 @@ class OtherRentalController {
             .map((entry) => entry.key)
             .toList(),
         distance: 100000,
-        fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
+        fromLocation: Location(
+          lat: 15.8.toDouble(),
+          lng: -97.toDouble(),
+          address: "",
+        ),
         withCache: true,
         limit: _fetchAssetSize,
         offset: _fetchAssetOffset,
@@ -130,7 +134,11 @@ class OtherRentalController {
         categories1: [category1.value],
         distance: 100000,
         withCache: true,
-        fromLocation: Location(lat: 15.8.toDouble(), lng: -97.toDouble()),
+        fromLocation: Location(
+          lat: 15.8.toDouble(),
+          lng: -97.toDouble(),
+          address: "",
+        ),
         limit: _fetchAgencySize,
         offset: _fetchAgencyOffset,
       );

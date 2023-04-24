@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -265,14 +267,26 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
           children: List.generate(
         viewController.rentals.length,
         (int index) => MezCard(
+            onClick: () {
+              if (viewController.rentalCategory == RentalCategory1.Home) {
+                CustHomeRentalView.navigate(
+                  rentalId: viewController.rentals[index].details.id.toInt(),
+                );
+              } else {
+                CustRentalView.navigate(
+                  rentalId: viewController.rentals[index].details.id.toInt(),
+                );
+              }
+            },
             firstAvatarBgImage:
                 (viewController.rentals[index].details.firstImage != null)
                     ? CachedNetworkImageProvider(
                         viewController.rentals[index].details.firstImage!)
-                    : null,
+                    : CachedNetworkImageProvider(customImageUrl),
             content: Text(
                 viewController.rentals[index].details.name[userLanguage] ??
-                    "")),
+                    viewController
+                        .rentals[index].details.name.entries.first.value)),
       ));
     } else
       return Container(
