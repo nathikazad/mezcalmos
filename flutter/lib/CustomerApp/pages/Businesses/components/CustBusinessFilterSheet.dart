@@ -44,62 +44,75 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          defaultFilterInput.keys.elementAt(index).inCaps,
-                          style: context.textTheme.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Column(
-                          children: List.generate(
-                              defaultFilterInput.values.elementAt(index).length,
-                              (int subIndex) {
-                            String actualSubItem = defaultFilterInput.values
-                                .elementAt(index)[subIndex];
+                        defaultFilterInput.values.elementAt(index).length == 1
+                            ? SizedBox.shrink()
+                            : Text(
+                                defaultFilterInput.keys.elementAt(index).inCaps,
+                                style: context.textTheme.bodyLarge,
+                              ),
+                        defaultFilterInput.values.elementAt(index).length == 1
+                            ? SizedBox.shrink()
+                            : SizedBox(
+                                height: 15,
+                              ),
+                        defaultFilterInput.values.elementAt(index).length == 1
+                            ? SizedBox.shrink()
+                            : Column(
+                                children: List.generate(
+                                    defaultFilterInput.values
+                                        .elementAt(index)
+                                        .length, (int subIndex) {
+                                  String actualSubItem = defaultFilterInput
+                                      .values
+                                      .elementAt(index)[subIndex];
 
-                            return CheckboxListTile(
-                              //    checkColor: primaryBlueColor,
-                              activeColor: primaryBlueColor,
-                              title: Text(actualSubItem),
+                                  return CheckboxListTile(
+                                    //    checkColor: primaryBlueColor,
+                                    activeColor: primaryBlueColor,
+                                    title: Text(actualSubItem),
 
-                              value: selectedFilters[defaultFilterInput.keys
-                                          .elementAt(index)]
-                                      ?.contains(actualSubItem) ??
-                                  false,
-                              onChanged: (bool? v) {
-                                mezDbgPrint("selected ==> $selectedFilters");
-                                mezDbgPrint("main one ===>$filterInput");
-                                if (v == true) {
-                                  selectedFilters.update(
-                                      defaultFilterInput.keys.elementAt(index),
-                                      (List<String> value) {
-                                    value.add(actualSubItem);
-                                    return value;
-                                  });
-                                } else {
-                                  mezDbgPrint("false");
-                                  selectedFilters.update(
-                                      defaultFilterInput.keys.elementAt(index),
-                                      (List<String> value) {
-                                    value.remove(actualSubItem);
-                                    return value;
-                                  });
-                                  // selectedFilters.values
-                                  //     .elementAt(index)
-                                  //     .remove(actualSubItem);
-                                }
-                                mezDbgPrint("selected ==> $selectedFilters");
-                                mezDbgPrint("main one ===>$filterInput");
-                                mezDbgPrint(selectedFilters[defaultFilterInput
-                                        .keys
-                                        .elementAt(index)]
-                                    ?.contains(actualSubItem));
-                                selectedFilters.refresh();
-                              },
-                            );
-                          }),
-                        ),
+                                    value: selectedFilters[defaultFilterInput
+                                                .keys
+                                                .elementAt(index)]
+                                            ?.contains(actualSubItem) ??
+                                        false,
+                                    onChanged: (bool? v) {
+                                      mezDbgPrint(
+                                          "selected ==> $selectedFilters");
+                                      mezDbgPrint("main one ===>$filterInput");
+                                      if (v == true) {
+                                        selectedFilters.update(
+                                            defaultFilterInput.keys
+                                                .elementAt(index),
+                                            (List<String> value) {
+                                          value.add(actualSubItem);
+                                          return value;
+                                        });
+                                      } else {
+                                        mezDbgPrint("false");
+                                        selectedFilters.update(
+                                            defaultFilterInput.keys
+                                                .elementAt(index),
+                                            (List<String> value) {
+                                          value.remove(actualSubItem);
+                                          return value;
+                                        });
+                                        // selectedFilters.values
+                                        //     .elementAt(index)
+                                        //     .remove(actualSubItem);
+                                      }
+                                      mezDbgPrint(
+                                          "selected ==> $selectedFilters");
+                                      mezDbgPrint("main one ===>$filterInput");
+                                      mezDbgPrint(selectedFilters[
+                                              defaultFilterInput.keys
+                                                  .elementAt(index)]
+                                          ?.contains(actualSubItem));
+                                      selectedFilters.refresh();
+                                    },
+                                  );
+                                }),
+                              ),
                         SizedBox(
                           height: 15,
                         ),

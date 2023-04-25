@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/controllers/CustClassesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/controllers/CustTherapyListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -16,20 +16,20 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 
 // todo @ChiragKr04 fix the cards and ui  of this page
-class CustClassesListView extends StatefulWidget {
-  const CustClassesListView({super.key});
+class CustTherapyListView extends StatefulWidget {
+  const CustTherapyListView({super.key});
   static Future<void> navigate() {
-    final String route = CustBusinessRoutes.custClassesListRoute;
+    final String route = CustBusinessRoutes.custTherapyListRoute;
     return MezRouter.toPath(route);
   }
 
   @override
-  State<CustClassesListView> createState() => _CustClassesListViewState();
+  State<CustTherapyListView> createState() => _CustTherapyListViewState();
 }
 
-class _CustClassesListViewState extends State<CustClassesListView> {
-  CustClassesListViewController viewController =
-      CustClassesListViewController();
+class _CustTherapyListViewState extends State<CustTherapyListView> {
+  CustTherapyListViewController viewController =
+      CustTherapyListViewController();
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Class",
+        title: "Therapy",
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -67,7 +67,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : _buildClasses(),
+                            : _buildTherapy(),
                       ),
                     ],
                   ),
@@ -85,12 +85,12 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Class",
+            label: "Therapy",
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.celebration,
+            icon: Icons.healing,
             borderRadius: 35,
             backgroundColor: viewController.showBusiness.isTrue
                 ? Colors.grey.shade300
@@ -105,12 +105,12 @@ class _CustClassesListViewState extends State<CustClassesListView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Studio",
+            label: "Therapist",
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
             },
-            icon: Icons.school,
+            icon: Icons.local_hospital,
             borderRadius: 35,
             backgroundColor: viewController.showBusiness.isFalse
                 ? Colors.grey.shade300
@@ -191,7 +191,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           child: Text("No businesses found"));
   }
 
-  Widget _buildClasses() {
+  Widget _buildTherapy() {
     if (viewController.events.isNotEmpty) {
       return Column(
           children: List.generate(
@@ -211,6 +211,6 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No events found"));
+          child: Text("No Therapy found"));
   }
 }
