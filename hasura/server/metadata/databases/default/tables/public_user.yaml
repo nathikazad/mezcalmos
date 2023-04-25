@@ -18,9 +18,24 @@ select_permissions:
         - language_id
         - name
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - deleted
+        - id
+        - big_image
+        - email
+        - firebase_id
+        - image
+        - language_id
+        - name
+        - phone
+        - creation_time
+      filter: {}
   - role: customer
     permission:
       columns:
+        - creation_time
         - deleted
         - email
         - firebase_id
@@ -33,6 +48,7 @@ select_permissions:
   - role: delivery_driver
     permission:
       columns:
+        - creation_time
         - deleted
         - email
         - firebase_id
@@ -45,11 +61,12 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - deleted
-        - id
         - big_image
+        - creation_time
+        - deleted
         - email
         - firebase_id
+        - id
         - image
         - language_id
         - name
@@ -72,6 +89,7 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
+        - creation_time
         - deleted
         - email
         - firebase_id
@@ -84,6 +102,7 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - creation_time
         - deleted
         - email
         - firebase_id
@@ -94,6 +113,18 @@ select_permissions:
         - phone
       filter: {}
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - big_image
+        - image
+        - language_id
+        - name
+        - phone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
   - role: customer
     permission:
       columns:

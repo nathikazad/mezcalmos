@@ -1669,6 +1669,7 @@ class UserInfo {
   String? email;
   String? phoneNumber;
   bool? deleted;
+  String? creationTime;
   UserInfo(
       {required this.id,
       this.image,
@@ -1677,7 +1678,8 @@ class UserInfo {
       required this.language,
       this.email,
       this.phoneNumber,
-      this.deleted});
+      this.deleted,
+      this.creationTime});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -1688,6 +1690,7 @@ class UserInfo {
       "email": email,
       "phoneNumber": phoneNumber,
       "deleted": deleted,
+      "creationTime": creationTime,
     };
   }
 }

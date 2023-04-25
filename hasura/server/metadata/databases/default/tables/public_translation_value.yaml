@@ -9,6 +9,18 @@ object_relationships:
     using:
       foreign_key_constraint_on: translation_id
 insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        translation_group:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
   - role: delivery_driver
     permission:
       check:
@@ -81,6 +93,18 @@ select_permissions:
         - language_id
         - value
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter:
+        translation_group:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
@@ -124,6 +148,19 @@ select_permissions:
         - value
       filter: {}
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter:
+        translation_group:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
   - role: delivery_driver
     permission:
       columns:

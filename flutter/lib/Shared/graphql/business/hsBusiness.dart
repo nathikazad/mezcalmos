@@ -191,3 +191,95 @@ Future<List<BusinessCard>> get_business_by_event_category1(
     return [];
   }
 }
+
+Future<List<BusinessCard>> get_business_by_service_category1(
+    {required List<ServiceCategory1> categories1,
+    required double distance,
+    required Location fromLocation,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<BusinessCard> _businesses = <BusinessCard>[];
+
+  final QueryResult<Query$get_business_by_service_category1> response =
+      await _db.graphQLClient.query$get_business_by_service_category1(
+          Options$Query$get_business_by_service_category1(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$get_business_by_service_category1(
+                  categories1: categories1
+                      .map((ServiceCategory1 e) => e.toFirebaseFormatString())
+                      .toList(),
+                  distance: distance,
+                  from: Geography(
+                      fromLocation.lat as double, fromLocation.lng as double),
+                  offset: offset,
+                  limit: limit)));
+
+  if (response.parsedData?.business_business != null) {
+    response.parsedData?.business_business.forEach(
+        (Query$get_business_by_service_category1$business_business data) async {
+      final PaymentInfo _paymentInfo = PaymentInfo.fromData(
+          stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
+      _businesses.add(BusinessCard(
+        id: data.id,
+        detailsId: data.details.id,
+        name: data.details.name,
+        image: data.details.image,
+        acceptedPayments: _paymentInfo.acceptedPayments,
+        avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
+        reviewCount: data.reviews_aggregate.aggregate?.count,
+      ));
+    });
+    return _businesses;
+  } else {
+    return [];
+  }
+}
+
+Future<List<BusinessCard>> get_business_by_product_category1(
+    {required List<ProductCategory1> categories1,
+    required double distance,
+    required Location fromLocation,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<BusinessCard> _businesses = <BusinessCard>[];
+
+  final QueryResult<Query$get_business_by_product_category1> response =
+      await _db.graphQLClient.query$get_business_by_product_category1(
+          Options$Query$get_business_by_product_category1(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$get_business_by_product_category1(
+                  categories1: categories1
+                      .map((ProductCategory1 e) => e.toFirebaseFormatString())
+                      .toList(),
+                  distance: distance,
+                  from: Geography(
+                      fromLocation.lat as double, fromLocation.lng as double),
+                  offset: offset,
+                  limit: limit)));
+
+  if (response.parsedData?.business_business != null) {
+    response.parsedData?.business_business.forEach(
+        (Query$get_business_by_product_category1$business_business data) async {
+      final PaymentInfo _paymentInfo = PaymentInfo.fromData(
+          stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
+      _businesses.add(BusinessCard(
+        id: data.id,
+        detailsId: data.details.id,
+        name: data.details.name,
+        image: data.details.image,
+        acceptedPayments: _paymentInfo.acceptedPayments,
+        avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
+        reviewCount: data.reviews_aggregate.aggregate?.count,
+      ));
+    });
+    return _businesses;
+  } else {
+    return [];
+  }
+}

@@ -10,6 +10,7 @@ export interface UserInfo {
   email?: string;
   phoneNumber?: string;
   deleted?: boolean;
+  creationTime?: string;
 }
 
 export interface CustomerInfo extends UserInfo {
