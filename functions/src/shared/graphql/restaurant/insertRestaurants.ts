@@ -25,7 +25,7 @@ export async function insertRestaurants(data: any) {
     //     }]
     // })
     // let insertedRestaurants: Record<string, boolean> = {};
-    // queryResponse.restaurant_restaurant.forEach((r) => {
+    // queryResponse.restaurant_restaurant.forEach((r:any) => {
     //     if(r.details?.firebase_id == null)
     //         return;
     //     // console.log(typeof r.details.firebase_id)

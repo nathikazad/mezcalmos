@@ -22,7 +22,7 @@ export async function createLaundryOrder(
         };
     }) ?? [];
 
-    let mezAdminDetails = mezAdmins!.map((m) => {
+    let mezAdminDetails = mezAdmins!.map((m:any) => {
         return {
           participant_id: m.id,
           app_type_id: AppType.MezAdmin

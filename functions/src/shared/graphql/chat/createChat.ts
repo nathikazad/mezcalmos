@@ -8,7 +8,7 @@ import { ServiceProvider, ServiceProviderToAppType } from "../../models/Services
 
 export async function createServiceProviderCustomerChat(serviceProvider: ServiceProvider, customer: CustomerInfo): Promise<number> {
     let chain = getHasura();
-    let operatorsDetails = serviceProvider.operators!.map((r) => {
+    let operatorsDetails = serviceProvider.operators!.map((r:any) => {
         return {
             participant_id: r.userId,
             app_type_id: ServiceProviderToAppType[serviceProvider.serviceProviderType]
@@ -100,7 +100,7 @@ export async function createDirectChat(user1: UserInfo, user2: UserInfo, directC
 export async function createMezAdminChat(user: UserInfo, userAppType: AppType, mezAdmins: MezAdmin[]) {
     let chain = getHasura();
 
-    let mezAdminsDetails = mezAdmins.map((m) => {
+    let mezAdminsDetails = mezAdmins.map((m:any) => {
         return {
             participant_id: m.id,
             app_type_id: AppType.MezAdmin

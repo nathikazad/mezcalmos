@@ -108,7 +108,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         discount_value: checkoutReq.discountValue ?? undefined,
         tax: checkoutReq.tax ?? undefined,
         items: {
-          data: customerCart.items!.map((i) => {
+          data: customerCart.items!.map((i:any) => {
             console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
             console.log("+ ItemName ", i.name);
             return {
@@ -141,7 +141,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   if(response.insert_restaurant_order_one == null) {
     throw new MezError("orderCreationError");
   }
-  let orderItems: OrderItem[] = customerCart.items.map((i) => {
+  let orderItems: OrderItem[] = customerCart.items.map((i:any) => {
     return {
       itemId: i.itemId,
       name: i.name,

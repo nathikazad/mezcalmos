@@ -23,13 +23,13 @@ export async function createOrderRequest(
         };
     }) ?? [];
 
-    let mezAdminDetails = mezAdmins!.map((m) => {
+    let mezAdminDetails = mezAdmins!.map((m:any) => {
         return {
           participant_id: m.id,
           app_type_id: AppType.MezAdmin
         };
     });
-    let items = cart.items.map((i) => {
+    let items = cart.items.map((i:any) => {
         return {
             service_id: i.serviceId,
             service_type: i.serviceType,
@@ -92,7 +92,7 @@ export async function createOrderRequest(
         
         status: BusinessOrderRequestStatus.RequestReceived,
         estimatedCost: cart.cost,
-        items: cart.items.map((i) => {
+        items: cart.items.map((i:any) => {
             return {
                 id: 0,
                 ...i

@@ -12,7 +12,7 @@ export async function insertCustomers(data: any) {
         }]
     })
     let insertedCustomers: Record<string, boolean> = {};
-    queryResponse.customer_customer.forEach((r) => {
+    queryResponse.customer_customer.forEach((r:any) => {
         // if(rdetails?.firebase_id == null)
             // return;
         // console.log(typeof r.details.firebase_id)

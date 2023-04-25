@@ -27,7 +27,7 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         throw new MezError("cartNotFound");
     }
     
-    let items: BusinessCartItem[] = response.business_cart_by_pk.items.map((i) => {
+    let items: BusinessCartItem[] = response.business_cart_by_pk.items.map((i:any) => {
         return {
             cartItemId: i.id,
             customerId,
@@ -37,7 +37,7 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         }
     })
     let cost = 0;
-    items.forEach((i) => {
+    items.forEach((i:any) => {
         switch (i.cost.timeUnit) {
             case TimeUnit.PerHour:
                 cost += (i.cost.estimatedCostPerOne 

@@ -65,7 +65,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     throw new MezError("orderNotFound");
   }
 
-  let items: OrderItem[] = response.restaurant_order_by_pk.items.map((i) => {
+  let items: OrderItem[] = response.restaurant_order_by_pk.items.map((i:any) => {
     return {
       orderItemId: i.id,
       name: i.restaurant_item.name,
@@ -168,7 +168,7 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
     throw new MezError("orderNotFound");
   }
   
-  let items: OrderItem[] = response.restaurant_order[0].items.map((i) => {
+  let items: OrderItem[] = response.restaurant_order[0].items.map((i:any) => {
     return {
       orderItemId: i.id,
       name: i.restaurant_item.name,
@@ -284,7 +284,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
   });
 
  return  response.restaurant_order.map((o ): RestaurantOrder => {
-    let restaurantOperators: Operator[] = o.restaurant.restaurant_operators.map((r) => {
+    let restaurantOperators: Operator[] = o.restaurant.restaurant_operators.map((r:any) => {
       return {
         id: r.id,
         userId: r.user_id,
@@ -305,7 +305,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         }
       }
     })
-    let items: OrderItem[] = o.items.map((i) => {
+    let items: OrderItem[] = o.items.map((i:any) => {
       return {
         name: i.restaurant_item.name,
         orderItemId: i.id,
@@ -396,8 +396,8 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       }
     }]
   });
-  return response.restaurant_order.map((o): RestaurantOrder => {
-    let items: OrderItem[] = o.items.map((i) => {
+  return response.restaurant_order.map((o:any): RestaurantOrder => {
+    let items: OrderItem[] = o.items.map((i:any) => {
       return {
         name: i.restaurant_item.name,
         orderItemId: i.id,

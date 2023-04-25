@@ -20,7 +20,7 @@
         "dotenv": "^10.0.0",
         "firebase-admin": "^11.5.0",
         "firebase-dynamic-links": "^1.1.1",
-        "firebase-functions": "^4.2.1",
+        "firebase-functions": "^4.3.1",
         "graphql": "^15.5.1",
         "graphql-request": "^3.5.0",
         "stripe": "^9.14.0",

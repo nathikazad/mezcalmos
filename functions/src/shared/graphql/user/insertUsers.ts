@@ -8,7 +8,7 @@ export async function insertUsers(data: any) {
         }]
     })
     let insertedUsers: Record<string, boolean> = {};
-    queryResponse.user.forEach((r) => {
+    queryResponse.user.forEach((r:any) => {
         // if(rdetails?.firebase_id == null)
             // return;
         // console.log(typeof r.details.firebase_id)

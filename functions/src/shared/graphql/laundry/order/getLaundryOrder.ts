@@ -70,7 +70,7 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
       throw new MezError("orderNotFound");
     }
   
-    let categories: OrderCategory[] = response.laundry_order_by_pk.categories.map((c) => {
+    let categories: OrderCategory[] = response.laundry_order_by_pk.categories.map((c:any) => {
       return {
         orderCategoryId: c.id,
         categoryId: c.category_id,
@@ -190,7 +190,7 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
     throw new MezError("orderNotFound");
   }
 
-  let categories: OrderCategory[] = response.laundry_order[0].categories.map((c) => {
+  let categories: OrderCategory[] = response.laundry_order[0].categories.map((c:any) => {
     return {
       orderCategoryId: c.id,
       categoryId: c.category_id,
@@ -273,8 +273,8 @@ export async function getCustomerLaundryOrders(customerId: number): Promise<Laun
       }],
     }]
   });
-  return response.laundry_order.map((o): LaundryOrder => {
-    let categories: OrderCategory[] = o.categories.map((c) => {
+  return response.laundry_order.map((o:any): LaundryOrder => {
+    let categories: OrderCategory[] = o.categories.map((c:any) => {
       return {
         orderCategoryId: c.id,
         categoryId: c.category_id,
@@ -378,8 +378,8 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
       },
     }]
   });
-  return response.laundry_order.map((o): LaundryOrder => {
-    let laundryOperators: Operator[] = o.store.operators.map((r) => {
+  return response.laundry_order.map((o:any): LaundryOrder => {
+    let laundryOperators: Operator[] = o.store.operators.map((r:any) => {
       return {
         id: r.id,
         userId: r.user_id,
@@ -400,7 +400,7 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
         }
       }
     })
-    let categories: OrderCategory[] = o.categories.map((c) => {
+    let categories: OrderCategory[] = o.categories.map((c:any) => {
       return {
         orderCategoryId: c.id,
         categoryId: c.category_id,
