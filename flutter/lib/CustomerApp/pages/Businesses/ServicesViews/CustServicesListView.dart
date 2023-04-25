@@ -77,7 +77,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : _buildRentals(),
+                            : _buildServices(),
                       ),
                     ],
                   ),
@@ -151,7 +151,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
           child: Text("No businesses found"));
   }
 
-  Widget _buildRentals() {
+  Widget _buildServices() {
     if (viewController.services.isNotEmpty) {
       return Column(
           children: List.generate(

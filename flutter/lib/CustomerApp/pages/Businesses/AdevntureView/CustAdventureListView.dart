@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/controllers/CustVolunteerListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/controllers/CustAdventureListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -16,20 +16,20 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 
 // todo @ChiragKr04 fix the cards and ui  of this page
-class CustVolunteerListView extends StatefulWidget {
-  const CustVolunteerListView({super.key});
+class CustAdventureListView extends StatefulWidget {
+  const CustAdventureListView({super.key});
   static Future<void> navigate() {
-    final String route = CustBusinessRoutes.custVolunteerListRoute;
+    final String route = CustBusinessRoutes.custAdventureListRoute;
     return MezRouter.toPath(route);
   }
 
   @override
-  State<CustVolunteerListView> createState() => _CustVolunteerListViewState();
+  State<CustAdventureListView> createState() => _CustAdventureListViewState();
 }
 
-class _CustVolunteerListViewState extends State<CustVolunteerListView> {
-  CustVolunteerListViewController viewController =
-      CustVolunteerListViewController();
+class _CustAdventureListViewState extends State<CustAdventureListView> {
+  CustAdventureListViewController viewController =
+      CustAdventureListViewController();
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Volunteer",
+        title: "Adventure",
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -65,7 +65,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : _buildVolunteer(),
+                            : _buildAdventure(),
                       ),
                     ],
                   ),
@@ -83,12 +83,12 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Volunteer",
+            label: "Adventure",
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.volunteer_activism,
+            icon: Icons.hiking,
             borderRadius: 35,
             backgroundColor: viewController.showBusiness.isTrue
                 ? Colors.grey.shade300
@@ -139,27 +139,27 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
           child: Text("No businesses found"));
   }
 
-  Widget _buildVolunteer() {
-    if (viewController.volunteer.isNotEmpty) {
+  Widget _buildAdventure() {
+    if (viewController.adventure.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.volunteer.length,
+        viewController.adventure.length,
         (int index) => MezCard(
             onClick: () {
               CustEventView.navigate(
-                eventId: viewController.volunteer[index].details.id.toInt(),
+                eventId: viewController.adventure[index].details.id.toInt(),
               );
             },
             firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.volunteer[index].details.image?.first ?? ""),
+                viewController.adventure[index].details.image?.first ?? ""),
             content: Text(
-                viewController.volunteer[index].details.name[userLanguage] ??
+                viewController.adventure[index].details.name[userLanguage] ??
                     "")),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No Volunteering found"));
+          child: Text("No Adventures found"));
   }
 }

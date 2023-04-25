@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/CustAdventureListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -68,7 +69,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         CustVolunteerListView.navigate();
         return;
       case AllServiceViewEnum.Adventure:
-        RentalView.navigate();
+        CustAdventureListView.navigate();
         return;
       case AllServiceViewEnum.Service:
         CustServicesWrapper.navigate();
