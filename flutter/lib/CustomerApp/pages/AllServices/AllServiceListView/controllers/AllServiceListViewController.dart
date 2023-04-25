@@ -10,7 +10,8 @@ enum AllServiceViewEnum {
   Volunteer,
   Adventure,
   Service,
-  LocallyMade
+  LocallyMade,
+  Food,
 }
 
 class AllServiceListViewController {
@@ -57,6 +58,10 @@ class AllServiceListViewController {
       {
         "icon": aLocallyMade,
         "title": "locallyMade",
+      },
+      {
+        "icon": aFood,
+        "title": "food",
       },
     ]);
   }

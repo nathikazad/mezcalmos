@@ -56,7 +56,7 @@ class CustClassesListViewController {
 
   bool get isLoading => _isLoading.value;
   bool get isFiltering => selectedCategories.length != _filterCategories.length;
-  List<EventCard> get events => _classes.value;
+  List<EventCard> get classes => _classes.value;
   List<BusinessCard> get businesses => _businesses.value;
 
   Future<void> init() async {

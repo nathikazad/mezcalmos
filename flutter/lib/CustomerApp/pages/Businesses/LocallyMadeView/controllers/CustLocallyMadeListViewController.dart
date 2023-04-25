@@ -7,12 +7,12 @@ import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
+import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
-class CustServiceListViewController {
+class CustLocallyMadeListViewController {
   // variables //
-  RxList<Service> _services = <Service>[].obs;
+  RxList<ProductCard> _products = <ProductCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
   // RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
 
@@ -21,21 +21,21 @@ class CustServiceListViewController {
   Location? _fromLocation;
   String searchQuery = "";
 
-  List<ServiceCategory1> _filterCategories = <ServiceCategory1>[];
+  List<ProductCategory1> _filterCategories = <ProductCategory1>[];
 
-  RxList<ServiceCategory1> selectedCategories = <ServiceCategory1>[].obs;
-  RxList<ServiceCategory1> previewCategories = <ServiceCategory1>[].obs;
+  RxList<ProductCategory1> selectedCategories = <ProductCategory1>[].obs;
+  RxList<ProductCategory1> previewCategories = <ProductCategory1>[].obs;
   // scroll logic //
   /* SCROLL CONTROLLER */
   ScrollController get scrollController => showBusiness.isTrue
       ? _businessScrollController
-      : _servicesScrollController;
-  ScrollController _servicesScrollController = ScrollController();
+      : _productsScrollController;
+  ScrollController _productsScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int servicesFetchSize = 15;
-  int _servicesCurrentOffset = 0;
-  bool _servicesFetchingData = false;
-  bool _servicesReachedEndOfData = false;
+  int productsFetchSize = 15;
+  int _productsCurrentOffset = 0;
+  bool _productsFetchingData = false;
+  bool _productsReachedEndOfData = false;
   final int businessFetchSize = 3;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
@@ -46,19 +46,19 @@ class CustServiceListViewController {
   // getters //
   bool get isLoading => _isLoading.value;
   bool get isFiltering => selectedCategories.length != _filterCategories.length;
-  List<ServiceCategory1> get filterCategories => _filterCategories;
+  List<ProductCategory1> get filterCategories => _filterCategories;
 
-  List<Service> get services => _services.value;
+  List<ProductCard> get products => _products.value;
   List<BusinessCard> get businesses => _businesses.value;
 
   /// return current view rental category (Home, Surf, etc)
-  List<ServiceCategory1> get serviceCategory => _currentServicesCategory;
+  List<ProductCategory1> get productsCategory => _currentProductCategory;
 
-  late List<ServiceCategory1> _currentServicesCategory;
+  late List<ProductCategory1> _currentProductCategory;
 
 // methods //
-  Future<void> init({required ServiceCategory1 serviceCategory}) async {
-    _currentServicesCategory = [serviceCategory];
+  Future<void> init({required ProductCategory1 serviceCategory}) async {
+    _currentProductCategory = [serviceCategory];
 
     filterCategories.add(
       serviceCategory,
@@ -76,9 +76,9 @@ class CustServiceListViewController {
           lng: location.longitude!,
           address: "",
         );
-        await _fetchServices();
+        await _fetchProducts();
         await _fetchBusinesses();
-        _servicesScrollController.onBottomReach(_fetchServices,
+        _productsScrollController.onBottomReach(_fetchProducts,
             sensitivity: 500);
         _businessScrollController.onBottomReach(_fetchBusinesses,
             sensitivity: 500);
@@ -91,33 +91,33 @@ class CustServiceListViewController {
     }
   }
 
-  Future<void> _fetchServices() async {
-    if (_servicesFetchingData || _servicesReachedEndOfData) {
+  Future<void> _fetchProducts() async {
+    if (_productsFetchingData || _productsReachedEndOfData) {
       return;
     }
     try {
-      _servicesFetchingData = true;
+      _productsFetchingData = true;
       mezDbgPrint(
-          "👋 _fetchRentals called selected categories : $selectedCategories \n ferchSize : $servicesFetchSize \n offset: $_servicesCurrentOffset");
-      List<ServiceCard> newList = await get_service_by_category(
-        categories1: serviceCategory,
+          "👋 _fetchRentals called selected categories : $selectedCategories \n ferchSize : $productsFetchSize \n offset: $_productsCurrentOffset");
+      List<ProductCard> newList = await get_product_by_category(
+        categories1: productsCategory,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         tags: [],
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false,
-        offset: _servicesCurrentOffset,
-        limit: servicesFetchSize,
+        offset: _productsCurrentOffset,
+        limit: productsFetchSize,
       );
-      _services.value += newList;
+      _products.value += newList;
       if (newList.length == 0) {
-        _servicesReachedEndOfData = true;
+        _productsReachedEndOfData = true;
       }
-      _servicesCurrentOffset += servicesFetchSize;
+      _productsCurrentOffset += productsFetchSize;
     } catch (e) {
       mezDbgPrint(e);
     } finally {
-      _servicesFetchingData = false;
+      _productsFetchingData = false;
     }
   }
 
@@ -155,13 +155,13 @@ class CustServiceListViewController {
     selectedCategories.value = List.from(previewCategories);
 
     _resetRentals();
-    _fetchServices();
+    _fetchProducts();
   }
 
   void resetFilter() {
     previewCategories.value = List.from(filterCategories);
     selectedCategories.value = List.from(filterCategories);
-    _fetchServices();
+    _fetchProducts();
   }
 
   void switchFilterCategory(bool? value, int index) {
@@ -173,8 +173,8 @@ class CustServiceListViewController {
   }
 
   void _resetRentals() {
-    _services.clear();
-    _servicesCurrentOffset = 0;
-    _servicesReachedEndOfData = false;
+    _products.clear();
+    _productsCurrentOffset = 0;
+    _productsReachedEndOfData = false;
   }
 }

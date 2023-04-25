@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
-class CustServiceListViewController {
+class CustFoodListViewController {
   // variables //
   RxList<Service> _services = <Service>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;

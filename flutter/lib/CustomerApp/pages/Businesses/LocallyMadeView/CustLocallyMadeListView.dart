@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/controllers/CustServicesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/controllers/CustLocallyMadeListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/MezSearch.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -12,35 +12,36 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
-class CustServicesListView extends StatefulWidget {
-  const CustServicesListView({super.key});
-  static Future<void> navigate({required ServiceCategory1 serviceCategory}) {
-    final String route = CustBusinessRoutes.custServicesListRoute;
+class CustLocallyMadeListView extends StatefulWidget {
+  const CustLocallyMadeListView({super.key});
+  static Future<void> navigate({required ProductCategory1 productCategory}) {
+    final String route = CustBusinessRoutes.custLocallyMadeRoute;
     return MezRouter.toPath(route, arguments: {
-      "serviceCategory": serviceCategory,
+      "productCategory": productCategory,
     });
   }
 
   @override
-  State<CustServicesListView> createState() => _CustServicesListViewState();
+  State<CustLocallyMadeListView> createState() =>
+      _CustLocallyMadeListViewState();
 }
 
-class _CustServicesListViewState extends State<CustServicesListView> {
-  CustServiceListViewController viewController =
-      CustServiceListViewController();
+class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
+  CustLocallyMadeListViewController viewController =
+      CustLocallyMadeListViewController();
 
   @override
   void initState() {
-    ServiceCategory1? serviceCategory =
-        MezRouter.bodyArguments?["serviceCategory"] as ServiceCategory1?;
+    ProductCategory1? serviceCategory =
+        MezRouter.bodyArguments?["productCategory"] as ProductCategory1?;
     if (serviceCategory != null) {
       viewController.init(serviceCategory: serviceCategory);
     } else {
       showErrorSnackBar(
-          errorText: "Service Category not found : $serviceCategory");
+          errorText: "Product Category not found : $serviceCategory");
     }
     super.initState();
   }
@@ -51,7 +52,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        titleWidget: Text(viewController.serviceCategory.first.name),
+        titleWidget: Text(viewController.productsCategory.first.name),
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -78,7 +79,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : _buildServices(),
+                            : _buildProducts(),
                       ),
                     ],
                   ),
@@ -96,12 +97,12 @@ class _CustServicesListViewState extends State<CustServicesListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: viewController.serviceCategory.first.name,
+            label: viewController.productsCategory.first.name,
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.celebration,
+            icon: Icons.local_offer,
             borderRadius: 35,
             backgroundColor: viewController.showBusiness.isTrue
                 ? Colors.grey.shade300
@@ -152,31 +153,31 @@ class _CustServicesListViewState extends State<CustServicesListView> {
           child: Text("No businesses found"));
   }
 
-  Widget _buildServices() {
-    if (viewController.services.isNotEmpty) {
+  Widget _buildProducts() {
+    if (viewController.products.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.services.length,
+        viewController.products.length,
         (int index) => MezCard(
             onClick: () {
-              CustServiceView.navigate(
-                serviceId: viewController.services[index].details.id.toInt(),
+              CustProductView.navigate(
+                productId: viewController.products[index].details.id.toInt(),
               );
             },
             firstAvatarBgImage:
-                (viewController.services[index].details.firstImage != null)
+                (viewController.products[index].details.firstImage != null)
                     ? CachedNetworkImageProvider(
-                        viewController.services[index].details.firstImage!)
+                        viewController.products[index].details.firstImage!)
                     : CachedNetworkImageProvider(customImageUrl),
             content: Text(
-                viewController.services[index].details.name[userLanguage] ??
+                viewController.products[index].details.name[userLanguage] ??
                     viewController
-                        .services[index].details.name.entries.first.value)),
+                        .products[index].details.name.entries.first.value)),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No ${viewController.serviceCategory.first.name} found"));
+          child: Text("No services found"));
   }
 }

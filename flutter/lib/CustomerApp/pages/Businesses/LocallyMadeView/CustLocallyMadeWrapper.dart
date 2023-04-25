@@ -3,32 +3,32 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-class CustServicesWrapper extends StatefulWidget {
-  const CustServicesWrapper({super.key});
+class CustLocallyMadeWrapper extends StatefulWidget {
+  const CustLocallyMadeWrapper({super.key});
   static Future<void> navigate() {
-    final String route = CustBusinessRoutes.custServicesWrapperRoute;
+    final String route = CustBusinessRoutes.custLocallyMadeWrapperRoute;
     return MezRouter.toPath(route);
   }
 
   @override
-  State<CustServicesWrapper> createState() => _CustServicesWrapperState();
+  State<CustLocallyMadeWrapper> createState() => _CustLocallyMadeWrapperState();
 }
 
-class _CustServicesWrapperState extends State<CustServicesWrapper> {
+class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Services",
+        title: "Locally Made",
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -36,32 +36,32 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
           children: [
             MezCard(
                 onClick: () {
-                  CustServicesListView.navigate(
-                    serviceCategory: ServiceCategory1.Cleaning
+                  CustLocallyMadeListView.navigate(
+                    productCategory: ProductCategory1.Consumable,
                   );
                 },
                 content: Text(
-                  "Cleaning",
+                  "Consumable",
                   style: context.textTheme.displayLarge,
                 )),
             MezCard(
                 onClick: () {
-                  CustServicesListView.navigate(
-                    serviceCategory: ServiceCategory1.MealPlanning,
+                  CustLocallyMadeListView.navigate(
+                    productCategory: ProductCategory1.PersonalCare,
                   );
                 },
                 content: Text(
-                  "Meal Planning",
+                  "Personal Care",
                   style: context.textTheme.displayLarge,
                 )),
             MezCard(
                 onClick: () {
-                  CustServicesListView.navigate(
-                    serviceCategory: ServiceCategory1.PetSitting,
+                  CustLocallyMadeListView.navigate(
+                    productCategory: ProductCategory1.Art,
                   );
                 },
                 content: Text(
-                  "Pet Sitting",
+                  "Art",
                   style: context.textTheme.displayLarge,
                 )),
           ],

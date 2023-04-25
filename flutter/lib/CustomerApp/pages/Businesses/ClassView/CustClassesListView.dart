@@ -192,20 +192,21 @@ class _CustClassesListViewState extends State<CustClassesListView> {
   }
 
   Widget _buildClasses() {
-    if (viewController.events.isNotEmpty) {
+    if (viewController.classes.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.events.length,
+        viewController.classes.length,
         (int index) => MezCard(
             onClick: () {
               CustEventView.navigate(
-                eventId: viewController.events[index].details.id.toInt(),
+                eventId: viewController.classes[index].details.id.toInt(),
               );
             },
             firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.events[index].details.image?.first ?? ""),
+                viewController.classes[index].details.image?.first ?? ""),
             content: Text(
-                viewController.events[index].details.name[userLanguage] ?? "")),
+                viewController.classes[index].details.name[userLanguage] ??
+                    "")),
       ));
     } else
       return Container(

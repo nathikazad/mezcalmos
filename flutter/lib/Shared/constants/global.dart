@@ -145,6 +145,7 @@ const String aLocallyMade = "assets/images/customer/locallyMade.png";
 const String aCleaning = "assets/images/customer/cleaning.png";
 const String aMealPrep = "assets/images/customer/mealPrep.png";
 const String aPetSitting = "assets/images/customer/petSitting.png";
+const String aFood = "assets/images/customer/food.png";
 
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";

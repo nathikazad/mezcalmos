@@ -16,6 +16,8 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyLi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/CustAdventureListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -75,7 +77,10 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         CustServicesWrapper.navigate();
         return;
       case AllServiceViewEnum.LocallyMade:
-        RentalView.navigate();
+        CustLocallyMadeWrapper.navigate();
+        return;
+      case AllServiceViewEnum.Food:
+        CustFoodWrapper.navigate();
         return;
     }
   }

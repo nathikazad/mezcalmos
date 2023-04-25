@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/controllers/CustServicesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/controllers/CustFoodListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/MezSearch.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -12,25 +12,24 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
-class CustServicesListView extends StatefulWidget {
-  const CustServicesListView({super.key});
+class CustFoodListView extends StatefulWidget {
+  const CustFoodListView({super.key});
   static Future<void> navigate({required ServiceCategory1 serviceCategory}) {
-    final String route = CustBusinessRoutes.custServicesListRoute;
+    final String route = CustBusinessRoutes.custFoodRoute;
     return MezRouter.toPath(route, arguments: {
       "serviceCategory": serviceCategory,
     });
   }
 
   @override
-  State<CustServicesListView> createState() => _CustServicesListViewState();
+  State<CustFoodListView> createState() => _CustFoodListViewState();
 }
 
-class _CustServicesListViewState extends State<CustServicesListView> {
-  CustServiceListViewController viewController =
-      CustServiceListViewController();
+class _CustFoodListViewState extends State<CustFoodListView> {
+  CustFoodListViewController viewController = CustFoodListViewController();
 
   @override
   void initState() {
@@ -78,7 +77,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : _buildServices(),
+                            : _buildService(),
                       ),
                     ],
                   ),
@@ -101,7 +100,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.celebration,
+            icon: Icons.local_offer,
             borderRadius: 35,
             backgroundColor: viewController.showBusiness.isTrue
                 ? Colors.grey.shade300
@@ -152,15 +151,15 @@ class _CustServicesListViewState extends State<CustServicesListView> {
           child: Text("No businesses found"));
   }
 
-  Widget _buildServices() {
+  Widget _buildService() {
     if (viewController.services.isNotEmpty) {
       return Column(
           children: List.generate(
         viewController.services.length,
         (int index) => MezCard(
             onClick: () {
-              CustServiceView.navigate(
-                serviceId: viewController.services[index].details.id.toInt(),
+              CustProductView.navigate(
+                productId: viewController.services[index].details.id.toInt(),
               );
             },
             firstAvatarBgImage:
