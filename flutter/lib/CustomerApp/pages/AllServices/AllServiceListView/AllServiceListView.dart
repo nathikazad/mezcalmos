@@ -13,7 +13,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -64,13 +65,13 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         CustEventsListView.navigate();
         return;
       case AllServiceViewEnum.Volunteer:
-        HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Volunteer);
+        CustVolunteerListView.navigate();
         return;
       case AllServiceViewEnum.Adventure:
         RentalView.navigate();
         return;
       case AllServiceViewEnum.Service:
-        CustServicesListView.navigate();
+        CustServicesWrapper.navigate();
         return;
       case AllServiceViewEnum.LocallyMade:
         RentalView.navigate();

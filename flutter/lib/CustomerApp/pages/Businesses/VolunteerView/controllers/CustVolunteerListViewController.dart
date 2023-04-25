@@ -10,9 +10,9 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 
-class CustTherapyListViewController {
+class CustVolunteerListViewController {
   // variables //
-  RxList<EventCard> _therapy = <EventCard>[].obs;
+  RxList<EventCard> _volunteer = <EventCard>[].obs;
 
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
 
@@ -24,13 +24,13 @@ class CustTherapyListViewController {
   /* SCROLL CONTROLLER */
   ScrollController get scrollController => showBusiness.isTrue
       ? _businessScrollController
-      : _therapyScrollController;
-  ScrollController _therapyScrollController = ScrollController();
+      : _volunteerScrollController;
+  ScrollController _volunteerScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int therapyFetchSize = 10;
-  int _therapyCurrentOffset = 0;
-  bool _therapyFetchingData = false;
-  bool _therapyReachedEndOfData = false;
+  final int volunteerFetchSize = 10;
+  int _volunteerCurrentOffset = 0;
+  bool _volunteerFetchingData = false;
+  bool _volunteerReachedEndOfData = false;
   final int businessFetchSize = 10;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
@@ -38,7 +38,7 @@ class CustTherapyListViewController {
   /* SCROLL CONTROLLER */
 
   final List<EventCategory1> _filterCategories = <EventCategory1>[
-    EventCategory1.Therapy,
+    EventCategory1.Volunteer,
   ];
 
   final List<EventCategory2> _categories2 = <EventCategory2>[
@@ -54,7 +54,7 @@ class CustTherapyListViewController {
 
   bool get isLoading => _isLoading.value;
   bool get isFiltering => selectedCategories.length != _filterCategories.length;
-  List<EventCard> get therapy => _therapy.value;
+  List<EventCard> get volunteer => _volunteer.value;
   List<BusinessCard> get businesses => _businesses.value;
 
   Future<void> init() async {
@@ -73,7 +73,8 @@ class CustTherapyListViewController {
         await _fetchTherapy();
         await _fetchBusinesses();
 
-        _therapyScrollController.onBottomReach(_fetchTherapy, sensitivity: 500);
+        _volunteerScrollController.onBottomReach(_fetchTherapy,
+            sensitivity: 500);
         _businessScrollController.onBottomReach(_fetchBusinesses,
             sensitivity: 500);
       }
@@ -91,21 +92,19 @@ class CustTherapyListViewController {
           .map((EventCategory1 e) => e.toFirebaseFormatString())
           .toList(),
       "schedule": [
-        ScheduleType.Scheduled,
         ScheduleType.OneTime,
-        ScheduleType.OnDemand
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
     };
   }
 
   Future<void> _fetchTherapy() async {
-    if (_therapyFetchingData || _therapyReachedEndOfData) {
+    if (_volunteerFetchingData || _volunteerReachedEndOfData) {
       return;
     }
     try {
-      _therapyFetchingData = true;
+      _volunteerFetchingData = true;
       mezDbgPrint(
-          "👋 _fetchTherapy called selected categories : schedule type : ${filterInput["schedule"]!.map((String e) => e.toScheduleType()).toList()} \n ${filterInput["categories"]!.map((String e) => e.toEventCategory1()).toList()} \n ferchSize : $therapyFetchSize \n offset: $_therapyCurrentOffset");
+          "👋 _fetchTherapy called selected categories : schedule type : ${filterInput["schedule"]!.map((String e) => e.toScheduleType()).toList()} \n ${filterInput["categories"]!.map((String e) => e.toEventCategory1()).toList()} \n ferchSize : $volunteerFetchSize \n offset: $_volunteerCurrentOffset");
       List<EventCard> newList = await get_event_by_category(
         categories1: filterInput["categories"]!
             .map((String e) => e.toEventCategory1())
@@ -118,18 +117,18 @@ class CustTherapyListViewController {
             .map((String e) => e.toScheduleType())
             .toList(),
         withCache: false,
-        offset: _therapyCurrentOffset,
-        limit: therapyFetchSize,
+        offset: _volunteerCurrentOffset,
+        limit: volunteerFetchSize,
       );
-      _therapy.value += newList;
+      _volunteer.value += newList;
       if (newList.length == 0) {
-        _therapyReachedEndOfData = true;
+        _volunteerReachedEndOfData = true;
       }
-      _therapyCurrentOffset += therapyFetchSize;
+      _volunteerCurrentOffset += volunteerFetchSize;
     } catch (e) {
       mezDbgPrint(e);
     } finally {
-      _therapyFetchingData = false;
+      _volunteerFetchingData = false;
     }
   }
 
@@ -179,10 +178,10 @@ class CustTherapyListViewController {
   }
 
   void _resetEvents() {
-    _therapy.clear();
+    _volunteer.clear();
 
-    _therapyCurrentOffset = 0;
-    _therapyReachedEndOfData = false;
+    _volunteerCurrentOffset = 0;
+    _volunteerReachedEndOfData = false;
   }
 
   void resetFilter() {
@@ -191,7 +190,7 @@ class CustTherapyListViewController {
   }
 
   void dispose() {
-    _therapyScrollController.dispose();
+    _volunteerScrollController.dispose();
     _businessScrollController.dispose();
   }
 }
