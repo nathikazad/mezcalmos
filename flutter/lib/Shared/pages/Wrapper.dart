@@ -126,6 +126,9 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("[777] app = customerApp .. routing to home!");
         await MezRouter.popEverythingTillBeforeWrapper();
         await MezRouter.toPath(SharedRoutes.kHomeRoute);
+        // todo @sanchit
+        // we check if unique id is set in local storage and redirected to false
+        //    if yes we fetch the sp info and redirect the user the sp page and set redirected to true
       } else {
         mezDbgPrint(
             "😌😌😌😌😌😌 user is not signed to use the app user should sign in 😌😌😌😌");

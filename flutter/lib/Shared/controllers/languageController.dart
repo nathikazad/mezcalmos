@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as dartIO;
 //import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -139,6 +140,7 @@ class LanguageController extends GetxController {
   }
 
   Language _getSystemLanguage() {
+    if (kIsWeb) return Language.EN;
     return dartIO.Platform.localeName.substring(0, 2) == 'es'
         ? Language.ES
         : Language.EN;
