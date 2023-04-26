@@ -155,3 +155,20 @@ query getServiceProviderType($unique_id: String!) {
   }
 }
 
+query getServiceProviderId($uniqueId: String) {
+  service_provider_details(where: {unique_id: {_eq: $uniqueId}}) {
+    service_provider_type
+    business {
+      id
+    }
+    delivery_company {
+      id
+    }
+    laundry_store {
+      id
+    }
+    restaurant {
+      id
+    }
+  }
+}

@@ -18,6 +18,7 @@ select_permissions:
         - schedule
         - details_id
         - gps_location
+        - address
         - time
       filter: {}
       allow_aggregations: true

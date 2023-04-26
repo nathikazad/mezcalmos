@@ -4,11 +4,13 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -125,6 +127,16 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("current route ======>>>>${MezRouter.currentRoute().name}");
         mezDbgPrint("[777] app = customerApp .. routing to home!");
         await MezRouter.popEverythingTillBeforeWrapper();
+        mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${GetStorage().read('uniqueId')}");
+        if (GetStorage().read("uniqueId") != null &&
+            GetStorage().read("redirected") == false) {
+          final String? route = await get_service_provider_route(
+              uniqueId: GetStorage().read("uniqueId"));
+          if (route != null) {
+            await MezRouter.toPath(route);
+            GetStorage().write("redirected", true);
+          }
+        }
         await MezRouter.toPath(SharedRoutes.kHomeRoute);
         // todo @sanchit
         // we check if unique id is set in local storage and redirected to false

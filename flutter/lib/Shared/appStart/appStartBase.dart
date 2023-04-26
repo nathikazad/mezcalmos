@@ -99,11 +99,17 @@ class StartingPointBaseState extends State<StartingPointBase> {
   Widget build(BuildContext context) {
     // todo @sanchit
     // check if app is customer app
+    mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${appType}");
     if (appType == AppType.Customer) {
       String myurl = Uri.base.toString();
       mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${myurl}");
-    }
 
+      if (myurl.contains("uniqueId=")) {
+        GetStorage()
+            .write('uniqueId', myurl.split("uniqueId=")[1].split("/")[0]);
+        GetStorage().write('redirected', false);
+      }
+    }
     // we check if uniqueId is set
     //     if yes we save it to local storage along with a variable called redirected = false
     SystemChrome.setPreferredOrientations(
