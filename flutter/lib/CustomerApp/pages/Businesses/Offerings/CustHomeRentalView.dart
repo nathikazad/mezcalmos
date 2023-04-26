@@ -71,6 +71,10 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       _CustBusinessAdditionalData(
                         homeRental: viewController.homeRental!,
                       ),
+                      Text(
+                        _i18n()['price'],
+                        style: context.textTheme.bodyLarge,
+                      ),
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),

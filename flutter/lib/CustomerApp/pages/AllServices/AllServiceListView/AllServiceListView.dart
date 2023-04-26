@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/SubServiceController.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalServicesView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/HomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/RentalViews/OtherRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/controller/AssetController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
@@ -36,7 +32,6 @@ class _AllServiceListViewState extends State<AllServiceListView> {
   void initState() {
     super.initState();
     Get.put(AllServiceListViewController());
-    Get.put(AssetController());
     cServiceController = Get.find<AllServiceListViewController>();
     cServiceController.init();
   }
@@ -96,23 +91,23 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         padding: const EdgeInsets.only(top: 8.0),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 14.0,
-            crossAxisSpacing: 14.0,
-            childAspectRatio: 1.2,
-          ),
+              crossAxisCount: 2, mainAxisSpacing: 14.0, crossAxisSpacing: 14.0),
           itemCount: serviceListData.length,
           itemBuilder: (BuildContext context, int index) {
             return MezCard(
+              radius: 10,
+              borderRadius: 15,
+              contentPadding: EdgeInsets.zero,
               onClick: () {
                 navigateToServices(AllServiceViewEnum.values[index]);
               },
               content: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Image.asset(
                     serviceListData[index]["icon"].toString(),
-                    height: 96,
-                    width: 96,
+                    height: 85.mezSp,
+                    width: 85.mezSp,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),

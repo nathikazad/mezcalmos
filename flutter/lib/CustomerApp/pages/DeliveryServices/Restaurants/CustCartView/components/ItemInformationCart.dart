@@ -104,7 +104,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   style: context.txt.bodyLarge,
                 ),
                 SizedBox(
-                  height: 3,
+                  height: 12.5,
                 ),
                 _incrementItemComponent(widget.item)
               ],

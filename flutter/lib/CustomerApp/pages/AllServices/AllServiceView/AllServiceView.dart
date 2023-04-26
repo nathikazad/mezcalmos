@@ -53,6 +53,7 @@ class _AllServiceViewState extends State<AllServiceView> {
             MezCard(
                 contentPadding: EdgeInsets.zero,
                 radius: 50,
+                borderRadius: 25,
                 content: Obx(
                   () => TextField(
                     decoration: InputDecoration(

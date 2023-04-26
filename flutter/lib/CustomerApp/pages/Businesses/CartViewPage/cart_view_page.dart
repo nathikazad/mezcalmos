@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/Services/Rental/components/AssetCard.dart';
 import 'package:mezcalmos/CustomerApp/router/cartRoute.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -105,29 +104,29 @@ class _CartViewPageState extends State<CartViewPage> {
                             ),
                             Stack(
                               children: [
-                                AssetCard(
-                                  title: "Home for rent in Av Juan...",
-                                  image: NetworkImage(customImageUrl),
-                                  needLeadingImage: true,
-                                  needTrailingImage: false,
-                                  needCustomSubtitle: true,
-                                  lBottomText: "13 Apr, 08:00 AM",
-                                  subtitleWidget: Row(
-                                    children: [
-                                      Icon(Icons.person),
-                                      Text("${index + 1}"),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Image.asset(aPriceCheck),
-                                      Text("\$528 x 1 day = \$528")
-                                    ],
-                                  ),
-                                  leftBottomIcon: Icon(
-                                    Icons.access_time_filled,
-                                  ),
-                                  onClick: () {},
-                                ),
+                                // AssetCard(
+                                //   title: "Home for rent in Av Juan...",
+                                //   image: NetworkImage(customImageUrl),
+                                //   needLeadingImage: true,
+                                //   needTrailingImage: false,
+                                //   needCustomSubtitle: true,
+                                //   lBottomText: "13 Apr, 08:00 AM",
+                                //   subtitleWidget: Row(
+                                //     children: [
+                                //       Icon(Icons.person),
+                                //       Text("${index + 1}"),
+                                //       SizedBox(
+                                //         width: 5,
+                                //       ),
+                                //       Image.asset(aPriceCheck),
+                                //       Text("\$528 x 1 day = \$528")
+                                //     ],
+                                //   ),
+                                //   leftBottomIcon: Icon(
+                                //     Icons.access_time_filled,
+                                //   ),
+                                //   onClick: () {},
+                                // ),
                                 Positioned(
                                   right: 5,
                                   top: 5,
