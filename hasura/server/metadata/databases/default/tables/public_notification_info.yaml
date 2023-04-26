@@ -2,6 +2,19 @@ table:
   name: notification_info
   schema: public
 insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - app_type_id
+        - token
+        - user_id
+        - turn_off_notifications
   - role: customer
     permission:
       check:
@@ -81,6 +94,20 @@ insert_permissions:
         - user_id
         - turn_off_notifications
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - app_type_id
+        - id
+        - token
+        - turn_off_notifications
+        - user_id
+      filter:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
@@ -164,6 +191,25 @@ select_permissions:
           - user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - app_type_id
+        - token
+        - user_id
+        - turn_off_notifications
+      filter:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:

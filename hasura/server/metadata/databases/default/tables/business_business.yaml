@@ -54,3 +54,15 @@ select_permissions:
         - referral_points
         - service_provider_type
       filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - details_id
+        - id
+        - referral_points
+        - service_provider_type
+        - profile
+      filter:
+        operators:
+          user_id:
+            _eq: X-Hasura-User-Id
