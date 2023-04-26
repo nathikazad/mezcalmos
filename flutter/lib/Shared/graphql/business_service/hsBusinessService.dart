@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 HasuraDb _db = Get.find<HasuraDb>();
 
 Future<List<ServiceCard>> get_service_by_category(
-    {required List<String> categories1,
+    {required List<ServiceCategory1> categories1,
     required double distance,
     required Location fromLocation,
     List<String>? categories2,
@@ -28,7 +28,9 @@ Future<List<ServiceCard>> get_service_by_category(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_service_by_category(
-              categories1: categories1,
+              categories1: categories1
+                  .map((ServiceCategory1 e) => e.toFirebaseFormatString())
+                  .toList(),
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
@@ -43,7 +45,7 @@ Future<List<ServiceCard>> get_service_by_category(
       _services.add(ServiceCard(
           businessName: data.business.details.name,
           service: Service(
-            category1: data.details.category1,
+            category1: data.details.category1.toServiceCategory1(),
             details: BusinessItemDetails(
               id: data.id,
               name: toLanguageMap(translations: data.details.name.translations),
@@ -89,7 +91,7 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
         data.details.image.map<String>((e) => e.toString()).toList();
     return ServiceWithBusinessCard(
         service: Service(
-            category1: data.details.category1,
+            category1: data.details.category1.toServiceCategory1(),
             details: BusinessItemDetails(
               id: id,
               name: toLanguageMap(translations: data.details.name.translations),
@@ -157,7 +159,7 @@ Future<int?> add_one_service({required Service service}) async {
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: service.details.available,
-                          category1: service.category1,
+                          category1: service.category1.toFirebaseFormatString(),
                           // category2: service.category2?.toFirebaseFormatString(),
                           cost: service.details.cost,
                           image: service.details.image,

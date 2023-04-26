@@ -20,7 +20,7 @@ export async function getMezAdmins(): Promise<MezAdmin[]> {
         }],
        
     });
-    return response.mez_admin.map((m) => {
+    return response.mez_admin.map((m:any) => {
         return <MezAdmin>{
             version: m.version,
             notificationInfo: (m.notification_info) ? <NotificationInfo> {

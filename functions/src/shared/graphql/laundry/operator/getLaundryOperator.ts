@@ -39,7 +39,7 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
       throw new MezError("laundryStoreNotfound");
     }
     
-    return response.laundry_operator.map((r): Operator => {
+    return response.laundry_operator.map((r:any): Operator => {
       return {
         id: r.id,
         userId: r.user_id,

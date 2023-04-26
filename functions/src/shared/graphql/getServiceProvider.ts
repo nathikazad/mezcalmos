@@ -106,7 +106,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
     }
     switch (response.service_provider_details_by_pk.service_provider_type) {
         case ServiceProviderType.Restaurant:
-            let operators: Operator[] = response.service_provider_details_by_pk.restaurant!.restaurant_operators.map((r): Operator => {
+            let operators: Operator[] = response.service_provider_details_by_pk.restaurant!.restaurant_operators.map((r:any): Operator => {
                 return {
                     id: r.id,
                     userId: r.user_id,
@@ -179,7 +179,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                 }
             }
         case ServiceProviderType.Laundry:
-            let laundryOperators: Operator[] = response.service_provider_details_by_pk.laundry_store!.operators.map((o) => {
+            let laundryOperators: Operator[] = response.service_provider_details_by_pk.laundry_store!.operators.map((o:any) => {
                 return {
                     id: o.id,
                     serviceProviderId: o.store_id,
@@ -382,7 +382,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
     }
     switch (response.service_provider_details[0].service_provider_type) {
         case ServiceProviderType.Restaurant:
-            let operators: Operator[] = response.service_provider_details[0].restaurant!.restaurant_operators.map((r): Operator => {
+            let operators: Operator[] = response.service_provider_details[0].restaurant!.restaurant_operators.map((r:any): Operator => {
                 return {
                     id: r.id,
                     userId: r.user_id,
@@ -455,7 +455,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 }
             }
         case ServiceProviderType.Laundry:
-            let laundryOperators: Operator[] = response.service_provider_details[0].laundry_store!.operators.map((o) => {
+            let laundryOperators: Operator[] = response.service_provider_details[0].laundry_store!.operators.map((o:any) => {
                 return {
                     id: o.id,
                     serviceProviderId: response.service_provider_details[0].laundry_store!.id,
@@ -519,7 +519,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 //     : undefined,
             }
         case ServiceProviderType.DeliveryCompany:
-            let deliveryOperators: Operator[] = response.service_provider_details[0].delivery_company!.delivery_operators.map((o) => {
+            let deliveryOperators: Operator[] = response.service_provider_details[0].delivery_company!.delivery_operators.map((o:any) => {
                 return {
                     id: o.id,
                     serviceProviderId: response.service_provider_details[0].delivery_company!.id,

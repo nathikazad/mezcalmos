@@ -424,7 +424,6 @@
               "codText": "Efectivo en la entrega",
               "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",
-              "viewAll": "Ver Todo",
               "paymentMethod": "Método de pago",
               "workingHours": "Horas laborales",
               "weekDays": {
@@ -573,9 +572,7 @@
             "studio": "Estudio"
           }
         },
-        "wellness": {
-          "title": "Bienestar"
-        },
+        "therapy": "Terapia",
         "events": "Eventos",
         "event": {
           "title": "Eventos",
@@ -592,9 +589,7 @@
             "description": "Obtain delivery of anything you desire to your location."
           }
         },
-        "volunteer": {
-          "title": "Voluntario"
-        },
+        "volunteer": "Voluntario",
         "adventures": "Aventura",
         "adventure": {
           "title": "Aventura",
@@ -607,6 +602,8 @@
             "description": "Get your clothes cleaned by your nearest laundry service."
           }
         },
+        "locallyMade": "Fabricación Local",
+        "food": "Alimentos",
         "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",
         "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad."

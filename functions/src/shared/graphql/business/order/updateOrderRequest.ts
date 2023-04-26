@@ -5,7 +5,7 @@ import { BusinessOrder } from "../../../models/Services/Business/BusinessOrder";
 export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
     let chain = getHasura();
 
-    let updates = order.items.map((i) => {
+    let updates = order.items.map((i:any) => {
         return {
             where: {
                 _and: [{

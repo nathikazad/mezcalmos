@@ -576,9 +576,7 @@
             "studio": "Studio"
           }
         },
-        "wellness": {
-          "title": "Wellness"
-        },
+        "therapy": "Therapy",
         "events": "Events",
         "event": {
           "title": "Events",
@@ -595,9 +593,7 @@
             "description": "Obtain delivery of anything you desire to your location."
           }
         },
-        "volunteer": {
-          "title": "Volunteer"
-        },
+        "volunteer": "Volunteer",
         "adventures": "Adventure",
         "adventure": {
           "title": "Adventure",
@@ -610,6 +606,8 @@
             "description": "Get your clothes cleaned by your nearest laundry service."
           }
         },
+        "locallyMade": "Locally Made",
+        "food": "Food",
         "welcomeText": "Welcome to MEZKALA 👋",
         "search": "Search",
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."

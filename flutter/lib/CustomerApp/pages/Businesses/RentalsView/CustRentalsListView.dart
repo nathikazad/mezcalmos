@@ -269,15 +269,9 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
         viewController.rentals.length,
         (int index) => MezCard(
             onClick: () {
-              if (viewController.rentalCategory == RentalCategory1.Home) {
-                CustHomeRentalView.navigate(
-                  rentalId: viewController.rentals[index].details.id.toInt(),
-                );
-              } else {
-                CustRentalView.navigate(
-                  rentalId: viewController.rentals[index].details.id.toInt(),
-                );
-              }
+              CustRentalView.navigate(
+                rentalId: viewController.rentals[index].details.id.toInt(),
+              );
             },
             firstAvatarBgImage:
                 (viewController.rentals[index].details.firstImage != null)

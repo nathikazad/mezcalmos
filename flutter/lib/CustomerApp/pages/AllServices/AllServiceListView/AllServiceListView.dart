@@ -11,6 +11,13 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWr
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/CustAdventureListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper'];
@@ -52,29 +59,30 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         //  RentalView.navigate();
         return;
       case AllServiceViewEnum.Class:
-        OtherAssetListsView.navigate(viewEnum: RentalViewEnum.Classes);
+        CustClassesListView.navigate();
         return;
-      case AllServiceViewEnum.Wellness:
-        HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Wellness);
+      case AllServiceViewEnum.Therapy:
+        CustTherapyListView.navigate();
         return;
       case AllServiceViewEnum.Event:
         CustEventsListView.navigate();
         return;
       case AllServiceViewEnum.Volunteer:
-        HomeAssetListsView.navigate(viewEnum: RentalViewEnum.Volunteer);
+        CustVolunteerListView.navigate();
         return;
       case AllServiceViewEnum.Adventure:
-        RentalView.navigate();
+        CustAdventureListView.navigate();
+        return;
+      case AllServiceViewEnum.Service:
+        CustServicesWrapper.navigate();
+        return;
+      case AllServiceViewEnum.LocallyMade:
+        CustLocallyMadeWrapper.navigate();
+        return;
+      case AllServiceViewEnum.Food:
+        CustFoodWrapper.navigate();
         return;
     }
-  }
-
-  bool noTabsONNextScreen(int index) {
-    if (AllServiceViewEnum.values[index] == AllServiceViewEnum.Wellness ||
-        AllServiceViewEnum.values[index] == AllServiceViewEnum.Volunteer) {
-      return true;
-    }
-    return false;
   }
 
   @override
@@ -109,14 +117,11 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Obx(
-                      () => Text(
-                        noTabsONNextScreen(index)
-                            ? _i18n()[AllServiceViewEnum.values[index].name
-                                    .toLowerCase()]["title"]
-                                .toString()
-                            : _i18n()[serviceListData[index]["title"]]
-                                .toString(),
-                        style: txt.headlineSmall,
+                      () => FittedBox(
+                        child: Text(
+                          _i18n()[serviceListData[index]["title"]].toString(),
+                          style: txt.headlineSmall,
+                        ),
                       ),
                     ),
                   ),

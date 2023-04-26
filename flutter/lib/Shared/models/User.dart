@@ -11,6 +11,7 @@ class UserInfo {
   String? _name;
   String? _image;
   Language? language;
+  String? creationTime;
   String get name => _name ?? "Unknown User";
   bool get isNameSet => _name != null;
   bool get isImageSet => _image != null;
@@ -27,6 +28,7 @@ class UserInfo {
       this.firebaseId,
       required String? name,
       required String? image,
+      this.creationTime,
       this.language}) {
     _name = name;
     _image = image;
@@ -58,6 +60,7 @@ class UserInfo {
         "image": image,
         "language":
             language?.toString() ?? Language.EN.toFirebaseFormatString(),
+        "creation_time": creationTime,
       };
 
   // UserInfo copyWith({

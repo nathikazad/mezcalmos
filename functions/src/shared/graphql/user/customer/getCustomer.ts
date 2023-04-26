@@ -42,7 +42,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
         throw new MezError("customerNotFound");
     }
     let stripeSPIds: Record<number, string> = {};
-    response.customer_customer_by_pk.stripe_sp_ids.forEach((i) => {
+    response.customer_customer_by_pk.stripe_sp_ids.forEach((i:any) => {
         stripeSPIds[i.sp_id] = i.stripe_id
     })
     let cards: Record<string, CustomerCard> = {}

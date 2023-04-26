@@ -89,7 +89,7 @@ export async function getBusinessOperators(businessId: number): Promise<Operator
   if(response.business_operator.length == 0) {
     throw new MezError("businessNotFound");
   }
-  return response.business_operator.map((o) => {
+  return response.business_operator.map((o:any) => {
     return {
       id: o.id,
       detailsId: o.operator_details.id,

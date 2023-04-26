@@ -84,7 +84,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
       address: response.delivery_courier_order_by_pk.to_location_address
     }
   
-    let items: CourierItem[] = response.delivery_courier_order_by_pk.items.map((i) => {
+    let items: CourierItem[] = response.delivery_courier_order_by_pk.items.map((i:any) => {
       return {
         id: i.id,
         name: i.name,
@@ -207,7 +207,7 @@ export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder):
       address: response.delivery_courier_order[0].to_location_address,
     }
   
-    let items: CourierItem[] = response.delivery_courier_order[0].items.map((i) => {
+    let items: CourierItem[] = response.delivery_courier_order[0].items.map((i:any) => {
       return {
         id: i.id,
         name: i.name,

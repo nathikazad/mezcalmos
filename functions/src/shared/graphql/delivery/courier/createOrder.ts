@@ -24,7 +24,7 @@ export async function createNewCourierOrder(
         };
     });
     let packageCost = 0;
-    courierRequest.items.forEach((i) => {
+    courierRequest.items.forEach((i:any) => {
         packageCost += i.estimatedCost ?? 0;
     })
 
@@ -48,7 +48,7 @@ export async function createNewCourierOrder(
                 refund_amount: courierRequest.refundAmount ?? undefined,
                 discount_value: courierRequest.discountValue ?? undefined,
                 items: {
-                    data: courierRequest.items.map((i) => {
+                    data: courierRequest.items.map((i:any) => {
                         return {
                             name: i.name,
                             image: i.image,

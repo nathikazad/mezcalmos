@@ -1147,8 +1147,9 @@ class UserInfo {
   String? email;
   String? phoneNumber;
   bool? deleted;
+  String? creationTime;
   UserInfo({
-    required this.id, this.image, required this.firebaseId, this.name, required this.language, this.email, this.phoneNumber, this.deleted});
+    required this.id, this.image, required this.firebaseId, this.name, required this.language, this.email, this.phoneNumber, this.deleted, this.creationTime});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -1159,6 +1160,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "email": email,
       "phoneNumber": phoneNumber,
       "deleted": deleted,
+      "creationTime": creationTime,
     };
   }
 
@@ -2041,7 +2043,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class Service {
-  String category1;
+  ServiceCategory1 category1;
   BusinessItemDetails details;
   Service({
     required this.category1, required this.details});
@@ -2055,7 +2057,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class Product {
-  String category1;
+  ProductCategory1 category1;
   BusinessItemDetails details;
   Product({
     required this.category1, required this.details});
@@ -2160,6 +2162,38 @@ extension ParseStringToRentalCategory2 on String {
     return RentalCategory2.values.firstWhere(
         (RentalCategory2 rentalCategory2) =>
             rentalCategory2.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum ServiceCategory1 { MealPlanning, Cleaning, PetSitting, Uncategorized }
+extension ParseServiceCategory1ToString on ServiceCategory1 {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToServiceCategory1 on String {
+  ServiceCategory1 toServiceCategory1() {
+    return ServiceCategory1.values.firstWhere(
+        (ServiceCategory1 serviceCategory1) =>
+            serviceCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum ProductCategory1 { Consumable, PersonalCare, Art, Uncategorized }
+extension ParseProductCategory1ToString on ProductCategory1 {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToProductCategory1 on String {
+  ProductCategory1 toProductCategory1() {
+    return ProductCategory1.values.firstWhere(
+        (ProductCategory1 productCategory1) =>
+            productCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

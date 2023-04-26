@@ -109,6 +109,10 @@ class AuthController extends GetxController {
       await fetchUserInfoFromHasura();
       _setLAppLanguage();
       await _onSignInCallback();
+      // todo @sanchit
+      // we check if user just signed up using _userInfo.value.created time < 120 seconds
+      //    if yes we check if uniqueId is set in local storage
+      //        we call the cloud function
     }
 
     _authStateStreamController.add(user);

@@ -53,11 +53,11 @@ export interface Event {
     tags?: Array<EventTag>;
 }
 export interface Service {
-    category1: string;
+    category1: ServiceCategory1;
     details: BusinessItemDetails;
 }
 export interface Product {
-    category1: string;
+    category1: ProductCategory1;
     details: BusinessItemDetails;
 }
 
@@ -117,6 +117,18 @@ export enum RentalCategory2 {
     Car = "car",
     ATB = "aTB",
     Bicycle = "bicycle",
+    Uncategorized = "uncategorized"
+}
+export enum ServiceCategory1 {
+    MealPlanning = "mealPlanning",
+    Cleaning = "cleaning",
+    PetSitting = "petSitting",
+    Uncategorized = "uncategorized"
+}
+export enum ProductCategory1 {
+    Consumable = "consumable",
+    PersonalCare = "personalCare",
+    Art = "art",
     Uncategorized = "uncategorized"
 }
 export enum EventTag {

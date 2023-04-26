@@ -123,8 +123,8 @@ select_permissions:
         - service_provider_id
         - service_provider_type
       filter:
-        restaurant:
-          restaurant_operators:
+        business:
+          operators:
             user_id:
               _eq: X-Hasura-User-Id
   - role: customer

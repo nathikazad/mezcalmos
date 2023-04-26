@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 HasuraDb _db = Get.find<HasuraDb>();
 
 Future<List<ProductCard>> get_product_by_category(
-    {required List<String> categories1,
+    {required List<ProductCategory1> categories1,
     required double distance,
     required Location fromLocation,
     List<String>? categories2,
@@ -28,7 +28,9 @@ Future<List<ProductCard>> get_product_by_category(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_product_by_category(
-              categories1: categories1,
+              categories1: categories1
+                  .map((ProductCategory1 e) => e.toFirebaseFormatString())
+                  .toList(),
               distance: distance,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
@@ -43,7 +45,7 @@ Future<List<ProductCard>> get_product_by_category(
       _products.add(ProductCard(
           businessName: data.business.details.name,
           product: Product(
-            category1: data.details.category1,
+            category1: data.details.category1.toProductCategory1(),
             details: BusinessItemDetails(
               id: data.id,
               name: toLanguageMap(translations: data.details.name.translations),
@@ -82,7 +84,7 @@ Future<ProductWithBusinessCard?> get_product_by_id(
     if (data != null) {
       return ProductWithBusinessCard(
           product: Product(
-              category1: data.details.category1,
+              category1: data.details.category1.toProductCategory1(),
               details: BusinessItemDetails(
                 id: id,
                 name:
@@ -151,7 +153,7 @@ Future<int?> add_one_product({required Product product}) async {
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: product.details.available,
-                          category1: product.category1,
+                          category1: product.category1.toFirebaseFormatString(),
                           // category2: product.category2?.toFirebaseFormatString(),
                           cost: product.details.cost,
                           image: product.details.image,

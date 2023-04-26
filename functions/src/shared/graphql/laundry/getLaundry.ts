@@ -75,7 +75,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
     if(response.laundry_store_by_pk == null || response.laundry_store_by_pk.details == null) {
         throw new MezError("laundryStoreNotfound");
     }
-    let laundryOperators: Operator[] = response.laundry_store_by_pk.operators.map((o) => {
+    let laundryOperators: Operator[] = response.laundry_store_by_pk.operators.map((o:any) => {
         return {
             id: o.id,
             serviceProviderId: o.store_id,

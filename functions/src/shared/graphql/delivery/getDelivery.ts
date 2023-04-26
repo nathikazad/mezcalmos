@@ -238,7 +238,7 @@ export async function getDeliveryCompany(deliveryCompanyId: number): Promise<Ser
   if(response.delivery_company_by_pk == null || response.delivery_company_by_pk.details == null) {
     throw new MezError("deliveryCompanyNotFound");
   } 
-  let operators: Operator[] = response.delivery_company_by_pk.delivery_operators.map((o) => {
+  let operators: Operator[] = response.delivery_company_by_pk.delivery_operators.map((o:any) => {
     return {
       id: o.id,
       detailsId: o.details_id,

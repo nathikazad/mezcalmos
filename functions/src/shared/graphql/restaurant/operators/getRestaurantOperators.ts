@@ -45,7 +45,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
     throw new MezError("restaurantNotfound");
   }
   
-  return response.restaurant_operator.map((r): Operator => {
+  return response.restaurant_operator.map((r:any): Operator => {
     return {
       id: r.id,
       detailsId: r.operator_details.id,

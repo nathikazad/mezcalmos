@@ -38,7 +38,7 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
         throw new MezError("orderRequestNotFound");
     }
   
-    let items: BusinessOrderRequestItem[] = response.business_order_request_by_pk.items.map((i) => {
+    let items: BusinessOrderRequestItem[] = response.business_order_request_by_pk.items.map((i:any) => {
         return {
             id: i.id,
             serviceId: i.service_id,

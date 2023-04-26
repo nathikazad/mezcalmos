@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 
 // todo @ChiragKr04 fix the cards ui and translations of this page
 class CustHomeRentalListView extends StatefulWidget {
@@ -146,6 +147,11 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
           children: List.generate(
         viewController.rentals.length,
         (int index) => MezCard(
+            onClick: () {
+              CustHomeRentalView.navigate(
+                rentalId: viewController.rentals[index].details.id.toInt(),
+              );
+            },
             firstAvatarBgImage:
                 (viewController.rentals[index].details.firstImage != null)
                     ? CachedNetworkImageProvider(

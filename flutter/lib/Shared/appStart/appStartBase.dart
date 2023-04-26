@@ -85,14 +85,10 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
   /// _error
   bool _error = false;
-  late AppLaunchMode _launchMode;
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
-    const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "stage");
-    _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
     initializeSetup();
@@ -101,6 +97,12 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
   @override
   Widget build(BuildContext context) {
+    // todo @sanchit
+    // check if app is customer app
+    String myurl = Uri.base.toString();
+    mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${myurl}");
+    // we check if uniqueId is set
+    //     if yes we save it to local storage along with a variable called redirected = false
     SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[
         DeviceOrientation.portraitUp,

@@ -11,7 +11,7 @@ export async function insertRestaurantOperators(data: any) {
     //     }]
     // })
     // let insertedOps: Record<string, boolean> = {};
-    // queryResponse.restaurant_operator.forEach((r) => {
+    // queryResponse.restaurant_operator.forEach((r:any) => {
     //     // if(rdetails?.firebase_id == null)
     //         // return;
     //     // console.log(typeof r.details.firebase_id)

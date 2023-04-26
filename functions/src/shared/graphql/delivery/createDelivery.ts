@@ -18,7 +18,7 @@ export async function createLaundryToCustomerDeliveryOrder(
         }]
     });
 
-    let mezAdminDetails = mezAdmins.mez_admin.map((m) => {
+    let mezAdminDetails = mezAdmins.mez_admin.map((m:any) => {
         return {
           participant_id: m.user_id,
           app_type_id: AppType.MezAdmin

@@ -25,16 +25,8 @@ class CustBusinessAdditionalData extends StatelessWidget {
 
     String wholeAdditionalParamString() {
       final String circle = "•";
-      var additionalValues2 = {
-        "Space": "Very Spacious",
-        "For party": true,
-        "Space2": "Very Spacious",
-        "For party2": true,
-        "Space3": "Very Spacious",
-        "For party3": true,
-      };
       String wholeString = "";
-      additionalValues2.map(
+      additionalValues.map(
         (key, value) {
           wholeString += "$circle $key $value ";
           return MapEntry(key, value);
@@ -43,12 +35,14 @@ class CustBusinessAdditionalData extends StatelessWidget {
       return wholeString.toString();
     }
 
-    return Text(
-      wholeAdditionalParamString(),
-      style: context.textTheme.bodyLarge!.copyWith(
-        color: primaryBlueColor,
-        fontWeight: FontWeight.w600,
-      ),
-    );
+    return additionalValues.isEmpty
+        ? const SizedBox.shrink()
+        : Text(
+            wholeAdditionalParamString(),
+            style: context.textTheme.bodyLarge!.copyWith(
+              color: primaryBlueColor,
+              fontWeight: FontWeight.w600,
+            ),
+          );
   }
 }

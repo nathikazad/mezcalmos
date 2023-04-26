@@ -112,3 +112,43 @@ query get_business_by_event_category1($distance: Float!, $from: geography!, $off
     }
   }
 }
+
+query get_business_by_service_category1($distance: Float!, $from: geography!, $categories1: [String!], $offset: Int, $limit: Int) {
+  business_business(where: {_and: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}, services: {details: {category1: {_in: $categories1}}}}}, offset: $offset, limit: $limit) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      name
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
+
+query get_business_by_product_category1($distance: Float!, $from: geography!, $categories1: [String!], $offset: Int, $limit: Int) {
+  business_business(where: {_and: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}, products: {details: {category1: {_in: $categories1}}}}}, offset: $offset, limit: $limit) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      name
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
