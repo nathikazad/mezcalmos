@@ -176,6 +176,15 @@ class CloudFunctions {
       }));
   }
 
+  static Future<AddReferralResponse> serviceProvider_addReferral(
+      {required String uniqueId}  ) async {
+    return AddReferralResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-addReferral",
+      parameters: <String, dynamic>{
+        "uniqueId": uniqueId,
+      }));
+  }
+
   static Future<RestaurantResponse> restaurant2_createRestaurant(
       {required String name,
       required String image,
@@ -293,7 +302,8 @@ class CloudFunctions {
       required BusinessProfile profile,
       required Location location,
       String? businessOperatorNotificationToken,
-      required Map<String,bool> language}  ) async {
+      required Map<String,bool> language,
+      required Schedule schedule}  ) async {
     return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "business-createBusiness",
       parameters: <String, dynamic>{
@@ -303,6 +313,7 @@ class CloudFunctions {
         "location":location.toFirebaseFormattedJson(),
         "businessOperatorNotificationToken": businessOperatorNotificationToken,
         "language": language,
+        "schedule":schedule.toFirebaseFormattedJson(),
       }));
   }
 

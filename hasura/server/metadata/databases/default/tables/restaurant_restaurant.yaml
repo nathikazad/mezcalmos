@@ -89,6 +89,7 @@ select_permissions:
         - details_id
         - id
       filter: {}
+      allow_aggregations: true
   - role: delivery_driver
     permission:
       columns:

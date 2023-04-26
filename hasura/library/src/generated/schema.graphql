@@ -149,43 +149,6 @@ type business_business {
   surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
   """
   profile: String!
-  referral_points: Int!
-
-  """An array relationship"""
-  referrals(
-    """distinct select on columns"""
-    distinct_on: [business_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [business_referral_order_by!]
-
-    """filter the rows returned"""
-    where: business_referral_bool_exp
-  ): [business_referral!]!
-
-  """An aggregate relationship"""
-  referrals_aggregate(
-    """distinct select on columns"""
-    distinct_on: [business_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [business_referral_order_by!]
-
-    """filter the rows returned"""
-    where: business_referral_bool_exp
-  ): business_referral_aggregate!
 
   """An array relationship"""
   rentals(
@@ -326,7 +289,6 @@ type business_business_aggregate_fields {
 type business_business_avg_fields {
   details_id: Float
   id: Float
-  referral_points: Float
 }
 
 """
@@ -346,9 +308,6 @@ input business_business_bool_exp {
   products: business_product_bool_exp
   products_aggregate: business_product_aggregate_bool_exp
   profile: String_comparison_exp
-  referral_points: Int_comparison_exp
-  referrals: business_referral_bool_exp
-  referrals_aggregate: business_referral_aggregate_bool_exp
   rentals: business_rental_bool_exp
   rentals_aggregate: business_rental_aggregate_bool_exp
   reviews: review_bool_exp
@@ -379,7 +338,6 @@ input type for incrementing numeric columns in table "business.business"
 input business_business_inc_input {
   details_id: Int
   id: Int
-  referral_points: Int
 }
 
 """
@@ -397,8 +355,6 @@ input business_business_insert_input {
   surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
   """
   profile: String
-  referral_points: Int
-  referrals: business_referral_arr_rel_insert_input
   rentals: business_rental_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   service_provider_type: String
@@ -414,7 +370,6 @@ type business_business_max_fields {
   surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
   """
   profile: String
-  referral_points: Int
   service_provider_type: String
 }
 
@@ -427,7 +382,6 @@ type business_business_min_fields {
   surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
   """
   profile: String
-  referral_points: Int
   service_provider_type: String
 }
 
@@ -470,8 +424,6 @@ input business_business_order_by {
   operators_aggregate: business_operator_aggregate_order_by
   products_aggregate: business_product_aggregate_order_by
   profile: order_by
-  referral_points: order_by
-  referrals_aggregate: business_referral_aggregate_order_by
   rentals_aggregate: business_rental_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
@@ -497,9 +449,6 @@ enum business_business_select_column {
   profile
 
   """column name"""
-  referral_points
-
-  """column name"""
   service_provider_type
 }
 
@@ -514,7 +463,6 @@ input business_business_set_input {
   surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
   """
   profile: String
-  referral_points: Int
   service_provider_type: String
 }
 
@@ -522,21 +470,18 @@ input business_business_set_input {
 type business_business_stddev_fields {
   details_id: Float
   id: Float
-  referral_points: Float
 }
 
 """aggregate stddev_pop on columns"""
 type business_business_stddev_pop_fields {
   details_id: Float
   id: Float
-  referral_points: Float
 }
 
 """aggregate stddev_samp on columns"""
 type business_business_stddev_samp_fields {
   details_id: Float
   id: Float
-  referral_points: Float
 }
 
 """
@@ -559,7 +504,6 @@ input business_business_stream_cursor_value_input {
   surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
   """
   profile: String
-  referral_points: Int
   service_provider_type: String
 }
 
@@ -567,7 +511,6 @@ input business_business_stream_cursor_value_input {
 type business_business_sum_fields {
   details_id: Int
   id: Int
-  referral_points: Int
 }
 
 """
@@ -584,9 +527,6 @@ enum business_business_update_column {
   profile
 
   """column name"""
-  referral_points
-
-  """column name"""
   service_provider_type
 }
 
@@ -596,8 +536,6 @@ input business_business_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_business_set_input
-
-  """filter the rows which have to be updated"""
   where: business_business_bool_exp!
 }
 
@@ -605,21 +543,18 @@ input business_business_updates {
 type business_business_var_pop_fields {
   details_id: Float
   id: Float
-  referral_points: Float
 }
 
 """aggregate var_samp on columns"""
 type business_business_var_samp_fields {
   details_id: Float
   id: Float
-  referral_points: Float
 }
 
 """aggregate variance on columns"""
 type business_business_variance_fields {
   details_id: Float
   id: Float
-  referral_points: Float
 }
 
 """
@@ -1149,8 +1084,6 @@ input business_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_item_set_input
-
-  """filter the rows which have to be updated"""
   where: business_cart_item_bool_exp!
 }
 
@@ -1338,8 +1271,6 @@ input business_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_set_input
-
-  """filter the rows which have to be updated"""
   where: business_cart_bool_exp!
 }
 
@@ -1843,8 +1774,6 @@ input business_event_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_event_set_input
-
-  """filter the rows which have to be updated"""
   where: business_event_bool_exp!
 }
 
@@ -2173,8 +2102,6 @@ input business_home_rental_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_home_rental_set_input
-
-  """filter the rows which have to be updated"""
   where: business_home_rental_bool_exp!
 }
 
@@ -2626,8 +2553,6 @@ input business_item_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_item_details_set_input
-
-  """filter the rows which have to be updated"""
   where: business_item_details_bool_exp!
 }
 
@@ -3021,8 +2946,6 @@ input business_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: business_operator_bool_exp!
 }
 
@@ -3718,8 +3641,6 @@ input business_order_request_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_order_request_item_set_input
-
-  """filter the rows which have to be updated"""
   where: business_order_request_item_bool_exp!
 }
 
@@ -4024,8 +3945,6 @@ input business_order_request_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_order_request_set_input
-
-  """filter the rows which have to be updated"""
   where: business_order_request_bool_exp!
 }
 
@@ -4395,8 +4314,6 @@ input business_product_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_product_set_input
-
-  """filter the rows which have to be updated"""
   where: business_product_bool_exp!
 }
 
@@ -4446,343 +4363,6 @@ input business_product_variance_order_by {
   business_id: order_by
   details_id: order_by
   id: order_by
-}
-
-"""
-columns and relationships of "business.referral"
-"""
-type business_referral {
-  business_id: Int!
-  customer_id: Int!
-}
-
-"""
-aggregated selection of "business.referral"
-"""
-type business_referral_aggregate {
-  aggregate: business_referral_aggregate_fields
-  nodes: [business_referral!]!
-}
-
-input business_referral_aggregate_bool_exp {
-  count: business_referral_aggregate_bool_exp_count
-}
-
-input business_referral_aggregate_bool_exp_count {
-  arguments: [business_referral_select_column!]
-  distinct: Boolean
-  filter: business_referral_bool_exp
-  predicate: Int_comparison_exp!
-}
-
-"""
-aggregate fields of "business.referral"
-"""
-type business_referral_aggregate_fields {
-  avg: business_referral_avg_fields
-  count(columns: [business_referral_select_column!], distinct: Boolean): Int!
-  max: business_referral_max_fields
-  min: business_referral_min_fields
-  stddev: business_referral_stddev_fields
-  stddev_pop: business_referral_stddev_pop_fields
-  stddev_samp: business_referral_stddev_samp_fields
-  sum: business_referral_sum_fields
-  var_pop: business_referral_var_pop_fields
-  var_samp: business_referral_var_samp_fields
-  variance: business_referral_variance_fields
-}
-
-"""
-order by aggregate values of table "business.referral"
-"""
-input business_referral_aggregate_order_by {
-  avg: business_referral_avg_order_by
-  count: order_by
-  max: business_referral_max_order_by
-  min: business_referral_min_order_by
-  stddev: business_referral_stddev_order_by
-  stddev_pop: business_referral_stddev_pop_order_by
-  stddev_samp: business_referral_stddev_samp_order_by
-  sum: business_referral_sum_order_by
-  var_pop: business_referral_var_pop_order_by
-  var_samp: business_referral_var_samp_order_by
-  variance: business_referral_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "business.referral"
-"""
-input business_referral_arr_rel_insert_input {
-  data: [business_referral_insert_input!]!
-
-  """upsert condition"""
-  on_conflict: business_referral_on_conflict
-}
-
-"""aggregate avg on columns"""
-type business_referral_avg_fields {
-  business_id: Float
-  customer_id: Float
-}
-
-"""
-order by avg() on columns of table "business.referral"
-"""
-input business_referral_avg_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""
-Boolean expression to filter rows from the table "business.referral". All fields are combined with a logical 'AND'.
-"""
-input business_referral_bool_exp {
-  _and: [business_referral_bool_exp!]
-  _not: business_referral_bool_exp
-  _or: [business_referral_bool_exp!]
-  business_id: Int_comparison_exp
-  customer_id: Int_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "business.referral"
-"""
-enum business_referral_constraint {
-  """
-  unique or primary key constraint on columns "customer_id"
-  """
-  referral_pkey
-}
-
-"""
-input type for incrementing numeric columns in table "business.referral"
-"""
-input business_referral_inc_input {
-  business_id: Int
-  customer_id: Int
-}
-
-"""
-input type for inserting data into table "business.referral"
-"""
-input business_referral_insert_input {
-  business_id: Int
-  customer_id: Int
-}
-
-"""aggregate max on columns"""
-type business_referral_max_fields {
-  business_id: Int
-  customer_id: Int
-}
-
-"""
-order by max() on columns of table "business.referral"
-"""
-input business_referral_max_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""aggregate min on columns"""
-type business_referral_min_fields {
-  business_id: Int
-  customer_id: Int
-}
-
-"""
-order by min() on columns of table "business.referral"
-"""
-input business_referral_min_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""
-response of any mutation on the table "business.referral"
-"""
-type business_referral_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [business_referral!]!
-}
-
-"""
-on_conflict condition type for table "business.referral"
-"""
-input business_referral_on_conflict {
-  constraint: business_referral_constraint!
-  update_columns: [business_referral_update_column!]! = []
-  where: business_referral_bool_exp
-}
-
-"""Ordering options when selecting data from "business.referral"."""
-input business_referral_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""primary key columns input for table: business.referral"""
-input business_referral_pk_columns_input {
-  customer_id: Int!
-}
-
-"""
-select columns of table "business.referral"
-"""
-enum business_referral_select_column {
-  """column name"""
-  business_id
-
-  """column name"""
-  customer_id
-}
-
-"""
-input type for updating data in table "business.referral"
-"""
-input business_referral_set_input {
-  business_id: Int
-  customer_id: Int
-}
-
-"""aggregate stddev on columns"""
-type business_referral_stddev_fields {
-  business_id: Float
-  customer_id: Float
-}
-
-"""
-order by stddev() on columns of table "business.referral"
-"""
-input business_referral_stddev_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type business_referral_stddev_pop_fields {
-  business_id: Float
-  customer_id: Float
-}
-
-"""
-order by stddev_pop() on columns of table "business.referral"
-"""
-input business_referral_stddev_pop_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type business_referral_stddev_samp_fields {
-  business_id: Float
-  customer_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "business.referral"
-"""
-input business_referral_stddev_samp_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""
-Streaming cursor of the table "business_referral"
-"""
-input business_referral_stream_cursor_input {
-  """Stream column input with initial value"""
-  initial_value: business_referral_stream_cursor_value_input!
-
-  """cursor ordering"""
-  ordering: cursor_ordering
-}
-
-"""Initial value of the column from where the streaming should start"""
-input business_referral_stream_cursor_value_input {
-  business_id: Int
-  customer_id: Int
-}
-
-"""aggregate sum on columns"""
-type business_referral_sum_fields {
-  business_id: Int
-  customer_id: Int
-}
-
-"""
-order by sum() on columns of table "business.referral"
-"""
-input business_referral_sum_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""
-update columns of table "business.referral"
-"""
-enum business_referral_update_column {
-  """column name"""
-  business_id
-
-  """column name"""
-  customer_id
-}
-
-input business_referral_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: business_referral_inc_input
-
-  """sets the columns of the filtered rows to the given values"""
-  _set: business_referral_set_input
-
-  """filter the rows which have to be updated"""
-  where: business_referral_bool_exp!
-}
-
-"""aggregate var_pop on columns"""
-type business_referral_var_pop_fields {
-  business_id: Float
-  customer_id: Float
-}
-
-"""
-order by var_pop() on columns of table "business.referral"
-"""
-input business_referral_var_pop_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""aggregate var_samp on columns"""
-type business_referral_var_samp_fields {
-  business_id: Float
-  customer_id: Float
-}
-
-"""
-order by var_samp() on columns of table "business.referral"
-"""
-input business_referral_var_samp_order_by {
-  business_id: order_by
-  customer_id: order_by
-}
-
-"""aggregate variance on columns"""
-type business_referral_variance_fields {
-  business_id: Float
-  customer_id: Float
-}
-
-"""
-order by variance() on columns of table "business.referral"
-"""
-input business_referral_variance_order_by {
-  business_id: order_by
-  customer_id: order_by
 }
 
 """
@@ -5150,8 +4730,6 @@ input business_rental_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_rental_set_input
-
-  """filter the rows which have to be updated"""
   where: business_rental_bool_exp!
 }
 
@@ -5536,8 +5114,6 @@ input business_service_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_service_set_input
-
-  """filter the rows which have to be updated"""
   where: business_service_bool_exp!
 }
 
@@ -6165,8 +5741,6 @@ input chat_participant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_participant_set_input
-
-  """filter the rows which have to be updated"""
   where: chat_participant_bool_exp!
 }
 
@@ -6360,8 +5934,6 @@ input chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_set_input
-
-  """filter the rows which have to be updated"""
   where: chat_bool_exp!
 }
 
@@ -6511,10 +6083,6 @@ type customer_customer {
     where: customer_stripe_cards_bool_exp
   ): customer_stripe_cards_aggregate!
   stripe_id: String
-  stripe_info(
-    """JSON select path"""
-    path: String
-  ): jsonb
 
   """An array relationship"""
   stripe_sp_ids(
@@ -6582,11 +6150,6 @@ type customer_customer_aggregate_fields {
   variance: customer_customer_variance_fields
 }
 
-"""append existing jsonb value of filtered columns with new jsonb value"""
-input customer_customer_append_input {
-  stripe_info: jsonb
-}
-
 """aggregate avg on columns"""
 type customer_customer_avg_fields {
   user_id: Float
@@ -6611,7 +6174,6 @@ input customer_customer_bool_exp {
   stripe_cards: customer_stripe_cards_bool_exp
   stripe_cards_aggregate: customer_stripe_cards_aggregate_bool_exp
   stripe_id: String_comparison_exp
-  stripe_info: jsonb_comparison_exp
   stripe_sp_ids: customer_stripe_sp_id_bool_exp
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_bool_exp
   user: user_bool_exp
@@ -6634,28 +6196,6 @@ enum customer_customer_constraint {
 }
 
 """
-delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-"""
-input customer_customer_delete_at_path_input {
-  stripe_info: [String!]
-}
-
-"""
-delete the array element with specified index (negative integers count from the
-end). throws an error if top level container is not an array
-"""
-input customer_customer_delete_elem_input {
-  stripe_info: Int
-}
-
-"""
-delete key/value pair or string element. key/value pairs are matched based on their key value
-"""
-input customer_customer_delete_key_input {
-  stripe_info: String
-}
-
-"""
 input type for incrementing numeric columns in table "customer.customer"
 """
 input customer_customer_inc_input {
@@ -6675,7 +6215,6 @@ input customer_customer_insert_input {
   service_provider_type: String
   stripe_cards: customer_stripe_cards_arr_rel_insert_input
   stripe_id: String
-  stripe_info: jsonb
   stripe_sp_ids: customer_stripe_sp_id_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -6740,7 +6279,6 @@ input customer_customer_order_by {
   service_provider_type: order_by
   stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
   stripe_id: order_by
-  stripe_info: order_by
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -6749,11 +6287,6 @@ input customer_customer_order_by {
 """primary key columns input for table: customer.customer"""
 input customer_customer_pk_columns_input {
   user_id: Int!
-}
-
-"""prepend existing jsonb value of filtered columns with new jsonb value"""
-input customer_customer_prepend_input {
-  stripe_info: jsonb
 }
 
 """
@@ -6773,9 +6306,6 @@ enum customer_customer_select_column {
   stripe_id
 
   """column name"""
-  stripe_info
-
-  """column name"""
   user_id
 }
 
@@ -6787,7 +6317,6 @@ input customer_customer_set_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
-  stripe_info: jsonb
   user_id: Int
 }
 
@@ -6823,7 +6352,6 @@ input customer_customer_stream_cursor_value_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
-  stripe_info: jsonb
   user_id: Int
 }
 
@@ -6849,42 +6377,15 @@ enum customer_customer_update_column {
   stripe_id
 
   """column name"""
-  stripe_info
-
-  """column name"""
   user_id
 }
 
 input customer_customer_updates {
-  """append existing jsonb value of filtered columns with new jsonb value"""
-  _append: customer_customer_append_input
-
-  """
-  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-  """
-  _delete_at_path: customer_customer_delete_at_path_input
-
-  """
-  delete the array element with specified index (negative integers count from
-  the end). throws an error if top level container is not an array
-  """
-  _delete_elem: customer_customer_delete_elem_input
-
-  """
-  delete key/value pair or string element. key/value pairs are matched based on their key value
-  """
-  _delete_key: customer_customer_delete_key_input
-
   """increments the numeric columns with given value of the filtered values"""
   _inc: customer_customer_inc_input
 
-  """prepend existing jsonb value of filtered columns with new jsonb value"""
-  _prepend: customer_customer_prepend_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_customer_bool_exp!
 }
 
@@ -7139,8 +6640,6 @@ input customer_favourited_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_favourited_item_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_favourited_item_bool_exp!
 }
 
@@ -7583,8 +7082,6 @@ input customer_minimal_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_minimal_order_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_minimal_order_bool_exp!
 }
 
@@ -7998,8 +7495,6 @@ input customer_saved_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_saved_location_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_saved_location_bool_exp!
 }
 
@@ -8530,8 +8025,6 @@ input customer_stripe_cards_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_cards_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_stripe_cards_bool_exp!
 }
 
@@ -8932,8 +8425,6 @@ input customer_stripe_sp_id_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_sp_id_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_stripe_sp_id_bool_exp!
 }
 
@@ -9366,8 +8857,6 @@ input delivery_company_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_company_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_company_bool_exp!
 }
 
@@ -10098,8 +9587,6 @@ input delivery_courier_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_courier_order_item_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_courier_order_item_bool_exp!
 }
 
@@ -10517,8 +10004,6 @@ input delivery_courier_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_courier_order_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_courier_order_bool_exp!
 }
 
@@ -11067,8 +10552,6 @@ input delivery_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_details_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_details_bool_exp!
 }
 
@@ -11710,8 +11193,6 @@ input delivery_driver_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_driver_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_driver_bool_exp!
 }
 
@@ -12148,8 +11629,6 @@ input delivery_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_operator_bool_exp!
 }
 
@@ -13224,8 +12703,6 @@ input delivery_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_public_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_order_public_bool_exp!
 }
 
@@ -13865,8 +13342,6 @@ input delivery_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_order_bool_exp!
 }
 
@@ -14252,8 +13727,6 @@ input direct_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: direct_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: direct_chat_bool_exp!
 }
 
@@ -14608,8 +14081,6 @@ enum language_update_column {
 input language_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: language_set_input
-
-  """filter the rows which have to be updated"""
   where: language_bool_exp!
 }
 
@@ -15006,8 +14477,6 @@ input laundry_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_category_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_category_bool_exp!
 }
 
@@ -15453,8 +14922,6 @@ input laundry_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_operator_bool_exp!
 }
 
@@ -16201,8 +15668,6 @@ input laundry_order_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_category_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_order_category_bool_exp!
 }
 
@@ -16821,8 +16286,6 @@ input laundry_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_order_bool_exp!
 }
 
@@ -17381,8 +16844,6 @@ input laundry_store_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_store_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_store_bool_exp!
 }
 
@@ -17700,8 +17161,6 @@ input mez_admin_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_admin_chat_bool_exp!
 }
 
@@ -17880,8 +17339,6 @@ input mez_admin_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_admin_bool_exp!
 }
 
@@ -18078,8 +17535,6 @@ input mez_json_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_json_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_json_bool_exp!
 }
 
@@ -18231,19 +17686,6 @@ type mutation_root {
   delete single row from the table: "business.product"
   """
   delete_business_product_by_pk(id: Int!): business_product
-
-  """
-  delete data from the table: "business.referral"
-  """
-  delete_business_referral(
-    """filter the rows which have to be deleted"""
-    where: business_referral_bool_exp!
-  ): business_referral_mutation_response
-
-  """
-  delete single row from the table: "business.referral"
-  """
-  delete_business_referral_by_pk(customer_id: Int!): business_referral
 
   """
   delete data from the table: "business.rental"
@@ -18873,6 +18315,19 @@ type mutation_root {
   delete_service_provider_post_by_pk(id: Int!): service_provider_post
 
   """
+  delete data from the table: "service_provider.referral"
+  """
+  delete_service_provider_referral(
+    """filter the rows which have to be deleted"""
+    where: service_provider_referral_bool_exp!
+  ): service_provider_referral_mutation_response
+
+  """
+  delete single row from the table: "service_provider.referral"
+  """
+  delete_service_provider_referral_by_pk(customer_id: Int!): service_provider_referral
+
+  """
   delete data from the table: "service_provider.service_link"
   """
   delete_service_provider_service_link(
@@ -19198,28 +18653,6 @@ type mutation_root {
     """upsert condition"""
     on_conflict: business_product_on_conflict
   ): business_product
-
-  """
-  insert data into the table: "business.referral"
-  """
-  insert_business_referral(
-    """the rows to be inserted"""
-    objects: [business_referral_insert_input!]!
-
-    """upsert condition"""
-    on_conflict: business_referral_on_conflict
-  ): business_referral_mutation_response
-
-  """
-  insert a single row into the table: "business.referral"
-  """
-  insert_business_referral_one(
-    """the row to be inserted"""
-    object: business_referral_insert_input!
-
-    """upsert condition"""
-    on_conflict: business_referral_on_conflict
-  ): business_referral
 
   """
   insert data into the table: "business.rental"
@@ -20288,6 +19721,28 @@ type mutation_root {
   ): service_provider_post
 
   """
+  insert data into the table: "service_provider.referral"
+  """
+  insert_service_provider_referral(
+    """the rows to be inserted"""
+    objects: [service_provider_referral_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: service_provider_referral_on_conflict
+  ): service_provider_referral_mutation_response
+
+  """
+  insert a single row into the table: "service_provider.referral"
+  """
+  insert_service_provider_referral_one(
+    """the row to be inserted"""
+    object: service_provider_referral_insert_input!
+
+    """upsert condition"""
+    on_conflict: service_provider_referral_on_conflict
+  ): service_provider_referral
+
+  """
   insert data into the table: "service_provider.service_link"
   """
   insert_service_provider_service_link(
@@ -20980,40 +20435,6 @@ type mutation_root {
   ): [business_product_mutation_response]
 
   """
-  update data of the table: "business.referral"
-  """
-  update_business_referral(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: business_referral_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: business_referral_set_input
-
-    """filter the rows which have to be updated"""
-    where: business_referral_bool_exp!
-  ): business_referral_mutation_response
-
-  """
-  update single row of the table: "business.referral"
-  """
-  update_business_referral_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: business_referral_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: business_referral_set_input
-    pk_columns: business_referral_pk_columns_input!
-  ): business_referral
-
-  """
-  update multiples rows of table: "business.referral"
-  """
-  update_business_referral_many(
-    """updates to execute, in order"""
-    updates: [business_referral_updates!]!
-  ): [business_referral_mutation_response]
-
-  """
   update data of the table: "business.rental"
   """
   update_business_rental(
@@ -21197,30 +20618,8 @@ type mutation_root {
   update data of the table: "customer.customer"
   """
   update_customer_customer(
-    """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: customer_customer_append_input
-
-    """
-    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    """
-    _delete_at_path: customer_customer_delete_at_path_input
-
-    """
-    delete the array element with specified index (negative integers count from
-    the end). throws an error if top level container is not an array
-    """
-    _delete_elem: customer_customer_delete_elem_input
-
-    """
-    delete key/value pair or string element. key/value pairs are matched based on their key value
-    """
-    _delete_key: customer_customer_delete_key_input
-
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
-
-    """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -21233,30 +20632,8 @@ type mutation_root {
   update single row of the table: "customer.customer"
   """
   update_customer_customer_by_pk(
-    """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: customer_customer_append_input
-
-    """
-    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    """
-    _delete_at_path: customer_customer_delete_at_path_input
-
-    """
-    delete the array element with specified index (negative integers count from
-    the end). throws an error if top level container is not an array
-    """
-    _delete_elem: customer_customer_delete_elem_input
-
-    """
-    delete key/value pair or string element. key/value pairs are matched based on their key value
-    """
-    _delete_key: customer_customer_delete_key_input
-
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
-
-    """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -23084,6 +22461,40 @@ type mutation_root {
   ): [service_provider_post_mutation_response]
 
   """
+  update data of the table: "service_provider.referral"
+  """
+  update_service_provider_referral(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_referral_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_referral_set_input
+
+    """filter the rows which have to be updated"""
+    where: service_provider_referral_bool_exp!
+  ): service_provider_referral_mutation_response
+
+  """
+  update single row of the table: "service_provider.referral"
+  """
+  update_service_provider_referral_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_referral_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_referral_set_input
+    pk_columns: service_provider_referral_pk_columns_input!
+  ): service_provider_referral
+
+  """
+  update multiples rows of table: "service_provider.referral"
+  """
+  update_service_provider_referral_many(
+    """updates to execute, in order"""
+    updates: [service_provider_referral_updates!]!
+  ): [service_provider_referral_mutation_response]
+
+  """
   update data of the table: "service_provider.service_link"
   """
   update_service_provider_service_link(
@@ -23639,8 +23050,6 @@ input notification_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: notification_info_set_input
-
-  """filter the rows which have to be updated"""
   where: notification_info_bool_exp!
 }
 
@@ -24129,51 +23538,6 @@ type query_root {
   fetch data from the table: "business.product" using primary key columns
   """
   business_product_by_pk(id: Int!): business_product
-
-  """
-  fetch data from the table: "business.referral"
-  """
-  business_referral(
-    """distinct select on columns"""
-    distinct_on: [business_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [business_referral_order_by!]
-
-    """filter the rows returned"""
-    where: business_referral_bool_exp
-  ): [business_referral!]!
-
-  """
-  fetch aggregated fields from the table: "business.referral"
-  """
-  business_referral_aggregate(
-    """distinct select on columns"""
-    distinct_on: [business_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [business_referral_order_by!]
-
-    """filter the rows returned"""
-    where: business_referral_bool_exp
-  ): business_referral_aggregate!
-
-  """
-  fetch data from the table: "business.referral" using primary key columns
-  """
-  business_referral_by_pk(customer_id: Int!): business_referral
 
   """
   fetch data from the table: "business.rental"
@@ -26593,6 +25957,51 @@ type query_root {
   service_provider_post_by_pk(id: Int!): service_provider_post
 
   """
+  fetch data from the table: "service_provider.referral"
+  """
+  service_provider_referral(
+    """distinct select on columns"""
+    distinct_on: [service_provider_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_referral_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_referral_bool_exp
+  ): [service_provider_referral!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.referral"
+  """
+  service_provider_referral_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_referral_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_referral_bool_exp
+  ): service_provider_referral_aggregate!
+
+  """
+  fetch data from the table: "service_provider.referral" using primary key columns
+  """
+  service_provider_referral_by_pk(customer_id: Int!): service_provider_referral
+
+  """
   fetch data from the table: "service_provider.service_link"
   """
   service_provider_service_link(
@@ -27509,8 +26918,6 @@ input restaurant_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_cart_item_bool_exp!
 }
 
@@ -27708,8 +27115,6 @@ input restaurant_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_cart_bool_exp!
 }
 
@@ -28196,8 +27601,6 @@ input restaurant_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_category_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_category_bool_exp!
 }
 
@@ -28707,8 +28110,6 @@ input restaurant_choice_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_choice_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_choice_bool_exp!
 }
 
@@ -29518,8 +28919,6 @@ input restaurant_item_option_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_option_map_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_item_option_map_bool_exp!
 }
 
@@ -29867,8 +29266,6 @@ input restaurant_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_item_bool_exp!
 }
 
@@ -30326,8 +29723,6 @@ input restaurant_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_operator_bool_exp!
 }
 
@@ -30988,8 +30383,6 @@ input restaurant_option_choice_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_choice_map_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_option_choice_map_bool_exp!
 }
 
@@ -31401,8 +30794,6 @@ input restaurant_option_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_option_bool_exp!
 }
 
@@ -32347,8 +31738,6 @@ input restaurant_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_item_bool_exp!
 }
 
@@ -32887,8 +32276,6 @@ input restaurant_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_public_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_public_bool_exp!
 }
 
@@ -33306,8 +32693,6 @@ input restaurant_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_bool_exp!
 }
 
@@ -33951,8 +33336,6 @@ input restaurant_restaurant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_restaurant_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_restaurant_bool_exp!
 }
 
@@ -34429,8 +33812,6 @@ input review_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: review_set_input
-
-  """filter the rows which have to be updated"""
   where: review_bool_exp!
 }
 
@@ -34743,8 +34124,6 @@ input service_provider_customer_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_customer_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_customer_chat_bool_exp!
 }
 
@@ -35122,8 +34501,6 @@ input service_provider_delivery_partner_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_delivery_partner_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_delivery_partner_bool_exp!
 }
 
@@ -35184,6 +34561,9 @@ type service_provider_details {
     path: String
   ): jsonb!
   approved: Boolean!
+
+  """An object relationship"""
+  business: business_business
   creation_time: timestamptz!
 
   """An object relationship"""
@@ -35211,6 +34591,7 @@ type service_provider_details {
   name: String!
   open_status: String!
   phone_number: String
+  referral_points: Int!
 
   """An object relationship"""
   restaurant: restaurant_restaurant
@@ -35269,6 +34650,7 @@ type service_provider_details_avg_fields {
   description_id: Float
   id: Float
   location_id: Float
+  referral_points: Float
   service_link_id: Float
   stripe_id: Float
 }
@@ -35282,6 +34664,7 @@ input service_provider_details_bool_exp {
   _or: [service_provider_details_bool_exp!]
   accepted_payments: jsonb_comparison_exp
   approved: Boolean_comparison_exp
+  business: business_business_bool_exp
   creation_time: timestamptz_comparison_exp
   delivery_company: delivery_company_bool_exp
   description: translation_bool_exp
@@ -35296,6 +34679,7 @@ input service_provider_details_bool_exp {
   name: String_comparison_exp
   open_status: String_comparison_exp
   phone_number: String_comparison_exp
+  referral_points: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   schedule: jsonb_comparison_exp
   service_link: service_provider_service_link_bool_exp
@@ -35377,6 +34761,7 @@ input service_provider_details_inc_input {
   description_id: Int
   id: Int
   location_id: Int
+  referral_points: Int
   service_link_id: Int
   stripe_id: Int
 }
@@ -35387,6 +34772,7 @@ input type for inserting data into table "service_provider.details"
 input service_provider_details_insert_input {
   accepted_payments: jsonb
   approved: Boolean
+  business: business_business_obj_rel_insert_input
   creation_time: timestamptz
   delivery_company: delivery_company_obj_rel_insert_input
   description: translation_obj_rel_insert_input
@@ -35403,6 +34789,7 @@ input service_provider_details_insert_input {
   name: String
   open_status: String
   phone_number: String
+  referral_points: Int
   restaurant: restaurant_restaurant_obj_rel_insert_input
   schedule: jsonb
   service_link: service_provider_service_link_obj_rel_insert_input
@@ -35424,6 +34811,7 @@ type service_provider_details_max_fields {
   name: String
   open_status: String
   phone_number: String
+  referral_points: Int
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
@@ -35441,6 +34829,7 @@ type service_provider_details_min_fields {
   name: String
   open_status: String
   phone_number: String
+  referral_points: Int
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
@@ -35481,6 +34870,7 @@ input service_provider_details_on_conflict {
 input service_provider_details_order_by {
   accepted_payments: order_by
   approved: order_by
+  business: business_business_order_by
   creation_time: order_by
   delivery_company: delivery_company_order_by
   description: translation_order_by
@@ -35495,6 +34885,7 @@ input service_provider_details_order_by {
   name: order_by
   open_status: order_by
   phone_number: order_by
+  referral_points: order_by
   restaurant: restaurant_restaurant_order_by
   schedule: order_by
   service_link: service_provider_service_link_order_by
@@ -35560,6 +34951,9 @@ enum service_provider_details_select_column {
   phone_number
 
   """column name"""
+  referral_points
+
+  """column name"""
   schedule
 
   """column name"""
@@ -35593,6 +34987,7 @@ input service_provider_details_set_input {
   name: String
   open_status: String
   phone_number: String
+  referral_points: Int
   schedule: jsonb
   service_link_id: Int
   service_provider_type: String
@@ -35605,6 +35000,7 @@ type service_provider_details_stddev_fields {
   description_id: Float
   id: Float
   location_id: Float
+  referral_points: Float
   service_link_id: Float
   stripe_id: Float
 }
@@ -35614,6 +35010,7 @@ type service_provider_details_stddev_pop_fields {
   description_id: Float
   id: Float
   location_id: Float
+  referral_points: Float
   service_link_id: Float
   stripe_id: Float
 }
@@ -35623,6 +35020,7 @@ type service_provider_details_stddev_samp_fields {
   description_id: Float
   id: Float
   location_id: Float
+  referral_points: Float
   service_link_id: Float
   stripe_id: Float
 }
@@ -35654,6 +35052,7 @@ input service_provider_details_stream_cursor_value_input {
   name: String
   open_status: String
   phone_number: String
+  referral_points: Int
   schedule: jsonb
   service_link_id: Int
   service_provider_type: String
@@ -35666,6 +35065,7 @@ type service_provider_details_sum_fields {
   description_id: Int
   id: Int
   location_id: Int
+  referral_points: Int
   service_link_id: Int
   stripe_id: Int
 }
@@ -35711,6 +35111,9 @@ enum service_provider_details_update_column {
   phone_number
 
   """column name"""
+  referral_points
+
+  """column name"""
   schedule
 
   """column name"""
@@ -35754,8 +35157,6 @@ input service_provider_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_details_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_details_bool_exp!
 }
 
@@ -35764,6 +35165,7 @@ type service_provider_details_var_pop_fields {
   description_id: Float
   id: Float
   location_id: Float
+  referral_points: Float
   service_link_id: Float
   stripe_id: Float
 }
@@ -35773,6 +35175,7 @@ type service_provider_details_var_samp_fields {
   description_id: Float
   id: Float
   location_id: Float
+  referral_points: Float
   service_link_id: Float
   stripe_id: Float
 }
@@ -35782,6 +35185,7 @@ type service_provider_details_variance_fields {
   description_id: Float
   id: Float
   location_id: Float
+  referral_points: Float
   service_link_id: Float
   stripe_id: Float
 }
@@ -35998,8 +35402,6 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_location_bool_exp!
 }
 
@@ -36322,8 +35724,6 @@ input service_provider_operator_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_operator_details_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_operator_details_bool_exp!
 }
 
@@ -36719,8 +36119,6 @@ input service_provider_post_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_post_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_post_bool_exp!
 }
 
@@ -36739,6 +36137,237 @@ type service_provider_post_var_samp_fields {
 """aggregate variance on columns"""
 type service_provider_post_variance_fields {
   id: Float
+  service_provider_id: Float
+}
+
+"""
+columns and relationships of "service_provider.referral"
+"""
+type service_provider_referral {
+  customer_id: Int!
+  service_provider_id: Int!
+  service_provider_type: String!
+}
+
+"""
+aggregated selection of "service_provider.referral"
+"""
+type service_provider_referral_aggregate {
+  aggregate: service_provider_referral_aggregate_fields
+  nodes: [service_provider_referral!]!
+}
+
+"""
+aggregate fields of "service_provider.referral"
+"""
+type service_provider_referral_aggregate_fields {
+  avg: service_provider_referral_avg_fields
+  count(columns: [service_provider_referral_select_column!], distinct: Boolean): Int!
+  max: service_provider_referral_max_fields
+  min: service_provider_referral_min_fields
+  stddev: service_provider_referral_stddev_fields
+  stddev_pop: service_provider_referral_stddev_pop_fields
+  stddev_samp: service_provider_referral_stddev_samp_fields
+  sum: service_provider_referral_sum_fields
+  var_pop: service_provider_referral_var_pop_fields
+  var_samp: service_provider_referral_var_samp_fields
+  variance: service_provider_referral_variance_fields
+}
+
+"""aggregate avg on columns"""
+type service_provider_referral_avg_fields {
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "service_provider.referral". All fields are combined with a logical 'AND'.
+"""
+input service_provider_referral_bool_exp {
+  _and: [service_provider_referral_bool_exp!]
+  _not: service_provider_referral_bool_exp
+  _or: [service_provider_referral_bool_exp!]
+  customer_id: Int_comparison_exp
+  service_provider_id: Int_comparison_exp
+  service_provider_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "service_provider.referral"
+"""
+enum service_provider_referral_constraint {
+  """
+  unique or primary key constraint on columns "customer_id"
+  """
+  referral_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "service_provider.referral"
+"""
+input service_provider_referral_inc_input {
+  customer_id: Int
+  service_provider_id: Int
+}
+
+"""
+input type for inserting data into table "service_provider.referral"
+"""
+input service_provider_referral_insert_input {
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate max on columns"""
+type service_provider_referral_max_fields {
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate min on columns"""
+type service_provider_referral_min_fields {
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""
+response of any mutation on the table "service_provider.referral"
+"""
+type service_provider_referral_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [service_provider_referral!]!
+}
+
+"""
+on_conflict condition type for table "service_provider.referral"
+"""
+input service_provider_referral_on_conflict {
+  constraint: service_provider_referral_constraint!
+  update_columns: [service_provider_referral_update_column!]! = []
+  where: service_provider_referral_bool_exp
+}
+
+"""Ordering options when selecting data from "service_provider.referral"."""
+input service_provider_referral_order_by {
+  customer_id: order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
+}
+
+"""primary key columns input for table: service_provider.referral"""
+input service_provider_referral_pk_columns_input {
+  customer_id: Int!
+}
+
+"""
+select columns of table "service_provider.referral"
+"""
+enum service_provider_referral_select_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+"""
+input type for updating data in table "service_provider.referral"
+"""
+input service_provider_referral_set_input {
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate stddev on columns"""
+type service_provider_referral_stddev_fields {
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type service_provider_referral_stddev_pop_fields {
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type service_provider_referral_stddev_samp_fields {
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""
+Streaming cursor of the table "service_provider_referral"
+"""
+input service_provider_referral_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: service_provider_referral_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input service_provider_referral_stream_cursor_value_input {
+  customer_id: Int
+  service_provider_id: Int
+  service_provider_type: String
+}
+
+"""aggregate sum on columns"""
+type service_provider_referral_sum_fields {
+  customer_id: Int
+  service_provider_id: Int
+}
+
+"""
+update columns of table "service_provider.referral"
+"""
+enum service_provider_referral_update_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  service_provider_type
+}
+
+input service_provider_referral_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: service_provider_referral_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: service_provider_referral_set_input
+  where: service_provider_referral_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type service_provider_referral_var_pop_fields {
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type service_provider_referral_var_samp_fields {
+  customer_id: Float
+  service_provider_id: Float
+}
+
+"""aggregate variance on columns"""
+type service_provider_referral_variance_fields {
+  customer_id: Float
   service_provider_id: Float
 }
 
@@ -37021,8 +36650,6 @@ input service_provider_service_link_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_service_link_bool_exp!
 }
 
@@ -37400,8 +37027,6 @@ input service_provider_stripe_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_stripe_info_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_stripe_info_bool_exp!
 }
 
@@ -37675,8 +37300,6 @@ input service_provider_subscriber_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_subscriber_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_subscriber_bool_exp!
 }
 
@@ -38351,65 +37974,6 @@ type subscription_root {
     """filter the rows returned"""
     where: business_product_bool_exp
   ): [business_product!]!
-
-  """
-  fetch data from the table: "business.referral"
-  """
-  business_referral(
-    """distinct select on columns"""
-    distinct_on: [business_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [business_referral_order_by!]
-
-    """filter the rows returned"""
-    where: business_referral_bool_exp
-  ): [business_referral!]!
-
-  """
-  fetch aggregated fields from the table: "business.referral"
-  """
-  business_referral_aggregate(
-    """distinct select on columns"""
-    distinct_on: [business_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [business_referral_order_by!]
-
-    """filter the rows returned"""
-    where: business_referral_bool_exp
-  ): business_referral_aggregate!
-
-  """
-  fetch data from the table: "business.referral" using primary key columns
-  """
-  business_referral_by_pk(customer_id: Int!): business_referral
-
-  """
-  fetch data from the table in a streaming manner: "business.referral"
-  """
-  business_referral_stream(
-    """maximum number of rows returned in a single batch"""
-    batch_size: Int!
-
-    """cursor to stream the results returned by the query"""
-    cursor: [business_referral_stream_cursor_input]!
-
-    """filter the rows returned"""
-    where: business_referral_bool_exp
-  ): [business_referral!]!
 
   """
   fetch data from the table: "business.rental"
@@ -41515,6 +41079,65 @@ type subscription_root {
   ): [service_provider_post!]!
 
   """
+  fetch data from the table: "service_provider.referral"
+  """
+  service_provider_referral(
+    """distinct select on columns"""
+    distinct_on: [service_provider_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_referral_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_referral_bool_exp
+  ): [service_provider_referral!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.referral"
+  """
+  service_provider_referral_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_referral_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_referral_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_referral_bool_exp
+  ): service_provider_referral_aggregate!
+
+  """
+  fetch data from the table: "service_provider.referral" using primary key columns
+  """
+  service_provider_referral_by_pk(customer_id: Int!): service_provider_referral
+
+  """
+  fetch data from the table in a streaming manner: "service_provider.referral"
+  """
+  service_provider_referral_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [service_provider_referral_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: service_provider_referral_bool_exp
+  ): [service_provider_referral!]!
+
+  """
   fetch data from the table: "service_provider.service_link"
   """
   service_provider_service_link(
@@ -42303,8 +41926,6 @@ input translation_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_set_input
-
-  """filter the rows which have to be updated"""
   where: translation_bool_exp!
 }
 
@@ -42615,8 +42236,6 @@ input translation_value_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_value_set_input
-
-  """filter the rows which have to be updated"""
   where: translation_value_bool_exp!
 }
 
@@ -42990,8 +42609,6 @@ input user_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: user_set_input
-
-  """filter the rows which have to be updated"""
   where: user_bool_exp!
 }
 
@@ -43150,8 +42767,6 @@ enum valid_types_app_type_update_column {
 input valid_types_app_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_app_type_set_input
-
-  """filter the rows which have to be updated"""
   where: valid_types_app_type_bool_exp!
 }
 
@@ -43291,7 +42906,5 @@ enum valid_types_service_provider_type_update_column {
 input valid_types_service_provider_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_service_provider_type_set_input
-
-  """filter the rows which have to be updated"""
   where: valid_types_service_provider_type_bool_exp!
 }
