@@ -364,6 +364,7 @@ class CreateServiceViewController {
           "en": true,
         },
         profile: businessProfile!,
+        schedule: serviceInput.value.schedule!,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
