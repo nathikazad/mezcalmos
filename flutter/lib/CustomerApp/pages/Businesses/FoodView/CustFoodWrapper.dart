@@ -28,7 +28,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Locally Made",
+        title: "Food",
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

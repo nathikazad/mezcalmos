@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsLis
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
@@ -42,39 +43,39 @@ class _AllServiceListViewState extends State<AllServiceListView> {
     cServiceController.dispose();
   }
 
-  void navigateToServices(AllServiceViewEnum value) {
+  void navigateToServices(MezService value) {
     cServiceController.setCurrentSelectedService(value);
     switch (value) {
-      case AllServiceViewEnum.Delivery:
+      case MezService.Deliveries:
         DeliveryServiceView.navigate();
         return;
-      case AllServiceViewEnum.Rental:
+      case MezService.Rentals:
         // CustRentalsListView.navigate(category: RentalCategory1.Vehicle);
         CustRentalWrapper.navigate();
         //  RentalView.navigate();
         return;
-      case AllServiceViewEnum.Class:
+      case MezService.Classes:
         CustClassesListView.navigate();
         return;
-      case AllServiceViewEnum.Therapy:
+      case MezService.Therapy:
         CustTherapyListView.navigate();
         return;
-      case AllServiceViewEnum.Event:
+      case MezService.Events:
         CustEventsListView.navigate();
         return;
-      case AllServiceViewEnum.Volunteer:
+      case MezService.Volunteer:
         CustVolunteerListView.navigate();
         return;
-      case AllServiceViewEnum.Adventure:
+      case MezService.Adventure:
         CustAdventureListView.navigate();
         return;
-      case AllServiceViewEnum.Service:
+      case MezService.Services:
         CustServicesWrapper.navigate();
         return;
-      case AllServiceViewEnum.LocallyMade:
+      case MezService.LocallyMade:
         CustLocallyMadeWrapper.navigate();
         return;
-      case AllServiceViewEnum.Food:
+      case MezService.Food:
         CustFoodWrapper.navigate();
         return;
     }
@@ -82,50 +83,72 @@ class _AllServiceListViewState extends State<AllServiceListView> {
 
   @override
   Widget build(BuildContext context) {
-    final RxList<Map<String, String>> serviceListData =
+    final RxMap<MezService, Map<String, String>> serviceListData =
         cServiceController.deliveryServiceListData;
     final TextTheme txt = Theme.of(context).textTheme;
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 14.0, crossAxisSpacing: 14.0),
-          itemCount: serviceListData.length,
-          itemBuilder: (BuildContext context, int index) {
-            return MezCard(
-              radius: 10,
-              borderRadius: 15,
-              contentPadding: EdgeInsets.zero,
-              onClick: () {
-                navigateToServices(AllServiceViewEnum.values[index]);
-              },
-              content: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image.asset(
-                    serviceListData[index]["icon"].toString(),
-                    height: 85.mezSp,
-                    width: 85.mezSp,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Obx(
-                      () => FittedBox(
-                        child: Text(
-                          _i18n()[serviceListData[index]["title"]].toString(),
-                          style: txt.headlineSmall,
+    return Obx(
+      () {
+        if (cServiceController.serviceTreeData.value == null) {
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 14.0,
+                  crossAxisSpacing: 14.0),
+              itemCount:
+                  cServiceController.serviceTreeData.value!.children.length,
+              itemBuilder: (BuildContext context, int index) {
+                var currentMezService = cServiceController
+                    .serviceTreeData.value!.children[index].name;
+                return MezCard(
+                  radius: 10,
+                  borderRadius: 15,
+                  contentPadding: EdgeInsets.zero,
+                  onClick: () {
+                    navigateToServices(currentMezService);
+                  },
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset(
+                        cServiceController
+                            .deliveryServiceListData[currentMezService]!["icon"]
+                            .toString(),
+                        height: 85.mezSp,
+                        width: 85.mezSp,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Obx(
+                          () => FittedBox(
+                            child: Text(
+                              _i18n()[cServiceController
+                                      .deliveryServiceListData[
+                                          currentMezService]!["title"]
+                                      .toString()]
+                                  .toString(),
+                              style: txt.headlineSmall,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
