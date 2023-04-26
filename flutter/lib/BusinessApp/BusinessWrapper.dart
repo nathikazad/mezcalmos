@@ -5,13 +5,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
+import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -44,10 +46,11 @@ class _BusinessWarpperState extends State<BusinessWarpper> {
 
   Future<void> handleState() async {
     mezDbgPrint(
-        "🫡 Start routing process 🫡 =>${deliveryOpAuthController.operator.value?.toJson()}");
+        "🫡 Start routing process 🫡 =>${deliveryOpAuthController.operator.value}");
 
-    if (deliveryOpAuthController.operator.value?.isAuthorized == true) {
-      //  MezRouter.toNamed(DeliveryAdminRoutes.kDeliveryOpTabsView);
+    if (deliveryOpAuthController.operator.value?.status ==
+        AuthorizationStatus.Authorized) {
+      MezRouter.toNamed(BusinessOpRoutes.kBusniessOpTabsView);
     } else {
       CreateServiceView.navigate(
           serviceProviderType: cModels.ServiceProviderType.Business);

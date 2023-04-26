@@ -1040,13 +1040,6 @@ const documentNodeQuerygetUserById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'creation_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -1173,7 +1166,6 @@ class Query$getUserById$user_by_pk {
     this.email,
     this.phone,
     required this.language_id,
-    required this.creation_time,
     required this.$__typename,
   });
 
@@ -1185,7 +1177,6 @@ class Query$getUserById$user_by_pk {
     final l$email = json['email'];
     final l$phone = json['phone'];
     final l$language_id = json['language_id'];
-    final l$creation_time = json['creation_time'];
     final l$$__typename = json['__typename'];
     return Query$getUserById$user_by_pk(
       deleted: (l$deleted as bool),
@@ -1195,7 +1186,6 @@ class Query$getUserById$user_by_pk {
       email: (l$email as String?),
       phone: (l$phone as String?),
       language_id: (l$language_id as String),
-      creation_time: (l$creation_time as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1213,8 +1203,6 @@ class Query$getUserById$user_by_pk {
   final String? phone;
 
   final String language_id;
-
-  final String creation_time;
 
   final String $__typename;
 
@@ -1234,8 +1222,6 @@ class Query$getUserById$user_by_pk {
     _resultData['phone'] = l$phone;
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
-    final l$creation_time = creation_time;
-    _resultData['creation_time'] = l$creation_time;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1250,7 +1236,6 @@ class Query$getUserById$user_by_pk {
     final l$email = email;
     final l$phone = phone;
     final l$language_id = language_id;
-    final l$creation_time = creation_time;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$deleted,
@@ -1260,7 +1245,6 @@ class Query$getUserById$user_by_pk {
       l$email,
       l$phone,
       l$language_id,
-      l$creation_time,
       l$$__typename,
     ]);
   }
@@ -1309,11 +1293,6 @@ class Query$getUserById$user_by_pk {
     if (l$language_id != lOther$language_id) {
       return false;
     }
-    final l$creation_time = creation_time;
-    final lOther$creation_time = other.creation_time;
-    if (l$creation_time != lOther$creation_time) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -1349,7 +1328,6 @@ abstract class CopyWith$Query$getUserById$user_by_pk<TRes> {
     String? email,
     String? phone,
     String? language_id,
-    String? creation_time,
     String? $__typename,
   });
 }
@@ -1375,7 +1353,6 @@ class _CopyWithImpl$Query$getUserById$user_by_pk<TRes>
     Object? email = _undefined,
     Object? phone = _undefined,
     Object? language_id = _undefined,
-    Object? creation_time = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getUserById$user_by_pk(
@@ -1392,9 +1369,6 @@ class _CopyWithImpl$Query$getUserById$user_by_pk<TRes>
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
-        creation_time: creation_time == _undefined || creation_time == null
-            ? _instance.creation_time
-            : (creation_time as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1415,7 +1389,6 @@ class _CopyWithStubImpl$Query$getUserById$user_by_pk<TRes>
     String? email,
     String? phone,
     String? language_id,
-    String? creation_time,
     String? $__typename,
   }) =>
       _res;

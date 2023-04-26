@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/business_operator/hsBusinessOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 
 class BusinessOpAuthController extends GetxController {
   Rxn<Operator> operator = Rxn();
@@ -34,10 +35,10 @@ class BusinessOpAuthController extends GetxController {
   Future<void> setupBusinessOperator() async {
     try {
       mezDbgPrint("Gettign Business operator for user id: $operatorUserId");
-      // operator.value = await get_delivery_operator(userId: operatorUserId);
+      operator.value = await get_business_operator(userId: operatorUserId);
       mezDbgPrint("Operator value  ====>${operator.value}");
       if (operator.value != null) {
-        _companyId.value = operator.value!.state.serviceProviderId;
+        _companyId.value = operator.value!.serviceProviderId.toInt();
       }
     } catch (e, stk) {
       mezDbgPrint(e);

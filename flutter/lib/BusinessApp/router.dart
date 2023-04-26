@@ -1,11 +1,12 @@
 import 'package:mezcalmos/BusinessApp/BusinessWrapper.dart';
+import 'package:mezcalmos/BusinessApp/pages/BsOpTabsView.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class BusinessOpRoutes {
-  static const String kDeliveryOpTabsView = '/tabsView';
+  static const String kBusniessOpTabsView = '/tabsView';
   static const String kDeliveryOpPastOrdersRoute = '/pastOrders';
 
   static const String kNotAuthorizedOperatorRoute = "/deliveryOp/unauthorized";
@@ -21,11 +22,11 @@ class BusinessOpRoutes {
           name: SharedRoutes.kHomeRoute,
           builder: () => BusinessWarpper(),
         ),
-        // QRoute(
-        //   path: kDeliveryOpTabsView,
-        //   name: kDeliveryOpTabsView,
-        //   builder: () => DvOpTabsView(),
-        // ),
+        QRoute(
+          path: kBusniessOpTabsView,
+          name: kBusniessOpTabsView,
+          builder: () => BsOpTabsView(),
+        ),
         // QRoute(
         //   path: kDeliveryOpPastOrdersRoute,
         //   name: kDeliveryOpPastOrdersRoute,

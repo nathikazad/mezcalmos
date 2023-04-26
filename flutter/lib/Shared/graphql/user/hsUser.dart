@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 final HasuraDb _db = Get.find<HasuraDb>();
 Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
@@ -22,12 +21,12 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
   } else {
     final Query$getUserById$user_by_pk data = response.parsedData!.user_by_pk!;
     return UserInfo(
-        hasuraId: hasuraId,
-        firebaseId: data.firebase_id,
-        name: data.name,
-        language: data.language_id.toLanguage(),
-        image: data.image,
-        creationTime: data.creation_time);
+      hasuraId: hasuraId,
+      firebaseId: data.firebase_id,
+      name: data.name,
+      language: data.language_id.toLanguage(),
+      image: data.image,
+    );
   }
 }
 

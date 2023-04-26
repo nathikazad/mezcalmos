@@ -1,0 +1,25 @@
+query getBusinessOperatorByUserId($userId: Int!) {
+  business_operator(where: {user_id: {_eq: $userId}}) {
+    id
+    operator_details {
+  owner
+    status
+    online
+    }
+  
+    user_id
+    user {
+      firebase_id
+  
+      image
+      language_id
+      name
+   
+    }
+    business_id
+    details_id
+   
+   
+  
+  }
+}
