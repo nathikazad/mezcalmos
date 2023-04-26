@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustBusinessMessageCard extends StatelessWidget {
   const CustBusinessMessageCard({
@@ -70,10 +72,15 @@ class CustBusinessMessageCard extends StatelessWidget {
       action: MessageButton(
         chatId: 0,
         onTap: () {
-          custChatController.initiateChat(
-            business: business,
-            offeringName: offeringName,
-          );
+          // check if user not logged in
+          if (Get.find<AuthController>().user == null) {
+            SignInView.navigateAtOrderTime();
+          } else {
+            custChatController.initiateChat(
+              business: business,
+              offeringName: offeringName,
+            );
+          }
         },
       ),
     );
