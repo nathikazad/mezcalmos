@@ -24,10 +24,9 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - address
-        - bathrooms
+        - rental_id
         - bedrooms
+        - bathrooms
         - gps_location
         - home_type
-        - rental_id
       filter: {}

@@ -35,7 +35,6 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - creation_time
         - deleted
         - email
         - firebase_id
@@ -48,7 +47,6 @@ select_permissions:
   - role: delivery_driver
     permission:
       columns:
-        - creation_time
         - deleted
         - email
         - firebase_id
@@ -61,12 +59,11 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - big_image
-        - creation_time
         - deleted
+        - id
+        - big_image
         - email
         - firebase_id
-        - id
         - image
         - language_id
         - name
@@ -89,7 +86,6 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
-        - creation_time
         - deleted
         - email
         - firebase_id
@@ -102,7 +98,6 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - creation_time
         - deleted
         - email
         - firebase_id

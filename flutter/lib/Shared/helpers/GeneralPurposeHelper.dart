@@ -837,7 +837,7 @@ Future<int?> addReviewDialog(
 }
 
 Widget radioCircleButton(
-    {bool value = false, required void Function(bool?) onTap}) {
+    {bool value = false, required void Function(bool) onTap}) {
   return InkWell(
     customBorder: CircleBorder(),
     onTap: () {

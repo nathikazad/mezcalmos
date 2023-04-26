@@ -12,12 +12,11 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - address
+        - id
         - business_id
+        - schedule_type
+        - schedule
         - details_id
         - gps_location
-        - id
-        - schedule
-        - schedule_type
         - time
       filter: {}

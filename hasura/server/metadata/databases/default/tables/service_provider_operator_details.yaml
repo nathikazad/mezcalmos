@@ -2,6 +2,15 @@ table:
   name: operator_details
   schema: service_provider
 object_relationships:
+  - name: business_operator
+    using:
+      manual_configuration:
+        column_mapping:
+          id: details_id
+        insertion_order: null
+        remote_table:
+          name: operator
+          schema: business
   - name: delivery_operator
     using:
       manual_configuration:
@@ -40,6 +49,20 @@ object_relationships:
           name: operator
           schema: restaurant
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - user_id
+        - status
+        - owner
+        - app_version
+        - online
+        - app_type_id
+      filter:
+        business_operator:
+          user_id:
+            _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:

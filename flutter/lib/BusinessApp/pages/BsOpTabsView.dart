@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -18,8 +19,8 @@ class BsOpTabsView extends StatefulWidget {
 
 class _BsOpTabsViewState extends State<BsOpTabsView>
     with TickerProviderStateMixin {
-  DeliveryOpAuthController opAuthController =
-      Get.find<DeliveryOpAuthController>();
+  BusinessOpAuthController opAuthController =
+      Get.find<BusinessOpAuthController>();
 
   RxInt _index = RxInt(0);
   @override
@@ -40,10 +41,8 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
 
   Widget _getBody() {
     switch (_index.value) {
-      // case 0:
-      //   return DvOpCurrentOrdersListView(
-      //     canGoBack: false,
-      //   );
+      case 0:
+        return BsOpServicesListView();
 
       // case 1:
       //   return ServiceDriversListView(
@@ -87,16 +86,16 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.history),
-                label: '${_i18n()["orders"]}',
+                icon: Icon(Icons.business_center),
+                label: 'Services',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.delivery_dining),
-                label: '${_i18n()["drivers"]}',
+                icon: Icon(Icons.feed),
+                label: 'Feed',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.price_check),
-                label: '${_i18n()["deliveryCost"]}',
+                icon: Icon(Icons.textsms),
+                label: 'Messages',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
