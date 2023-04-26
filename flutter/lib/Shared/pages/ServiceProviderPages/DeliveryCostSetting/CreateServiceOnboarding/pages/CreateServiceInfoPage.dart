@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
@@ -83,6 +86,11 @@ class CreateServiceInfoPage extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
+            // todo @ChiragKr04 fix ui and translation for the filter card and sheet
+            if (viewController.isBusiness) _businessTypeFilter(context),
+            SizedBox(
+              height: 15,
+            ),
             Text(
               "${_i18n()['phoneText']}",
               style: context.txt.bodyLarge,
@@ -122,6 +130,165 @@ class CreateServiceInfoPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _businessTypeFilter(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Business type",
+          style: context.txt.bodyLarge,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        FormField<BusinessProfile?>(
+            validator: (BusinessProfile? value) {
+              mezDbgPrint("Called Validator");
+              if (value == null) {
+                return "Required";
+              }
+              return null;
+            },
+            initialValue: viewController.businessProfile,
+            builder: (FormFieldState<BusinessProfile?> fieldState) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Card(
+                    child: InkWell(
+                      onTap: () async {
+                        final BusinessProfile? newBusinessType =
+                            await _businessTypeSheet(
+                                context, viewController.businessProfile);
+
+                        fieldState.didChange(newBusinessType);
+                        fieldState.validate();
+
+                        if (newBusinessType != null) {
+                          viewController.setBusinessProfile(newBusinessType);
+                        }
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(),
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(
+                              () => Text(
+                                (viewController.businessProfile != null)
+                                    ? viewController.businessProfile!
+                                        .toFirebaseFormatString()
+                                    : "Business type",
+                                //  style: context.textTheme.bodyLarge,
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward_ios)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (fieldState.hasError)
+                    Container(
+                      margin: const EdgeInsets.only(left: 15),
+                      child: Text(fieldState.errorText ?? "",
+                          style: context.textTheme.titleMedium
+                              ?.copyWith(color: Colors.redAccent)),
+                    )
+                ],
+              );
+            })
+      ],
+    );
+  }
+
+  Future<BusinessProfile?> _businessTypeSheet(
+      BuildContext context, BusinessProfile? initialValue) {
+    Rxn<BusinessProfile> _businessProfile = Rxn<BusinessProfile>(initialValue);
+
+    return showModalBottomSheet<BusinessProfile?>(
+        isScrollControlled: true,
+        context: context,
+        constraints:
+            BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.8),
+        builder: (BuildContext context) {
+          return Column(
+            children: [
+              Text(
+                "Business type",
+                style: context.textTheme.bodyLarge,
+              ),
+              Divider(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Obx(
+                    () => Column(
+                        children: List.generate(
+                            BusinessProfile.values.length,
+                            (int index) => Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        BusinessProfile.values[index]
+                                            .toFirebaseFormatString(),
+                                        style: context.textTheme.bodyLarge,
+                                      ),
+                                      radioCircleButton(
+                                          value:
+                                              BusinessProfile.values[index] ==
+                                                  _businessProfile.value,
+                                          onTap: (bool? v) {
+                                            v == false
+                                                ? _businessProfile.value =
+                                                    BusinessProfile
+                                                        .values[index]
+                                                : _businessProfile.value = null;
+                                            mezDbgPrint(
+                                                "current ======> ${_businessProfile.value}");
+                                            mezDbgPrint(
+                                                "from list ======> ${BusinessProfile.values[index]}");
+                                            _businessProfile.refresh();
+                                          })
+                                    ],
+                                  ),
+                                ))),
+                  ),
+                ),
+              ),
+              Divider(),
+              Row(
+                children: [
+                  Flexible(
+                      child: MezButton(
+                    label: "Cancel",
+                    onClick: () async {
+                      Navigator.pop(context);
+                    },
+                    backgroundColor: offRedColor,
+                    textColor: redAccentColor,
+                  )),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Flexible(
+                      child: MezButton(
+                    label: "Save",
+                    onClick: () async {
+                      Navigator.pop(context, _businessProfile.value);
+                    },
+                  )),
+                ],
+              )
+            ],
+          );
+        });
   }
 
   Widget _locationCard(BuildContext context) {

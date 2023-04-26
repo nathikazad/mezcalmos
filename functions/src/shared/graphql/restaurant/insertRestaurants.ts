@@ -11,7 +11,7 @@ export async function insertRestaurants(data: any) {
         }]
       })
       let detailsIds: Record<string, number> = {};
-      detailsResponse.service_provider_details.forEach((d) => {
+      detailsResponse.service_provider_details.forEach((d : any) => {
         // if(!d.unique_id || !d.service_link_id)
         //   return;
         detailsIds[d.name] = d.id;

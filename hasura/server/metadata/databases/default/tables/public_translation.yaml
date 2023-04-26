@@ -2,6 +2,16 @@ table:
   name: translation
   schema: public
 object_relationships:
+  - name: business
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: business
+          schema: business
   - name: delivery_company
     using:
       manual_configuration:
@@ -41,6 +51,17 @@ array_relationships:
           name: translation_value
           schema: public
 insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
   - role: delivery_operator
     permission:
       check:
@@ -95,6 +116,17 @@ select_permissions:
         - service_provider_id
         - service_provider_type
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:

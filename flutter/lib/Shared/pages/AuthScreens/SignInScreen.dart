@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,11 +12,9 @@ import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/fakeCreds.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'dart:io';
 
 enum SignInMode {
   OptionalSignIn,
@@ -130,12 +126,12 @@ class _SignInViewState extends State<SignInView> {
         SizedBox(
           height: 10,
         ),
-        smsLoginBtn(),
-        SizedBox(
-          height: 10,
-        ),
-        if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
-          appleLoginBtn(),
+        // smsLoginBtn(),
+        // SizedBox(
+        //   height: 10,
+        // ),
+        // if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
+        //   appleLoginBtn(),
         if (MezEnv.appLaunchMode == AppLaunchMode.stage)
           ...stageLoginBtns(stageCredentials),
         if (MezEnv.appLaunchMode == AppLaunchMode.dev)

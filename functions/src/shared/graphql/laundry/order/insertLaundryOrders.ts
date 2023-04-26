@@ -12,7 +12,7 @@ export async function insertLaundryOrders(data: any, response: any) {
         }]
     })
     let insertedOrders: Record<string, boolean> = {};
-    queryResponse.laundry_order.forEach((r) => {
+    queryResponse.laundry_order.forEach((r : any) => {
         if(r.firebase_id == null)
             return;
         // console.log(typeof r.details.firebase_id)

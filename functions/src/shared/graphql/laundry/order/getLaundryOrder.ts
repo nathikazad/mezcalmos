@@ -378,8 +378,8 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
       },
     }]
   });
-  return response.laundry_order.map((o): LaundryOrder => {
-    let laundryOperators: Operator[] = o.store.operators.map((r) => {
+  return response.laundry_order.map((o : any): LaundryOrder => {
+    let laundryOperators: Operator[] = o.store.operators.map((r:  any) => {
       return {
         id: r.id,
         userId: r.user_id,
@@ -400,7 +400,7 @@ export async function getReceivedLaundryOrders(): Promise<LaundryOrder[]> {
         }
       }
     })
-    let categories: OrderCategory[] = o.categories.map((c) => {
+    let categories: OrderCategory[] = o.categories.map((c: any) => {
       return {
         orderCategoryId: c.id,
         categoryId: c.category_id,

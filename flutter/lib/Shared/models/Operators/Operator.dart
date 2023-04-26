@@ -80,7 +80,7 @@ class Operator {
 }
 // ignore_for_file: constant_identifier_names
 
-enum OperatorType { Laundry, Restaurant, Delivery }
+enum OperatorType { Laundry, Restaurant, Delivery, Business }
 
 extension ParseOrderTypeToString on OperatorType {
   String toFirebaseFormatString() {

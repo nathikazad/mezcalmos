@@ -83,7 +83,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
     throw new MezError("restaurantNotFound");
   }
 
-  let operators: Operator[] = response.restaurant_restaurant_by_pk.restaurant_operators.map((r): Operator => {
+  let operators: Operator[] = response.restaurant_restaurant_by_pk.restaurant_operators.map((r : any): Operator => {
     return {
       id: r.id,
       userId: r.user_id,

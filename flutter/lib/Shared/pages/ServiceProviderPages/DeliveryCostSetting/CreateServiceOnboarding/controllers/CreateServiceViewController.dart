@@ -44,6 +44,7 @@ class CreateServiceViewController {
   TextEditingController phone = TextEditingController();
 
   // obs //
+  Rxn<BusinessProfile> _businessProfile = Rxn<BusinessProfile>();
   RxnNum previewCost = RxnNum();
   Rxn<DeliveryCost> deliveryCost = Rxn();
   RxInt currentPage = RxInt(0);
@@ -66,6 +67,8 @@ class CreateServiceViewController {
   late ServiceProviderType serviceType;
 
   // getters //
+  BusinessProfile? get businessProfile => _businessProfile.value;
+  bool get isBusiness => serviceType == ServiceProviderType.Business;
 
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
@@ -166,7 +169,7 @@ class CreateServiceViewController {
         await handleInfoPageNext();
         break;
       case 2:
-        handleScheduleNext();
+        return handleScheduleNext();
         break;
       case 3:
         return _createService();
@@ -222,12 +225,18 @@ class CreateServiceViewController {
         .whenComplete(() => currentPage.value = pageController.page!.toInt());
   }
 
-  void handleScheduleNext() {
+  Future<bool?> handleScheduleNext() async {
     serviceInput.value.schedule = newSchedule.value;
-    pageController
-        .animateToPage(currentPage.value + 1,
-            duration: Duration(milliseconds: 500), curve: Curves.easeIn)
-        .whenComplete(() => currentPage.value = pageController.page!.toInt());
+    if (!isBusiness) {
+      unawaited(pageController
+          .animateToPage(currentPage.value + 1,
+              duration: Duration(milliseconds: 500), curve: Curves.easeIn)
+          .whenComplete(
+              () => currentPage.value = pageController.page!.toInt()));
+    } else {
+      return await _createService();
+    }
+    return null;
   }
 
   bool isFormValid() {
@@ -272,11 +281,18 @@ class CreateServiceViewController {
     } else {
       serviceInput.value.selfDeliveryCost = null;
     }
-    final bool res = await _pushServiceToDb();
-    return res;
+    if (serviceType == ServiceProviderType.Restaurant) {
+      final bool res = await _pushRestaurantToDb();
+      return res;
+    } else if (isBusiness) {
+      final bool res = await _pushBusinessToDb();
+      return res;
+    } else {
+      return false;
+    }
   }
 
-  Future<bool> _pushServiceToDb() async {
+  Future<bool> _pushRestaurantToDb() async {
     mezDbgPrint(
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
@@ -332,6 +348,34 @@ class CreateServiceViewController {
     // }
   }
 
+  Future<bool> _pushBusinessToDb() async {
+    mezDbgPrint(
+        "Creating business ${businessProfile?.toFirebaseFormatString()} with this paylod ====>>>\n ${_constructServiceDetails()}");
+    try {
+      cModels.BusinessResponse res =
+          await CloudFunctions.business_createBusiness(
+        name: serviceInput.value.serviceInfo!.name,
+        image: serviceInput.value.serviceInfo!.image,
+        location: cModels.Location(
+            lat: serviceInput.value.serviceInfo!.location.latitude,
+            lng: serviceInput.value.serviceInfo!.location.longitude,
+            address: serviceInput.value.serviceInfo!.location.address),
+        language: {
+          "en": true,
+        },
+        profile: businessProfile!,
+      );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success;
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message?.toString() ?? "Unknown Error");
+      throw Exception("Exception in _pushBusinessToDb 🟥🟥🟥 $e,$stk");
+    }
+  }
+
   Map<String, Object?> _constructServiceDetails() {
     return {
       "name": serviceInput.value.serviceInfo!.name,
@@ -346,6 +390,14 @@ class CreateServiceViewController {
       "deliveryPartnerId": serviceInput.value.deliveryPartnerId,
       "deliveryDetails": serviceInput.value.selfDeliveryCost?.toJson(),
     };
+  }
+
+  void setBusinessProfile(BusinessProfile value) {
+    _businessProfile.value = value;
+  }
+
+  void clearBusinessProfile() {
+    _businessProfile.value = null;
   }
 
   // Future<String> uploadServiceImgToFbStorage({
