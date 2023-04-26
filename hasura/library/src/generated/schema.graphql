@@ -151,42 +151,6 @@ type business_business {
   profile: String!
 
   """An array relationship"""
-  referrals(
-    """distinct select on columns"""
-    distinct_on: [service_provider_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_referral_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_referral_bool_exp
-  ): [service_provider_referral!]!
-
-  """An aggregate relationship"""
-  referrals_aggregate(
-    """distinct select on columns"""
-    distinct_on: [service_provider_referral_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_referral_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_referral_bool_exp
-  ): service_provider_referral_aggregate!
-
-  """An array relationship"""
   rentals(
     """distinct select on columns"""
     distinct_on: [business_rental_select_column!]
@@ -344,8 +308,6 @@ input business_business_bool_exp {
   products: business_product_bool_exp
   products_aggregate: business_product_aggregate_bool_exp
   profile: String_comparison_exp
-  referrals: service_provider_referral_bool_exp
-  referrals_aggregate: service_provider_referral_aggregate_bool_exp
   rentals: business_rental_bool_exp
   rentals_aggregate: business_rental_aggregate_bool_exp
   reviews: review_bool_exp
@@ -393,7 +355,6 @@ input business_business_insert_input {
   surfShop, vehicleRental, homeRental, wellnessClass, party, volunteer, tourAgency, therapy
   """
   profile: String
-  referrals: service_provider_referral_arr_rel_insert_input
   rentals: business_rental_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   service_provider_type: String
@@ -463,7 +424,6 @@ input business_business_order_by {
   operators_aggregate: business_operator_aggregate_order_by
   products_aggregate: business_product_aggregate_order_by
   profile: order_by
-  referrals_aggregate: service_provider_referral_aggregate_order_by
   rentals_aggregate: business_rental_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
@@ -36197,17 +36157,6 @@ type service_provider_referral_aggregate {
   nodes: [service_provider_referral!]!
 }
 
-input service_provider_referral_aggregate_bool_exp {
-  count: service_provider_referral_aggregate_bool_exp_count
-}
-
-input service_provider_referral_aggregate_bool_exp_count {
-  arguments: [service_provider_referral_select_column!]
-  distinct: Boolean
-  filter: service_provider_referral_bool_exp
-  predicate: Int_comparison_exp!
-}
-
 """
 aggregate fields of "service_provider.referral"
 """
@@ -36225,45 +36174,10 @@ type service_provider_referral_aggregate_fields {
   variance: service_provider_referral_variance_fields
 }
 
-"""
-order by aggregate values of table "service_provider.referral"
-"""
-input service_provider_referral_aggregate_order_by {
-  avg: service_provider_referral_avg_order_by
-  count: order_by
-  max: service_provider_referral_max_order_by
-  min: service_provider_referral_min_order_by
-  stddev: service_provider_referral_stddev_order_by
-  stddev_pop: service_provider_referral_stddev_pop_order_by
-  stddev_samp: service_provider_referral_stddev_samp_order_by
-  sum: service_provider_referral_sum_order_by
-  var_pop: service_provider_referral_var_pop_order_by
-  var_samp: service_provider_referral_var_samp_order_by
-  variance: service_provider_referral_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "service_provider.referral"
-"""
-input service_provider_referral_arr_rel_insert_input {
-  data: [service_provider_referral_insert_input!]!
-
-  """upsert condition"""
-  on_conflict: service_provider_referral_on_conflict
-}
-
 """aggregate avg on columns"""
 type service_provider_referral_avg_fields {
   customer_id: Float
   service_provider_id: Float
-}
-
-"""
-order by avg() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_avg_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
 }
 
 """
@@ -36312,29 +36226,11 @@ type service_provider_referral_max_fields {
   service_provider_type: String
 }
 
-"""
-order by max() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_max_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
-  service_provider_type: order_by
-}
-
 """aggregate min on columns"""
 type service_provider_referral_min_fields {
   customer_id: Int
   service_provider_id: Int
   service_provider_type: String
-}
-
-"""
-order by min() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_min_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
-  service_provider_type: order_by
 }
 
 """
@@ -36398,40 +36294,16 @@ type service_provider_referral_stddev_fields {
   service_provider_id: Float
 }
 
-"""
-order by stddev() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_stddev_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate stddev_pop on columns"""
 type service_provider_referral_stddev_pop_fields {
   customer_id: Float
   service_provider_id: Float
 }
 
-"""
-order by stddev_pop() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_stddev_pop_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate stddev_samp on columns"""
 type service_provider_referral_stddev_samp_fields {
   customer_id: Float
   service_provider_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_stddev_samp_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
 }
 
 """
@@ -36456,14 +36328,6 @@ input service_provider_referral_stream_cursor_value_input {
 type service_provider_referral_sum_fields {
   customer_id: Int
   service_provider_id: Int
-}
-
-"""
-order by sum() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_sum_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
 }
 
 """
@@ -36495,40 +36359,16 @@ type service_provider_referral_var_pop_fields {
   service_provider_id: Float
 }
 
-"""
-order by var_pop() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_var_pop_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate var_samp on columns"""
 type service_provider_referral_var_samp_fields {
   customer_id: Float
   service_provider_id: Float
 }
 
-"""
-order by var_samp() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_var_samp_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate variance on columns"""
 type service_provider_referral_variance_fields {
   customer_id: Float
   service_provider_id: Float
-}
-
-"""
-order by variance() on columns of table "service_provider.referral"
-"""
-input service_provider_referral_variance_order_by {
-  customer_id: order_by
-  service_provider_id: order_by
 }
 
 """
