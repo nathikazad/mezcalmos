@@ -1,7 +1,7 @@
+import { AddOperatorDetails, AddOperatorError } from "../../../../serviceProvider/addOperator";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
 import { Operator, ServiceProvider } from "../../../models/Services/Service";
-import { AddOperatorDetails, AddOperatorError } from "../../../operator/addOperator";
 
 export async function createLaundryOperator(operatorUserId: number, addOpDetails: AddOperatorDetails, laundryStore: ServiceProvider): Promise<Operator> {
 

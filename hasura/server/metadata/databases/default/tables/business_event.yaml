@@ -21,3 +21,4 @@ select_permissions:
         - schedule_type
         - time
       filter: {}
+      allow_aggregations: true

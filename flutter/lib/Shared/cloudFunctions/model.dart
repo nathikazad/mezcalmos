@@ -455,6 +455,25 @@ class ServiceProviderChatResponse {
   }
 }
 
+class AddReferralResponse {
+  bool success;
+  AddReferralError? error;
+  String? unhandledError;
+  AddReferralResponse(this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory AddReferralResponse.fromFirebaseFormattedJson(json) {
+    return AddReferralResponse(json["success"],
+        json["error"]?.toString().toAddReferralError(), json["unhandledError"]);
+  }
+}
+
 class Location {
   num lat;
   num lng;
@@ -3263,6 +3282,29 @@ extension ParseStringToServiceProviderChatError on String {
     return ServiceProviderChatError.values.firstWhere(
         (ServiceProviderChatError serviceProviderChatError) =>
             serviceProviderChatError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum AddReferralError {
+  UnhandledError,
+  IncorrectUniqueId,
+  AlreadyReferred,
+  InvalideServiceProviderType
+}
+
+extension ParseAddReferralErrorToString on AddReferralError {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToAddReferralError on String {
+  AddReferralError toAddReferralError() {
+    return AddReferralError.values.firstWhere(
+        (AddReferralError addReferralError) =>
+            addReferralError.toFirebaseFormatString().toLowerCase() ==
             toLowerCase());
   }
 }

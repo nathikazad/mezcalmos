@@ -1,6 +1,6 @@
 import { getHasura } from "../../../utilities/hasura";
 import { AuthorizationStatus, MezError } from "../../models/Generic/Generic";
-import { AuthOperatorError } from "../../operator/authorizeOperator";
+import { AuthOperatorError } from "../../../serviceProvider/authorizeOperator";
 
 export async function updateOperatorStatusToAuthorized(operatorDetailsId: number) {
     let chain = getHasura();

@@ -2,6 +2,13 @@ table:
   name: details
   schema: service_provider
 object_relationships:
+  - name: business
+    using:
+      foreign_key_constraint_on:
+        column: details_id
+        table:
+          name: business
+          schema: business
   - name: delivery_company
     using:
       foreign_key_constraint_on:

@@ -76,6 +76,7 @@ select_permissions:
         - normal_delivery_time
         - service_provider_type
       filter: {}
+      allow_aggregations: true
   - role: delivery_driver
     permission:
       columns:
