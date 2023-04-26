@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum AllServiceViewEnum {
   Delivery,
@@ -22,6 +24,7 @@ class AllServiceListViewController {
       _deliveryServiceListData;
 
   void init() {
+    _fetchServiceTree();
     _deliveryServiceListData = RxList<Map<String, String>>([
       {
         "icon": aDelivery,
@@ -64,6 +67,16 @@ class AllServiceListViewController {
         "title": "food",
       },
     ]);
+  }
+
+  void _fetchServiceTree() async {
+    var data = await get_service_tree(
+      distance: 1000000000,
+      lat: 15.8.toDouble(),
+      lng: -97.toDouble(),
+      withCache: true,
+    );
+    mezDbgPrint("service_tree: $data");
   }
 
   void setCurrentSelectedService(AllServiceViewEnum serviceValue) {

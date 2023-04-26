@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/controllers/CustServicesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -140,6 +141,11 @@ class _CustServicesListViewState extends State<CustServicesListView> {
           children: List.generate(
         viewController.businesses.length,
         (int index) => MezCard(
+            onClick: () {
+              CustBusinessView.navigate(
+                businessId: viewController.businesses[index].id,
+              );
+            },
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
             content: Text(viewController.businesses[index].name)),

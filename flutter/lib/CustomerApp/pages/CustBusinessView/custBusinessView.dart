@@ -96,7 +96,6 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   // todo @iyadh implements all the needed services / events / rentals .... lists cards of the business
                 ],
               )),
-              Text("data"),
               Container(
                   child: ListView(
                 padding: EdgeInsets.all(16),
@@ -108,7 +107,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                         schedule: _viewController.business!.details.schedule!),
                   ServiceLocationCard(
                       location: MezLocation(
-                          _viewController.business!.details.location.address!,
+                          _viewController.business!.details.location.address,
                           MezLocation.buildLocationData(
                               _viewController.business!.details.location.lat
                                   .toDouble(),

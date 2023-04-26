@@ -38,7 +38,7 @@ class CustBusinessViewController {
     required TickerProvider vsync,
   }) async {
     _businessId = businessId;
-    tabController = TabController(length: 3, vsync: vsync);
+    tabController = TabController(length: 2, vsync: vsync);
     mezDbgPrint('businessId: $businessId');
     _business.value =
         await get_business_by_id(id: businessId, withCache: false);

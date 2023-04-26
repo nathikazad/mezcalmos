@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -22,6 +24,13 @@ class CustBusinessRentalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MezCard(
+      onClick: () {
+        if (rental.category1 == RentalCategory1.Home) {
+          CustHomeRentalView.navigate(rentalId: rental.details.id.toInt());
+        } else {
+          CustRentalView.navigate(rentalId: rental.details.id.toInt());
+        }
+      },
       firstAvatarBgImage:
           (rental.details.image != null && rental.details.image!.isNotEmpty)
               ? CachedNetworkImageProvider(rental.details.image![0])

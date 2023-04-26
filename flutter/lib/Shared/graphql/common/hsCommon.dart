@@ -273,6 +273,10 @@ class ServiceTree {
   ServiceTree? parent;
   List<ServiceTree> children = [];
   ServiceTree(this.name, this.count, this.parent);
+
+  @override
+  String toString() =>
+      'ServiceTree(name: $name, count: $count, children: $children)';
 }
 
 enum MezService {
@@ -294,7 +298,7 @@ enum MezService {
   MealPlanning,
   Surf,
   Vehicle,
-  Homes,
+  Home,
   Cleaning,
   PetSitting,
   Consumable,
@@ -312,7 +316,57 @@ extension ParseMezServiceToString on MezService {
 
 extension ParseStringToMezService on String {
   MezService toMezService() {
+    mezDbgPrint2("toMezService ${toLowerCase()}");
     return MezService.values.firstWhere((MezService mezService) =>
         mezService.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
+
+// var data = ServiceTree(
+//   name: MezService.Root,
+//   count: 0,
+//   children: [
+//     ServiceTree(
+//       name: MezService.Deliveries,
+//       count: 2,
+//       children: [
+//         ServiceTree(
+//           name: MezService.Courier,
+//           count: 1,
+//           children: [],
+//         ),
+//         ServiceTree(
+//           name: MezService.Laundry,
+//           count: 1,
+//           children: [],
+//         )
+//       ],
+//     ),
+//     ServiceTree(
+//       name: MezService.Food,
+//       count: 4,
+//       children: [
+//         ServiceTree(
+//           name: MezService.Restaurants,
+//           count: 4,
+//           children: [],
+//         ),
+//       ],
+//     ),
+//     ServiceTree(
+//       name: MezService.Classes,
+//       count: 15,
+//       children: [],
+//     ),
+//     ServiceTree(
+//       name: MezService.Therapy,
+//       count: 22,
+//       children: [],
+//     ),
+//     ServiceTree(
+//       name: MezService.Events,
+//       count: 12,
+//       children: [],
+//     )
+//   ],
+// );
