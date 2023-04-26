@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Allows Local Networking</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string><mez-output-name></string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>mezcalmos</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb394067681830405</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>394067681830405</string>
+	<key>FacebookClientToken</key>
+	<string><mez-fb-client-token></string>
+	<key>FacebookDisplayName</key>
+	<string>Mezcalmos</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+
+		<string>fbapi</string>
+		<string>http</string>
+		<string>https</string>
+		<string>sms</string>
+        <string>tel</string>
+        <string>mailto</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>App needs location always and when in use to update your Taxi Driver about your location!</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>App needs location always and when in use to update your Taxi Driver about your location, so can the app have location always?</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Older devices need location.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App needs location when in use to update your Taxi Driver about your location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+    <string>voip</string>
+		<string>processing</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+		<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://mezc.co</string>
+	</array>
+
+ 	<key>CFBundlePrimaryIcon</key>
+	<dict>
+		<key>CFBundleIconFiles</key>
+		<array>
+			<string>AppIcon-<mez-app-type></string>
+		</array>
+		<key>UIPrerenderedIcon</key>
+		<false/>
+	</dict>
+ </dict>
+</plist>

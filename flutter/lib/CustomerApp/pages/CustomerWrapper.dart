@@ -65,7 +65,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     return Scaffold(
       bottomNavigationBar: _navBar(),
       body: Obx(() {
-        if (authController.isUserSignedIn) {
+        if (authController.user != null) {
           return _getBody();
         } else {
           return AllServiceView();
@@ -106,7 +106,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   Widget _navBar() {
     return Obx(
-      () => authController.isUserSignedIn
+      () => authController.user != null
           ? BottomNavigationBar(
               selectedLabelStyle: context.textTheme.bodyLarge,
               unselectedLabelStyle: context.textTheme.bodyMedium,

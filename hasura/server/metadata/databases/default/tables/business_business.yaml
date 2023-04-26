@@ -60,3 +60,14 @@ select_permissions:
         - profile
         - service_provider_type
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - details_id
+        - id
+        - service_provider_type
+        - profile
+      filter:
+        operators:
+          user_id:
+            _eq: X-Hasura-User-Id

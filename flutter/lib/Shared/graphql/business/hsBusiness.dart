@@ -209,7 +209,8 @@ Future<List<BusinessCard>> get_business_by_service_category1(
                   : FetchPolicy.networkOnly,
               variables: Variables$Query$get_business_by_service_category1(
                   categories1: categories1
-                      .map((ServiceCategory1 e) => e.toFirebaseFormatString())
+                      .map<String>(
+                          (ServiceCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
                   from: Geography(

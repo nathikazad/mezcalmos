@@ -46,7 +46,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
         stripeSPIds[i.sp_id] = i.stripe_id
     })
     let cards: Record<string, CustomerCard> = {}
-    response.customer_customer_by_pk.stripe_cards.forEach((c:any) => {
+    response.customer_customer_by_pk.stripe_cards.forEach((c : any) => {
         cards[c.card_id] = {
             cardId: c.card_id,
             brand: c.brand,

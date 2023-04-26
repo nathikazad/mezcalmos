@@ -99,12 +99,7 @@ select_permissions:
         - translation_id
         - language_id
         - value
-      filter:
-        translation_group:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
+      filter: {}
   - role: customer
     permission:
       columns:
@@ -160,7 +155,12 @@ update_permissions:
             operators:
               user_id:
                 _eq: X-Hasura-User-Id
-      check: null
+      check:
+        translation_group:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: delivery_driver
     permission:
       columns:

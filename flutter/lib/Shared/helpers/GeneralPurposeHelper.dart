@@ -841,7 +841,7 @@ Widget radioCircleButton(
   return InkWell(
     customBorder: CircleBorder(),
     onTap: () {
-      onTap.call(null);
+      onTap.call(value);
     },
     child: Ink(
         child: (value)

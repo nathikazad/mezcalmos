@@ -124,7 +124,9 @@ update_permissions:
       filter:
         id:
           _eq: X-Hasura-User-Id
-      check: null
+      check:
+        id:
+          _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:

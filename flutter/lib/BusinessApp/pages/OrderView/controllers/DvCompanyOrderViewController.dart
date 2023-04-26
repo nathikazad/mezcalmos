@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -24,10 +24,10 @@ class DvCompanyOrderViewController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   // vars //
   Rxn<DeliveryOrder> order = Rxn();
-  DeliveryOrderStatus? _statusSnapshot;
+  cModels.DeliveryOrderStatus? _statusSnapshot;
 
   // getters //
-  DeliveryOrderStatus get orderStatus {
+  cModels.DeliveryOrderStatus get orderStatus {
     return order.value!.status;
   }
 
@@ -245,10 +245,10 @@ class DvCompanyOrderViewController {
   // }
   Future<bool> cancelOrder() async {
     try {
-      ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery3_changeStatus(
+      cModels.ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery2_changeStatus(
         deliveryId: order.value!.orderId,
-        newStatus: DeliveryOrderStatus.CancelledByAdmin,
+        newStatus: cModels.DeliveryOrderStatus.CancelledByAdmin,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
@@ -272,6 +272,6 @@ class DvCompanyOrderViewController {
 
   void clearNotifications(int orderId) {
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
-        orderType: OrderType.Courier, orderId: orderId);
+        orderType: cModels.OrderType.Courier, orderId: orderId);
   }
 }

@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
@@ -153,6 +152,7 @@ class AuthController extends GetxController {
       'delivery_operator',
       'delivery_driver',
       'laundry_operator'
+      'business_operator',
     ];
 
     final List<String> difference =
