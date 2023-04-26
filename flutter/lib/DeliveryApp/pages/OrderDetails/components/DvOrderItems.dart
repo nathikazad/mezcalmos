@@ -99,8 +99,10 @@ class DvOrderItems extends StatelessWidget {
                                       ],
                                     ),
                                   if (viewController
-                                          .order.value?.isDriverAssigned ==
-                                      true)
+                                              .order.value?.isDriverAssigned ==
+                                          true &&
+                                      viewController.order.value?.inProcess() ==
+                                          true)
                                     MezButton(
                                       label: (viewController
                                               .items.value![index].unavailable)
@@ -177,7 +179,9 @@ class DvOrderItems extends StatelessWidget {
                         width: 10,
                       ),
                       if (!viewController.items.value![index].unavailable &&
-                          viewController.order.value?.isDriverAssigned == true)
+                          viewController.order.value?.isDriverAssigned ==
+                              true &&
+                          viewController.order.value?.inProcess() == true)
                         MezIconButton(
                             elevation: 0,
                             backgroundColor: backgroundShadeColor,
@@ -190,7 +194,7 @@ class DvOrderItems extends StatelessWidget {
                                   .toString();
                               await _showCostSheet(context, index);
                             },
-                            icon: Icons.edit)
+                            icon: Icons.edit_outlined)
                     ],
                   ),
                 ),
@@ -200,6 +204,7 @@ class DvOrderItems extends StatelessWidget {
   }
 
   Future<dynamic> _showCostSheet(BuildContext context, int index) {
+    viewController.costText.text = '';
     return showModalBottomSheet(
         isScrollControlled: true,
         shape: RoundedRectangleBorder(

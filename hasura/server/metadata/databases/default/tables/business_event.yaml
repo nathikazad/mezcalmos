@@ -20,3 +20,4 @@ select_permissions:
         - gps_location
         - time
       filter: {}
+      allow_aggregations: true

@@ -20,12 +20,12 @@ array_relationships:
         table:
           name: operator
           schema: business
-  - name: referrals
+  - name: products
     using:
       foreign_key_constraint_on:
         column: business_id
         table:
-          name: referral
+          name: product
           schema: business
   - name: rentals
     using:
@@ -51,15 +51,13 @@ select_permissions:
         - details_id
         - id
         - profile
-        - referral_points
         - service_provider_type
       filter: {}
-  - role: restaurant_operator
+  - role: business_operator
     permission:
       columns:
         - details_id
         - id
-        - referral_points
         - service_provider_type
         - profile
       filter:

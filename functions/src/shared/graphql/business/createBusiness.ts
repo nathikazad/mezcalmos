@@ -18,6 +18,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                         image: businessDetails.image,
                         language: JSON.stringify(businessDetails.language),
                         service_provider_type: ServiceProviderType.Business,
+                        schedule: JSON.stringify(businessDetails.schedule),
                         location: {
                             data: {
                                 gps: JSON.stringify({
@@ -63,6 +64,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
             name: businessDetails.name,
             image: businessDetails.image,
             location: businessDetails.location,
+            schedule: businessDetails.schedule,
             deliveryDetails: {
                 customerPickup: false,
                 deliveryAvailable: false,

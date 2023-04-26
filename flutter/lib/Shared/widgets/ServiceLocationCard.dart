@@ -15,10 +15,12 @@ class ServiceLocationCard extends StatefulWidget {
   const ServiceLocationCard({
     Key? key,
     required this.location,
+    this.textStyle,
     this.height = null,
   }) : super(key: key);
 
   final MezLocation location;
+  final TextStyle? textStyle;
   final double? height;
 
   @override

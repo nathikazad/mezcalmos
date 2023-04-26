@@ -3,7 +3,7 @@ import { AppType, Language, MezError } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";;
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../../models/Services/Service";
-import { AddDriverDetails, AddDriverError } from "../../../../delivery/addDriver";
+import { AddDriverDetails, AddDriverError } from "../../../../serviceProvider/addDriver";
 
 export async function createDeliveryDriver(userId: number, serviceProvider: ServiceProvider, addDriverDetails: AddDriverDetails): Promise<DeliveryDriver> {
     let chain = getHasura();

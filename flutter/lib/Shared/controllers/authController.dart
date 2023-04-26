@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -113,6 +115,28 @@ class AuthController extends GetxController {
       // we check if user just signed up using _userInfo.value.created time < 120 seconds
       //    if yes we check if uniqueId is set in local storage
       //        we call the cloud function
+      if (_userInfo.value?.creationTime != null) {
+        if ((DateTime.now().millisecondsSinceEpoch) -
+                (DateTime.parse(_userInfo.value!.creationTime!)
+                    .millisecondsSinceEpoch) <
+            120 * 1000) {
+          if (GetStorage().read('uniqueId') != null) {
+            try {
+              final cModels.AddReferralResponse res =
+                  await CloudFunctions.serviceProvider_addReferral(
+                      uniqueId: GetStorage().read('uniqueId'));
+
+              if (res.success == false) {
+                mezDbgPrint(res.error);
+              }
+              // GetStorage().remove('uniqueId');
+            } catch (e, stk) {
+              mezDbgPrint(e);
+              mezDbgPrint(stk);
+            }
+          }
+        }
+      }
     }
 
     _authStateStreamController.add(user);

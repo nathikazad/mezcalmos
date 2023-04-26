@@ -13,15 +13,14 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 import * as userChanges from './utilities/userChanges'
 import { assignDriver } from "./delivery/assignDriver";
-import { addDriver } from "./delivery/addDriver";
-import { authorizeDriver } from "./delivery/authorizeDriver";
+import { addDriver } from "./serviceProvider/addDriver";
 import { callUser } from "./utilities/agora";
 import { requestLaundry } from "./laundry/laundryRequest";
 import { createLaundry } from "./laundry/createNewLaundry";
 import { cancelLaundryFromCustomer } from "./laundry/cancelLaundryFromCustomer";
 import { changeDeliveryStatus } from "./delivery/statusChange";
-import { addOperator } from "./shared/operator/addOperator";
-import { authorizeOperator } from "./shared/operator/authorizeOperator";
+import { addOperator } from "./serviceProvider/addOperator";
+import { authorizeOperator } from "./serviceProvider/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
 import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
@@ -30,6 +29,8 @@ import { requestOrder } from "./business/orderRequest";
 import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
 import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
 import { createServiceProviderChat } from "./shared/chat/createChat";
+import { addNewReferral } from "./serviceProvider/addReferral";
+import { authorizeDriver } from "./serviceProvider/authorizeDriver";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -69,6 +70,7 @@ export const serviceProvider = {
   addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
   authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
   createServiceProviderChat: authenticatedCall((userId, data) => createServiceProviderChat(userId, data)),
+  addReferral: authenticatedCall((userId, data) => addNewReferral(userId, data)),
 }
 
 export const restaurant2 = {

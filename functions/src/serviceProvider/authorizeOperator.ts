@@ -1,17 +1,17 @@
-import { pushNotification } from "../../utilities/senders/notifyUser";
-import { deleteDeliveryOperator } from "../graphql/delivery/operator/deleteOperator";
-import { getDeliveryOperatorByUserId, getDeliveryOperator } from "../graphql/delivery/operator/getDeliveryOperator";
-import { deleteLaundryOperator } from "../graphql/laundry/operator/deleteOperator";
-import { getLaundryOperator, getLaundryOperatorByUserId } from "../graphql/laundry/operator/getLaundryOperator";
-import { updateOperatorStatusToAuthorized } from "../graphql/operator/updateOperatorStatus";
-import { deleteRestaurantOperator } from "../graphql/restaurant/operators/deleteOperator";
-import { getRestaurantOperator, getRestaurantOperatorByUserId } from "../graphql/restaurant/operators/getRestaurantOperators";
-import { isMezAdmin } from "../helper";
-import { ParticipantType } from "../models/Generic/Chat";
-import { DeliveryOperatorApprovedNotification } from "../models/Generic/Delivery";
-import { MezError } from "../models/Generic/Generic";
-import { Notification, NotificationAction, NotificationType } from "../models/Notification";
-import { Operator, OperatorApprovedNotification } from "../models/Services/Service";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { deleteDeliveryOperator } from "../shared/graphql/delivery/operator/deleteOperator";
+import { getDeliveryOperatorByUserId, getDeliveryOperator } from "../shared/graphql/delivery/operator/getDeliveryOperator";
+import { deleteLaundryOperator } from "../shared/graphql/laundry/operator/deleteOperator";
+import { getLaundryOperator, getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
+import { updateOperatorStatusToAuthorized } from "../shared/graphql/operator/updateOperatorStatus";
+import { deleteRestaurantOperator } from "../shared/graphql/restaurant/operators/deleteOperator";
+import { getRestaurantOperator, getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
+import { isMezAdmin } from "../shared/helper";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { DeliveryOperatorApprovedNotification } from "../shared/models/Generic/Delivery";
+import { MezError } from "../shared/models/Generic/Generic";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { Operator, OperatorApprovedNotification } from "../shared/models/Services/Service";
 
 export interface AuthorizeDetails {
     newOperatorId: number,

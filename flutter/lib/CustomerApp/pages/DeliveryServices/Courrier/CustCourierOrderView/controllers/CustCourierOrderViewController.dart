@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePri
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustCourierOrderView"];
@@ -105,94 +106,88 @@ class CustCourierOrderViewController {
             contentPadding:
                 const EdgeInsets.only(bottom: 0, top: 16, left: 16, right: 16),
             insetPadding:
-                const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                EdgeInsets.symmetric(horizontal: 12.5.w, vertical: 15),
             // contentPadding:
             //     const EdgeInsets.symmetric(vertical: 12, horizontal: 22),
-            content: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFECEEFF), shape: BoxShape.circle),
-                    padding: const EdgeInsets.all(16),
-                    child: Icon(
-                      Icons.price_change_rounded,
-                      size: 35,
-                      color: primaryBlueColor,
-                    ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Color(0xFFECEEFF), shape: BoxShape.circle),
+                  padding: const EdgeInsets.all(16),
+                  child: Icon(
+                    Icons.price_change_rounded,
+                    size: 35,
+                    color: primaryBlueColor,
                   ),
-                  SizedBox(
-                    height: 8,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  "${_i18n()['priceChangeTitle']}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
                   ),
-                  Text(
-                    "${_i18n()['priceChangeTitle']}",
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 24,
-                    ),
-                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text("${_i18n()['newPrice']}",
+                    style:
+                        context.textTheme.displaySmall?.copyWith(fontSize: 20)),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(order.costs.changePriceRequest?.newPrice.toPriceString() ??
+                    "-"),
+                if (order.costs.changePriceRequest?.reason != null &&
+                    order.costs.changePriceRequest!.reason.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      Divider(
                         height: 20,
                       ),
-                      Text("${_i18n()['newPrice']}",
-                          style: context.textTheme.displaySmall
-                              ?.copyWith(fontSize: 20)),
+                      Text(
+                        "${_i18n()['reason']}",
+                        style: context.textTheme.bodyLarge,
+                      ),
                       SizedBox(
                         height: 5,
                       ),
-                      Text(order.costs.changePriceRequest?.newPrice
-                              .toPriceString() ??
-                          "-"),
-                      if (order.costs.changePriceRequest?.reason != null &&
-                          order.costs.changePriceRequest!.reason.isNotEmpty)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Divider(
-                              height: 20,
-                            ),
-                            Text(
-                              "${_i18n()['reason']}",
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(order.costs.changePriceRequest?.reason ?? ""),
-                          ],
-                        ),
-                      SizedBox(
-                        height: 8,
-                      ),
+                      Text(order.costs.changePriceRequest?.reason ?? ""),
                     ],
                   ),
-                  MezButton(
-                    label: "${_i18n()['accept']}",
-                    onClick: () async {
-                      await _priceChangeResponse(accepted: true);
-                      isChangePricePopUp = false;
-                      Navigator.pop(context);
-                    },
-                  ),
-                  MezButton(
-                    label: "${_i18n()['cancelOrder']}",
-                    height: 50,
-                    backgroundColor: Colors.transparent,
-                    textColor: Colors.grey.shade900,
-                    onClick: () async {
-                      await _priceChangeResponse(accepted: false);
-                      isChangePricePopUp = false;
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
+                SizedBox(
+                  height: 8,
+                ),
+                MezButton(
+                  label: "${_i18n()['accept']}",
+                  onClick: () async {
+                    await _priceChangeResponse(accepted: true);
+                    isChangePricePopUp = false;
+                    Navigator.pop(context);
+                  },
+                ),
+                MezButton(
+                  label: "${_i18n()['cancelOrder']}",
+                  height: 50,
+                  backgroundColor: Colors.transparent,
+                  textColor: Colors.grey.shade900,
+                  onClick: () async {
+                    await _priceChangeResponse(accepted: false);
+                    isChangePricePopUp = false;
+                    Navigator.pop(context);
+                  },
+                )
+              ],
             ),
           );
         });

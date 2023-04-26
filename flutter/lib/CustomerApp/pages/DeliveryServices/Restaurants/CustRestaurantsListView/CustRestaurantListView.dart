@@ -273,6 +273,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
   Widget _sortingSwitcher() {
     return Obx(() => CustSwitchOpenService(
+          label: '${_i18n()["showOnlyOpenRestaurants"]}',
           showOnlyOpen: viewController.showOnlyOpen.value,
           onChange: (bool value) {
             viewController.changeAlwaysOpenSwitch(value);

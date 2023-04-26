@@ -24,3 +24,4 @@ select_permissions:
         - details_id
         - id
       filter: {}
+      allow_aggregations: true

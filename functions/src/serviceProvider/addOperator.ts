@@ -1,17 +1,17 @@
-import { pushNotification } from "../../utilities/senders/notifyUser";
-import { createDeliveryOperator } from "../graphql/delivery/operator/createDeliveryOperator";
-import { getDeliveryOperators } from "../graphql/delivery/operator/getDeliveryOperator";
-import { getServiceProviderFromUniqueId } from "../graphql/getServiceProvider";
-import { createLaundryOperator } from "../graphql/laundry/operator/createLaundryOperator";
-import { getLaundryOperators } from "../graphql/laundry/operator/getLaundryOperator";
-import { createRestaurantOperator } from "../graphql/restaurant/operators/createRestaurantOperator";
-import { getRestaurantOperators } from "../graphql/restaurant/operators/getRestaurantOperators";
-import { getUser } from "../graphql/user/getUser";
-import { ParticipantType } from "../models/Generic/Chat";
-import { MezError } from "../models/Generic/Generic";
-import { UserInfo } from "../models/Generic/User";
-import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../models/Notification";
-import { Operator, ServiceProvider, ServiceProviderType } from "../models/Services/Service";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { createDeliveryOperator } from "../shared/graphql/delivery/operator/createDeliveryOperator";
+import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
+import { getServiceProviderFromUniqueId } from "../shared/graphql/getServiceProvider";
+import { createLaundryOperator } from "../shared/graphql/laundry/operator/createLaundryOperator";
+import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
+import { createRestaurantOperator } from "../shared/graphql/restaurant/operators/createRestaurantOperator";
+import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
+import { getUser } from "../shared/graphql/user/getUser";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { MezError } from "../shared/models/Generic/Generic";
+import { UserInfo } from "../shared/models/Generic/User";
+import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
+import { Operator, ServiceProvider, ServiceProviderType } from "../shared/models/Services/Service";
 
 export interface AddOperatorDetails {
     uniqueId: string,

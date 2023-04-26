@@ -1,6 +1,6 @@
+import { AddOperatorDetails, AddOperatorError } from "../../../../serviceProvider/addOperator";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
-import { AddOperatorDetails, AddOperatorError } from "../../../operator/addOperator";
 import { Operator, ServiceProvider } from "../../../models/Services/Service";
 
 export async function createDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails, deliveryCompany: ServiceProvider): Promise<Operator> {
