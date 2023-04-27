@@ -55,7 +55,17 @@ class BusinessAppTheme {
             fontSize: 10.sp,
             color: Colors.black.withOpacity(0.8),
           ),
-          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(12),
+          isDense: true,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide.none),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(width: 1, color: Colors.grey.shade400)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide.none),
           floatingLabelBehavior: FloatingLabelBehavior.never),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,

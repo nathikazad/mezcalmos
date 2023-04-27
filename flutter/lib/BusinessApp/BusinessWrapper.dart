@@ -45,6 +45,9 @@ class _BusinessWarpperState extends State<BusinessWarpper> {
   }
 
   Future<void> handleState() async {
+    // if (Get.find<AuthController>().userRedirectFinish == true) {
+    //   return;
+    // }
     mezDbgPrint(
         "🫡 Start routing process 🫡 =>${deliveryOpAuthController.operator.value}");
 

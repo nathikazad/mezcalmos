@@ -115,7 +115,7 @@ class _WrapperState extends State<Wrapper> {
     // We should Priotorize the AppNeedsUpdate router to force users to update
     // if (!MezRouter.isCurrentRoute(SharedRoutes.kAppNeedsUpdate)) {
     mezDbgPrint(
-        "User redirect :=========>${authController.userRedirectFinish}");
+        " 🔥 User redirect :=========>${authController.userRedirectFinish}");
     if (authController.userRedirectFinish == true) {
       return;
     }

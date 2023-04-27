@@ -323,7 +323,9 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
                     category1: rental.category1.toFirebaseFormatString(),
                     category2: rental.category2?.toFirebaseFormatString() ??
                         RentalCategory2.Uncategorized.toFirebaseFormatString(),
-                    cost: rental.details.cost,
+                    cost: rental.details.cost.map((TimeUnit key, num value) =>
+                        MapEntry(
+                            key.toFirebaseFormatString(), value.toDouble())),
                     image: rental.details.image,
                     name: Input$translation_obj_rel_insert_input(
                         data: Input$translation_insert_input(

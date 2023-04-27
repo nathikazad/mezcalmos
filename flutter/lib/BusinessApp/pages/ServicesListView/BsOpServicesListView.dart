@@ -91,6 +91,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                     child: MezButton(
                                   label: "Add",
                                   onClick: () async {
+                                    Navigator.pop(context);
                                     BsOpHomeRentalView.navigate(id: null);
                                   },
                                 ))

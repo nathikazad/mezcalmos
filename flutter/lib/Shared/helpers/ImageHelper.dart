@@ -356,3 +356,14 @@ Future<String> uploadImgToFbStorage(
   }
   return _uploadedImgUrl;
 }
+
+Future<File> createFileFromAsset(
+    {required String assetPath, required String fileName}) async {
+  // Get the asset data
+  ByteData data = await rootBundle.load(assetPath);
+  // Create the file and write the asset data to it
+  File file = File('$fileName');
+  await file.writeAsBytes(
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  return file;
+}
