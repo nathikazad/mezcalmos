@@ -6,15 +6,18 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsLi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class CustServicesWrapper extends StatefulWidget {
   const CustServicesWrapper({super.key});
-  static Future<void> navigate() {
+  static Future<void> navigate({required List<ServiceTree> serviceTree}) {
     final String route = CustBusinessRoutes.custServicesWrapperRoute;
-    return MezRouter.toPath(route);
+    return MezRouter.toPath(route, arguments: {
+      "serviceTree": serviceTree,
+    });
   }
 
   @override
@@ -22,6 +25,34 @@ class CustServicesWrapper extends StatefulWidget {
 }
 
 class _CustServicesWrapperState extends State<CustServicesWrapper> {
+  late List<ServiceTree> serviceTree;
+
+  @override
+  void initState() {
+    super.initState();
+    serviceTree = MezRouter.bodyArguments!["serviceTree"] as List<ServiceTree>;
+  }
+
+  void navigateToListView(MezService mezService) {
+    switch (mezService) {
+      case MezService.Cleaning:
+        CustServicesListView.navigate(
+          serviceCategory: ServiceCategory1.Cleaning,
+        );
+        break;
+      case MezService.MealPlanning:
+        CustServicesListView.navigate(
+          serviceCategory: ServiceCategory1.MealPlanning,
+        );
+        break;
+      case MezService.PetSitting:
+        CustServicesListView.navigate(
+          serviceCategory: ServiceCategory1.PetSitting,
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,38 +64,18 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: [
-            MezCard(
-                onClick: () {
-                  CustServicesListView.navigate(
-                    serviceCategory: ServiceCategory1.Cleaning
-                  );
-                },
-                content: Text(
-                  "Cleaning",
-                  style: context.textTheme.displayLarge,
-                )),
-            MezCard(
-                onClick: () {
-                  CustServicesListView.navigate(
-                    serviceCategory: ServiceCategory1.MealPlanning,
-                  );
-                },
-                content: Text(
-                  "Meal Planning",
-                  style: context.textTheme.displayLarge,
-                )),
-            MezCard(
-                onClick: () {
-                  CustServicesListView.navigate(
-                    serviceCategory: ServiceCategory1.PetSitting,
-                  );
-                },
-                content: Text(
-                  "Pet Sitting",
-                  style: context.textTheme.displayLarge,
-                )),
-          ],
+          children: List.generate(
+            serviceTree.length,
+            (int index) => MezCard(
+              onClick: () {
+                navigateToListView(serviceTree[index].name);
+              },
+              content: Text(
+                serviceTree[index].name.name,
+                style: context.textTheme.displayLarge,
+              ),
+            ),
+          ),
         ),
       ),
     );

@@ -43,15 +43,22 @@ class _AllServiceListViewState extends State<AllServiceListView> {
     cServiceController.dispose();
   }
 
-  void navigateToServices(MezService value) {
+  void navigateToServices(
+    MezService value,
+    List<ServiceTree> childServiceTree,
+  ) {
     cServiceController.setCurrentSelectedService(value);
     switch (value) {
       case MezService.Deliveries:
-        DeliveryServiceView.navigate();
+        DeliveryServiceView.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
       case MezService.Rentals:
         // CustRentalsListView.navigate(category: RentalCategory1.Vehicle);
-        CustRentalWrapper.navigate();
+        CustRentalWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         //  RentalView.navigate();
         return;
       case MezService.Classes:
@@ -70,13 +77,19 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         CustAdventureListView.navigate();
         return;
       case MezService.Services:
-        CustServicesWrapper.navigate();
+        CustServicesWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
       case MezService.LocallyMade:
-        CustLocallyMadeWrapper.navigate();
+        CustLocallyMadeWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
       case MezService.Food:
-        CustFoodWrapper.navigate();
+        CustFoodWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
     }
   }
@@ -97,54 +110,63 @@ class _AllServiceListViewState extends State<AllServiceListView> {
           );
         }
         return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 14.0,
-                  crossAxisSpacing: 14.0),
-              itemCount:
-                  cServiceController.serviceTreeData.value!.children.length,
-              itemBuilder: (BuildContext context, int index) {
-                var currentMezService = cServiceController
-                    .serviceTreeData.value!.children[index].name;
-                return MezCard(
-                  radius: 10,
-                  borderRadius: 15,
-                  contentPadding: EdgeInsets.zero,
-                  onClick: () {
-                    navigateToServices(currentMezService);
-                  },
-                  content: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await cServiceController.fetchServiceTree();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 14.0,
+                    crossAxisSpacing: 14.0),
+                itemCount:
+                    cServiceController.serviceTreeData.value!.children.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var currentMezService = cServiceController
+                      .serviceTreeData.value!.children[index].name;
+                  return MezCard(
+                    radius: 10,
+                    borderRadius: 15,
+                    contentPadding: EdgeInsets.zero,
+                    onClick: () {
+                      navigateToServices(
+                        currentMezService,
                         cServiceController
-                            .deliveryServiceListData[currentMezService]!["icon"]
-                            .toString(),
-                        height: 85.mezSp,
-                        width: 85.mezSp,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Obx(
-                          () => FittedBox(
-                            child: Text(
-                              _i18n()[cServiceController
-                                      .deliveryServiceListData[
-                                          currentMezService]!["title"]
-                                      .toString()]
-                                  .toString(),
-                              style: txt.headlineSmall,
+                            .serviceTreeData.value!.children[index].children,
+                      );
+                    },
+                    content: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          cServiceController.deliveryServiceListData[
+                                  currentMezService]!["icon"]
+                              .toString(),
+                          height: 85.mezSp,
+                          width: 85.mezSp,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Obx(
+                            () => FittedBox(
+                              child: Text(
+                                _i18n()[cServiceController
+                                        .deliveryServiceListData[
+                                            currentMezService]!["title"]
+                                        .toString()]
+                                    .toString(),
+                                style: txt.headlineSmall,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         );
