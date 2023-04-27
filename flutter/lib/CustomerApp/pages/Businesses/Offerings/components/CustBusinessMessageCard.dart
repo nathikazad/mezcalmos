@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustMessagesView/controllers/CustChatController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -23,6 +23,7 @@ class CustBusinessMessageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final CustChatController custChatController = CustChatController();
     final List<IconData> acceptedIconList = getAcceptedPaymentIcon();
+    print("BUSINESS DATA ${business.id} ${business.detailsId}");
     return MezCard(
       firstAvatarBgImage: CachedNetworkImageProvider(business.image),
       content: Column(
@@ -77,7 +78,8 @@ class CustBusinessMessageCard extends StatelessWidget {
             SignInView.navigateAtOrderTime();
           } else {
             custChatController.initiateChat(
-              business: business,
+              businessId: business.id,
+              businessImage: business.image,
               offeringName: offeringName,
             );
           }

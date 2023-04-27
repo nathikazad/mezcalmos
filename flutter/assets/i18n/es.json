@@ -627,7 +627,7 @@
       "CustomerWrapper": {
         "orders" : "Pedidos",
         "profile" :"Perfil",
-        "feed" : "Alimentar",
+        "messages" : "Mensajes",
         "home" :"Hogar",
         "savedLocations": "Ubicaciones guardadas",
         "welcomeText": "Bienvenido a MEZCALMOS 👋",
