@@ -283,7 +283,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
     }]
   });
 
- return  response.restaurant_order.map((o ): RestaurantOrder => {
+ return  response.restaurant_order.map((o: any): RestaurantOrder => {
     let restaurantOperators: Operator[] = o.restaurant.restaurant_operators.map((r:any) => {
       return {
         id: r.id,

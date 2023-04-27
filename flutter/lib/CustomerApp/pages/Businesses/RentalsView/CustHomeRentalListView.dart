@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustHomeRentalsListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -130,6 +131,11 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
           children: List.generate(
         viewController.businesses.length,
         (int index) => MezCard(
+            onClick: () {
+              CustBusinessView.navigate(
+                businessId: viewController.businesses[index].id,
+              );
+            },
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
             content: Text(viewController.businesses[index].name)),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/controllers/CustAdventureListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -128,6 +129,11 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
           children: List.generate(
         viewController.businesses.length,
         (int index) => MezCard(
+            onClick: () {
+              CustBusinessView.navigate(
+                businessId: viewController.businesses[index].id,
+              );
+            },
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
             content: Text(viewController.businesses[index].name)),

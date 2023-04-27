@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsLis
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
@@ -42,90 +43,134 @@ class _AllServiceListViewState extends State<AllServiceListView> {
     cServiceController.dispose();
   }
 
-  void navigateToServices(AllServiceViewEnum value) {
+  void navigateToServices(
+    MezService value,
+    List<ServiceTree> childServiceTree,
+  ) {
     cServiceController.setCurrentSelectedService(value);
     switch (value) {
-      case AllServiceViewEnum.Delivery:
-        DeliveryServiceView.navigate();
+      case MezService.Deliveries:
+        DeliveryServiceView.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
-      case AllServiceViewEnum.Rental:
+      case MezService.Rentals:
         // CustRentalsListView.navigate(category: RentalCategory1.Vehicle);
-        CustRentalWrapper.navigate();
+        CustRentalWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         //  RentalView.navigate();
         return;
-      case AllServiceViewEnum.Class:
+      case MezService.Classes:
         CustClassesListView.navigate();
         return;
-      case AllServiceViewEnum.Therapy:
+      case MezService.Therapy:
         CustTherapyListView.navigate();
         return;
-      case AllServiceViewEnum.Event:
+      case MezService.Events:
         CustEventsListView.navigate();
         return;
-      case AllServiceViewEnum.Volunteer:
+      case MezService.Volunteer:
         CustVolunteerListView.navigate();
         return;
-      case AllServiceViewEnum.Adventure:
+      case MezService.Adventure:
         CustAdventureListView.navigate();
         return;
-      case AllServiceViewEnum.Service:
-        CustServicesWrapper.navigate();
+      case MezService.Services:
+        CustServicesWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
-      case AllServiceViewEnum.LocallyMade:
-        CustLocallyMadeWrapper.navigate();
+      case MezService.LocallyMade:
+        CustLocallyMadeWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
-      case AllServiceViewEnum.Food:
-        CustFoodWrapper.navigate();
+      case MezService.Food:
+        CustFoodWrapper.navigate(
+          serviceTree: childServiceTree,
+        );
         return;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final RxList<Map<String, String>> serviceListData =
+    final RxMap<MezService, Map<String, String>> serviceListData =
         cServiceController.deliveryServiceListData;
     final TextTheme txt = Theme.of(context).textTheme;
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 14.0, crossAxisSpacing: 14.0),
-          itemCount: serviceListData.length,
-          itemBuilder: (BuildContext context, int index) {
-            return MezCard(
-              radius: 10,
-              borderRadius: 15,
-              contentPadding: EdgeInsets.zero,
-              onClick: () {
-                navigateToServices(AllServiceViewEnum.values[index]);
-              },
-              content: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image.asset(
-                    serviceListData[index]["icon"].toString(),
-                    height: 85.mezSp,
-                    width: 85.mezSp,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Obx(
-                      () => FittedBox(
-                        child: Text(
-                          _i18n()[serviceListData[index]["title"]].toString(),
-                          style: txt.headlineSmall,
+    return Obx(
+      () {
+        if (cServiceController.serviceTreeData.value == null) {
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        return Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await cServiceController.fetchServiceTree();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 14.0,
+                    crossAxisSpacing: 14.0),
+                itemCount:
+                    cServiceController.serviceTreeData.value!.children.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var currentMezService = cServiceController
+                      .serviceTreeData.value!.children[index].name;
+                  return MezCard(
+                    radius: 10,
+                    borderRadius: 15,
+                    contentPadding: EdgeInsets.zero,
+                    onClick: () {
+                      navigateToServices(
+                        currentMezService,
+                        cServiceController
+                            .serviceTreeData.value!.children[index].children,
+                      );
+                    },
+                    content: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          cServiceController.deliveryServiceListData[
+                                  currentMezService]!["icon"]
+                              .toString(),
+                          height: 85.mezSp,
+                          width: 85.mezSp,
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Obx(
+                            () => FittedBox(
+                              child: Text(
+                                _i18n()[cServiceController
+                                        .deliveryServiceListData[
+                                            currentMezService]!["title"]
+                                        .toString()]
+                                    .toString(),
+                                style: txt.headlineSmall,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

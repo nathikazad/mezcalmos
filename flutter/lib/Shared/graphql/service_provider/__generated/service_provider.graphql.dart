@@ -8712,3 +8712,1396 @@ class _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details$re
   }) =>
       _res;
 }
+
+class Variables$Query$getServiceProviderId {
+  factory Variables$Query$getServiceProviderId({String? uniqueId}) =>
+      Variables$Query$getServiceProviderId._({
+        if (uniqueId != null) r'uniqueId': uniqueId,
+      });
+
+  Variables$Query$getServiceProviderId._(this._$data);
+
+  factory Variables$Query$getServiceProviderId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('uniqueId')) {
+      final l$uniqueId = data['uniqueId'];
+      result$data['uniqueId'] = (l$uniqueId as String?);
+    }
+    return Variables$Query$getServiceProviderId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String? get uniqueId => (_$data['uniqueId'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('uniqueId')) {
+      final l$uniqueId = uniqueId;
+      result$data['uniqueId'] = l$uniqueId;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getServiceProviderId<
+          Variables$Query$getServiceProviderId>
+      get copyWith => CopyWith$Variables$Query$getServiceProviderId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getServiceProviderId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$uniqueId = uniqueId;
+    final lOther$uniqueId = other.uniqueId;
+    if (_$data.containsKey('uniqueId') !=
+        other._$data.containsKey('uniqueId')) {
+      return false;
+    }
+    if (l$uniqueId != lOther$uniqueId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$uniqueId = uniqueId;
+    return Object.hashAll(
+        [_$data.containsKey('uniqueId') ? l$uniqueId : const {}]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getServiceProviderId<TRes> {
+  factory CopyWith$Variables$Query$getServiceProviderId(
+    Variables$Query$getServiceProviderId instance,
+    TRes Function(Variables$Query$getServiceProviderId) then,
+  ) = _CopyWithImpl$Variables$Query$getServiceProviderId;
+
+  factory CopyWith$Variables$Query$getServiceProviderId.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getServiceProviderId;
+
+  TRes call({String? uniqueId});
+}
+
+class _CopyWithImpl$Variables$Query$getServiceProviderId<TRes>
+    implements CopyWith$Variables$Query$getServiceProviderId<TRes> {
+  _CopyWithImpl$Variables$Query$getServiceProviderId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getServiceProviderId _instance;
+
+  final TRes Function(Variables$Query$getServiceProviderId) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? uniqueId = _undefined}) =>
+      _then(Variables$Query$getServiceProviderId._({
+        ..._instance._$data,
+        if (uniqueId != _undefined) 'uniqueId': (uniqueId as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getServiceProviderId<TRes>
+    implements CopyWith$Variables$Query$getServiceProviderId<TRes> {
+  _CopyWithStubImpl$Variables$Query$getServiceProviderId(this._res);
+
+  TRes _res;
+
+  call({String? uniqueId}) => _res;
+}
+
+class Query$getServiceProviderId {
+  Query$getServiceProviderId({
+    required this.service_provider_details,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceProviderId.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_details = json['service_provider_details'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceProviderId(
+      service_provider_details: (l$service_provider_details as List<dynamic>)
+          .map((e) =>
+              Query$getServiceProviderId$service_provider_details.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getServiceProviderId$service_provider_details>
+      service_provider_details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_details = service_provider_details;
+    _resultData['service_provider_details'] =
+        l$service_provider_details.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_details = service_provider_details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_details.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getServiceProviderId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_details = service_provider_details;
+    final lOther$service_provider_details = other.service_provider_details;
+    if (l$service_provider_details.length !=
+        lOther$service_provider_details.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_details.length; i++) {
+      final l$service_provider_details$entry = l$service_provider_details[i];
+      final lOther$service_provider_details$entry =
+          lOther$service_provider_details[i];
+      if (l$service_provider_details$entry !=
+          lOther$service_provider_details$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceProviderId
+    on Query$getServiceProviderId {
+  CopyWith$Query$getServiceProviderId<Query$getServiceProviderId>
+      get copyWith => CopyWith$Query$getServiceProviderId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceProviderId<TRes> {
+  factory CopyWith$Query$getServiceProviderId(
+    Query$getServiceProviderId instance,
+    TRes Function(Query$getServiceProviderId) then,
+  ) = _CopyWithImpl$Query$getServiceProviderId;
+
+  factory CopyWith$Query$getServiceProviderId.stub(TRes res) =
+      _CopyWithStubImpl$Query$getServiceProviderId;
+
+  TRes call({
+    List<Query$getServiceProviderId$service_provider_details>?
+        service_provider_details,
+    String? $__typename,
+  });
+  TRes service_provider_details(
+      Iterable<Query$getServiceProviderId$service_provider_details> Function(
+              Iterable<
+                  CopyWith$Query$getServiceProviderId$service_provider_details<
+                      Query$getServiceProviderId$service_provider_details>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getServiceProviderId<TRes>
+    implements CopyWith$Query$getServiceProviderId<TRes> {
+  _CopyWithImpl$Query$getServiceProviderId(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceProviderId _instance;
+
+  final TRes Function(Query$getServiceProviderId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceProviderId(
+        service_provider_details: service_provider_details == _undefined ||
+                service_provider_details == null
+            ? _instance.service_provider_details
+            : (service_provider_details
+                as List<Query$getServiceProviderId$service_provider_details>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_details(
+          Iterable<Query$getServiceProviderId$service_provider_details> Function(
+                  Iterable<
+                      CopyWith$Query$getServiceProviderId$service_provider_details<
+                          Query$getServiceProviderId$service_provider_details>>)
+              _fn) =>
+      call(
+          service_provider_details: _fn(_instance.service_provider_details.map(
+              (e) =>
+                  CopyWith$Query$getServiceProviderId$service_provider_details(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getServiceProviderId<TRes>
+    implements CopyWith$Query$getServiceProviderId<TRes> {
+  _CopyWithStubImpl$Query$getServiceProviderId(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getServiceProviderId$service_provider_details>?
+        service_provider_details,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_details(_fn) => _res;
+}
+
+const documentNodeQuerygetServiceProviderId = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getServiceProviderId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'uniqueId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_details'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'unique_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'uniqueId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'service_provider_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'business'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_company'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'laundry_store'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'restaurant'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getServiceProviderId _parserFn$Query$getServiceProviderId(
+        Map<String, dynamic> data) =>
+    Query$getServiceProviderId.fromJson(data);
+
+class Options$Query$getServiceProviderId
+    extends graphql.QueryOptions<Query$getServiceProviderId> {
+  Options$Query$getServiceProviderId({
+    String? operationName,
+    Variables$Query$getServiceProviderId? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetServiceProviderId,
+          parserFn: _parserFn$Query$getServiceProviderId,
+        );
+}
+
+class WatchOptions$Query$getServiceProviderId
+    extends graphql.WatchQueryOptions<Query$getServiceProviderId> {
+  WatchOptions$Query$getServiceProviderId({
+    String? operationName,
+    Variables$Query$getServiceProviderId? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetServiceProviderId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getServiceProviderId,
+        );
+}
+
+class FetchMoreOptions$Query$getServiceProviderId
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getServiceProviderId({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$getServiceProviderId? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQuerygetServiceProviderId,
+        );
+}
+
+extension ClientExtension$Query$getServiceProviderId on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getServiceProviderId>>
+      query$getServiceProviderId(
+              [Options$Query$getServiceProviderId? options]) async =>
+          await this.query(options ?? Options$Query$getServiceProviderId());
+  graphql.ObservableQuery<Query$getServiceProviderId>
+      watchQuery$getServiceProviderId(
+              [WatchOptions$Query$getServiceProviderId? options]) =>
+          this.watchQuery(options ?? WatchOptions$Query$getServiceProviderId());
+  void writeQuery$getServiceProviderId({
+    required Query$getServiceProviderId data,
+    Variables$Query$getServiceProviderId? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetServiceProviderId),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getServiceProviderId? readQuery$getServiceProviderId({
+    Variables$Query$getServiceProviderId? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetServiceProviderId),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getServiceProviderId.fromJson(result);
+  }
+}
+
+class Query$getServiceProviderId$service_provider_details {
+  Query$getServiceProviderId$service_provider_details({
+    required this.service_provider_type,
+    this.business,
+    this.delivery_company,
+    this.laundry_store,
+    this.restaurant,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceProviderId$service_provider_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_type = json['service_provider_type'];
+    final l$business = json['business'];
+    final l$delivery_company = json['delivery_company'];
+    final l$laundry_store = json['laundry_store'];
+    final l$restaurant = json['restaurant'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceProviderId$service_provider_details(
+      service_provider_type: (l$service_provider_type as String),
+      business: l$business == null
+          ? null
+          : Query$getServiceProviderId$service_provider_details$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      delivery_company: l$delivery_company == null
+          ? null
+          : Query$getServiceProviderId$service_provider_details$delivery_company
+              .fromJson((l$delivery_company as Map<String, dynamic>)),
+      laundry_store: l$laundry_store == null
+          ? null
+          : Query$getServiceProviderId$service_provider_details$laundry_store
+              .fromJson((l$laundry_store as Map<String, dynamic>)),
+      restaurant: l$restaurant == null
+          ? null
+          : Query$getServiceProviderId$service_provider_details$restaurant
+              .fromJson((l$restaurant as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String service_provider_type;
+
+  final Query$getServiceProviderId$service_provider_details$business? business;
+
+  final Query$getServiceProviderId$service_provider_details$delivery_company?
+      delivery_company;
+
+  final Query$getServiceProviderId$service_provider_details$laundry_store?
+      laundry_store;
+
+  final Query$getServiceProviderId$service_provider_details$restaurant?
+      restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
+    final l$delivery_company = delivery_company;
+    _resultData['delivery_company'] = l$delivery_company?.toJson();
+    final l$laundry_store = laundry_store;
+    _resultData['laundry_store'] = l$laundry_store?.toJson();
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_type = service_provider_type;
+    final l$business = business;
+    final l$delivery_company = delivery_company;
+    final l$laundry_store = laundry_store;
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_type,
+      l$business,
+      l$delivery_company,
+      l$laundry_store,
+      l$restaurant,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getServiceProviderId$service_provider_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$delivery_company = delivery_company;
+    final lOther$delivery_company = other.delivery_company;
+    if (l$delivery_company != lOther$delivery_company) {
+      return false;
+    }
+    final l$laundry_store = laundry_store;
+    final lOther$laundry_store = other.laundry_store;
+    if (l$laundry_store != lOther$laundry_store) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceProviderId$service_provider_details
+    on Query$getServiceProviderId$service_provider_details {
+  CopyWith$Query$getServiceProviderId$service_provider_details<
+          Query$getServiceProviderId$service_provider_details>
+      get copyWith =>
+          CopyWith$Query$getServiceProviderId$service_provider_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceProviderId$service_provider_details<
+    TRes> {
+  factory CopyWith$Query$getServiceProviderId$service_provider_details(
+    Query$getServiceProviderId$service_provider_details instance,
+    TRes Function(Query$getServiceProviderId$service_provider_details) then,
+  ) = _CopyWithImpl$Query$getServiceProviderId$service_provider_details;
+
+  factory CopyWith$Query$getServiceProviderId$service_provider_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details;
+
+  TRes call({
+    String? service_provider_type,
+    Query$getServiceProviderId$service_provider_details$business? business,
+    Query$getServiceProviderId$service_provider_details$delivery_company?
+        delivery_company,
+    Query$getServiceProviderId$service_provider_details$laundry_store?
+        laundry_store,
+    Query$getServiceProviderId$service_provider_details$restaurant? restaurant,
+    String? $__typename,
+  });
+  CopyWith$Query$getServiceProviderId$service_provider_details$business<TRes>
+      get business;
+  CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company<
+      TRes> get delivery_company;
+  CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store<
+      TRes> get laundry_store;
+  CopyWith$Query$getServiceProviderId$service_provider_details$restaurant<TRes>
+      get restaurant;
+}
+
+class _CopyWithImpl$Query$getServiceProviderId$service_provider_details<TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details<TRes> {
+  _CopyWithImpl$Query$getServiceProviderId$service_provider_details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceProviderId$service_provider_details _instance;
+
+  final TRes Function(Query$getServiceProviderId$service_provider_details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_type = _undefined,
+    Object? business = _undefined,
+    Object? delivery_company = _undefined,
+    Object? laundry_store = _undefined,
+    Object? restaurant = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceProviderId$service_provider_details(
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
+        business: business == _undefined
+            ? _instance.business
+            : (business
+                as Query$getServiceProviderId$service_provider_details$business?),
+        delivery_company: delivery_company == _undefined
+            ? _instance.delivery_company
+            : (delivery_company
+                as Query$getServiceProviderId$service_provider_details$delivery_company?),
+        laundry_store: laundry_store == _undefined
+            ? _instance.laundry_store
+            : (laundry_store
+                as Query$getServiceProviderId$service_provider_details$laundry_store?),
+        restaurant: restaurant == _undefined
+            ? _instance.restaurant
+            : (restaurant
+                as Query$getServiceProviderId$service_provider_details$restaurant?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getServiceProviderId$service_provider_details$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$getServiceProviderId$service_provider_details$business
+            .stub(_then(_instance))
+        : CopyWith$Query$getServiceProviderId$service_provider_details$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company<
+      TRes> get delivery_company {
+    final local$delivery_company = _instance.delivery_company;
+    return local$delivery_company == null
+        ? CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company
+            .stub(_then(_instance))
+        : CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company(
+            local$delivery_company, (e) => call(delivery_company: e));
+  }
+
+  CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store<
+      TRes> get laundry_store {
+    final local$laundry_store = _instance.laundry_store;
+    return local$laundry_store == null
+        ? CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store
+            .stub(_then(_instance))
+        : CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store(
+            local$laundry_store, (e) => call(laundry_store: e));
+  }
+
+  CopyWith$Query$getServiceProviderId$service_provider_details$restaurant<TRes>
+      get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return local$restaurant == null
+        ? CopyWith$Query$getServiceProviderId$service_provider_details$restaurant
+            .stub(_then(_instance))
+        : CopyWith$Query$getServiceProviderId$service_provider_details$restaurant(
+            local$restaurant, (e) => call(restaurant: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details<TRes> {
+  _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? service_provider_type,
+    Query$getServiceProviderId$service_provider_details$business? business,
+    Query$getServiceProviderId$service_provider_details$delivery_company?
+        delivery_company,
+    Query$getServiceProviderId$service_provider_details$laundry_store?
+        laundry_store,
+    Query$getServiceProviderId$service_provider_details$restaurant? restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getServiceProviderId$service_provider_details$business<TRes>
+      get business =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$business
+              .stub(_res);
+  CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company<
+          TRes>
+      get delivery_company =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company
+              .stub(_res);
+  CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store<
+          TRes>
+      get laundry_store =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store
+              .stub(_res);
+  CopyWith$Query$getServiceProviderId$service_provider_details$restaurant<TRes>
+      get restaurant =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$restaurant
+              .stub(_res);
+}
+
+class Query$getServiceProviderId$service_provider_details$business {
+  Query$getServiceProviderId$service_provider_details$business({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceProviderId$service_provider_details$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceProviderId$service_provider_details$business(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getServiceProviderId$service_provider_details$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceProviderId$service_provider_details$business
+    on Query$getServiceProviderId$service_provider_details$business {
+  CopyWith$Query$getServiceProviderId$service_provider_details$business<
+          Query$getServiceProviderId$service_provider_details$business>
+      get copyWith =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceProviderId$service_provider_details$business<
+    TRes> {
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$business(
+    Query$getServiceProviderId$service_provider_details$business instance,
+    TRes Function(Query$getServiceProviderId$service_provider_details$business)
+        then,
+  ) = _CopyWithImpl$Query$getServiceProviderId$service_provider_details$business;
+
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$business;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getServiceProviderId$service_provider_details$business<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$business<
+            TRes> {
+  _CopyWithImpl$Query$getServiceProviderId$service_provider_details$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceProviderId$service_provider_details$business _instance;
+
+  final TRes Function(
+      Query$getServiceProviderId$service_provider_details$business) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceProviderId$service_provider_details$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$business<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$business<
+            TRes> {
+  _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getServiceProviderId$service_provider_details$delivery_company {
+  Query$getServiceProviderId$service_provider_details$delivery_company({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceProviderId$service_provider_details$delivery_company.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceProviderId$service_provider_details$delivery_company(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getServiceProviderId$service_provider_details$delivery_company) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceProviderId$service_provider_details$delivery_company
+    on Query$getServiceProviderId$service_provider_details$delivery_company {
+  CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company<
+          Query$getServiceProviderId$service_provider_details$delivery_company>
+      get copyWith =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company<
+    TRes> {
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company(
+    Query$getServiceProviderId$service_provider_details$delivery_company
+        instance,
+    TRes Function(
+            Query$getServiceProviderId$service_provider_details$delivery_company)
+        then,
+  ) = _CopyWithImpl$Query$getServiceProviderId$service_provider_details$delivery_company;
+
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$delivery_company;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getServiceProviderId$service_provider_details$delivery_company<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company<
+            TRes> {
+  _CopyWithImpl$Query$getServiceProviderId$service_provider_details$delivery_company(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceProviderId$service_provider_details$delivery_company
+      _instance;
+
+  final TRes Function(
+          Query$getServiceProviderId$service_provider_details$delivery_company)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getServiceProviderId$service_provider_details$delivery_company(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$delivery_company<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$delivery_company<
+            TRes> {
+  _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$delivery_company(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getServiceProviderId$service_provider_details$laundry_store {
+  Query$getServiceProviderId$service_provider_details$laundry_store({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceProviderId$service_provider_details$laundry_store.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceProviderId$service_provider_details$laundry_store(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getServiceProviderId$service_provider_details$laundry_store) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceProviderId$service_provider_details$laundry_store
+    on Query$getServiceProviderId$service_provider_details$laundry_store {
+  CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store<
+          Query$getServiceProviderId$service_provider_details$laundry_store>
+      get copyWith =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store<
+    TRes> {
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store(
+    Query$getServiceProviderId$service_provider_details$laundry_store instance,
+    TRes Function(
+            Query$getServiceProviderId$service_provider_details$laundry_store)
+        then,
+  ) = _CopyWithImpl$Query$getServiceProviderId$service_provider_details$laundry_store;
+
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$laundry_store;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getServiceProviderId$service_provider_details$laundry_store<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store<
+            TRes> {
+  _CopyWithImpl$Query$getServiceProviderId$service_provider_details$laundry_store(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceProviderId$service_provider_details$laundry_store
+      _instance;
+
+  final TRes Function(
+      Query$getServiceProviderId$service_provider_details$laundry_store) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceProviderId$service_provider_details$laundry_store(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$laundry_store<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$laundry_store<
+            TRes> {
+  _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$laundry_store(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getServiceProviderId$service_provider_details$restaurant {
+  Query$getServiceProviderId$service_provider_details$restaurant({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceProviderId$service_provider_details$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceProviderId$service_provider_details$restaurant(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getServiceProviderId$service_provider_details$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceProviderId$service_provider_details$restaurant
+    on Query$getServiceProviderId$service_provider_details$restaurant {
+  CopyWith$Query$getServiceProviderId$service_provider_details$restaurant<
+          Query$getServiceProviderId$service_provider_details$restaurant>
+      get copyWith =>
+          CopyWith$Query$getServiceProviderId$service_provider_details$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceProviderId$service_provider_details$restaurant<
+    TRes> {
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$restaurant(
+    Query$getServiceProviderId$service_provider_details$restaurant instance,
+    TRes Function(
+            Query$getServiceProviderId$service_provider_details$restaurant)
+        then,
+  ) = _CopyWithImpl$Query$getServiceProviderId$service_provider_details$restaurant;
+
+  factory CopyWith$Query$getServiceProviderId$service_provider_details$restaurant.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$restaurant;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getServiceProviderId$service_provider_details$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$restaurant<
+            TRes> {
+  _CopyWithImpl$Query$getServiceProviderId$service_provider_details$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceProviderId$service_provider_details$restaurant
+      _instance;
+
+  final TRes Function(
+      Query$getServiceProviderId$service_provider_details$restaurant) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceProviderId$service_provider_details$restaurant(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderId$service_provider_details$restaurant<
+            TRes> {
+  _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}

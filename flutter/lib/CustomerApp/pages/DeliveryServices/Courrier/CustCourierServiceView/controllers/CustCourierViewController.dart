@@ -24,7 +24,7 @@ class CustCourierServiceViewController {
 
     unawaited(get_service_reviews(
             serviceId: companyId,
-            serviceProviderType: cModels.ServiceProviderType.Business,
+            serviceProviderType: cModels.ServiceProviderType.DeliveryCompany,
             withCache: false)
         .then((List<Review> value) {
       _deliveryCompany.value?.reviews = value;

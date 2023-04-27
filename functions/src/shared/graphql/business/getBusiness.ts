@@ -80,7 +80,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
                 lng: response.business_business_by_pk.details.location.gps.coordinates[0],
                 address: response.business_business_by_pk.details.location.address,
             },
-            description: response.business_business_by_pk.details.description?.translations.reduce((prev:Record<any, any>, current) => {
+            description: response.business_business_by_pk.details.description?.translations.reduce((prev:Record<any, any>, current: any) => {
                 prev[current.language_id] = current.value;
                 return prev;
             }, {}),

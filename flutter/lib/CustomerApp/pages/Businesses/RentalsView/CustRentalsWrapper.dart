@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsLi
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -16,9 +17,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 //TO DO
 class CustRentalWrapper extends StatefulWidget {
   const CustRentalWrapper({super.key});
-  static Future<void> navigate() {
+  static Future<void> navigate({required List<ServiceTree> serviceTree}) {
     final String route = CustBusinessRoutes.custRentalsWrapperRoute;
-    return MezRouter.toPath(route);
+    return MezRouter.toPath(route, arguments: {
+      "serviceTree": serviceTree,
+    });
   }
 
   @override
@@ -26,6 +29,40 @@ class CustRentalWrapper extends StatefulWidget {
 }
 
 class _CustRentalWrapperState extends State<CustRentalWrapper> {
+  late List<ServiceTree> serviceTree;
+
+  @override
+  void initState() {
+    super.initState();
+    serviceTree = MezRouter.bodyArguments!["serviceTree"] as List<ServiceTree>;
+  }
+
+  void navigateToListView(MezService mezService) {
+    switch (mezService) {
+      case MezService.Surf:
+        CustRentalsListView.navigate(category: RentalCategory1.Surf);
+        return;
+      case MezService.Vehicle:
+        CustRentalsListView.navigate(category: RentalCategory1.Vehicle);
+        return;
+      case MezService.Home:
+        CustHomeRentalListView.navigate();
+        return;
+    }
+  }
+
+  String getCardImage(MezService mezService) {
+    switch (mezService) {
+      case MezService.Surf:
+        return 'assets/images/customer/rental/surf.png';
+      case MezService.Vehicle:
+        return 'assets/images/customer/rental/carRental.png';
+      case MezService.Home:
+        return 'assets/images/customer/rental/homes.png';
+    }
+    return 'assets/images/customer/rental/homes.png';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,77 +74,35 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: [
-            MezCard(
+          children: List.generate(
+            serviceTree.length,
+            (int index) {
+              final MezService currentService = serviceTree[index].name;
+              return MezCard(
                 onClick: () {
-                  CustRentalsListView.navigate(category: RentalCategory1.Surf);
+                  navigateToListView(currentService);
                 },
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${_i18n()['surf']['title']}',
+                      '${_i18n()[currentService.name.toLowerCase()]['title']}',
                       style: context.textTheme.displayMedium,
                     ),
                     Text(
-                      '${_i18n()['surf']['description']}',
+                      '${_i18n()[currentService.name.toLowerCase()]['description']}',
                       style: context.textTheme.titleMedium,
                     ),
                   ],
                 ),
                 action: Image.asset(
-                  'assets/images/customer/rental/surf.png',
+                  getCardImage(currentService),
                   width: 25.mezW,
                   height: 20.mezW,
-                )),
-            MezCard(
-                margin: EdgeInsets.only(top: 5),
-                onClick: () {
-                  CustRentalsListView.navigate(
-                      category: RentalCategory1.Vehicle);
-                },
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${_i18n()['vehicle']['title']}',
-                      style: context.textTheme.displayMedium,
-                    ),
-                    Text(
-                      '${_i18n()['vehicle']['description']}',
-                      style: context.textTheme.titleMedium,
-                    ),
-                  ],
                 ),
-                action: Image.asset(
-                  'assets/images/customer/rental/carRental.png',
-                  width: 25.mezW,
-                  height: 20.mezW,
-                )),
-            MezCard(
-                margin: EdgeInsets.only(top: 5),
-                onClick: () {
-                  CustHomeRentalListView.navigate();
-                },
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${_i18n()['homes']['title']}',
-                      style: context.textTheme.displayMedium,
-                    ),
-                    Text(
-                      '${_i18n()['homes']['description']}',
-                      style: context.textTheme.titleMedium,
-                    ),
-                  ],
-                ),
-                action: Image.asset(
-                  'assets/images/customer/rental/homes.png',
-                  width: 25.mezW,
-                  height: 20.mezW,
-                )),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );

@@ -76,7 +76,7 @@ export async function getChat(chatId: number): Promise<Chat> {
     if (!(response.chat_by_pk)) {
         throw new MezError("chatNotFound");
     }
-    let participants: Participant[] = response.chat_by_pk.chat_participants.map((p) => {
+    let participants: Participant[] = response.chat_by_pk.chat_participants.map((p: any) => {
         return <Participant>{
             id: p.user.id,
             name: p.user.name,

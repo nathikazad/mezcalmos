@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
@@ -216,6 +219,55 @@ Future<cModels.Schedule?> get_service_schedule(
     return scheduleFromData(data.schedule!);
   }
   return null;
+}
+
+Future<String?> get_service_provider_route(
+    {required String uniqueId, bool withCache = true}) async {
+  QueryResult<Query$getServiceProviderId> res =
+      await _db.graphQLClient.query$getServiceProviderId(
+    Options$Query$getServiceProviderId(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$getServiceProviderId(uniqueId: uniqueId),
+    ),
+  );
+  if (res.parsedData == null ||
+      res.parsedData!.service_provider_details.isEmpty) {
+    throwError(res.exception);
+  }
+  final cModels.ServiceProviderType serviceProviderType = res
+      .parsedData!.service_provider_details[0].service_provider_type
+      .toServiceProviderType();
+  mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${serviceProviderType}");
+  String? route;
+  switch (serviceProviderType) {
+    case cModels.ServiceProviderType.Restaurant:
+      route = RestaurantRoutes.restaurantViewRoute.replaceAll(
+          ":restaurantId",
+          res.parsedData!.service_provider_details[0].restaurant!.id
+              .toString());
+      break;
+    case cModels.ServiceProviderType.Laundry:
+      route = LaundryRoutes.singleLaundryRoute.replaceAll(
+          ":laundryId",
+          res.parsedData!.service_provider_details[0].laundry_store!.id
+              .toString());
+      break;
+    case cModels.ServiceProviderType.DeliveryCompany:
+      route = CourierRoutes.kCourierServiceRoute.replaceAll(
+          ":deliveryCompanyId",
+          res.parsedData!.service_provider_details[0].delivery_company!.id
+              .toString());
+      break;
+    case cModels.ServiceProviderType.Business:
+      // route = BusinessRoutes.kBusinessRoute.replaceAll(":businessId",
+      //     res.parsedData!.service_provider_details[0].business!.id.toString());
+      break;
+    case cModels.ServiceProviderType.DeliveryDriver:
+    case cModels.ServiceProviderType.Customer:
+      break;
+  }
+  return route;
 }
 
 Future<ServiceInfo> update_service_info(

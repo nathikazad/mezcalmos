@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -22,6 +23,11 @@ class CustBusinessServiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MezCard(
+      onClick: () {
+        CustServiceView.navigate(
+          serviceId: service.details.id.toInt(),
+        );
+      },
       firstAvatarBgImage:
           (service.details.image != null && service.details.image!.isNotEmpty)
               ? CachedNetworkImageProvider(service.details.image![0])

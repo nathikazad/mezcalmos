@@ -101,7 +101,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             lng: response.laundry_store_by_pk.details.location.gps.coordinates[0],
             address: response.laundry_store_by_pk.details.location.address,
         },
-        description: response.laundry_store_by_pk.details.description?.translations.reduce((prev:Record<any, any>, current) => {
+        description: response.laundry_store_by_pk.details.description?.translations.reduce((prev:Record<any, any>, current: any) => {
             prev[current.language_id] = current.value;
             return prev;
         }, {}),
