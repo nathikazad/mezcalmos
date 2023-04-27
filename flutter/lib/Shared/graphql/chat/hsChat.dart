@@ -102,20 +102,14 @@ Future<HasuraChat?> get_service_provider_customer_chat(
     final HasuraChat RetChat = HasuraChat(
         chatInfo: HasuraChatInfo(
           chatTite: _chat.parsedData!.service_provider_customer_chat[0].chat
-                      .chat_info?['${MezEnv.appType.toChatInfoString()}']
-                  ['chatTitle'] ??
-              "",
+              .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatTitle'],
           phoneNumber: _chat.parsedData!.service_provider_customer_chat[0].chat
                   .chat_info!['${MezEnv.appType.toChatInfoString()}']
               ['phoneNumber'],
           chatImg: _chat.parsedData!.service_provider_customer_chat[0].chat
-                      .chat_info?['${MezEnv.appType.toChatInfoString()}']
-                  ['chatImage'] ??
-              "",
+              .chat_info!['${MezEnv.appType.toChatInfoString()}']['chatImage'],
           parentlink: _chat.parsedData!.service_provider_customer_chat[0].chat
-                      .chat_info?['${MezEnv.appType.toChatInfoString()}']
-                  ['parentLink'] ??
-              "",
+              .chat_info!['${MezEnv.appType.toChatInfoString()}']['parentLink'],
         ),
         creationTime: DateTime.parse(_chat.parsedData!
                 .service_provider_customer_chat[0].chat.creation_time)
