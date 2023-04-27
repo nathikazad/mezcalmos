@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -78,7 +80,9 @@ class BsHomeRentalViewController {
       final List<String> _imagesUrls = await _uploadItemsImages();
 
       Rental rental = Rental(
+          homeType: "apartment",
           category1: RentalCategory1.Home,
+          gpsLocation: Location(address: "adress", lat: 15.855, lng: -97.06020),
           details: BusinessItemDetails(
               id: 0,
               name: {
@@ -97,8 +101,15 @@ class BsHomeRentalViewController {
                       MapEntry(value, double.parse(key.text)))));
       mezDbgPrint(
           "Create rental with this payload : ${rental.toFirebaseFormattedJson()}");
-      int? res = await add_one_home_rental(rental: rental);
-      mezDbgPrint(res);
+      try {
+        int? res = await add_one_home_rental(rental: rental);
+        if (res != null) {
+          showSavedSnackBar();
+          
+        }
+      } on OperationException catch (e) {
+        mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
+      }
     }
   }
 

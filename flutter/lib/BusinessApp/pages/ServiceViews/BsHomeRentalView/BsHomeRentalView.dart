@@ -13,10 +13,11 @@ import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 
 class BsOpHomeRentalView extends StatefulWidget {
   const BsOpHomeRentalView({Key? key}) : super(key: key);
-  static Future<void> navigate({required int? id}) async {
+  static Future<bool> navigate({required int? id}) async {
     String route = BusinessOpRoutes.kBsOpHomeRental;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
-    return MezRouter.toPath(route);
+    await MezRouter.toPath(route);
+    return MezRouter.backResult;
   }
 
   @override

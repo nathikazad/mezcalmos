@@ -227,6 +227,59 @@ Future<List<RentalCard>> get_home_rentals(
   }
 }
 
+Future<List<RentalCard>> get_business_home_rentals(
+    {required int busniessId,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<RentalCard> _homes = <RentalCard>[];
+
+  final QueryResult<Query$get_business_home_rentals> response = await _db
+      .graphQLClient
+      .query$get_business_home_rentals(Options$Query$get_business_home_rentals(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_home_rentals(
+              businessId: busniessId, offset: offset, limit: limit)));
+
+  mezDbgPrint("get_home_rentals $response");
+
+  if (response.parsedData?.business_home_rental != null) {
+    response.parsedData?.business_home_rental.forEach(
+        (Query$get_business_home_rentals$business_home_rental data) async {
+      _homes.add(RentalCard(
+          businessName: data.rental.business.details.name,
+          rental: Rental(
+            category1: data.rental.details.category1.toRentalCategory1(),
+            details: BusinessItemDetails(
+              id: data.rental.id,
+              name: toLanguageMap(
+                  translations: data.rental.details.name.translations),
+              position: data.rental.details.position,
+              businessId: data.rental.business.id,
+              available: data.rental.details.available,
+              image: data.rental.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.rental.details.cost),
+              additionalParameters: data.rental.details.additional_parameters,
+            ),
+            bathrooms: data.bathrooms,
+            bedrooms: data.bedrooms,
+            gpsLocation: Location(
+                lat: data.gps_location.latitude,
+                lng: data.gps_location.longitude,
+                address: data.address),
+            homeType: data.home_type,
+          )));
+    });
+    return _homes;
+  } else {
+    return [];
+  }
+}
+
 Future<int?> add_one_rental({required Rental rental}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
 
@@ -313,6 +366,7 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
             rental.gpsLocation!.lng.toDouble())
         : null,
     home_type: rental.homeType,
+    address: rental.gpsLocation?.address,
     rental: Input$business_rental_obj_rel_insert_input(
         data: Input$business_rental_insert_input(
             business_id: rental.details.businessId.toInt(),
