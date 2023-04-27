@@ -149,7 +149,7 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
     if (response.delivery_driver.length == 0) {
       throw new MezError("deliveryCompanyHasNoDrivers");
     }
-    return response.delivery_driver.map((d) => {
+    return response.delivery_driver.map((d: any) => {
       return {
         id: d.id,
         userId: d.user_id,

@@ -120,7 +120,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       lat : response.restaurant_restaurant_by_pk.details.location?.gps.coordinates[1],
       lng: response.restaurant_restaurant_by_pk.details.location?.gps.coordinates[0]
     },
-    description: response.restaurant_restaurant_by_pk.details.description?.translations.reduce((prev:Record<any, any>, current) => {
+    description: response.restaurant_restaurant_by_pk.details.description?.translations.reduce((prev:Record<any, any>, current:any) => {
       prev[current.language_id] = current.value;
       return prev;
     }, {}),

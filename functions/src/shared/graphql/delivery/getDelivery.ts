@@ -159,7 +159,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
     }]
   });
 
-  return response.delivery_order.map((d) => {
+  return response.delivery_order.map((d: any) => {
     let delivery: DeliveryOrder = {
       packageReady: d.package_ready,
       deliveryId: d.id,

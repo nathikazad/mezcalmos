@@ -126,10 +126,10 @@ class _SignInViewState extends State<SignInView> {
         SizedBox(
           height: 10,
         ),
-        // smsLoginBtn(),
-        // SizedBox(
-        //   height: 10,
-        // ),
+        smsLoginBtn(),
+        SizedBox(
+          height: 10,
+        ),
         // if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
         //   appleLoginBtn(),
         if (MezEnv.appLaunchMode == AppLaunchMode.stage)

@@ -142,7 +142,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     lat : response.service_provider_details_by_pk.location?.gps.coordinates[1],
                     lng: response.service_provider_details_by_pk.location?.gps.coordinates[0]
                 },
-                description: response.service_provider_details_by_pk.description?.translations.reduce((prev:Record<any, any>, current) => {
+                description: response.service_provider_details_by_pk.description?.translations.reduce((prev:Record<any, any>, current: any) => {
                 prev[current.language_id] = current.value;
                 return prev;
                 }, {}),
@@ -205,7 +205,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     lng: response.service_provider_details_by_pk.location.gps.coordinates[0],
                     address: response.service_provider_details_by_pk.location.address,
                 },
-                description: response.service_provider_details_by_pk.description?.translations.reduce((prev:Record<any, any>, current) => {
+                description: response.service_provider_details_by_pk.description?.translations.reduce((prev:Record<any, any>, current: any) => {
                     prev[current.language_id] = current.value;
                     return prev;
                 }, {}),
@@ -418,7 +418,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     lat : response.service_provider_details[0].location?.gps.coordinates[1],
                     lng: response.service_provider_details[0].location?.gps.coordinates[0]
                 },
-                description: response.service_provider_details[0].description?.translations.reduce((prev:Record<any, any>, current) => {
+                description: response.service_provider_details[0].description?.translations.reduce((prev:Record<any, any>, current: any) => {
                 prev[current.language_id] = current.value;
                 return prev;
                 }, {}),
@@ -482,7 +482,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     lng: response.service_provider_details[0].location.gps.coordinates[0],
                     address: response.service_provider_details[0].location.address,
                 },
-                description: response.service_provider_details[0].description?.translations.reduce((prev:Record<any, any>, current) => {
+                description: response.service_provider_details[0].description?.translations.reduce((prev:Record<any, any>, current: any) => {
                     prev[current.language_id] = current.value;
                     return prev;
                 }, {}),
@@ -546,7 +546,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     lng: response.service_provider_details[0].location.gps.coordinates[0],
                     address: response.service_provider_details[0].location.address,
                 },
-                description: response.service_provider_details[0].description?.translations.reduce((prev:Record<any, any>, current) => {
+                description: response.service_provider_details[0].description?.translations.reduce((prev:Record<any, any>, current: any) => {
                     prev[current.language_id] = current.value;
                     return prev;
                 }, {}),

@@ -1,3 +1,5 @@
+// ignore_for_file: unawaited_futures
+
 import 'dart:async';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -127,17 +129,22 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("current route ======>>>>${MezRouter.currentRoute().name}");
         mezDbgPrint("[777] app = customerApp .. routing to home!");
         await MezRouter.popEverythingTillBeforeWrapper();
-        mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${GetStorage().read('uniqueId')}");
-        if (GetStorage().read("uniqueId") != null &&
-            GetStorage().read("redirected") == false) {
-          final String? route = await get_service_provider_route(
-              uniqueId: GetStorage().read("uniqueId"));
-          if (route != null) {
-            await MezRouter.toPath(route);
-            GetStorage().write("redirected", true);
+
+        MezRouter.toPath(SharedRoutes.kHomeRoute);
+
+        Future.microtask(() async {
+          mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${GetStorage().read('uniqueId')}");
+
+          if (GetStorage().read("uniqueId") != null &&
+              GetStorage().read("redirected") == false) {
+            final String? route = await get_service_provider_route(
+                uniqueId: GetStorage().read("uniqueId"));
+            if (route != null) {
+              GetStorage().write("redirected", true);
+              MezRouter.toPath(route);
+            }
           }
-        }
-        await MezRouter.toPath(SharedRoutes.kHomeRoute);
+        });
         // todo @sanchit
         // we check if unique id is set in local storage and redirected to false
         //    if yes we fetch the sp info and redirect the user the sp page and set redirected to true
