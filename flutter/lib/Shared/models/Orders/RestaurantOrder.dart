@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 // enum RestaurantOrderStatus {
 //   OrderReceived,
@@ -113,6 +112,9 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   String clipBoardText(cModels.Language languageType) {
+    final String url =
+        "https://www.google.com/maps/dir/?api=1&destination=${dropOffLocation.position.latitude},${dropOffLocation.position.longitude}";
+
     String text = "";
     text += "${restaurant.name}\n";
     text +=
@@ -137,7 +139,7 @@ class RestaurantOrder extends DeliverableOrder {
 
     text += "${customer.name}\n";
     text += "${dropOffLocation.address}\n";
-    text += "https:";
+    text += "$url\n";
 
     return text;
   }

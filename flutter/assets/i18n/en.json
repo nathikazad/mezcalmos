@@ -2720,6 +2720,7 @@
     "cancel": "Cancel",
     "minutes": "minutes",
     "min": "min",
-    "slowInternet": "Slow internet"
+    "slowInternet": "Slow internet",
+    "noInternet": "No internet connection"
   }
 }

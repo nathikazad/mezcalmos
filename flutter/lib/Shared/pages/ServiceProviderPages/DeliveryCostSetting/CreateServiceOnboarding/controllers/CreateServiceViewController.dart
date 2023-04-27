@@ -88,8 +88,7 @@ class CreateServiceViewController {
     if (newImageFile.value != null) {
       newImageUrl.value = await uploadImgToFbStorage(
           imageFile: newImageFile.value!,
-          pathPrefix:
-              "restaurants/$serviceName/avatar/${newImageFile.value!.path}");
+          storageFolder: "/services/${serviceType.name}/$serviceName/images");
     }
   }
 
@@ -265,11 +264,6 @@ class CreateServiceViewController {
     }
   }
 
-  // bool get _infoIsValid =>
-  //     serviceName.text.length > 3 &&
-  //     newLocation.value != null &&
-  //     newImageUrl.value != null;
-
   bool get _isDeliveryCostValid {
     return costFormKey.currentState?.validate() == true;
   }
@@ -333,19 +327,6 @@ class CreateServiceViewController {
       throwError(stk);
       return false;
     }
-    // final HttpsCallable cloudFunction = FirebaseFunctions.instance
-    //     .httpsCallable('restaurant2-createRestaurant');
-    // try {
-    //   final HttpsCallableResult response =
-    //       await cloudFunction.call(_constructServiceDetails());
-    //   mezDbgPrint("Response : ${response.data}");
-
-    //   return ServerResponse.fromJson(response.data);
-    // } catch (e, stk) {
-    //   mezDbgPrint("Errrooooooooor =======> $e,$stk");
-    //   return ServerResponse(ResponseStatus.Error,
-    //       errorMessage: "Server Error", errorCode: "serverError");
-    // }
   }
 
   Future<bool> _pushBusinessToDb() async {

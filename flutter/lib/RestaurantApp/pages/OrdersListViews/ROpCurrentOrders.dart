@@ -161,8 +161,8 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                           order: viewController.currentOrders[index],
                           onTap: () {
                             RestaurantOrderView.navigate(
-                                orderId: viewController.currentOrders[index].id
-                                    .toString());
+                                orderId:
+                                    viewController.currentOrders[index].id);
                           },
                         );
                       }),

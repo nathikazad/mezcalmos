@@ -40,9 +40,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
 
-  static Future<void> navigate({required String orderId}) {
+  static Future<void> navigate({required int orderId}) {
     return MezRouter.toPath(RestaurantAppRoutes.restaurantOrderRoute
-        .replaceAll(":orderId", orderId));
+        .replaceAll(":orderId", orderId.toString()));
   }
 
   static String constructPath(int orderId) {
@@ -186,7 +186,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                             showConfirmationDialog(context,
                                 onYesClick: () async {
                               await viewController.cancelOrder().then(
-                                  (ServerResponse value) => MezRouter.back());
+                                  (ChangeRestaurantStatusResponse value) =>
+                                      MezRouter.back());
                             });
                           },
                           child: Container(

@@ -105,7 +105,6 @@ class BsHomeRentalViewController {
         int? res = await add_one_home_rental(rental: rental);
         if (res != null) {
           showSavedSnackBar();
-          
         }
       } on OperationException catch (e) {
         mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
@@ -119,7 +118,7 @@ class BsHomeRentalViewController {
       if (value != null) {
         await uploadImgToFbStorage(
                 imageFile: imPicker.XFile(value.path),
-                pathPrefix:
+                storageFolder:
                     "Business/HomeRentals/items/${DateTime.now().toIso8601String()}")
             .then((String url) => _imagesUrls.add(url));
       }

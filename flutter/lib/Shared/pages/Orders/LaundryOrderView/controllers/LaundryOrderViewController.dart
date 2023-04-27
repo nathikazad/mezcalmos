@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
@@ -152,7 +151,6 @@ class LaundryOrderViewController {
   }
 
 // Order status change methods
-
   Future<ServerResponse> addReview({
     required int orderId,
     required int serviceId,
@@ -183,7 +181,7 @@ class LaundryOrderViewController {
   Future<void> cancelOrder() async {
     try {
       cModels.ChangeLaundryStatusResponse res =
-          await CloudFunctions.laundry2_cancelFromAdmin(orderId: order.orderId);
+          await CloudFunctions.laundry3_cancelFromAdmin(orderId: order.orderId);
       showSavedSnackBar(
           title: "Cancelled", subtitle: "Order cancelled successfuly");
       if (res.success == false) {
@@ -315,7 +313,7 @@ class LaundryOrderViewController {
   Future<void> sertOrderReady() async {
     try {
       cModels.ChangeLaundryStatusResponse res =
-          await CloudFunctions.laundry2_readyForDeliveryOrder(
+          await CloudFunctions.laundry3_readyForDeliveryOrder(
               orderId: _order.value!.orderId);
       if (res.success == false) {
         mezDbgPrint(res.error);

@@ -13,8 +13,13 @@ import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { updateDeliveryOrderStatus, updateDeliveryPackageCost } from "../shared/graphql/delivery/updateDelivery";
+import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { setLaundryToCustomerDeliveryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { createLaundryToCustomerDeliveryOrder } from "../shared/graphql/delivery/createDelivery";
+import { notifyDeliveryCompany } from "../shared/helper";
+import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
+import { ServiceProvider } from "../shared/models/Services/Service";
 
 interface ChangeStatusDetails {
   orderId: number,
@@ -36,6 +41,11 @@ enum ChangeLaundryStatusError {
   OrderStripeInfoNotDefined = "orderStripeInfoNotDefined",
   ServiceProviderStripeAccountDoesNotExist = "serviceProviderStripeAccountDoesNotExist",
   UpdateOrderStripeError = "updateOrderStripeError",
+  OrderCreationError = "orderCreationError",
+  LaundryStoreNotfound = "laundryStoreNotfound",
+  NoDeliveryChatWithStoreId = " noDeliveryChatWithStoreId",
+  DeliveryCompanyNotFound = "deliveryCompanyNotFound",
+  DeliveryCompanyHasNoDrivers = "deliveryCompanyHasNoDrivers"
 }
 export async function cancelOrder(userId: number, changeStatusDetails: ChangeStatusDetails): Promise<ChangeLaundryStatusResponse> {
   return await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.CancelledByAdmin, userId)
@@ -78,25 +88,29 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
 
       let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId!);
 
-      if(newStatus == LaundryOrderStatus.CancelledByAdmin) {
-        fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+      if(newStatus == LaundryOrderStatus.ReadyForDelivery) {
+        let laundryStore: ServiceProvider = await getLaundryStore(order.storeId);
+        
+        let toCustomerDeliveryOrder: DeliveryOrder = await createLaundryToCustomerDeliveryOrder(order, laundryStore, fromCustomerDeliveryOrder);
+        setLaundryToCustomerDeliveryOrderChatInfo(order, laundryStore, toCustomerDeliveryOrder, customer);
 
+        if(laundryStore.deliveryDetails.selfDelivery == false)
+          notifyDeliveryCompany(toCustomerDeliveryOrder);
+        notify(customer);
+      } else {
+        fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+  
         updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
-      }
-      
-      if(order.toCustomerDeliveryId) {
-        let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
-        if(newStatus == LaundryOrderStatus.CancelledByAdmin) {
+
+        if(order.toCustomerDeliveryId) {
+          let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
           toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
   
           updateDeliveryOrderStatus(toCustomerDeliveryOrder);
-        } else {
-          toCustomerDeliveryOrder.packageCost = order.itemsCost;
-          updateDeliveryPackageCost(toCustomerDeliveryOrder)
-        }
-        notify(customer, fromCustomerDeliveryOrder, toCustomerDeliveryOrder);
-      } else 
+          notify(customer, fromCustomerDeliveryOrder, toCustomerDeliveryOrder);
+        } else 
         notify(customer, fromCustomerDeliveryOrder)
+      }
     } else
       notify(customer);
     return {

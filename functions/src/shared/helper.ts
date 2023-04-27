@@ -1,11 +1,14 @@
 import { deliveryNewOrderMessage } from "../delivery/bgNotificationMessages";
+import { RemoveDriverError } from "../delivery/removeDriver";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getDeliveryDrivers } from "./graphql/delivery/driver/getDeliveryDriver";
-import { getDeliveryOperators } from "./graphql/delivery/operator/getDeliveryOperator";
+import { getDeliveryOperatorByUserId, getDeliveryOperators } from "./graphql/delivery/operator/getDeliveryOperator";
+import { getLaundryOperatorByUserId } from "./graphql/laundry/operator/getLaundryOperator";
+import { getRestaurantOperatorByUserId } from "./graphql/restaurant/operators/getRestaurantOperators";
 import { getMezAdmin } from "./graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "./models/Generic/Chat";
-import { DeliveryOrder, DeliveryDriver } from "./models/Generic/Delivery";
-import { AuthorizationStatus } from "./models/Generic/Generic";
+import { DeliveryOrder, DeliveryDriver, DeliveryServiceProviderType } from "./models/Generic/Delivery";
+import { AuthorizationStatus, MezError } from "./models/Generic/Generic";
 import { OrderNotification, NotificationType, NotificationAction, Notification } from "./models/Notification";
 import { Operator } from "./models/Services/Service";
 
@@ -77,23 +80,50 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder) {
     });
 }
   
-  function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
-      if ((lat1 == lat2) && (lon1 == lon2)) {
-          return 0;
+function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+        return 0;
+    }
+    else {
+        var radlat1 = Math.PI * lat1/180;
+        var radlat2 = Math.PI * lat2/180;
+        var theta = lon1-lon2;
+        var radtheta = Math.PI * theta/180;
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        if (dist > 1) {
+            dist = 1;
+        }
+        dist = Math.acos(dist);
+        dist = dist * 180/Math.PI;
+        dist = dist * 60 * 1.1515;
+        //unit is miles
+        return dist;
+    }
+}
+
+export async function checkOperatorAuthorization(userId: number, deliveryServiceProviderType: DeliveryServiceProviderType) {
+  if((await isMezAdmin(userId)) == true)
+    return;
+    
+  switch (deliveryServiceProviderType) {
+    case DeliveryServiceProviderType.Restaurant:
+      let restaurantOperator: Operator = await getRestaurantOperatorByUserId(userId);
+      if (!restaurantOperator.owner || restaurantOperator.status != AuthorizationStatus.Authorized) {
+        throw new MezError(RemoveDriverError.UnauthorizedAccess);
       }
-      else {
-          var radlat1 = Math.PI * lat1/180;
-          var radlat2 = Math.PI * lat2/180;
-          var theta = lon1-lon2;
-          var radtheta = Math.PI * theta/180;
-          var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-          if (dist > 1) {
-              dist = 1;
-          }
-          dist = Math.acos(dist);
-          dist = dist * 180/Math.PI;
-          dist = dist * 60 * 1.1515;
-          //unit is miles
-          return dist;
+      break;
+    case DeliveryServiceProviderType.Laundry:
+      let laundryOperator: Operator = await getLaundryOperatorByUserId(userId);
+      if (!laundryOperator.owner || laundryOperator.status != AuthorizationStatus.Authorized) {
+        throw new MezError(RemoveDriverError.UnauthorizedAccess);
       }
+      break;
+    case DeliveryServiceProviderType.DeliveryCompany:
+      let deliveryOperator: Operator = await getDeliveryOperatorByUserId(userId);
+      if (!deliveryOperator.owner || deliveryOperator.status != AuthorizationStatus.Authorized) {
+        throw new MezError(RemoveDriverError.UnauthorizedAccess);
+      }
+    default:
+      break;
   }
+}

@@ -2705,6 +2705,7 @@
     "noRoute": "No se encontró ruta.Ingrese un destino válido",
     "minutes": "minutos",
     "slowInternet": "Internet lento",
+    "noInternet": "Sin conexión a Internet",
     "min": "min"
   }
 }

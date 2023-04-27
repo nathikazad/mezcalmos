@@ -33,7 +33,8 @@ class _WrapperState extends State<Wrapper> {
   AuthController authController = Get.find<AuthController>();
   final LocationController _locationController = Get.find<LocationController>();
   StreamSubscription<LocationPermissionsStatus>? locationStatusListener;
-  Function? slowStatusDialog;
+  Function? internetStatusDialog;
+  InternetStatus? previousInternetStatus;
   //String? _previousUserUid = "init";
 
   @override
@@ -65,25 +66,32 @@ class _WrapperState extends State<Wrapper> {
 
   void checkConnectivity() {
     ConnectivityHelper.internetStatusStream
-        .listen((InternetStatus internetStatus) {
+        .listen((InternetStatus currentInternetStatus) {
       // mezDbgPrint("Inside check connectivity");
-      if (internetStatus == InternetStatus.Offline) {
-        if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
-          mezDbgPrint("No internet going so going to no internet page");
-          unawaited(MezRouter.toNamed(SharedRoutes.kNoInternetRoute));
+      // if (internetStatus == InternetStatus.Offline) {
+      //   if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
+      //     mezDbgPrint("No internet going so going to no internet page");
+      //     unawaited(MezRouter.toNamed(SharedRoutes.kNoInternetRoute));
+      //   }
+      // } else {
+      //   if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
+      //     mezDbgPrint("Internet is back so going to back");
+      //     MezRouter.back();
+      //   }
+      // }
+      if (previousInternetStatus != currentInternetStatus) {
+        if (internetStatusDialog != null) {
+          internetStatusDialog!.call();
+          internetStatusDialog = null;
         }
-      } else {
-        if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
-          mezDbgPrint("Internet is back so going to back");
-          MezRouter.back();
+        if (currentInternetStatus == InternetStatus.Slow) {
+          internetStatusDialog = BotToast.showText(
+              text: _i18n()['slowInternet'], duration: Duration(days: 1));
+        } else if (currentInternetStatus == InternetStatus.Offline) {
+          internetStatusDialog = BotToast.showText(
+              text: _i18n()['noInternet'], duration: Duration(days: 1));
         }
-      }
-      if (internetStatus == InternetStatus.Slow) {
-        slowStatusDialog = BotToast.showText(
-            text: _i18n()['slowInternet'], duration: Duration(days: 1));
-      } else {
-        slowStatusDialog?.call();
-        slowStatusDialog = null;
+        previousInternetStatus = currentInternetStatus;
       }
     });
   }

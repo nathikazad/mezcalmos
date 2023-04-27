@@ -73,8 +73,7 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                           order: _viewController.pastOrders[index],
                           onTap: () {
                             RestaurantOrderView.navigate(
-                                orderId: _viewController.pastOrders[index].id
-                                    .toString());
+                                orderId: _viewController.pastOrders[index].id);
                           },
                         );
                       },

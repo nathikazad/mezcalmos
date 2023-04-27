@@ -4,7 +4,7 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
-import { Operator, ServiceProvider } from "../shared/models/Services/Service";
+import { Operator } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { PaymentDetails, capturePayment } from "../utilities/stripe/payment";
@@ -12,10 +12,6 @@ import { getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/get
 import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
 import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
-import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
-import { createLaundryToCustomerDeliveryOrder } from "../shared/graphql/delivery/createDelivery";
-import { setLaundryToCustomerDeliveryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
-import { notifyDeliveryCompany } from "../shared/helper";
 
 
 export async function changeLaundryOrderStatus(
@@ -37,13 +33,6 @@ export async function changeLaundryOrderStatus(
           break;
         case DeliveryOrderStatus.Delivered:
           laundryOrder.status = LaundryOrderStatus.AtLaundry;
-          let laundryStore: ServiceProvider = await getLaundryStore(laundryOrder.storeId);
-
-          let toCustomerDeliveryOrder: DeliveryOrder = await createLaundryToCustomerDeliveryOrder(laundryOrder, laundryStore, deliveryOrder);
-          setLaundryToCustomerDeliveryOrderChatInfo(laundryOrder, laundryStore, toCustomerDeliveryOrder, customer);
-
-          if(laundryStore.deliveryDetails.selfDelivery == false)
-            notifyDeliveryCompany(toCustomerDeliveryOrder);
           break;
         default:
           break;

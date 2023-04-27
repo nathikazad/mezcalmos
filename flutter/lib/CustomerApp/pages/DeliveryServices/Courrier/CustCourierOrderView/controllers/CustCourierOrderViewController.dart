@@ -16,7 +16,6 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -196,7 +195,7 @@ class CustCourierOrderViewController {
   Future<void> _priceChangeResponse({required bool accepted}) async {
     try {
       cModels.ChangePriceResResponse res =
-          await CloudFunctions.delivery2_changeDeliveryPriceResponse(
+          await CloudFunctions.delivery3_changeDeliveryPriceResponse(
               accepted: accepted,
               orderId: order.orderId,
               orderType: cModels.OrderType.Courier);
@@ -224,7 +223,7 @@ class CustCourierOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      await CloudFunctions.delivery2_cancelCourierFromCustomer(
+      await CloudFunctions.delivery3_cancelCourierFromCustomer(
           orderId: order.orderId);
       return true;
     } on FirebaseFunctionsException catch (e, stk) {
