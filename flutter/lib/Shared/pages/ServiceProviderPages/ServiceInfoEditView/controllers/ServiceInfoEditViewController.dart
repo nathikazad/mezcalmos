@@ -127,10 +127,9 @@ class ServiceInfoEditViewController {
       await updateServiceDescriptionDescription();
       await updateServiceLocation();
       if (newImageFile.value != null) {
-        String path =
-            "/services/${serviceType.name}/$serviceId/images/${DateTime.now().toIso8601String()}";
+        final String path = "/services/${serviceType.name}/$serviceId/images";
         newImageUrl.value = await uploadImgToFbStorage(
-            imageFile: newImageFile.value!, pathPrefix: path);
+            imageFile: newImageFile.value!, storageFolder: path);
       }
       await updateServiceInfo();
       return true;

@@ -4,12 +4,14 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessEv
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustMessagesView/controllers/CustChatController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPaymentMethods.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -21,6 +23,8 @@ import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustBusinessView extends StatefulWidget {
   const CustBusinessView({Key? key}) : super(key: key);
@@ -60,6 +64,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
   Widget build(BuildContext context) {
     return Scaffold(body: Obx(() {
       if (_viewController.isBusinessLoaded) {
+        mezDbgPrint(
+            "BUSINESS DATA ${_viewController.business?.details.location.toFirebaseFormattedJson()}");
+        mezDbgPrint(
+            "BUSINESS DATA ${_viewController.business?.details.acceptedPayments}");
         return NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool value) {
             return [
@@ -73,62 +81,65 @@ class _CustBusinessViewState extends State<CustBusinessView>
             physics: NeverScrollableScrollPhysics(),
             children: [
               Container(
-                  child: ListView(
-                padding: EdgeInsets.all(16),
-                children: [
-                  if (_viewController.business!.rentals != null &&
-                      _viewController.business!.rentals!.isNotEmpty)
-                    _rentals(context),
-                  if (_viewController.business!.events != null &&
-                      _viewController.business!.events!.isNotEmpty)
-                    _events(context),
-                  if (_viewController.business!.products != null &&
-                      _viewController.business!.products!.isNotEmpty)
-                    _products(context),
-                  if (_viewController.business!.services != null &&
-                      _viewController.business!.services!.isNotEmpty)
-                    _services(context)
-                  // Column(
-                  //   children: List.generate(
-                  //       viewController.business.events.length,
-                  //       (index) => BusinessEventCard(event : event)),
-                  // )
-                  // todo @iyadh implements all the needed services / events / rentals .... lists cards of the business
-                ],
-              )),
+                child: ListView(
+                  padding: EdgeInsets.all(16),
+                  children: [
+                    if (_viewController.business!.rentals != null &&
+                        _viewController.business!.rentals!.isNotEmpty)
+                      _rentals(context),
+                    if (_viewController.business!.events != null &&
+                        _viewController.business!.events!.isNotEmpty)
+                      _events(context),
+                    if (_viewController.business!.products != null &&
+                        _viewController.business!.products!.isNotEmpty)
+                      _products(context),
+                    if (_viewController.business!.services != null &&
+                        _viewController.business!.services!.isNotEmpty)
+                      _services(context)
+                    // Column(
+                    //   children: List.generate(
+                    //       viewController.business.events.length,
+                    //       (index) => BusinessEventCard(event : event)),
+                    // )
+                    // todo @iyadh implements all the needed services / events / rentals .... lists cards of the business
+                  ],
+                ),
+              ),
               Container(
-                  child: ListView(
-                padding: EdgeInsets.all(16),
-                children: [
-                  // todo @iyadh implements info tab view
-                  __headerButtons(),
-                  if (_viewController.business!.details.schedule != null)
-                    MezServiceOpenHours(
-                        schedule: _viewController.business!.details.schedule!),
-                  ServiceLocationCard(
-                      location: MezLocation(
-                          _viewController.business!.details.location.address,
-                          MezLocation.buildLocationData(
-                              _viewController.business!.details.location.lat
-                                  .toDouble(),
-                              _viewController.business!.details.location.lat
-                                  .toDouble()))),
-                  if (_viewController.business!.details.acceptedPayments !=
-                      null)
-                    CustBusinessPaymentMethods(
-                        margin: EdgeInsets.only(top: 10),
-                        paymentsMethods: _viewController
-                            .business!.details.acceptedPayments!),
-                  CustBusinessPaymentMethods(
-                      margin: EdgeInsets.only(top: 10),
-                      paymentsMethods: {
-                        PaymentType.Card: true,
-                        PaymentType.Cash: true,
-                        PaymentType.BankTransfer: true
-                      }),
-                  _reviewsList(context),
-                ],
-              )),
+                child: ListView(
+                  padding: EdgeInsets.all(16),
+                  children: [
+                    // todo @iyadh implements info tab view
+                    __headerButtons(),
+                    if (_viewController.business!.details.schedule != null)
+                      MezServiceOpenHours(
+                          schedule:
+                              _viewController.business!.details.schedule!),
+                    ServiceLocationCard(
+                        location: MezLocation(
+                            _viewController.business!.details.location.address,
+                            MezLocation.buildLocationData(
+                                _viewController.business!.details.location.lat
+                                    .toDouble(),
+                                _viewController.business!.details.location.lat
+                                    .toDouble()))),
+                    if (_viewController.business!.details.acceptedPayments !=
+                        null)
+                      CustBusinessPaymentMethods(
+                          margin: EdgeInsets.only(top: 10),
+                          paymentsMethods: _viewController
+                              .business!.details.acceptedPayments!),
+                    // CustBusinessPaymentMethods(
+                    //     margin: EdgeInsets.only(top: 10),
+                    //     paymentsMethods: {
+                    //       PaymentType.Card: true,
+                    //       PaymentType.Cash: true,
+                    //       PaymentType.BankTransfer: true
+                    //     }),
+                    _reviewsList(context),
+                  ],
+                ),
+              ),
             ],
           ),
         );
@@ -236,6 +247,19 @@ class _CustBusinessViewState extends State<CustBusinessView>
   }
 
   Widget __headerButtons() {
+    void navigateToChat() {
+      // check if user not logged in
+      if (Get.find<AuthController>().user == null) {
+        SignInView.navigateAtOrderTime();
+      } else {
+        CustChatController().initiateChat(
+          businessId: _viewController.business!.details.id.toInt(),
+          businessImage: _viewController.business!.details.image,
+          offeringName: null,
+        );
+      }
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -245,7 +269,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
           backgroundColor: Colors.transparent,
           shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
           label: InkWell(
-            onTap: () {},
+            onTap: () => navigateToChat(),
             child: FittedBox(
               fit: BoxFit.fitWidth,
               child: RichText(
@@ -274,7 +298,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
           backgroundColor: Colors.transparent,
           shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
           label: InkWell(
-            onTap: () {},
+            onTap: () => navigateToChat(),
             child: FittedBox(
               fit: BoxFit.fitWidth,
               child: RichText(

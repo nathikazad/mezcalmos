@@ -141,7 +141,7 @@ class CustRequestCourierViewController {
     try {
       await _uploadItemsImages();
       cModels.CreateCourierResponse res =
-          await CloudFunctions.delivery2_createCourierOrder(
+          await CloudFunctions.delivery3_createCourierOrder(
         toLocation: cModels.Location(
             lat: toLoc.value!.position.latitude!,
             lng: toLoc.value!.position.longitude!,
@@ -193,8 +193,8 @@ class CustRequestCourierViewController {
     await Future.forEach(newImages.keys, (int key) async {
       await uploadImgToFbStorage(
               imageFile: newImages[key]!,
-              pathPrefix:
-                  "${Get.find<AuthController>().hasuraUserId!}/Courier/items/${DateTime.now().toIso8601String()}")
+              storageFolder:
+                  "CourierOrders/${Get.find<AuthController>().hasuraUserId!}/items")
           .then((String url) => items[key].image = url);
     });
   }

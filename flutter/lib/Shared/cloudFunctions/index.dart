@@ -22,54 +22,54 @@ class CloudFunctions {
       parameters: <String, dynamic>{});
   }
 
-  static Future<SendOtpResponse> otp2_sendOTPForLogin(
+  static Future<SendOtpResponse> otp3_sendOTPForLogin(
       {required String language,
       required String phoneNumber}  ) async {
     return SendOtpResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "otp2-sendOTPForLogin",
+      functionName: "otp3-sendOTPForLogin",
       parameters: <String, dynamic>{
         "language": language,
         "phoneNumber": phoneNumber,
       }));
   }
 
-  static Future<AuthResponse> otp2_getAuthUsingOTP(
+  static Future<AuthResponse> otp3_getAuthUsingOTP(
       {required String phoneNumber,
       required String OTPCode}  ) async {
     return AuthResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "otp2-getAuthUsingOTP",
+      functionName: "otp3-getAuthUsingOTP",
       parameters: <String, dynamic>{
         "phoneNumber": phoneNumber,
         "OTPCode": OTPCode,
       }));
   }
 
-  static Future<PaymentIntentResponse> stripe2_getPaymentIntent(
+  static Future<PaymentIntentResponse> stripe3_getPaymentIntent(
       {required num serviceProviderDetailsId,
       required num paymentAmount}  ) async {
     return PaymentIntentResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe2-getPaymentIntent",
+      functionName: "stripe3-getPaymentIntent",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId": serviceProviderDetailsId,
         "paymentAmount": paymentAmount,
       }));
   }
 
-  static Future<AddCardResponse> stripe2_addCard(
+  static Future<AddCardResponse> stripe3_addCard(
       {required String paymentMethod}  ) async {
     return AddCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe2-addCard",
+      functionName: "stripe3-addCard",
       parameters: <String, dynamic>{
         "paymentMethod": paymentMethod,
       }));
   }
 
-  static Future<ChargeCardResponse> stripe2_chargeCard(
+  static Future<ChargeCardResponse> stripe3_chargeCard(
       {required num serviceProviderDetailsId,
       required String cardId,
       required num paymentAmount}  ) async {
     return ChargeCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe2-chargeCard",
+      functionName: "stripe3-chargeCard",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId": serviceProviderDetailsId,
         "cardId": cardId,
@@ -77,38 +77,38 @@ class CloudFunctions {
       }));
   }
 
-  static Future<RemoveCardResponse> stripe2_removeCard(
+  static Future<RemoveCardResponse> stripe3_removeCard(
       {required String cardId}  ) async {
     return RemoveCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe2-removeCard",
+      functionName: "stripe3-removeCard",
       parameters: <String, dynamic>{
         "cardId": cardId,
       }));
   }
 
-  static Future<SetupStripeResponse> stripe2_setupServiceProvider(
+  static Future<SetupStripeResponse> stripe3_setupServiceProvider(
       {required num serviceProviderDetailsId}  ) async {
     return SetupStripeResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe2-setupServiceProvider",
+      functionName: "stripe3-setupServiceProvider",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId": serviceProviderDetailsId,
       }));
   }
 
-  static Future<UpdateStripeResponse> stripe2_updateServiceProvider(
+  static Future<UpdateStripeResponse> stripe3_updateServiceProvider(
       {required num serviceProviderDetailsId}  ) async {
     return UpdateStripeResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe2-updateServiceProvider",
+      functionName: "stripe3-updateServiceProvider",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId": serviceProviderDetailsId,
       }));
   }
 
-  static Future<CallUserResponse> agora_callChatUser(
+  static Future<CallUserResponse> agora2_callChatUser(
       {required num chatId,
       required ParticipantType callerParticipantType}  ) async {
     return CallUserResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "agora-callChatUser",
+      functionName: "agora2-callChatUser",
       parameters: <String, dynamic>{
         "chatId": chatId,
         "callerParticipantType":callerParticipantType.toFirebaseFormatString(),
@@ -197,7 +197,7 @@ class CloudFunctions {
       required Map<String,bool> language,
       String? uniqueId}  ) async {
     return RestaurantResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "restaurant2-createRestaurant",
+      functionName: "restaurant3-createRestaurant",
       parameters: <String, dynamic>{
         "name": name,
         "image": image,
@@ -212,7 +212,7 @@ class CloudFunctions {
       }));
   }
 
-  static Future<CheckoutResponse> restaurant2_checkoutCart(
+  static Future<CheckoutResponse> restaurant3_checkoutCart(
       {required CustomerAppType customerAppType,
       required Location customerLocation,
       required num deliveryCost,
@@ -230,7 +230,7 @@ class CloudFunctions {
       num? tax,
       num? discountValue}  ) async {
     return CheckoutResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "restaurant2-checkoutCart",
+      functionName: "restaurant3-checkoutCart",
       parameters: <String, dynamic>{
         "customerAppType":customerAppType.toFirebaseFormatString(),
         "customerLocation":customerLocation.toFirebaseFormattedJson(),
@@ -251,46 +251,46 @@ class CloudFunctions {
       }));
   }
 
-  static Future<ChangeRestaurantStatusResponse> restaurant2_prepareOrder(
+  static Future<ChangeRestaurantStatusResponse> restaurant3_prepareOrder(
       {required num orderId}  ) async {
     return ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "restaurant2-prepareOrder",
+      functionName: "restaurant3-prepareOrder",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
   }
 
-  static Future<ChangeRestaurantStatusResponse> restaurant2_readyForOrderPickup(
+  static Future<ChangeRestaurantStatusResponse> restaurant3_readyForOrderPickup(
       {required num orderId}  ) async {
     return ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "restaurant2-readyForOrderPickup",
+      functionName: "restaurant3-readyForOrderPickup",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
   }
 
-  static Future<ChangeRestaurantStatusResponse> restaurant2_orderPickedUpByCustomer(
+  static Future<ChangeRestaurantStatusResponse> restaurant3_orderPickedUpByCustomer(
       {required num orderId}  ) async {
     return ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "restaurant2-orderPickedUpByCustomer",
+      functionName: "restaurant3-orderPickedUpByCustomer",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
   }
 
-  static Future<ChangeRestaurantStatusResponse> restaurant2_cancelOrderFromAdmin(
+  static Future<ChangeRestaurantStatusResponse> restaurant3_cancelOrderFromAdmin(
       {required num orderId}  ) async {
     return ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "restaurant2-cancelOrderFromAdmin",
+      functionName: "restaurant3-cancelOrderFromAdmin",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
   }
 
-  static Future<CancelRestaurantOrderResponse> restaurant2_cancelOrderFromCustomer(
+  static Future<CancelRestaurantOrderResponse> restaurant3_cancelOrderFromCustomer(
       {required num orderId}  ) async {
     return CancelRestaurantOrderResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "restaurant2-cancelOrderFromCustomer",
+      functionName: "restaurant3-cancelOrderFromCustomer",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
@@ -366,7 +366,7 @@ class CloudFunctions {
       required Map<String,bool> language,
       String? uniqueId}  ) async {
     return LaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "laundry2-createLaundry",
+      functionName: "laundry3-createLaundry",
       parameters: <String, dynamic>{
         "name": name,
         "image": image,
@@ -381,7 +381,7 @@ class CloudFunctions {
       }));
   }
 
-  static Future<ReqLaundryResponse> laundry2_requestLaundry(
+  static Future<ReqLaundryResponse> laundry3_requestLaundry(
       {required num storeId,
       required PaymentType paymentType,
       required DeliveryType deliveryType,
@@ -399,7 +399,7 @@ class CloudFunctions {
       required String tripPolyline,
       num? distanceFromBase}  ) async {
     return ReqLaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "laundry2-requestLaundry",
+      functionName: "laundry3-requestLaundry",
       parameters: <String, dynamic>{
         "storeId": storeId,
         "paymentType":paymentType.toFirebaseFormatString(),
@@ -420,39 +420,39 @@ class CloudFunctions {
       }));
   }
 
-  static Future<ChangeLaundryStatusResponse> laundry2_readyForDeliveryOrder(
+  static Future<ChangeLaundryStatusResponse> laundry3_readyForDeliveryOrder(
       {required num orderId}  ) async {
     return ChangeLaundryStatusResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "laundry2-readyForDeliveryOrder",
+      functionName: "laundry3-readyForDeliveryOrder",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
   }
 
-  static Future<CancelLaundryResponse> laundry2_cancelFromCustomer(
+  static Future<CancelLaundryResponse> laundry3_cancelFromCustomer(
       {required num orderId}  ) async {
     return CancelLaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "laundry2-cancelFromCustomer",
+      functionName: "laundry3-cancelFromCustomer",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
   }
 
-  static Future<ChangeLaundryStatusResponse> laundry2_cancelFromAdmin(
+  static Future<ChangeLaundryStatusResponse> laundry3_cancelFromAdmin(
       {required num orderId}  ) async {
     return ChangeLaundryStatusResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "laundry2-cancelFromAdmin",
+      functionName: "laundry3-cancelFromAdmin",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));
   }
 
-  static Future<AssignDriverResponse> delivery2_assignDriver(
+  static Future<AssignDriverResponse> delivery3_assignDriver(
       {required num deliveryOrderId,
       required num deliveryDriverId,
       bool? changeDriver}  ) async {
     return AssignDriverResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery2-assignDriver",
+      functionName: "delivery3-assignDriver",
       parameters: <String, dynamic>{
         "deliveryOrderId": deliveryOrderId,
         "deliveryDriverId": deliveryDriverId,
@@ -460,18 +460,18 @@ class CloudFunctions {
       }));
   }
 
-  static Future<ChangeDeliveryStatusResponse> delivery2_changeStatus(
+  static Future<ChangeDeliveryStatusResponse> delivery3_changeStatus(
       {required num deliveryId,
       required DeliveryOrderStatus newStatus}  ) async {
     return ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery2-changeStatus",
+      functionName: "delivery3-changeStatus",
       parameters: <String, dynamic>{
         "deliveryId": deliveryId,
         "newStatus":newStatus.toFirebaseFormatString(),
       }));
   }
 
-  static Future<CreateCourierResponse> delivery2_createCourierOrder(
+  static Future<CreateCourierResponse> delivery3_createCourierOrder(
       {required Location toLocation,
       Location? fromLocationGps,
       String? fromLocationText,
@@ -489,7 +489,7 @@ class CloudFunctions {
       num? distanceFromBase,
       num? refundAmount}  ) async {
     return CreateCourierResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery2-createCourierOrder",
+      functionName: "delivery3-createCourierOrder",
       parameters: <String, dynamic>{
         "toLocation":toLocation.toFirebaseFormattedJson(),
         "fromLocationGps":fromLocationGps?.toFirebaseFormattedJson(),
@@ -514,12 +514,12 @@ class CloudFunctions {
       }));
   }
 
-  static Future<ChangePriceReqResponse> delivery2_changeDeliveryPrice(
+  static Future<ChangePriceReqResponse> delivery3_changeDeliveryPrice(
       {required num deliveryOrderId,
       required num newPrice,
       required String reason}  ) async {
     return ChangePriceReqResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery2-changeDeliveryPrice",
+      functionName: "delivery3-changeDeliveryPrice",
       parameters: <String, dynamic>{
         "deliveryOrderId": deliveryOrderId,
         "newPrice": newPrice,
@@ -527,12 +527,12 @@ class CloudFunctions {
       }));
   }
 
-  static Future<ChangePriceResResponse> delivery2_changeDeliveryPriceResponse(
+  static Future<ChangePriceResResponse> delivery3_changeDeliveryPriceResponse(
       {required bool accepted,
       required num orderId,
       required OrderType orderType}  ) async {
     return ChangePriceResResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery2-changeDeliveryPriceResponse",
+      functionName: "delivery3-changeDeliveryPriceResponse",
       parameters: <String, dynamic>{
         "accepted": accepted,
         "orderId": orderId,
@@ -540,10 +540,10 @@ class CloudFunctions {
       }));
   }
 
-  static Future<CancelCourierResponse> delivery2_cancelCourierFromCustomer(
+  static Future<CancelCourierResponse> delivery3_cancelCourierFromCustomer(
       {required num orderId}  ) async {
     return CancelCourierResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery2-cancelCourierFromCustomer",
+      functionName: "delivery3-cancelCourierFromCustomer",
       parameters: <String, dynamic>{
         "orderId": orderId,
       }));

@@ -12,10 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -134,10 +131,9 @@ Future<cModels.PaymentIntentResponse?> getPaymentIntent({
   required num paymentAmount,
 }) async {
   try {
-    cModels.PaymentIntentResponse res =
-        await CloudFunctions.stripe2_getPaymentIntent(
-            paymentAmount: paymentAmount,
-            serviceProviderDetailsId: serviceProviderDetailsId);
+    PaymentIntentResponse res = await CloudFunctions.stripe3_getPaymentIntent(
+        paymentAmount: paymentAmount,
+        serviceProviderDetailsId: serviceProviderDetailsId);
     if (res.success == false) {
       showErrorSnackBar(errorText: res.error.toString());
       mezDbgPrint(res.error);
@@ -156,8 +152,8 @@ Future<cModels.PaymentIntentResponse?> getPaymentIntent({
 
 Future<String?> addCard({required String paymentMethod}) async {
   try {
-    cModels.AddCardResponse res =
-        await CloudFunctions.stripe2_addCard(paymentMethod: paymentMethod);
+    AddCardResponse res =
+        await CloudFunctions.stripe3_addCard(paymentMethod: paymentMethod);
     if (res.success == false) {
       showErrorSnackBar(errorText: res.error.toString());
       mezDbgPrint(res.error);
@@ -191,7 +187,7 @@ Future<String?> acceptPaymentWithSavedCard(
   mezDbgPrint("Payment with saved Card ============> ${card.toString()}");
 
   try {
-    cModels.ChargeCardResponse res = await CloudFunctions.stripe2_chargeCard(
+    ChargeCardResponse res = await CloudFunctions.stripe3_chargeCard(
         serviceProviderDetailsId: serviceProviderDetailsId,
         cardId: card.cardId,
         paymentAmount: paymentAmount);
@@ -209,30 +205,6 @@ Future<String?> acceptPaymentWithSavedCard(
     mezDbgPrint(stk);
   }
   return null;
-  // final HttpsCallable addCardFunction =
-  //     FirebaseFunctions.instance.httpsCallable("stripe-chargeCard");
-  // try {
-  //   final HttpsCallableResult<dynamic> response =
-  //       await addCardFunction.call(<String, dynamic>{
-  //     "serviceProviderId": serviceProviderId,
-  //     "cardId": card.cardId,
-  //     "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-  //     "paymentAmount": paymentAmount
-  //   });
-  //   final ServerResponse serverResponse =
-  //       ServerResponse.fromJson(response.data);
-  //   if (serverResponse.success) {
-  //     return extractPaymentIdFromIntent(
-  //         serverResponse.data['paymentIntent'].toString());
-  //   } else {
-  //     MezSnackbar(
-  //         "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
-  //     throw Exception(serverResponse.errorMessage ?? "Unknown Error");
-  //   }
-  // } catch (e) {
-  //   MezSnackbar("Add Card Error", "Server side error");
-  //   throw e;
-  // }
 }
 
 Future<void> acceptPaymentWithSheet(
@@ -336,7 +308,7 @@ Future<cModels.SetupStripeResponse> onboardServiceProvider(
 ) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  return await CloudFunctions.stripe2_setupServiceProvider(
+  return await CloudFunctions.stripe3_setupServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
 }
@@ -347,8 +319,7 @@ Future<void> updateServiceProvider(
     Map<cModels.PaymentType, bool> acceptedPayments) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  cModels.UpdateStripeResponse res =
-      await CloudFunctions.stripe2_updateServiceProvider(
+  UpdateStripeResponse res = await CloudFunctions.stripe3_updateServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
   if (res.success == false) {

@@ -80,7 +80,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
                 return MinimalOrderCard(
                   order: order,
                   onTap: () {
-                    DvCompanyOrderView.navigate(orderId: order.id);
+                    DvOrderView.navigate(orderId: order.id);
                   },
                 );
               },

@@ -59,12 +59,13 @@ T mapFromJson<T>(jsonString) {
   mezDbgPrint("mapFromJson: $jsonString");
   try {
     return jsonDecode(jsonString.toString()) as T;
-  } on FormatException catch (e) {
+  } on FormatException {
     return jsonString;
   }
 }
 
 /// Stringify a Map object
 String mapToJson(map) {
+  mezDbgPrint("map =======>$map");
   return jsonEncode(map);
 }

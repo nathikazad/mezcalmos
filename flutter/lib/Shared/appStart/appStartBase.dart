@@ -315,29 +315,31 @@ class StartingPointBaseState extends State<StartingPointBase> {
       return _actualApp(appTheme, routes);
   }
 
-  DevicePreview _actualApp(ThemeData appTheme, List<QRoute> routes) {
-    return DevicePreview(
-      enabled: MezEnv.previewMode == true ? true : false,
-      builder: (BuildContext context) => MaterialApp.router(
-        routeInformationParser: QRouteInformationParser(),
+  Widget _actualApp(ThemeData appTheme, List<QRoute> routes) {
+    return
+        // DevicePreview(
+        //   enabled: MezEnv.previewMode == true ? true : false,
+        //   builder: (BuildContext context) =>
 
-        useInheritedMediaQuery: true,
-        locale:
-            MezEnv.previewMode == true ? DevicePreview.locale(context) : null,
-        builder: MezEnv.previewMode == true
-            ? DevicePreview.appBuilder
-            : BotToastInit(),
-        debugShowCheckedModeBanner: false,
-        // onInit: () async => _initializeConfig(),
-        title: MezEnv.appType.toShortString(),
-        theme: appTheme,
-        color: Colors.white,
+        MaterialApp.router(
+      routeInformationParser: QRouteInformationParser(),
 
-        routerDelegate: QRouterDelegate(
-          routes,
-          observers: [BotToastNavigatorObserver()],
-        ),
+      useInheritedMediaQuery: true,
+      locale: MezEnv.previewMode == true ? DevicePreview.locale(context) : null,
+      builder: MezEnv.previewMode == true
+          ? DevicePreview.appBuilder
+          : BotToastInit(),
+      debugShowCheckedModeBanner: false,
+      // onInit: () async => _initializeConfig(),
+      title: MezEnv.appType.toShortString(),
+      theme: appTheme,
+      color: Colors.white,
+
+      routerDelegate: QRouterDelegate(
+        routes,
+        observers: [BotToastNavigatorObserver()],
       ),
     );
+    //);
   }
 }

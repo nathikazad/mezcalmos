@@ -59,7 +59,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     let notification: Notification = {
       foreground: <NewRestaurantNotification>{
         time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
+        notificationType: NotificationType.NewRestaurant,
         notificationAction: NotificationAction.ShowSnackBarAlways,
         name: restaurant.name,
         image: restaurant.image,

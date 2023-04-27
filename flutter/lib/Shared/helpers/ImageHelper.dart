@@ -332,13 +332,15 @@ Future<List<int>> cropRonded(Uint8List bytes) async {
 
 Future<String> uploadImgToFbStorage(
     {required XFile imageFile,
-    required String pathPrefix,
+    required String storageFolder,
+    String? fileName,
     int compressLevel = 10}) async {
   String? _uploadedImgUrl;
 
   mezDbgPrint("::::: log {{{{ ${imageFile.path}  }}}}}");
   final List<String> splitted = imageFile.path.split('.');
-  final String imgPath = "pathPrefix/${splitted[splitted.length - 1]}";
+  final String imgPath =
+      "$storageFolder/${fileName ?? DateTime.now().toIso8601String()}.${splitted[splitted.length - 1]}";
   mezDbgPrint("::::: log {{{{ $imgPath  }}}}}");
   final Uint8List uint8list = await compressImageBytes(
       await imageFile.readAsBytes(), imageFile.path,
@@ -355,4 +357,15 @@ Future<String> uploadImgToFbStorage(
         .getDownloadURL();
   }
   return _uploadedImgUrl;
+}
+
+Future<File> createFileFromAsset(
+    {required String assetPath, required String fileName}) async {
+  // Get the asset data
+  ByteData data = await rootBundle.load(assetPath);
+  // Create the file and write the asset data to it
+  File file = File('$fileName');
+  await file.writeAsBytes(
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  return file;
 }

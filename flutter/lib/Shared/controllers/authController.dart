@@ -96,9 +96,7 @@ class AuthController extends GetxController {
               ['x-hasura-allowed-roles'])) {
         mezDbgPrint("No token, calling addHasuraClaims");
 
-        await FirebaseFunctions.instance
-            .httpsCallable('user2-addHasuraClaim')
-            .call();
+        await CloudFunctions.user2_addHasuraClaim();
 
         tokenResult = await user.getIdTokenResult(true);
       }

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
@@ -164,7 +165,9 @@ class DvOrderDetailsViewController {
             String imageUrl = await uploadImgToFbStorage(
                 compressLevel: 50,
                 imageFile: newBillFile.value!,
-                pathPrefix: "bills/delivery/$orderId");
+                storageFolder:
+                    "CourierOrders/${Get.find<AuthController>().hasuraUserId!}/bills",
+                fileName: orderId.toString());
             newBillUrl.value = await update_courier_order_bill(
                 orderId: orderId, imageUrl: imageUrl);
           }
@@ -183,7 +186,7 @@ class DvOrderDetailsViewController {
     if (updatePriceFormKey.currentState?.validate() == true) {
       try {
         cModels.ChangePriceReqResponse res =
-            await CloudFunctions.delivery2_changeDeliveryPrice(
+            await CloudFunctions.delivery3_changeDeliveryPrice(
                 deliveryOrderId: order.value!.orderId,
                 newPrice: double.parse(openOrderPriceText.text),
                 reason: openOrderReasonText.text);
@@ -211,7 +214,7 @@ class DvOrderDetailsViewController {
   Future<bool> cancelOrder() async {
     try {
       cModels.ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery2_changeStatus(
+          await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.value!.orderId,
         newStatus: cModels.DeliveryOrderStatus.CancelledByDeliverer,
       );

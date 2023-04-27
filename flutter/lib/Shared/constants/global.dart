@@ -7,7 +7,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -297,3 +296,7 @@ Future<void> launchAppStoreLink() async {
   }
   //
 }
+
+Widget get smallSepartor => SizedBox(height: 8);
+Widget get meduimSeperator => SizedBox(height: 15);
+Widget get bigSeperator => SizedBox(height: 25);
