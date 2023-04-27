@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
@@ -24,8 +25,10 @@ class DeliveryServiceView extends StatefulWidget {
   @override
   State<DeliveryServiceView> createState() => _DeliveryServiceViewState();
 
-  static Future<void> navigate() {
-    return MezRouter.toPath(XRouter.deliveryServicesRoute);
+  static Future<void> navigate({required List<ServiceTree> serviceTree}) {
+    return MezRouter.toPath(XRouter.deliveryServicesRoute, arguments: {
+      "serviceTree": serviceTree,
+    });
   }
 }
 
@@ -34,9 +37,12 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   AllServiceListViewController allServiceListViewController =
       Get.find<AllServiceListViewController>();
 
+  late List<ServiceTree> serviceTree;
+
   @override
   void initState() {
     super.initState();
+    serviceTree = MezRouter.bodyArguments!["serviceTree"] as List<ServiceTree>;
   }
 
   @override
@@ -53,10 +59,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
-        titleWidget: Text(_i18n()[allServiceListViewController
-                .currentSelectedService.value.name
-                .toLowerCase()]
-            .toString()),
+        titleWidget: Text(_i18n()['delivery'].toString()),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),
@@ -115,37 +118,80 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   }
 
   Widget mezListOfServices() {
+    void navigateToListView(MezService mezService) {
+      switch (mezService) {
+        case MezService.Food:
+          CustRestaurantListView.navigate();
+          return;
+        case MezService.Laundry:
+          CustLaundriesListView.navigate();
+          return;
+        case MezService.Courier:
+          CustCourierServicesListView.navigate();
+          return;
+      }
+    }
+
+    String getCardImage(MezService mezService) {
+      switch (mezService) {
+        case MezService.Food:
+          return "assets/images/customer/foodService.png";
+        case MezService.Laundry:
+          return 'assets/images/customer/laundryService.png';
+        case MezService.Courier:
+          return 'assets/images/customer/courrierService.png';
+      }
+      return 'assets/images/customer/laundryService.png';
+    }
+
     return Column(
-      children: [
-        Obx(
-          () => ServicesCard(
-            title: "${_i18n()['food']["title"]}",
-            url: "assets/images/customer/foodService.png",
-            subtitle: "${_i18n()['food']["subtitle"]}",
-            onTap: () {
-              CustRestaurantListView.navigate();
-            },
-          ),
-        ),
-        Obx(
-          () => ServicesCard(
-            title: "${_i18n()['laundry']["title"]}",
-            subtitle: "${_i18n()['laundry']["subtitle"]}",
-            url: "assets/images/customer/laundryService.png",
-            onTap: () {
-              CustLaundriesListView.navigate();
-            },
-          ),
-        ),
-        ServicesCard(
-          title: "Courier",
-          url: "assets/images/customer/courrierService.png",
-          subtitle: "Obtain delivery of anything you desire to your location.",
-          onTap: () {
-            CustCourierServicesListView.navigate();
-          },
-        ),
-      ],
+      children: List.generate(
+        serviceTree.length,
+        (index) {
+          final MezService currentService = serviceTree[index].name;
+          return Obx(
+            () => ServicesCard(
+              title: "${_i18n()[currentService.name.toLowerCase()]["title"]}",
+              url: getCardImage(currentService),
+              subtitle:
+                  "${_i18n()[currentService.name.toLowerCase()]["subtitle"]}",
+              onTap: () {
+                navigateToListView(currentService);
+              },
+            ),
+          );
+        },
+      ),
+      // [
+      //   Obx(
+      //     () => ServicesCard(
+      //       title: "${_i18n()['food']["title"]}",
+      //       url: "assets/images/customer/foodService.png",
+      //       subtitle: "${_i18n()['food']["subtitle"]}",
+      //       onTap: () {
+      //         CustRestaurantListView.navigate();
+      //       },
+      //     ),
+      //   ),
+      //   Obx(
+      //     () => ServicesCard(
+      //       title: "${_i18n()['laundry']["title"]}",
+      //       subtitle: "${_i18n()['laundry']["subtitle"]}",
+      //       url: "assets/images/customer/laundryService.png",
+      //       onTap: () {
+      //         CustLaundriesListView.navigate();
+      //       },
+      //     ),
+      //   ),
+      //   ServicesCard(
+      //     title: "${_i18n()['courier']["title"]}",
+      //     url: "assets/images/customer/courrierService.png",
+      //     subtitle: "${_i18n()['courier']["subtitle"]}",
+      //     onTap: () {
+      //       CustCourierServicesListView.navigate();
+      //     },
+      //   ),
+      // ],
     );
   }
 

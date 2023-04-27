@@ -25,7 +25,7 @@ class AllServiceListViewController {
       _deliveryServiceListData;
 
   void init() {
-    _fetchServiceTree();
+    fetchServiceTree();
     _deliveryServiceListData = RxMap<MezService, Map<String, String>>({
       MezService.Deliveries: {
         "icon": aDelivery,
@@ -70,7 +70,7 @@ class AllServiceListViewController {
     });
   }
 
-  void _fetchServiceTree() async {
+  Future<void> fetchServiceTree() async {
     var data = await get_service_tree(
       distance: 1000000000,
       lat: 15.8.toDouble(),
