@@ -26,6 +26,7 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
       name: data.name,
       language: data.language_id.toLanguage(),
       image: data.image,
+      creationTime: data.creation_time,
     );
   }
 }

@@ -34,13 +34,6 @@ array_relationships:
         table:
           name: rental
           schema: business
-  - name: services
-    using:
-      foreign_key_constraint_on:
-        column: business_id
-        table:
-          name: service
-          schema: business
   - name: reviews
     using:
       manual_configuration:
@@ -51,14 +44,21 @@ array_relationships:
         remote_table:
           name: review
           schema: public
+  - name: services
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: service
+          schema: business
 select_permissions:
-  - role: customer
+  - role: anonymous
     permission:
       columns:
         - details_id
         - id
-        - profile
         - service_provider_type
+        - profile
       filter: {}
   - role: business_operator
     permission:
@@ -71,3 +71,11 @@ select_permissions:
         operators:
           user_id:
             _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - details_id
+        - id
+        - profile
+        - service_provider_type
+      filter: {}

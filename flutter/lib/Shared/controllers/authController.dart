@@ -152,7 +152,7 @@ class AuthController extends GetxController {
       'delivery_operator',
       'delivery_driver',
       'laundry_operator'
-      'business_operator',
+          'business_operator',
     ];
 
     final List<String> difference =
