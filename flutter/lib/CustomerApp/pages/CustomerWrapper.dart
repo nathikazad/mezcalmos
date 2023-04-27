@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustMessagesView/CustMessagesView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -83,12 +84,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
           asTab: true,
         );
       case 2:
-        return Scaffold(
-          body: Container(
-            alignment: Alignment.center,
-            child: Text("Coming soon..."),
-          ),
-        );
+        return CustMessagesView();
       case 3:
         return UserProfileView(
           asTab: true,
@@ -123,7 +119,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                       icon: Icon(Icons.history), label: "${_i18n()['orders']}"),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.feed_outlined),
-                      label: "${_i18n()['feed']}"),
+                      label: "${_i18n()['messages']}"),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person_outline),
                       label: "${_i18n()['profile']}"),
