@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 
 class BsOpHomeRentalView extends StatefulWidget {
   const BsOpHomeRentalView({Key? key}) : super(key: key);
-  static Future<bool> navigate({required int? id}) async {
+  static Future<bool?> navigate({required int? id}) async {
     String route = BusinessOpRoutes.kBsOpHomeRental;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
     await MezRouter.toPath(route);
@@ -28,17 +28,25 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
   BsHomeRentalViewController viewController = BsHomeRentalViewController();
   @override
   void initState() {
-    // TODO: implement initState
+    viewController.init();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "Home rental"),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+        MezRouter.back(backResult: viewController.shouldRefetch);
+      }, title: "Home rental"),
       bottomNavigationBar: MezButton(
         label: "Save",
+        borderRadius: 0,
         onClick: () async {
           await viewController.save();
         },
@@ -150,11 +158,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
                   ),
                   InkWell(
                       onTap: () {
-                        if (viewController.timeUnits.length > 1) {
+                        if (viewController.units.length > 1) {
                           _timeUnitSelectorSheet(context);
-                        } else if (viewController.timeUnits.length == 1) {
+                        } else if (viewController.units.length == 1) {
                           viewController
-                              .addPriceTimeUnit(viewController.timeUnits.first);
+                              .addPriceTimeUnit(viewController.units.first);
                         }
                       },
                       child: Ink(
@@ -222,7 +230,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
                   height: 35,
                 ),
                 Column(
-                  children: viewController.timeUnits.map((TimeUnit timeUnit) {
+                  children: viewController.units.map((TimeUnit timeUnit) {
                     return Container(
                       margin: const EdgeInsets.only(top: 5),
                       child: Row(

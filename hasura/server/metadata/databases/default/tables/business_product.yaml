@@ -9,13 +9,6 @@ object_relationships:
     using:
       foreign_key_constraint_on: details_id
 select_permissions:
-  - role: anonymous
-    permission:
-      columns:
-        - business_id
-        - details_id
-        - id
-      filter: {}
   - role: customer
     permission:
       columns:

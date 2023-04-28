@@ -1,83 +1,36 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/ServicesViewsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class BsHomeRentalViewController {
-  imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+class BsHomeRentalViewController extends ServicesViewsController {
+  @override
+  String get imagesUploadFolder => "Business/HomeRentals/Images";
 
-  // instances //
-  TextEditingController nameController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  @override
+  List<TimeUnit> get timeUnits => List.unmodifiable([
+        TimeUnit.PerHour,
+        TimeUnit.PerDay,
+        TimeUnit.PerWeek,
+        TimeUnit.PerMonth,
+      ]);
 
-  // streams //
-
-  // variables //
-  List<TimeUnit> _timeUnits = List.unmodifiable([
-    TimeUnit.PerHour,
-    TimeUnit.PerDay,
-    TimeUnit.PerWeek,
-    TimeUnit.PerMonth,
-  ]);
-
-  // states variables //
-  RxBool isAvailable = RxBool(false);
-  RxList<String> imagesUrls = RxList.empty();
-  RxMap<TextEditingController, TimeUnit> priceTimeUnitMap =
-      RxMap<TextEditingController, TimeUnit>();
-  RxList<File?> images = RxList.filled(5, null);
-  // getters//
-  List<TimeUnit> get timeUnits => _timeUnits
-      .where((TimeUnit element) =>
-          priceTimeUnitMap.values.contains(element) == false)
-      .toList();
-
-  // methods //
-  Future<void> init() async {}
-
-  void addPriceTimeUnit(TimeUnit timeUnit) {
-    priceTimeUnitMap[TextEditingController()] = timeUnit;
+  @override
+  Future<void> init() async {
+    //  mezDbgPrint("INIT home rental view");
   }
 
-  void removeTimeUnit(TimeUnit timeUnit) {
-    priceTimeUnitMap.removeWhere(
-        (TextEditingController key, TimeUnit value) => value == timeUnit);
-  }
-
-  Future<void> addItemImage(
-      {required int itemIndex, required BuildContext context}) async {
-    final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
-
-    if (_from != null) {
-      final imPicker.XFile? _res =
-          await imagePicker(picker: _imagePicker, source: _from);
-
-      try {
-        if (_res != null) {
-          images[itemIndex] = File(_res.path);
-        }
-      } catch (e) {
-        mezDbgPrint(
-            "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
-      }
-    }
-  }
-
-  void dispose() {}
-
+  @override
+  Future<void> fetchData() async {}
+  @override
   Future<void> save() async {
     if (formKey.currentState?.validate() == true) {
-      final List<String> _imagesUrls = await _uploadItemsImages();
+      final List<String> _imagesUrls = await uploadItemsImages();
 
       Rental rental = Rental(
           homeType: "apartment",
@@ -105,6 +58,7 @@ class BsHomeRentalViewController {
         int? res = await add_one_home_rental(rental: rental);
         if (res != null) {
           showSavedSnackBar();
+          shouldRefetch = true;
         }
       } on OperationException catch (e) {
         mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
@@ -112,17 +66,8 @@ class BsHomeRentalViewController {
     }
   }
 
-  Future<List<String>> _uploadItemsImages() async {
-    List<String> _imagesUrls = [];
-    await Future.forEach(images, (File? value) async {
-      if (value != null) {
-        await uploadImgToFbStorage(
-                imageFile: imPicker.XFile(value.path),
-                storageFolder:
-                    "Business/HomeRentals/items/${DateTime.now().toIso8601String()}")
-            .then((String url) => _imagesUrls.add(url));
-      }
-    });
-    return _imagesUrls;
+  @override
+  void dispose() {
+    // TODO: implement dispose
   }
 }

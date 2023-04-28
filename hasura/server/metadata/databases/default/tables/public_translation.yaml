@@ -122,11 +122,7 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_type
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: customer
     permission:
       columns:
