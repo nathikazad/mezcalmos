@@ -1,3 +1,36 @@
 table:
   name: data_consumption
   schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - date
+        - id
+        - total_size
+        - user_id
+        - name_of_subscription
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - date
+        - id
+        - total_size
+        - user_id
+        - name_of_subscription
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - total_size
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

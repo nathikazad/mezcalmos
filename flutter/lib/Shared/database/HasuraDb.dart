@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/data_consumption/hsDataConsumption.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart' as gqClient;
@@ -65,7 +66,7 @@ class HasuraDb {
 
   Map<String, HasuraSubscription> hasuraSubscriptions =
       <String, HasuraSubscription>{};
-  Map<String, num> dataConsumption = <String, num>{};
+  Map<String, int> dataConsumption = <String, int>{};
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
   Timer? expirationCheckTimer;
@@ -229,8 +230,14 @@ class HasuraDb {
     dataConsumptionTimer?.cancel();
     dataConsumptionTimer =
         Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
-      if (dataConsumption.isNotEmpty) {
-        dataConsumption.forEach((key, value) {});
+      if (dataConsumption.isNotEmpty &&
+          Get.find<AuthController>().hasuraUserId != null) {
+        dataConsumption.forEach((key, value) {
+          updateSubscriptionDataConsumption(
+              nameOfSubscription: key,
+              totalSize: value,
+              userId: Get.find<AuthController>().hasuraUserId!);
+        });
         dataConsumption.clear();
       }
       // check if dataConsumption data structure is not empty

@@ -18727,114 +18727,6 @@ const documentNodeSubscriptionlisten_on_inprocess_driver_orders =
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'restaurant'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'details'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'firebase_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'gps'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: 'address'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'language'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'open_status'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -18945,7 +18837,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     required this.dropoff_address,
     required this.dropoff_gps,
     required this.customer,
-    this.restaurant,
     required this.$__typename,
   });
 
@@ -18962,7 +18853,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
     final l$customer = json['customer'];
-    final l$restaurant = json['restaurant'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_inprocess_driver_orders$delivery_order(
       id: (l$id as int),
@@ -18980,10 +18870,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
       customer:
           Subscription$listen_on_inprocess_driver_orders$delivery_order$customer
               .fromJson((l$customer as Map<String, dynamic>)),
-      restaurant: l$restaurant == null
-          ? null
-          : Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant
-              .fromJson((l$restaurant as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -19010,9 +18896,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
 
   final Subscription$listen_on_inprocess_driver_orders$delivery_order$customer
       customer;
-
-  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant?
-      restaurant;
 
   final String $__typename;
 
@@ -19042,8 +18925,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     _resultData['dropoff_gps'] = geographyToJson(l$dropoff_gps);
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
-    final l$restaurant = restaurant;
-    _resultData['restaurant'] = l$restaurant?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -19062,7 +18943,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
     final l$customer = customer;
-    final l$restaurant = restaurant;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -19076,7 +18956,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
       l$dropoff_address,
       l$dropoff_gps,
       l$customer,
-      l$restaurant,
       l$$__typename,
     ]);
   }
@@ -19146,11 +19025,6 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order {
     if (l$customer != lOther$customer) {
       return false;
     }
-    final l$restaurant = restaurant;
-    final lOther$restaurant = other.restaurant;
-    if (l$restaurant != lOther$restaurant) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -19196,14 +19070,10 @@ abstract class CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_
     Geography? dropoff_gps,
     Subscription$listen_on_inprocess_driver_orders$delivery_order$customer?
         customer,
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant?
-        restaurant,
     String? $__typename,
   });
   CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$customer<
       TRes> get customer;
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-      TRes> get restaurant;
 }
 
 class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order<
@@ -19235,7 +19105,6 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
     Object? customer = _undefined,
-    Object? restaurant = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listen_on_inprocess_driver_orders$delivery_order(
@@ -19272,10 +19141,6 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
             ? _instance.customer
             : (customer
                 as Subscription$listen_on_inprocess_driver_orders$delivery_order$customer),
-        restaurant: restaurant == _undefined
-            ? _instance.restaurant
-            : (restaurant
-                as Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -19285,16 +19150,6 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
     final local$customer = _instance.customer;
     return CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$customer(
         local$customer, (e) => call(customer: e));
-  }
-
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-      TRes> get restaurant {
-    final local$restaurant = _instance.restaurant;
-    return local$restaurant == null
-        ? CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant(
-            local$restaurant, (e) => call(restaurant: e));
   }
 }
 
@@ -19321,8 +19176,6 @@ class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_
     Geography? dropoff_gps,
     Subscription$listen_on_inprocess_driver_orders$delivery_order$customer?
         customer,
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant?
-        restaurant,
     String? $__typename,
   }) =>
       _res;
@@ -19330,11 +19183,6 @@ class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_
           TRes>
       get customer =>
           CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$customer
-              .stub(_res);
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-          TRes>
-      get restaurant =>
-          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant
               .stub(_res);
 }
 
@@ -19658,639 +19506,6 @@ class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_
   call({
     String? name,
     String? image,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
-  Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant({
-    required this.id,
-    this.details,
-    required this.$__typename,
-  });
-
-  factory Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$details = json['details'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant(
-      id: (l$id as int),
-      details: l$details == null
-          ? null
-          : Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details
-              .fromJson((l$details as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details?
-      details;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$details = details;
-    _resultData['details'] = l$details?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$details = details;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$details,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant
-    on Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant>
-      get copyWith =>
-          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-    TRes> {
-  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant(
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant
-        instance,
-    TRes Function(
-            Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant)
-        then,
-  ) = _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant;
-
-  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant;
-
-  TRes call({
-    int? id,
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details?
-        details,
-    String? $__typename,
-  });
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-      TRes> get details;
-}
-
-class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-        TRes>
-    implements
-        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-            TRes> {
-  _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant
-      _instance;
-
-  final TRes Function(
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? details = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        details: details == _undefined
-            ? _instance.details
-            : (details
-                as Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-      TRes> get details {
-    final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details(
-            local$details, (e) => call(details: e));
-  }
-}
-
-class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-        TRes>
-    implements
-        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details?
-        details,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-          TRes>
-      get details =>
-          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details
-              .stub(_res);
-}
-
-class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details {
-  Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details({
-    required this.id,
-    this.firebase_id,
-    required this.image,
-    required this.name,
-    required this.location,
-    required this.language,
-    required this.open_status,
-    required this.$__typename,
-  });
-
-  factory Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$firebase_id = json['firebase_id'];
-    final l$image = json['image'];
-    final l$name = json['name'];
-    final l$location = json['location'];
-    final l$language = json['language'];
-    final l$open_status = json['open_status'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details(
-      id: (l$id as int),
-      firebase_id: (l$firebase_id as String?),
-      image: (l$image as String),
-      name: (l$name as String),
-      location:
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location
-              .fromJson((l$location as Map<String, dynamic>)),
-      language: mapFromJson(l$language),
-      open_status: (l$open_status as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String? firebase_id;
-
-  final String image;
-
-  final String name;
-
-  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location
-      location;
-
-  final dynamic language;
-
-  final String open_status;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$firebase_id = firebase_id;
-    _resultData['firebase_id'] = l$firebase_id;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$location = location;
-    _resultData['location'] = l$location.toJson();
-    final l$language = language;
-    _resultData['language'] = mapToJson(l$language);
-    final l$open_status = open_status;
-    _resultData['open_status'] = l$open_status;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$firebase_id = firebase_id;
-    final l$image = image;
-    final l$name = name;
-    final l$location = location;
-    final l$language = language;
-    final l$open_status = open_status;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$firebase_id,
-      l$image,
-      l$name,
-      l$location,
-      l$language,
-      l$open_status,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$firebase_id = firebase_id;
-    final lOther$firebase_id = other.firebase_id;
-    if (l$firebase_id != lOther$firebase_id) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$location = location;
-    final lOther$location = other.location;
-    if (l$location != lOther$location) {
-      return false;
-    }
-    final l$language = language;
-    final lOther$language = other.language;
-    if (l$language != lOther$language) {
-      return false;
-    }
-    final l$open_status = open_status;
-    final lOther$open_status = other.open_status;
-    if (l$open_status != lOther$open_status) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details
-    on Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details {
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details>
-      get copyWith =>
-          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-    TRes> {
-  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details(
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details
-        instance,
-    TRes Function(
-            Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details)
-        then,
-  ) = _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details;
-
-  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details;
-
-  TRes call({
-    int? id,
-    String? firebase_id,
-    String? image,
-    String? name,
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location?
-        location,
-    dynamic? language,
-    String? open_status,
-    String? $__typename,
-  });
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-      TRes> get location;
-}
-
-class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-        TRes>
-    implements
-        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-            TRes> {
-  _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details
-      _instance;
-
-  final TRes Function(
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? firebase_id = _undefined,
-    Object? image = _undefined,
-    Object? name = _undefined,
-    Object? location = _undefined,
-    Object? language = _undefined,
-    Object? open_status = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        firebase_id: firebase_id == _undefined
-            ? _instance.firebase_id
-            : (firebase_id as String?),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
-        location: location == _undefined || location == null
-            ? _instance.location
-            : (location
-                as Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location),
-        language: language == _undefined || language == null
-            ? _instance.language
-            : (language as dynamic),
-        open_status: open_status == _undefined || open_status == null
-            ? _instance.open_status
-            : (open_status as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-      TRes> get location {
-    final local$location = _instance.location;
-    return CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location(
-        local$location, (e) => call(location: e));
-  }
-}
-
-class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-        TRes>
-    implements
-        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? firebase_id,
-    String? image,
-    String? name,
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location?
-        location,
-    dynamic? language,
-    String? open_status,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-          TRes>
-      get location =>
-          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location
-              .stub(_res);
-}
-
-class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location {
-  Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location({
-    required this.gps,
-    required this.address,
-    required this.$__typename,
-  });
-
-  factory Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location.fromJson(
-      Map<String, dynamic> json) {
-    final l$gps = json['gps'];
-    final l$address = json['address'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location(
-      gps: geographyFromJson(l$gps),
-      address: (l$address as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Geography gps;
-
-  final String address;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$gps = gps;
-    _resultData['gps'] = geographyToJson(l$gps);
-    final l$address = address;
-    _resultData['address'] = l$address;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$gps = gps;
-    final l$address = address;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$gps,
-      l$address,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$gps = gps;
-    final lOther$gps = other.gps;
-    if (l$gps != lOther$gps) {
-      return false;
-    }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location
-    on Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location {
-  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location>
-      get copyWith =>
-          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-    TRes> {
-  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location(
-    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location
-        instance,
-    TRes Function(
-            Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location)
-        then,
-  ) = _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location;
-
-  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location;
-
-  TRes call({
-    Geography? gps,
-    String? address,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-        TRes>
-    implements
-        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-            TRes> {
-  _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location
-      _instance;
-
-  final TRes Function(
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? gps = _undefined,
-    Object? address = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location(
-        gps: gps == _undefined || gps == null
-            ? _instance.gps
-            : (gps as Geography),
-        address: address == _undefined || address == null
-            ? _instance.address
-            : (address as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-        TRes>
-    implements
-        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$details$location(
-      this._res);
-
-  TRes _res;
-
-  call({
-    Geography? gps,
-    String? address,
     String? $__typename,
   }) =>
       _res;
