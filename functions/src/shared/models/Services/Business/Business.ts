@@ -16,6 +16,8 @@ export interface BusinessItemDetails {
     id: number;
     name: Record<Language, string>;
     description?: Record<Language, string>;
+    nameId?: number;
+    descriptionId?: number;
     position?: number;
     businessId: number;
     available: boolean;
