@@ -447,21 +447,6 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
         image
       }
     }
-    restaurant {
-      id
-      details {
-        id
-        firebase_id
-        image
-        name
-        location {
-          gps
-          address
-        }
-        language
-        open_status
-      }
-    }
   }
 }
 

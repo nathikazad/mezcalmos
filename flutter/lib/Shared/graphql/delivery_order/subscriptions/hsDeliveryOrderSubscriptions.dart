@@ -366,6 +366,15 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
                   orderId: orderId)))
       .map((QueryResult<Subscription$listen_driver_order_prices> event) {
     mezDbgPrint("Event =======>$event");
+
+    if (Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] ==
+        null)
+      Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] = 0;
+    Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] +=
+        event.data.toString().length;
+    // table
+    // name_of_subscription, date, total_size, user_id
+
     if (event.parsedData?.delivery_order_by_pk != null) {
       Subscription$listen_driver_order_prices$delivery_order_by_pk data =
           event.parsedData!.delivery_order_by_pk!;

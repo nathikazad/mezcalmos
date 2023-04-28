@@ -65,9 +65,11 @@ class HasuraDb {
 
   Map<String, HasuraSubscription> hasuraSubscriptions =
       <String, HasuraSubscription>{};
+  Map<String, num> dataConsumption = <String, num>{};
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
   Timer? expirationCheckTimer;
+  Timer? dataConsumptionTimer;
   num? expirationTime;
 
   Future<void> initializeHasura() async {
@@ -129,9 +131,11 @@ class HasuraDb {
 
       expirationTime = JwtDecoder.decode(hasuraAuthToken)["exp"];
       startJWTExpirationCheckTimer();
+      startDataConsumptionTimer();
     } else {
       expirationTime = null;
       cancelJWTExpirationCheckTimer();
+      cancelDataConsumptionTimer();
     }
 
     if (_wsLink == null) {
@@ -219,6 +223,21 @@ class HasuraDb {
   void cancelJWTExpirationCheckTimer() {
     expirationCheckTimer?.cancel();
     expirationCheckTimer = null;
+  }
+
+  void startDataConsumptionTimer() {
+    dataConsumptionTimer?.cancel();
+    dataConsumptionTimer =
+        Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
+      // check if dataConsumption data structure is not empty
+      //      write key,values to db
+      //      clear data afterwards
+    });
+  }
+
+  void cancelDataConsumptionTimer() {
+    dataConsumptionTimer?.cancel();
+    dataConsumptionTimer = null;
   }
 
   bool checkIfJWTExpired() {
