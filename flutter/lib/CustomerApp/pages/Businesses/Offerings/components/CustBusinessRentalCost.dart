@@ -74,29 +74,30 @@ class CustBusinessRentalCost extends StatelessWidget {
           direction: costData.length > 2 ? Axis.horizontal : Axis.vertical,
           children: [
             for (int index = 0; index < costData.length; index++)
-              costData.length <= 2
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          costData[index]["icon"],
-                        ),
-                        Text(
-                          "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-                        )
-                      ],
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          costData[index]["icon"],
-                        ),
-                        Text(
-                          "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-                        )
-                      ],
-                    ),
+              // costData.length <= 2
+              //     ? Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: <Widget>[
+              //           Icon(
+              //             costData[index]["icon"],
+              //           ),
+              //           Text(
+              //             "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
+              //           )
+              //         ],
+              //       )
+              //     :
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    costData[index]["icon"],
+                  ),
+                  Text(
+                    "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
+                  )
+                ],
+              ),
           ],
         ));
   }

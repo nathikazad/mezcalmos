@@ -50,20 +50,6 @@ class _AllServiceViewState extends State<AllServiceView> {
             mezkalaDescription(txt.titleMedium!),
             // const SizedBox(height: 10),
             mezkalaServiceTitle(txt.displayMedium!),
-            MezCard(
-                contentPadding: EdgeInsets.zero,
-                radius: 50,
-                borderRadius: 25,
-                content: Obx(
-                  () => TextField(
-                    decoration: InputDecoration(
-                      hintText: _i18n()["search"].toString(),
-                      fillColor: Colors.transparent,
-                      prefixIcon: Icon(Icons.search),
-                      prefixIconColor: Colors.black,
-                    ),
-                  ),
-                )),
             AllServiceListView(),
           ],
         ),
