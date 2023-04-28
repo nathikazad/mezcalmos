@@ -71,6 +71,7 @@ select_permissions:
         operators:
           user_id:
             _eq: X-Hasura-User-Id
+      allow_aggregations: true
   - role: customer
     permission:
       columns:

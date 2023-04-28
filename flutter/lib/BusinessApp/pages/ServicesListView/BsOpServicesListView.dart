@@ -90,7 +90,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 children: List.generate(
                     viewController.homeRentals.length,
                     (int index) => MezCard(
-                            content: Text(
+                        onClick: () {
+                          BsOpHomeRentalView.navigate(
+                              id: viewController.homeRentals[index].details.id
+                                  .toInt());
+                        },
+                        content: Text(
                           viewController.homeRentals[index].details
                                   .name[userLanguage] ??
                               "name error",

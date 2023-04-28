@@ -9,6 +9,13 @@ select_permissions:
         - id
         - address
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
   - role: customer
     permission:
       columns:

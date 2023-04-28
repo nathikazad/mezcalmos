@@ -7,8 +7,12 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class BsHomeRentalViewController extends ServicesViewsController {
+  Rxn<Rental> _rental = Rxn<Rental>();
+  Rental? get rental => _rental.value;
+  bool get isEditing => _rental.value != null;
   @override
   String get imagesUploadFolder => "Business/HomeRentals/Images";
 
@@ -21,12 +25,30 @@ class BsHomeRentalViewController extends ServicesViewsController {
       ]);
 
   @override
-  Future<void> init() async {
-    //  mezDbgPrint("INIT home rental view");
+  Future<void> initEditMode({required int id}) async {
+    _rental.value = await get_rental_by_id(id: id, withCache: false);
+    if (rental != null) {
+      nameController.text = rental!.details.name[userLanguage] ?? "";
+      descriptionController.text =
+          rental!.details.description?[userLanguage] ?? "";
+      isAvailable.value = rental!.details.available;
+
+      if (rental!.details.image != null) {
+        for (int i = 0; i < rental!.details.image!.length; i++) {
+          imagesUrls[i] = rental!.details.image![i];
+        }
+      }
+      imagesUrls.refresh();
+      mezDbgPrint("imagesUrls : ${imagesUrls.value}");
+      mezDbgPrint("rental : ${rental!.details.image}");
+      rental!.details.cost.forEach((TimeUnit key, num value) {
+        TextEditingController _controller = TextEditingController();
+        _controller.text = value.toString();
+        priceTimeUnitMap[_controller] = key;
+      });
+    }
   }
 
-  @override
-  Future<void> fetchData() async {}
   @override
   Future<void> save() async {
     if (formKey.currentState?.validate() == true) {

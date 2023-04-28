@@ -5,6 +5,8 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -28,7 +30,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
   BsHomeRentalViewController viewController = BsHomeRentalViewController();
   @override
   void initState() {
-    viewController.init();
+    int? id = MezRouter.urlArguments["id"]?.asInt;
+    if (id != null) {
+      viewController.initEditMode(id: id);
+    }
+
     super.initState();
   }
 
@@ -43,7 +49,10 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
         MezRouter.back(backResult: viewController.shouldRefetch);
-      }, title: "Home rental"),
+      },
+          titleWidget: Obx(() => Text(viewController.rental != null
+              ? "${viewController.rental!.details.name[userLanguage] ?? ""}"
+              : "Home rental"))),
       bottomNavigationBar: MezButton(
         label: "Save",
         borderRadius: 0,
@@ -85,9 +94,8 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
                     children: List.generate(
                       5,
                       (int index) {
-                        bool hasImage = viewController.images.length >= index &&
-                            viewController.images.isNotEmpty &&
-                            viewController.images[index] != null;
+                        bool hasImage = viewController.getImage(index) != null;
+                        mezDbgPrint(hasImage);
                         return InkWell(
                           onTap: () {
                             viewController.addItemImage(
@@ -102,8 +110,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
                               borderRadius: BorderRadius.circular(10),
                               image: hasImage
                                   ? DecorationImage(
-                                      image: FileImage(
-                                          (viewController.images[index]!)),
+                                      image: viewController.getImage(index)!,
                                       fit: BoxFit.cover,
                                     )
                                   : null,

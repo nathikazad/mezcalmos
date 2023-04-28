@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -25,7 +26,7 @@ abstract class ServicesViewsController {
 
   // states variables //
   RxBool isAvailable = RxBool(false);
-  RxList<String> imagesUrls = RxList.empty();
+  RxList<String?> imagesUrls = RxList.filled(5, null);
   RxMap<TextEditingController, TimeUnit> priceTimeUnitMap =
       RxMap<TextEditingController, TimeUnit>();
   RxList<File?> images = RxList.filled(5, null);
@@ -36,8 +37,7 @@ abstract class ServicesViewsController {
       .toList();
 
   // methods //
-  Future<void> init();
-  Future<void> fetchData();
+  Future<void> initEditMode({required int id});
   Future<void> save();
   void addPriceTimeUnit(TimeUnit timeUnit) {
     priceTimeUnitMap[TextEditingController()] = timeUnit;
@@ -68,16 +68,27 @@ abstract class ServicesViewsController {
   }
 
   Future<List<String>> uploadItemsImages() async {
-    List<String> _imagesUrls = [];
-    await Future.forEach(images, (File? value) async {
-      if (value != null) {
-        await uploadImgToFbStorage(
-                imageFile: imPicker.XFile(value.path),
-                storageFolder: "$imagesUploadFolder")
-            .then((String url) => _imagesUrls.add(url));
+    List<String> _imagesUrls = List.from(imagesUrls);
+
+    for (int i = 0; i < images.length; i++) {
+      if (images[i] != null) {
+        _imagesUrls[i] = await uploadImgToFbStorage(
+            imageFile: imPicker.XFile(images[i]!.path),
+            storageFolder: "$imagesUploadFolder");
       }
-    });
+    }
+
     return _imagesUrls;
+  }
+
+  ImageProvider? getImage(int index) {
+    mezDbgPrint("Image url $index : ${imagesUrls[index]}");
+    if (images[index] != null) {
+      return FileImage(images[index]!);
+    } else if (imagesUrls[index] != null) {
+      return CachedNetworkImageProvider(imagesUrls[index]!);
+    }
+    return null;
   }
 
   void dispose();

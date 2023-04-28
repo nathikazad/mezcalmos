@@ -92,6 +92,24 @@ select_permissions:
         - to_name
       filter: {}
       allow_aggregations: true
+  - role: business_operator
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
+      filter: {}
+      allow_aggregations: true
   - role: customer
     permission:
       columns:
