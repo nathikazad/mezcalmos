@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServi
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -169,7 +170,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           label: "Add",
                           onClick: () async {
                             Navigator.pop(context);
-                            BsOpHomeRentalView.navigate(id: null);
+                            bool? hasChanged =
+                                await BsOpHomeRentalView.navigate(id: null);
+                            mezDbgPrint("hasChanged: $hasChanged");
+                            if (hasChanged == true) {
+                              viewController.init();
+                            }
                           },
                         ))
                       ],

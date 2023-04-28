@@ -5,9 +5,15 @@ object_relationships:
   - name: rental
     using:
       foreign_key_constraint_on: rental_id
-select_permissions:
-  - role: anonymous
+insert_permissions:
+  - role: business_operator
     permission:
+      check:
+        rental:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
       columns:
         - gps_location
         - bathrooms
@@ -15,7 +21,7 @@ select_permissions:
         - rental_id
         - address
         - home_type
-      filter: {}
+select_permissions:
   - role: business_operator
     permission:
       columns:

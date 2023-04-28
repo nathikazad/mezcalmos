@@ -63,6 +63,28 @@ select_permissions:
         - service_provider_type
         - unique_id
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - referral_points
+        - service_link_id
+        - stripe_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - unique_id
+        - creation_time
+        - language
+      filter: {}
   - role: customer
     permission:
       columns:

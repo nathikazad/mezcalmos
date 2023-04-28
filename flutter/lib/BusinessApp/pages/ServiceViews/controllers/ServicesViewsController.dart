@@ -19,6 +19,7 @@ abstract class ServicesViewsController {
 
   // variables //
   String get imagesUploadFolder;
+  bool shouldRefetch = false;
 
   List<TimeUnit> get timeUnits;
 
@@ -29,14 +30,15 @@ abstract class ServicesViewsController {
       RxMap<TextEditingController, TimeUnit>();
   RxList<File?> images = RxList.filled(5, null);
   // getters//
-  List<TimeUnit> get units => units
+  List<TimeUnit> get units => timeUnits
       .where((TimeUnit element) =>
           priceTimeUnitMap.values.contains(element) == false)
       .toList();
 
   // methods //
-  Future<void> init() async {}
-
+  Future<void> init();
+  Future<void> fetchData();
+  Future<void> save();
   void addPriceTimeUnit(TimeUnit timeUnit) {
     priceTimeUnitMap[TextEditingController()] = timeUnit;
   }
@@ -65,11 +67,7 @@ abstract class ServicesViewsController {
     }
   }
 
-  void dispose() {}
-
-  Future<void> save();
-
-  Future<List<String>> _uploadItemsImages() async {
+  Future<List<String>> uploadItemsImages() async {
     List<String> _imagesUrls = [];
     await Future.forEach(images, (File? value) async {
       if (value != null) {
@@ -81,4 +79,6 @@ abstract class ServicesViewsController {
     });
     return _imagesUrls;
   }
+
+  void dispose();
 }

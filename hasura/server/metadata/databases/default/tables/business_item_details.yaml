@@ -8,22 +8,23 @@ object_relationships:
   - name: name
     using:
       foreign_key_constraint_on: name_id
-select_permissions:
-  - role: anonymous
+insert_permissions:
+  - role: business_operator
     permission:
+      check: {}
       columns:
+        - available
+        - description_id
         - id
         - name_id
-        - description_id
         - position
-        - available
-        - category1
-        - image
-        - cost
         - additional_parameters
-        - category2
+        - cost
+        - image
         - tags
-      filter: {}
+        - category1
+        - category2
+select_permissions:
   - role: business_operator
     permission:
       columns:

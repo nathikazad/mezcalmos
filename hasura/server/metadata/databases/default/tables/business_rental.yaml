@@ -15,15 +15,28 @@ object_relationships:
         table:
           name: home_rental
           schema: business
+insert_permissions:
+  - role: business_operator
+    permission:
+      check: {}
+      columns:
+        - business_id
+        - details_id
+        - id
+        - category3
 select_permissions:
-  - role: anonymous
+  - role: business_operator
     permission:
       columns:
         - business_id
         - details_id
         - id
         - category3
-      filter: {}
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
