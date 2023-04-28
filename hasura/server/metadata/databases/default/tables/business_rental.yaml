@@ -16,6 +16,14 @@ object_relationships:
           name: home_rental
           schema: business
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - business_id
+        - details_id
+        - id
+        - category3
+      filter: {}
   - role: customer
     permission:
       columns:

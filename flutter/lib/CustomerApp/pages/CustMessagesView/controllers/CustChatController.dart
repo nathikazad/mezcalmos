@@ -14,17 +14,20 @@ class CustChatController {
   AuthController _authController = Get.find<AuthController>();
   RxList<HasuraChat> _allChats = RxList<HasuraChat>([]);
   RxList<HasuraChat> get allChats => _allChats;
+  RxBool isLoading = false.obs;
 
   void init() {
     _getCustomerChatData();
   }
 
   Future<void> _getCustomerChatData() async {
+    isLoading.value = true;
     var chatData = await get_customer_chat_by_sp_type(
       customerId: _authController.user!.hasuraId,
       serviceProviderType: ServiceProviderType.Business,
     );
     _allChats.value = chatData;
+    isLoading.value = false;
   }
 
   Future<void> initiateChat({

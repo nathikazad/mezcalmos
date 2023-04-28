@@ -3,12 +3,18 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
 
 class CustFoodWrapper extends StatefulWidget {
   const CustFoodWrapper({super.key});
@@ -56,27 +62,42 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
     }
   }
 
+  String getCardImage(MezService mezService) {
+    switch (mezService) {
+      case MezService.Restaurants:
+        return aRestaurant;
+      case MezService.Farmers:
+        return aFarmers;
+      case MezService.LocallyMade:
+        return aLocallyMade;
+      case MezService.MealPlanning:
+        return aMealPrep;
+    }
+    return aUncategorized;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Food",
+        title: _i18n()['food']['title'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: List.generate(
             serviceTree.length,
-            (int index) => MezCard(
-              onClick: () {
+            (int index) => ServicesCard(
+              onTap: () {
                 navigateToListView(serviceTree[index].name);
               },
-              content: Text(
-                serviceTree[index].name.name,
-                style: context.textTheme.displayLarge,
-              ),
+              url: getCardImage(serviceTree[index].name),
+              title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+                  ['title'],
+              subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
+                  ['subtitle'],
             ),
           ),
         ),

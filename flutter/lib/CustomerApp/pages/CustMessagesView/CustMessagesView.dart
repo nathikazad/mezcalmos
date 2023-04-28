@@ -37,74 +37,79 @@ class _CustMessagesViewState extends State<CustMessagesView> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
-        child: Obx(
-          () => custChatController.allChats.isEmpty
-              ? Center(
-                  child: Text("No Chats"),
-                )
-              : Column(
-                  children: List.generate(
-                    custChatController.allChats.length,
-                    (index) {
-                      return MezCard(
-                        onClick: () {
-                          if (Get.find<AuthController>().user == null) {
-                            SignInView.navigateAtOrderTime();
-                          } else {
-                            custChatController.navigateToChatScreen(
-                              chatid: custChatController.allChats[index].id,
-                            );
-                          }
-                        },
-                        content: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                custChatController
-                                    .allChats[index].chatInfo.chatImg,
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          custChatController.allChats[index]
-                                              .chatInfo.chatTite,
-                                          style: context.textTheme.bodyLarge,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          custChatController
-                                              .allChats[index].creationTime
-                                              .timeAgo(),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      custChatController
-                                              .allChats[index].messages.isEmpty
-                                          ? ""
-                                          : custChatController.allChats[index]
-                                              .messages.last.message,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+        child: Obx(() {
+          if (custChatController.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (custChatController.allChats.isEmpty) {
+            return Center(
+              child: Text("No Chats"),
+            );
+          }
+          return Column(
+            children: List.generate(
+              custChatController.allChats.length,
+              (index) {
+                return MezCard(
+                  onClick: () {
+                    if (Get.find<AuthController>().user == null) {
+                      SignInView.navigateAtOrderTime();
+                    } else {
+                      custChatController.navigateToChatScreen(
+                        chatid: custChatController.allChats[index].id,
                       );
-                    },
+                    }
+                  },
+                  content: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          custChatController.allChats[index].chatInfo.chatImg,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    custChatController
+                                        .allChats[index].chatInfo.chatTite,
+                                    style: context.textTheme.bodyLarge,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    custChatController
+                                        .allChats[index].creationTime
+                                        .timeAgo(),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                custChatController
+                                        .allChats[index].messages.isEmpty
+                                    ? ""
+                                    : custChatController
+                                        .allChats[index].messages.last.message,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                ),
-        ),
+                );
+              },
+            ),
+          );
+        }),
       ),
     );
   }

@@ -101,29 +101,13 @@ Future<ServiceTree> get_service_tree(
   }
 
   final ServiceTree rentals = ServiceTree(MezService.Rentals, 0, root);
+  List<Future<void>> futures = [];
   RentalCategory1.values.forEach((RentalCategory1 element) async {
     if (element == RentalCategory1.Uncategorized) return;
 
-    final QueryResult<Query$number_of_rentals_by_category> rentalResponse =
-        await _db.graphQLClient.query$number_of_rentals_by_category(
-            Options$Query$number_of_rentals_by_category(
-                fetchPolicy: withCache
-                    ? FetchPolicy.cacheAndNetwork
-                    : FetchPolicy.networkOnly,
-                variables: Variables$Query$number_of_rentals_by_category(
-                    distance: distance,
-                    from: Geography(lat, lng),
-                    category1: element.toFirebaseFormatString())));
-    if (rentalResponse.parsedData!.business_rental_aggregate.aggregate!.count >
-        0) {
-      final ServiceTree rental = ServiceTree(
-          element.toFirebaseFormatString().toMezService(),
-          rentalResponse.parsedData!.business_rental_aggregate.aggregate!.count,
-          rentals);
-      rentals.children.add(rental);
-      rentals.count += rental.count;
-    }
+    futures.add(rentalsQuery(withCache, distance, lat, lng, element, rentals));
   });
+  await Future.wait(futures);
   if (rentals.count > 0) {
     root.children.add(rentals);
   }
@@ -204,66 +188,102 @@ Future<ServiceTree> get_service_tree(
     root.children.add(adventure);
   }
   final ServiceTree services = ServiceTree(MezService.Services, 0, root);
+  List<Future<void>> futuresServices = [];
   ServiceCategory1.values.forEach((ServiceCategory1 element) async {
     if (element == ServiceCategory1.Uncategorized) return;
 
-    final QueryResult<Query$number_of_services_by_category> serviceResponse =
-        await _db.graphQLClient.query$number_of_services_by_category(
-            Options$Query$number_of_services_by_category(
-                fetchPolicy: withCache
-                    ? FetchPolicy.cacheAndNetwork
-                    : FetchPolicy.networkOnly,
-                variables: Variables$Query$number_of_services_by_category(
-                    distance: distance,
-                    from: Geography(lat, lng),
-                    category1: element.toFirebaseFormatString())));
-    if (serviceResponse
-            .parsedData!.business_service_aggregate.aggregate!.count >
-        0) {
-      final ServiceTree service = ServiceTree(
-          element.toFirebaseFormatString().toMezService(),
-          serviceResponse
-              .parsedData!.business_service_aggregate.aggregate!.count,
-          services);
-      services.children.add(service);
-      services.count += service.count;
-    }
+    futuresServices
+        .add(servicesQuery(withCache, distance, lat, lng, element, services));
   });
+  await Future.wait(futuresServices);
   if (services.count > 0) {
     root.children.add(services);
   }
 
   final ServiceTree products = ServiceTree(MezService.LocallyMade, 0, root);
+  List<Future<void>> futuresProducts = [];
   ProductCategory1.values.forEach((ProductCategory1 element) async {
     if (element == ProductCategory1.Uncategorized) return;
 
-    final QueryResult<Query$number_of_products_by_category> productResponse =
-        await _db.graphQLClient.query$number_of_products_by_category(
-            Options$Query$number_of_products_by_category(
-                fetchPolicy: withCache
-                    ? FetchPolicy.cacheAndNetwork
-                    : FetchPolicy.networkOnly,
-                variables: Variables$Query$number_of_products_by_category(
-                    distance: distance,
-                    from: Geography(lat, lng),
-                    category1: element.toFirebaseFormatString())));
-    if (productResponse
-            .parsedData!.business_product_aggregate.aggregate!.count >
-        0) {
-      final ServiceTree product = ServiceTree(
-          element.toFirebaseFormatString().toMezService(),
-          productResponse
-              .parsedData!.business_product_aggregate.aggregate!.count,
-          products);
-      products.children.add(product);
-      products.count += product.count;
-    }
+    futuresProducts
+        .add(productsQuery(withCache, distance, lat, lng, element, products));
   });
+  await Future.wait(futuresProducts);
   if (products.count > 0) {
     root.children.add(products);
   }
 
   return root;
+}
+
+Future<void> productsQuery(bool withCache, double distance, double lat,
+    double lng, ProductCategory1 element, ServiceTree products) async {
+  final QueryResult<Query$number_of_products_by_category> productResponse =
+      await _db.graphQLClient.query$number_of_products_by_category(
+          Options$Query$number_of_products_by_category(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$number_of_products_by_category(
+                  distance: distance,
+                  from: Geography(lat, lng),
+                  category1: element.toFirebaseFormatString())));
+  if (productResponse.parsedData!.business_product_aggregate.aggregate!.count >
+      0) {
+    final ServiceTree product = ServiceTree(
+        element.toFirebaseFormatString().toMezService(),
+        productResponse.parsedData!.business_product_aggregate.aggregate!.count,
+        products);
+    products.children.add(product);
+    products.count += product.count;
+  }
+}
+
+Future<void> servicesQuery(bool withCache, double distance, double lat,
+    double lng, ServiceCategory1 element, ServiceTree services) async {
+  final QueryResult<Query$number_of_services_by_category> serviceResponse =
+      await _db.graphQLClient.query$number_of_services_by_category(
+          Options$Query$number_of_services_by_category(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$number_of_services_by_category(
+                  distance: distance,
+                  from: Geography(lat, lng),
+                  category1: element.toFirebaseFormatString())));
+  if (serviceResponse.parsedData!.business_service_aggregate.aggregate!.count >
+      0) {
+    final ServiceTree service = ServiceTree(
+        element.toFirebaseFormatString().toMezService(),
+        serviceResponse.parsedData!.business_service_aggregate.aggregate!.count,
+        services);
+    services.children.add(service);
+    services.count += service.count;
+  }
+}
+
+Future<void> rentalsQuery(bool withCache, double distance, double lat,
+    double lng, RentalCategory1 element, ServiceTree rentals) async {
+  final QueryResult<Query$number_of_rentals_by_category> rentalResponse =
+      await _db.graphQLClient.query$number_of_rentals_by_category(
+          Options$Query$number_of_rentals_by_category(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$number_of_rentals_by_category(
+                  distance: distance,
+                  from: Geography(lat, lng),
+                  category1: element.toFirebaseFormatString())));
+
+  if (rentalResponse.parsedData!.business_rental_aggregate.aggregate!.count >
+      0) {
+    final ServiceTree rental = ServiceTree(
+        element.toFirebaseFormatString().toMezService(),
+        rentalResponse.parsedData!.business_rental_aggregate.aggregate!.count,
+        rentals);
+    rentals.children.add(rental);
+    rentals.count += rental.count;
+  }
 }
 
 //construct a tree class

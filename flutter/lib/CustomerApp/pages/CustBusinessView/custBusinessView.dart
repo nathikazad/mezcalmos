@@ -121,7 +121,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                             MezLocation.buildLocationData(
                                 _viewController.business!.details.location.lat
                                     .toDouble(),
-                                _viewController.business!.details.location.lat
+                                _viewController.business!.details.location.lng
                                     .toDouble()))),
                     if (_viewController.business!.details.acceptedPayments !=
                         null)

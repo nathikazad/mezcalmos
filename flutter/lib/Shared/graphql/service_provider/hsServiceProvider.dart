@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
@@ -260,8 +261,10 @@ Future<String?> get_service_provider_route(
               .toString());
       break;
     case cModels.ServiceProviderType.Business:
-      // route = BusinessRoutes.kBusinessRoute.replaceAll(":businessId",
-      //     res.parsedData!.service_provider_details[0].business!.id.toString());
+      route = CustomerRoutes.custBusinessRoute.replaceFirst(
+          ':businessId',
+          res.parsedData!.service_provider_details[0].delivery_company!.id
+              .toString());
       break;
     case cModels.ServiceProviderType.DeliveryDriver:
     case cModels.ServiceProviderType.Customer:

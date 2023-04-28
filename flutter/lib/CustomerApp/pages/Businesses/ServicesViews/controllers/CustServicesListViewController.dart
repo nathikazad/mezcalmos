@@ -122,33 +122,33 @@ class CustServiceListViewController {
   }
 
   Future<void> _fetchBusinesses() async {
-    // if (_businessFetchingData || _businessReachedEndOfData) {
-    //   return;
-    // }
-    // try {
-    //   mezDbgPrint(
-    //       "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
-    //   _businessFetchingData = true;
-    //   List<BusinessCard> newList = await get_business_by_ser_category1(
-    //       categories1: [_currentRentalCategory],
-    //       distance: 1000000000000,
-    //       fromLocation: _fromLocation!,
-    //       offset: _businessCurrentOffset,
-    //       limit: businessFetchSize,
+    if (_businessFetchingData || _businessReachedEndOfData) {
+      return;
+    }
+    try {
+      mezDbgPrint(
+          "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
+      _businessFetchingData = true;
+      List<BusinessCard> newList = await get_business_by_service_category1(
+          categories1: _currentServicesCategory,
+          distance: 1000000000000,
+          fromLocation: _fromLocation!,
+          offset: _businessCurrentOffset,
+          limit: businessFetchSize,
 
-    //       // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
-    //       withCache: false);
-    //   _businesses.value += newList;
-    //   if (newList.length == 0) {
-    //     _businessReachedEndOfData = true;
-    //   }
+          // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
+          withCache: false);
+      _businesses.value += newList;
+      if (newList.length == 0) {
+        _businessReachedEndOfData = true;
+      }
 
-    //   _businessCurrentOffset += businessFetchSize;
-    // } catch (e) {
-    //   mezDbgPrint(e);
-    // } finally {
-    //   _businessFetchingData = false;
-    // }
+      _businessCurrentOffset += businessFetchSize;
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      _businessFetchingData = false;
+    }
   }
 
   void filter() {
