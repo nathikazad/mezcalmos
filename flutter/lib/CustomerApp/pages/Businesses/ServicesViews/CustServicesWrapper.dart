@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']

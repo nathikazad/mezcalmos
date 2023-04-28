@@ -6,10 +6,10 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustHomeWrapper']['rental'];
@@ -54,13 +54,13 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
   String getCardImage(MezService mezService) {
     switch (mezService) {
       case MezService.Surf:
-        return 'assets/images/customer/rental/surf.png';
+        return aSurf;
       case MezService.Vehicle:
-        return 'assets/images/customer/rental/carRental.png';
+        return aVehicle;
       case MezService.Home:
-        return 'assets/images/customer/rental/homes.png';
+        return aHomes;
     }
-    return 'assets/images/customer/rental/homes.png';
+    return aUncategorized;
   }
 
   @override
@@ -78,28 +78,15 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
             serviceTree.length,
             (int index) {
               final MezService currentService = serviceTree[index].name;
-              return MezCard(
-                onClick: () {
-                  navigateToListView(currentService);
+              return ServicesCard(
+                onTap: () {
+                  navigateToListView(serviceTree[index].name);
                 },
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${_i18n()[currentService.name.toLowerCase()]['title']}',
-                      style: context.textTheme.displayMedium,
-                    ),
-                    Text(
-                      '${_i18n()[currentService.name.toLowerCase()]['description']}',
-                      style: context.textTheme.titleMedium,
-                    ),
-                  ],
-                ),
-                action: Image.asset(
-                  getCardImage(currentService),
-                  width: 25.mezW,
-                  height: 20.mezW,
-                ),
+                url: getCardImage(serviceTree[index].name),
+                title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+                    ['title'],
+                subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
+                    ['description'],
               );
             },
           ),

@@ -576,7 +576,7 @@
             "car": "Car",
             "store": "Store"
           },
-          "homes": {
+          "home": {
             "title": "Homes",
             "description": "Obtain delivery of anything you desire to your location.",
             "home": "Home",
@@ -671,6 +671,10 @@
         },
         "personalcare": {
           "title": "Personal Care",
+          "subtitle": "Get your clothes cleaned by your nearest laundry service."
+        },
+        "cleaning": {
+          "title": "Cleaning",
           "subtitle": "Get your clothes cleaned by your nearest laundry service."
         },
         "laundry": {

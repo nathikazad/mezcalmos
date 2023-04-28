@@ -572,7 +572,7 @@
             "car": "Auto",
             "store": "Almacenar"
           },
-          "homes": {
+          "home": {
             "title": "Casas",
             "description": "Obtenga la entrega de todo lo que desee a su ubicación.",
             "home": "Hogar",
