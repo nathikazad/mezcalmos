@@ -19,6 +19,7 @@
 - "!include laundry_store.yaml"
 - "!include public_chat.yaml"
 - "!include public_chat_participant.yaml"
+- "!include public_data_consumption.yaml"
 - "!include public_direct_chat.yaml"
 - "!include public_language.yaml"
 - "!include public_mez_admin.yaml"

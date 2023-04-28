@@ -229,6 +229,10 @@ class HasuraDb {
     dataConsumptionTimer?.cancel();
     dataConsumptionTimer =
         Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
+      if (dataConsumption.isNotEmpty) {
+        dataConsumption.forEach((key, value) {});
+        dataConsumption.clear();
+      }
       // check if dataConsumption data structure is not empty
       //      write key,values to db
       //      clear data afterwards

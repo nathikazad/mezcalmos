@@ -127,11 +127,13 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
                   orderData.customer_review_by_driver!.created_at,
                 ))
             : null,
-        serviceReviewByDriver: (orderData.service_provider_review_by_driver != null)
+        serviceReviewByDriver: (orderData.service_provider_review_by_driver !=
+                null)
             ? Review(
                 comment: orderData.service_provider_review_by_driver!.note,
                 rating: orderData.service_provider_review_by_driver!.rating,
-                toEntityId: orderData.service_provider_review_by_driver!.to_entity_id,
+                toEntityId:
+                    orderData.service_provider_review_by_driver!.to_entity_id,
                 toEntityType: orderData
                     .service_provider_review_by_driver!.to_entity_type
                     .toServiceProviderType(),
@@ -367,11 +369,12 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
       .map((QueryResult<Subscription$listen_driver_order_prices> event) {
     mezDbgPrint("Event =======>$event");
 
-    if (Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] ==
-        null)
-      Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] = 0;
-    Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] +=
-        event.data.toString().length;
+    Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] = event
+            .data
+            .toString()
+            .length +
+        (Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] ??
+            0);
     // table
     // name_of_subscription, date, total_size, user_id
 
