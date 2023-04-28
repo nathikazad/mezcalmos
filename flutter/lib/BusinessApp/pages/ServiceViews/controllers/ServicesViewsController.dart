@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 abstract class ServicesViewsController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+  TabController? tabController;
 
   // instances //
   TextEditingController nameController = TextEditingController();
@@ -38,6 +39,10 @@ abstract class ServicesViewsController {
 
   // methods //
   Future<void> initEditMode({required int id});
+  void init({required TickerProvider thickerProvider}) {
+    tabController = TabController(length: 2, vsync: thickerProvider);
+  }
+
   Future<void> save();
   void addPriceTimeUnit(TimeUnit timeUnit) {
     priceTimeUnitMap[TextEditingController()] = timeUnit;

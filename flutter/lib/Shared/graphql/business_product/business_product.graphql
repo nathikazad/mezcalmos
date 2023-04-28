@@ -22,6 +22,8 @@ query get_product_by_id($id: Int!) {
       available
       category1
       category2
+      name_id
+      description_id
       cost
       tags
       description {

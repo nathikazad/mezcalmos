@@ -21,6 +21,8 @@ query get_service_by_id($id: Int!) {
       additional_parameters
       available
       category1
+      name_id
+      description_id
       category2
       cost
       tags

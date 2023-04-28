@@ -108,6 +108,7 @@ Future<Business?> get_business_by_id(
             scheduleType: event.schedule_type.toScheduleType(),
             details: BusinessItemDetails(
               id: event.id,
+            
               name:
                   toLanguageMap(translations: event.details.name.translations),
               position: event.details.position,

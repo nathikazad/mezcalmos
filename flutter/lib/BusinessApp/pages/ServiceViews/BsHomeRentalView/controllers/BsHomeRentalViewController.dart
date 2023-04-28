@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class BsHomeRentalViewController extends ServicesViewsController {
+
   Rxn<Rental> _rental = Rxn<Rental>();
   Rental? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
@@ -92,4 +93,8 @@ class BsHomeRentalViewController extends ServicesViewsController {
   void dispose() {
     // TODO: implement dispose
   }
+  
+ 
+  
+ 
 }

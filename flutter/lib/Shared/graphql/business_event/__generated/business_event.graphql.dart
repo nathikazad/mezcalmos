@@ -441,6 +441,20 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'additional_parameters'),
                 alias: null,
                 arguments: [],
@@ -1920,6 +1934,8 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$business$revi
 
 class Query$get_event_by_id$business_event_by_pk$details {
   Query$get_event_by_id$business_event_by_pk$details({
+    required this.name_id,
+    this.description_id,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -1936,6 +1952,8 @@ class Query$get_event_by_id$business_event_by_pk$details {
 
   factory Query$get_event_by_id$business_event_by_pk$details.fromJson(
       Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
@@ -1949,6 +1967,8 @@ class Query$get_event_by_id$business_event_by_pk$details {
     final l$position = json['position'];
     final l$$__typename = json['__typename'];
     return Query$get_event_by_id$business_event_by_pk$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -1969,6 +1989,10 @@ class Query$get_event_by_id$business_event_by_pk$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int name_id;
+
+  final int? description_id;
 
   final dynamic? additional_parameters;
 
@@ -1997,6 +2021,10 @@ class Query$get_event_by_id$business_event_by_pk$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -2028,6 +2056,8 @@ class Query$get_event_by_id$business_event_by_pk$details {
 
   @override
   int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
@@ -2041,6 +2071,8 @@ class Query$get_event_by_id$business_event_by_pk$details {
     final l$position = position;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$name_id,
+      l$description_id,
       l$additional_parameters,
       l$available,
       l$category1,
@@ -2063,6 +2095,16 @@ class Query$get_event_by_id$business_event_by_pk$details {
     }
     if (!(other is Query$get_event_by_id$business_event_by_pk$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$additional_parameters = additional_parameters;
@@ -2152,6 +2194,8 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$details<
       _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details;
 
   TRes call({
+    int? name_id,
+    int? description_id,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -2186,6 +2230,8 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
@@ -2200,6 +2246,12 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_event_by_id$business_event_by_pk$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -2261,6 +2313,8 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details<TRes>
   TRes _res;
 
   call({
+    int? name_id,
+    int? description_id,
     dynamic? additional_parameters,
     bool? available,
     String? category1,

@@ -423,6 +423,20 @@ const documentNodeQueryget_service_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'category2'),
                 alias: null,
                 arguments: [],
@@ -1768,6 +1782,8 @@ class Query$get_service_by_id$business_service_by_pk$details {
     this.additional_parameters,
     required this.available,
     required this.category1,
+    required this.name_id,
+    this.description_id,
     required this.category2,
     required this.cost,
     required this.tags,
@@ -1783,6 +1799,8 @@ class Query$get_service_by_id$business_service_by_pk$details {
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
     final l$category2 = json['category2'];
     final l$cost = json['cost'];
     final l$tags = json['tags'];
@@ -1797,6 +1815,8 @@ class Query$get_service_by_id$business_service_by_pk$details {
           : mapFromJson(l$additional_parameters),
       available: (l$available as bool),
       category1: (l$category1 as String),
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
       category2: (l$category2 as String),
       cost: mapFromJson(l$cost),
       tags: mapFromJson(l$tags),
@@ -1818,6 +1838,10 @@ class Query$get_service_by_id$business_service_by_pk$details {
   final bool available;
 
   final String category1;
+
+  final int name_id;
+
+  final int? description_id;
 
   final String category2;
 
@@ -1846,6 +1870,10 @@ class Query$get_service_by_id$business_service_by_pk$details {
     _resultData['available'] = l$available;
     final l$category1 = category1;
     _resultData['category1'] = l$category1;
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$category2 = category2;
     _resultData['category2'] = l$category2;
     final l$cost = cost;
@@ -1870,6 +1898,8 @@ class Query$get_service_by_id$business_service_by_pk$details {
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
+    final l$name_id = name_id;
+    final l$description_id = description_id;
     final l$category2 = category2;
     final l$cost = cost;
     final l$tags = tags;
@@ -1882,6 +1912,8 @@ class Query$get_service_by_id$business_service_by_pk$details {
       l$additional_parameters,
       l$available,
       l$category1,
+      l$name_id,
+      l$description_id,
       l$category2,
       l$cost,
       l$tags,
@@ -1915,6 +1947,16 @@ class Query$get_service_by_id$business_service_by_pk$details {
     final l$category1 = category1;
     final lOther$category1 = other.category1;
     if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$category2 = category2;
@@ -1987,6 +2029,8 @@ abstract class CopyWith$Query$get_service_by_id$business_service_by_pk$details<
     dynamic? additional_parameters,
     bool? available,
     String? category1,
+    int? name_id,
+    int? description_id,
     String? category2,
     dynamic? cost,
     dynamic? tags,
@@ -2022,6 +2066,8 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk$details<TRes>
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
     Object? category2 = _undefined,
     Object? cost = _undefined,
     Object? tags = _undefined,
@@ -2041,6 +2087,12 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk$details<TRes>
         category1: category1 == _undefined || category1 == null
             ? _instance.category1
             : (category1 as String),
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         category2: category2 == _undefined || category2 == null
             ? _instance.category2
             : (category2 as String),
@@ -2095,6 +2147,8 @@ class _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk$details<
     dynamic? additional_parameters,
     bool? available,
     String? category1,
+    int? name_id,
+    int? description_id,
     String? category2,
     dynamic? cost,
     dynamic? tags,

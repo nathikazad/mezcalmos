@@ -1,6 +1,8 @@
 query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category1: String, $categories2: [String!], $tags: [String!]) {
   business_rental(where: {_and: {details: {_and: {category1: {_eq: $category1}, category2: {_in: $categories2}, tags: {_has_keys_all: $tags}}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
     details {
+       name_id
+        description_id
       id
       name {
         translations {
@@ -47,6 +49,7 @@ query get_rental_by_id($id: Int!) {
       details {
         id
         name
+        
         image
         location {
           gps
@@ -76,6 +79,8 @@ query get_rental_by_id($id: Int!) {
           value
         }
       }
+       name_id
+        description_id
       id
       image
       name {
@@ -108,14 +113,18 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
       id
       category3
       details {
+        name_id
+        description_id
         id
         name {
+          
           translations {
             language_id
             value
           }
         }
         description {
+          
           translations {
             language_id
             value
@@ -151,6 +160,8 @@ query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
       id
       category3
       details {
+         name_id
+        description_id
         id
         name {
           translations {

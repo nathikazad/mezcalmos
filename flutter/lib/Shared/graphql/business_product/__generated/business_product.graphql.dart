@@ -430,6 +430,20 @@ const documentNodeQueryget_product_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'cost'),
                 alias: null,
                 arguments: [],
@@ -1769,6 +1783,8 @@ class Query$get_product_by_id$business_product_by_pk$details {
     required this.available,
     required this.category1,
     required this.category2,
+    required this.name_id,
+    this.description_id,
     required this.cost,
     required this.tags,
     this.description,
@@ -1784,6 +1800,8 @@ class Query$get_product_by_id$business_product_by_pk$details {
     final l$available = json['available'];
     final l$category1 = json['category1'];
     final l$category2 = json['category2'];
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
     final l$cost = json['cost'];
     final l$tags = json['tags'];
     final l$description = json['description'];
@@ -1798,6 +1816,8 @@ class Query$get_product_by_id$business_product_by_pk$details {
       available: (l$available as bool),
       category1: (l$category1 as String),
       category2: (l$category2 as String),
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
       cost: mapFromJson(l$cost),
       tags: mapFromJson(l$tags),
       description: l$description == null
@@ -1820,6 +1840,10 @@ class Query$get_product_by_id$business_product_by_pk$details {
   final String category1;
 
   final String category2;
+
+  final int name_id;
+
+  final int? description_id;
 
   final dynamic cost;
 
@@ -1848,6 +1872,10 @@ class Query$get_product_by_id$business_product_by_pk$details {
     _resultData['category1'] = l$category1;
     final l$category2 = category2;
     _resultData['category2'] = l$category2;
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$cost = cost;
     _resultData['cost'] = mapToJson(l$cost);
     final l$tags = tags;
@@ -1871,6 +1899,8 @@ class Query$get_product_by_id$business_product_by_pk$details {
     final l$available = available;
     final l$category1 = category1;
     final l$category2 = category2;
+    final l$name_id = name_id;
+    final l$description_id = description_id;
     final l$cost = cost;
     final l$tags = tags;
     final l$description = description;
@@ -1883,6 +1913,8 @@ class Query$get_product_by_id$business_product_by_pk$details {
       l$available,
       l$category1,
       l$category2,
+      l$name_id,
+      l$description_id,
       l$cost,
       l$tags,
       l$description,
@@ -1920,6 +1952,16 @@ class Query$get_product_by_id$business_product_by_pk$details {
     final l$category2 = category2;
     final lOther$category2 = other.category2;
     if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$cost = cost;
@@ -1988,6 +2030,8 @@ abstract class CopyWith$Query$get_product_by_id$business_product_by_pk$details<
     bool? available,
     String? category1,
     String? category2,
+    int? name_id,
+    int? description_id,
     dynamic? cost,
     dynamic? tags,
     Query$get_product_by_id$business_product_by_pk$details$description?
@@ -2023,6 +2067,8 @@ class _CopyWithImpl$Query$get_product_by_id$business_product_by_pk$details<TRes>
     Object? available = _undefined,
     Object? category1 = _undefined,
     Object? category2 = _undefined,
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
     Object? cost = _undefined,
     Object? tags = _undefined,
     Object? description = _undefined,
@@ -2044,6 +2090,12 @@ class _CopyWithImpl$Query$get_product_by_id$business_product_by_pk$details<TRes>
         category2: category2 == _undefined || category2 == null
             ? _instance.category2
             : (category2 as String),
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         cost: cost == _undefined || cost == null
             ? _instance.cost
             : (cost as dynamic),
@@ -2096,6 +2148,8 @@ class _CopyWithStubImpl$Query$get_product_by_id$business_product_by_pk$details<
     bool? available,
     String? category1,
     String? category2,
+    int? name_id,
+    int? description_id,
     dynamic? cost,
     dynamic? tags,
     Query$get_product_by_id$business_product_by_pk$details$description?

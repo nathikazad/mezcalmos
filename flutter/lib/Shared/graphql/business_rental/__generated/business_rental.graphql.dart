@@ -632,6 +632,20 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
@@ -1273,6 +1287,8 @@ class _CopyWithStubImpl$Query$get_rental_by_category$business_rental<TRes>
 
 class Query$get_rental_by_category$business_rental$details {
   Query$get_rental_by_category$business_rental$details({
+    required this.name_id,
+    this.description_id,
     required this.id,
     required this.name,
     this.additional_parameters,
@@ -1288,6 +1304,8 @@ class Query$get_rental_by_category$business_rental$details {
 
   factory Query$get_rental_by_category$business_rental$details.fromJson(
       Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
     final l$additional_parameters = json['additional_parameters'];
@@ -1300,6 +1318,8 @@ class Query$get_rental_by_category$business_rental$details {
     final l$tags = json['tags'];
     final l$$__typename = json['__typename'];
     return Query$get_rental_by_category$business_rental$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
       id: (l$id as int),
       name: Query$get_rental_by_category$business_rental$details$name.fromJson(
           (l$name as Map<String, dynamic>)),
@@ -1316,6 +1336,10 @@ class Query$get_rental_by_category$business_rental$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int name_id;
+
+  final int? description_id;
 
   final int id;
 
@@ -1341,6 +1365,10 @@ class Query$get_rental_by_category$business_rental$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;
@@ -1370,6 +1398,8 @@ class Query$get_rental_by_category$business_rental$details {
 
   @override
   int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
     final l$additional_parameters = additional_parameters;
@@ -1382,6 +1412,8 @@ class Query$get_rental_by_category$business_rental$details {
     final l$tags = tags;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$name_id,
+      l$description_id,
       l$id,
       l$name,
       l$additional_parameters,
@@ -1403,6 +1435,16 @@ class Query$get_rental_by_category$business_rental$details {
     }
     if (!(other is Query$get_rental_by_category$business_rental$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$id = id;
@@ -1487,6 +1529,8 @@ abstract class CopyWith$Query$get_rental_by_category$business_rental$details<
       _CopyWithStubImpl$Query$get_rental_by_category$business_rental$details;
 
   TRes call({
+    int? name_id,
+    int? description_id,
     int? id,
     Query$get_rental_by_category$business_rental$details$name? name,
     dynamic? additional_parameters,
@@ -1519,6 +1563,8 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$details<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
     Object? additional_parameters = _undefined,
@@ -1532,6 +1578,12 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$details<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_rental_by_category$business_rental$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -1581,6 +1633,8 @@ class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$details<
   TRes _res;
 
   call({
+    int? name_id,
+    int? description_id,
     int? id,
     Query$get_rental_by_category$business_rental$details$name? name,
     dynamic? additional_parameters,
@@ -3199,6 +3253,20 @@ const documentNodeQueryget_rental_by_id = DocumentNode(definitions: [
                 ]),
               ),
               FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
@@ -4804,6 +4872,8 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
     required this.category2,
     required this.cost,
     this.description,
+    required this.name_id,
+    this.description_id,
     required this.id,
     this.image,
     required this.name,
@@ -4820,6 +4890,8 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
     final l$category2 = json['category2'];
     final l$cost = json['cost'];
     final l$description = json['description'];
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
@@ -4838,6 +4910,8 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
           ? null
           : Query$get_rental_by_id$business_rental_by_pk$details$description
               .fromJson((l$description as Map<String, dynamic>)),
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
       id: (l$id as int),
       image: l$image == null ? null : mapFromJson(l$image),
       name: Query$get_rental_by_id$business_rental_by_pk$details$name.fromJson(
@@ -4861,6 +4935,10 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
 
   final Query$get_rental_by_id$business_rental_by_pk$details$description?
       description;
+
+  final int name_id;
+
+  final int? description_id;
 
   final int id;
 
@@ -4890,6 +4968,10 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
     _resultData['cost'] = mapToJson(l$cost);
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -4912,6 +4994,8 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
     final l$category2 = category2;
     final l$cost = cost;
     final l$description = description;
+    final l$name_id = name_id;
+    final l$description_id = description_id;
     final l$id = id;
     final l$image = image;
     final l$name = name;
@@ -4925,6 +5009,8 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
       l$category2,
       l$cost,
       l$description,
+      l$name_id,
+      l$description_id,
       l$id,
       l$image,
       l$name,
@@ -4975,6 +5061,16 @@ class Query$get_rental_by_id$business_rental_by_pk$details {
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$id = id;
@@ -5037,6 +5133,8 @@ abstract class CopyWith$Query$get_rental_by_id$business_rental_by_pk$details<
     dynamic? cost,
     Query$get_rental_by_id$business_rental_by_pk$details$description?
         description,
+    int? name_id,
+    int? description_id,
     int? id,
     dynamic? image,
     Query$get_rental_by_id$business_rental_by_pk$details$name? name,
@@ -5072,6 +5170,8 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$details<TRes>
     Object? category2 = _undefined,
     Object? cost = _undefined,
     Object? description = _undefined,
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
@@ -5101,6 +5201,12 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$details<TRes>
             ? _instance.description
             : (description
                 as Query$get_rental_by_id$business_rental_by_pk$details$description?),
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as dynamic?),
         name: name == _undefined || name == null
@@ -5150,6 +5256,8 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$details<
     dynamic? cost,
     Query$get_rental_by_id$business_rental_by_pk$details$description?
         description,
+    int? name_id,
+    int? description_id,
     int? id,
     dynamic? image,
     Query$get_rental_by_id$business_rental_by_pk$details$name? name,
@@ -6545,6 +6653,20 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'name_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'description_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -7347,6 +7469,8 @@ class _CopyWithStubImpl$Query$get_home_rentals$business_home_rental$rental<TRes>
 
 class Query$get_home_rentals$business_home_rental$rental$details {
   Query$get_home_rentals$business_home_rental$rental$details({
+    required this.name_id,
+    this.description_id,
     required this.id,
     required this.name,
     this.description,
@@ -7363,6 +7487,8 @@ class Query$get_home_rentals$business_home_rental$rental$details {
 
   factory Query$get_home_rentals$business_home_rental$rental$details.fromJson(
       Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
     final l$description = json['description'];
@@ -7376,6 +7502,8 @@ class Query$get_home_rentals$business_home_rental$rental$details {
     final l$position = json['position'];
     final l$$__typename = json['__typename'];
     return Query$get_home_rentals$business_home_rental$rental$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
       id: (l$id as int),
       name: Query$get_home_rentals$business_home_rental$rental$details$name
           .fromJson((l$name as Map<String, dynamic>)),
@@ -7396,6 +7524,10 @@ class Query$get_home_rentals$business_home_rental$rental$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int name_id;
+
+  final int? description_id;
 
   final int id;
 
@@ -7424,6 +7556,10 @@ class Query$get_home_rentals$business_home_rental$rental$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;
@@ -7455,6 +7591,8 @@ class Query$get_home_rentals$business_home_rental$rental$details {
 
   @override
   int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
     final l$description = description;
@@ -7468,6 +7606,8 @@ class Query$get_home_rentals$business_home_rental$rental$details {
     final l$position = position;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$name_id,
+      l$description_id,
       l$id,
       l$name,
       l$description,
@@ -7491,6 +7631,16 @@ class Query$get_home_rentals$business_home_rental$rental$details {
     if (!(other
             is Query$get_home_rentals$business_home_rental$rental$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$id = id;
@@ -7581,6 +7731,8 @@ abstract class CopyWith$Query$get_home_rentals$business_home_rental$rental$detai
       _CopyWithStubImpl$Query$get_home_rentals$business_home_rental$rental$details;
 
   TRes call({
+    int? name_id,
+    int? description_id,
     int? id,
     Query$get_home_rentals$business_home_rental$rental$details$name? name,
     Query$get_home_rentals$business_home_rental$rental$details$description?
@@ -7619,6 +7771,8 @@ class _CopyWithImpl$Query$get_home_rentals$business_home_rental$rental$details<
   static const _undefined = {};
 
   TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
@@ -7633,6 +7787,12 @@ class _CopyWithImpl$Query$get_home_rentals$business_home_rental$rental$details<
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_home_rentals$business_home_rental$rental$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -7697,6 +7857,8 @@ class _CopyWithStubImpl$Query$get_home_rentals$business_home_rental$rental$detai
   TRes _res;
 
   call({
+    int? name_id,
+    int? description_id,
     int? id,
     Query$get_home_rentals$business_home_rental$rental$details$name? name,
     Query$get_home_rentals$business_home_rental$rental$details$description?
@@ -9203,6 +9365,20 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'name_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'description_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -10038,6 +10214,8 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
 
 class Query$get_business_home_rentals$business_home_rental$rental$details {
   Query$get_business_home_rentals$business_home_rental$rental$details({
+    required this.name_id,
+    this.description_id,
     required this.id,
     required this.name,
     this.description,
@@ -10054,6 +10232,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
 
   factory Query$get_business_home_rentals$business_home_rental$rental$details.fromJson(
       Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
     final l$description = json['description'];
@@ -10067,6 +10247,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     final l$position = json['position'];
     final l$$__typename = json['__typename'];
     return Query$get_business_home_rentals$business_home_rental$rental$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
       id: (l$id as int),
       name:
           Query$get_business_home_rentals$business_home_rental$rental$details$name
@@ -10088,6 +10270,10 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int name_id;
+
+  final int? description_id;
 
   final int id;
 
@@ -10117,6 +10303,10 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$name = name;
@@ -10148,6 +10338,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
 
   @override
   int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
     final l$description = description;
@@ -10161,6 +10353,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     final l$position = position;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$name_id,
+      l$description_id,
       l$id,
       l$name,
       l$description,
@@ -10184,6 +10378,16 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     if (!(other
             is Query$get_business_home_rentals$business_home_rental$rental$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
       return false;
     }
     final l$id = id;
@@ -10276,6 +10480,8 @@ abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$ren
       _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details;
 
   TRes call({
+    int? name_id,
+    int? description_id,
     int? id,
     Query$get_business_home_rentals$business_home_rental$rental$details$name?
         name,
@@ -10317,6 +10523,8 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
   static const _undefined = {};
 
   TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
@@ -10331,6 +10539,12 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_home_rentals$business_home_rental$rental$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -10395,6 +10609,8 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
   TRes _res;
 
   call({
+    int? name_id,
+    int? description_id,
     int? id,
     Query$get_business_home_rentals$business_home_rental$rental$details$name?
         name,

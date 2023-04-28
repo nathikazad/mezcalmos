@@ -52,7 +52,9 @@ Future<List<ProductCard>> get_product_by_category(
               position: data.details.position,
               businessId: data.business.id,
               available: data.details.available,
-              image: data.details.image?.map<String>((e) => e.toString()).toList() ??
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
                   [],
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
@@ -87,6 +89,8 @@ Future<ProductWithBusinessCard?> get_product_by_id(
               category1: data.details.category1.toProductCategory1(),
               details: BusinessItemDetails(
                 id: id,
+                nameId: data.details.name_id,
+                descriptionId: data.details.description_id,
                 name:
                     toLanguageMap(translations: data.details.name.translations),
                 businessId: data.business.id,

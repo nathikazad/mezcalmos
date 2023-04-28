@@ -291,7 +291,7 @@ class CreateServiceViewController {
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
       final RestaurantResponse res =
-          await CloudFunctions.restaurant2_createRestaurant(
+          await CloudFunctions.restaurant3_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
         image: serviceInput.value.serviceInfo!.image,
         location: cModels.Location(

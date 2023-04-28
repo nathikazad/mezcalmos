@@ -104,6 +104,8 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
               category2: data.details.category2.toRentalCategory2(),
               category3: data.category3,
               details: BusinessItemDetails(
+                nameId: data.details.name_id,
+                descriptionId: data.details.description_id,
                 id: id,
                 name:
                     toLanguageMap(translations: data.details.name.translations),
@@ -200,6 +202,8 @@ Future<List<RentalCard>> get_home_rentals(
             category1: data.rental.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(
               id: data.rental.id,
+              nameId: data.rental.details.name_id,
+              descriptionId: data.rental.details.description_id,
               name: toLanguageMap(
                   translations: data.rental.details.name.translations),
               position: data.rental.details.position,

@@ -203,6 +203,8 @@ Future<EventWithBusinessCard?> get_event_by_id(
                   [],
               details: BusinessItemDetails(
                 id: id,
+                    nameId: data.details.name_id,
+              descriptionId: data.details.description_id,
                 name:
                     toLanguageMap(translations: data.details.name.translations),
                 position: data.details.position,
