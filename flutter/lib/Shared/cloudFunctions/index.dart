@@ -185,7 +185,18 @@ class CloudFunctions {
       }));
   }
 
-  static Future<RestaurantResponse> restaurant2_createRestaurant(
+  static Future<RemoveDriverResponse> serviceProvider_removeDriver(
+      {required num deliveryDriverId,
+      required DeliveryServiceProviderType deliveryServiceProviderType}  ) async {
+    return RemoveDriverResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-removeDriver",
+      parameters: <String, dynamic>{
+        "deliveryDriverId": deliveryDriverId,
+        "deliveryServiceProviderType":deliveryServiceProviderType.toFirebaseFormatString(),
+      }));
+  }
+
+  static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,
       required Location location,
@@ -354,7 +365,7 @@ class CloudFunctions {
       }));
   }
 
-  static Future<LaundryResponse> laundry2_createLaundry(
+  static Future<LaundryResponse> laundry3_createLaundry(
       {required String name,
       required String image,
       required Location location,

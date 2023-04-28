@@ -14,7 +14,7 @@ class SendOtpResponse {
     };
   }
 
-  factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory SendOtpResponse.fromFirebaseFormattedJson(json) {
     return SendOtpResponse(
         json["success"],
         json["error"]?.toString().toSendOtpError(),
@@ -38,7 +38,7 @@ class AuthResponse {
     };
   }
 
-  factory AuthResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory AuthResponse.fromFirebaseFormattedJson(json) {
     return AuthResponse(
         json["success"],
         json["error"]?.toString().toAuthOtpError(),
@@ -78,7 +78,7 @@ class PaymentIntentResponse {
     };
   }
 
-  factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory PaymentIntentResponse.fromFirebaseFormattedJson(json) {
     return PaymentIntentResponse(
         json["success"],
         json["error"]?.toString().toPaymentIntentError(),
@@ -106,7 +106,7 @@ class AddCardResponse {
     };
   }
 
-  factory AddCardResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory AddCardResponse.fromFirebaseFormattedJson(json) {
     return AddCardResponse(
         json["success"],
         json["error"]?.toString().toAddCardError(),
@@ -143,7 +143,7 @@ class ChargeCardResponse {
     };
   }
 
-  factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory ChargeCardResponse.fromFirebaseFormattedJson(json) {
     return ChargeCardResponse(
         json["success"],
         json["error"]?.toString().toChargeCardError(),
@@ -168,7 +168,7 @@ class RemoveCardResponse {
     };
   }
 
-  factory RemoveCardResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory RemoveCardResponse.fromFirebaseFormattedJson(json) {
     return RemoveCardResponse(json["success"],
         json["error"]?.toString().toRemoveCardError(), json["unhandledError"]);
   }
@@ -196,7 +196,7 @@ class SetupStripeResponse {
     };
   }
 
-  factory SetupStripeResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory SetupStripeResponse.fromFirebaseFormattedJson(json) {
     return SetupStripeResponse(
         json["success"],
         json["error"]?.toString().toSetupStripeError(),
@@ -221,7 +221,7 @@ class UpdateStripeResponse {
     };
   }
 
-  factory UpdateStripeResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory UpdateStripeResponse.fromFirebaseFormattedJson(json) {
     return UpdateStripeResponse(
         json["success"],
         json["error"]?.toString().toUpdateStripeError(),
@@ -242,7 +242,7 @@ enum ParticipantType {
 
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -290,7 +290,7 @@ class CallUserResponse {
     };
   }
 
-  factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory CallUserResponse.fromFirebaseFormattedJson(json) {
     return CallUserResponse(
         json["success"],
         json["error"]?.toString().toCallUserError(),
@@ -317,7 +317,7 @@ class AddOperatorResponse {
     };
   }
 
-  factory AddOperatorResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory AddOperatorResponse.fromFirebaseFormattedJson(json) {
     return AddOperatorResponse(json["success"],
         json["error"]?.toString().toAddOperatorError(), json["unhandledError"]);
   }
@@ -336,7 +336,7 @@ class AuthOperatorResponse {
     };
   }
 
-  factory AuthOperatorResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory AuthOperatorResponse.fromFirebaseFormattedJson(json) {
     return AuthOperatorResponse(
         json["success"],
         json["error"]?.toString().toAuthOperatorError(),
@@ -357,7 +357,7 @@ class AddDriverResponse {
     };
   }
 
-  factory AddDriverResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory AddDriverResponse.fromFirebaseFormattedJson(json) {
     return AddDriverResponse(json["success"],
         json["error"]?.toString().toAddDriverError(), json["unhandledError"]);
   }
@@ -368,7 +368,7 @@ enum DeliveryServiceProviderType { Restaurant, DeliveryCompany, Laundry }
 extension ParseDeliveryServiceProviderTypeToString
     on DeliveryServiceProviderType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -397,7 +397,7 @@ class AuthorizeDriverResponse {
     };
   }
 
-  factory AuthorizeDriverResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory AuthorizeDriverResponse.fromFirebaseFormattedJson(json) {
     return AuthorizeDriverResponse(
         json["success"],
         json["error"]?.toString().toAuthorizeDriverError(),
@@ -474,6 +474,27 @@ class AddReferralResponse {
   }
 }
 
+class RemoveDriverResponse {
+  bool success;
+  RemoveDriverError? error;
+  String? unhandledError;
+  RemoveDriverResponse(this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory RemoveDriverResponse.fromFirebaseFormattedJson(json) {
+    return RemoveDriverResponse(
+        json["success"],
+        json["error"]?.toString().toRemoveDriverError(),
+        json["unhandledError"]);
+  }
+}
+
 class Location {
   num lat;
   num lng;
@@ -543,7 +564,7 @@ class RestaurantResponse {
     };
   }
 
-  factory RestaurantResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory RestaurantResponse.fromFirebaseFormattedJson(json) {
     return RestaurantResponse(json["success"],
         json["error"]?.toString().toRestaurantError(), json["unhandledError"]);
   }
@@ -553,7 +574,7 @@ enum CustomerAppType { Native, Web }
 
 extension ParseCustomerAppTypeToString on CustomerAppType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -571,7 +592,7 @@ enum PaymentType { Cash, Card, BankTransfer }
 
 extension ParsePaymentTypeToString on PaymentType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -587,7 +608,7 @@ enum DeliveryType { Pickup, Delivery }
 
 extension ParseDeliveryTypeToString on DeliveryType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -614,7 +635,7 @@ class CheckoutResponse {
     };
   }
 
-  factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory CheckoutResponse.fromFirebaseFormattedJson(json) {
     return CheckoutResponse(
         json["success"],
         json["error"]?.toString().toCheckoutResponseError(),
@@ -636,8 +657,7 @@ class ChangeRestaurantStatusResponse {
     };
   }
 
-  factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(
-      dynamic json) {
+  factory ChangeRestaurantStatusResponse.fromFirebaseFormattedJson(json) {
     return ChangeRestaurantStatusResponse(
         json["success"],
         json["error"]?.toString().toChangeRestaurantStatusError(),
@@ -658,8 +678,7 @@ class CancelRestaurantOrderResponse {
     };
   }
 
-  factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(
-      dynamic json) {
+  factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(json) {
     return CancelRestaurantOrderResponse(json["success"],
         json["error"]?.toString().toCancelOrderError(), json["unhandledError"]);
   }
@@ -796,7 +815,7 @@ class LaundryResponse {
     };
   }
 
-  factory LaundryResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory LaundryResponse.fromFirebaseFormattedJson(json) {
     return LaundryResponse(json["success"],
         json["error"]?.toString().toLaundryError(), json["unhandledError"]);
   }
@@ -818,7 +837,7 @@ class ReqLaundryResponse {
     };
   }
 
-  factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory ReqLaundryResponse.fromFirebaseFormattedJson(json) {
     return ReqLaundryResponse(
         json["success"],
         json["error"]?.toString().toReqLaundryError(),
@@ -840,7 +859,7 @@ class ChangeLaundryStatusResponse {
     };
   }
 
-  factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory ChangeLaundryStatusResponse.fromFirebaseFormattedJson(json) {
     return ChangeLaundryStatusResponse(
         json["success"],
         json["error"]?.toString().toChangeLaundryStatusError(),
@@ -861,7 +880,7 @@ class CancelLaundryResponse {
     };
   }
 
-  factory CancelLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory CancelLaundryResponse.fromFirebaseFormattedJson(json) {
     return CancelLaundryResponse(
         json["success"],
         json["error"]?.toString().toCancelLaundryError(),
@@ -882,7 +901,7 @@ class AssignDriverResponse {
     };
   }
 
-  factory AssignDriverResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory AssignDriverResponse.fromFirebaseFormattedJson(json) {
     return AssignDriverResponse(
         json["success"],
         json["error"]?.toString().toAssignDriverError(),
@@ -905,7 +924,7 @@ enum DeliveryOrderStatus {
 
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -932,7 +951,7 @@ class ChangeDeliveryStatusResponse {
     };
   }
 
-  factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory ChangeDeliveryStatusResponse.fromFirebaseFormattedJson(json) {
     return ChangeDeliveryStatusResponse(
         json["success"],
         json["error"]?.toString().toChangeDeliveryStatusError(),
@@ -988,7 +1007,7 @@ class CreateCourierResponse {
     };
   }
 
-  factory CreateCourierResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory CreateCourierResponse.fromFirebaseFormattedJson(json) {
     return CreateCourierResponse(
         json["success"],
         json["error"]?.toString().toCreateCourierError(),
@@ -1010,7 +1029,7 @@ class ChangePriceReqResponse {
     };
   }
 
-  factory ChangePriceReqResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory ChangePriceReqResponse.fromFirebaseFormattedJson(json) {
     return ChangePriceReqResponse(json["success"],
         json["error"]?.toString().toChangePriceError(), json["unhandledError"]);
   }
@@ -1020,7 +1039,7 @@ enum OrderType { Taxi, Restaurant, Laundry, Courier, Business }
 
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1045,7 +1064,7 @@ class ChangePriceResResponse {
     };
   }
 
-  factory ChangePriceResResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory ChangePriceResResponse.fromFirebaseFormattedJson(json) {
     return ChangePriceResResponse(json["success"],
         json["error"]?.toString().toChangePriceError(), json["unhandledError"]);
   }
@@ -1064,7 +1083,7 @@ class CancelCourierResponse {
     };
   }
 
-  factory CancelCourierResponse.fromFirebaseFormattedJson(dynamic json) {
+  factory CancelCourierResponse.fromFirebaseFormattedJson(json) {
     return CancelCourierResponse(
         json["success"],
         json["error"]?.toString().toCancelCourierError(),
@@ -1529,7 +1548,7 @@ enum AppType {
 
 extension ParseAppTypeToString on AppType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1545,7 +1564,7 @@ enum TokenType { DeviceNotificationToken }
 
 extension ParseTokenTypeToString on TokenType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1566,7 +1585,7 @@ enum AuthorizationStatus {
 
 extension ParseAuthorizationStatusToString on AuthorizationStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -1903,6 +1922,8 @@ class BusinessItemDetails {
   num id;
   Map<Language, String> name;
   Map<Language, String>? description;
+  num? nameId;
+  num? descriptionId;
   num? position;
   num businessId;
   bool available;
@@ -1913,6 +1934,8 @@ class BusinessItemDetails {
       {required this.id,
       required this.name,
       this.description,
+      this.nameId,
+      this.descriptionId,
       this.position,
       required this.businessId,
       required this.available,
@@ -1924,6 +1947,8 @@ class BusinessItemDetails {
       "id": id,
       "name": name,
       "description": description,
+      "nameId": nameId,
+      "descriptionId": descriptionId,
       "position": position,
       "businessId": businessId,
       "available": available,
@@ -1940,13 +1965,6 @@ extension ParseTimeUnitToString on TimeUnit {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension TimeUnitHelper on TimeUnit {
-  String toStringDuration() {
-    final String duration = toString().split('.').last;
-    return duration.contains('Per') ? duration.replaceAll('Per', '') : duration;
   }
 }
 
@@ -2974,7 +2992,7 @@ enum SendOtpError {
 
 extension ParseSendOtpErrorToString on SendOtpError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -2990,7 +3008,7 @@ enum AuthOtpError { UnhandledError, InvalidOTPCode, ExceededNumberOfTries }
 
 extension ParseAuthOtpErrorToString on AuthOtpError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3014,7 +3032,7 @@ enum PaymentIntentError {
 
 extension ParsePaymentIntentErrorToString on PaymentIntentError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3037,7 +3055,7 @@ enum AddCardError {
 
 extension ParseAddCardErrorToString on AddCardError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3062,7 +3080,7 @@ enum ChargeCardError {
 
 extension ParseChargeCardErrorToString on ChargeCardError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3088,7 +3106,7 @@ enum RemoveCardError {
 
 extension ParseRemoveCardErrorToString on RemoveCardError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3112,7 +3130,7 @@ enum SetupStripeError {
 
 extension ParseSetupStripeErrorToString on SetupStripeError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3136,7 +3154,7 @@ enum UpdateStripeError {
 
 extension ParseUpdateStripeErrorToString on UpdateStripeError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3159,7 +3177,7 @@ enum CallUserError {
 
 extension ParseCallUserErrorToString on CallUserError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3184,7 +3202,7 @@ enum AddOperatorError {
 
 extension ParseAddOperatorErrorToString on AddOperatorError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3208,7 +3226,7 @@ enum AuthOperatorError {
 
 extension ParseAuthOperatorErrorToString on AuthOperatorError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3231,7 +3249,7 @@ enum AddDriverError {
 
 extension ParseAddDriverErrorToString on AddDriverError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3252,7 +3270,7 @@ enum AuthorizeDriverError {
 
 extension ParseAuthorizeDriverErrorToString on AuthorizeDriverError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3316,6 +3334,29 @@ extension ParseStringToAddReferralError on String {
   }
 }
 
+enum RemoveDriverError {
+  UnhandledError,
+  DriverNotFound,
+  OperatorNotFound,
+  UnauthorizedAccess
+}
+
+extension ParseRemoveDriverErrorToString on RemoveDriverError {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToRemoveDriverError on String {
+  RemoveDriverError toRemoveDriverError() {
+    return RemoveDriverError.values.firstWhere(
+        (RemoveDriverError removeDriverError) =>
+            removeDriverError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
 enum RestaurantError {
   UnhandledError,
   DeliveryDetailsNotSet,
@@ -3328,7 +3369,7 @@ enum RestaurantError {
 
 extension ParseRestaurantErrorToString on RestaurantError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3362,7 +3403,7 @@ enum CheckoutResponseError {
 
 extension ParseCheckoutResponseErrorToString on CheckoutResponseError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3393,7 +3434,7 @@ enum ChangeRestaurantStatusError {
 extension ParseChangeRestaurantStatusErrorToString
     on ChangeRestaurantStatusError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3423,7 +3464,7 @@ enum CancelOrderError {
 
 extension ParseCancelOrderErrorToString on CancelOrderError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3543,7 +3584,7 @@ enum LaundryError {
 
 extension ParseLaundryErrorToString on LaundryError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3574,7 +3615,7 @@ enum ReqLaundryError {
 
 extension ParseReqLaundryErrorToString on ReqLaundryError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3609,7 +3650,7 @@ enum ChangeLaundryStatusError {
 
 extension ParseChangeLaundryStatusErrorToString on ChangeLaundryStatusError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3638,7 +3679,7 @@ enum CancelLaundryError {
 
 extension ParseCancelLaundryErrorToString on CancelLaundryError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3666,7 +3707,7 @@ enum AssignDriverError {
 
 extension ParseAssignDriverErrorToString on AssignDriverError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3703,7 +3744,7 @@ enum ChangeDeliveryStatusError {
 
 extension ParseChangeDeliveryStatusErrorToString on ChangeDeliveryStatusError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3727,7 +3768,7 @@ enum CreateCourierError {
 
 extension ParseCreateCourierErrorToString on CreateCourierError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3758,7 +3799,7 @@ enum ChangePriceError {
 
 extension ParseChangePriceErrorToString on ChangePriceError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -3781,7 +3822,7 @@ enum CancelCourierError {
 
 extension ParseCancelCourierErrorToString on CancelCourierError {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
