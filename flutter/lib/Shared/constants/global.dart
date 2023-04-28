@@ -145,6 +145,12 @@ const String aCleaning = "assets/images/customer/cleaning.png";
 const String aMealPrep = "assets/images/customer/mealPrep.png";
 const String aPetSitting = "assets/images/customer/petSitting.png";
 const String aFood = "assets/images/customer/food.png";
+const String aRestaurant = "assets/images/customer/restaurant.png";
+const String aFarmers = "assets/images/customer/farmers.png";
+const String aUncategorized = "assets/images/customer/uncategorized.png";
+const String aArt = "assets/images/customer/art.png";
+const String aConsumable = "assets/images/customer/consumable.png";
+const String aPersonalCare = "assets/images/customer/personalCare.png";
 
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";

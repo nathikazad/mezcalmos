@@ -6,10 +6,16 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsLi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
 
 class CustLocallyMadeWrapper extends StatefulWidget {
   const CustLocallyMadeWrapper({super.key});
@@ -53,27 +59,40 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
     }
   }
 
+  String getCardImage(MezService mezService) {
+    switch (mezService) {
+      case MezService.Consumable:
+        return aConsumable;
+      case MezService.PersonalCare:
+        return aPersonalCare;
+      case MezService.Art:
+        return aArt;
+    }
+    return aUncategorized;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Locally Made",
+        title: _i18n()['locallymade']['title'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: List.generate(
             serviceTree.length,
-            (int index) => MezCard(
-              onClick: () {
+            (int index) => ServicesCard(
+              onTap: () {
                 navigateToListView(serviceTree[index].name);
               },
-              content: Text(
-                serviceTree[index].name.name,
-                style: context.textTheme.displayLarge,
-              ),
+              url: getCardImage(serviceTree[index].name),
+              title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+                  ['title'],
+              subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
+                  ['subtitle'],
             ),
           ),
         ),

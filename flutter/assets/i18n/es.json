@@ -625,10 +625,10 @@
         "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad."
       },
       "CustomerWrapper": {
-        "orders" : "Pedidos",
-        "profile" :"Perfil",
-        "messages" : "Mensajes",
-        "home" :"Hogar",
+        "orders": "Pedidos",
+        "profile": "Perfil",
+        "messages": "Mensajes",
+        "home": "Hogar",
         "savedLocations": "Ubicaciones guardadas",
         "welcomeText": "Bienvenido a MEZCALMOS 👋",
         "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad.",
@@ -640,6 +640,42 @@
         "food": {
           "title": "Comida",
           "subtitle": "Descubre los platillos más deliciosos de los restaurantes más cercanos"
+        },
+        "restaurants": {
+          "title": "Restaurants",
+          "subtitle": "Discover most delicious dishes from the nearest restaurants."
+        },
+        "farmers": {
+          "title": "Farmers",
+          "subtitle": "Find and purchase locally grown fruits, vegetables, grains, and other produce directly from farmers."
+        },
+        "locallymade": {
+          "title": "Locally Made",
+          "subtitle": "Savor the taste of locally made treats."
+        },
+        "mealplanning": {
+          "title": "Meal Planning",
+          "subtitle": "Plan your meals effortlessly with our meal planning service."
+        },
+        "art": {
+          "title": "Art",
+          "subtitle": "Obtain delivery of anything you desire to your location."
+        },
+        "consumable": {
+          "title": "Consumable",
+          "subtitle": "Discover most delicious dishes from the nearest restaurants."
+        },
+        "personalcare": {
+          "title": "Personal Care",
+          "subtitle": "Get your clothes cleaned by your nearest laundry service."
+        },
+        "cleaning": {
+          "title": "Cleaning",
+          "subtitle": "Get your clothes cleaned by your nearest laundry service."
+        },
+        "petsitting": {
+          "title": "Pet Sitting",
+          "subtitle": "Obtain delivery of anything you desire to your location."
         },
         "laundry": {
           "title": "Lavandería",

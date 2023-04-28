@@ -629,11 +629,10 @@
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."
       },
       "CustomerWrapper": {
-       
-        "orders" : "Orders",
-        "profile" :"Profile",
-        "messages" : "Messages",
-        "home" :"Home",
+        "orders": "Orders",
+        "profile": "Profile",
+        "messages": "Messages",
+        "home": "Home",
         "savedLocations": "Saved locations",
         "welcomeText": "Welcome to MEZCALMOS 👋",
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
@@ -645,6 +644,34 @@
         "food": {
           "subtitle": "Discover most delicious dishes from the nearest restaurants .",
           "title": "Food"
+        },
+        "restaurants": {
+          "title": "Restaurants",
+          "subtitle": "Discover most delicious dishes from the nearest restaurants."
+        },
+        "farmers": {
+          "title": "Farmers",
+          "subtitle": "Find and purchase locally grown fruits, vegetables, grains, and other produce directly from farmers."
+        },
+        "locallymade": {
+          "title": "Locally Made",
+          "subtitle": "Savor the taste of locally made treats."
+        },
+        "mealplanning": {
+          "title": "Meal Planning",
+          "subtitle": "Plan your meals effortlessly with our meal planning service."
+        },
+        "art": {
+          "title": "Art",
+          "subtitle": "Obtain delivery of anything you desire to your location."
+        },
+        "consumable": {
+          "title": "Consumable",
+          "subtitle": "Discover most delicious dishes from the nearest restaurants."
+        },
+        "personalcare": {
+          "title": "Personal Care",
+          "subtitle": "Get your clothes cleaned by your nearest laundry service."
         },
         "laundry": {
           "subtitle": "Get your clothes cleaned by your nearest laundry service",
