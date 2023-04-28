@@ -5,15 +5,16 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 class BsOpServicesListView extends StatefulWidget {
-  
   const BsOpServicesListView({Key? key}) : super(key: key);
 
   @override
@@ -32,6 +33,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu, title: "Services"),
+      drawer: MezSideMenu(),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

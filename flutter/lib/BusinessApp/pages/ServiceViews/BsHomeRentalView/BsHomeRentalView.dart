@@ -150,11 +150,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
                   ),
                   InkWell(
                       onTap: () {
-                        if (viewController.timeUnits.length > 1) {
+                        if (viewController.units.length > 1) {
                           _timeUnitSelectorSheet(context);
-                        } else if (viewController.timeUnits.length == 1) {
+                        } else if (viewController.units.length == 1) {
                           viewController
-                              .addPriceTimeUnit(viewController.timeUnits.first);
+                              .addPriceTimeUnit(viewController.units.first);
                         }
                       },
                       child: Ink(
@@ -222,7 +222,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView> {
                   height: 35,
                 ),
                 Column(
-                  children: viewController.timeUnits.map((TimeUnit timeUnit) {
+                  children: viewController.units.map((TimeUnit timeUnit) {
                     return Container(
                       margin: const EdgeInsets.only(top: 5),
                       child: Row(
