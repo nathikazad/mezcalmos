@@ -32,15 +32,19 @@ class BusinessItemDetailsController {
   RxBool isEditing = false.obs;
   Rxn<BusinessItemDetails> _details = Rxn<BusinessItemDetails>();
   // getters //
+
   BusinessItemDetails? get details => _details.value;
   // methods //
   Future<void> initEditMode({required int detalsId}) async {
+    mezDbgPrint(" 🟢  initEditMode : $detalsId");
     _details.value = await get_business_details_by_id(
         detailsId: detalsId,
         businessId: Get.find<BusinessOpAuthController>().companyId!);
     if (details != null) {
       nameController.text = details!.name[Language.EN] ?? "";
-      descriptionController.text = details!.description?[Language.ES] ?? "";
+      descriptionController.text = details!.description?[Language.EN] ?? "";
+      scNameController.text = details!.name[Language.ES] ?? "";
+      scDescriptionController.text = details!.description?[Language.ES] ?? "";
       isAvailable.value = details!.available;
 
       if (details!.image != null) {
@@ -79,10 +83,11 @@ class BusinessItemDetailsController {
   }
 
   Future<void> updateItemDetails() async {
-    await Future.wait([updateName(), updateDescription(), pushDetailsToDb()]);
+    await Future.wait(
+        [_updateName(), _updateDescription(), _pushDetailsToDb()]);
   }
 
-  Future<void> pushDetailsToDb() async {
+  Future<void> _pushDetailsToDb() async {
     BusinessItemDetails _details = await contructDetails();
     try {
       int? res = await update_business_item_details(
@@ -110,9 +115,9 @@ class BusinessItemDetailsController {
     return data;
   }
 
-  Future<int?> updateDescription() async {
+  Future<int?> _updateDescription() async {
     int? descId;
-    if (fd.mapEquals(details?.description, constructDesc())) {
+    if (!fd.mapEquals(details?.description, constructDesc())) {
       if (details?.descriptionId != null) {
         constructDesc().forEach((Language key, String value) {
           update_translation(
@@ -133,8 +138,8 @@ class BusinessItemDetailsController {
     return null;
   }
 
-  Future<void> updateName() async {
-    if (fd.mapEquals(details?.name, constructName())) {
+  Future<void> _updateName() async {
+    if (!fd.mapEquals(details?.name, constructName())) {
       constructName().forEach((Language key, String value) {
         update_translation(
             langType: key,
@@ -146,6 +151,7 @@ class BusinessItemDetailsController {
 
   void addPriceTimeUnit(TimeUnit timeUnit) {
     priceTimeUnitMap[TextEditingController()] = timeUnit;
+    // priceTimeUnitMap.refresh();
   }
 
   void removeTimeUnit(TimeUnit timeUnit) {

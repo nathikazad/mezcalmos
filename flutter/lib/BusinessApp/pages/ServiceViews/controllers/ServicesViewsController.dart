@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 abstract class ServicesViewsController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -15,23 +11,7 @@ abstract class ServicesViewsController {
 
   // streams //
 
-  // variables //
-  String get imagesUploadFolder;
   bool shouldRefetch = false;
-
-  List<TimeUnit> get timeUnits;
-
-  // states variables //
-  RxBool isAvailable = RxBool(false);
-  RxList<String?> imagesUrls = RxList.filled(5, null);
-  RxMap<TextEditingController, TimeUnit> priceTimeUnitMap =
-      RxMap<TextEditingController, TimeUnit>();
-  RxList<File?> images = RxList.filled(5, null);
-  // getters//
-  List<TimeUnit> get units => timeUnits
-      .where((TimeUnit element) =>
-          priceTimeUnitMap.values.contains(element) == false)
-      .toList();
 
   // methods //
   Future<void> initEditMode({required int id});

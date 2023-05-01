@@ -100,13 +100,14 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
     if (data != null) {
       return RentalWithBusinessCard(
           rental: Rental(
+              id: id,
               category1: data.details.category1.toRentalCategory1(),
               category2: data.details.category2.toRentalCategory2(),
               category3: data.category3,
               details: BusinessItemDetails(
                 nameId: data.details.name_id,
                 descriptionId: data.details.description_id,
-                id: id,
+                id: data.details.id,
                 name:
                     toLanguageMap(translations: data.details.name.translations),
                 position: data.details.position,
@@ -447,9 +448,7 @@ Future<RentalWithBusinessCard?> update_business_home_rental(
     Options$Mutation$update_home_rental_by_id(
       variables: Variables$Mutation$update_home_rental_by_id(
         id: id,
-        object: Input$business_home_rental_set_input(
-         
-        ),
+        object: Input$business_home_rental_set_input(),
       ),
     ),
   );

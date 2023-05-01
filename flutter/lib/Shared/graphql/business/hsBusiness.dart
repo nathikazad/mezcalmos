@@ -301,6 +301,7 @@ Future<int?> update_business_item_details(
                             key.toFirebaseFormatString(), value.toDouble())),
                   ))));
   if (res.hasException) {
+    mezDbgPrint("ERROR UPDATING BUSINESS ITEM DETAILS => $res");
     throw Exception("🛑 Error updating business item details ${res.exception}");
   }
   return res.parsedData?.update_business_item_details_by_pk?.id;

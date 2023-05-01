@@ -35,6 +35,7 @@ export enum TimeUnit {
     Total = "total",
 }
 export interface Rental {
+    id?: number;
     category1: RentalCategory1;
     category2?: RentalCategory2;
     category3?: string;
@@ -45,6 +46,7 @@ export interface Rental {
     homeType?: string,
 }
 export interface Event {
+    id?: number;
     category1: EventCategory1;
     category2?: EventCategory2;
     scheduleType: ScheduleType;
@@ -55,10 +57,12 @@ export interface Event {
     tags?: Array<EventTag>;
 }
 export interface Service {
+    id?: number;
     category1: ServiceCategory1;
     details: BusinessItemDetails;
 }
 export interface Product {
+    id?: number;
     category1: ProductCategory1;
     details: BusinessItemDetails;
 }

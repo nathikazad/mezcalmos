@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpTimeUnit
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -32,7 +33,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   @override
   void initState() {
     viewController.init(thickerProvider: this);
-    int? id = MezRouter.urlArguments["id"]?.asInt;
+    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);
     }
@@ -87,15 +88,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          bigSeperator,
           Text(
             "Name",
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
-            controller: viewController.detailsController.nameController,
+            controller: viewController.detailsController.scNameController,
             decoration: InputDecoration(
               hintText: "Add item name",
             ),
@@ -109,7 +110,8 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           TextFormField(
             maxLines: 7,
             minLines: 5,
-            controller: viewController.detailsController.descriptionController,
+            controller:
+                viewController.detailsController.scDescriptionController,
             decoration: InputDecoration(
               hintText: "Enter a description for your item",
             ),
@@ -129,12 +131,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           children: [
             Obx(
               () => MezItemAvSwitcher(
-                value: viewController.isAvailable.value,
+                value: viewController.detailsController.isAvailable.value,
                 onAvalableTap: () {
-                  viewController.isAvailable.value = true;
+                  viewController.detailsController.isAvailable.value = true;
                 },
                 onUnavalableTap: () {
-                  viewController.isAvailable.value = false;
+                  viewController.detailsController.isAvailable.value = false;
                 },
               ),
             ),
@@ -192,6 +194,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                       if (viewController.units.length > 1) {
                         TimeUnit? newUnit = await bsOpTimeUnitSelectorSheet(
                             context: context, units: viewController.units);
+                        mezDbgPrint("newUnit: $newUnit");
                         if (newUnit != null) {
                           viewController.detailsController
                               .addPriceTimeUnit(newUnit);
@@ -227,13 +230,16 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             Obx(
               () => Column(
                   children: List.generate(
-                      viewController.priceTimeUnitMap.length, (int index) {
+                      viewController.detailsController.priceTimeUnitMap.length,
+                      (int index) {
                 final TimeUnit timeUnit = viewController
-                    .priceTimeUnitMap.entries
+                    .detailsController.priceTimeUnitMap.entries
                     .toList()[index]
                     .value;
                 final TextEditingController textEditingController =
-                    viewController.priceTimeUnitMap.entries.toList()[index].key;
+                    viewController.detailsController.priceTimeUnitMap.entries
+                        .toList()[index]
+                        .key;
                 return BsOpServicePriceCard(
                   textEditingController: textEditingController,
                   timeUnit: timeUnit,

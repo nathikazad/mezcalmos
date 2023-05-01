@@ -15,20 +15,22 @@ class BsHomeRentalViewController extends ServicesViewsController {
   Rxn<Rental> _rental = Rxn<Rental>();
   Rental? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
-  @override
-  String get imagesUploadFolder => "Business/HomeRentals/Images";
 
-  @override
   List<TimeUnit> get timeUnits => List.unmodifiable([
         TimeUnit.PerHour,
         TimeUnit.PerDay,
         TimeUnit.PerWeek,
         TimeUnit.PerMonth,
       ]);
+  List<TimeUnit> get units => timeUnits
+      .where((TimeUnit element) =>
+          detailsController.priceTimeUnitMap.values.contains(element) == false)
+      .toList();
 
   @override
   Future<void> initEditMode({required int id}) async {
     _rental.value = await get_rental_by_id(id: id, withCache: false);
+    mezDbgPrint("rental id : $id");
     if (rental != null) {
       await detailsController.initEditMode(
           detalsId: rental!.details.id.toInt());
@@ -36,7 +38,9 @@ class BsHomeRentalViewController extends ServicesViewsController {
   }
 
   @override
-  Future<void> saveItemDetails() async {}
+  Future<void> saveItemDetails() async {
+    await detailsController.updateItemDetails();
+  }
 
   Future<Rental> _constructRental() async {
     BusinessItemDetails details = await detailsController.contructDetails();
@@ -52,10 +56,11 @@ class BsHomeRentalViewController extends ServicesViewsController {
   @override
   Future<void> save() async {
     if (formKey.currentState?.validate() == true) {
-      Rental _rental = await _constructRental();
       if (isEditing) {
         await saveItemDetails();
+        shouldRefetch = true;
       } else {
+        Rental _rental = await _constructRental();
         await createItem(_rental);
       }
     }

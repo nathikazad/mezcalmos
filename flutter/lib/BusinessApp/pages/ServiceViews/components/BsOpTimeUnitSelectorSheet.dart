@@ -9,7 +9,7 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
   required BuildContext context,
   required List<TimeUnit> units,
 }) async {
-  await showModalBottomSheet<TimeUnit>(
+  TimeUnit? timeUnit = await showModalBottomSheet<TimeUnit>(
       context: context,
       builder: (BuildContext context) {
         Rxn<TimeUnit> selected = Rxn();
@@ -88,5 +88,5 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
           ),
         );
       });
-  return null;
+  return timeUnit;
 }
