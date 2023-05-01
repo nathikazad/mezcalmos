@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -14,6 +16,9 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpServicesListView extends StatefulWidget {
   const BsOpServicesListView({Key? key}) : super(key: key);
@@ -48,7 +53,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      "Services",
+                      _i18n()["services"],
                       style: context.textTheme.bodyLarge,
                     )),
                 InkWell(
@@ -67,7 +72,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           width: 5,
                         ),
                         Text(
-                          "Reorder",
+                          _i18n()["reorder"],
                           style: context.textTheme.bodyLarge
                               ?.copyWith(color: primaryBlueColor),
                         ),
@@ -81,7 +86,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
               height: 30,
             ),
             Text(
-              "Home Rentals",
+              _i18n()["homerental"]["title"],
               style: context.textTheme.bodyLarge,
             ),
             smallSepartor,
@@ -95,6 +100,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                               id: viewController.homeRentals[index].details.id
                                   .toInt());
                         },
+                        firstAvatarBgImage: NetworkImage(
+                          viewController
+                                  .homeRentals[index].details.firstImage ??
+                              customImageUrl,
+                        ),
                         content: Text(
                           viewController.homeRentals[index].details
                                   .name[userLanguage] ??
@@ -111,83 +121,103 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
 
   MezButton _addServiceButton(BuildContext context) {
     return MezButton(
-      label: "Add service",
+      label: _i18n()["addService"],
       onClick: () async {
         // ignore: inference_failure_on_function_invocation
         showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Service type",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                    ),
-                    Divider(
-                      height: 35,
-                    ),
-                    Row(
+              BusinessServiceType currentSelectedService =
+                  BusinessServiceType.Rental;
+              return StatefulBuilder(builder: (context, setState) {
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
-                          fit: FlexFit.tight,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            _i18n()["serviceType"],
+                            style: context.textTheme.bodyLarge,
+                          ),
+                        ),
+                        Divider(
+                          height: 35,
+                        ),
+                        ...BusinessServiceType.values.map(
+                          (value) => Row(
                             children: [
-                              Text(
-                                "Rental",
-                                style: context.textTheme.bodyLarge,
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _i18n()[value.name.toLowerCase()]["title"]
+                                          .toString(),
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                    Text(
+                                      _i18n()[value.name.toLowerCase()]
+                                              ["subtitle"]
+                                          .toString(),
+                                    )
+                                  ],
+                                ),
                               ),
-                              Text(
-                                  "Using a rental service, you can advertise a vehicle for rent.")
+                              radioCircleButton(
+                                onTap: (bool v) {
+                                  setState(() {
+                                    currentSelectedService = value;
+                                  });
+                                },
+                                value: value == currentSelectedService,
+                              ),
                             ],
                           ),
                         ),
-                        radioCircleButton(onTap: (bool v) {}, value: true)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                            child: MezButton(
-                          label: "Cancel",
-                          backgroundColor: offRedColor,
-                          textColor: redAccentColor,
-                          onClick: () async {
-                            Navigator.pop(context);
-                          },
-                        )),
                         SizedBox(
-                          width: 15,
+                          height: 10,
                         ),
-                        Flexible(
-                            child: MezButton(
-                          label: "Add",
-                          onClick: () async {
-                            Navigator.pop(context);
-                            bool? hasChanged =
-                                await BsOpHomeRentalView.navigate(id: null);
-                            mezDbgPrint("hasChanged: $hasChanged");
-                            if (hasChanged == true) {
-                              viewController.init();
-                            }
-                          },
-                        ))
+                        Row(
+                          children: [
+                            Flexible(
+                                child: MezButton(
+                              label: "Cancel",
+                              backgroundColor: offRedColor,
+                              textColor: redAccentColor,
+                              onClick: () async {
+                                Navigator.pop(context);
+                              },
+                            )),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Flexible(
+                                child: MezButton(
+                              label: "Add",
+                              onClick: () async {
+                                mezDbgPrint(
+                                    "added service: $currentSelectedService");
+                                Navigator.pop(context);
+                                // bool? hasChanged =
+                                //     await BsOpHomeRentalView.navigate(id: null);
+                                // if (hasChanged == true) {
+                                //   viewController.init();
+                                // }
+                              },
+                            ))
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              );
+                  ),
+                );
+              });
             });
       },
     );

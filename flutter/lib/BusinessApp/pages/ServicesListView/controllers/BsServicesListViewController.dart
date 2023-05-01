@@ -3,6 +3,15 @@ import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart'
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 
+enum BusinessServiceType {
+  Rental,
+  HomeRental,
+  Event,
+  Class,
+  Service,
+  Product,
+}
+
 class BsServicesListViewController {
   // instances //
   BusinessOpAuthController _businessOpAuthController =
@@ -14,6 +23,7 @@ class BsServicesListViewController {
 
   // states variables //
   RxList<Rental> homeRentals = RxList.empty();
+  RxList<Rental> rentals = RxList.empty();
 
   // methods //
   Future<void> init() async {
