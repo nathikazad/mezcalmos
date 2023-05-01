@@ -47,6 +47,7 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
         detailsId: data.details.id,
         name: data.details.name,
         image: data.details.image,
+        currency: data.details.currency.toCurrency(),
         acceptedPayments: _paymentInfo.acceptedPayments,
         avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
         reviewCount: data.reviews_aggregate.aggregate?.count,
@@ -108,7 +109,6 @@ Future<Business?> get_business_by_id(
             scheduleType: event.schedule_type.toScheduleType(),
             details: BusinessItemDetails(
               id: event.id,
-            
               name:
                   toLanguageMap(translations: event.details.name.translations),
               position: event.details.position,
@@ -131,6 +131,7 @@ Future<Business?> get_business_by_id(
               location: constructLocation(
                   data.details.location.gps, data.details.location.address),
               language: convertToLanguages(data.details.language),
+              currency: data.details.currency.toCurrency(),
               deliveryDetails: DeliveryDetails(
                   deliveryAvailable: false,
                   customerPickup: false,
@@ -183,6 +184,7 @@ Future<List<BusinessCard>> get_business_by_event_category1(
         detailsId: data.details.id,
         name: data.details.name,
         image: data.details.image,
+        currency: data.details.currency.toCurrency(),
         acceptedPayments: _paymentInfo.acceptedPayments,
         avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
         reviewCount: data.reviews_aggregate.aggregate?.count,
@@ -230,6 +232,7 @@ Future<List<BusinessCard>> get_business_by_service_category1(
         detailsId: data.details.id,
         name: data.details.name,
         image: data.details.image,
+        currency: data.details.currency.toCurrency(),
         acceptedPayments: _paymentInfo.acceptedPayments,
         avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
         reviewCount: data.reviews_aggregate.aggregate?.count,
@@ -276,6 +279,7 @@ Future<List<BusinessCard>> get_business_by_product_category1(
         detailsId: data.details.id,
         name: data.details.name,
         image: data.details.image,
+        currency: data.details.currency.toCurrency(),
         acceptedPayments: _paymentInfo.acceptedPayments,
         avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
         reviewCount: data.reviews_aggregate.aggregate?.count,

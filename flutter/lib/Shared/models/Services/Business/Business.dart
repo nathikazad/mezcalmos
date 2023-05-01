@@ -7,6 +7,7 @@ class BusinessCard {
   String name;
   String image;
   Map<PaymentType, bool> acceptedPayments;
+  Currency currency;
   double? avgRating;
   int? reviewCount;
 
@@ -16,6 +17,7 @@ class BusinessCard {
       required this.name,
       required this.image,
       required this.acceptedPayments,
+      required this.currency,
       this.avgRating,
       this.reviewCount});
 }
@@ -32,9 +34,11 @@ Map<TimeUnit, num> constructBusinessServiceCost(cost) {
 
 class RentalCard extends Rental {
   final String businessName;
+  final Currency currency;
   RentalCard({
     required Rental rental,
     required this.businessName,
+    required this.currency,
   }) : super(
           category1: rental.category1,
           details: rental.details,
@@ -47,9 +51,11 @@ class RentalCard extends Rental {
 
 class EventCard extends Event {
   final String businessName;
+  final Currency currency;
   EventCard({
     required Event event,
     required this.businessName,
+    required this.currency,
   }) : super(
           scheduleType: event.scheduleType,
           category1: event.category1,
@@ -66,9 +72,11 @@ class EventCard extends Event {
 
 class ProductCard extends Product {
   final String businessName;
+  final Currency currency;
   ProductCard({
     required Product product,
     required this.businessName,
+    required this.currency,
   }) : super(
           category1: product.category1,
           details: product.details,
@@ -77,9 +85,11 @@ class ProductCard extends Product {
 
 class ServiceCard extends Service {
   final String businessName;
+  final Currency currency;
   ServiceCard({
     required Service service,
     required this.businessName,
+    required this.currency,
   }) : super(
           category1: service.category1,
           details: service.details,

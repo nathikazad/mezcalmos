@@ -44,6 +44,7 @@ Future<List<ProductCard>> get_product_by_category(
         .forEach((Query$get_product_by_category$business_product data) async {
       _products.add(ProductCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           product: Product(
             category1: data.details.category1.toProductCategory1(),
             details: BusinessItemDetails(
@@ -109,6 +110,7 @@ Future<ProductWithBusinessCard?> get_product_by_id(
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,
+            currency: data.business.details.currency.toCurrency(),
             acceptedPayments: PaymentInfo.fromData(
                     stripeInfo: {},
                     acceptedPayments: data.business.details.accepted_payments)

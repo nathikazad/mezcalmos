@@ -29,6 +29,7 @@ export interface ServiceProvider {
   operators?: Array<Operator>;
   serviceProviderType: ServiceProviderType;
   uniqueId?: string;
+  currency?: Currency;
 }
 
 export interface Operator {
@@ -82,6 +83,10 @@ export enum ServiceProviderType {
   DeliveryCompany = "deliveryCompany",
   Customer = "customer",
   DeliveryDriver = "deliveryDriver"
+}
+
+export enum Currency {
+  Peso = "peso",
 }
 
 export interface OperatorApprovedNotification extends ForegroundNotification {

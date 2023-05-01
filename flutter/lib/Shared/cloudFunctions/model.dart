@@ -511,10 +511,12 @@ class Location {
 
 class Schedule {
   Map<Weekday, OpenHours> openHours;
-  Schedule({required this.openHours});
+  List<num> timezone;
+  Schedule({required this.openHours, required this.timezone});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "openHours": openHours,
+      "timezone": timezone,
     };
   }
 }
@@ -1757,6 +1759,7 @@ class ServiceProvider {
   List<Operator>? operators;
   ServiceProviderType serviceProviderType;
   String? uniqueId;
+  Currency? currency;
   ServiceProvider(
       {required this.id,
       required this.serviceProviderDetailsId,
@@ -1778,7 +1781,8 @@ class ServiceProvider {
       required this.deliveryDetails,
       this.operators,
       required this.serviceProviderType,
-      this.uniqueId});
+      this.uniqueId,
+      this.currency});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -1802,6 +1806,7 @@ class ServiceProvider {
       "operators": operators,
       "serviceProviderType": serviceProviderType,
       "uniqueId": uniqueId,
+      "currency": currency,
     };
   }
 }
@@ -1889,6 +1894,22 @@ class ServiceLink {
       "driverDeepLink": driverDeepLink,
       "driverQrImageLink": driverQrImageLink,
     };
+  }
+}
+
+enum Currency { Peso }
+
+extension ParseCurrencyToString on Currency {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCurrency on String {
+  Currency toCurrency() {
+    return Currency.values.firstWhere((Currency currency) =>
+        currency.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

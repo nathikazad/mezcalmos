@@ -52,6 +52,7 @@ Future<List<EventCard>> get_event_by_category(
         .forEach((Query$get_event_by_category$business_event data) async {
       _events.add(EventCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           event: Event(
             category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null && data.address != null
@@ -130,6 +131,7 @@ Future<List<EventCard>> get_class_by_category(
         .forEach((Query$get_class_by_category$business_event data) async {
       _classes.add(EventCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           event: Event(
             category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null && data.address != null
@@ -203,8 +205,8 @@ Future<EventWithBusinessCard?> get_event_by_id(
                   [],
               details: BusinessItemDetails(
                 id: id,
-                    nameId: data.details.name_id,
-              descriptionId: data.details.description_id,
+                nameId: data.details.name_id,
+                descriptionId: data.details.description_id,
                 name:
                     toLanguageMap(translations: data.details.name.translations),
                 position: data.details.position,
@@ -229,6 +231,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,
+            currency: data.business.details.currency.toCurrency(),
             acceptedPayments: PaymentInfo.fromData(
                     stripeInfo: {},
                     acceptedPayments: data.business.details.accepted_payments)
