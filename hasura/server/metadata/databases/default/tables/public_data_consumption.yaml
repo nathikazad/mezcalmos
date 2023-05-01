@@ -10,6 +10,19 @@ insert_permissions:
       columns:
         - date
         - id
+        - name_of_subscription
+        - number_of_events
+        - total_size
+        - user_id
+  - role: delivery_driver
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - date
+        - id
+        - number_of_events
         - total_size
         - user_id
         - name_of_subscription
@@ -19,6 +32,19 @@ select_permissions:
       columns:
         - date
         - id
+        - name_of_subscription
+        - number_of_events
+        - total_size
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - date
+        - id
+        - number_of_events
         - total_size
         - user_id
         - name_of_subscription
@@ -29,6 +55,16 @@ update_permissions:
   - role: customer
     permission:
       columns:
+        - number_of_events
+        - total_size
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: delivery_driver
+    permission:
+      columns:
+        - number_of_events
         - total_size
       filter:
         user_id:
