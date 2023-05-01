@@ -14,7 +14,7 @@ class UserInfo {
   bool get isNameSet => _name != null;
   bool get isImageSet => _image != null;
   String get image {
-    if (_image != null && _image!.toString().isURL) {
+    if (_image != null && _image!.isNotEmpty) {
       return _image!;
     } else {
       return defaultUserImgUrl;
