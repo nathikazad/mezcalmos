@@ -113,6 +113,130 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         ))),
               ),
             ),
+            Divider(
+              height: 30,
+            ),
+            Text(
+              _i18n()["rental"]["title"],
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            Obx(
+              () => Column(
+                children: List.generate(
+                    viewController.rentals.length,
+                    (int index) => MezCard(
+                        onClick: () {
+                          BsOpHomeRentalView.navigate(
+                              id: viewController.rentals[index].details.id
+                                  .toInt());
+                        },
+                        firstAvatarBgImage: NetworkImage(
+                          viewController
+                                  .rentals[index].details.firstImage ??
+                              customImageUrl,
+                        ),
+                        content: Text(
+                          viewController.rentals[index].details
+                                  .name[userLanguage] ??
+                              "name error",
+                          style: context.textTheme.bodyLarge,
+                        ))),
+              ),
+            ),
+            Divider(
+              height: 30,
+            ),
+            Text(
+              _i18n()["event"]["title"],
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            Obx(
+              () => Column(
+                children: List.generate(
+                    viewController.events.length,
+                    (int index) => MezCard(
+                        onClick: () {
+                          BsOpHomeRentalView.navigate(
+                              id: viewController.events[index].details.id
+                                  .toInt());
+                        },
+                        firstAvatarBgImage: NetworkImage(
+                          viewController
+                                  .events[index].details.firstImage ??
+                              customImageUrl,
+                        ),
+                        content: Text(
+                          viewController.events[index].details
+                                  .name[userLanguage] ??
+                              "name error",
+                          style: context.textTheme.bodyLarge,
+                        ))),
+              ),
+            ),
+            Divider(
+              height: 30,
+            ),
+            Text(
+              _i18n()["service"]["title"],
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            Obx(
+              () => Column(
+                children: List.generate(
+                    viewController.services.length,
+                    (int index) => MezCard(
+                        onClick: () {
+                          BsOpHomeRentalView.navigate(
+                              id: viewController.services[index].details.id
+                                  .toInt());
+                        },
+                        firstAvatarBgImage: NetworkImage(
+                          viewController
+                                  .services[index].details.firstImage ??
+                              customImageUrl,
+                        ),
+                        content: Text(
+                          viewController.services[index].details
+                                  .name[userLanguage] ??
+                              "name error",
+                          style: context.textTheme.bodyLarge,
+                        ))),
+              ),
+            ),
+            Divider(
+              height: 30,
+            ),
+            Text(
+              _i18n()["product"]["title"],
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            Obx(
+              () => Column(
+                children: List.generate(
+                    viewController.product.length,
+                    (int index) => MezCard(
+                        onClick: () {
+                          BsOpHomeRentalView.navigate(
+                              id: viewController.product[index].details.id
+                                  .toInt());
+                        },
+                        firstAvatarBgImage: NetworkImage(
+                          viewController
+                                  .product[index].details.firstImage ??
+                              customImageUrl,
+                        ),
+                        content: Text(
+                          viewController.product[index].details
+                                  .name[userLanguage] ??
+                              "name error",
+                          style: context.textTheme.bodyLarge,
+                        ))),
+              ),
+            ),
           ],
         ),
       ),

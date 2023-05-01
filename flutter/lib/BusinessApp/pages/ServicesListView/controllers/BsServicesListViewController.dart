@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
+import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 
 enum BusinessServiceType {
   Rental,
@@ -22,14 +25,33 @@ class BsServicesListViewController {
   // variables //
 
   // states variables //
-  RxList<Rental> homeRentals = RxList.empty();
-  RxList<Rental> rentals = RxList.empty();
+  RxList<RentalCard> homeRentals = RxList.empty();
+  RxList<RentalCard> rentals = RxList.empty();
+  RxList<EventCard> events = RxList.empty();
+  RxList<ServiceCard> services = RxList.empty();
+  RxList<ProductCard> product = RxList.empty();
 
   // methods //
   Future<void> init() async {
     homeRentals.value.clear();
     homeRentals.value = await get_business_home_rentals(
       busniessId: _businessOpAuthController.companyId!,
+      withCache: false,
+    );
+    rentals.value = await get_business_rentals(
+      busniessId: _businessOpAuthController.companyId!,
+      withCache: false,
+    );
+    events.value = await get_business_events(
+      businessId: _businessOpAuthController.companyId!,
+      withCache: false,
+    );
+    services.value = await get_business_services(
+      businessId: _businessOpAuthController.companyId!,
+      withCache: false,
+    );
+    product.value = await get_business_products(
+      businessId: _businessOpAuthController.companyId!,
       withCache: false,
     );
   }

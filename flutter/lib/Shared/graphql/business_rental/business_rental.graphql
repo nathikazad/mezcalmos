@@ -274,11 +274,12 @@ mutation update_home_rental_by_id($id: Int!,$object: business_home_rental_set_in
     }
   }
 }
+
 query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
-  business_rental(where: {business_id: {_eq: $businessId}}, limit: $limit, offset: $offset) {
+  business_rental(where: {_and: {details: {_and: {category1: {_eq: "vehicle"}, category2: {_in: ["car", "motorcycle"]}, tags: {_has_keys_all: []}}}, business_id: {_eq: $businessId}}}, limit: $limit, offset: $offset) {
     details {
-       name_id
-        description_id
+      name_id
+      description_id
       id
       name {
         translations {
@@ -308,6 +309,6 @@ query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
         }
       }
     }
-    
   }
 }
+
