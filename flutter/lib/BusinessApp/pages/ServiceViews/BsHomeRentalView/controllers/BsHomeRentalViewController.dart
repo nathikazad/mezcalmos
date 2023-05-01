@@ -1,16 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/ServicesViewsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class BsHomeRentalViewController extends ServicesViewsController {
+class BsHomeRentalViewController {
   // instances //
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
+  // vars //
+  bool shouldRefetch = false;
   // state variables //
   Rxn<Rental> _rental = Rxn<Rental>();
   Rental? get rental => _rental.value;
@@ -27,7 +31,10 @@ class BsHomeRentalViewController extends ServicesViewsController {
           detailsController.priceTimeUnitMap.values.contains(element) == false)
       .toList();
 
-  @override
+  void init({required TickerProvider thickerProvider}) {
+    tabController = TabController(length: 2, vsync: thickerProvider);
+  }
+
   Future<void> initEditMode({required int id}) async {
     _rental.value = await get_rental_by_id(id: id, withCache: false);
     mezDbgPrint("rental id : $id");
@@ -37,7 +44,6 @@ class BsHomeRentalViewController extends ServicesViewsController {
     }
   }
 
-  @override
   Future<void> saveItemDetails() async {
     await detailsController.updateItemDetails();
   }
@@ -53,7 +59,6 @@ class BsHomeRentalViewController extends ServicesViewsController {
     return rental;
   }
 
-  @override
   Future<void> save() async {
     if (formKey.currentState?.validate() == true) {
       if (isEditing) {
@@ -66,7 +71,6 @@ class BsHomeRentalViewController extends ServicesViewsController {
     }
   }
 
-  @override
   void dispose() {
     // TODO: implement dispose
   }
