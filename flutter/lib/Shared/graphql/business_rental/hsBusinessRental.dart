@@ -285,6 +285,51 @@ Future<List<RentalCard>> get_business_home_rentals(
   }
 }
 
+Future<List<RentalCard>> get_business_rentals(
+    {required int busniessId,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<RentalCard> _homes = <RentalCard>[];
+
+  final QueryResult<Query$get_business_rentals> response = await _db
+      .graphQLClient
+      .query$get_business_rentals(Options$Query$get_business_rentals(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_rentals(
+              businessId: busniessId, offset: offset, limit: limit)));
+
+  mezDbgPrint("get_home_rentals $response");
+
+  if (response.parsedData?.business_rental != null) {
+    response.parsedData?.business_rental
+        .forEach((Query$get_business_rentals$business_rental data) async {
+      _homes.add(RentalCard(
+          businessName: data.business.details.name,
+          rental: Rental(
+            category1: data.details.category1.toRentalCategory1(),
+            details: BusinessItemDetails(
+              id: data.id,
+              name: toLanguageMap(translations: data.details.name.translations),
+              position: data.details.position,
+              businessId: data.business.id,
+              available: data.details.available,
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.details.cost),
+              additionalParameters: data.details.additional_parameters,
+            ),
+          )));
+    });
+    return _homes;
+  } else {
+    return [];
+  }
+}
+
 Future<int?> add_one_rental({required Rental rental}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
 

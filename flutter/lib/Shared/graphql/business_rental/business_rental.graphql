@@ -274,3 +274,40 @@ mutation update_home_rental_by_id($id: Int!,$object: business_home_rental_set_in
     }
   }
 }
+query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
+  business_rental(where: {business_id: {_eq: $businessId}}, limit: $limit, offset: $offset) {
+    details {
+       name_id
+        description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    category3
+    business {
+      id
+      details {
+        id
+        name
+        location {
+          gps
+          address
+        }
+      }
+    }
+    
+  }
+}
