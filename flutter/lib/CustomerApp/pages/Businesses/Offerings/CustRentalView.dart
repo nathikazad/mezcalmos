@@ -71,12 +71,18 @@ class _CustRentalViewState extends State<CustRentalView> {
                       _CustBusinessAdditionalData(
                         rental: viewController.rental!,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         _i18n()['price'],
                         style: context.textTheme.bodyLarge,
                       ),
                       CustBusinessRentalCost(
                         cost: viewController.rental!.details.cost,
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       Text(
                         _i18n()['description'],
@@ -103,9 +109,21 @@ class _CustRentalViewState extends State<CustRentalView> {
                                 ),
                               ),
                             ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        _i18n()['store'],
+                        style: context.textTheme.bodyLarge,
+                      ),
                       CustBusinessMessageCard(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
                         business: viewController.rental!.business,
                         offeringName: viewController.rental!.details.name,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

@@ -1,4 +1,3 @@
-
 {
   "CustomerApp": {
     "main": {
@@ -58,7 +57,8 @@
         "description": "Description",
         "price": "Price",
         "noDescription": "No Description",
-        "noTitle": "No Title"
+        "noTitle": "No Title",
+        "store": "Store"
       },
       "cards": {
         "SavedCardsListView": {
@@ -556,8 +556,12 @@
             "month": "Month",
             "person": "Person",
             "total": "Total",
-            "none": "None"
+            "none": "None",
+            "motorcycle": "Motorcycle",
+            "car": "Car",
+            "bicycle": "Bicycle"
           },
+
           "surf": {
             "title": "Surf",
             "description": "Discover most delicious dishes from the nearest restaurants.",
@@ -627,6 +631,17 @@
         "welcomeText": "Welcome to MEZKALA 👋",
         "search": "Search",
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."
+      },
+      "CustBusinessView": {
+        "rentals": "Rentals",
+        "events": "Events",
+        "products": "Products",
+        "services": "Services",
+        "chatWithUs": "Chat with us",
+        "contactUs": "Contact us",
+        "reviews": "Reviews",
+        "viewAll": "View All",
+        "loading": "Loading"
       },
       "CustomerWrapper": {
         "orders": "Orders",

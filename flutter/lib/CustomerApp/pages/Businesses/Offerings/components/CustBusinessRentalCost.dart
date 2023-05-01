@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustHomeWrapper']['rental'];
 
 class CustBusinessRentalCost extends StatelessWidget {
   const CustBusinessRentalCost({super.key, required this.cost});
@@ -74,30 +79,27 @@ class CustBusinessRentalCost extends StatelessWidget {
           direction: costData.length > 2 ? Axis.horizontal : Axis.vertical,
           children: [
             for (int index = 0; index < costData.length; index++)
-              // costData.length <= 2
-              //     ? Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: <Widget>[
-              //           Icon(
-              //             costData[index]["icon"],
-              //           ),
-              //           Text(
-              //             "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-              //           )
-              //         ],
-              //       )
-              //     :
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    costData[index]["icon"],
-                  ),
-                  Text(
-                    "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-                  )
-                ],
-              ),
+              costData.length <= 2
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          costData[index]["icon"],
+                        ),
+                        Text(
+                            '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()['shared'][costData[index]['unit']]}')
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          costData[index]["icon"],
+                        ),
+                        Text(
+                            '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()['shared'][costData[index]['unit']]}')
+                      ],
+                    ),
           ],
         ));
   }

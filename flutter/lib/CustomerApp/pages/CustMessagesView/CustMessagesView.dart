@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustMessagesView/controllers/CustChatController.dart';
@@ -53,6 +54,9 @@ class _CustMessagesViewState extends State<CustMessagesView> {
               custChatController.allChats.length,
               (index) {
                 return MezCard(
+                  margin: EdgeInsets.only(bottom: 10),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15),
+                  elevation: 0,
                   onClick: () {
                     if (Get.find<AuthController>().user == null) {
                       SignInView.navigateAtOrderTime();
@@ -65,6 +69,7 @@ class _CustMessagesViewState extends State<CustMessagesView> {
                   content: Row(
                     children: [
                       CircleAvatar(
+                        radius: 16.5.mezSp,
                         backgroundImage: NetworkImage(
                           custChatController.allChats[index].chatInfo.chatImg,
                         ),
@@ -79,11 +84,17 @@ class _CustMessagesViewState extends State<CustMessagesView> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    custChatController
-                                        .allChats[index].chatInfo.chatTite,
-                                    style: context.textTheme.bodyLarge,
-                                    overflow: TextOverflow.ellipsis,
+                                  Expanded(
+                                    child: Text(
+                                      custChatController
+                                          .allChats[index].chatInfo.chatTite,
+                                      style: context.textTheme.bodyLarge
+                                          ?.copyWith(
+                                              fontSize: 12.5.mezSp,
+                                              overflow: TextOverflow.ellipsis,
+                                              fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                   Text(
                                     custChatController

@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -107,6 +108,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
               selectedLabelStyle: context.textTheme.bodyLarge,
               unselectedLabelStyle: context.textTheme.bodyMedium,
               currentIndex: _index.value,
+              unselectedItemColor: pickLocationHintTextFieldColor,
               onTap: (int v) {
                 _index.value = v;
               },
@@ -118,7 +120,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   BottomNavigationBarItem(
                       icon: Icon(Icons.history), label: "${_i18n()['orders']}"),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.feed_outlined),
+                      icon: Icon(Icons.sms_outlined),
                       label: "${_i18n()['messages']}"),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person_outline),

@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -25,6 +26,9 @@ import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustBusinessView'];
 
 class CustBusinessView extends StatefulWidget {
   const CustBusinessView({Key? key}) : super(key: key);
@@ -176,7 +180,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
             children: [
               CircularProgressIndicator(),
               SizedBox(height: 10),
-              Text('Loading', style: context.textTheme.bodyMedium
+              Text('${_i18n()['loading']}', style: context.textTheme.bodyMedium
                   //   ?.copyWith(color: pr),
                   ),
             ],
@@ -190,10 +194,12 @@ class _CustBusinessViewState extends State<CustBusinessView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Rentals',
+        Text('${_i18n()['rentals']}',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        SizedBox(height: 5),
         for (Rental rental in _viewController.business!.rentals!)
           CustBusinessRentalCard(
+            margin: EdgeInsets.only(bottom: 10),
             rental: rental,
             elevation: 0,
           )
@@ -208,10 +214,12 @@ class _CustBusinessViewState extends State<CustBusinessView>
         SizedBox(
           height: 15,
         ),
-        Text('Events',
+        Text('${_i18n()['events']}',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        SizedBox(height: 5),
         for (Event event in _viewController.business!.events!)
           CustBusinessEventCard(
+            margin: EdgeInsets.only(bottom: 10),
             elevation: 0,
             event: event,
           )
@@ -223,10 +231,14 @@ class _CustBusinessViewState extends State<CustBusinessView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Products',
+        Text('${_i18n()['products']}',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        SizedBox(height: 5),
         for (Product product in _viewController.business!.products!)
-          CustBusinessProductCard(elevation: 0, product: product)
+          CustBusinessProductCard(
+              margin: EdgeInsets.only(bottom: 10),
+              elevation: 0,
+              product: product)
       ],
     );
   }
@@ -235,10 +247,12 @@ class _CustBusinessViewState extends State<CustBusinessView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Services',
+        Text('${_i18n()['services']}',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        SizedBox(height: 5),
         for (Service service in _viewController.business!.services!)
           CustBusinessServiceCard(
+            margin: EdgeInsets.only(bottom: 10),
             service: service,
             elevation: 0,
           )
@@ -264,59 +278,63 @@ class _CustBusinessViewState extends State<CustBusinessView>
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        RawChip(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          backgroundColor: Colors.transparent,
-          shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
-          label: InkWell(
-            onTap: () => navigateToChat(),
-            child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: Icon(
-                          Icons.message_rounded,
-                          color: primaryBlueColor,
-                        )),
-                    TextSpan(
-                      text: 'Chat with us', //'${_i18n()["chatWithUs"]}',
-                      style: context.txt.bodyLarge
-                          ?.copyWith(color: primaryBlueColor),
-                    ),
-                  ],
+        Expanded(
+          child: RawChip(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            backgroundColor: Colors.transparent,
+            shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
+            label: InkWell(
+              onTap: () => navigateToChat(),
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.message_rounded,
+                            color: primaryBlueColor,
+                          )),
+                      TextSpan(
+                        text: '${_i18n()["chatWithUs"]}',
+                        style: context.txt.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
-        RawChip(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          backgroundColor: Colors.transparent,
-          shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
-          label: InkWell(
-            onTap: () => navigateToChat(),
-            child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: Icon(
-                          Icons.phone,
-                          color: primaryBlueColor,
-                        )),
-                    TextSpan(
-                      text: 'Contact Us', //'${_i18n()["contactUs"]}',
-                      style: context.txt.bodyLarge
-                          ?.copyWith(color: primaryBlueColor),
-                    ),
-                  ],
+        Expanded(
+          child: RawChip(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            backgroundColor: Colors.transparent,
+            shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
+            label: InkWell(
+              onTap: () => navigateToChat(),
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.phone,
+                            color: primaryBlueColor,
+                          )),
+                      TextSpan(
+                        text: '${_i18n()["contactUs"]}',
+                        style: context.txt.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -337,7 +355,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
               Row(
                 children: [
                   Text(
-                    'Reviews',
+                    '${_i18n()['reviews']}',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(
@@ -374,7 +392,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                       color: Colors.transparent,
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        'View all',
+                        '${_i18n()['viewAll']}',
                         style: context.txt.bodyLarge
                             ?.copyWith(color: primaryBlueColor),
                       ),

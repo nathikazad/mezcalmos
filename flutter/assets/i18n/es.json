@@ -56,7 +56,8 @@
         "description": "Descripción",
         "price": "Precio",
         "noDescription": "Sin descripción",
-        "noTitle": "Sin Título"
+        "noTitle": "Sin Título",
+        "store": "Almacenar"
       },
       "cards": {
         "SavedCardsListView": {
@@ -552,7 +553,10 @@
             "month": "Mes",
             "person": "Persona",
             "total": "Total",
-            "none": "Ninguna"
+            "none": "Ninguna",
+            "motorcycle": "Motocicleta",
+            "car": "Auto",
+            "bicycle": "Bicicleta"
           },
           "surf": {
             "title": "Navegar",
@@ -623,6 +627,17 @@
         "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",
         "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad."
+      },
+      "CustBusinessView": {
+        "rentals": "Alquileres",
+        "events": "Eventos",
+        "products": "Productos",
+        "services": "Servicios",
+        "chatWithUs": "habla con nosotros",
+        "contactUs": "Contáctenos",
+        "reviews": "Reseñas",
+        "viewAll": "Ver todo",
+        "loading": "Cargando"
       },
       "CustomerWrapper": {
         "orders": "Pedidos",

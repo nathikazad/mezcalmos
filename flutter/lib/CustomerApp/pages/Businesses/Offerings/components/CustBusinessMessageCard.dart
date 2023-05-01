@@ -11,12 +11,13 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustBusinessMessageCard extends StatelessWidget {
-  const CustBusinessMessageCard({
-    super.key,
-    required this.business,
-    required this.offeringName,
-  });
+  const CustBusinessMessageCard(
+      {super.key,
+      required this.business,
+      required this.offeringName,
+      this.contentPadding});
   final BusinessCard business;
+  final EdgeInsets? contentPadding;
   final Map<Language, String> offeringName;
 
   @override
@@ -25,6 +26,8 @@ class CustBusinessMessageCard extends StatelessWidget {
     final List<IconData> acceptedIconList = getAcceptedPaymentIcon();
     print("BUSINESS DATA ${business.id} ${business.detailsId}");
     return MezCard(
+      contentPadding: contentPadding,
+      elevation: 0,
       firstAvatarBgImage: CachedNetworkImageProvider(business.image),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

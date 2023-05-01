@@ -98,47 +98,66 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
   }
 
   Widget _viewBusinessesSwitcher() {
-    return Row(
-      children: [
-        Flexible(
-          child: MezButton(
-            label:
-                '${_i18n()[viewController.rentalCategory.name.toLowerCase()]['title']}',
-            height: 35,
-            onClick: () async {
-              viewController.showBusiness.value = false;
-            },
-            icon: Icons.motorcycle,
-            borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isTrue
-                ? Colors.grey.shade300
-                : null,
-            textColor: viewController.showBusiness.isTrue
-                ? Colors.grey.shade800
-                : null,
+    IconData firstButtonIcon = Icons.motorcycle;
+    switch (viewController.rentalCategory) {
+      case RentalCategory1.Surf:
+        firstButtonIcon = Icons.surfing;
+        break;
+      case RentalCategory1.Vehicle:
+        firstButtonIcon = Icons.motorcycle;
+        break;
+      default:
+        firstButtonIcon = Icons.house_rounded;
+    }
+
+    IconData secondButtonIcon = Icons.store;
+    if (viewController.rentalCategory == RentalCategory1.Home) {
+      secondButtonIcon = Icons.store;
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Row(
+        children: [
+          Flexible(
+            child: MezButton(
+              label:
+                  '${_i18n()[viewController.rentalCategory.name.toLowerCase()]['title']}',
+              height: 35,
+              onClick: () async {
+                viewController.showBusiness.value = false;
+              },
+              icon: firstButtonIcon,
+              borderRadius: 35,
+              backgroundColor: viewController.showBusiness.isTrue
+                  ? Colors.grey.shade300
+                  : null,
+              textColor: viewController.showBusiness.isTrue
+                  ? Colors.grey.shade800
+                  : null,
+            ),
           ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Flexible(
-          child: MezButton(
-            label: '${_i18n()['shared']['store']}',
-            height: 35,
-            onClick: () async {
-              viewController.showBusiness.value = true;
-            },
-            icon: Icons.store,
-            borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isFalse
-                ? Colors.grey.shade300
-                : null,
-            textColor: viewController.showBusiness.isFalse
-                ? Colors.grey.shade800
-                : null,
+          SizedBox(
+            width: 10,
           ),
-        ),
-      ],
+          Flexible(
+            child: MezButton(
+              label: '${_i18n()['shared']['store']}',
+              height: 35,
+              onClick: () async {
+                viewController.showBusiness.value = true;
+              },
+              icon: secondButtonIcon,
+              borderRadius: 35,
+              backgroundColor: viewController.showBusiness.isFalse
+                  ? Colors.grey.shade300
+                  : null,
+              textColor: viewController.showBusiness.isFalse
+                  ? Colors.grey.shade800
+                  : null,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -193,11 +212,15 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${_i18n()['shared']['filter']}'),
+                Text(
+                  '${_i18n()['shared']['filter']}',
+                  style:
+                      context.textTheme.bodyLarge?.copyWith(fontSize: 15.mezSp),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -206,10 +229,13 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                     children: List.generate(
                         viewController.filterCategories.length, (int index) {
                       return CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
                         //    checkColor: primaryBlueColor,
                         activeColor: primaryBlueColor,
-                        title:
-                            Text(viewController.filterCategories[index].name),
+                        title: Text(
+                          '${_i18n()['shared'][viewController.filterCategories[index].name.toLowerCase()]}',
+                          style: context.textTheme.bodyLarge,
+                        ),
                         value: viewController.selectedCategories
                             .contains(viewController.filterCategories[index]),
                         onChanged: (bool? v) {
@@ -226,8 +252,13 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                   children: [
                     Flexible(
                         child: MezButton(
+                            height: 45,
+                            borderColor: redAccentColor,
+                            textStyle: context.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: redAccentColor),
                             label: '${_i18n()['shared']['cancel']}',
-                            backgroundColor: offRedColor,
+                            backgroundColor: Colors.transparent,
                             textColor: redAccentColor,
                             onClick: () async {
                               //   viewController.resetFilter();
@@ -239,6 +270,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                     ),
                     Flexible(
                         child: MezButton(
+                            withGradient: true,
                             label: '${_i18n()['shared']['confirm']}',
                             onClick: () async {
                               viewController.filter();
@@ -260,12 +292,15 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
           children: List.generate(
         viewController.businesses.length,
         (int index) => MezCard(
+            elevation: 0,
+            margin: EdgeInsets.only(bottom: 12.5),
             onClick: () {
               CustBusinessView.navigate(
                 businessId: viewController.businesses[index].id,
               );
             },
-            radius: 30,
+            radius: 20.mezSp,
+            contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
             content: Column(
@@ -317,6 +352,8 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
           children: List.generate(
         viewController.rentals.length,
         (int index) => MezCard(
+          margin: EdgeInsets.only(bottom: 15),
+          elevation: 0,
           onClick: () {
             CustRentalView.navigate(
               rentalId: viewController.rentals[index].details.id.toInt(),
@@ -344,7 +381,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                         overflow: TextOverflow.ellipsis,
                         style: context.textTheme.bodyLarge?.copyWith(
                             height: 2,
-                            fontSize: 11.5.mezSp,
+                            fontSize: 12.5.mezSp,
                             fontWeight: FontWeight.w600),
                       )
                     ],
@@ -362,9 +399,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                 ],
               ),
               Divider(),
-              Text(viewController
-                      .rentals[index].details.description?[userLanguage] ??
-                  '${_i18n()['shared']['none']}')
+              Text(viewController.rentals[index].businessName)
             ],
           ),
           // action: (viewController.rentals[index].details.firstImage != null)
@@ -402,7 +437,13 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     });
 
     return Row(
-      children: <Icon>[for (IconData icon in iconList) Icon(icon)],
+      children: <Icon>[
+        for (IconData icon in iconList)
+          Icon(
+            icon,
+            size: 15.mezSp,
+          )
+      ],
     );
   }
 }
