@@ -14621,3 +14621,2726 @@ class _CopyWithStubImpl$Mutation$add_home_rental$insert_business_home_rental_one
   }) =>
       _res;
 }
+
+class Variables$Mutation$update_home_rental_by_id {
+  factory Variables$Mutation$update_home_rental_by_id({
+    required int id,
+    Input$business_home_rental_set_input? object,
+  }) =>
+      Variables$Mutation$update_home_rental_by_id._({
+        r'id': id,
+        if (object != null) r'object': object,
+      });
+
+  Variables$Mutation$update_home_rental_by_id._(this._$data);
+
+  factory Variables$Mutation$update_home_rental_by_id.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    if (data.containsKey('object')) {
+      final l$object = data['object'];
+      result$data['object'] = l$object == null
+          ? null
+          : Input$business_home_rental_set_input.fromJson(
+              (l$object as Map<String, dynamic>));
+    }
+    return Variables$Mutation$update_home_rental_by_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Input$business_home_rental_set_input? get object =>
+      (_$data['object'] as Input$business_home_rental_set_input?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    if (_$data.containsKey('object')) {
+      final l$object = object;
+      result$data['object'] = l$object?.toJson();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_home_rental_by_id<
+          Variables$Mutation$update_home_rental_by_id>
+      get copyWith => CopyWith$Variables$Mutation$update_home_rental_by_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_home_rental_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (_$data.containsKey('object') != other._$data.containsKey('object')) {
+      return false;
+    }
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$object = object;
+    return Object.hashAll([
+      l$id,
+      _$data.containsKey('object') ? l$object : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_home_rental_by_id<TRes> {
+  factory CopyWith$Variables$Mutation$update_home_rental_by_id(
+    Variables$Mutation$update_home_rental_by_id instance,
+    TRes Function(Variables$Mutation$update_home_rental_by_id) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_home_rental_by_id;
+
+  factory CopyWith$Variables$Mutation$update_home_rental_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_home_rental_by_id;
+
+  TRes call({
+    int? id,
+    Input$business_home_rental_set_input? object,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_home_rental_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_home_rental_by_id<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_home_rental_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_home_rental_by_id _instance;
+
+  final TRes Function(Variables$Mutation$update_home_rental_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? object = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_home_rental_by_id._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (object != _undefined)
+          'object': (object as Input$business_home_rental_set_input?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_home_rental_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_home_rental_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_home_rental_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Input$business_home_rental_set_input? object,
+  }) =>
+      _res;
+}
+
+class Mutation$update_home_rental_by_id {
+  Mutation$update_home_rental_by_id({
+    this.update_business_home_rental_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_business_home_rental_by_pk =
+        json['update_business_home_rental_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id(
+      update_business_home_rental_by_pk: l$update_business_home_rental_by_pk ==
+              null
+          ? null
+          : Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+              .fromJson((l$update_business_home_rental_by_pk
+                  as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?
+      update_business_home_rental_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_home_rental_by_pk =
+        update_business_home_rental_by_pk;
+    _resultData['update_business_home_rental_by_pk'] =
+        l$update_business_home_rental_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_home_rental_by_pk =
+        update_business_home_rental_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_home_rental_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_home_rental_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_home_rental_by_pk =
+        update_business_home_rental_by_pk;
+    final lOther$update_business_home_rental_by_pk =
+        other.update_business_home_rental_by_pk;
+    if (l$update_business_home_rental_by_pk !=
+        lOther$update_business_home_rental_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id
+    on Mutation$update_home_rental_by_id {
+  CopyWith$Mutation$update_home_rental_by_id<Mutation$update_home_rental_by_id>
+      get copyWith => CopyWith$Mutation$update_home_rental_by_id(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id<TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id(
+    Mutation$update_home_rental_by_id instance,
+    TRes Function(Mutation$update_home_rental_by_id) then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id;
+
+  factory CopyWith$Mutation$update_home_rental_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id;
+
+  TRes call({
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?
+        update_business_home_rental_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+      TRes> get update_business_home_rental_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id<TRes>
+    implements CopyWith$Mutation$update_home_rental_by_id<TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id _instance;
+
+  final TRes Function(Mutation$update_home_rental_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_home_rental_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_rental_by_id(
+        update_business_home_rental_by_pk: update_business_home_rental_by_pk ==
+                _undefined
+            ? _instance.update_business_home_rental_by_pk
+            : (update_business_home_rental_by_pk
+                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+      TRes> get update_business_home_rental_by_pk {
+    final local$update_business_home_rental_by_pk =
+        _instance.update_business_home_rental_by_pk;
+    return local$update_business_home_rental_by_pk == null
+        ? CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+            local$update_business_home_rental_by_pk,
+            (e) => call(update_business_home_rental_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id<TRes>
+    implements CopyWith$Mutation$update_home_rental_by_id<TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?
+        update_business_home_rental_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+          TRes>
+      get update_business_home_rental_by_pk =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_home_rental_by_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'business_home_rental_set_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_home_rental_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'rental_id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'bathrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'bedrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'gps_location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'home_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'rental'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category3'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'description_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'description'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'tags'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'additional_parameters'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'available'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'category1'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'category2'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'cost'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'position'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'business'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_home_rental_by_id _parserFn$Mutation$update_home_rental_by_id(
+        Map<String, dynamic> data) =>
+    Mutation$update_home_rental_by_id.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_home_rental_by_id = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_home_rental_by_id?,
+);
+
+class Options$Mutation$update_home_rental_by_id
+    extends graphql.MutationOptions<Mutation$update_home_rental_by_id> {
+  Options$Mutation$update_home_rental_by_id({
+    String? operationName,
+    required Variables$Mutation$update_home_rental_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_home_rental_by_id? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_home_rental_by_id>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_home_rental_by_id(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_home_rental_by_id,
+          parserFn: _parserFn$Mutation$update_home_rental_by_id,
+        );
+
+  final OnMutationCompleted$Mutation$update_home_rental_by_id?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_home_rental_by_id
+    extends graphql.WatchQueryOptions<Mutation$update_home_rental_by_id> {
+  WatchOptions$Mutation$update_home_rental_by_id({
+    String? operationName,
+    required Variables$Mutation$update_home_rental_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_home_rental_by_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_home_rental_by_id,
+        );
+}
+
+extension ClientExtension$Mutation$update_home_rental_by_id
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_home_rental_by_id>>
+      mutate$update_home_rental_by_id(
+              Options$Mutation$update_home_rental_by_id options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_home_rental_by_id>
+      watchMutation$update_home_rental_by_id(
+              WatchOptions$Mutation$update_home_rental_by_id options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk({
+    required this.bathrooms,
+    required this.bedrooms,
+    required this.gps_location,
+    required this.home_type,
+    required this.address,
+    required this.rental,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$bathrooms = json['bathrooms'];
+    final l$bedrooms = json['bedrooms'];
+    final l$gps_location = json['gps_location'];
+    final l$home_type = json['home_type'];
+    final l$address = json['address'];
+    final l$rental = json['rental'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+      bathrooms: (l$bathrooms as int),
+      bedrooms: (l$bedrooms as int),
+      gps_location: geographyFromJson(l$gps_location),
+      home_type: (l$home_type as String),
+      address: (l$address as String),
+      rental:
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
+              .fromJson((l$rental as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int bathrooms;
+
+  final int bedrooms;
+
+  final Geography gps_location;
+
+  final String home_type;
+
+  final String address;
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
+      rental;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$bathrooms = bathrooms;
+    _resultData['bathrooms'] = l$bathrooms;
+    final l$bedrooms = bedrooms;
+    _resultData['bedrooms'] = l$bedrooms;
+    final l$gps_location = gps_location;
+    _resultData['gps_location'] = geographyToJson(l$gps_location);
+    final l$home_type = home_type;
+    _resultData['home_type'] = l$home_type;
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$rental = rental;
+    _resultData['rental'] = l$rental.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$bathrooms = bathrooms;
+    final l$bedrooms = bedrooms;
+    final l$gps_location = gps_location;
+    final l$home_type = home_type;
+    final l$address = address;
+    final l$rental = rental;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$bathrooms,
+      l$bedrooms,
+      l$gps_location,
+      l$home_type,
+      l$address,
+      l$rental,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$bathrooms = bathrooms;
+    final lOther$bathrooms = other.bathrooms;
+    if (l$bathrooms != lOther$bathrooms) {
+      return false;
+    }
+    final l$bedrooms = bedrooms;
+    final lOther$bedrooms = other.bedrooms;
+    if (l$bedrooms != lOther$bedrooms) {
+      return false;
+    }
+    final l$gps_location = gps_location;
+    final lOther$gps_location = other.gps_location;
+    if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$home_type = home_type;
+    final lOther$home_type = other.home_type;
+    if (l$home_type != lOther$home_type) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$rental = rental;
+    final lOther$rental = other.rental;
+    if (l$rental != lOther$rental) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk;
+
+  TRes call({
+    int? bathrooms,
+    int? bedrooms,
+    Geography? gps_location,
+    String? home_type,
+    String? address,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental?
+        rental,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+      TRes> get rental;
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? bathrooms = _undefined,
+    Object? bedrooms = _undefined,
+    Object? gps_location = _undefined,
+    Object? home_type = _undefined,
+    Object? address = _undefined,
+    Object? rental = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+        bathrooms: bathrooms == _undefined || bathrooms == null
+            ? _instance.bathrooms
+            : (bathrooms as int),
+        bedrooms: bedrooms == _undefined || bedrooms == null
+            ? _instance.bedrooms
+            : (bedrooms as int),
+        gps_location: gps_location == _undefined || gps_location == null
+            ? _instance.gps_location
+            : (gps_location as Geography),
+        home_type: home_type == _undefined || home_type == null
+            ? _instance.home_type
+            : (home_type as String),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        rental: rental == _undefined || rental == null
+            ? _instance.rental
+            : (rental
+                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+      TRes> get rental {
+    final local$rental = _instance.rental;
+    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
+        local$rental, (e) => call(rental: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? bathrooms,
+    int? bedrooms,
+    Geography? gps_location,
+    String? home_type,
+    String? address,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental?
+        rental,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+          TRes>
+      get rental =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
+              .stub(_res);
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental({
+    required this.id,
+    required this.category3,
+    required this.details,
+    required this.business,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$category3 = json['category3'];
+    final l$details = json['details'];
+    final l$business = json['business'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
+      id: (l$id as int),
+      category3: (l$category3 as String),
+      details:
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      business:
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String category3;
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
+      details;
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+      business;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$category3 = category3;
+    _resultData['category3'] = l$category3;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$category3 = category3;
+    final l$details = details;
+    final l$business = business;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$category3,
+      l$details,
+      l$business,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$category3 = category3;
+    final lOther$category3 = other.category3;
+    if (l$category3 != lOther$category3) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental;
+
+  TRes call({
+    int? id,
+    String? category3,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details?
+        details,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business?
+        business,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+      TRes> get details;
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+      TRes> get business;
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? category3 = _undefined,
+    Object? details = _undefined,
+    Object? business = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        category3: category3 == _undefined || category3 == null
+            ? _instance.category3
+            : (category3 as String),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+        local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+        local$business, (e) => call(business: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? category3,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details?
+        details,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business?
+        business,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+          TRes>
+      get details =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
+              .stub(_res);
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+          TRes>
+      get business =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+              .stub(_res);
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details({
+    required this.name_id,
+    this.description_id,
+    required this.id,
+    required this.name,
+    this.description,
+    required this.tags,
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$description = json['description'];
+    final l$tags = json['tags'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      id: (l$id as int),
+      name:
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      description: l$description == null
+          ? null
+          : Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      tags: mapFromJson(l$tags),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int name_id;
+
+  final int? description_id;
+
+  final int id;
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
+      name;
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?
+      description;
+
+  final dynamic tags;
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$id = id;
+    final l$name = name;
+    final l$description = description;
+    final l$tags = tags;
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name_id,
+      l$description_id,
+      l$id,
+      l$name,
+      l$description,
+      l$tags,
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details;
+
+  TRes call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name?
+        name,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?
+        description,
+    dynamic? tags,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+      TRes> get name;
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+      TRes> get description;
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? description = _undefined,
+    Object? tags = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+        local$name, (e) => call(name: e));
+  }
+
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
+            local$description, (e) => call(description: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name?
+        name,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?
+        description,
+    dynamic? tags,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+          TRes>
+      get name =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
+              .stub(_res);
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+          TRes>
+      get description =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
+              .stub(_res);
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name;
+
+  TRes call({
+    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+                      Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+                          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description;
+
+  TRes call({
+    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations> Function(
+              Iterable<
+                  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+                      Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations> Function(
+                  Iterable<
+                      CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+                          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+      id: (l$id as int),
+      details:
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business;
+
+  TRes call({
+    int? id,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+          TRes>
+      get details =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+              .stub(_res);
+}
+
+class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details {
+  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details({
+    required this.id,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+      id: (l$id as int),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details {
+  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details>
+      get copyWith =>
+          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+    TRes> {
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+        instance,
+    TRes Function(
+            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details;
+
+  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details;
+
+  TRes call({
+    int? id,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}

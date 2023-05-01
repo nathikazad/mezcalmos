@@ -439,3 +439,20 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
   }
   return null;
 }
+
+Future<RentalWithBusinessCard?> update_business_home_rental(
+    {required int id, required Rental rental}) async {
+  final QueryResult<Mutation$update_home_rental_by_id> res =
+      await _db.graphQLClient.mutate$update_home_rental_by_id(
+    Options$Mutation$update_home_rental_by_id(
+      variables: Variables$Mutation$update_home_rental_by_id(
+        id: id,
+        object: Input$business_home_rental_set_input(
+         
+        ),
+      ),
+    ),
+  );
+
+  return null;
+}
