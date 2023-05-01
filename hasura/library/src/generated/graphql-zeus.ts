@@ -2251,6 +2251,7 @@ count?: [{	columns?:ValueTypes["customer_stripe_sp_id_select_column"][],	distinc
 	date?:true,
 	id?:true,
 	name_of_subscription?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2279,6 +2280,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	/** aggregate avg on columns */
 ["data_consumption_avg_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2291,6 +2293,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	date?:ValueTypes["date_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	name_of_subscription?:ValueTypes["String_comparison_exp"],
+	number_of_events?:ValueTypes["Int_comparison_exp"],
 	total_size?:ValueTypes["Int_comparison_exp"],
 	user_id?:ValueTypes["Int_comparison_exp"]
 };
@@ -2299,6 +2302,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	/** input type for incrementing numeric columns in table "data_consumption" */
 ["data_consumption_inc_input"]: {
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 };
@@ -2307,6 +2311,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	date?:ValueTypes["date"],
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 };
@@ -2315,6 +2320,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	date?:true,
 	id?:true,
 	name_of_subscription?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2324,6 +2330,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	date?:true,
 	id?:true,
 	name_of_subscription?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2347,6 +2354,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	date?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	name_of_subscription?:ValueTypes["order_by"],
+	number_of_events?:ValueTypes["order_by"],
 	total_size?:ValueTypes["order_by"],
 	user_id?:ValueTypes["order_by"]
 };
@@ -2361,12 +2369,14 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	date?:ValueTypes["date"],
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 };
 	/** aggregate stddev on columns */
 ["data_consumption_stddev_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2374,6 +2384,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	/** aggregate stddev_pop on columns */
 ["data_consumption_stddev_pop_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2381,6 +2392,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	/** aggregate stddev_samp on columns */
 ["data_consumption_stddev_samp_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2397,12 +2409,14 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	date?:ValueTypes["date"],
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 };
 	/** aggregate sum on columns */
 ["data_consumption_sum_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2419,6 +2433,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	/** aggregate var_pop on columns */
 ["data_consumption_var_pop_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2426,6 +2441,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	/** aggregate var_samp on columns */
 ["data_consumption_var_samp_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -2433,6 +2449,7 @@ count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:bo
 	/** aggregate variance on columns */
 ["data_consumption_variance_fields"]: AliasType<{
 	id?:true,
+	number_of_events?:true,
 	total_size?:true,
 	user_id?:true,
 		__typename?: true
@@ -22183,6 +22200,7 @@ the end). throws an error if top level container is not an array */
 			date?:PartialObjects["date"],
 			id?:number,
 			name_of_subscription?:string,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22211,6 +22229,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_avg_fields"]: {
 		__typename?: "data_consumption_avg_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22222,6 +22241,7 @@ the end). throws an error if top level container is not an array */
 	date?:PartialObjects["date_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	name_of_subscription?:PartialObjects["String_comparison_exp"],
+	number_of_events?:PartialObjects["Int_comparison_exp"],
 	total_size?:PartialObjects["Int_comparison_exp"],
 	user_id?:PartialObjects["Int_comparison_exp"]
 },
@@ -22230,6 +22250,7 @@ the end). throws an error if top level container is not an array */
 	/** input type for incrementing numeric columns in table "data_consumption" */
 ["data_consumption_inc_input"]: {
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 },
@@ -22238,6 +22259,7 @@ the end). throws an error if top level container is not an array */
 	date?:PartialObjects["date"],
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 },
@@ -22247,6 +22269,7 @@ the end). throws an error if top level container is not an array */
 			date?:PartialObjects["date"],
 			id?:number,
 			name_of_subscription?:string,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22256,6 +22279,7 @@ the end). throws an error if top level container is not an array */
 			date?:PartialObjects["date"],
 			id?:number,
 			name_of_subscription?:string,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22278,6 +22302,7 @@ the end). throws an error if top level container is not an array */
 	date?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	name_of_subscription?:PartialObjects["order_by"],
+	number_of_events?:PartialObjects["order_by"],
 	total_size?:PartialObjects["order_by"],
 	user_id?:PartialObjects["order_by"]
 },
@@ -22292,6 +22317,7 @@ the end). throws an error if top level container is not an array */
 	date?:PartialObjects["date"],
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 },
@@ -22299,6 +22325,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_stddev_fields"]: {
 		__typename?: "data_consumption_stddev_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22306,6 +22333,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_stddev_pop_fields"]: {
 		__typename?: "data_consumption_stddev_pop_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22313,6 +22341,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_stddev_samp_fields"]: {
 		__typename?: "data_consumption_stddev_samp_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22328,6 +22357,7 @@ the end). throws an error if top level container is not an array */
 	date?:PartialObjects["date"],
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 },
@@ -22335,6 +22365,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_sum_fields"]: {
 		__typename?: "data_consumption_sum_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22351,6 +22382,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_var_pop_fields"]: {
 		__typename?: "data_consumption_var_pop_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22358,6 +22390,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_var_samp_fields"]: {
 		__typename?: "data_consumption_var_samp_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -22365,6 +22398,7 @@ the end). throws an error if top level container is not an array */
 ["data_consumption_variance_fields"]: {
 		__typename?: "data_consumption_variance_fields";
 			id?:number,
+			number_of_events?:number,
 			total_size?:number,
 			user_id?:number
 	},
@@ -40991,6 +41025,7 @@ export type data_consumption = {
 	date:date,
 	id:number,
 	name_of_subscription:string,
+	number_of_events:number,
 	total_size:number,
 	user_id:number
 }
@@ -41022,6 +41057,7 @@ export type data_consumption_aggregate_fields = {
 export type data_consumption_avg_fields = {
 	__typename?: "data_consumption_avg_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41034,6 +41070,7 @@ export type data_consumption_bool_exp = {
 	date?:date_comparison_exp,
 	id?:Int_comparison_exp,
 	name_of_subscription?:String_comparison_exp,
+	number_of_events?:Int_comparison_exp,
 	total_size?:Int_comparison_exp,
 	user_id?:Int_comparison_exp
 }
@@ -41046,6 +41083,7 @@ export enum data_consumption_constraint {
 /** input type for incrementing numeric columns in table "data_consumption" */
 export type data_consumption_inc_input = {
 		id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41055,6 +41093,7 @@ export type data_consumption_insert_input = {
 		date?:date,
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41065,6 +41104,7 @@ export type data_consumption_max_fields = {
 	date?:date,
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41075,6 +41115,7 @@ export type data_consumption_min_fields = {
 	date?:date,
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41100,6 +41141,7 @@ export type data_consumption_order_by = {
 		date?:order_by,
 	id?:order_by,
 	name_of_subscription?:order_by,
+	number_of_events?:order_by,
 	total_size?:order_by,
 	user_id?:order_by
 }
@@ -41114,6 +41156,7 @@ export enum data_consumption_select_column {
 	date = "date",
 	id = "id",
 	name_of_subscription = "name_of_subscription",
+	number_of_events = "number_of_events",
 	total_size = "total_size",
 	user_id = "user_id"
 }
@@ -41123,6 +41166,7 @@ export type data_consumption_set_input = {
 		date?:date,
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41131,6 +41175,7 @@ export type data_consumption_set_input = {
 export type data_consumption_stddev_fields = {
 	__typename?: "data_consumption_stddev_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41139,6 +41184,7 @@ export type data_consumption_stddev_fields = {
 export type data_consumption_stddev_pop_fields = {
 	__typename?: "data_consumption_stddev_pop_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41147,6 +41193,7 @@ export type data_consumption_stddev_pop_fields = {
 export type data_consumption_stddev_samp_fields = {
 	__typename?: "data_consumption_stddev_samp_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41164,6 +41211,7 @@ export type data_consumption_stream_cursor_value_input = {
 		date?:date,
 	id?:number,
 	name_of_subscription?:string,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41172,6 +41220,7 @@ export type data_consumption_stream_cursor_value_input = {
 export type data_consumption_sum_fields = {
 	__typename?: "data_consumption_sum_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41181,6 +41230,7 @@ export enum data_consumption_update_column {
 	date = "date",
 	id = "id",
 	name_of_subscription = "name_of_subscription",
+	number_of_events = "number_of_events",
 	total_size = "total_size",
 	user_id = "user_id"
 }
@@ -41197,6 +41247,7 @@ export type data_consumption_updates = {
 export type data_consumption_var_pop_fields = {
 	__typename?: "data_consumption_var_pop_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41205,6 +41256,7 @@ export type data_consumption_var_pop_fields = {
 export type data_consumption_var_samp_fields = {
 	__typename?: "data_consumption_var_samp_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -41213,6 +41265,7 @@ export type data_consumption_var_samp_fields = {
 export type data_consumption_variance_fields = {
 	__typename?: "data_consumption_variance_fields",
 	id?:number,
+	number_of_events?:number,
 	total_size?:number,
 	user_id?:number
 }
@@ -64778,6 +64831,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		number_of_events:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		total_size:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -64794,6 +64853,12 @@ export const AllTypesProps: Record<string,any> = {
 	data_consumption_constraint: "enum",
 	data_consumption_inc_input:{
 		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -64827,6 +64892,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		name_of_subscription:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64883,6 +64954,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		number_of_events:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		total_size:{
 			type:"order_by",
 			array:false,
@@ -64920,6 +64997,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		name_of_subscription:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64966,6 +65049,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		name_of_subscription:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -115565,6 +115654,7 @@ export const ReturnTypes: Record<string,any> = {
 		date:"date",
 		id:"Int",
 		name_of_subscription:"String",
+		number_of_events:"Int",
 		total_size:"Int",
 		user_id:"Int"
 	},
@@ -115587,6 +115677,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	data_consumption_avg_fields:{
 		id:"Float",
+		number_of_events:"Float",
 		total_size:"Float",
 		user_id:"Float"
 	},
@@ -115594,6 +115685,7 @@ export const ReturnTypes: Record<string,any> = {
 		date:"date",
 		id:"Int",
 		name_of_subscription:"String",
+		number_of_events:"Int",
 		total_size:"Int",
 		user_id:"Int"
 	},
@@ -115601,6 +115693,7 @@ export const ReturnTypes: Record<string,any> = {
 		date:"date",
 		id:"Int",
 		name_of_subscription:"String",
+		number_of_events:"Int",
 		total_size:"Int",
 		user_id:"Int"
 	},
@@ -115610,36 +115703,43 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	data_consumption_stddev_fields:{
 		id:"Float",
+		number_of_events:"Float",
 		total_size:"Float",
 		user_id:"Float"
 	},
 	data_consumption_stddev_pop_fields:{
 		id:"Float",
+		number_of_events:"Float",
 		total_size:"Float",
 		user_id:"Float"
 	},
 	data_consumption_stddev_samp_fields:{
 		id:"Float",
+		number_of_events:"Float",
 		total_size:"Float",
 		user_id:"Float"
 	},
 	data_consumption_sum_fields:{
 		id:"Int",
+		number_of_events:"Int",
 		total_size:"Int",
 		user_id:"Int"
 	},
 	data_consumption_var_pop_fields:{
 		id:"Float",
+		number_of_events:"Float",
 		total_size:"Float",
 		user_id:"Float"
 	},
 	data_consumption_var_samp_fields:{
 		id:"Float",
+		number_of_events:"Float",
 		total_size:"Float",
 		user_id:"Float"
 	},
 	data_consumption_variance_fields:{
 		id:"Float",
+		number_of_events:"Float",
 		total_size:"Float",
 		user_id:"Float"
 	},

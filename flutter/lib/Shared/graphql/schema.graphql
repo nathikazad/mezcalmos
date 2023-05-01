@@ -3346,6 +3346,7 @@ type data_consumption {
   date: date!
   id: Int!
   name_of_subscription: String!
+  number_of_events: Int!
   total_size: Int!
   user_id: Int!
 }
@@ -3378,6 +3379,7 @@ type data_consumption_aggregate_fields {
 """aggregate avg on columns"""
 type data_consumption_avg_fields {
   id: Float
+  number_of_events: Float
   total_size: Float
   user_id: Float
 }
@@ -3392,6 +3394,7 @@ input data_consumption_bool_exp {
   date: date_comparison_exp
   id: Int_comparison_exp
   name_of_subscription: String_comparison_exp
+  number_of_events: Int_comparison_exp
   total_size: Int_comparison_exp
   user_id: Int_comparison_exp
 }
@@ -3411,6 +3414,7 @@ input type for incrementing numeric columns in table "data_consumption"
 """
 input data_consumption_inc_input {
   id: Int
+  number_of_events: Int
   total_size: Int
   user_id: Int
 }
@@ -3422,6 +3426,7 @@ input data_consumption_insert_input {
   date: date
   id: Int
   name_of_subscription: String
+  number_of_events: Int
   total_size: Int
   user_id: Int
 }
@@ -3431,6 +3436,7 @@ type data_consumption_max_fields {
   date: date
   id: Int
   name_of_subscription: String
+  number_of_events: Int
   total_size: Int
   user_id: Int
 }
@@ -3440,6 +3446,7 @@ type data_consumption_min_fields {
   date: date
   id: Int
   name_of_subscription: String
+  number_of_events: Int
   total_size: Int
   user_id: Int
 }
@@ -3469,6 +3476,7 @@ input data_consumption_order_by {
   date: order_by
   id: order_by
   name_of_subscription: order_by
+  number_of_events: order_by
   total_size: order_by
   user_id: order_by
 }
@@ -3492,6 +3500,9 @@ enum data_consumption_select_column {
   name_of_subscription
 
   """column name"""
+  number_of_events
+
+  """column name"""
   total_size
 
   """column name"""
@@ -3505,6 +3516,7 @@ input data_consumption_set_input {
   date: date
   id: Int
   name_of_subscription: String
+  number_of_events: Int
   total_size: Int
   user_id: Int
 }
@@ -3512,6 +3524,7 @@ input data_consumption_set_input {
 """aggregate stddev on columns"""
 type data_consumption_stddev_fields {
   id: Float
+  number_of_events: Float
   total_size: Float
   user_id: Float
 }
@@ -3519,6 +3532,7 @@ type data_consumption_stddev_fields {
 """aggregate stddev_pop on columns"""
 type data_consumption_stddev_pop_fields {
   id: Float
+  number_of_events: Float
   total_size: Float
   user_id: Float
 }
@@ -3526,6 +3540,7 @@ type data_consumption_stddev_pop_fields {
 """aggregate stddev_samp on columns"""
 type data_consumption_stddev_samp_fields {
   id: Float
+  number_of_events: Float
   total_size: Float
   user_id: Float
 }
@@ -3546,6 +3561,7 @@ input data_consumption_stream_cursor_value_input {
   date: date
   id: Int
   name_of_subscription: String
+  number_of_events: Int
   total_size: Int
   user_id: Int
 }
@@ -3553,6 +3569,7 @@ input data_consumption_stream_cursor_value_input {
 """aggregate sum on columns"""
 type data_consumption_sum_fields {
   id: Int
+  number_of_events: Int
   total_size: Int
   user_id: Int
 }
@@ -3569,6 +3586,9 @@ enum data_consumption_update_column {
 
   """column name"""
   name_of_subscription
+
+  """column name"""
+  number_of_events
 
   """column name"""
   total_size
@@ -3589,6 +3609,7 @@ input data_consumption_updates {
 """aggregate var_pop on columns"""
 type data_consumption_var_pop_fields {
   id: Float
+  number_of_events: Float
   total_size: Float
   user_id: Float
 }
@@ -3596,6 +3617,7 @@ type data_consumption_var_pop_fields {
 """aggregate var_samp on columns"""
 type data_consumption_var_samp_fields {
   id: Float
+  number_of_events: Float
   total_size: Float
   user_id: Float
 }
@@ -3603,6 +3625,7 @@ type data_consumption_var_samp_fields {
 """aggregate variance on columns"""
 type data_consumption_variance_fields {
   id: Float
+  number_of_events: Float
   total_size: Float
   user_id: Float
 }

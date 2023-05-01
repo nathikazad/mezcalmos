@@ -1,5 +1,5 @@
 mutation updateSubscriptionDataConsumption($name_of_subscription: String, $user_id: Int, $total_size: Int) {
-  update_data_consumption(where: {name_of_subscription: {_eq: $name_of_subscription}, user_id: {_eq: $user_id}, date: {_eq: "now()"}}, _inc: {total_size: $total_size}) {
+  update_data_consumption(where: {name_of_subscription: {_eq: $name_of_subscription}, user_id: {_eq: $user_id}, date: {_eq: "now()"}}, _inc: {total_size: $total_size, number_of_events: 1}) {
     affected_rows
   }
 }

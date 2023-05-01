@@ -416,7 +416,11 @@ const documentNodeMutationupdateSubscriptionDataConsumption =
               ObjectFieldNode(
                 name: NameNode(value: 'total_size'),
                 value: VariableNode(name: NameNode(value: 'total_size')),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'number_of_events'),
+                value: IntValueNode(value: '1'),
+              ),
             ]),
           ),
         ],
