@@ -285,7 +285,8 @@ Future<ServiceInfo> update_service_info(
             name: serviceInfo.name,
             image: serviceInfo.image,
             phone_number: serviceInfo.phoneNumber,
-            description_id: serviceInfo.descriptionId),
+            description_id: serviceInfo.descriptionId,
+            currency: serviceInfo.currency?.toFirebaseFormatString()),
       ),
     ),
   );

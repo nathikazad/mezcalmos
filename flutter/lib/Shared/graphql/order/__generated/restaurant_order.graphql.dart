@@ -369,6 +369,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
@@ -2170,6 +2177,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
     this.firebase_id,
     required this.image,
     required this.language,
+    required this.currency,
     required this.location,
     required this.name,
     required this.$__typename,
@@ -2181,6 +2189,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$language = json['language'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$name = json['name'];
     final l$$__typename = json['__typename'];
@@ -2189,6 +2198,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language: mapFromJson(l$language),
+      currency: (l$currency as String),
       location:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -2204,6 +2214,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
   final String image;
 
   final dynamic language;
+
+  final String currency;
 
   final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location
       location;
@@ -2222,6 +2234,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
     _resultData['image'] = l$image;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$name = name;
@@ -2237,6 +2251,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$language = language;
+    final l$currency = currency;
     final l$location = location;
     final l$name = name;
     final l$$__typename = $__typename;
@@ -2245,6 +2260,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
       l$firebase_id,
       l$image,
       l$language,
+      l$currency,
       l$location,
       l$name,
       l$$__typename,
@@ -2279,6 +2295,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$resta
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -2330,6 +2351,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? firebase_id,
     String? image,
     dynamic? language,
+    String? currency,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location?
         location,
     String? name,
@@ -2363,6 +2385,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? name = _undefined,
     Object? $__typename = _undefined,
@@ -2379,6 +2402,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -2413,6 +2439,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? firebase_id,
     String? image,
     dynamic? language,
+    String? currency,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location?
         location,
     String? name,
@@ -6216,6 +6243,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
@@ -8023,6 +8057,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     this.firebase_id,
     required this.image,
     required this.language,
+    required this.currency,
     required this.location,
     required this.name,
     required this.$__typename,
@@ -8034,6 +8069,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$language = json['language'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$name = json['name'];
     final l$$__typename = json['__typename'];
@@ -8042,6 +8078,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language: mapFromJson(l$language),
+      currency: (l$currency as String),
       location:
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -8057,6 +8094,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
   final String image;
 
   final dynamic language;
+
+  final String currency;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location
       location;
@@ -8075,6 +8114,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     _resultData['image'] = l$image;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$name = name;
@@ -8090,6 +8131,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$language = language;
+    final l$currency = currency;
     final l$location = location;
     final l$name = name;
     final l$$__typename = $__typename;
@@ -8098,6 +8140,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
       l$firebase_id,
       l$image,
       l$language,
+      l$currency,
       l$location,
       l$name,
       l$$__typename,
@@ -8132,6 +8175,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -8183,6 +8231,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     String? firebase_id,
     String? image,
     dynamic? language,
+    String? currency,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location?
         location,
     String? name,
@@ -8216,6 +8265,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$rest
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? name = _undefined,
     Object? $__typename = _undefined,
@@ -8232,6 +8282,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$rest
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -8266,6 +8319,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     String? firebase_id,
     String? image,
     dynamic? language,
+    String? currency,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location?
         location,
     String? name,

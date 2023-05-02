@@ -3126,6 +3126,13 @@ const documentNodeMutationupdateServiceDetails = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'currency'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'stripe_info'),
             alias: null,
             arguments: [],
@@ -3431,6 +3438,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     required this.open_status,
     this.phone_number,
     this.service_link_id,
+    required this.currency,
     this.stripe_info,
     required this.service_provider_type,
     this.schedule,
@@ -3453,6 +3461,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     final l$open_status = json['open_status'];
     final l$phone_number = json['phone_number'];
     final l$service_link_id = json['service_link_id'];
+    final l$currency = json['currency'];
     final l$stripe_info = json['stripe_info'];
     final l$service_provider_type = json['service_provider_type'];
     final l$schedule = json['schedule'];
@@ -3472,6 +3481,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
       open_status: (l$open_status as String),
       phone_number: (l$phone_number as String?),
       service_link_id: (l$service_link_id as int?),
+      currency: (l$currency as String),
       stripe_info: l$stripe_info == null
           ? null
           : Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe_info
@@ -3512,6 +3522,8 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
   final String? phone_number;
 
   final int? service_link_id;
+
+  final String currency;
 
   final Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe_info?
       stripe_info;
@@ -3554,6 +3566,8 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     _resultData['phone_number'] = l$phone_number;
     final l$service_link_id = service_link_id;
     _resultData['service_link_id'] = l$service_link_id;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$service_provider_type = service_provider_type;
@@ -3583,6 +3597,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     final l$open_status = open_status;
     final l$phone_number = phone_number;
     final l$service_link_id = service_link_id;
+    final l$currency = currency;
     final l$stripe_info = stripe_info;
     final l$service_provider_type = service_provider_type;
     final l$schedule = schedule;
@@ -3602,6 +3617,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
       l$open_status,
       l$phone_number,
       l$service_link_id,
+      l$currency,
       l$stripe_info,
       l$service_provider_type,
       l$schedule,
@@ -3681,6 +3697,11 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     if (l$service_link_id != lOther$service_link_id) {
       return false;
     }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
     final l$stripe_info = stripe_info;
     final lOther$stripe_info = other.stripe_info;
     if (l$stripe_info != lOther$stripe_info) {
@@ -3753,6 +3774,7 @@ abstract class CopyWith$Mutation$updateServiceDetails$update_service_provider_de
     String? open_status,
     String? phone_number,
     int? service_link_id,
+    String? currency,
     Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe_info?
         stripe_info,
     String? service_provider_type,
@@ -3803,6 +3825,7 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
     Object? open_status = _undefined,
     Object? phone_number = _undefined,
     Object? service_link_id = _undefined,
+    Object? currency = _undefined,
     Object? stripe_info = _undefined,
     Object? service_provider_type = _undefined,
     Object? schedule = _undefined,
@@ -3846,6 +3869,9 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
         service_link_id: service_link_id == _undefined
             ? _instance.service_link_id
             : (service_link_id as int?),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info
@@ -3920,6 +3946,7 @@ class _CopyWithStubImpl$Mutation$updateServiceDetails$update_service_provider_de
     String? open_status,
     String? phone_number,
     int? service_link_id,
+    String? currency,
     Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe_info?
         stripe_info,
     String? service_provider_type,

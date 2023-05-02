@@ -1,7 +1,6 @@
 
 export interface Schedule {
     openHours: Record<Weekday, OpenHours>;
-    timezone: Array<number>;
 }
 
 export interface OpenHours {

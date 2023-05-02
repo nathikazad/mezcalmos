@@ -123,9 +123,9 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                 rating: orderData.review!.rating,
                 toEntityId: orderData.review!.to_entity_id,
                 fromImage: orderData.review!.from_image,
-          fromName: orderData.review!.from_name,
-          toImage: orderData.review!.to_image,
-          toName: orderData.review!.to_name,
+                fromName: orderData.review!.from_name,
+                toImage: orderData.review!.to_image,
+                toName: orderData.review!.to_name,
                 toEntityType:
                     orderData.review!.to_entity_type.toServiceProviderType(),
                 fromEntityId: orderData.review!.from_entity_id,
@@ -157,6 +157,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
           hasuraId: orderData.restaurant.id,
           image: orderData.restaurant.details!.image,
           name: orderData.restaurant.details!.name,
+          currency: orderData.restaurant.details!.currency.toCurrency(),
         ),
         driverInfo: (orderData.delivery?.delivery_driver != null)
             ? UserInfo(
@@ -296,10 +297,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
             comment: orderData.review!.note,
             rating: orderData.review!.rating,
             toEntityId: orderData.review!.to_entity_id,
-           fromImage: orderData.review!.from_image,
-          fromName: orderData.review!.from_name,
-          toImage: orderData.review!.to_image,
-          toName: orderData.review!.to_name,
+            fromImage: orderData.review!.from_image,
+            fromName: orderData.review!.from_name,
+            toImage: orderData.review!.to_image,
+            toName: orderData.review!.to_name,
             toEntityType:
                 orderData.review!.to_entity_type.toServiceProviderType(),
             fromEntityId: orderData.review!.from_entity_id,
@@ -331,6 +332,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       hasuraId: orderData.restaurant.id,
       image: orderData.restaurant.details!.image,
       name: orderData.restaurant.details!.name,
+      currency: orderData.restaurant.details!.currency.toCurrency(),
     ),
     driverInfo: (orderData.delivery?.delivery_driver != null)
         ? UserInfo(

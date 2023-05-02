@@ -24,6 +24,7 @@ query getDeliveryCompanyById($id: Int!) {
       open_status
       creation_time
       service_provider_type
+      currency
       description {
         id
         translations {

@@ -4069,6 +4069,13 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'currency'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'image'),
                 alias: null,
                 arguments: [],
@@ -5604,6 +5611,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   Query$getLaundryStoreById$laundry_store_by_pk$details({
     required this.id,
     required this.location_id,
+    required this.currency,
     required this.image,
     required this.language,
     this.description_id,
@@ -5622,6 +5630,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$location_id = json['location_id'];
+    final l$currency = json['currency'];
     final l$image = json['image'];
     final l$language = json['language'];
     final l$description_id = json['description_id'];
@@ -5637,6 +5646,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     return Query$getLaundryStoreById$laundry_store_by_pk$details(
       id: (l$id as int),
       location_id: (l$location_id as int),
+      currency: (l$currency as String),
       image: (l$image as String),
       language: mapFromJson(l$language),
       description_id: (l$description_id as int?),
@@ -5662,6 +5672,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   final int id;
 
   final int location_id;
+
+  final String currency;
 
   final String image;
 
@@ -5695,6 +5707,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     _resultData['id'] = l$id;
     final l$location_id = location_id;
     _resultData['location_id'] = l$location_id;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language = language;
@@ -5726,6 +5740,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   int get hashCode {
     final l$id = id;
     final l$location_id = location_id;
+    final l$currency = currency;
     final l$image = image;
     final l$language = language;
     final l$description_id = description_id;
@@ -5741,6 +5756,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     return Object.hashAll([
       l$id,
       l$location_id,
+      l$currency,
       l$image,
       l$language,
       l$description_id,
@@ -5773,6 +5789,11 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$location_id = location_id;
     final lOther$location_id = other.location_id;
     if (l$location_id != lOther$location_id) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$image = image;
@@ -5864,6 +5885,7 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<
   TRes call({
     int? id,
     int? location_id,
+    String? currency,
     String? image,
     dynamic? language,
     int? description_id,
@@ -5905,6 +5927,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
   TRes call({
     Object? id = _undefined,
     Object? location_id = _undefined,
+    Object? currency = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
     Object? description_id = _undefined,
@@ -5923,6 +5946,9 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
         location_id: location_id == _undefined || location_id == null
             ? _instance.location_id
             : (location_id as int),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -6004,6 +6030,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<
   call({
     int? id,
     int? location_id,
+    String? currency,
     String? image,
     dynamic? language,
     int? description_id,
@@ -9330,6 +9357,13 @@ const documentNodeMutationupdateLaundryInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'currency'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
@@ -10223,6 +10257,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     required this.location_id,
     required this.image,
     required this.language,
+    required this.currency,
     required this.location,
     required this.accepted_payments,
     this.stripe_info,
@@ -10240,6 +10275,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$location_id = json['location_id'];
     final l$image = json['image'];
     final l$language = json['language'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
     final l$stripe_info = json['stripe_info'];
@@ -10254,6 +10290,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
       location_id: (l$location_id as int),
       image: (l$image as String),
       language: mapFromJson(l$language),
+      currency: (l$currency as String),
       location:
           Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -10281,6 +10318,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
   final String image;
 
   final dynamic language;
+
+  final String currency;
 
   final Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location
       location;
@@ -10313,6 +10352,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     _resultData['image'] = l$image;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$accepted_payments = accepted_payments;
@@ -10340,6 +10381,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$location_id = location_id;
     final l$image = image;
     final l$language = language;
+    final l$currency = currency;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
     final l$stripe_info = stripe_info;
@@ -10354,6 +10396,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
       l$location_id,
       l$image,
       l$language,
+      l$currency,
       l$location,
       l$accepted_payments,
       l$stripe_info,
@@ -10394,6 +10437,11 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -10473,6 +10521,7 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     int? location_id,
     String? image,
     dynamic? language,
+    String? currency,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location?
         location,
     dynamic? accepted_payments,
@@ -10516,6 +10565,7 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$detail
     Object? location_id = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
     Object? stripe_info = _undefined,
@@ -10537,6 +10587,9 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$detail
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -10612,6 +10665,7 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     int? location_id,
     String? image,
     dynamic? language,
+    String? currency,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location?
         location,
     dynamic? accepted_payments,

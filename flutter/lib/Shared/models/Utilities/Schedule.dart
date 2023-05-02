@@ -40,7 +40,7 @@ extension OpenHoursFunctions on OpenHours {
 Schedule scheduleFromData(data) {
   final Map<Weekday, OpenHours> openHours = {};
 
-  data.openHours.forEach((day, openHour) {
+  data.forEach((day, openHour) {
     try {
       final List<int> from = openHour["from"]
           .toString()
@@ -59,21 +59,22 @@ Schedule scheduleFromData(data) {
       mezDbgPrint("something went wrong $e");
     }
   });
-  final List<num> timezone = data.timezone.split(':').map((String val) {
-    return num.parse(val);
-  }).toList();
-  if (data.timezone.contains('-')) {
-    timezone[1] = -timezone[1];
-  }
-  return Schedule(openHours: openHours, timezone: timezone);
+  // final List<num> timezone = data.timezone.split(':').map((String val) {
+  //   return num.parse(val);
+  // }).toList();
+  // if (data.timezone.contains('-')) {
+  //   timezone[1] = -timezone[1];
+  // }
+  // return Schedule(openHours: openHours, timezone: timezone);
+  return Schedule(openHours: openHours);
 }
 
 extension ScheduleFunctions on Schedule {
   bool isOpen() {
     bool isOpen = false;
     final String dayNane = DateFormat('EEEE').format(DateTime.now());
-    final DateTime now = DateTime.now().toUtc().add(
-        Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
+    final DateTime now = DateTime.now(); //.toUtc().add(
+    // Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
     openHours.forEach((Weekday key, OpenHours value) {
       if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
         if (value.isOpen == true) {
@@ -99,15 +100,15 @@ extension ScheduleFunctions on Schedule {
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
-    if (timezone[0] < 0) {
-      timezone[1] = -timezone[1];
-      json["timezone"] = timezone.join(':');
-      timezone[1] = -timezone[1];
-    } else {
-      json["timezone"] = timezone.join(':');
-    }
+    // if (timezone[0] < 0) {
+    //   timezone[1] = -timezone[1];
+    //   json["timezone"] = timezone.join(':');
+    //   timezone[1] = -timezone[1];
+    // } else {
+    //   json["timezone"] = timezone.join(':');
+    // }
     Weekday.values.forEach((Weekday weekday) {
-      json["openHours"][weekday.toFirebaseFormatString()] =
+      json[weekday.toFirebaseFormatString()] =
           openHours[weekday]?.toFirebaseFormattedJson();
     });
     return json;
@@ -145,8 +146,7 @@ extension ScheduleFunctions on Schedule {
       _cloneSchedule[key] = value.clone();
     });
 
-    final Schedule newSchedule =
-        Schedule(openHours: _cloneSchedule, timezone: timezone);
+    final Schedule newSchedule = Schedule(openHours: _cloneSchedule);
 
     return newSchedule;
   }
@@ -166,11 +166,11 @@ extension ScheduleFunctions on Schedule {
     DateTime data = DateTime.now();
     if (_getServiceDates()
         .contains(DateFormat("EEEE").format(DateTime.now()).toLowerCase())) {
-      data = DateTime.now().toUtc().add(
-          Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
+      data = DateTime.now(); //.toUtc().add(
+      // Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
     } else {
-      DateTime testDate = DateTime.now().toUtc().add(
-          Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
+      DateTime testDate = DateTime.now(); //.toUtc().add(
+      // Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
       for (int i = 0; i < 7; i++) {
         testDate = DateTime(testDate.year, testDate.month, testDate.day + i);
         if (_getServiceDates()
