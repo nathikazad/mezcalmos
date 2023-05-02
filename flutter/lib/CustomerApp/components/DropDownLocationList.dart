@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as Location;
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -14,8 +15,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:sizer/sizer.dart';
-
-import '../pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["DropDownLocationList"];
