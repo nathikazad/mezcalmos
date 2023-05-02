@@ -161,7 +161,10 @@ Future<int?> add_one_product({required Product product}) async {
                           available: product.details.available,
                           category1: product.category1.toFirebaseFormatString(),
                           // category2: product.category2?.toFirebaseFormatString(),
-                          cost: product.details.cost,
+                          cost: product.details.cost.map(
+                              (TimeUnit key, num value) => MapEntry(
+                                  key.toFirebaseFormatString(),
+                                  value.toDouble())),
                           image: product.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
@@ -190,24 +193,20 @@ Future<int?> add_one_product({required Product product}) async {
                           description: (product.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id:
-                                          product.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType
-                                          .Business.toFirebaseFormatString(),
-                                      translations:
-                                          Input$translation_value_arr_rel_insert_input(
-                                              data: <Input$translation_value_insert_input>[
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.EN
-                                                    .toFirebaseFormatString(),
-                                                value: product.details
-                                                    .description?[Language.EN]),
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.ES
-                                                    .toFirebaseFormatString(),
-                                                value: product.details
-                                                    .description?[Language.ES])
-                                          ])))
+                                      service_provider_id: product.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
+                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: product.details
+                                                .description?[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: product.details
+                                                .description?[Language.ES])
+                                      ])))
                               : null))))));
   if (response.hasException) {
     mezDbgPrint(
