@@ -39,7 +39,7 @@ class _BsOpDropdownState extends State<BsOpDropdown> {
       items: widget.items
           .map((String item) => DropdownMenuItem(
                 value: item,
-                child: Text(item),
+                child: Text("item"),
               ))
           .toList(),
       onChanged: (String? value) {

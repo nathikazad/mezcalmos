@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/controllers/BsServiceViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -186,6 +189,33 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
               ],
             ),
             smallSepartor,
+            bigSeperator,
+            Text("Schedule"),
+            smallSepartor,
+            Card(
+              child: InkWell(
+                onTap: () async {
+                  // viewController.showScheduleDialog(context);
+                  Schedule? res = await BsOpSchedulePickerView.navigate();
+                  mezDbgPrint("res: $res");
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          "Add schedule",
+                          style: context.textTheme.bodyLarge,
+                        ),
+                      ),
+                      Icon(Icons.add)
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -1,9 +1,10 @@
+import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpTabsView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -16,6 +17,7 @@ class BusinessOpRoutes {
   static const String kBsOpEvent = '/event/:id';
   static const String kBsOpService = '/service/:id';
   static const String kBsOpProduct = '/product/:id';
+  static const String kBsOpSchedulePick = '/pickSchedule';
   static const String kDeliveryOpPastOrdersRoute = '/pastOrders';
 
   static const String kNotAuthorizedOperatorRoute = "/deliveryOp/unauthorized";
@@ -35,6 +37,11 @@ class BusinessOpRoutes {
           path: kBusniessOpTabsView,
           name: kBusniessOpTabsView,
           builder: () => BsOpTabsView(),
+        ),
+        QRoute(
+          path: kBsOpSchedulePick,
+          name: kBsOpSchedulePick,
+          builder: () => BsOpSchedulePickerView(),
         ),
         QRoute(
           path: kBsOpHomeRental,

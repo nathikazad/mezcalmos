@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -250,6 +250,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
         // ignore: inference_failure_on_function_invocation
         showModalBottomSheet(
             context: context,
+            isScrollControlled: true,
             builder: (BuildContext context) {
               BusinessServiceType currentSelectedService =
                   BusinessServiceType.Rental;
@@ -276,7 +277,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 }
               }
 
-              return StatefulBuilder(builder: (context, setState) {
+              return StatefulBuilder(builder: (BuildContext context, setState) {
                 return Container(
                   margin:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
@@ -296,7 +297,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           height: 35,
                         ),
                         ...BusinessServiceType.values.map(
-                          (value) => Row(
+                          (BusinessServiceType value) => Row(
                             children: [
                               Flexible(
                                 fit: FlexFit.tight,
