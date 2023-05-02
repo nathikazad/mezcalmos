@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/controllers/BsRentalViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/controllers/BsServiceViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -10,22 +10,22 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 
-class BsOpRentalView extends StatefulWidget {
-  const BsOpRentalView({Key? key}) : super(key: key);
+class BsOpServiceView extends StatefulWidget {
+  const BsOpServiceView({Key? key}) : super(key: key);
   static Future<bool?> navigate({required int? id}) async {
-    String route = BusinessOpRoutes.kBsOpRental;
+    String route = BusinessOpRoutes.kBsOpService;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
     await MezRouter.toPath(route);
     return MezRouter.backResult;
   }
 
   @override
-  _BsOpRentalViewState createState() => _BsOpRentalViewState();
+  _BsOpServiceViewState createState() => _BsOpServiceViewState();
 }
 
-class _BsOpRentalViewState extends State<BsOpRentalView>
+class _BsOpServiceViewState extends State<BsOpServiceView>
     with TickerProviderStateMixin {
-  BsRentalViewController viewController = BsRentalViewController();
+  BsServiceViewController viewController = BsServiceViewController();
   @override
   void initState() {
     viewController.init(thickerProvider: this);
@@ -73,9 +73,9 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                 text: "Spanish",
               )
             ], controller: viewController.tabController)),
-        titleWidget: Obx(() => Text(viewController.rental != null
-            ? "${viewController.rental!.details.name[userLanguage] ?? ""}"
-            : "Rental")));
+        titleWidget: Obx(() => Text(viewController.service != null
+            ? "${viewController.service!.details.name[userLanguage] ?? ""}"
+            : "Service")));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -107,7 +107,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             controller:
                 viewController.detailsController.scDescriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your rental",
+              hintText: "Enter a description for your service",
             ),
           ),
         ],
@@ -155,7 +155,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             TextFormField(
               controller: viewController.detailsController.nameController,
               decoration: InputDecoration(
-                hintText: "Add rental name",
+                hintText: "Add service name",
               ),
             ),
             bigSeperator,
@@ -170,7 +170,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
               controller:
                   viewController.detailsController.descriptionController,
               decoration: InputDecoration(
-                hintText: "Enter a description for your rental",
+                hintText: "Enter a description for your service",
               ),
             ),
             bigSeperator,
