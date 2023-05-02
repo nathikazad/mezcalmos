@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
@@ -16,7 +16,7 @@ class UserInfo {
   bool get isNameSet => _name != null;
   bool get isImageSet => _image != null;
   String get image {
-    if (_image != null && _image!.toString().isURL) {
+    if (_image != null && _image!.isNotEmpty) {
       return _image!;
     } else {
       return defaultUserImgUrl;
@@ -83,6 +83,7 @@ class UserInfo {
     String? image,
     Language? language,
   }) {
+    mezDbgPrint("Cloning user info with name: $name and image: $image");
     return UserInfo(
       firebaseId: firebaseId,
       hasuraId: hasuraId,

@@ -222,3 +222,46 @@ Future<int?> add_one_service({required Service service}) async {
   }
   return null;
 }
+
+Future<List<ServiceCard>> get_business_services(
+    {required int businessId,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<ServiceCard> _services = <ServiceCard>[];
+
+  final QueryResult<Query$get_business_services> response = await _db
+      .graphQLClient
+      .query$get_business_services(Options$Query$get_business_services(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_services(
+              businessId: businessId, offset: offset, limit: limit)));
+
+  if (response.parsedData?.business_service != null) {
+    response.parsedData?.business_service
+        .forEach((Query$get_business_services$business_service data) async {
+      _services.add(ServiceCard(
+          businessName: data.business.details.name,
+          service: Service(
+            category1: data.details.category1.toServiceCategory1(),
+            details: BusinessItemDetails(
+              id: data.id,
+              name: toLanguageMap(translations: data.details.name.translations),
+              position: data.details.position,
+              businessId: data.business.id,
+              available: data.details.available,
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.details.cost),
+              additionalParameters: data.details.additional_parameters,
+            ),
+          )));
+    });
+    return _services;
+  } else {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  }
+}

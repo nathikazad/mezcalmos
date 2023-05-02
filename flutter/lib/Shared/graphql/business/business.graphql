@@ -199,3 +199,38 @@ query get_business_by_product_category1($distance: Float!, $from: geography!, $c
     }
   }
 }
+mutation update_business_item_details_by_id($id: Int!,$object: business_item_details_set_input) {
+  update_business_item_details_by_pk(pk_columns: {id: $id}, _set: $object) {
+    id
+  }
+}
+query getBusinessItemDetailsById($id: Int!) {
+  business_item_details_by_pk(id: $id) {
+       name_id
+       
+        description_id
+        id
+        name {
+          
+          translations {
+            language_id
+            value
+          }
+        }
+        description {
+          
+          translations {
+            language_id
+            value
+          }
+        }
+        tags
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+  }
+}

@@ -129,3 +129,46 @@ mutation add_service($object: business_service_insert_input!) {
     id
   }
 }
+
+query get_business_services($businessId: Int!, $limit: Int, $offset: Int) {
+  business_service(where:  {business_id: {_eq: $businessId}}, limit: $limit, offset: $offset) {
+    
+
+      
+      id
+ 
+      details {
+         name_id
+        description_id
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        tags
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+      }
+      business {
+        id
+        details {
+          id
+          name
+        }
+      }
+    }
+  
+}

@@ -230,3 +230,92 @@ mutation add_home_rental($object: business_home_rental_insert_input!) {
     }
   }
 }
+mutation update_home_rental_by_id($id: Int!,$object: business_home_rental_set_input) {
+  update_business_home_rental_by_pk(pk_columns: {rental_id: $id}, _set: $object) {
+   bathrooms
+    bedrooms
+    gps_location
+    home_type
+    address
+    rental {
+      id
+      category3
+      details {
+        name_id
+        description_id
+        id
+        name {
+          
+          translations {
+            language_id
+            value
+          }
+        }
+        description {
+          
+          translations {
+            language_id
+            value
+          }
+        }
+        tags
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+      }
+      business {
+        id
+        details {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+
+query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
+  business_rental(where: {_and: {details: {_and: {category1: {_eq: "vehicle"}, category2: {_in: ["car", "motorcycle"]}, tags: {_has_keys_all: []}}}, business_id: {_eq: $businessId}}}, limit: $limit, offset: $offset) {
+    details {
+      name_id
+      description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    category3
+     business {
+      id
+      details {
+        id
+        name
+        
+        image
+        location {
+          gps
+          address
+        }
+        accepted_payments
+      }
+    
+    }
+  }
+}
+

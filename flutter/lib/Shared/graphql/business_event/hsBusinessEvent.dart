@@ -436,3 +436,61 @@ Future<int?> add_one_event({required Event event}) async {
   }
   return null;
 }
+
+Future<List<EventCard>> get_business_events(
+    {required int businessId,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<EventCard> _events = <EventCard>[];
+
+  final QueryResult<Query$get_business_events> response = await _db
+      .graphQLClient
+      .query$get_business_events(Options$Query$get_business_events(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_events(
+              businessId: businessId, offset: offset, limit: limit)));
+  mezDbgPrint("Event response ======>${response.data}");
+  if (response.parsedData?.business_event != null) {
+    response.parsedData?.business_event
+        .forEach((Query$get_business_events$business_event data) async {
+      _events.add(EventCard(
+          businessName: data.business.details.name,
+          event: Event(
+            category1: data.details.category1.toEventCategory1(),
+            gpsLocation: data.gps_location != null && data.address != null
+                ? Location(
+                    lat: data.gps_location!.latitude,
+                    lng: data.gps_location!.longitude,
+                    address: data.address!)
+                : null,
+            time: data.time,
+            tags: data.details.tags
+                    ?.map<EventTag>((e) => e.toString().toEventTag())
+                    .toList() ??
+                [],
+            details: BusinessItemDetails(
+              id: data.id,
+              name: toLanguageMap(translations: data.details.name.translations),
+              position: data.details.position,
+              businessId: data.business.id,
+              available: data.details.available,
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.details.cost),
+              additionalParameters: data.details.additional_parameters,
+            ),
+            scheduleType: data.schedule_type.toScheduleType(),
+            schedule: (data.schedule != null)
+                ? scheduleFromData(data.schedule)
+                : null,
+          )));
+    });
+    return _events;
+  } else {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  }
+}
