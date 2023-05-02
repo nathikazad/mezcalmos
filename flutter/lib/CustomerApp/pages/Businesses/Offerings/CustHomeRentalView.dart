@@ -71,12 +71,18 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       _CustBusinessAdditionalData(
                         homeRental: viewController.homeRental!,
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
                       Text(
                         _i18n()['price'],
                         style: context.textTheme.bodyLarge,
                       ),
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       Text(
                         _i18n()['description'],
@@ -93,7 +99,8 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                           : ServiceLocationCard(
                               height: 20.h,
                               location: MezLocation(
-                                viewController.homeRental!.gpsLocation?.address ??
+                                viewController
+                                        .homeRental!.gpsLocation?.address ??
                                     "",
                                 MezLocation.buildLocationData(
                                   viewController.homeRental!.gpsLocation!.lat
@@ -103,9 +110,16 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                                 ),
                               ),
                             ),
+                      SizedBox(
+                        height: 15,
+                      ),
                       CustBusinessMessageCard(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.homeRental!.business,
                         offeringName: viewController.homeRental!.details.name,
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

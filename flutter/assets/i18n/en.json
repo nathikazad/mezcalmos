@@ -564,7 +564,7 @@
 
           "surf": {
             "title": "Surf",
-            "description": "Discover most delicious dishes from the nearest restaurants.",
+            "description": "Find the best surfboards around you.",
             "board": "Board",
             "store": "Store"
           },
@@ -582,7 +582,7 @@
           },
           "home": {
             "title": "Homes",
-            "description": "Obtain delivery of anything you desire to your location.",
+            "description": "Discover the best homes in your city.",
             "home": "Home",
             "agency": "Agency"
           }
@@ -642,6 +642,21 @@
         "reviews": "Reviews",
         "viewAll": "View All",
         "loading": "Loading"
+      },
+      "CustHomeRentalListView": {
+        "homes": "Homes",
+        "home": "Home",
+        "agency": "Agency",
+        "noBusinessesFound": "No businesses found",
+        "noRentalsFound": "No Rentals Found",
+        "hour": "Hour",
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "person": "Person",
+        "total": "Total",
+        "bedrooms": "Bedrooms",
+        "bathrooms": "Bathrooms"
       },
       "CustomerWrapper": {
         "orders": "Orders",

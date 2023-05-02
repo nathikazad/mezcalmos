@@ -57,7 +57,7 @@
         "price": "Precio",
         "noDescription": "Sin descripción",
         "noTitle": "Sin Título",
-        "store": "Almacenar"
+        "store": "Tienda"
       },
       "cards": {
         "SavedCardsListView": {
@@ -543,7 +543,7 @@
         "rental": {
           "title": "Alquileres",
           "shared": {
-            "store": "Almacenar",
+            "store": "Tienda",
             "filter": "Filtrar",
             "cancel": "Cancelar",
             "confirm": "Confirmar",
@@ -559,26 +559,26 @@
             "bicycle": "Bicicleta"
           },
           "surf": {
-            "title": "Navegar",
-            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos.",
+            "title": "Surf",
+            "description": "Encuentra las mejores tablas de surf a tu alrededor.",
             "board": "Junta",
-            "store": "Almacenar"
+            "store": "Tienda"
           },
           "vehicle": {
             "title": "Vehículo",
             "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
             "vehicle": "Vehículo",
-            "store": "Almacenar"
+            "store": "Tienda"
           },
           "car": {
             "title": "Auto",
             "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
             "car": "Auto",
-            "store": "Almacenar"
+            "store": "Tienda"
           },
           "home": {
             "title": "Casas",
-            "description": "Obtenga la entrega de todo lo que desee a su ubicación.",
+            "description": "Descubre las mejores casas de su ciudad.",
             "home": "Hogar",
             "agency": "Agencia"
           }
@@ -638,6 +638,21 @@
         "reviews": "Reseñas",
         "viewAll": "Ver todo",
         "loading": "Cargando"
+      },
+      "CustHomeRentalListView": {
+        "homes": "Casas",
+        "home": "Hogar",
+        "agency": "Agencia",
+        "noBusinessesFound": "No se encontraron negocios",
+        "noRentalsFound": "No se encontraron alquileres",
+        "hour": "Hora",
+        "day": "Día",
+        "week": "Semana",
+        "month": "Mes",
+        "person": "Persona",
+        "total": "Total",
+        "bedrooms": "Dormitorios",
+        "bathrooms": "Baños"
       },
       "CustomerWrapper": {
         "orders": "Pedidos",
