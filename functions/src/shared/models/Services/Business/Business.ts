@@ -43,7 +43,7 @@ export interface Rental {
     bedrooms?: number;
     bathrooms?: number;
     gpsLocation?: Location,
-    homeType?: string,
+    homeType?: HomeType,
 }
 export interface Event {
     id?: number;
@@ -72,6 +72,13 @@ export enum RentalCategory1 {
     Vehicle = "vehicle",
     Home = "home",
     Uncategorized = "uncategorized"
+}
+export enum HomeType {
+    Apartment = "apartment",
+    Villa = "villa",
+    Condo = "condo",
+    Bungalow = "bungalow",
+    Hotel = "hotel"
 }
 export enum EventCategory1 {
     Yoga = "yoga",

@@ -17909,6 +17909,13 @@ const documentNodeQueryget_business_rentals = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
@@ -17936,6 +17943,13 @@ const documentNodeQueryget_business_rentals = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                     ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'accepted_payments'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -19165,7 +19179,9 @@ class Query$get_business_rentals$business_rental$business$details {
   Query$get_business_rentals$business_rental$business$details({
     required this.id,
     required this.name,
+    required this.image,
     required this.location,
+    required this.accepted_payments,
     required this.$__typename,
   });
 
@@ -19173,14 +19189,18 @@ class Query$get_business_rentals$business_rental$business$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$image = json['image'];
     final l$location = json['location'];
+    final l$accepted_payments = json['accepted_payments'];
     final l$$__typename = json['__typename'];
     return Query$get_business_rentals$business_rental$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      image: (l$image as String),
       location:
           Query$get_business_rentals$business_rental$business$details$location
               .fromJson((l$location as Map<String, dynamic>)),
+      accepted_payments: mapFromJson(l$accepted_payments),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -19189,8 +19209,12 @@ class Query$get_business_rentals$business_rental$business$details {
 
   final String name;
 
+  final String image;
+
   final Query$get_business_rentals$business_rental$business$details$location
       location;
+
+  final dynamic accepted_payments;
 
   final String $__typename;
 
@@ -19200,8 +19224,12 @@ class Query$get_business_rentals$business_rental$business$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -19211,12 +19239,16 @@ class Query$get_business_rentals$business_rental$business$details {
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$image = image;
     final l$location = location;
+    final l$accepted_payments = accepted_payments;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
+      l$image,
       l$location,
+      l$accepted_payments,
       l$$__typename,
     ]);
   }
@@ -19241,9 +19273,19 @@ class Query$get_business_rentals$business_rental$business$details {
     if (l$name != lOther$name) {
       return false;
     }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
     final l$location = location;
     final lOther$location = other.location;
     if (l$location != lOther$location) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -19281,8 +19323,10 @@ abstract class CopyWith$Query$get_business_rentals$business_rental$business$deta
   TRes call({
     int? id,
     String? name,
+    String? image,
     Query$get_business_rentals$business_rental$business$details$location?
         location,
+    dynamic? accepted_payments,
     String? $__typename,
   });
   CopyWith$Query$get_business_rentals$business_rental$business$details$location<
@@ -19309,7 +19353,9 @@ class _CopyWithImpl$Query$get_business_rentals$business_rental$business$details<
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? image = _undefined,
     Object? location = _undefined,
+    Object? accepted_payments = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_rentals$business_rental$business$details(
@@ -19317,10 +19363,17 @@ class _CopyWithImpl$Query$get_business_rentals$business_rental$business$details<
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
                 as Query$get_business_rentals$business_rental$business$details$location),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -19346,8 +19399,10 @@ class _CopyWithStubImpl$Query$get_business_rentals$business_rental$business$deta
   call({
     int? id,
     String? name,
+    String? image,
     Query$get_business_rentals$business_rental$business$details$location?
         location,
+    dynamic? accepted_payments,
     String? $__typename,
   }) =>
       _res;

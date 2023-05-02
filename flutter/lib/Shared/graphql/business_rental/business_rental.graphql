@@ -297,16 +297,20 @@ query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
     }
     id
     category3
-    business {
+     business {
       id
       details {
         id
         name
+        
+        image
         location {
           gps
           address
         }
+        accepted_payments
       }
+    
     }
     
   }

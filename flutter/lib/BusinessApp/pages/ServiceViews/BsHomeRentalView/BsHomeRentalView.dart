@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/controllers/BsHomeRentalViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServicePriceCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpTimeUnitSelectorSheet.dart';
@@ -248,6 +250,63 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                   },
                 );
               })),
+            ),
+            bigSeperator,
+            Text(
+              "Rental details",
+              style: context.textTheme.bodyLarge,
+            ),
+            meduimSeperator,
+            Text(
+              "Home type",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            BsOpDropdown(
+              items: HomeType.values
+                  .map((HomeType e) => e.toFirebaseFormatString())
+                  .toList(),
+              value: viewController.homeType.value?.toFirebaseFormatString(),
+              onChanged: (String? newHomeType) {
+                if (newHomeType != null) {
+                  viewController.homeType.value = newHomeType.toHomeType();
+                }
+              },
+              labelText: 'your home type',
+            ),
+            bigSeperator,
+            Obx(
+              () => BsOpOfferingLocationCard(
+                location: viewController.homeLocation.value,
+                label: "Pick house location",
+                onLocationSelected: (Location loc) {
+                  viewController.homeLocation.value = loc;
+                },
+              ),
+            ),
+            bigSeperator,
+            Text(
+              "Bedrooms",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            TextFormField(
+              controller: viewController.bedroomsController,
+              decoration: InputDecoration(
+                hintText: "how many bedrooms does your home have?",
+              ),
+            ),
+            bigSeperator,
+            Text(
+              "Bathrooms",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            TextFormField(
+              controller: viewController.bathroomsController,
+              decoration: InputDecoration(
+                hintText: "how many bathrooms does your home have?",
+              ),
             ),
           ],
         ),

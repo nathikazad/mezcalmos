@@ -13,10 +13,16 @@ class BsHomeRentalViewController {
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
+  TextEditingController bedroomsController = TextEditingController();
+  TextEditingController bathroomsController = TextEditingController();
+
   // vars //
   bool shouldRefetch = false;
   // state variables //
   Rxn<Rental> _rental = Rxn<Rental>();
+  Rxn<Location> homeLocation = Rxn<Location>();
+  Rxn<HomeType> homeType = Rxn<HomeType>();
+  // getters //
   Rental? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
 
@@ -51,9 +57,9 @@ class BsHomeRentalViewController {
   Future<Rental> _constructRental() async {
     BusinessItemDetails details = await detailsController.contructDetails();
     Rental rental = Rental(
-      homeType: "apartment",
+      homeType: homeType.value,
       category1: RentalCategory1.Home,
-      gpsLocation: Location(address: "adress", lat: 15.855, lng: -97.06020),
+      gpsLocation: homeLocation.value,
       details: details,
     );
     return rental;

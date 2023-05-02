@@ -64,7 +64,7 @@ Future<List<RentalCard>> get_rental_by_category(
             ),
             bathrooms: data.home_rental?.bathrooms,
             bedrooms: data.home_rental?.bedrooms,
-            homeType: data.home_rental?.home_type,
+            homeType: data.home_rental?.home_type.toHomeType(),
             gpsLocation: (data.home_rental != null)
                 ? Location(
                     lat: data.home_rental!.gps_location.latitude,
@@ -124,7 +124,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
               ),
               bathrooms: data.home_rental?.bathrooms,
               bedrooms: data.home_rental?.bedrooms,
-              homeType: data.home_rental?.home_type,
+              homeType: data.home_rental?.home_type.toHomeType(),
               gpsLocation: (data.home_rental != null)
                   ? Location(
                       lat: data.home_rental!.gps_location.latitude,
@@ -223,7 +223,7 @@ Future<List<RentalCard>> get_home_rentals(
                 lat: data.gps_location.latitude,
                 lng: data.gps_location.longitude,
                 address: data.address),
-            homeType: data.home_type,
+            homeType: data.home_type.toHomeType(),
           )));
     });
     return _homes;
@@ -276,7 +276,7 @@ Future<List<RentalCard>> get_business_home_rentals(
                 lat: data.gps_location.latitude,
                 lng: data.gps_location.longitude,
                 address: data.address),
-            homeType: data.home_type,
+            homeType: data.home_type.toHomeType(),
           )));
     });
     return _homes;
@@ -415,7 +415,7 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
         ? Geography(rental.gpsLocation!.lat.toDouble(),
             rental.gpsLocation!.lng.toDouble())
         : null,
-    home_type: rental.homeType,
+    home_type: rental.homeType?.toFirebaseFormatString(),
     address: rental.gpsLocation?.address,
     rental: Input$business_rental_obj_rel_insert_input(
         data: Input$business_rental_insert_input(
@@ -486,17 +486,67 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
   return null;
 }
 
-Future<RentalWithBusinessCard?> update_business_home_rental(
+Future<Rental?> update_business_home_rental(
     {required int id, required Rental rental}) async {
   final QueryResult<Mutation$update_home_rental_by_id> res =
       await _db.graphQLClient.mutate$update_home_rental_by_id(
     Options$Mutation$update_home_rental_by_id(
       variables: Variables$Mutation$update_home_rental_by_id(
         id: id,
-        object: Input$business_home_rental_set_input(),
+        object: Input$business_home_rental_set_input(
+          bathrooms: rental.bathrooms?.toInt(),
+          bedrooms: rental.bedrooms?.toInt(),
+          gps_location: (rental.gpsLocation != null)
+              ? Geography(rental.gpsLocation!.lat.toDouble(),
+                  rental.gpsLocation!.lng.toDouble())
+              : null,
+          home_type: rental.homeType?.toFirebaseFormatString(),
+          address: rental.gpsLocation?.address,
+        ),
       ),
     ),
   );
+  if (res.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
+    throwError(res.exception);
+  } else if (res.parsedData?.update_business_home_rental_by_pk != null) {
+    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk data =
+        res.parsedData!.update_business_home_rental_by_pk!;
+    return Rental(
+        id: id,
+        category1: data.rental.details.category1.toRentalCategory1(),
+        category2: data.rental.details.category2.toRentalCategory2(),
+        category3: data.rental.category3,
+        details: BusinessItemDetails(
+          nameId: data.rental.details.name_id,
+          descriptionId: data.rental.details.description_id,
+          id: data.rental.details.id,
+          name: toLanguageMap(
+              translations: data.rental.details.name.translations),
+          position: data.rental.details.position,
+          businessId: data.rental.business.id,
+          available: data.rental.details.available,
+          cost: constructBusinessServiceCost(data.rental.details.cost),
+          image: data.rental.details.image
+                  ?.map<String>((e) => e.toString())
+                  .toList() ??
+              [],
+          additionalParameters: data.rental.details.additional_parameters,
+          description: toLanguageMap(
+              translations:
+                  data.rental.details.description?.translations ?? []),
+        ),
+        bathrooms: data.bathrooms,
+        bedrooms: data.bedrooms,
+        homeType: data.home_type.toHomeType(),
+        gpsLocation: (data.gps_location != null)
+            ? Location(
+                lat: data.gps_location.latitude,
+                lng: data.gps_location.longitude,
+                address: data.address)
+            : null);
+  }
 
   return null;
 }

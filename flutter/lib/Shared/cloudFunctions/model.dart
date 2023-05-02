@@ -2037,7 +2037,7 @@ class Rental {
   num? bedrooms;
   num? bathrooms;
   Location? gpsLocation;
-  String? homeType;
+  HomeType? homeType;
   Rental({
     this.id, required this.category1, this.category2, this.category3, required this.details, this.bedrooms, this.bathrooms, this.gpsLocation, this.homeType});
 Map<String, dynamic> toFirebaseFormattedJson() {
@@ -2128,6 +2128,22 @@ extension ParseStringToRentalCategory1 on String {
     return RentalCategory1.values.firstWhere(
         (RentalCategory1 rentalCategory1) =>
             rentalCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum HomeType { Apartment, Villa, Condo, Bungalow, Hotel }
+extension ParseHomeTypeToString on HomeType {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToHomeType on String {
+  HomeType toHomeType() {
+    return HomeType.values.firstWhere(
+        (HomeType homeType) =>
+            homeType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
