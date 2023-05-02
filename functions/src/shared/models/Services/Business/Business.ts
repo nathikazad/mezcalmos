@@ -35,6 +35,7 @@ export enum TimeUnit {
     Total = "total",
 }
 export interface Rental {
+    id?: number;
     category1: RentalCategory1;
     category2?: RentalCategory2;
     category3?: string;
@@ -42,9 +43,10 @@ export interface Rental {
     bedrooms?: number;
     bathrooms?: number;
     gpsLocation?: Location,
-    homeType?: string,
+    homeType?: HomeType,
 }
 export interface Event {
+    id?: number;
     category1: EventCategory1;
     category2?: EventCategory2;
     scheduleType: ScheduleType;
@@ -55,10 +57,12 @@ export interface Event {
     tags?: Array<EventTag>;
 }
 export interface Service {
+    id?: number;
     category1: ServiceCategory1;
     details: BusinessItemDetails;
 }
 export interface Product {
+    id?: number;
     category1: ProductCategory1;
     details: BusinessItemDetails;
 }
@@ -68,6 +72,13 @@ export enum RentalCategory1 {
     Vehicle = "vehicle",
     Home = "home",
     Uncategorized = "uncategorized"
+}
+export enum HomeType {
+    Apartment = "apartment",
+    Villa = "villa",
+    Condo = "condo",
+    Bungalow = "bungalow",
+    Hotel = "hotel"
 }
 export enum EventCategory1 {
     Yoga = "yoga",

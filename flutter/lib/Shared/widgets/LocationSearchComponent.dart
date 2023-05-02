@@ -68,7 +68,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
   @override
   void dispose() {
     // _controller.dispose();
-    _focusNode?.dispose();
+    //  _focusNode?.dispose();
     super.dispose();
   }
 

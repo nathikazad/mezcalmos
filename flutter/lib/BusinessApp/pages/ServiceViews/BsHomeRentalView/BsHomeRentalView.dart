@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/controllers/BsHomeRentalViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServicePriceCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpTimeUnitSelectorSheet.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 
 class BsOpHomeRentalView extends StatefulWidget {
@@ -32,7 +35,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   @override
   void initState() {
     viewController.init(thickerProvider: this);
-    int? id = MezRouter.urlArguments["id"]?.asInt;
+    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);
     }
@@ -49,22 +52,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-        MezRouter.back(backResult: viewController.shouldRefetch);
-      },
-          tabBar: PreferredSize(
-              preferredSize: Size.fromHeight(50),
-              child: TabBar(tabs: [
-                Tab(
-                  text: "English",
-                ),
-                Tab(
-                  text: "Spanish",
-                )
-              ], controller: viewController.tabController)),
-          titleWidget: Obx(() => Text(viewController.rental != null
-              ? "${viewController.rental!.details.name[userLanguage] ?? ""}"
-              : "Home rental"))),
+      appBar: _appbar(),
       bottomNavigationBar: MezButton(
         label: "Save",
         borderRadius: 0,
@@ -73,346 +61,256 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
         },
       ),
       body: TabBarView(
+        controller: viewController.tabController,
+        children: [_primaryTab(context), _secondaryTab(context)],
+      ),
+    );
+  }
+
+  AppBar _appbar() {
+    return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+      MezRouter.back(backResult: viewController.shouldRefetch);
+    },
+        tabBar: PreferredSize(
+            preferredSize: Size.fromHeight(50),
+            child: TabBar(tabs: [
+              Tab(
+                text: "English",
+              ),
+              Tab(
+                text: "Spanish",
+              )
+            ], controller: viewController.tabController)),
+        titleWidget: Obx(() => Text(viewController.rental != null
+            ? "${viewController.rental!.details.name[userLanguage] ?? ""}"
+            : "Home rental")));
+  }
+
+  Widget _secondaryTab(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-              key: viewController.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Obx(
-                    () => MezItemAvSwitcher(
-                      value: viewController.isAvailable.value,
-                      onAvalableTap: () {
-                        viewController.isAvailable.value = true;
-                      },
-                      onUnavalableTap: () {
-                        viewController.isAvailable.value = false;
-                      },
-                    ),
-                  ),
-                  bigSeperator,
-                  Text(
-                    "Images",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                  Text(
-                    "You can only upload up to five images.",
-                  ),
-                  smallSepartor,
-                  Obx(
-                    () => Wrap(
-                        spacing: 8,
-                        runSpacing: 5,
-                        children: List.generate(
-                          5,
-                          (int index) {
-                            bool hasImage =
-                                viewController.getImage(index) != null;
-                            mezDbgPrint(hasImage);
-                            return InkWell(
-                              onTap: () {
-                                viewController.addItemImage(
-                                    itemIndex: index, context: context);
-                              },
-                              borderRadius: BorderRadius.circular(10),
-                              child: Ink(
-                                width: 70,
-                                height: 70,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: hasImage
-                                      ? DecorationImage(
-                                          image:
-                                              viewController.getImage(index)!,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : null,
-                                ),
-                                child: hasImage == false
-                                    ? Icon(
-                                        Icons.add_photo_alternate,
-                                        color: Colors.grey,
-                                        size: 35,
-                                      )
-                                    : Container(),
-                              ),
-                            );
-                          },
-                        )),
-                  ),
-                  bigSeperator,
-                  Text(
-                    "Name",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                  smallSepartor,
-                  TextFormField(
-                    controller: viewController.nameController,
-                    decoration: InputDecoration(
-                      hintText: "Add item name",
-                    ),
-                  ),
-                  bigSeperator,
-                  Text(
-                    "Description",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                  smallSepartor,
-                  TextFormField(
-                    maxLines: 7,
-                    minLines: 5,
-                    controller: viewController.descriptionController,
-                    decoration: InputDecoration(
-                      hintText: "Enter a description for your item",
-                    ),
-                  ),
-                  bigSeperator,
-                  Row(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Text(
-                          "Prices",
-                          style: context.textTheme.bodyLarge,
-                        ),
-                      ),
-                      InkWell(
-                          onTap: () {
-                            if (viewController.units.length > 1) {
-                              _timeUnitSelectorSheet(context);
-                            } else if (viewController.units.length == 1) {
-                              viewController
-                                  .addPriceTimeUnit(viewController.units.first);
-                            }
-                          },
-                          child: Ink(
-                            padding: const EdgeInsets.all(5),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.add_circle_outline,
-                                  size: 20,
-                                  color: primaryBlueColor,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "Add price",
-                                  style: context.textTheme.bodyLarge
-                                      ?.copyWith(color: primaryBlueColor),
-                                ),
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                  smallSepartor,
-                  Obx(
-                    () => Column(
-                        children: List.generate(
-                            viewController.priceTimeUnitMap.length,
-                            (int index) => _priceCard(
-                                textEditingController: viewController
-                                    .priceTimeUnitMap.entries
-                                    .toList()[index]
-                                    .key,
-                                timeUnit: viewController
-                                    .priceTimeUnitMap.entries
-                                    .toList()[index]
-                                    .value))),
-                  ),
-                ],
+          Text(
+            "Name",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.detailsController.scNameController,
+            decoration: InputDecoration(
+              hintText: "Add item name",
+            ),
+          ),
+          bigSeperator,
+          Text(
+            "Description",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            maxLines: 7,
+            minLines: 5,
+            controller:
+                viewController.detailsController.scDescriptionController,
+            decoration: InputDecoration(
+              hintText: "Enter a description for your item",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _primaryTab(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Form(
+        key: viewController.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Obx(
+              () => MezItemAvSwitcher(
+                value: viewController.detailsController.isAvailable.value,
+                onAvalableTap: () {
+                  viewController.detailsController.isAvailable.value = true;
+                },
+                onUnavalableTap: () {
+                  viewController.detailsController.isAvailable.value = false;
+                },
               ),
             ),
-          ),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [Text("Second tab")],
+            bigSeperator,
+            Text(
+              "Images",
+              style: context.textTheme.bodyLarge,
             ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Future<dynamic> _timeUnitSelectorSheet(BuildContext context) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          Rxn<TimeUnit> selected = Rxn();
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+            Text(
+              "You can only upload up to five images.",
+            ),
+            smallSepartor,
+            BsOpServiceImagesGrid(
+              detailsController: viewController.detailsController,
+            ),
+            bigSeperator,
+            Text(
+              "Name",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            TextFormField(
+              controller: viewController.detailsController.nameController,
+              decoration: InputDecoration(
+                hintText: "Add item name",
+              ),
+            ),
+            bigSeperator,
+            Text(
+              "Description",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            TextFormField(
+              maxLines: 7,
+              minLines: 5,
+              controller:
+                  viewController.detailsController.descriptionController,
+              decoration: InputDecoration(
+                hintText: "Enter a description for your item",
+              ),
+            ),
+            bigSeperator,
+            Row(
               children: [
-                Container(
-                  alignment: Alignment.center,
+                Flexible(
+                  fit: FlexFit.tight,
                   child: Text(
-                    "Price type",
+                    "Prices",
                     style: context.textTheme.bodyLarge,
                   ),
                 ),
-                Divider(
-                  height: 35,
-                ),
-                Column(
-                  children: viewController.units.map((TimeUnit timeUnit) {
-                    return Container(
-                      margin: const EdgeInsets.only(top: 5),
+                InkWell(
+                    onTap: () async {
+                      if (viewController.units.length > 1) {
+                        TimeUnit? newUnit = await bsOpTimeUnitSelectorSheet(
+                            context: context, units: viewController.units);
+                        mezDbgPrint("newUnit: $newUnit");
+                        if (newUnit != null) {
+                          viewController.detailsController
+                              .addPriceTimeUnit(newUnit);
+                        }
+                      } else if (viewController.units.length == 1) {
+                        viewController.detailsController
+                            .addPriceTimeUnit(viewController.units.first);
+                      }
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(5),
                       child: Row(
                         children: [
-                          Flexible(
-                            fit: FlexFit.tight,
-                            child: Text(
-                              timeUnit.toFirebaseFormatString(),
-                              style: context.textTheme.bodyLarge,
-                            ),
+                          Icon(
+                            Icons.add_circle_outline,
+                            size: 20,
+                            color: primaryBlueColor,
                           ),
-                          Obx(
-                            () => radioCircleButton(
-                                onTap: (bool v) {
-                                  if (!v) {
-                                    selected.value = timeUnit;
-                                  } else {
-                                    selected.value = null;
-                                  }
-                                },
-                                value: timeUnit == selected.value),
-                          )
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "Add price",
+                            style: context.textTheme.bodyLarge
+                                ?.copyWith(color: primaryBlueColor),
+                          ),
                         ],
                       ),
-                    );
-                  }).toList(),
-                ),
-                bigSeperator,
-                Row(
-                  children: [
-                    Flexible(
-                        child: MezButton(
-                      label: "Cancel",
-                      backgroundColor: offRedColor,
-                      textColor: redAccentColor,
-                      onClick: () async {
-                        Navigator.pop(context);
-                      },
                     )),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Flexible(
-                        child: MezButton(
-                      label: "Add",
-                      onClick: () async {
-                        if (selected.value != null) {
-                          viewController.addPriceTimeUnit(selected.value!);
-                          Navigator.pop(context, selected.value);
-                        }
-                      },
-                    ))
-                  ],
-                ),
               ],
             ),
-          );
-        });
-  }
-
-  Container _priceCard(
-      {required TextEditingController textEditingController,
-      required TimeUnit timeUnit}) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: Row(
-        children: [
-          Flexible(
-              flex: 2,
-              child: TextFormField(
-                style: context.textTheme.bodyLarge,
-                decoration: InputDecoration(
-                    hintText: "Price",
-                    suffixIconConstraints: BoxConstraints(
-                      minWidth: 0,
-                      minHeight: 0,
-                    ).tighten(width: 80),
-                    prefixIcon: Icon(Icons.attach_money),
-                    suffixIcon: Text(
-                      "${timeUnit.toFirebaseFormatString()}",
-                      style: context.textTheme.bodyLarge,
-                    )),
-                controller: textEditingController,
-              )),
-          SizedBox(
-            width: 8,
-          ),
-          MezIconButton(
-              onTap: () {
-                viewController.removeTimeUnit(timeUnit);
+            smallSepartor,
+            Obx(
+              () => Column(
+                  children: List.generate(
+                      viewController.detailsController.priceTimeUnitMap.length,
+                      (int index) {
+                final TimeUnit timeUnit = viewController
+                    .detailsController.priceTimeUnitMap.entries
+                    .toList()[index]
+                    .value;
+                final TextEditingController textEditingController =
+                    viewController.detailsController.priceTimeUnitMap.entries
+                        .toList()[index]
+                        .key;
+                return BsOpServicePriceCard(
+                  textEditingController: textEditingController,
+                  timeUnit: timeUnit,
+                  onRemoveTimeUnit: () {
+                    viewController.detailsController.removeTimeUnit(timeUnit);
+                  },
+                );
+              })),
+            ),
+            bigSeperator,
+            Text(
+              "Rental details",
+              style: context.textTheme.bodyLarge,
+            ),
+            meduimSeperator,
+            Text(
+              "Home type",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            BsOpDropdown(
+              items: HomeType.values
+                  .map((HomeType e) => e.toFirebaseFormatString())
+                  .toList(),
+              value: viewController.homeType.value?.toFirebaseFormatString(),
+              onChanged: (String? newHomeType) {
+                if (newHomeType != null) {
+                  viewController.homeType.value = newHomeType.toHomeType();
+                }
               },
-              iconSize: 20,
-              backgroundColor: Colors.transparent,
-              iconColor: redAccentColor,
-              icon: Icons.delete_outline)
-          // Flexible(
-          //   child: MezDropDown(
-          //     hintText: "Price",
-          //     itemsList: TimeUnit.values
-          //         .map((TimeUnit e) => e.toFirebaseFormatString())
-          //         .toList(),
-          //     onChanged: (String? v) {},
-          //   ),
-          // ),
-        ],
+              labelText: 'your home type',
+            ),
+            bigSeperator,
+            Obx(
+              () => BsOpOfferingLocationCard(
+                location: viewController.homeLocation.value,
+                label: "Pick house location",
+                onLocationSelected: (Location loc) {
+                  viewController.homeLocation.value = loc;
+                },
+              ),
+            ),
+            bigSeperator,
+            Text(
+              "Bedrooms",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            TextFormField(
+              controller: viewController.bedroomsController,
+              decoration: InputDecoration(
+                hintText: "how many bedrooms does your home have?",
+              ),
+            ),
+            bigSeperator,
+            Text(
+              "Bathrooms",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            TextFormField(
+              controller: viewController.bathroomsController,
+              decoration: InputDecoration(
+                hintText: "how many bathrooms does your home have?",
+              ),
+            ),
+          ],
+        ),
       ),
-    );
-  }
-}
-
-class MezDropDown extends StatelessWidget {
-  final String hintText;
-  final String? initialValue;
-  final List<String> itemsList;
-  final Function(String?) onChanged;
-
-  const MezDropDown({
-    required this.hintText,
-    required this.itemsList,
-    required this.onChanged,
-    this.initialValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        isDense: true,
-        hintText: hintText,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide.none),
-        errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide.none),
-      ),
-      items: itemsList.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      value: initialValue,
-      onChanged: onChanged,
-      validator: (String? value) {
-        if (value == null || value.isEmpty) {
-          return 'This field is required';
-        }
-        return null;
-      },
     );
   }
 }

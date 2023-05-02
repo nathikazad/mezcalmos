@@ -2,13 +2,13 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/business/__generated/business.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -108,7 +108,6 @@ Future<Business?> get_business_by_id(
             scheduleType: event.schedule_type.toScheduleType(),
             details: BusinessItemDetails(
               id: event.id,
-            
               name:
                   toLanguageMap(translations: event.details.name.translations),
               position: event.details.position,
@@ -285,4 +284,55 @@ Future<List<BusinessCard>> get_business_by_product_category1(
   } else {
     return [];
   }
+}
+
+Future<int?> update_business_item_details(
+    {required int id, required BusinessItemDetails details}) async {
+  QueryResult<Mutation$update_business_item_details_by_id> res =
+      await _db.graphQLClient.mutate$update_business_item_details_by_id(
+          Options$Mutation$update_business_item_details_by_id(
+              variables: Variables$Mutation$update_business_item_details_by_id(
+                  id: id,
+                  object: Input$business_item_details_set_input(
+                    available: details.available,
+                    image: details.image,
+                    cost: details.cost.map((TimeUnit key, num value) =>
+                        MapEntry(
+                            key.toFirebaseFormatString(), value.toDouble())),
+                  ))));
+  if (res.hasException) {
+    mezDbgPrint("ERROR UPDATING BUSINESS ITEM DETAILS => $res");
+    throw Exception("🛑 Error updating business item details ${res.exception}");
+  }
+  return res.parsedData?.update_business_item_details_by_pk?.id;
+}
+
+Future<BusinessItemDetails?> get_business_details_by_id(
+    {required int detailsId, required int businessId}) async {
+  final QueryResult<Query$getBusinessItemDetailsById> res =
+      await _db.graphQLClient.query$getBusinessItemDetailsById(
+          Options$Query$getBusinessItemDetailsById(
+              variables:
+                  Variables$Query$getBusinessItemDetailsById(id: detailsId)));
+  if (res.hasException) {
+    throw Exception("🛑 Error getting business item details ${res.exception}");
+  } else if (res.parsedData?.business_item_details_by_pk != null) {
+    Query$getBusinessItemDetailsById$business_item_details_by_pk data =
+        res.parsedData!.business_item_details_by_pk!;
+    return BusinessItemDetails(
+      nameId: data.name_id,
+      descriptionId: data.description_id,
+      id: data.id,
+      name: toLanguageMap(translations: data.name.translations),
+      position: data.position,
+      businessId: businessId,
+      available: data.available,
+      cost: constructBusinessServiceCost(data.cost),
+      image: data.image?.map<String>((e) => e.toString()).toList() ?? [],
+      additionalParameters: data.additional_parameters,
+      description:
+          toLanguageMap(translations: data.description?.translations ?? []),
+    );
+  }
+  return null;
 }

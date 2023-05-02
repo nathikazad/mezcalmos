@@ -8596,6 +8596,316 @@ input customer_stripe_sp_id_variance_order_by {
 }
 
 """
+columns and relationships of "data_consumption"
+"""
+type data_consumption {
+  date: date!
+  id: Int!
+  name_of_subscription: String!
+  number_of_events: Int!
+  total_size: Int!
+  user_id: Int!
+}
+
+"""
+aggregated selection of "data_consumption"
+"""
+type data_consumption_aggregate {
+  aggregate: data_consumption_aggregate_fields
+  nodes: [data_consumption!]!
+}
+
+"""
+aggregate fields of "data_consumption"
+"""
+type data_consumption_aggregate_fields {
+  avg: data_consumption_avg_fields
+  count(columns: [data_consumption_select_column!], distinct: Boolean): Int!
+  max: data_consumption_max_fields
+  min: data_consumption_min_fields
+  stddev: data_consumption_stddev_fields
+  stddev_pop: data_consumption_stddev_pop_fields
+  stddev_samp: data_consumption_stddev_samp_fields
+  sum: data_consumption_sum_fields
+  var_pop: data_consumption_var_pop_fields
+  var_samp: data_consumption_var_samp_fields
+  variance: data_consumption_variance_fields
+}
+
+"""aggregate avg on columns"""
+type data_consumption_avg_fields {
+  id: Float
+  number_of_events: Float
+  total_size: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "data_consumption". All fields are combined with a logical 'AND'.
+"""
+input data_consumption_bool_exp {
+  _and: [data_consumption_bool_exp!]
+  _not: data_consumption_bool_exp
+  _or: [data_consumption_bool_exp!]
+  date: date_comparison_exp
+  id: Int_comparison_exp
+  name_of_subscription: String_comparison_exp
+  number_of_events: Int_comparison_exp
+  total_size: Int_comparison_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "data_consumption"
+"""
+enum data_consumption_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  data_consumption_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "data_consumption"
+"""
+input data_consumption_inc_input {
+  id: Int
+  number_of_events: Int
+  total_size: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "data_consumption"
+"""
+input data_consumption_insert_input {
+  date: date
+  id: Int
+  name_of_subscription: String
+  number_of_events: Int
+  total_size: Int
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type data_consumption_max_fields {
+  date: date
+  id: Int
+  name_of_subscription: String
+  number_of_events: Int
+  total_size: Int
+  user_id: Int
+}
+
+"""aggregate min on columns"""
+type data_consumption_min_fields {
+  date: date
+  id: Int
+  name_of_subscription: String
+  number_of_events: Int
+  total_size: Int
+  user_id: Int
+}
+
+"""
+response of any mutation on the table "data_consumption"
+"""
+type data_consumption_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [data_consumption!]!
+}
+
+"""
+on_conflict condition type for table "data_consumption"
+"""
+input data_consumption_on_conflict {
+  constraint: data_consumption_constraint!
+  update_columns: [data_consumption_update_column!]! = []
+  where: data_consumption_bool_exp
+}
+
+"""Ordering options when selecting data from "data_consumption"."""
+input data_consumption_order_by {
+  date: order_by
+  id: order_by
+  name_of_subscription: order_by
+  number_of_events: order_by
+  total_size: order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: data_consumption"""
+input data_consumption_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "data_consumption"
+"""
+enum data_consumption_select_column {
+  """column name"""
+  date
+
+  """column name"""
+  id
+
+  """column name"""
+  name_of_subscription
+
+  """column name"""
+  number_of_events
+
+  """column name"""
+  total_size
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "data_consumption"
+"""
+input data_consumption_set_input {
+  date: date
+  id: Int
+  name_of_subscription: String
+  number_of_events: Int
+  total_size: Int
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type data_consumption_stddev_fields {
+  id: Float
+  number_of_events: Float
+  total_size: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type data_consumption_stddev_pop_fields {
+  id: Float
+  number_of_events: Float
+  total_size: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type data_consumption_stddev_samp_fields {
+  id: Float
+  number_of_events: Float
+  total_size: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "data_consumption"
+"""
+input data_consumption_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: data_consumption_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input data_consumption_stream_cursor_value_input {
+  date: date
+  id: Int
+  name_of_subscription: String
+  number_of_events: Int
+  total_size: Int
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type data_consumption_sum_fields {
+  id: Int
+  number_of_events: Int
+  total_size: Int
+  user_id: Int
+}
+
+"""
+update columns of table "data_consumption"
+"""
+enum data_consumption_update_column {
+  """column name"""
+  date
+
+  """column name"""
+  id
+
+  """column name"""
+  name_of_subscription
+
+  """column name"""
+  number_of_events
+
+  """column name"""
+  total_size
+
+  """column name"""
+  user_id
+}
+
+input data_consumption_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: data_consumption_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: data_consumption_set_input
+
+  """filter the rows which have to be updated"""
+  where: data_consumption_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type data_consumption_var_pop_fields {
+  id: Float
+  number_of_events: Float
+  total_size: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type data_consumption_var_samp_fields {
+  id: Float
+  number_of_events: Float
+  total_size: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type data_consumption_variance_fields {
+  id: Float
+  number_of_events: Float
+  total_size: Float
+  user_id: Float
+}
+
+scalar date
+
+"""
+Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'.
+"""
+input date_comparison_exp {
+  _eq: date
+  _gt: date
+  _gte: date
+  _in: [date!]
+  _is_null: Boolean
+  _lt: date
+  _lte: date
+  _neq: date
+  _nin: [date!]
+}
+
+"""
 columns and relationships of "delivery.company"
 """
 type delivery_company {
@@ -17973,6 +18283,19 @@ type mutation_root {
   delete_customer_stripe_sp_id_by_pk(id: Int!): customer_stripe_sp_id
 
   """
+  delete data from the table: "data_consumption"
+  """
+  delete_data_consumption(
+    """filter the rows which have to be deleted"""
+    where: data_consumption_bool_exp!
+  ): data_consumption_mutation_response
+
+  """
+  delete single row from the table: "data_consumption"
+  """
+  delete_data_consumption_by_pk(id: Int!): data_consumption
+
+  """
   delete data from the table: "delivery.company"
   """
   delete_delivery_company(
@@ -19028,6 +19351,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: customer_stripe_sp_id_on_conflict
   ): customer_stripe_sp_id
+
+  """
+  insert data into the table: "data_consumption"
+  """
+  insert_data_consumption(
+    """the rows to be inserted"""
+    objects: [data_consumption_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: data_consumption_on_conflict
+  ): data_consumption_mutation_response
+
+  """
+  insert a single row into the table: "data_consumption"
+  """
+  insert_data_consumption_one(
+    """the row to be inserted"""
+    object: data_consumption_insert_input!
+
+    """upsert condition"""
+    on_conflict: data_consumption_on_conflict
+  ): data_consumption
 
   """
   insert data into the table: "delivery.company"
@@ -21060,6 +21405,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [customer_stripe_sp_id_updates!]!
   ): [customer_stripe_sp_id_mutation_response]
+
+  """
+  update data of the table: "data_consumption"
+  """
+  update_data_consumption(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: data_consumption_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: data_consumption_set_input
+
+    """filter the rows which have to be updated"""
+    where: data_consumption_bool_exp!
+  ): data_consumption_mutation_response
+
+  """
+  update single row of the table: "data_consumption"
+  """
+  update_data_consumption_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: data_consumption_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: data_consumption_set_input
+    pk_columns: data_consumption_pk_columns_input!
+  ): data_consumption
+
+  """
+  update multiples rows of table: "data_consumption"
+  """
+  update_data_consumption_many(
+    """updates to execute, in order"""
+    updates: [data_consumption_updates!]!
+  ): [data_consumption_mutation_response]
 
   """
   update data of the table: "delivery.company"
@@ -24235,6 +24614,51 @@ type query_root {
   fetch data from the table: "customer.stripe_sp_id" using primary key columns
   """
   customer_stripe_sp_id_by_pk(id: Int!): customer_stripe_sp_id
+
+  """
+  fetch data from the table: "data_consumption"
+  """
+  data_consumption(
+    """distinct select on columns"""
+    distinct_on: [data_consumption_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [data_consumption_order_by!]
+
+    """filter the rows returned"""
+    where: data_consumption_bool_exp
+  ): [data_consumption!]!
+
+  """
+  fetch aggregated fields from the table: "data_consumption"
+  """
+  data_consumption_aggregate(
+    """distinct select on columns"""
+    distinct_on: [data_consumption_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [data_consumption_order_by!]
+
+    """filter the rows returned"""
+    where: data_consumption_bool_exp
+  ): data_consumption_aggregate!
+
+  """
+  fetch data from the table: "data_consumption" using primary key columns
+  """
+  data_consumption_by_pk(id: Int!): data_consumption
 
   """
   fetch data from the table: "delivery.company"
@@ -38865,6 +39289,65 @@ type subscription_root {
     """filter the rows returned"""
     where: customer_stripe_sp_id_bool_exp
   ): [customer_stripe_sp_id!]!
+
+  """
+  fetch data from the table: "data_consumption"
+  """
+  data_consumption(
+    """distinct select on columns"""
+    distinct_on: [data_consumption_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [data_consumption_order_by!]
+
+    """filter the rows returned"""
+    where: data_consumption_bool_exp
+  ): [data_consumption!]!
+
+  """
+  fetch aggregated fields from the table: "data_consumption"
+  """
+  data_consumption_aggregate(
+    """distinct select on columns"""
+    distinct_on: [data_consumption_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [data_consumption_order_by!]
+
+    """filter the rows returned"""
+    where: data_consumption_bool_exp
+  ): data_consumption_aggregate!
+
+  """
+  fetch data from the table: "data_consumption" using primary key columns
+  """
+  data_consumption_by_pk(id: Int!): data_consumption
+
+  """
+  fetch data from the table in a streaming manner: "data_consumption"
+  """
+  data_consumption_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [data_consumption_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: data_consumption_bool_exp
+  ): [data_consumption!]!
 
   """
   fetch data from the table: "delivery.company"

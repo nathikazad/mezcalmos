@@ -216,3 +216,46 @@ Future<int?> add_one_product({required Product product}) async {
   }
   return null;
 }
+
+Future<List<ProductCard>> get_business_products(
+    {required int businessId,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<ProductCard> _products = <ProductCard>[];
+
+  final QueryResult<Query$get_business_products> response = await _db
+      .graphQLClient
+      .query$get_business_products(Options$Query$get_business_products(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_products(
+              businessId: businessId, offset: offset, limit: limit)));
+
+  if (response.parsedData?.business_product != null) {
+    response.parsedData?.business_product
+        .forEach((Query$get_business_products$business_product data) async {
+      _products.add(ProductCard(
+          businessName: data.business.details.name,
+          product: Product(
+            category1: data.details.category1.toProductCategory1(),
+            details: BusinessItemDetails(
+              id: data.id,
+              name: toLanguageMap(translations: data.details.name.translations),
+              position: data.details.position,
+              businessId: data.business.id,
+              available: data.details.available,
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.details.cost),
+              additionalParameters: data.details.additional_parameters,
+            ),
+          )));
+    });
+    return _products;
+  } else {
+    return [];
+  }
+}

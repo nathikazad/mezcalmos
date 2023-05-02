@@ -1,4 +1,38 @@
 {
+  "BusinessApp": {
+    "pages": {
+      "services": {
+        "services": "Services",
+        "serviceType": "Service Type",
+        "addService": "Add Service",
+        "reorder": "Reorder",
+        "rental": {
+          "title": "Rental",
+          "subtitle": "Using a rental service, you can advertise a home for rent."
+        },
+        "homerental": {
+          "title": "Home Rental",
+          "subtitle": "Using a home rental service, you can advertise a home for rent."
+        },
+        "class": {
+          "title": "Class",
+          "subtitle": "Using a Class service, you can advertise a Class event."
+        },
+        "event": {
+          "title": "Event",
+          "subtitle": "Using a Event service, you can advertise a Event."
+        },
+        "service": {
+          "title": "Service",
+          "subtitle": "Using a Service, you can advertise a Service"
+        },
+        "product": {
+          "title": "Product",
+          "subtitle": "Using a Product service, you can advertise a Product."
+        }
+      }
+    }
+  },
   "CustomerApp": {
     "main": {
       "savedLocations": "My locations",
