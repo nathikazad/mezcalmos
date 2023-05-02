@@ -17704,12 +17704,67 @@ const documentNodeQueryget_business_rentals = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'business_id'),
+                name: NameNode(value: '_and'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(name: NameNode(value: 'businessId')),
-                  )
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_and'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'category1'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_eq'),
+                                value: StringValueNode(
+                                  value: 'vehicle',
+                                  isBlock: false,
+                                ),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'category2'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_in'),
+                                value: ListValueNode(values: [
+                                  StringValueNode(
+                                    value: 'car',
+                                    isBlock: false,
+                                  ),
+                                  StringValueNode(
+                                    value: 'motorcycle',
+                                    isBlock: false,
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'tags'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_has_keys_all'),
+                                value: ListValueNode(values: []),
+                              )
+                            ]),
+                          ),
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business_id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'businessId')),
+                      )
+                    ]),
+                  ),
                 ]),
               )
             ]),

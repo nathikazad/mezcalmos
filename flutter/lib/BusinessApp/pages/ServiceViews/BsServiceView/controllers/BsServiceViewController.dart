@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
-class BsRentalViewController {
+class BsServiceViewController {
   // instances //
 
   // streams //
@@ -27,20 +27,20 @@ class BsRentalViewController {
   // vars //
   bool shouldRefetch = false;
   // state variables //
-  Rxn<RentalWithBusinessCard> _rental = Rxn<RentalWithBusinessCard>();
-  RentalWithBusinessCard? get rental => _rental.value;
-  bool get isEditing => _rental.value != null;
+  Rxn<ServiceWithBusinessCard> _service = Rxn<ServiceWithBusinessCard>();
+  ServiceWithBusinessCard? get service => _service.value;
+  bool get isEditing => _service.value != null;
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
   }
 
   Future<void> initEditMode({required int id}) async {
-    _rental.value = await get_rental_by_id(id: id, withCache: false);
+    _service.value = await get_service_by_id(id: id, withCache: false);
     mezDbgPrint("service id : $id");
-    if (rental != null) {
+    if (service != null) {
       await detailsController.initEditMode(
-          detalsId: rental!.details.id.toInt());
+          detalsId: service!.details.id.toInt());
     }
   }
 
@@ -52,11 +52,11 @@ class BsRentalViewController {
     // TODO: implement dispose
   }
 
-  Future<void> createItem(Rental rental) async {
+  Future<void> createItem(Service service) async {
     mezDbgPrint(
-        "Create service with this payload : ${rental.toFirebaseFormattedJson()}");
+        "Create service with this payload : ${service.toFirebaseFormattedJson()}");
     try {
-      int? res = await add_one_rental(rental: rental);
+      int? res = await add_one_service(service: service);
 
       if (res != null) {
         showSavedSnackBar();
