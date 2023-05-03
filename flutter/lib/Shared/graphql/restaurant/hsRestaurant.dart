@@ -170,6 +170,7 @@ Future<Restaurant?> get_restaurant_by_id(
             descriptionId: data.details!.description_id,
             location: MezLocation.fromHasura(
                 data.details!.location.gps, data.details!.location.address)),
+        currency: data.details!.currency.toCurrency(),
         schedule: data.details!.schedule != null
             ? scheduleFromData(data.details!.schedule)
             : null,

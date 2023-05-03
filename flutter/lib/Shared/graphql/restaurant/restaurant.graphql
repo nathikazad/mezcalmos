@@ -75,7 +75,7 @@ query getOneRestaurant($id: Int!) {
     details {
       id
       firebase_id
-
+      currency
       location_id
       image
       language
@@ -137,6 +137,7 @@ query getRestaurantPaymentInfo($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
     details {
       id
+      currency
       stripe_info {
         id
         stripe_id

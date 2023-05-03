@@ -44,6 +44,7 @@ Future<List<ProductCard>> get_product_by_category(
         .forEach((Query$get_product_by_category$business_product data) async {
       _products.add(ProductCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           product: Product(
             category1: data.details.category1.toProductCategory1(),
             details: BusinessItemDetails(
@@ -109,6 +110,7 @@ Future<ProductWithBusinessCard?> get_product_by_id(
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,
+            currency: data.business.details.currency.toCurrency(),
             acceptedPayments: PaymentInfo.fromData(
                     stripeInfo: {},
                     acceptedPayments: data.business.details.accepted_payments)
@@ -159,7 +161,10 @@ Future<int?> add_one_product({required Product product}) async {
                           available: product.details.available,
                           category1: product.category1.toFirebaseFormatString(),
                           // category2: product.category2?.toFirebaseFormatString(),
-                          cost: product.details.cost,
+                          cost: product.details.cost.map(
+                              (TimeUnit key, num value) => MapEntry(
+                                  key.toFirebaseFormatString(),
+                                  value.toDouble())),
                           image: product.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
@@ -188,24 +193,20 @@ Future<int?> add_one_product({required Product product}) async {
                           description: (product.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id:
-                                          product.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType
-                                          .Business.toFirebaseFormatString(),
-                                      translations:
-                                          Input$translation_value_arr_rel_insert_input(
-                                              data: <Input$translation_value_insert_input>[
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.EN
-                                                    .toFirebaseFormatString(),
-                                                value: product.details
-                                                    .description?[Language.EN]),
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.ES
-                                                    .toFirebaseFormatString(),
-                                                value: product.details
-                                                    .description?[Language.ES])
-                                          ])))
+                                      service_provider_id: product.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
+                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: product.details
+                                                .description?[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: product.details
+                                                .description?[Language.ES])
+                                      ])))
                               : null))))));
   if (response.hasException) {
     mezDbgPrint(

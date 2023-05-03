@@ -21,6 +21,7 @@ query get_business_by_id($id: Int!) {
       open_status
       phone_number
       schedule
+      currency
     }
     events {
       id
@@ -100,6 +101,7 @@ query get_business_by_rental_category1(
       accepted_payments
       image
       name
+      currency
     }
     reviews_aggregate {
       aggregate {
@@ -143,6 +145,7 @@ query get_business_by_event_category1(
       accepted_payments
       image
       name
+      currency
     }
     reviews_aggregate {
       aggregate {
@@ -162,6 +165,7 @@ query get_business_by_service_category1($distance: Float!, $from: geography!, $c
       id
       accepted_payments
       image
+      currency
       name
     }
     reviews_aggregate {
@@ -182,6 +186,7 @@ query get_business_by_product_category1($distance: Float!, $from: geography!, $c
       id
       accepted_payments
       image
+      currency
       name
     }
     reviews_aggregate {

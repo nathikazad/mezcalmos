@@ -50,7 +50,9 @@ class _BsOpProductViewState extends State<BsOpProductView>
       bottomNavigationBar: MezButton(
         label: "Save",
         borderRadius: 0,
-        onClick: () async {},
+        onClick: () async {
+          await viewController.save();
+        },
       ),
       body: TabBarView(
         controller: viewController.tabController,
@@ -179,13 +181,24 @@ class _BsOpProductViewState extends State<BsOpProductView>
                 Flexible(
                   fit: FlexFit.tight,
                   child: Text(
-                    "Prices",
+                    "Price",
                     style: context.textTheme.bodyLarge,
                   ),
                 ),
               ],
             ),
             smallSepartor,
+            TextFormField(
+              controller: viewController.priceController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: "Enter price",
+                prefixIcon: Icon(
+                  Icons.attach_money_rounded,
+                  color: Colors.black,
+                ),
+              ),
+            ),
           ],
         ),
       ),

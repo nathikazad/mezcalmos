@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/__generated/delivery_company.graphql.dart';
@@ -49,6 +50,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
                 translations: data.details!.description!.translations)
             : null,
         descriptionId: data.details!.description_id,
+        currency: data.details!.currency.toCurrency(),
         location: MezLocation.fromHasura(
             data.details!.location.gps, data.details!.location.address),
         name: data.details!.name,

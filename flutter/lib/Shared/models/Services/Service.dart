@@ -16,6 +16,7 @@ abstract class Service {
   cModels.ServiceProviderType? serviceProviderType;
   ServiceState state;
   Map<cModels.Language, bool> languages;
+  cModels.Currency? currency;
   List<Review> reviews = <Review>[];
   num? rate;
   num? numberOfReviews;
@@ -36,7 +37,8 @@ abstract class Service {
       this.reviews = const [],
       this.rate,
       required this.deliveryCost,
-      this.paymentInfo});
+      this.paymentInfo,
+      this.currency});
 
   cModels.Language get primaryLanguage => languages.entries
       .firstWhere(

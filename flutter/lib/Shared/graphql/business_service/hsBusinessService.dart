@@ -44,6 +44,7 @@ Future<List<ServiceCard>> get_service_by_category(
         .forEach((Query$get_service_by_category$business_service data) async {
       _services.add(ServiceCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           service: Service(
             category1: data.details.category1.toServiceCategory1(),
             details: BusinessItemDetails(
@@ -114,6 +115,7 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
           detailsId: data.business.details.id,
           name: data.business.details.name,
           image: data.business.details.image,
+          currency: data.business.details.currency.toCurrency(),
           acceptedPayments: PaymentInfo.fromData(
                   stripeInfo: {},
                   acceptedPayments: data.business.details.accepted_payments)

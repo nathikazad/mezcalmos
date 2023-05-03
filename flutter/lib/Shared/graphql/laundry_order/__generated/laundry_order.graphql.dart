@@ -707,6 +707,13 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
@@ -3608,6 +3615,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$detai
     required this.id,
     required this.name,
     required this.image,
+    required this.currency,
     required this.location,
     required this.$__typename,
   });
@@ -3617,12 +3625,14 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$detai
     final l$id = json['id'];
     final l$name = json['name'];
     final l$image = json['image'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$details(
       id: (l$id as int),
       name: (l$name as String),
       image: (l$image as String),
+      currency: (l$currency as String),
       location:
           Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -3635,6 +3645,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$detai
   final String name;
 
   final String image;
+
+  final String currency;
 
   final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$details$location
       location;
@@ -3649,6 +3661,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$detai
     _resultData['name'] = l$name;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -3661,12 +3675,14 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$detai
     final l$id = id;
     final l$name = name;
     final l$image = image;
+    final l$currency = currency;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$image,
+      l$currency,
       l$location,
       l$$__typename,
     ]);
@@ -3695,6 +3711,11 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$detai
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -3740,6 +3761,7 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
     int? id,
     String? name,
     String? image,
+    String? currency,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$details$location?
         location,
     String? $__typename,
@@ -3771,6 +3793,7 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
     Object? id = _undefined,
     Object? name = _undefined,
     Object? image = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -3783,6 +3806,9 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -3813,6 +3839,7 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
     int? id,
     String? name,
     String? image,
+    String? currency,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$details$location?
         location,
     String? $__typename,
@@ -6583,6 +6610,13 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'currency'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -9471,6 +9505,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$store$details {
     required this.id,
     required this.name,
     required this.image,
+    required this.currency,
     required this.location,
     required this.$__typename,
   });
@@ -9480,12 +9515,14 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$store$details {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$image = json['image'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$get_laundry_order_by_id$laundry_order_by_pk$store$details(
       id: (l$id as int),
       name: (l$name as String),
       image: (l$image as String),
+      currency: (l$currency as String),
       location:
           Query$get_laundry_order_by_id$laundry_order_by_pk$store$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -9498,6 +9535,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$store$details {
   final String name;
 
   final String image;
+
+  final String currency;
 
   final Query$get_laundry_order_by_id$laundry_order_by_pk$store$details$location
       location;
@@ -9512,6 +9551,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$store$details {
     _resultData['name'] = l$name;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -9524,12 +9565,14 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$store$details {
     final l$id = id;
     final l$name = name;
     final l$image = image;
+    final l$currency = currency;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$image,
+      l$currency,
       l$location,
       l$$__typename,
     ]);
@@ -9558,6 +9601,11 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$store$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -9602,6 +9650,7 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$
     int? id,
     String? name,
     String? image,
+    String? currency,
     Query$get_laundry_order_by_id$laundry_order_by_pk$store$details$location?
         location,
     String? $__typename,
@@ -9632,6 +9681,7 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$deta
     Object? id = _undefined,
     Object? name = _undefined,
     Object? image = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -9643,6 +9693,9 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$deta
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -9673,6 +9726,7 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$
     int? id,
     String? name,
     String? image,
+    String? currency,
     Query$get_laundry_order_by_id$laundry_order_by_pk$store$details$location?
         location,
     String? $__typename,

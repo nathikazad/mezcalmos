@@ -45,6 +45,7 @@ Future<List<RentalCard>> get_rental_by_category(
         .forEach((Query$get_rental_by_category$business_rental data) async {
       _rentals.add(RentalCard(
         businessName: data.business.details.name,
+        currency: data.business.details.currency.toCurrency(),
         rental: Rental(
             category1: data.details.category1.toRentalCategory1(),
             category2: data.details.category2.toRentalCategory2(),
@@ -136,6 +137,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,
+            currency: data.business.details.currency.toCurrency(),
             acceptedPayments: PaymentInfo.fromData(
                     stripeInfo: {},
                     acceptedPayments: data.business.details.accepted_payments)
@@ -199,6 +201,7 @@ Future<List<RentalCard>> get_home_rentals(
         .forEach((Query$get_home_rentals$business_home_rental data) async {
       _homes.add(RentalCard(
           businessName: data.rental.business.details.name,
+          currency: data.rental.business.details.currency.toCurrency(),
           rental: Rental(
             category1: data.rental.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(
@@ -254,6 +257,7 @@ Future<List<RentalCard>> get_business_home_rentals(
         (Query$get_business_home_rentals$business_home_rental data) async {
       _homes.add(RentalCard(
           businessName: data.rental.business.details.name,
+          currency: data.rental.business.details.currency.toCurrency(),
           rental: Rental(
             category1: data.rental.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(

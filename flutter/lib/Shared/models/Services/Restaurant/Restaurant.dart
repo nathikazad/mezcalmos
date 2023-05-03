@@ -57,6 +57,7 @@ class Restaurant extends Service {
     super.deliveryCost,
     super.reviews,
     super.rate,
+    super.currency,
     this.serviceLink,
     this.deliveryDetailsId,
     this.selfDelivery = false,

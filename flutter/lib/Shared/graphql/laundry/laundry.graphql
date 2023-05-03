@@ -106,7 +106,7 @@ query getLaundryStoreById($id: Int!) {
     details {
       id
       location_id
-
+      currency
       image
       language
       description_id
@@ -187,6 +187,7 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
       location_id
       image
       language
+      currency
       location {
         gps
         address

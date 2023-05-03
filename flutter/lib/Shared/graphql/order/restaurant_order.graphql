@@ -13,6 +13,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         firebase_id
         image
         language
+        currency
         location {
           gps
           address
@@ -139,6 +140,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
         firebase_id
         image
         language
+        currency
         location {
           gps
           address
