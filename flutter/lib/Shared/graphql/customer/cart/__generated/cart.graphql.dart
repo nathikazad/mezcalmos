@@ -280,26 +280,7 @@ const documentNodeMutationaddItemToCart = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'object'),
             value: VariableNode(name: NameNode(value: 'item')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'on_conflict'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'constraint'),
-                value: EnumValueNode(
-                    name: NameNode(
-                        value:
-                            'restaurant_cart_item_customer_id_restaurant_item_id_key')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'update_columns'),
-                value: ListValueNode(values: [
-                  EnumValueNode(name: NameNode(value: 'quantity')),
-                  EnumValueNode(name: NameNode(value: 'cost_per_one')),
-                ]),
-              ),
-            ]),
-          ),
+          )
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

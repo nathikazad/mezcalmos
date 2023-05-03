@@ -1,9 +1,7 @@
 # Add Item to cart and return total cart price.
 
 mutation addItemToCart($item: restaurant_cart_item_insert_input!) {
-  insert_restaurant_cart_item_one(object: $item, 
-    on_conflict: {constraint: restaurant_cart_item_customer_id_restaurant_item_id_key, 
-      update_columns: [quantity, cost_per_one]}) {
+  insert_restaurant_cart_item_one(object: $item) {
     id
     cost_per_one
     customer_id
