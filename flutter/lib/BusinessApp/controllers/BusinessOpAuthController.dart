@@ -21,6 +21,8 @@ class BusinessOpAuthController extends GetxController {
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
 
+  get businessProfile => null;
+
   @override
   void onInit() {
     // ------------------------------------------------------------------------

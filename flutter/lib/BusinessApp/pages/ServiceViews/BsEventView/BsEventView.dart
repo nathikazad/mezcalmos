@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/controllers/BsEventViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -15,7 +16,9 @@ class BsOpEventView extends StatefulWidget {
   static Future<bool?> navigate({required int? id}) async {
     String route = BusinessOpRoutes.kBsOpEvent;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
-    await MezRouter.toPath(route);
+    await MezRouter.toPath(
+      route,
+    );
     return MezRouter.backResult;
   }
 
@@ -28,7 +31,8 @@ class _BsOpEventViewState extends State<BsOpEventView>
   BsEventViewController viewController = BsEventViewController();
   @override
   void initState() {
-    viewController.init(thickerProvider: this);
+   
+    viewController.init(thickerProvider: this,);
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);

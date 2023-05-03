@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
@@ -254,6 +255,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             builder: (BuildContext context) {
               BusinessServiceType currentSelectedService =
                   BusinessServiceType.Rental;
+              final profile =
+                  Get.find<BusinessOpAuthController>().businessProfile;
               void navigateToOfferingView() {
                 switch (currentSelectedService) {
                   case BusinessServiceType.Rental:
@@ -263,7 +266,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     BsOpHomeRentalView.navigate(id: null);
                     return;
                   case BusinessServiceType.Event:
-                    BsOpEventView.navigate(id: null);
+                    BsOpEventView.navigate(
+                      id: null,
+                    );
                     return;
                   case BusinessServiceType.Class:
                     BsOpEventView.navigate(id: null);

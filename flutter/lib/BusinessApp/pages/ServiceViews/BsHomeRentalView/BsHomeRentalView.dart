@@ -3,13 +3,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/controllers/BsHomeRentalViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServicePriceCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpTimeUnitSelectorSheet.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -182,74 +180,17 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               ),
             ),
             bigSeperator,
-            Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    "Prices",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                ),
-                InkWell(
-                    onTap: () async {
-                      if (viewController.units.length > 1) {
-                        TimeUnit? newUnit = await bsOpTimeUnitSelectorSheet(
-                            context: context, units: viewController.units);
-                        mezDbgPrint("newUnit: $newUnit");
-                        if (newUnit != null) {
-                          viewController.detailsController
-                              .addPriceTimeUnit(newUnit);
-                        }
-                      } else if (viewController.units.length == 1) {
-                        viewController.detailsController
-                            .addPriceTimeUnit(viewController.units.first);
-                      }
-                    },
-                    child: Ink(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add_circle_outline,
-                            size: 20,
-                            color: primaryBlueColor,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Add price",
-                            style: context.textTheme.bodyLarge
-                                ?.copyWith(color: primaryBlueColor),
-                          ),
-                        ],
-                      ),
-                    )),
-              ],
-            ),
-            smallSepartor,
             Obx(
-              () => Column(
-                  children: List.generate(
-                      viewController.detailsController.priceTimeUnitMap.length,
-                      (int index) {
-                final TimeUnit timeUnit = viewController
-                    .detailsController.priceTimeUnitMap.entries
-                    .toList()[index]
-                    .value;
-                final TextEditingController textEditingController =
-                    viewController.detailsController.priceTimeUnitMap.entries
-                        .toList()[index]
-                        .key;
-                return BsOpServicePriceCard(
-                  textEditingController: textEditingController,
-                  timeUnit: timeUnit,
-                  onRemoveTimeUnit: () {
-                    viewController.detailsController.removeTimeUnit(timeUnit);
-                  },
-                );
-              })),
+              ()=> BsOpOfferingPricesList(
+                availbleUnits: viewController.avalbleUnits,
+                onAddPrice: (TimeUnit unit) {
+                  viewController.detailsController.addPriceTimeUnit(unit);
+                },
+                onRemovePrice: (TimeUnit unit) {
+                  viewController.detailsController.removeTimeUnit(unit);
+                },
+                seletedPrices: viewController.detailsController.priceTimeUnitMap,
+              ),
             ),
             bigSeperator,
             Text(
