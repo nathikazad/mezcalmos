@@ -32,7 +32,7 @@ class BsProductViewController {
   bool get isEditing => _product.value != null;
   Rxn<ProductCategory1> productCategory = Rxn<ProductCategory1>();
 
-  List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([TimeUnit.Total]);
+  List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([TimeUnit.Unit]);
   List<TimeUnit> get avalbleUnits => _possibleTimeUnits
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
