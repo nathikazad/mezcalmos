@@ -26,6 +26,7 @@ query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, 
       details {
         id
         name
+        currency
         location {
           gps
           address
@@ -49,7 +50,7 @@ query get_rental_by_id($id: Int!) {
       details {
         id
         name
-        
+        currency
         image
         location {
           gps
@@ -144,6 +145,7 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
         details {
           id
           name
+          currency
         }
       }
     }
@@ -189,6 +191,7 @@ query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
         details {
           id
           name
+          currency
         }
       }
     }
@@ -303,7 +306,7 @@ query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
       details {
         id
         name
-        
+        currency
         image
         location {
           gps

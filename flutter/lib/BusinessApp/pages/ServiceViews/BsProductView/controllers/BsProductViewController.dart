@@ -24,6 +24,7 @@ class BsProductViewController {
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
+  TextEditingController priceController = TextEditingController();
   // vars //
   bool shouldRefetch = false;
   // state variables //
@@ -37,7 +38,7 @@ class BsProductViewController {
 
   Future<void> initEditMode({required int id}) async {
     _product.value = await get_product_by_id(id: id, withCache: false);
-    mezDbgPrint("product id : $id");
+    mezDbgPrint("product id : $id ${_product.value?.toFirebaseFormattedJson()}");
     if (product != null) {
       await detailsController.initEditMode(
           detalsId: product!.details.id.toInt());
@@ -48,6 +49,31 @@ class BsProductViewController {
     await detailsController.updateItemDetails();
   }
 
+  Future<Product> _constructProduct() async {
+    final BusinessItemDetails details =
+        await detailsController.contructDetails();
+    details.cost = {
+      TimeUnit.Total: num.parse(priceController.text.trim().toString()),
+    };
+    final Product product = Product(
+      category1: ProductCategory1.Consumable,
+      details: details,
+    );
+    return product;
+  }
+
+  Future<void> save() async {
+    if (formKey.currentState?.validate() == true) {
+      if (isEditing) {
+        await saveItemDetails();
+        shouldRefetch = true;
+      } else {
+        final Product _product = await _constructProduct();
+        await createItem(_product);
+      }
+    }
+  }
+
   void dispose() {
     // TODO: implement dispose
   }
@@ -56,7 +82,7 @@ class BsProductViewController {
     mezDbgPrint(
         "Create product with this payload : ${product.toFirebaseFormattedJson()}");
     try {
-      int? res = await add_one_product(product: product);
+      final int? res = await add_one_product(product: product);
 
       if (res != null) {
         showSavedSnackBar();

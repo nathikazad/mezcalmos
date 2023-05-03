@@ -809,6 +809,13 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
@@ -2165,6 +2172,7 @@ class Query$get_rental_by_category$business_rental$business$details {
   Query$get_rental_by_category$business_rental$business$details({
     required this.id,
     required this.name,
+    required this.currency,
     required this.location,
     required this.$__typename,
   });
@@ -2173,11 +2181,13 @@ class Query$get_rental_by_category$business_rental$business$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$get_rental_by_category$business_rental$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      currency: (l$currency as String),
       location:
           Query$get_rental_by_category$business_rental$business$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -2188,6 +2198,8 @@ class Query$get_rental_by_category$business_rental$business$details {
   final int id;
 
   final String name;
+
+  final String currency;
 
   final Query$get_rental_by_category$business_rental$business$details$location
       location;
@@ -2200,6 +2212,8 @@ class Query$get_rental_by_category$business_rental$business$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -2211,11 +2225,13 @@ class Query$get_rental_by_category$business_rental$business$details {
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$currency = currency;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
+      l$currency,
       l$location,
       l$$__typename,
     ]);
@@ -2239,6 +2255,11 @@ class Query$get_rental_by_category$business_rental$business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -2281,6 +2302,7 @@ abstract class CopyWith$Query$get_rental_by_category$business_rental$business$de
   TRes call({
     int? id,
     String? name,
+    String? currency,
     Query$get_rental_by_category$business_rental$business$details$location?
         location,
     String? $__typename,
@@ -2309,6 +2331,7 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$business$detail
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -2317,6 +2340,9 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental$business$detail
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -2346,6 +2372,7 @@ class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$business$de
   call({
     int? id,
     String? name,
+    String? currency,
     Query$get_rental_by_category$business_rental$business$details$location?
         location,
     String? $__typename,
@@ -3035,6 +3062,13 @@ const documentNodeQueryget_rental_by_id = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'currency'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -3965,6 +3999,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
   Query$get_rental_by_id$business_rental_by_pk$business$details({
     required this.id,
     required this.name,
+    required this.currency,
     required this.image,
     required this.location,
     required this.accepted_payments,
@@ -3975,6 +4010,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$image = json['image'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
@@ -3982,6 +4018,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     return Query$get_rental_by_id$business_rental_by_pk$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      currency: (l$currency as String),
       image: (l$image as String),
       location:
           Query$get_rental_by_id$business_rental_by_pk$business$details$location
@@ -3994,6 +4031,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
   final int id;
 
   final String name;
+
+  final String currency;
 
   final String image;
 
@@ -4010,6 +4049,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$location = location;
@@ -4025,6 +4066,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$currency = currency;
     final l$image = image;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
@@ -4032,6 +4074,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     return Object.hashAll([
       l$id,
       l$name,
+      l$currency,
       l$image,
       l$location,
       l$accepted_payments,
@@ -4057,6 +4100,11 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$image = image;
@@ -4109,6 +4157,7 @@ abstract class CopyWith$Query$get_rental_by_id$business_rental_by_pk$business$de
   TRes call({
     int? id,
     String? name,
+    String? currency,
     String? image,
     Query$get_rental_by_id$business_rental_by_pk$business$details$location?
         location,
@@ -4139,6 +4188,7 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$business$detail
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? image = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
@@ -4149,6 +4199,9 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$business$detail
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -4185,6 +4238,7 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$business$de
   call({
     int? id,
     String? name,
+    String? currency,
     String? image,
     Query$get_rental_by_id$business_rental_by_pk$business$details$location?
         location,
@@ -6860,6 +6914,13 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'currency'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: '__typename'),
                         alias: null,
                         arguments: [],
@@ -8755,6 +8816,7 @@ class Query$get_home_rentals$business_home_rental$rental$business$details {
   Query$get_home_rentals$business_home_rental$rental$business$details({
     required this.id,
     required this.name,
+    required this.currency,
     required this.$__typename,
   });
 
@@ -8762,10 +8824,12 @@ class Query$get_home_rentals$business_home_rental$rental$business$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
     return Query$get_home_rentals$business_home_rental$rental$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      currency: (l$currency as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8773,6 +8837,8 @@ class Query$get_home_rentals$business_home_rental$rental$business$details {
   final int id;
 
   final String name;
+
+  final String currency;
 
   final String $__typename;
 
@@ -8782,6 +8848,8 @@ class Query$get_home_rentals$business_home_rental$rental$business$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8791,10 +8859,12 @@ class Query$get_home_rentals$business_home_rental$rental$business$details {
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$currency = currency;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
+      l$currency,
       l$$__typename,
     ]);
   }
@@ -8817,6 +8887,11 @@ class Query$get_home_rentals$business_home_rental$rental$business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -8856,6 +8931,7 @@ abstract class CopyWith$Query$get_home_rentals$business_home_rental$rental$busin
   TRes call({
     int? id,
     String? name,
+    String? currency,
     String? $__typename,
   });
 }
@@ -8882,6 +8958,7 @@ class _CopyWithImpl$Query$get_home_rentals$business_home_rental$rental$business$
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_home_rentals$business_home_rental$rental$business$details(
@@ -8889,6 +8966,9 @@ class _CopyWithImpl$Query$get_home_rentals$business_home_rental$rental$business$
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -8908,6 +8988,7 @@ class _CopyWithStubImpl$Query$get_home_rentals$business_home_rental$rental$busin
   call({
     int? id,
     String? name,
+    String? currency,
     String? $__typename,
   }) =>
       _res;
@@ -9566,6 +9647,13 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
                       ),
                       FieldNode(
                         name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'currency'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -11517,6 +11605,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
   Query$get_business_home_rentals$business_home_rental$rental$business$details({
     required this.id,
     required this.name,
+    required this.currency,
     required this.$__typename,
   });
 
@@ -11524,10 +11613,12 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
     return Query$get_business_home_rentals$business_home_rental$rental$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      currency: (l$currency as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -11535,6 +11626,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
   final int id;
 
   final String name;
+
+  final String currency;
 
   final String $__typename;
 
@@ -11544,6 +11637,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -11553,10 +11648,12 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$currency = currency;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
+      l$currency,
       l$$__typename,
     ]);
   }
@@ -11579,6 +11676,11 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -11618,6 +11720,7 @@ abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$ren
   TRes call({
     int? id,
     String? name,
+    String? currency,
     String? $__typename,
   });
 }
@@ -11644,6 +11747,7 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -11652,6 +11756,9 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -11671,6 +11778,7 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
   call({
     int? id,
     String? name,
+    String? currency,
     String? $__typename,
   }) =>
       _res;
@@ -17964,6 +18072,13 @@ const documentNodeQueryget_business_rentals = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'image'),
                     alias: null,
                     arguments: [],
@@ -19234,6 +19349,7 @@ class Query$get_business_rentals$business_rental$business$details {
   Query$get_business_rentals$business_rental$business$details({
     required this.id,
     required this.name,
+    required this.currency,
     required this.image,
     required this.location,
     required this.accepted_payments,
@@ -19244,6 +19360,7 @@ class Query$get_business_rentals$business_rental$business$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$image = json['image'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
@@ -19251,6 +19368,7 @@ class Query$get_business_rentals$business_rental$business$details {
     return Query$get_business_rentals$business_rental$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      currency: (l$currency as String),
       image: (l$image as String),
       location:
           Query$get_business_rentals$business_rental$business$details$location
@@ -19263,6 +19381,8 @@ class Query$get_business_rentals$business_rental$business$details {
   final int id;
 
   final String name;
+
+  final String currency;
 
   final String image;
 
@@ -19279,6 +19399,8 @@ class Query$get_business_rentals$business_rental$business$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$location = location;
@@ -19294,6 +19416,7 @@ class Query$get_business_rentals$business_rental$business$details {
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$currency = currency;
     final l$image = image;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
@@ -19301,6 +19424,7 @@ class Query$get_business_rentals$business_rental$business$details {
     return Object.hashAll([
       l$id,
       l$name,
+      l$currency,
       l$image,
       l$location,
       l$accepted_payments,
@@ -19326,6 +19450,11 @@ class Query$get_business_rentals$business_rental$business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$image = image;
@@ -19378,6 +19507,7 @@ abstract class CopyWith$Query$get_business_rentals$business_rental$business$deta
   TRes call({
     int? id,
     String? name,
+    String? currency,
     String? image,
     Query$get_business_rentals$business_rental$business$details$location?
         location,
@@ -19408,6 +19538,7 @@ class _CopyWithImpl$Query$get_business_rentals$business_rental$business$details<
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? image = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
@@ -19418,6 +19549,9 @@ class _CopyWithImpl$Query$get_business_rentals$business_rental$business$details<
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -19454,6 +19588,7 @@ class _CopyWithStubImpl$Query$get_business_rentals$business_rental$business$deta
   call({
     int? id,
     String? name,
+    String? currency,
     String? image,
     Query$get_business_rentals$business_rental$business$details$location?
         location,

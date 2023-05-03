@@ -443,6 +443,13 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'currency'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'description'),
                 alias: null,
                 arguments: [],
@@ -1194,6 +1201,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     required this.open_status,
     required this.creation_time,
     required this.service_provider_type,
+    required this.currency,
     this.description,
     required this.location,
     required this.$__typename,
@@ -1212,6 +1220,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
     final l$service_provider_type = json['service_provider_type'];
+    final l$currency = json['currency'];
     final l$description = json['description'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
@@ -1227,6 +1236,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
+      currency: (l$currency as String),
       description: l$description == null
           ? null
           : Query$getDeliveryCompanyById$delivery_company_by_pk$details$description
@@ -1260,6 +1270,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
 
   final String service_provider_type;
 
+  final String currency;
+
   final Query$getDeliveryCompanyById$delivery_company_by_pk$details$description?
       description;
 
@@ -1292,6 +1304,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     _resultData['creation_time'] = l$creation_time;
     final l$service_provider_type = service_provider_type;
     _resultData['service_provider_type'] = l$service_provider_type;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$description = description;
     _resultData['description'] = l$description?.toJson();
     final l$location = location;
@@ -1314,6 +1328,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$open_status = open_status;
     final l$creation_time = creation_time;
     final l$service_provider_type = service_provider_type;
+    final l$currency = currency;
     final l$description = description;
     final l$location = location;
     final l$$__typename = $__typename;
@@ -1329,6 +1344,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
       l$open_status,
       l$creation_time,
       l$service_provider_type,
+      l$currency,
       l$description,
       l$location,
       l$$__typename,
@@ -1400,6 +1416,11 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     if (l$service_provider_type != lOther$service_provider_type) {
       return false;
     }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
@@ -1454,6 +1475,7 @@ abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
     String? open_status,
     String? creation_time,
     String? service_provider_type,
+    String? currency,
     Query$getDeliveryCompanyById$delivery_company_by_pk$details$description?
         description,
     Query$getDeliveryCompanyById$delivery_company_by_pk$details$location?
@@ -1495,6 +1517,7 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
     Object? service_provider_type = _undefined,
+    Object? currency = _undefined,
     Object? description = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
@@ -1532,6 +1555,9 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
                 : (service_provider_type as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         description: description == _undefined
             ? _instance.description
             : (description
@@ -1584,6 +1610,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
     String? open_status,
     String? creation_time,
     String? service_provider_type,
+    String? currency,
     Query$getDeliveryCompanyById$delivery_company_by_pk$details$description?
         description,
     Query$getDeliveryCompanyById$delivery_company_by_pk$details$location?

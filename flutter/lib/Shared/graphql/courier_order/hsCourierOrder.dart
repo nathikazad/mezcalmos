@@ -149,7 +149,9 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
                   .toString()),
           hasuraId: orderData.delivery_order.delivery_company!.id,
           image: orderData.delivery_order.delivery_company!.details!.image,
-          name: orderData.delivery_order.delivery_company!.details!.name),
+          name: orderData.delivery_order.delivery_company!.details!.name,
+          currency: orderData.delivery_order.delivery_company!.details!.currency
+              .toCurrency()),
 
       items: orderData.items
           .map((Query$get_courier_order_by_id$delivery_courier_order_by_pk$items
@@ -309,7 +311,10 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                     .toString()),
             hasuraId: orderData.delivery_order.delivery_company!.id,
             image: orderData.delivery_order.delivery_company!.details!.image,
-            name: orderData.delivery_order.delivery_company!.details!.name),
+            name: orderData.delivery_order.delivery_company!.details!.name,
+            currency: orderData
+                .delivery_order.delivery_company!.details!.currency
+                .toCurrency()),
 
         items: orderData.items
             .map(

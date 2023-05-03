@@ -75,6 +75,7 @@ query get_courier_order_by_id($orderId: Int!) {
         details {
           image
           name
+          currency
            location {
           gps
           address
@@ -240,6 +241,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
         details {
           image
           name
+          currency
            location {
           gps
           address

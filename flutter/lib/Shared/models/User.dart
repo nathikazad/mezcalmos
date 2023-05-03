@@ -161,6 +161,7 @@ class ServiceInfo extends UserInfo {
   int? descriptionId;
   String? phoneNumber;
   LanguageMap? description;
+  Currency? currency;
 
   ServiceInfo({
     required this.location,
@@ -171,6 +172,7 @@ class ServiceInfo extends UserInfo {
     required super.hasuraId,
     required super.image,
     this.descriptionId,
+    this.currency,
     required super.name,
     Language? lang,
   }) : super(language: lang);

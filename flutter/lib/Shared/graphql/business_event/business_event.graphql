@@ -7,6 +7,7 @@ query get_event_by_id($id: Int!) {
         accepted_payments
         image
         name
+        currency
       }
       reviews_aggregate {
         aggregate {
@@ -118,6 +119,7 @@ query get_event_by_category($categories1: [String!],
       details {
         id
         name
+        currency
         location {
           gps
           address
@@ -192,6 +194,7 @@ query get_class_by_category($categories1: [String!],
       details {
         id
         name
+        currency
         location {
           gps
           address
@@ -289,6 +292,7 @@ query get_business_events($businessId: Int!, $limit: Int, $offset: Int) {
         details {
           id
           name
+          currency
         }
       }
     }

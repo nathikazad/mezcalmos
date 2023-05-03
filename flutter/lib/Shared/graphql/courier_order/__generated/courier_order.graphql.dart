@@ -796,6 +796,13 @@ const documentNodeQueryget_courier_order_by_id = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'currency'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'location'),
                         alias: null,
                         arguments: [],
@@ -3968,6 +3975,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$
   Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details({
     required this.image,
     required this.name,
+    required this.currency,
     required this.location,
     required this.$__typename,
   });
@@ -3976,11 +3984,13 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$
       Map<String, dynamic> json) {
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details(
       image: (l$image as String),
       name: (l$name as String),
+      currency: (l$currency as String),
       location:
           Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -3991,6 +4001,8 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$
   final String image;
 
   final String name;
+
+  final String currency;
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location
       location;
@@ -4003,6 +4015,8 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -4014,11 +4028,13 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$
   int get hashCode {
     final l$image = image;
     final l$name = name;
+    final l$currency = currency;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$image,
       l$name,
+      l$currency,
       l$location,
       l$$__typename,
     ]);
@@ -4042,6 +4058,11 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -4086,6 +4107,7 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
   TRes call({
     String? image,
     String? name,
+    String? currency,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location?
         location,
     String? $__typename,
@@ -4116,6 +4138,7 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
   TRes call({
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -4127,6 +4150,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -4156,6 +4182,7 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
   call({
     String? image,
     String? name,
+    String? currency,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location?
         location,
     String? $__typename,
@@ -8671,6 +8698,13 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'currency'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'location'),
                         alias: null,
                         arguments: [],
@@ -11839,6 +11873,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
   Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details({
     required this.image,
     required this.name,
+    required this.currency,
     required this.location,
     required this.$__typename,
   });
@@ -11847,11 +11882,13 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       Map<String, dynamic> json) {
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details(
       image: (l$image as String),
       name: (l$name as String),
+      currency: (l$currency as String),
       location:
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -11862,6 +11899,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
   final String image;
 
   final String name;
+
+  final String currency;
 
   final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location
       location;
@@ -11874,6 +11913,8 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -11885,11 +11926,13 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
   int get hashCode {
     final l$image = image;
     final l$name = name;
+    final l$currency = currency;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$image,
       l$name,
+      l$currency,
       l$location,
       l$$__typename,
     ]);
@@ -11913,6 +11956,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$location = location;
@@ -11957,6 +12005,7 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
   TRes call({
     String? image,
     String? name,
+    String? currency,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location?
         location,
     String? $__typename,
@@ -11987,6 +12036,7 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   TRes call({
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -11998,6 +12048,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -12027,6 +12080,7 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
   call({
     String? image,
     String? name,
+    String? currency,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_company$details$location?
         location,
     String? $__typename,

@@ -65,6 +65,7 @@ mutation updateServiceDetails($detailsId: Int!, $data: service_provider_details_
     open_status
     phone_number
     service_link_id
+    currency
     stripe_info {
       charge_fees_on_customer
       charges_enabled

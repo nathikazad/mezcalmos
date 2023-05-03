@@ -7,6 +7,7 @@ query get_product_by_id($id: Int!) {
         accepted_payments
         image
         name
+        currency
       }
       reviews_aggregate {
         aggregate {
@@ -95,6 +96,7 @@ query get_product_by_category($categories1: [String!], $distance: Float!, $from:
       details {
         id
         name
+        currency
         location {
           gps
           address
@@ -166,6 +168,7 @@ query get_business_products($businessId: Int!, $limit: Int, $offset: Int) {
         details {
           id
           name
+          currency
         }
       }
     }

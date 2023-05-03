@@ -61,6 +61,7 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
         id
         name
         image
+        currency
         location {
           gps
           address
@@ -180,6 +181,7 @@ query get_laundry_order_by_id($orderId: Int!) {
         id
         name
         image
+        currency
         location {
           gps
           address

@@ -49,6 +49,7 @@ select_permissions:
         - accepted_payments
         - approved
         - creation_time
+        - currency
         - description_id
         - firebase_id
         - id
@@ -66,24 +67,25 @@ select_permissions:
   - role: business_operator
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - referral_points
-        - service_link_id
-        - stripe_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - currency
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - referral_points
+        - schedule
+        - service_link_id
         - service_provider_type
+        - stripe_id
         - unique_id
-        - creation_time
-        - language
       filter: {}
   - role: customer
     permission:
@@ -91,6 +93,7 @@ select_permissions:
         - accepted_payments
         - approved
         - creation_time
+        - currency
         - description_id
         - firebase_id
         - id
@@ -108,79 +111,83 @@ select_permissions:
   - role: delivery_driver
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - service_link_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - currency
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - schedule
+        - service_link_id
         - service_provider_type
-        - creation_time
-        - language
       filter: {}
   - role: delivery_operator
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - service_link_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - currency
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - schedule
+        - service_link_id
         - service_provider_type
-        - creation_time
-        - language
       filter: {}
   - role: laundry_operator
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - service_link_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - currency
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - schedule
+        - service_link_id
         - service_provider_type
-        - creation_time
-        - language
       filter: {}
   - role: mez_admin
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - service_link_id
-        - stripe_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - currency
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - schedule
+        - service_link_id
         - service_provider_type
-        - creation_time
-        - language
+        - stripe_id
       filter:
         _exists:
           _table:
@@ -192,27 +199,29 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - approved
-        - description_id
-        - id
-        - location_id
-        - service_link_id
         - accepted_payments
-        - schedule
+        - approved
+        - creation_time
+        - currency
+        - description_id
         - firebase_id
+        - id
         - image
+        - language
+        - location_id
         - name
         - open_status
         - phone_number
+        - schedule
+        - service_link_id
         - service_provider_type
-        - creation_time
-        - language
       filter: {}
 update_permissions:
   - role: delivery_operator
     permission:
       columns:
         - accepted_payments
+        - currency
         - image
         - language
         - name
@@ -229,6 +238,7 @@ update_permissions:
     permission:
       columns:
         - accepted_payments
+        - currency
         - description_id
         - image
         - language
@@ -246,6 +256,7 @@ update_permissions:
     permission:
       columns:
         - approved
+        - currency
         - image
         - language
         - location_id
@@ -273,6 +284,7 @@ update_permissions:
     permission:
       columns:
         - accepted_payments
+        - currency
         - description_id
         - image
         - language

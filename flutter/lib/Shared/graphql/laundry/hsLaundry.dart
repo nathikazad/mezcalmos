@@ -76,6 +76,7 @@ Future<Laundry?> get_laundry_store_by_id(
             locationId: data.details!.location_id,
             hasuraId: data.id,
             image: data.details!.image,
+            currency: data.details!.currency.toCurrency(),
             description: (data.details?.description?.translations != null)
                 ? {
                     data.details!.description!.translations.first.language_id
