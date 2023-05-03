@@ -13334,6 +13334,13 @@ const documentNodeQueryget_business_events = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -15004,6 +15011,7 @@ class Query$get_business_events$business_event$business$details {
   Query$get_business_events$business_event$business$details({
     required this.id,
     required this.name,
+    required this.currency,
     required this.$__typename,
   });
 
@@ -15011,10 +15019,12 @@ class Query$get_business_events$business_event$business$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
     return Query$get_business_events$business_event$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      currency: (l$currency as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -15022,6 +15032,8 @@ class Query$get_business_events$business_event$business$details {
   final int id;
 
   final String name;
+
+  final String currency;
 
   final String $__typename;
 
@@ -15031,6 +15043,8 @@ class Query$get_business_events$business_event$business$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -15040,10 +15054,12 @@ class Query$get_business_events$business_event$business$details {
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$currency = currency;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
+      l$currency,
       l$$__typename,
     ]);
   }
@@ -15065,6 +15081,11 @@ class Query$get_business_events$business_event$business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -15102,6 +15123,7 @@ abstract class CopyWith$Query$get_business_events$business_event$business$detail
   TRes call({
     int? id,
     String? name,
+    String? currency,
     String? $__typename,
   });
 }
@@ -15126,6 +15148,7 @@ class _CopyWithImpl$Query$get_business_events$business_event$business$details<
   TRes call({
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? currency = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_events$business_event$business$details(
@@ -15133,6 +15156,9 @@ class _CopyWithImpl$Query$get_business_events$business_event$business$details<
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -15152,6 +15178,7 @@ class _CopyWithStubImpl$Query$get_business_events$business_event$business$detail
   call({
     int? id,
     String? name,
+    String? currency,
     String? $__typename,
   }) =>
       _res;

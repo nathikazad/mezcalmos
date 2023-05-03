@@ -13813,43 +13813,6 @@ const documentNodeQuerygetRestaurantItems = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'restaurant'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'details'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'currency'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -13987,7 +13950,6 @@ class Query$getRestaurantItems$restaurant_item {
     this.special_period_end,
     this.special_period_start,
     required this.options,
-    this.restaurant,
     required this.$__typename,
   });
 
@@ -14005,7 +13967,6 @@ class Query$getRestaurantItems$restaurant_item {
     final l$special_period_end = json['special_period_end'];
     final l$special_period_start = json['special_period_start'];
     final l$options = json['options'];
-    final l$restaurant = json['restaurant'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurantItems$restaurant_item(
       id: (l$id as int),
@@ -14027,10 +13988,6 @@ class Query$getRestaurantItems$restaurant_item {
           .map((e) => Query$getRestaurantItems$restaurant_item$options.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      restaurant: l$restaurant == null
-          ? null
-          : Query$getRestaurantItems$restaurant_item$restaurant.fromJson(
-              (l$restaurant as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -14058,8 +14015,6 @@ class Query$getRestaurantItems$restaurant_item {
   final String? special_period_start;
 
   final List<Query$getRestaurantItems$restaurant_item$options> options;
-
-  final Query$getRestaurantItems$restaurant_item$restaurant? restaurant;
 
   final String $__typename;
 
@@ -14089,8 +14044,6 @@ class Query$getRestaurantItems$restaurant_item {
     _resultData['special_period_start'] = l$special_period_start;
     final l$options = options;
     _resultData['options'] = l$options.map((e) => e.toJson()).toList();
-    final l$restaurant = restaurant;
-    _resultData['restaurant'] = l$restaurant?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -14110,7 +14063,6 @@ class Query$getRestaurantItems$restaurant_item {
     final l$special_period_end = special_period_end;
     final l$special_period_start = special_period_start;
     final l$options = options;
-    final l$restaurant = restaurant;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -14125,7 +14077,6 @@ class Query$getRestaurantItems$restaurant_item {
       l$special_period_end,
       l$special_period_start,
       Object.hashAll(l$options.map((v) => v)),
-      l$restaurant,
       l$$__typename,
     ]);
   }
@@ -14206,11 +14157,6 @@ class Query$getRestaurantItems$restaurant_item {
         return false;
       }
     }
-    final l$restaurant = restaurant;
-    final lOther$restaurant = other.restaurant;
-    if (l$restaurant != lOther$restaurant) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -14252,7 +14198,6 @@ abstract class CopyWith$Query$getRestaurantItems$restaurant_item<TRes> {
     String? special_period_end,
     String? special_period_start,
     List<Query$getRestaurantItems$restaurant_item$options>? options,
-    Query$getRestaurantItems$restaurant_item$restaurant? restaurant,
     String? $__typename,
   });
   CopyWith$Query$getRestaurantItems$restaurant_item$name<TRes> get name;
@@ -14264,8 +14209,6 @@ abstract class CopyWith$Query$getRestaurantItems$restaurant_item<TRes> {
                   CopyWith$Query$getRestaurantItems$restaurant_item$options<
                       Query$getRestaurantItems$restaurant_item$options>>)
           _fn);
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant<TRes>
-      get restaurant;
 }
 
 class _CopyWithImpl$Query$getRestaurantItems$restaurant_item<TRes>
@@ -14294,7 +14237,6 @@ class _CopyWithImpl$Query$getRestaurantItems$restaurant_item<TRes>
     Object? special_period_end = _undefined,
     Object? special_period_start = _undefined,
     Object? options = _undefined,
-    Object? restaurant = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getRestaurantItems$restaurant_item(
@@ -14334,10 +14276,6 @@ class _CopyWithImpl$Query$getRestaurantItems$restaurant_item<TRes>
             ? _instance.options
             : (options
                 as List<Query$getRestaurantItems$restaurant_item$options>),
-        restaurant: restaurant == _undefined
-            ? _instance.restaurant
-            : (restaurant
-                as Query$getRestaurantItems$restaurant_item$restaurant?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -14370,15 +14308,6 @@ class _CopyWithImpl$Query$getRestaurantItems$restaurant_item<TRes>
                     e,
                     (i) => i,
                   ))).toList());
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant<TRes>
-      get restaurant {
-    final local$restaurant = _instance.restaurant;
-    return local$restaurant == null
-        ? CopyWith$Query$getRestaurantItems$restaurant_item$restaurant.stub(
-            _then(_instance))
-        : CopyWith$Query$getRestaurantItems$restaurant_item$restaurant(
-            local$restaurant, (e) => call(restaurant: e));
-  }
 }
 
 class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item<TRes>
@@ -14400,7 +14329,6 @@ class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item<TRes>
     String? special_period_end,
     String? special_period_start,
     List<Query$getRestaurantItems$restaurant_item$options>? options,
-    Query$getRestaurantItems$restaurant_item$restaurant? restaurant,
     String? $__typename,
   }) =>
       _res;
@@ -14411,10 +14339,6 @@ class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item<TRes>
           CopyWith$Query$getRestaurantItems$restaurant_item$description.stub(
               _res);
   options(_fn) => _res;
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant<TRes>
-      get restaurant =>
-          CopyWith$Query$getRestaurantItems$restaurant_item$restaurant.stub(
-              _res);
 }
 
 class Query$getRestaurantItems$restaurant_item$name {
@@ -16742,300 +16666,6 @@ class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$options$item_op
   call({
     String? language_id,
     String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$getRestaurantItems$restaurant_item$restaurant {
-  Query$getRestaurantItems$restaurant_item$restaurant({
-    this.details,
-    required this.$__typename,
-  });
-
-  factory Query$getRestaurantItems$restaurant_item$restaurant.fromJson(
-      Map<String, dynamic> json) {
-    final l$details = json['details'];
-    final l$$__typename = json['__typename'];
-    return Query$getRestaurantItems$restaurant_item$restaurant(
-      details: l$details == null
-          ? null
-          : Query$getRestaurantItems$restaurant_item$restaurant$details
-              .fromJson((l$details as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Query$getRestaurantItems$restaurant_item$restaurant$details? details;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$details = details;
-    _resultData['details'] = l$details?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$details = details;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$details,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$getRestaurantItems$restaurant_item$restaurant) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getRestaurantItems$restaurant_item$restaurant
-    on Query$getRestaurantItems$restaurant_item$restaurant {
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant<
-          Query$getRestaurantItems$restaurant_item$restaurant>
-      get copyWith =>
-          CopyWith$Query$getRestaurantItems$restaurant_item$restaurant(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$getRestaurantItems$restaurant_item$restaurant<
-    TRes> {
-  factory CopyWith$Query$getRestaurantItems$restaurant_item$restaurant(
-    Query$getRestaurantItems$restaurant_item$restaurant instance,
-    TRes Function(Query$getRestaurantItems$restaurant_item$restaurant) then,
-  ) = _CopyWithImpl$Query$getRestaurantItems$restaurant_item$restaurant;
-
-  factory CopyWith$Query$getRestaurantItems$restaurant_item$restaurant.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$restaurant;
-
-  TRes call({
-    Query$getRestaurantItems$restaurant_item$restaurant$details? details,
-    String? $__typename,
-  });
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details<TRes>
-      get details;
-}
-
-class _CopyWithImpl$Query$getRestaurantItems$restaurant_item$restaurant<TRes>
-    implements
-        CopyWith$Query$getRestaurantItems$restaurant_item$restaurant<TRes> {
-  _CopyWithImpl$Query$getRestaurantItems$restaurant_item$restaurant(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getRestaurantItems$restaurant_item$restaurant _instance;
-
-  final TRes Function(Query$getRestaurantItems$restaurant_item$restaurant)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? details = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getRestaurantItems$restaurant_item$restaurant(
-        details: details == _undefined
-            ? _instance.details
-            : (details
-                as Query$getRestaurantItems$restaurant_item$restaurant$details?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details<TRes>
-      get details {
-    final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details
-            .stub(_then(_instance))
-        : CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details(
-            local$details, (e) => call(details: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$restaurant<
-        TRes>
-    implements
-        CopyWith$Query$getRestaurantItems$restaurant_item$restaurant<TRes> {
-  _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$restaurant(
-      this._res);
-
-  TRes _res;
-
-  call({
-    Query$getRestaurantItems$restaurant_item$restaurant$details? details,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details<TRes>
-      get details =>
-          CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details
-              .stub(_res);
-}
-
-class Query$getRestaurantItems$restaurant_item$restaurant$details {
-  Query$getRestaurantItems$restaurant_item$restaurant$details({
-    required this.currency,
-    required this.$__typename,
-  });
-
-  factory Query$getRestaurantItems$restaurant_item$restaurant$details.fromJson(
-      Map<String, dynamic> json) {
-    final l$currency = json['currency'];
-    final l$$__typename = json['__typename'];
-    return Query$getRestaurantItems$restaurant_item$restaurant$details(
-      currency: (l$currency as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String currency;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$currency = currency;
-    _resultData['currency'] = l$currency;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$currency = currency;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$currency,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$getRestaurantItems$restaurant_item$restaurant$details) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$currency = currency;
-    final lOther$currency = other.currency;
-    if (l$currency != lOther$currency) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getRestaurantItems$restaurant_item$restaurant$details
-    on Query$getRestaurantItems$restaurant_item$restaurant$details {
-  CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details<
-          Query$getRestaurantItems$restaurant_item$restaurant$details>
-      get copyWith =>
-          CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details<
-    TRes> {
-  factory CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details(
-    Query$getRestaurantItems$restaurant_item$restaurant$details instance,
-    TRes Function(Query$getRestaurantItems$restaurant_item$restaurant$details)
-        then,
-  ) = _CopyWithImpl$Query$getRestaurantItems$restaurant_item$restaurant$details;
-
-  factory CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$restaurant$details;
-
-  TRes call({
-    String? currency,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$getRestaurantItems$restaurant_item$restaurant$details<
-        TRes>
-    implements
-        CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details<
-            TRes> {
-  _CopyWithImpl$Query$getRestaurantItems$restaurant_item$restaurant$details(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getRestaurantItems$restaurant_item$restaurant$details _instance;
-
-  final TRes Function(
-      Query$getRestaurantItems$restaurant_item$restaurant$details) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? currency = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getRestaurantItems$restaurant_item$restaurant$details(
-        currency: currency == _undefined || currency == null
-            ? _instance.currency
-            : (currency as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$restaurant$details<
-        TRes>
-    implements
-        CopyWith$Query$getRestaurantItems$restaurant_item$restaurant$details<
-            TRes> {
-  _CopyWithStubImpl$Query$getRestaurantItems$restaurant_item$restaurant$details(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? currency,
     String? $__typename,
   }) =>
       _res;
