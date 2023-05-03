@@ -237,7 +237,6 @@ Future<List<ProductCard>> get_business_products(
     response.parsedData?.business_product
         .forEach((Query$get_business_products$business_product data) async {
       _products.add(ProductCard(
-          currency: Currency.Peso,
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           product: Product(

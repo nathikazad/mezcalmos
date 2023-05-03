@@ -456,7 +456,6 @@ Future<List<EventCard>> get_business_events(
     response.parsedData?.business_event
         .forEach((Query$get_business_events$business_event data) async {
       _events.add(EventCard(
-          currency: Currency.Peso,
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           event: Event(
