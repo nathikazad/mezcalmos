@@ -3,13 +3,12 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 /// This Generates the first letters of the first 2 words in a String,
 ///
 /// Ex : Mezcalmos Admin => MA
 
-Language userLanguage = Get.find<LanguageController>().userLanguageKey;
+Language get userLanguage => Get.find<LanguageController>().userLanguageKey;
 String getRandomString(int length) {
   const String _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
