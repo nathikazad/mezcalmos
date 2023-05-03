@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 ///
 /// Ex : Mezcalmos Admin => MA
 
-LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+LanguageType get userLanguage => Get.find<LanguageController>().userLanguageKey;
 String getRandomString(int length) {
   const String _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
