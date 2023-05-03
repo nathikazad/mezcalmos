@@ -1179,3 +1179,734 @@ class _CopyWithStubImpl$Query$getBusinessOperatorByUserId$business_operator$user
   }) =>
       _res;
 }
+
+class Variables$Query$getOperatorBusinessProfile {
+  factory Variables$Query$getOperatorBusinessProfile({required int userId}) =>
+      Variables$Query$getOperatorBusinessProfile._({
+        r'userId': userId,
+      });
+
+  Variables$Query$getOperatorBusinessProfile._(this._$data);
+
+  factory Variables$Query$getOperatorBusinessProfile.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$userId = data['userId'];
+    result$data['userId'] = (l$userId as int);
+    return Variables$Query$getOperatorBusinessProfile._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get userId => (_$data['userId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$userId = userId;
+    result$data['userId'] = l$userId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getOperatorBusinessProfile<
+          Variables$Query$getOperatorBusinessProfile>
+      get copyWith => CopyWith$Variables$Query$getOperatorBusinessProfile(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getOperatorBusinessProfile) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$userId = userId;
+    final lOther$userId = other.userId;
+    if (l$userId != lOther$userId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$userId = userId;
+    return Object.hashAll([l$userId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getOperatorBusinessProfile<TRes> {
+  factory CopyWith$Variables$Query$getOperatorBusinessProfile(
+    Variables$Query$getOperatorBusinessProfile instance,
+    TRes Function(Variables$Query$getOperatorBusinessProfile) then,
+  ) = _CopyWithImpl$Variables$Query$getOperatorBusinessProfile;
+
+  factory CopyWith$Variables$Query$getOperatorBusinessProfile.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getOperatorBusinessProfile;
+
+  TRes call({int? userId});
+}
+
+class _CopyWithImpl$Variables$Query$getOperatorBusinessProfile<TRes>
+    implements CopyWith$Variables$Query$getOperatorBusinessProfile<TRes> {
+  _CopyWithImpl$Variables$Query$getOperatorBusinessProfile(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getOperatorBusinessProfile _instance;
+
+  final TRes Function(Variables$Query$getOperatorBusinessProfile) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? userId = _undefined}) =>
+      _then(Variables$Query$getOperatorBusinessProfile._({
+        ..._instance._$data,
+        if (userId != _undefined && userId != null) 'userId': (userId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getOperatorBusinessProfile<TRes>
+    implements CopyWith$Variables$Query$getOperatorBusinessProfile<TRes> {
+  _CopyWithStubImpl$Variables$Query$getOperatorBusinessProfile(this._res);
+
+  TRes _res;
+
+  call({int? userId}) => _res;
+}
+
+class Query$getOperatorBusinessProfile {
+  Query$getOperatorBusinessProfile({
+    required this.business_operator,
+    required this.$__typename,
+  });
+
+  factory Query$getOperatorBusinessProfile.fromJson(Map<String, dynamic> json) {
+    final l$business_operator = json['business_operator'];
+    final l$$__typename = json['__typename'];
+    return Query$getOperatorBusinessProfile(
+      business_operator: (l$business_operator as List<dynamic>)
+          .map((e) =>
+              Query$getOperatorBusinessProfile$business_operator.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getOperatorBusinessProfile$business_operator>
+      business_operator;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_operator = business_operator;
+    _resultData['business_operator'] =
+        l$business_operator.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_operator = business_operator;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$business_operator.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getOperatorBusinessProfile) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_operator = business_operator;
+    final lOther$business_operator = other.business_operator;
+    if (l$business_operator.length != lOther$business_operator.length) {
+      return false;
+    }
+    for (int i = 0; i < l$business_operator.length; i++) {
+      final l$business_operator$entry = l$business_operator[i];
+      final lOther$business_operator$entry = lOther$business_operator[i];
+      if (l$business_operator$entry != lOther$business_operator$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOperatorBusinessProfile
+    on Query$getOperatorBusinessProfile {
+  CopyWith$Query$getOperatorBusinessProfile<Query$getOperatorBusinessProfile>
+      get copyWith => CopyWith$Query$getOperatorBusinessProfile(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getOperatorBusinessProfile<TRes> {
+  factory CopyWith$Query$getOperatorBusinessProfile(
+    Query$getOperatorBusinessProfile instance,
+    TRes Function(Query$getOperatorBusinessProfile) then,
+  ) = _CopyWithImpl$Query$getOperatorBusinessProfile;
+
+  factory CopyWith$Query$getOperatorBusinessProfile.stub(TRes res) =
+      _CopyWithStubImpl$Query$getOperatorBusinessProfile;
+
+  TRes call({
+    List<Query$getOperatorBusinessProfile$business_operator>? business_operator,
+    String? $__typename,
+  });
+  TRes business_operator(
+      Iterable<Query$getOperatorBusinessProfile$business_operator> Function(
+              Iterable<
+                  CopyWith$Query$getOperatorBusinessProfile$business_operator<
+                      Query$getOperatorBusinessProfile$business_operator>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getOperatorBusinessProfile<TRes>
+    implements CopyWith$Query$getOperatorBusinessProfile<TRes> {
+  _CopyWithImpl$Query$getOperatorBusinessProfile(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOperatorBusinessProfile _instance;
+
+  final TRes Function(Query$getOperatorBusinessProfile) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_operator = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getOperatorBusinessProfile(
+        business_operator: business_operator == _undefined ||
+                business_operator == null
+            ? _instance.business_operator
+            : (business_operator
+                as List<Query$getOperatorBusinessProfile$business_operator>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes business_operator(
+          Iterable<Query$getOperatorBusinessProfile$business_operator> Function(
+                  Iterable<
+                      CopyWith$Query$getOperatorBusinessProfile$business_operator<
+                          Query$getOperatorBusinessProfile$business_operator>>)
+              _fn) =>
+      call(
+          business_operator: _fn(_instance.business_operator.map((e) =>
+              CopyWith$Query$getOperatorBusinessProfile$business_operator(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getOperatorBusinessProfile<TRes>
+    implements CopyWith$Query$getOperatorBusinessProfile<TRes> {
+  _CopyWithStubImpl$Query$getOperatorBusinessProfile(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getOperatorBusinessProfile$business_operator>? business_operator,
+    String? $__typename,
+  }) =>
+      _res;
+  business_operator(_fn) => _res;
+}
+
+const documentNodeQuerygetOperatorBusinessProfile = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getOperatorBusinessProfile'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'userId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_operator'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'user_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'userId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'business'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'profile'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getOperatorBusinessProfile _parserFn$Query$getOperatorBusinessProfile(
+        Map<String, dynamic> data) =>
+    Query$getOperatorBusinessProfile.fromJson(data);
+
+class Options$Query$getOperatorBusinessProfile
+    extends graphql.QueryOptions<Query$getOperatorBusinessProfile> {
+  Options$Query$getOperatorBusinessProfile({
+    String? operationName,
+    required Variables$Query$getOperatorBusinessProfile variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetOperatorBusinessProfile,
+          parserFn: _parserFn$Query$getOperatorBusinessProfile,
+        );
+}
+
+class WatchOptions$Query$getOperatorBusinessProfile
+    extends graphql.WatchQueryOptions<Query$getOperatorBusinessProfile> {
+  WatchOptions$Query$getOperatorBusinessProfile({
+    String? operationName,
+    required Variables$Query$getOperatorBusinessProfile variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetOperatorBusinessProfile,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getOperatorBusinessProfile,
+        );
+}
+
+class FetchMoreOptions$Query$getOperatorBusinessProfile
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getOperatorBusinessProfile({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getOperatorBusinessProfile variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetOperatorBusinessProfile,
+        );
+}
+
+extension ClientExtension$Query$getOperatorBusinessProfile
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getOperatorBusinessProfile>>
+      query$getOperatorBusinessProfile(
+              Options$Query$getOperatorBusinessProfile options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getOperatorBusinessProfile>
+      watchQuery$getOperatorBusinessProfile(
+              WatchOptions$Query$getOperatorBusinessProfile options) =>
+          this.watchQuery(options);
+  void writeQuery$getOperatorBusinessProfile({
+    required Query$getOperatorBusinessProfile data,
+    required Variables$Query$getOperatorBusinessProfile variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetOperatorBusinessProfile),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getOperatorBusinessProfile? readQuery$getOperatorBusinessProfile({
+    required Variables$Query$getOperatorBusinessProfile variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetOperatorBusinessProfile),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getOperatorBusinessProfile.fromJson(result);
+  }
+}
+
+class Query$getOperatorBusinessProfile$business_operator {
+  Query$getOperatorBusinessProfile$business_operator({
+    required this.business,
+    required this.$__typename,
+  });
+
+  factory Query$getOperatorBusinessProfile$business_operator.fromJson(
+      Map<String, dynamic> json) {
+    final l$business = json['business'];
+    final l$$__typename = json['__typename'];
+    return Query$getOperatorBusinessProfile$business_operator(
+      business:
+          Query$getOperatorBusinessProfile$business_operator$business.fromJson(
+              (l$business as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getOperatorBusinessProfile$business_operator$business business;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business = business;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getOperatorBusinessProfile$business_operator) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOperatorBusinessProfile$business_operator
+    on Query$getOperatorBusinessProfile$business_operator {
+  CopyWith$Query$getOperatorBusinessProfile$business_operator<
+          Query$getOperatorBusinessProfile$business_operator>
+      get copyWith =>
+          CopyWith$Query$getOperatorBusinessProfile$business_operator(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getOperatorBusinessProfile$business_operator<
+    TRes> {
+  factory CopyWith$Query$getOperatorBusinessProfile$business_operator(
+    Query$getOperatorBusinessProfile$business_operator instance,
+    TRes Function(Query$getOperatorBusinessProfile$business_operator) then,
+  ) = _CopyWithImpl$Query$getOperatorBusinessProfile$business_operator;
+
+  factory CopyWith$Query$getOperatorBusinessProfile$business_operator.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getOperatorBusinessProfile$business_operator;
+
+  TRes call({
+    Query$getOperatorBusinessProfile$business_operator$business? business,
+    String? $__typename,
+  });
+  CopyWith$Query$getOperatorBusinessProfile$business_operator$business<TRes>
+      get business;
+}
+
+class _CopyWithImpl$Query$getOperatorBusinessProfile$business_operator<TRes>
+    implements
+        CopyWith$Query$getOperatorBusinessProfile$business_operator<TRes> {
+  _CopyWithImpl$Query$getOperatorBusinessProfile$business_operator(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOperatorBusinessProfile$business_operator _instance;
+
+  final TRes Function(Query$getOperatorBusinessProfile$business_operator) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getOperatorBusinessProfile$business_operator(
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Query$getOperatorBusinessProfile$business_operator$business),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getOperatorBusinessProfile$business_operator$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$getOperatorBusinessProfile$business_operator$business(
+        local$business, (e) => call(business: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getOperatorBusinessProfile$business_operator<TRes>
+    implements
+        CopyWith$Query$getOperatorBusinessProfile$business_operator<TRes> {
+  _CopyWithStubImpl$Query$getOperatorBusinessProfile$business_operator(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getOperatorBusinessProfile$business_operator$business? business,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getOperatorBusinessProfile$business_operator$business<TRes>
+      get business =>
+          CopyWith$Query$getOperatorBusinessProfile$business_operator$business
+              .stub(_res);
+}
+
+class Query$getOperatorBusinessProfile$business_operator$business {
+  Query$getOperatorBusinessProfile$business_operator$business({
+    required this.profile,
+    required this.$__typename,
+  });
+
+  factory Query$getOperatorBusinessProfile$business_operator$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$profile = json['profile'];
+    final l$$__typename = json['__typename'];
+    return Query$getOperatorBusinessProfile$business_operator$business(
+      profile: (l$profile as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String profile;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$profile = profile;
+    _resultData['profile'] = l$profile;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$profile = profile;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$profile,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getOperatorBusinessProfile$business_operator$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$profile = profile;
+    final lOther$profile = other.profile;
+    if (l$profile != lOther$profile) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOperatorBusinessProfile$business_operator$business
+    on Query$getOperatorBusinessProfile$business_operator$business {
+  CopyWith$Query$getOperatorBusinessProfile$business_operator$business<
+          Query$getOperatorBusinessProfile$business_operator$business>
+      get copyWith =>
+          CopyWith$Query$getOperatorBusinessProfile$business_operator$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getOperatorBusinessProfile$business_operator$business<
+    TRes> {
+  factory CopyWith$Query$getOperatorBusinessProfile$business_operator$business(
+    Query$getOperatorBusinessProfile$business_operator$business instance,
+    TRes Function(Query$getOperatorBusinessProfile$business_operator$business)
+        then,
+  ) = _CopyWithImpl$Query$getOperatorBusinessProfile$business_operator$business;
+
+  factory CopyWith$Query$getOperatorBusinessProfile$business_operator$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getOperatorBusinessProfile$business_operator$business;
+
+  TRes call({
+    String? profile,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getOperatorBusinessProfile$business_operator$business<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorBusinessProfile$business_operator$business<
+            TRes> {
+  _CopyWithImpl$Query$getOperatorBusinessProfile$business_operator$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOperatorBusinessProfile$business_operator$business _instance;
+
+  final TRes Function(
+      Query$getOperatorBusinessProfile$business_operator$business) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? profile = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getOperatorBusinessProfile$business_operator$business(
+        profile: profile == _undefined || profile == null
+            ? _instance.profile
+            : (profile as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getOperatorBusinessProfile$business_operator$business<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorBusinessProfile$business_operator$business<
+            TRes> {
+  _CopyWithStubImpl$Query$getOperatorBusinessProfile$business_operator$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? profile,
+    String? $__typename,
+  }) =>
+      _res;
+}

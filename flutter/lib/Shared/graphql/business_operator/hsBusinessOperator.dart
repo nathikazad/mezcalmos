@@ -30,3 +30,24 @@ Future<Operator?> get_business_operator({required int userId}) async {
   }
   return null;
 }
+
+Future<BusinessProfile?> get_operator_business_profile(
+    {required int userId}) async {
+  QueryResult<Query$getOperatorBusinessProfile> res = await _db.graphQLClient
+      .query$getOperatorBusinessProfile(
+          Options$Query$getOperatorBusinessProfile(
+              fetchPolicy: FetchPolicy.noCache,
+              variables:
+                  Variables$Query$getOperatorBusinessProfile(userId: userId)));
+
+  if (res.parsedData?.business_operator == null) {
+    throw Exception("🟥 Get business operator exceptions =>${res.exception}");
+  }
+  mezDbgPrint2("🟩 Get business operator response =>${res.data}");
+  if (res.parsedData!.business_operator.isNotEmpty) {
+    Query$getOperatorBusinessProfile$business_operator data =
+        res.parsedData!.business_operator.first;
+    return data.business.profile.toBusinessProfile();
+  }
+  return null;
+}

@@ -115,14 +115,16 @@ class BsOpOfferingPricesList extends StatelessWidget {
               controller: textEditingController,
             ),
           ),
-          const SizedBox(width: 8),
           if (canRemove)
-            MezIconButton(
-              onTap: onRemoveTimeUnit,
-              iconSize: 20,
-              backgroundColor: Colors.transparent,
-              iconColor: Colors.redAccent,
-              icon: Icons.delete_outline,
+            Padding(
+              padding: const EdgeInsets.only(left: 6),
+              child: MezIconButton(
+                onTap: onRemoveTimeUnit,
+                iconSize: 20,
+                backgroundColor: Colors.transparent,
+                iconColor: Colors.redAccent,
+                icon: Icons.delete_outline,
+              ),
             ),
         ],
       ),

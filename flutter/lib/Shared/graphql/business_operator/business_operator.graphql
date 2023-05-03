@@ -23,3 +23,14 @@ query getBusinessOperatorByUserId($userId: Int!) {
   
   }
 }
+
+query getOperatorBusinessProfile($userId: Int!) {
+  business_operator(where: {user_id: {_eq: $userId}}) {
+business{
+  profile
+}
+   
+   
+  
+  }
+}
