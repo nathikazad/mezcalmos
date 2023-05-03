@@ -47,3 +47,19 @@ select_permissions:
         - gps_location
         - home_type
       filter: {}
+update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - address
+        - bathrooms
+        - bedrooms
+        - gps_location
+        - home_type
+      filter:
+        rental:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
