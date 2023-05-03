@@ -51,7 +51,8 @@ class _CustEventViewState extends State<CustEventView> {
 
   String generateCost() {
     String removePerFromTime(TimeUnit timeUnit) {
-      if (timeUnit == TimeUnit.Total) {
+      if (timeUnit == TimeUnit.Unit) {
+  
         return "";
       }
       return "/${timeUnit.name.toString().toLowerCase().replaceFirst("per", "")}";
