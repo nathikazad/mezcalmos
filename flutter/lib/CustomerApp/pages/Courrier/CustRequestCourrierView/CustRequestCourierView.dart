@@ -184,22 +184,27 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           ),
           Form(
             key: viewController.fromKey,
-            child: DropDownLocationList(
-              elevation: 0,
-              onValueChangeCallback: (MezLocation location) {
-                viewController.setToLocation(location);
-              },
-              bgColor: Colors.white,
-              checkDistance: false,
-              passedInLocation: viewController.toLoc.value,
-              serviceProviderLocation: null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DropDownLocationList(
+                  elevation: 0,
+                  onValueChangeCallback: (MezLocation location) {
+                    viewController.setToLocation(location);
+                  },
+                  bgColor: Colors.white,
+                  checkDistance: false,
+                  passedInLocation: viewController.toLoc.value,
+                  serviceProviderLocation: null,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                CustRequestCourierItems(
+                  viewController: viewController,
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          CustRequestCourierItems(
-            viewController: viewController,
           ),
           SizedBox(
             height: 75,

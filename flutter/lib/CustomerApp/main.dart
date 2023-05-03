@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
@@ -6,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
@@ -26,6 +28,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
       CustCardsListView.navigate();
+      Get.find<SideMenuDrawerController>().closeMenu();
     },
     icon: Icons.credit_card,
     title: "CustomerApp/main/savedCards",
@@ -34,6 +37,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
       SavedLocationView.navigate();
+      Get.find<SideMenuDrawerController>().closeMenu();
     },
     icon: Icons.near_me_outlined,
     title: "CustomerApp/main/savedLocations",

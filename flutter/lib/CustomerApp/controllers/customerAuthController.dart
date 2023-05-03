@@ -13,7 +13,7 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
-  
+
   bool _initialized = false;
   StreamController<bool> _cusAuthControllerInitializedStreamController =
       StreamController<bool>();
@@ -60,13 +60,18 @@ class CustomerAuthController extends GetxController {
   }
 
   Future<SavedLocation?> saveNewLocation(SavedLocation savedLocation) async {
-    return await add_saved_location(
+    SavedLocation? res = await add_saved_location(
         saved_location: savedLocation,
         customer_id: authController.hasuraUserId!);
+    await fetchSavedLocations();
+    return res;
   }
 
   Future<SavedLocation?> editLocation(SavedLocation savedLocation) async {
-    return await update_saved_location(savedLocation: savedLocation);
+    SavedLocation? res =
+        await update_saved_location(savedLocation: savedLocation);
+    await fetchSavedLocations();
+    return res;
   }
 
   Future<void> setAsDefaultLocation(SavedLocation newDefaultLocation) async {

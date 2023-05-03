@@ -68,7 +68,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
   @override
   void dispose() {
     // _controller.dispose();
-    _focusNode?.dispose();
+    // _focusNode?.dispose();
     super.dispose();
   }
 
@@ -109,6 +109,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
           focusNode: _focusNode,
           decoration: _inputDecoration(),
           onChanged: (String v) {
+            widget.controller?.text = v;
             if (v.length.isEven == true && v.length > 3) {
               setState(() {});
             }
