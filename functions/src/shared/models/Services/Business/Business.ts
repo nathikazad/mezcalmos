@@ -32,7 +32,7 @@ export enum TimeUnit {
     PerWeek = "perWeek",
     PerMonth = "perMonth",
     PerPerson = "perPerson",
-    Total = "total",
+    Unit = "unit",
 }
 export interface Rental {
     id?: number;

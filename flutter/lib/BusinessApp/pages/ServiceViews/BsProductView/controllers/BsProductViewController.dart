@@ -38,7 +38,8 @@ class BsProductViewController {
 
   Future<void> initEditMode({required int id}) async {
     _product.value = await get_product_by_id(id: id, withCache: false);
-    mezDbgPrint("product id : $id ${_product.value?.toFirebaseFormattedJson()}");
+    mezDbgPrint(
+        "product id : $id ${_product.value?.toFirebaseFormattedJson()}");
     if (product != null) {
       await detailsController.initEditMode(
           detalsId: product!.details.id.toInt());
@@ -52,8 +53,12 @@ class BsProductViewController {
   Future<Product> _constructProduct() async {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
+    // this should happen auto inside the details controller no need to do it here
+    // check if this is case and if it's not refer back to me
+    // and don't forget to set to possibles prices units
+
     details.cost = {
-      TimeUnit.Total: num.parse(priceController.text.trim().toString()),
+      TimeUnit.Unit: num.parse(priceController.text.trim().toString()),
     };
     final Product product = Product(
       category1: ProductCategory1.Consumable,
