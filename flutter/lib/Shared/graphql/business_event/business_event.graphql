@@ -292,6 +292,7 @@ query get_business_events($businessId: Int!, $limit: Int, $offset: Int) {
         details {
           id
           name
+          currency
         }
       }
     }

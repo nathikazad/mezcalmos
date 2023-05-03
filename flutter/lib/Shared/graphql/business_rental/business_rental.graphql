@@ -306,7 +306,7 @@ query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
       details {
         id
         name
-        
+        currency
         image
         location {
           gps

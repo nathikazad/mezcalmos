@@ -243,6 +243,7 @@ Future<List<ServiceCard>> get_business_services(
         .forEach((Query$get_business_services$business_service data) async {
       _services.add(ServiceCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           service: Service(
             category1: data.details.category1.toServiceCategory1(),
             details: BusinessItemDetails(

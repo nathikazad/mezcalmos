@@ -457,6 +457,7 @@ Future<List<EventCard>> get_business_events(
         .forEach((Query$get_business_events$business_event data) async {
       _events.add(EventCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           event: Event(
             category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null && data.address != null

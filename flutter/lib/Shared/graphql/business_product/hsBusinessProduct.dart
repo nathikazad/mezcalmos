@@ -238,6 +238,7 @@ Future<List<ProductCard>> get_business_products(
         .forEach((Query$get_business_products$business_product data) async {
       _products.add(ProductCard(
           businessName: data.business.details.name,
+          currency: data.business.details.currency.toCurrency(),
           product: Product(
             category1: data.details.category1.toProductCategory1(),
             details: BusinessItemDetails(

@@ -167,6 +167,7 @@ query get_business_services($businessId: Int!, $limit: Int, $offset: Int) {
         details {
           id
           name
+          currency
         }
       }
     }
