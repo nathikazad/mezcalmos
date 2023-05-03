@@ -33,6 +33,7 @@ abstract class Order {
   int chatId;
   DateTime? estimatedPackageReadyTime;
   DateTime? scheduleTime;
+  DateTime? cancellationTime;
 
   Order({
     required this.chatId,
@@ -52,6 +53,7 @@ abstract class Order {
     this.stripePaymentInfo,
     this.scheduleTime,
     this.estimatedPackageReadyTime,
+    this.cancellationTime,
   });
   bool isIncoming() {
     switch (orderType) {
@@ -192,6 +194,7 @@ abstract class DeliverableOrder extends Order {
     this.estimatedArrivalAtDropoff,
     super.estimatedPackageReadyTime,
     super.scheduleTime,
+    super.cancellationTime,
     super.stripePaymentInfo,
     required super.routeInformation,
     required this.pickupLocation,

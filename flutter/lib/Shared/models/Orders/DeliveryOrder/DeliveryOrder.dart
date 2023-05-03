@@ -28,6 +28,7 @@ class DeliveryOrder extends DeliverableOrder {
       required super.estimatedArrivalAtDropoff,
       required super.estimatedArrivalAtPickup,
       required super.estimatedPackageReadyTime,
+      super.cancellationTime,
       required super.serviceProvider,
       required super.deliveryProviderType,
       required super.driverInfo,
@@ -127,4 +128,24 @@ class DeliveryOrder extends DeliverableOrder {
 
   @override
   String toString() => super.toString();
+}
+
+//define a class for delivery order times
+class DeliveryOrderVariables {
+  DateTime? estimatedArrivalAtPickup;
+  DateTime? estimatedArrivalAtDropoff;
+  DateTime? estimatedPackageReadyTime;
+  DateTime? scheduleTime;
+  DateTime? cancellationTime;
+  DeliveryOrderStatus status;
+  bool packageReady;
+  DeliveryOrderVariables({
+    required this.status,
+    required this.packageReady,
+    this.estimatedArrivalAtPickup,
+    this.estimatedArrivalAtDropoff,
+    this.estimatedPackageReadyTime,
+    this.scheduleTime,
+    this.cancellationTime,
+  });
 }

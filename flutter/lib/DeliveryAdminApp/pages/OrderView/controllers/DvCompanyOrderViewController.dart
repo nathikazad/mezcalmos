@@ -36,7 +36,7 @@ class DvCompanyOrderViewController {
   }
 
   // streams //
-  StreamSubscription<DeliveryOrder?>? orderStream;
+  StreamSubscription<DeliveryOrderVariables?>? orderStream;
   String? subscriptionId;
 
   // init
@@ -62,13 +62,23 @@ class DvCompanyOrderViewController {
           "🚨 Can't get order $orderId 🚨 DvRestaurantOrderViewController");
     } else {
       subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_driver_order_by_id(orderId: orderId)
-            .listen((DeliveryOrder? event) {
+        orderStream = listen_on_driver_order_variables(orderId: orderId)
+            .listen((DeliveryOrderVariables? event) {
           mezDbgPrint(event);
           if (event != null) {
             mezDbgPrint("Stream triggred from order controller ✅✅✅✅✅✅✅✅✅");
-            order.value = null;
-            order.value = event;
+            // order.value = null;
+            order.value!.estimatedArrivalAtDropoff =
+                event.estimatedArrivalAtDropoff;
+            order.value!.estimatedArrivalAtPickup =
+                event.estimatedArrivalAtPickup;
+            order.value!.estimatedPackageReadyTime =
+                event.estimatedPackageReadyTime;
+            order.value!.scheduleTime = event.scheduleTime;
+            order.value!.cancellationTime = event.cancellationTime;
+            order.value!.status = event.status;
+            order.value!.packageReady = event.packageReady;
+            // order.value = event;
           }
         });
       }, cancel: () {
