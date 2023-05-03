@@ -6,12 +6,14 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceI
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 
 class BsOpServiceView extends StatefulWidget {
   const BsOpServiceView({Key? key}) : super(key: key);
@@ -190,32 +192,14 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             ),
             smallSepartor,
             bigSeperator,
-            Text("Schedule"),
-            smallSepartor,
-            Card(
-              child: InkWell(
-                onTap: () async {
-                  // viewController.showScheduleDialog(context);
-                  Schedule? res = await BsOpSchedulePickerView.navigate();
-                  mezDbgPrint("res: $res");
+            Obx(
+              () => BsOpScheduleSelector(
+                onScheduleSelected: (schedule) {
+                  viewController.changeSchedule(schedule);
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Text(
-                          "Add schedule",
-                          style: context.textTheme.bodyLarge,
-                        ),
-                      ),
-                      Icon(Icons.add)
-                    ],
-                  ),
-                ),
+                schedule: viewController.serviceSchedule.value,
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -89,7 +89,7 @@ Future<ProductWithBusinessCard?> get_product_by_id(
           product: Product(
               category1: data.details.category1.toProductCategory1(),
               details: BusinessItemDetails(
-                id: id,
+                id: data.details.id,
                 nameId: data.details.name_id,
                 descriptionId: data.details.description_id,
                 name:
@@ -237,6 +237,7 @@ Future<List<ProductCard>> get_business_products(
     response.parsedData?.business_product
         .forEach((Query$get_business_products$business_product data) async {
       _products.add(ProductCard(
+          currency: Currency.Peso,
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           product: Product(

@@ -94,7 +94,7 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
         service: Service(
             category1: data.details.category1.toServiceCategory1(),
             details: BusinessItemDetails(
-              id: id,
+              id: data.details.id,
               nameId: data.details.name_id,
               descriptionId: data.details.description_id,
               name: toLanguageMap(translations: data.details.name.translations),
@@ -242,6 +242,7 @@ Future<List<ServiceCard>> get_business_services(
     response.parsedData?.business_service
         .forEach((Query$get_business_services$business_service data) async {
       _services.add(ServiceCard(
+          currency: Currency.Peso,
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           service: Service(

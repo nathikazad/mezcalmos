@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
@@ -30,6 +31,7 @@ class BsServiceViewController {
   Rxn<ServiceWithBusinessCard> _service = Rxn<ServiceWithBusinessCard>();
   ServiceWithBusinessCard? get service => _service.value;
   bool get isEditing => _service.value != null;
+  Rx<Schedule?> serviceSchedule = Rx(null);
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
@@ -42,6 +44,10 @@ class BsServiceViewController {
       await detailsController.initEditMode(
           detalsId: service!.details.id.toInt());
     }
+  }
+
+  Future<void> changeSchedule(Schedule? schedule) async {
+    serviceSchedule.value = schedule;
   }
 
   Future<void> saveItemDetails() async {

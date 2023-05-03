@@ -31,6 +31,7 @@ class BsProductViewController {
   Rxn<ProductWithBusinessCard> _product = Rxn<ProductWithBusinessCard>();
   ProductWithBusinessCard? get product => _product.value;
   bool get isEditing => _product.value != null;
+  Rx<ProductCategory1?> productCategory = Rx<ProductCategory1?>(null);
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
@@ -43,6 +44,9 @@ class BsProductViewController {
     if (product != null) {
       await detailsController.initEditMode(
           detalsId: product!.details.id.toInt());
+      productCategory.value = product!.category1;
+      priceController.text =
+          product!.details.cost.entries.first.value.toString();
     }
   }
 
@@ -61,7 +65,7 @@ class BsProductViewController {
       TimeUnit.Unit: num.parse(priceController.text.trim().toString()),
     };
     final Product product = Product(
-      category1: ProductCategory1.Consumable,
+      category1: productCategory.value!,
       details: details,
     );
     return product;

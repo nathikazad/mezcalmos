@@ -310,6 +310,7 @@ Future<List<RentalCard>> get_business_rentals(
     response.parsedData?.business_rental
         .forEach((Query$get_business_rentals$business_rental data) async {
       _homes.add(RentalCard(
+          currency: Currency.Peso,
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           rental: Rental(
