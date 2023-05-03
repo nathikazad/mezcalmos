@@ -23,7 +23,10 @@ class BsOpScheduleSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Schedule"),
+        Text(
+          "Schedule",
+          style: context.textTheme.bodyLarge,
+        ),
         smallSepartor,
         Card(
           child: InkWell(

@@ -33,6 +33,12 @@ class BsServiceViewController {
   bool get isEditing => _service.value != null;
   Rx<Schedule?> serviceSchedule = Rx(null);
 
+    List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([TimeUnit.PerHour]);
+  List<TimeUnit> get avalbleUnits => _possibleTimeUnits
+      .where((TimeUnit element) =>
+          detailsController.priceTimeUnitMap.keys.contains(element) == false)
+      .toList();
+
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
   }

@@ -24,14 +24,19 @@ class BsProductViewController {
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
-  TextEditingController priceController = TextEditingController();
   // vars //
   bool shouldRefetch = false;
   // state variables //
   Rxn<ProductWithBusinessCard> _product = Rxn<ProductWithBusinessCard>();
   ProductWithBusinessCard? get product => _product.value;
   bool get isEditing => _product.value != null;
-  Rx<ProductCategory1?> productCategory = Rx<ProductCategory1?>(null);
+  Rxn<ProductCategory1> productCategory = Rxn<ProductCategory1>();
+
+  List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([TimeUnit.Total]);
+  List<TimeUnit> get avalbleUnits => _possibleTimeUnits
+      .where((TimeUnit element) =>
+          detailsController.priceTimeUnitMap.keys.contains(element) == false)
+      .toList();
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
@@ -43,10 +48,9 @@ class BsProductViewController {
         "product id : $id ${_product.value?.toFirebaseFormattedJson()}");
     if (product != null) {
       await detailsController.initEditMode(
-          detalsId: product!.details.id.toInt());
+        detalsId: product!.details.id.toInt(),
+      );
       productCategory.value = product!.category1;
-      priceController.text =
-          product!.details.cost.entries.first.value.toString();
     }
   }
 
@@ -57,13 +61,6 @@ class BsProductViewController {
   Future<Product> _constructProduct() async {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
-    // this should happen auto inside the details controller no need to do it here
-    // check if this is case and if it's not refer back to me
-    // and don't forget to set to possibles prices units
-
-    details.cost = {
-      TimeUnit.Unit: num.parse(priceController.text.trim().toString()),
-    };
     final Product product = Product(
       category1: productCategory.value!,
       details: details,

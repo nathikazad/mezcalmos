@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 
 class BsOpProductView extends StatefulWidget {
   const BsOpProductView({Key? key}) : super(key: key);
@@ -183,8 +184,10 @@ class _BsOpProductViewState extends State<BsOpProductView>
               style: context.textTheme.bodyLarge,
             ),
             smallSepartor,
-            Obx(
-              () => BsOpDropdown(
+            Obx(() {
+              print(
+                  "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
+              return BsOpDropdown(
                 labelText: "Select category",
                 items: ProductCategory1.values
                     .map((ProductCategory1 e) => e.toFirebaseFormatString())
@@ -195,24 +198,18 @@ class _BsOpProductViewState extends State<BsOpProductView>
                   viewController.productCategory.value =
                       category.toString().toProductCategory1();
                 },
-              ),
-            ),
+              );
+            }),
             smallSepartor,
-            Text(
-              "Price",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.priceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "Enter price",
-                prefixIcon: Icon(
-                  Icons.attach_money_rounded,
-                  color: Colors.black,
-                ),
-              ),
+            BsOpOfferingPricesList(
+              availbleUnits: viewController.avalbleUnits,
+              onAddPrice: (TimeUnit unit) {
+                viewController.detailsController.addPriceTimeUnit(unit);
+              },
+              onRemovePrice: (TimeUnit unit) {
+                viewController.detailsController.removeTimeUnit(unit);
+              },
+              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
           ],
         ),

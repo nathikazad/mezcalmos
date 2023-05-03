@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 
 class BsOpServiceView extends StatefulWidget {
   const BsOpServiceView({Key? key}) : super(key: key);
@@ -179,19 +180,17 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
               ),
             ),
             bigSeperator,
-            Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    "Prices",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                ),
-              ],
+            BsOpOfferingPricesList(
+              availbleUnits: viewController.avalbleUnits,
+              onAddPrice: (TimeUnit unit) {
+                viewController.detailsController.addPriceTimeUnit(unit);
+              },
+              onRemovePrice: (TimeUnit unit) {
+                viewController.detailsController.removeTimeUnit(unit);
+              },
+              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
             smallSepartor,
-            bigSeperator,
             Obx(
               () => BsOpScheduleSelector(
                 onScheduleSelected: (schedule) {
