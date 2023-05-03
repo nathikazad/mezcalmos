@@ -40,6 +40,7 @@ class BsProductViewController {
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
+    detailsController.addPriceTimeUnit(avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -75,6 +76,8 @@ class BsProductViewController {
         shouldRefetch = true;
       } else {
         final Product _product = await _constructProduct();
+        mezDbgPrint("busniess id : ${_product.details.businessId}");
+
         await createItem(_product);
       }
     }
